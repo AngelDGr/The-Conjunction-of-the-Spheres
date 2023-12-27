@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "tcots-witcher",
+	"version": "${version}",
+	"name": "The Conjunction of the Spheres",
+	"description": "A mod that adds a lot of enemies from the Witcher saga!",
+	"authors": [
+		"Tenebris Mors"
+	],
+	"contact": {
+		"homepage": "https://legacy.curseforge.com/members/angeldgr/projects",
+		"sources": "https://github.com/AngelDGr/Witcher-Medallions/"
+	},
+	"license": "MIT",
+	"icon": "assets/tcots-witcher/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"TCOTS.TCOTS_Main"
+		]
+	},
+	"mixins": [
+		"tcots-witcher.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.20",
+		"java": ">=17",
+		"fabric-api": "*",
+
+		"geckolib": ">=4.2",
+		"owo": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.curseforge": "https://legacy.curseforge.com/members/tenebris_mors/projects"
+			}
+		}
+	}
+}
