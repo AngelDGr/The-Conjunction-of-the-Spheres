@@ -13,17 +13,17 @@ import software.bernie.geckolib.model.data.EntityModelData;
 public class DrownerModel extends GeoModel<DrownerEntity> {
     @Override
     public Identifier getModelResource(DrownerEntity animatable) {
-        return new Identifier(TCOTS_Main.MODID, "geo/necrophages/drowner.geo.json");
+        return new Identifier(TCOTS_Main.MOD_ID, "geo/necrophages/drowner.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(DrownerEntity animatable) {
-        return new Identifier(TCOTS_Main.MODID, "textures/entity/necrophages/drowner/drowner.png");
+        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner.png");
     }
 
     @Override
     public Identifier getAnimationResource(DrownerEntity animatable) {
-        return new Identifier(TCOTS_Main.MODID, "animations/necrophages/drowner.animation.json");
+        return new Identifier(TCOTS_Main.MOD_ID, "animations/necrophages/drowner.animation.json");
     }
 
     @Override

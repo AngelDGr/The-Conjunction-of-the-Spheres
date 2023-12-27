@@ -56,10 +56,10 @@ public class DrownerEntity extends HostileEntity implements GeoEntity {
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState) {
         if(tAnimationState.isMoving()) {
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.drowner.walk", Animation.LoopType.LOOP));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("Walking", Animation.LoopType.LOOP));
         }
 
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.drowner.idle", Animation.LoopType.LOOP));
+        tAnimationState.getController().setAnimation(RawAnimation.begin().then("Idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
     @Override

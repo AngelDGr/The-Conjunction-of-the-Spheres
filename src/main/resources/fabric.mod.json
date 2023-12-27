@@ -17,6 +17,10 @@
 	"entrypoints": {
 		"main": [
 			"TCOTS.TCOTS_Main"
+		],
+
+		"client": [
+			"TCOTS.TCOTS_Client"
 		]
 	},
 	"mixins": [

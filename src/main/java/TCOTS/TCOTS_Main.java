@@ -1,6 +1,7 @@
 package TCOTS;
 
 import TCOTS.entity.necrophages.DrownerEntity;
+import TCOTS.items.TCOTS_Items;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -14,14 +15,14 @@ public class TCOTS_Main implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("modid");
 
-	public static String MODID = "tcots-witcher";
+	public static String MOD_ID = "tcots-witcher";
 
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-
+		TCOTS_Items.registerModItems();
 		LOGGER.info("Hello Fabric world!");
 
 		//Drowner

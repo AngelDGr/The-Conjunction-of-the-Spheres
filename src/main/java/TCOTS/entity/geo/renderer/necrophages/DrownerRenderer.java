@@ -7,7 +7,6 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class DrownerRenderer extends GeoEntityRenderer<DrownerEntity> {
@@ -17,7 +16,7 @@ public class DrownerRenderer extends GeoEntityRenderer<DrownerEntity> {
 
     @Override
     public Identifier getTextureLocation(DrownerEntity animatable) {
-        return new Identifier(TCOTS_Main.MODID, "textures/entity/necrophages/drowner/drowner.png");
+        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner.png");
     }
 
     @Override
