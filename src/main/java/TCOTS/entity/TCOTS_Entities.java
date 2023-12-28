@@ -14,6 +14,7 @@ public class TCOTS_Entities {
     public static final EntityType<DrownerEntity> DROWNER = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "drowner"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DrownerEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.0f, 2.0f)).build());
+                    //Hitbox
+                    .dimensions(EntityDimensions.fixed(0.78f, 2.0f)).build());
 
 }

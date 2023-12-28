@@ -13,8 +13,9 @@ public class TCOTS_Items {
 
     //#8db1c0
     //#9fa3ae
+    // 0xD57E36, 0x1D0D00,
     public static final Item DROWNER_SPAWN_EGG = registerItem("drowner_spawn_egg",
-            new SpawnEggItem(TCOTS_Entities.DROWNER, 0xD57E36, 0x1D0D00,
+            new SpawnEggItem(TCOTS_Entities.DROWNER, 0x8db1c0, 0x9fa3ae,
                     new FabricItemSettings()));
 
     private static Item registerItem(String name, Item item) {
