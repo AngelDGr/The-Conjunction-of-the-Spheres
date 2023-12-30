@@ -3,6 +3,7 @@ package TCOTS;
 import TCOTS.entity.necrophages.DrownerEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
+import TCOTS.sounds.TCOTS_Sounds;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -25,6 +26,7 @@ public class TCOTS_Main implements ModInitializer {
 		// Proceed with mild caution.
 		TCOTS_Items.registerModItems();
 		TCOTS_ItemsGroups.registerGroupItems();
+		TCOTS_Sounds.init();
 //		LOGGER.info("Hello Fabric world!");
 
 		//Drowner

@@ -1,0 +1,49 @@
+{
+  "drowner_attack": {
+    "subtitle": "tcots-witcher.sounds.drowner_attack",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/drowner/drowner_attack1",
+      "tcots-witcher:entity/necrophages/drowner/drowner_attack2"
+    ]
+  },
+  "drowner_hurt": {
+    "subtitle": "tcots-witcher.sounds.drowner_hurt",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/drowner/drowner_hurt1",
+      "tcots-witcher:entity/necrophages/drowner/drowner_hurt2"
+    ]
+  },
+  "drowner_idle": {
+    "subtitle": "tcots-witcher.sounds.drowner_idle",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/drowner/drowner_idle1",
+      "tcots-witcher:entity/necrophages/drowner/drowner_idle2",
+      "tcots-witcher:entity/necrophages/drowner/drowner_idle3"
+    ]
+  },
+  "drowner_death": {
+    "subtitle": "tcots-witcher.sounds.drowner_death",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/drowner/drowner_death1",
+      "tcots-witcher:entity/necrophages/drowner/drowner_death2"
+    ]
+  },
+
+  "drowner_footstep": {
+    "subtitle": "tcots-witcher.sounds.drowner_footstep",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/drowner/drowner_footstep1",
+      "tcots-witcher:entity/necrophages/drowner/drowner_footstep2",
+      "tcots-witcher:entity/necrophages/drowner/drowner_footstep3",
+      "tcots-witcher:entity/necrophages/drowner/drowner_footstep4",
+      "tcots-witcher:entity/necrophages/drowner/drowner_footstep5"
+    ]
+  },
+
+  "drowner_scream": {
+    "subtitle": "tcots-witcher.sounds.drowner_scream",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/drowner/drowner_scream"
+    ]
+  }
+}

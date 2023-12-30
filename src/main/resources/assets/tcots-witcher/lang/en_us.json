@@ -2,5 +2,11 @@
     "itemgroup.tcots-witcher": "The Conjunction of the Spheres",
     "item.tcots-witcher.drowner_spawn_egg": "Drowner Spawn Egg",
 
-    "entity.tcots-witcher.drowner": "Drowner"
+    "entity.tcots-witcher.drowner": "Drowner",
+    "tcots-witcher.sounds.drowner_footstep": "Footsteps",
+    "tcots-witcher.sounds.drowner_attack": "Drowner attacks",
+    "tcots-witcher.sounds.drowner_hurt": "Drowner hurts",
+    "tcots-witcher.sounds.drowner_idle": "Drowner groans",
+    "tcots-witcher.sounds.drowner_death": "Drowner dies",
+    "tcots-witcher.sounds.drowner_scream": "Drowner screams"
 }

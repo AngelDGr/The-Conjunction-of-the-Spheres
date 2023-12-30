@@ -29,12 +29,20 @@ public class DrownerModel extends GeoModel<DrownerEntity> {
     @Override
     public void setCustomAnimations(DrownerEntity animatable, long instanceId, AnimationState<DrownerEntity> animationState) {
 
-
         CoreGeoBone head = getAnimationProcessor().getBone("head");
+        EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
 
-        if (head != null && animationState.isMoving()) {
-            EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
-            head.setRotX(entityData.headPitch() * MathHelper.RADIANS_PER_DEGREE);
+        //Swimming
+        if(animatable.isSubmergedInWater()){
+            head.setRotX((entityData.headPitch() + 70) * MathHelper.RADIANS_PER_DEGREE);
+        }
+        //OnLand
+        else {
+            if (animatable.isAttacking()) {
+                head.setRotX((entityData.headPitch() + 30) * MathHelper.RADIANS_PER_DEGREE);
+            } else {
+                head.setRotX((entityData.headPitch() + 20) * MathHelper.RADIANS_PER_DEGREE);
+            }
             head.setRotY(entityData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE);
         }
     }
