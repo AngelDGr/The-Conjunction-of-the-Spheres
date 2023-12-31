@@ -12,7 +12,12 @@
 			},
 			"bones": [
 				{
+					"name": "wholeBody",
+					"pivot": [0, 14, 0]
+				},
+				{
 					"name": "FullBody",
+					"parent": "wholeBody",
 					"pivot": [0, 14, 0]
 				},
 				{

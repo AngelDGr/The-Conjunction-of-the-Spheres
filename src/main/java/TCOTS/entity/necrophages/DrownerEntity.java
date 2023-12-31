@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.control.YawAdjustingLookControl;
 import net.minecraft.entity.ai.goal.*;
@@ -22,6 +23,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,10 +33,13 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+
+
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -42,15 +47,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DrownerEntity extends HostileEntity implements GeoEntity {
     protected final SwimNavigation waterNavigation;
     protected final MobNavigation landNavigation;
+
     protected static final TrackedData<Boolean> SWIM = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);;
-//    static{
-//        SWIM = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-//    }
-    public boolean swimming_Progress=false;
     public DrownerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new DolphinOrLand_MoveControl(this, 85, 70, 100.0F, 0.1F, true);
-        this.lookControl = new YawAdjustingLookControl(this, 10);
+        this.moveControl = new DolphinOrLand_MoveControl(this);
+//        this.lookControl = new DrownerLookControl(this, 80);
         this.waterNavigation = new SwimNavigation(this, world);
         this.landNavigation = new MobNavigation(this, world);
     }
@@ -66,48 +68,123 @@ public class DrownerEntity extends HostileEntity implements GeoEntity {
 
     //MoveControl-
     private static class DolphinOrLand_MoveControl extends MoveControl {
-        private final int pitchChange;
-        private final int yawChange;
-        private final float speedInWater;
-        private final float speedInAir;
-        private final boolean buoyant;
-        public DolphinOrLand_MoveControl(DrownerEntity entity, int pitchChange, int yawChange, float speedInWater, float speedInAir, boolean buoyant) {
+        public DolphinOrLand_MoveControl(DrownerEntity entity) {
             super(entity);
-            this.pitchChange = pitchChange;
-            this.yawChange = yawChange;
-            this.speedInWater = speedInWater;
-            this.speedInAir = speedInAir;
-            this.buoyant = buoyant;
         }
 
         @Override
         public void tick() {
+            LivingEntity livingEntity = this.entity.getTarget();
             if(entity.isSubmergedInWater() || entity.isTouchingWater()) {
 
-                if(entity.isSubmergedInWater()){entity.getDataTracker().set(SWIM, Boolean.TRUE);
+                if(entity.isSubmergedInWater()){
+                    entity.getDataTracker().set(SWIM, Boolean.TRUE);
 
                 }
                 if(!entity.isSubmergedInWater()){entity.getDataTracker().set(SWIM, Boolean.FALSE);}
-                LivingEntity livingEntity = entity.getTarget();
+
+//                if (livingEntity != null && livingEntity.getY() > this.entity.getY()) {
+//                    this.entity.setVelocity(this.entity.getVelocity().add(0.0, 0.002, 0.0));
+//                }
+//
+//                if (this.state != State.MOVE_TO || this.entity.getNavigation().isIdle()) {
+//                    this.entity.setMovementSpeed(0.0F);
+//                    return;
+//                }
+//
+//                double d = this.targetX - this.entity.getX();
+//                double e = this.targetY - this.entity.getY();
+//                double f = this.targetZ - this.entity.getZ();
+//                double g = Math.sqrt(d * d + e * e + f * f);
+//                e /= g;
+//                float h = (float)(MathHelper.atan2(f, d) * 57.2957763671875) - 90.0F;
+//                this.entity.setYaw(this.wrapDegrees(this.entity.getYaw(), h, 90.0F));
+//                this.entity.bodyYaw = this.entity.getYaw();
+//                float i = (float)(this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
+//                float j = MathHelper.lerp(0.125F, this.entity.getMovementSpeed(), i);
+//                this.entity.setMovementSpeed(j);
+//                this.entity.setVelocity(this.entity.getVelocity().add((double)j * d * 0.005, (double)j * e * 0.1, (double)j * f * 0.005));
+
+
                 this.entity.setMovementSpeed(2.0f);
                 if(livingEntity != null && livingEntity.getY() > this.entity.getY()){
                     //Makes it go up
                     this.entity.setVelocity(this.entity.getVelocity().add(0.0, 0.01, 0.0));
                 }
-                if(livingEntity != null && livingEntity.getY() < this.entity.getY()){
-                    //Makes it go down
-                    this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.005, 0.0));
+                //Idk
+                if (this.state != State.MOVE_TO || this.entity.getNavigation().isIdle()) {
+                    this.entity.setMovementSpeed(0.0F);
+                    return;
                 }
+
+                double d = this.targetX - this.entity.getX();
+                double e = this.targetY - this.entity.getY();
+                double f = this.targetZ - this.entity.getZ();
+                double g = Math.sqrt(d * d + e * e + f * f);
+                e /= g;
+                float h = (float)(MathHelper.atan2(f, d) * 57.2957763671875) - 90.0F;
+                this.entity.setYaw(this.wrapDegrees(this.entity.getYaw(), h, 90.0F));
+                this.entity.bodyYaw = this.entity.getYaw();
+                float i = (float)(this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
+                float j = MathHelper.lerp(0.125F, this.entity.getMovementSpeed(), i);
+                this.entity.setMovementSpeed(j);
+                this.entity.setVelocity(this.entity.getVelocity().add((double)j * d * 0.005, (double)j * e * 0.1, (double)j * f * 0.005));
             }
             //It's on land, so return the normal MoveControl
             else{
-
                 if(!entity.isSubmergedInWater()){entity.getDataTracker().set(SWIM, Boolean.FALSE);}
-
             super.tick();}
         }
         private static float method_45335(float f) {
             return 1.0F - MathHelper.clamp((f - 10.0F) / 50.0F, 0.0F, 1.0F);
+        }
+    }
+
+    //LookControl
+    private static class DrownerLookControl extends LookControl {
+        private final int yawAdjustThreshold;
+        private static final int ADDED_PITCH = 10;
+        private static final int ADDED_YAW = 20;
+
+        public DrownerLookControl(DrownerEntity entity, int yawAdjustThreshold) {
+            super(entity);
+
+            this.yawAdjustThreshold = yawAdjustThreshold;
+        }
+
+        @Override
+        public void tick() {
+            if (entity.isSubmergedInWater()){
+                if (this.lookAtTimer > 0) {
+                    --this.lookAtTimer;
+                    this.getTargetYaw().ifPresent((yaw) -> {
+                        this.entity.headYaw = this.changeAngle(this.entity.headYaw, yaw + 20.0F, this.maxYawChange);
+                    });
+                    this.getTargetPitch().ifPresent((pitch) -> {
+                        this.entity.setPitch(this.changeAngle(this.entity.getPitch(), pitch + 10.0F, this.maxPitchChange));
+                    });
+                } else {
+                    if (this.entity.getNavigation().isIdle()) {
+                        this.entity.setPitch(this.changeAngle(this.entity.getPitch(), 0.0F, 5.0F));
+                    }
+
+                    this.entity.headYaw = this.changeAngle(this.entity.headYaw, this.entity.bodyYaw, this.maxYawChange);
+                }
+
+                float f = MathHelper.wrapDegrees(this.entity.headYaw - this.entity.bodyYaw);
+                MobEntity var10000;
+                if (f < (float)(-this.yawAdjustThreshold)) {
+                    var10000 = this.entity;
+                    var10000.bodyYaw -= 4.0F;
+                } else if (f > (float)this.yawAdjustThreshold) {
+                    var10000 = this.entity;
+                    var10000.bodyYaw += 4.0F;
+                }
+            }
+            else{
+                super.tick();
+            }
+
         }
     }
 
@@ -117,8 +194,8 @@ public class DrownerEntity extends HostileEntity implements GeoEntity {
     protected Box calculateBoundingBox() {
         if (dataTracker.get(SWIM)) {
             // Tiny hit-box when swim
-            return new Box(this.getX() - 0.6, this.getY()+1.7, this.getZ() - 0.6,
-                    this.getX() + 0.6, this.getY()+0.6, this.getZ() + 0.6);
+            return new Box(this.getX() - 0.39, this.getY()+1.7, this.getZ() - 0.39,
+                    this.getX() + 0.39, this.getY()+0.6, this.getZ() + 0.39);
         } else {
             // Normal hit-box otherwise
             return super.calculateBoundingBox();
@@ -171,72 +248,76 @@ public class DrownerEntity extends HostileEntity implements GeoEntity {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5,
                 state->{
-
                     if(this.isSubmergedInWater()){
                         if(state.isMoving()){
-                            state.setAndContinue(SWIMMING);
+                            return state.setAndContinue(SWIMMING);
                         }
                         else{
-                            state.setAndContinue(WATER_IDLE);
+                            return state.setAndContinue(WATER_IDLE);
                         }
                     }
                     else{
                     //If it's aggressive and it is moving
                     if(this.isAttacking() && state.isMoving()){
-                        state.setAndContinue(RUNNING);
+                        return state.setAndContinue(RUNNING);
                     }
                     //It's not attacking and/or it's no moving
                     else{
                         //If it's attacking but NO moving
                         if(isAttacking()){
-                            state.setAndContinue(RUNNING);
+                            return state.setAndContinue(RUNNING);
                         }
                         else {
                             //If it's just moving
                             if (state.isMoving()) {
-                                state.setAndContinue(WALKING);
+                                return state.setAndContinue(WALKING);
                             }
                             //Anything else
                             else {
-                                state.setAndContinue(IDLE);
+                                return state.setAndContinue(IDLE);
                             }
                         }
                     }
-                    return PlayState.CONTINUE;
                     }
-                    return PlayState.CONTINUE;
                 }
         ));
 
         //Attack Controller
         controllerRegistrar.add(
-         new AnimationController<>(this, "AttackController", 2, state -> {
+         new AnimationController<>(this, "AttackController", 1, state -> {
+             state.getController().forceAnimationReset();
+             // Random instance
+             Random random = new Random();
+             // Generates two random numbers
+             int r = ThreadLocalRandom.current().nextInt(1, 3);
             if (this.handSwinging){
-                // Random instance
-                Random random = new Random();
-                // Generates two random numbers
-                int r = ThreadLocalRandom.current().nextInt(1, 3);
                 if(this.isSubmergedInWater()){
                     if (r == 1) {
-                        state.setAndContinue(WATER_ATTACK1);
+                        return state.setAndContinue(WATER_ATTACK1);
                     } else {
-                        state.setAndContinue(WATER_ATTACK2);
+                        return state.setAndContinue(WATER_ATTACK2);
                     }
                 }
                 else {
                     if (r == 1) {
-                        state.setAndContinue(ATTACK1);
+                        return state.setAndContinue(ATTACK1);
                     } else {
-                        state.setAndContinue(ATTACK2);
+                        return state.setAndContinue(ATTACK2);
                     }
                 }
-                state.getController().forceAnimationReset();
-                return PlayState.CONTINUE;
             }
-             return PlayState.CONTINUE;
+
+
+//            if(state.getController().hasAnimationFinished()){
+//                return PlayState.STOP;
+//             }
+//            else{
+                return PlayState.CONTINUE;
+//            }
             })
         );
     }
+
 
     //Sounds
     @Override

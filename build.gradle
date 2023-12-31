@@ -70,7 +70,7 @@ dependencies {
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
 	//GeckoLib Dependency
-	modImplementation "software.bernie.geckolib:geckolib-fabric-1.20:${project.geckolib_version}"
+	modImplementation "software.bernie.geckolib:geckolib-fabric-1.20.1:${project.geckolib_version}"
 
 	//OwO-Lib Dependency
 	modImplementation "io.wispforest:owo-lib:${project.owo_version}"
