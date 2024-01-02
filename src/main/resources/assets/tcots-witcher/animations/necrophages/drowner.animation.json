@@ -445,11 +445,6 @@
 							"vector": [-20, 0, 0]
 						}
 					}
-				},
-				"FullBody": {
-					"rotation": {
-						"vector": [80, 0, 0]
-					}
 				}
 			}
 		},
@@ -552,11 +547,6 @@
 							"vector": [-20, 0, 0]
 						}
 					}
-				},
-				"FullBody": {
-					"rotation": {
-						"vector": [80, 0, 0]
-					}
 				}
 			}
 		},
@@ -643,11 +633,6 @@
 						"0.5": {
 							"vector": [30, 0, -5]
 						}
-					}
-				},
-				"FullBody": {
-					"rotation": {
-						"vector": [80, 0, 0]
 					}
 				}
 			}
@@ -739,11 +724,6 @@
 						"0.5": {
 							"vector": [30, 0, -5]
 						}
-					}
-				},
-				"FullBody": {
-					"rotation": {
-						"vector": [80, 0, 0]
 					}
 				}
 			}
@@ -1101,7 +1081,6 @@
 			}
 		},
 		"attack.greatswing": {
-			"loop": false,
 			"animation_length": 0.5,
 			"bones": {
 				"head": {
