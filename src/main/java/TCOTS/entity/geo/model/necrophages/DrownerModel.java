@@ -40,7 +40,6 @@ public class DrownerModel extends GeoModel<DrownerEntity> {
             if (entity.getSwimmingDataTracker()) {
                 wholeBody.setRotX((entityData.headPitch() - 80)* MathHelper.RADIANS_PER_DEGREE);
                 wholeBody.setRotY((entityData.netHeadYaw())* MathHelper.RADIANS_PER_DEGREE);
-//                head.setRotX((entityData.headPitch() - 290) * MathHelper.RADIANS_PER_DEGREE);
                 head.setRotX(290);
             }
             //OnLand

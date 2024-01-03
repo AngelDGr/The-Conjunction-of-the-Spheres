@@ -23,4 +23,5 @@ public class DrownerRenderer extends GeoEntityRenderer<DrownerEntity> {
     public void render(DrownerEntity entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
+
 }
