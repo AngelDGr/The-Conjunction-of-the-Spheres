@@ -906,6 +906,115 @@
 				}
 			}
 		},
+		"attack.lunge": {
+			"animation_length": 0.625,
+			"bones": {
+				"FullBody": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [0, 15, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"UpperBody_head": {
+					"rotation": {
+						"0.0": {
+							"vector": [25, 0, 0]
+						},
+						"0.25": {
+							"vector": [15, 15, 0]
+						}
+					}
+				},
+				"head": {
+					"rotation": {
+						"0.0": {
+							"vector": [-30, 0, 0]
+						},
+						"0.25": {
+							"vector": [0, -25, 0]
+						}
+					}
+				},
+				"BottomMouth": {
+					"rotation": {
+						"0.0": {
+							"vector": [30, 0, 0]
+						},
+						"0.25": {
+							"vector": [60, 0, 0],
+							"easing": "easeInBack"
+						},
+						"0.625": {
+							"vector": [20, 0, 0],
+							"easing": "easeInBack"
+						}
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"0.0": {
+							"vector": [-30, 0, 0]
+						},
+						"0.25": {
+							"vector": [-87, -10, 0]
+						},
+						"0.5": {
+							"vector": [48, -10, 0],
+							"easing": "easeInBack"
+						}
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"0.0": {
+							"vector": [40, 0, 0]
+						},
+						"0.25": {
+							"vector": [-60, -30, 15]
+						},
+						"0.5": {
+							"vector": [45, -30, 15],
+							"easing": "easeInBack"
+						}
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"0.0": {
+							"vector": [20, 0, 0]
+						},
+						"0.25": {
+							"vector": [40, 0, 0]
+						},
+						"0.625": {
+							"vector": [-17.5, 0, 0],
+							"easing": "easeInBack"
+						}
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"0.0": {
+							"vector": [-20, 0, 0]
+						},
+						"0.25": {
+							"vector": [17.5, 0, 0]
+						},
+						"0.625": {
+							"vector": [-5, 0, 0],
+							"easing": "easeInBack"
+						}
+					}
+				}
+			}
+		},
 		"special.emerging": {
 			"animation_length": 1.75,
 			"bones": {

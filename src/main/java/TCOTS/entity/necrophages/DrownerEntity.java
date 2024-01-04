@@ -4,7 +4,7 @@ import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 
-import net.minecraft.entity.ai.NoPenaltyTargeting;
+import net.minecraft.entity.ai.brain.task.LookTargetUtil;
 import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
@@ -19,10 +19,12 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.VexEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
@@ -31,6 +33,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -38,13 +41,13 @@ import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInst
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     protected final SwimNavigation waterNavigation;
     protected final MobNavigation landNavigation;
-    boolean lastSwimState;
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation WATER_IDLE = RawAnimation.begin().thenLoop("idle.water");
     public static final RawAnimation RUNNING= RawAnimation.begin().thenLoop("move.running");
@@ -52,9 +55,11 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     public static final RawAnimation SWIMMING= RawAnimation.begin().thenLoop("move.swimming");
     public static final RawAnimation ATTACK1 = RawAnimation.begin().thenPlay("attack.swing1");
     public static final RawAnimation ATTACK2 = RawAnimation.begin().thenPlay("attack.swing2");
+    public static final RawAnimation LUNGE = RawAnimation.begin().thenPlay("attack.lunge");
     public static final RawAnimation WATER_ATTACK1 = RawAnimation.begin().thenPlay("attack.waterswing1");
     public static final RawAnimation WATER_ATTACK2 = RawAnimation.begin().thenPlay("attack.waterswing2");
     protected static final TrackedData<Boolean> SWIM = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     public DrownerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -66,12 +71,21 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     }
 
     @Override
-    protected void initGoals() {
-        this.goalSelector.add(1, new Drowner_MeleeAttackGoal(this, 1.2D, false, 60));
+    protected void initGoals()
+    {
+        //Water attack and flee
+        this.goalSelector.add(0, new Drowner_FleeFromTarget(this,1.0, 1));
+        this.goalSelector.add(1, new Drowner_MeleeAttackGoal(this, 1.2D, false, 60, 40));
+
 
         this.goalSelector.add(2, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(3, new WanderAroundFarGoal(this, 0.75f, 1));
+
         this.goalSelector.add(4, new LookAroundGoal(this));
+
+        //Returns to ground
+
+
 
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
@@ -97,13 +111,16 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                     this.setSwimmingDataTracker(true);}
                 this.setSwimming(true);
             } else {
-                if(this.isTouchingWater()&&this.getSwimmingDataTracker())
-                {this.setSwimmingDataTracker(true);}
 
+                if (this.isTouchingWater() && this.getSwimmingDataTracker()) {
+                    this.setSwimmingDataTracker(true);
+                } else {
+                    if (this.isAlive()) {
+                        this.setSwimmingDataTracker(false);
+                    }
+                    this.setSwimming(false);
+                }
                 this.navigation = this.landNavigation;
-                if(this.isAlive()) {
-                    this.setSwimmingDataTracker(false);}
-                this.setSwimming(false);
             }
         }
     }
@@ -117,72 +134,80 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             this.drowner=entity;
         }
 
-        @Override
-        public void tick() {
+        private static float method_45335(float f) {
+            return 1.0F - MathHelper.clamp((f - 10.0F) / 50.0F, 0.0F, 1.0F);
+        }
+
+        public void handleUnderwaterMovement(){
             LivingEntity target = this.entity.getTarget();
-            //It's swimming, so applies the water control
-            if(drowner.getSwimmingDataTracker()) {
-                //Gets coordinates
-                double dXtoTarget = this.targetX - this.entity.getX();
-                double dYtoTarget = this.targetY - this.entity.getY();
-                double dZtoTarget = this.targetZ - this.entity.getZ();
-                double length = Math.sqrt(dXtoTarget * dXtoTarget + dYtoTarget * dYtoTarget + dZtoTarget * dZtoTarget);
+            double dXtoTarget = this.targetX - this.entity.getX();
+            double dYtoTarget = this.targetY - this.entity.getY();
+            double dZtoTarget = this.targetZ - this.entity.getZ();
+            double length = Math.sqrt(dXtoTarget * dXtoTarget + dYtoTarget * dYtoTarget + dZtoTarget * dZtoTarget);
 
-                //Movement Vector
-                Vec3d vec3D_movementUnderwater = new Vec3d((double)(dXtoTarget / length) * waterSpeed,
-                                                           (double)(dYtoTarget / length) * waterSpeed,
-                                                           (double)(dZtoTarget / length) * waterSpeed);
+            //Movement Vector
+            Vec3d vec3D_movementUnderwater = new Vec3d((double)(dXtoTarget / length) * waterSpeed,
+                                                       (double)(dYtoTarget / length) * waterSpeed,
+                                                       (double)(dZtoTarget / length) * waterSpeed);
 
-                //Makes it go up
-                if(target != null
-                        && target.getY() > this.entity.getY()
-                        //If the target it's attackable
-                        && drowner.canDrownerUnderwaterAttackTarget(target)
-                        //Target it's not submerged
-                        && !target.isSubmergedInWater())
-                {this.entity.setVelocity(this.entity.getVelocity().add(0.0, 0.01, 0.0));}
+            //Makes it go up
+            if(target != null
+                    && target.getY() > this.entity.getY()
+                    //If the target it's attackable
+                    && drowner.canDrownerUnderwaterAttackTarget(target)
+                    //Target it's not submerged
+                    && !target.isSubmergedInWater())
+            {this.entity.setVelocity(this.entity.getVelocity().add(0.0, 0.01, 0.0));}
 
-                //It's moving (no idle)
-                if (this.state == State.MOVE_TO && !this.entity.getNavigation().isIdle()) {
-                    //Calculate what angle the entity needs to see
-                    //Calculate the angle up and down (Y)
-                    float hipoY = (float) (MathHelper.atan2(dZtoTarget, dXtoTarget) * 57.2957763671875) - 90.0F;
-                    this.entity.setYaw(this.wrapDegrees(this.entity.getYaw(),hipoY,90));
+            //It's not underwater but it's not in land
+            if(!entity.isOnGround() && entity.isTouchingWater() && !entity.isSubmergedInWater()) {
+                //It's attacking in the water, but it's not submerged
+                if (drowner.canDrownerUnderwaterAttackTarget(target)) {
+                    this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.1, 0.0));
+                }
+                if (!entity.isAttacking()) {
+                    //It's on water, not underwater, but it doesn't see any target
+                    this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.008, 0.0));
+                }
+            }
 
-                    //Applies the 3D Movement Vector
-                    entity.limbAnimator.setSpeed(1);
-                    entity.move(MovementType.SELF, new Vec3d(vec3D_movementUnderwater.x, vec3D_movementUnderwater.y, vec3D_movementUnderwater.z));
+            //It's moving (no idle)
+            if (this.state == State.MOVE_TO && !this.entity.getNavigation().isIdle()) {
+                //Calculate what angle the entity needs to see
+                //Calculate the angle up and down (Y)
+                float hipoY = (float) (MathHelper.atan2(dZtoTarget, dXtoTarget) * 57.2957763671875) - 90.0F;
+                this.entity.setYaw(this.wrapDegrees(this.entity.getYaw(),hipoY,90));
+
+                //Applies the 3D Movement Vector
+                entity.limbAnimator.setSpeed(1);
+                entity.move(MovementType.SELF, new Vec3d(vec3D_movementUnderwater.x, vec3D_movementUnderwater.y, vec3D_movementUnderwater.z));
 //                    System.out.println("3DVector applied");
 
 //                    this.moveTo(this.targetX, this.targetY, this.targetZ, 0.5);
-                    //Keep it underwater
-                    if(drowner.canDrownerUnderwaterAttackTarget(target)) {
-                        assert target != null;
-                        if (!target.isSubmergedInWater()) {
-                            this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.001, 0.0));
-                        }
+                //Keep it underwater
+                if(drowner.canDrownerUnderwaterAttackTarget(target)) {
+                    assert target != null;
+                    if (!target.isSubmergedInWater()) {
+                        this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.001, 0.0));
                     }
                 }
-                else {
-                    this.entity.setMovementSpeed(0.0F);
-                }
+            }
+            else {
+                this.entity.setMovementSpeed(0.0F);
+            }
+        }
 
+        @Override
+        public void tick() {
+            //It's swimming, so applies the water control
+            if(drowner.getSwimmingDataTracker()) {
+                handleUnderwaterMovement();
             }
             //It's not underwater
             else{
-                //It's not underwater but it's not in land
-                if(!entity.isOnGround() && entity.isTouchingWater()){
-                    //It's attacking in the water, but it's not submerged
-                    if(drowner.canDrownerUnderwaterAttackTarget(target)){
-                        this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.1, 0.0));
-                    }
-                    if(!entity.isAttacking()){
-                        //It's on water, not underwater, but it doesn't see any target
-                        this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.008, 0.0));
-                    }
-                }
                 //It's on land, so return the normal MoveControl
-                else{super.tick();}
+                    super.tick();
+
             }
         }
     }
@@ -191,7 +216,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         private final int yawAdjustThreshold;
         private static final int ADDED_PITCH = 0;
         private static final int ADDED_YAW = 0;
-
         private final DrownerEntity drowner;
 
         public DrownerLookControl(DrownerEntity entity, int yawAdjustThreshold) {
@@ -235,25 +259,37 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             }
         }
     }
-    public boolean hasAttacked;
+    public boolean hasAttackedOnWater;
+    private int cooldownSwimmingAttackTicks;
+
+    private boolean getIsLugging(){
+        return this.dataTracker.get(LUGGING);
+    }
+
+    private void setIsLugging(boolean bool){
+        this.dataTracker.set(LUGGING, bool);
+    }
+
     //To manage attacks in and outside water
     private static class Drowner_MeleeAttackGoal extends MeleeAttackGoal {
         private final DrownerEntity drowner;
-        private final int cooldownBetweenAttacks;
-        private int cooldownSwimmingAttackTicks = 0;
+        private final int cooldownBetweenWaterAttacks;
+        private final int cooldownBetweenLungesAttacks;
+        int LungeTicks;
+        boolean cooldownBetweenLunges=false;
 
-        public Drowner_MeleeAttackGoal(DrownerEntity mob, double speed, boolean pauseWhenMobIdle, int cooldownBetweenAttacks) {
+        public Drowner_MeleeAttackGoal(DrownerEntity mob, double speed, boolean pauseWhenMobIdle, int cooldownBetweenWaterAttacks, int cooldownBetweenLungesAttacks) {
             super(mob, speed, pauseWhenMobIdle);
             this.drowner = mob;
-            this.cooldownBetweenAttacks = cooldownBetweenAttacks;
-            this.fleeingEntityNavigation = mob.getNavigation();
+            this.cooldownBetweenWaterAttacks = cooldownBetweenWaterAttacks;
+            this.cooldownBetweenLungesAttacks = cooldownBetweenLungesAttacks;
         }
 
         @Override
         public boolean canStart() {
             // If the Drowner it's swimming only attacks creatures on water
             if (drowner.isTouchingWater()) {
-                return super.canStart() && this.drowner.canDrownerUnderwaterAttackTarget(this.drowner.getTarget());
+                return super.canStart() && this.drowner.canDrownerUnderwaterAttackTarget(this.drowner.getTarget()) && !drowner.hasAttackedOnWater;
             } else {
                 return super.canStart();
             }
@@ -262,7 +298,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         @Override
         public boolean shouldContinue() {
             if(drowner.isTouchingWater()){
-                return super.shouldContinue() && this.drowner.canDrownerUnderwaterAttackTarget(this.drowner.getTarget());
+                return super.shouldContinue() && this.drowner.canDrownerUnderwaterAttackTarget(this.drowner.getTarget()) && !drowner.hasAttackedOnWater;
             }
             else{
                 return super.shouldContinue();
@@ -270,49 +306,123 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
 
         @Override
-        protected void attack(LivingEntity target, double squaredDistance) {
-            if (drowner.isTouchingWater()) {
-                if(!drowner.hasAttacked) {
-                    double d = this.getSquaredMaxAttackDistance(target);
-                    if (squaredDistance <= d && super.getCooldown() <= 0) {
-                        this.resetCooldown();
-                        this.mob.swingHand(Hand.MAIN_HAND);
-                        target.setVelocity(target.getVelocity().add(0.0, -0.3, 0.0));
-                        this.mob.tryAttack(target);
-                        cooldownSwimmingAttackTicks = cooldownBetweenAttacks;
-                        drowner.hasAttacked = true;
-                    }
-                }
-                else {
-//                    System.out.println("Attack Else");
-                        // Special method to circle around the player
-                        circleAround(target);
-                }
+        public void tick(){
+            //Start the counter for the Lunge attack
+            if (LungeTicks > 0) {
+                --LungeTicks;
             } else {
-                super.attack(target, squaredDistance);
-            }
+                cooldownBetweenLunges = false;
+            }super.tick();
         }
 
         @Override
-        public void tick() {
-            super.tick();
-            if (cooldownSwimmingAttackTicks > 0) {
-                --cooldownSwimmingAttackTicks;
-//                System.out.println(cooldownSwimmingAttackTicks);
+        protected void attack(LivingEntity target, double squaredDistance) {
+            //Special logic for water attack
+            if (drowner.isTouchingWater()) {
+                if(target!=null){
+                WaterAttackLogic(target, squaredDistance);}
             } else {
-                drowner.hasAttacked = false;
+                //Lunge and land attack
+                if(target!=null){
+                LungeAttack(target, squaredDistance);
+                }
             }
         }
 
-        @Nullable
-        protected Path fleePath;
-        protected final EntityNavigation fleeingEntityNavigation;
+        @NotNull
+        private Vec3d getVec3d(LivingEntity target) {
+            double dXtoTarget = target.getX() - this.mob.getX();
+            double dYtoTarget = target.getY() - this.mob.getY();
+            double dZtoTarget = target.getZ() - this.mob.getZ();
+            double length = Math.sqrt(dXtoTarget * dXtoTarget + dYtoTarget * dYtoTarget + dZtoTarget * dZtoTarget);
 
-        // Makes the Drowner go around the player
-        private void circleAround(LivingEntity target) {
-            if (target != null) {
+            //Movement Vector
+            return new Vec3d((double)(dXtoTarget / length) * 0.8,
+                    (double)(dYtoTarget / length) * 0.8,
+                    (double)(dZtoTarget / length)* 0.8) ;
+        }
 
+        //Logic for the lunge attack and attacks on land
+        private void LungeAttack(LivingEntity target, double squaredDistance){
+            double d = this.getSquaredMaxAttackDistance(target);
+            //Check if it can do a lunge
+            if(!cooldownBetweenLunges){
+                //Makes the lunge
+                if(this.mob.squaredDistanceTo(target) > 5 && (Objects.requireNonNull(this.mob.getTarget()).getY() - this.mob.getY()) < 10) {
+                    Vec3d vec3D_lunge = getVec3d(target);
+                    drowner.setIsLugging(true);
+                    this.mob.setVelocity(this.mob.getVelocity().add(vec3D_lunge.x, 0.08, vec3D_lunge.z));
+                    //Put the cooldown
+                    LungeTicks = cooldownBetweenLungesAttacks;
+                    cooldownBetweenLunges = true;
+                    System.out.println(drowner.getIsLugging());
+                }
+                else{
+                    //If it's not far enough, normal attack
+                    if (squaredDistance <= d && super.getCooldown() <= 0) {
+                        this.resetCooldown();
+                        this.mob.swingHand(Hand.MAIN_HAND);
+                        this.mob.tryAttack(target);
+                    }
+                }
             }
+            else {
+                //If it has cooldown, normal attack
+                if (squaredDistance <= d && super.getCooldown() <= 0) {
+                    this.resetCooldown();
+                    this.mob.swingHand(Hand.MAIN_HAND);
+                    this.mob.tryAttack(target);
+                }
+            }
+        }
+
+
+
+        //Method for water attack
+        private void WaterAttackLogic(LivingEntity target, double squaredDistance) {
+            if(!drowner.hasAttackedOnWater) {
+                double d = this.getSquaredMaxAttackDistance(target);
+                if (squaredDistance <= d && super.getCooldown() <= 0) {
+                    this.resetCooldown();
+                    this.mob.swingHand(Hand.MAIN_HAND);
+                    //Makes the target go down on water
+                    target.setVelocity(target.getVelocity().add(0.0, -0.3, 0.0));
+                    this.mob.tryAttack(target);
+                    drowner.cooldownSwimmingAttackTicks = cooldownBetweenWaterAttacks;
+                    drowner.hasAttackedOnWater = true;
+                }
+            }
+        }
+    }
+
+    //Makes the drowner flee after a hit that it make
+    private static class Drowner_FleeFromTarget extends SwimAroundGoal{
+        private final DrownerEntity drowner;
+        private Drowner_FleeFromTarget(DrownerEntity drowner, double speed, int probability) {
+            super(drowner, speed, probability);
+            this.drowner = drowner;
+        }
+
+        @Override
+        public boolean canStart() {
+            return super.canStart() && drowner.hasAttackedOnWater;
+        }
+        @Override
+        public boolean shouldContinue(){
+            return super.shouldContinue() && drowner.hasAttackedOnWater;
+        }
+        @Override
+        public void tick(){
+            if (drowner.cooldownSwimmingAttackTicks > 0) {
+                --drowner.cooldownSwimmingAttackTicks;
+            } else {
+                drowner.hasAttackedOnWater = false;
+            }
+        }
+        @Override
+        @Nullable
+        protected Vec3d getWanderTarget() {
+            return LookTargetUtil.find(this.mob, 4, 3);
         }
     }
 
@@ -349,6 +459,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(SWIM, Boolean.FALSE);
+        this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
     }
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
@@ -380,7 +491,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                         }
                     }
                     else{
-
                         //If it's aggressive and it is moving
                         if(this.isAttacking() && state.isMoving()){
                             return state.setAndContinue(RUNNING);
@@ -433,6 +543,24 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                 return PlayState.CONTINUE;
             })
         );
+
+        //Lunge Controller
+        controllerRegistrar.add(
+                new AnimationController<>(this, "LungeController", 1, state -> {
+                    state.getController().forceAnimationReset();
+                    if (this.getIsLugging()){
+                        state.setAnimation(LUNGE);
+                        System.out.println("LungeAnimationTriggered");
+                        if(state.getController().hasAnimationFinished()){
+                            this.setIsLugging(false);
+                            System.out.println("LungeAnimationReseted");
+                            return PlayState.STOP;
+                        }
+                        return PlayState.STOP;
+                    }
+                    return PlayState.STOP;
+                })
+        );
     }
 
     //Sounds
@@ -440,6 +568,12 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     protected SoundEvent getAmbientSound() {
         return TCOTS_Sounds.DROWNER_IDLE;
     }
+
+    @Override
+    protected SoundEvent getSwimSound() {
+        return SoundEvents.ENTITY_PLAYER_SWIM;
+    }
+
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return TCOTS_Sounds.DROWNER_HURT;
