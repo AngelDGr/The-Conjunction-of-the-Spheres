@@ -17,6 +17,8 @@ public class TCOTS_Sounds {
 
     public static SoundEvent DROWNER_SCREAM = registerSoundEvent("drowner_scream");
 
+    public static SoundEvent DROWNER_LUNGE = registerSoundEvent("drowner_lunge");
+
 //    public static final BlockSoundGroup ANIMATED_BLOCK_SOUNDS = new BlockSoundGroup(1f, 1f,
 //            ModSounds.ANIMATED_BLOCK_BREAK, ModSounds.ANIMATED_BLOCK_WALK, ModSounds.ANIMATED_BLOCK_PLACE,
 //            ModSounds.ANIMATED_BLOCK_HIT, ModSounds.ANIMATED_BLOCK_WALK);

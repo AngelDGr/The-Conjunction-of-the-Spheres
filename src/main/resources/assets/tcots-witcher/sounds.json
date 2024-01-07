@@ -40,6 +40,14 @@
     ]
   },
 
+  "drowner_lunge": {
+    "subtitle": "tcots-witcher.sounds.drowner_lunge",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/drowner/drowner_lunge1",
+      "tcots-witcher:entity/necrophages/drowner/drowner_lunge2"
+    ]
+  },
+
   "drowner_scream": {
     "subtitle": "tcots-witcher.sounds.drowner_scream",
     "sounds": [
