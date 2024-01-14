@@ -2,6 +2,7 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 
 import net.minecraft.entity.ai.brain.task.LookTargetUtil;
@@ -18,12 +19,13 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 
-import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.registry.tag.BiomeTags;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.nbt.NbtCompound;
@@ -32,7 +34,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.LightType;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.dimension.DimensionType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -43,17 +51,20 @@ import software.bernie.geckolib.core.object.PlayState;
 
 
 import java.util.EnumSet;
-import java.util.Objects;
 
 public class DrownerEntity extends Necrophage_Base implements GeoEntity {
-//TODO: Make it faster when walking in water
+//XTODO: Make it faster when walking in water
 //TODO: Make it that it don't sink in water
+// TODO: Add the digging in ground goal
 //TODO: Add drops
 //TODO: Add spawn
 
 
     protected final SwimNavigation waterNavigation;
     protected final MobNavigation landNavigation;
+
+    public EntityPose SWIMMINGPOSE;
+
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation WATER_IDLE = RawAnimation.begin().thenLoop("idle.water");
     public static final RawAnimation RUNNING= RawAnimation.begin().thenLoop("move.running");
@@ -85,7 +96,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         //Flee, lunge and Water/land attack
         this.goalSelector.add(0, new Drowner_FleeFromTarget(this,1.0, 1));
         this.goalSelector.add(0, new Drowner_Lunge(this,100, 0.9));
-        this.goalSelector.add(1, new Drowner_MeleeAttackGoal(this, 1.2D, false, 40));
+        this.goalSelector.add(1, new Drowner_LandWaterAttackGoal(this, 1.2D, false, 40));
 
         this.goalSelector.add(2, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(3, new WanderAroundFarGoal(this, 0.75f, 1));
@@ -93,6 +104,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         this.goalSelector.add(4, new LookAroundGoal(this));
 
         //Returns to ground
+        this.goalSelector.add(5, new Drowner_DigOnGround(this));
 
         //Objectives
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
@@ -156,25 +168,31 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                                                        (double)(dYtoTarget / length) * waterSpeed,
                                                        (double)(dZtoTarget / length) * waterSpeed);
 
-            //Makes it go up
+            //Makes it go up if it's attacking
             if(target != null
                     && target.getY() > this.entity.getY()
                     //If the target it's attackable
                     && drowner.canDrownerUnderwaterAttackTarget(target)
                     //Target it's not submerged
                     && !target.isSubmergedInWater())
-            {this.entity.setVelocity(this.entity.getVelocity().add(0.0, 0.01, 0.0));}
+            {this.entity.setVelocity(this.entity.getVelocity().add(0.0, 0.02, 0.0));}
 
-            //It's not underwater but it's not in land
+            //It's not underwater, it's touching water, but it's not in the ground
             if(!entity.isOnGround() && entity.isTouchingWater() && !entity.isSubmergedInWater()) {
                 //It's attacking in the water, but it's not submerged
                 if (drowner.canDrownerUnderwaterAttackTarget(target)) {
                     this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.1, 0.0));
                 }
-                if (!entity.isAttacking()) {
-                    //It's on water, not underwater, but it doesn't see any target
-                    this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.008, 0.0));
-                }
+//                if (!entity.isAttacking()) {
+//                    //It's on water, not underwater, but it doesn't see any target
+//                    this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.008, 0.0));
+//                }
+            }
+
+            if(entity.isOnGround() && drowner.getSwimmingDataTracker() && !entity.isAttacking()){
+//                if (drowner.canDrownerUnderwaterAttackTarget(target)) {
+                    this.entity.setVelocity(this.entity.getVelocity().add(0.0, 0.08, 0.0));
+//                }
             }
 
             //It's moving (no idle)
@@ -187,9 +205,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                 //Applies the 3D Movement Vector
                 entity.limbAnimator.setSpeed(1);
                 entity.move(MovementType.SELF, new Vec3d(vec3D_movementUnderwater.x, vec3D_movementUnderwater.y, vec3D_movementUnderwater.z));
-//                    System.out.println("3DVector applied");
 
-//                    this.moveTo(this.targetX, this.targetY, this.targetZ, 0.5);
                 //Keep it underwater
                 if(drowner.canDrownerUnderwaterAttackTarget(target)) {
                     assert target != null;
@@ -213,7 +229,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             else{
                 //It's on land, so return the normal MoveControl
                     super.tick();
-
             }
         }
     }
@@ -266,32 +281,17 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     }
     public boolean hasAttackedOnWater;
     private int cooldownSwimmingAttackTicks;
-
     public int LungeTicks;
-
     public boolean cooldownBetweenLunges=false;
 
     //To manage attacks in and outside water
-    private class Drowner_MeleeAttackGoal extends MeleeAttackGoal {
+    private class Drowner_LandWaterAttackGoal extends MeleeAttackGoal {
         private final DrownerEntity drowner;
         private final int cooldownBetweenWaterAttacks;
-        public Drowner_MeleeAttackGoal(DrownerEntity mob, double speed, boolean pauseWhenMobIdle, int cooldownBetweenWaterAttacks) {
+        public Drowner_LandWaterAttackGoal(DrownerEntity mob, double speed, boolean pauseWhenMobIdle, int cooldownBetweenWaterAttacks) {
             super(mob, speed, pauseWhenMobIdle);
             this.drowner = mob;
             this.cooldownBetweenWaterAttacks = cooldownBetweenWaterAttacks;
-        }
-
-        @Override
-        public void tick(){
-            //Start the counter for the Lunge attack
-            if (DrownerEntity.this.LungeTicks > 0) {
-                DrownerEntity.this.setIsLugging(false);
-                --DrownerEntity.this.LungeTicks;
-            } else {
-                DrownerEntity.this.cooldownBetweenLunges = false;
-            }
-
-            super.tick();
         }
 
         @Override
@@ -364,7 +364,9 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                 //5 square distance like 1.5 blocks aprox
                 //I want 7.5 blocks aprox
                 //So 7.5/1.5=5
-            return !DrownerEntity.this.cooldownBetweenLunges && this.mob.isAttacking() && !this.mob.getSwimmingDataTracker() && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25;}
+            return !DrownerEntity.this.cooldownBetweenLunges && this.mob.isAttacking() && !this.mob.getSwimmingDataTracker()
+                    && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
+                    && (this.mob.getTarget().getY() - this.mob.getY()) <= 1;}
             else {
                 return false;
             }
@@ -377,7 +379,9 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                 //5 square distance like 1.5 blocks aprox
                 //I want 7.5 blocks aprox
                 //So 7.5/1.5=5
-                return !DrownerEntity.this.cooldownBetweenLunges && this.mob.isAttacking() && !this.mob.getSwimmingDataTracker() && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25;}
+                return !DrownerEntity.this.cooldownBetweenLunges && this.mob.isAttacking() && !this.mob.getSwimmingDataTracker()
+                        && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
+                        && (this.mob.getTarget().getY() - this.mob.getY()) <= 1;}
             else {
                 return false;
             }
@@ -429,7 +433,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             //Check if it can do a lunge
             if(!DrownerEntity.this.cooldownBetweenLunges){
                 //Makes the lunge
-                if((Objects.requireNonNull(this.mob.getTarget()).getY() - this.mob.getY()) < 10) {
+//                if()
 
                     //Extra random ticks in cooldown
                     randomExtra = DrownerEntity.this.random.nextInt(51);
@@ -446,7 +450,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                     //Put the cooldown
                     LungeTicks = cooldownBetweenLungesAttacks + randomExtra;
                     DrownerEntity.this.cooldownBetweenLunges = true;
-                }
+
             }
 
         }
@@ -487,17 +491,30 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
     }
 
+
+    //Makes the drowner occult on ground
+    private class Drowner_DigOnGround extends Goal{
+        private final DrownerEntity drowner;
+
+        private Drowner_DigOnGround(DrownerEntity mob) {
+            this.drowner = mob;
+        }
+
+        @Override
+        public boolean canStart() {
+            return false;
+        }
+    }
+
     //This way don't reset every time it reenter the world, causing clipping
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Swimming", this.dataTracker.get(SWIM));
-//        nbt.putBoolean("Lugging", this.dataTracker.get(LUGGING));
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setSwimmingDataTracker(nbt.getBoolean("Swimming"));
-//        this.setIsLugging(nbt.getBoolean("Lugging"));
         super.readCustomDataFromNbt(nbt);
     }
     public boolean getSwimmingDataTracker() {
@@ -518,13 +535,15 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     protected Box calculateBoundingBox() {
         if (dataTracker.get(SWIM)) {
             // Tiny hit-box when swim
-            return new Box(this.getX() - 0.39, this.getY()+1.71, this.getZ() - 0.39,
+            return new Box(this.getX() - 0.39, this.getY()+1.65, this.getZ() - 0.39,
                     this.getX() + 0.39, this.getY()+0.6, this.getZ() + 0.39);
         } else {
             // Normal hit-box otherwise
             return super.calculateBoundingBox();
         }
     }
+
+
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
@@ -674,6 +693,13 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         return false;
     }
 
+    //Speed on water
+    @Override
+    protected float getBaseMovementSpeedMultiplier() {
+        return 0.93F;
+    }
+
+
     //To kill Drowner in one shot with a crossbow arrow
     @Override
     public boolean damage(DamageSource source, float amount) {
@@ -687,6 +713,47 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
         return super.damage(source, amount);
     }
+
+    @Override
+    public void tick(){
+        //Start the counter for the Lunge attack
+        if (DrownerEntity.this.LungeTicks > 0) {
+            DrownerEntity.this.setIsLugging(false);
+            --DrownerEntity.this.LungeTicks;
+        } else {
+            DrownerEntity.this.cooldownBetweenLunges = false;
+        }
+
+        super.tick();
+    }
+
+    //Natural Spawn
+    public static boolean canSpawnDrowner(EntityType<? extends DrownerEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        //If it's in ocean
+        if(
+                world.getBiome(pos).isIn(BiomeTags.IS_OCEAN)
+                || world.getBiome(pos).isIn(BiomeTags.IS_DEEP_OCEAN))
+        {
+            return world.getDifficulty() != Difficulty.PEACEFUL &&
+                    (world.getFluidState(pos.down()).isIn(FluidTags.WATER));
+                }
+        //If it's in another spawneable biome
+        else{
+            return world.getDifficulty() != Difficulty.PEACEFUL &&
+                    pos.getY() >= world.getSeaLevel() - 10 &&
+                    (  world.getBlockState(pos.down()).isOf(Blocks.SAND)
+                    || world.getBlockState(pos.down()).isOf(Blocks.DIRT)
+                    || world.getBlockState(pos.down()).isIn(BlockTags.FROGS_SPAWNABLE_ON));
+        }
+
+    }
+
+
+//    public static boolean isSpawnDark(ServerWorldAccess world, BlockPos pos, Random random) {
+//
+//        return false;
+//    }
+
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;

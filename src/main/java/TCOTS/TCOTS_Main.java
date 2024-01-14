@@ -27,6 +27,7 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_Items.registerModItems();
 		TCOTS_ItemsGroups.registerGroupItems();
 		TCOTS_Sounds.init();
+		TCOTS_Entities.addSpawns();
 //		LOGGER.info("Hello Fabric world!");
 
 		//Drowner
