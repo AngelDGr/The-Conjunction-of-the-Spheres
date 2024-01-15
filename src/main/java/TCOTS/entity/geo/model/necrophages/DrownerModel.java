@@ -35,7 +35,6 @@ public class DrownerModel extends GeoModel<DrownerEntity> {
         EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
 
         if(head!=null) {
-
             //Swimming
             if (entity.getSwimmingDataTracker()) {
                 wholeBody.setRotX((entityData.headPitch() - 80)* MathHelper.RADIANS_PER_DEGREE);

@@ -6,10 +6,12 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.Monster;
+import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.world.World;
 
-public class Necrophage_Base extends HostileEntity {
-    protected Necrophage_Base(EntityType<? extends HostileEntity> entityType, World world) {
+public class Necrophage_Base extends PathAwareEntity implements Monster {
+    protected Necrophage_Base(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -22,4 +24,6 @@ public class Necrophage_Base extends HostileEntity {
     public boolean canHaveStatusEffect(StatusEffectInstance effect) {
         return effect.getEffectType() != StatusEffects.POISON && super.canHaveStatusEffect(effect);
     }
+
+
 }
