@@ -25,5 +25,20 @@ public class Necrophage_Base extends PathAwareEntity implements Monster {
         return effect.getEffectType() != StatusEffects.POISON && super.canHaveStatusEffect(effect);
     }
 
+    @Override
+    public void tickMovement() {
+        this.tickHandSwing();
+        this.updateDespawnCounter();
+        super.tickMovement();
+    }
+
+    protected void updateDespawnCounter() {
+        float f = this.getBrightnessAtEyes();
+        if (f > 0.5F) {
+            this.despawnCounter += 2;
+        }
+
+    }
+
 
 }

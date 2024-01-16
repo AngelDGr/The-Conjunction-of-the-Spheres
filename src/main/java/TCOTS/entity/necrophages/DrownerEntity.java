@@ -19,6 +19,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -52,10 +53,10 @@ import java.util.EnumSet;
 public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 //XTODO: Make it faster when walking in water
 //TODO: Make it that it don't sink in water
+//TODO: Fix the datatracker
 //TODO: Add the digging in ground goal
 //TODO: Add drops
 //XTODO: Add spawn
-
 
     protected final SwimNavigation waterNavigation;
     protected final MobNavigation landNavigation;
@@ -71,8 +72,13 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     public static final RawAnimation LUNGE = RawAnimation.begin().thenPlay("attack.lunge");
     public static final RawAnimation WATER_ATTACK1 = RawAnimation.begin().thenPlay("attack.waterswing1");
     public static final RawAnimation WATER_ATTACK2 = RawAnimation.begin().thenPlay("attack.waterswing2");
+
+    public static final RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
+    public static final RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
+
     protected static final TrackedData<Boolean> SWIM = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     public DrownerEntity(EntityType<? extends DrownerEntity> entityType, World world) {
@@ -86,24 +92,29 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         this.landNavigation = new MobNavigation(this, world);
     }
 
-
     @Override
     protected void initGoals()
     {
-        //Flee, lunge and Water/land attack
+        //Flee, lunge, emerging and Water/land attack
         this.goalSelector.add(0, new Drowner_FleeFromTarget(this,1.0, 1));
-        this.goalSelector.add(0, new Drowner_Lunge(this,100, 0.9));
-        this.goalSelector.add(1, new Drowner_LandWaterAttackGoal(this, 1.2D, false, 40, 50));
+
+        //Emerge from ground
+        this.goalSelector.add(0, new Drowner_EmergeFromGround(this));
+
+        this.goalSelector.add(1, new Drowner_Lunge(this,100, 0.9));
 
         //Returns to ground
-//        this.goalSelector.add(2, new Drowner_DigOnGround(this));
-
-        this.goalSelector.add(3, new SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.75f, 1));
-
-        this.goalSelector.add(5, new LookAroundGoal(this));
+        this.goalSelector.add(2, new Drowner_ReturnToGround(this));
 
 
+        this.goalSelector.add(3, new Drowner_LandWaterAttackGoal(this, 1.2D, false, 40, 20));
+
+
+
+        this.goalSelector.add(4, new Drowner_SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(5, new Drowner_WanderAroundGoal(this, 0.75f, 20));
+
+        this.goalSelector.add(6, new Drowner_LookAroundGoal(this));
 
         //Objectives
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
@@ -303,7 +314,9 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             if (drowner.getSwimmingDataTracker()) {
                 return super.canStart() && this.drowner.canDrownerUnderwaterAttackTarget(this.drowner.getTarget()) && !drowner.hasAttackedOnWater;
             } else {
-                return super.canStart();
+                return super.canStart()
+                        && !this.drowner.getIsEmerging()
+                        && !this.drowner.getInGroundDataTracker();
             }
         }
         @Override
@@ -316,17 +329,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             }
         }
 
-//        @Override
-//        public void tick(){
-//            super.tick();
-//        }
-
-//        @Override
-//        public void start(){
-//            DrownerEntity.this.setInGroundDataTracker(false);
-//            super.start();
-//        }
-
         @Override
         protected void attack(LivingEntity target, double squaredDistance) {
             //Special logic for water attack
@@ -336,7 +338,10 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             } else {
                 //Lunge and land attack
                 if(target!=null){
-                    DrownerEntity.this.ReturnToGround_Ticks=this.ticksBeforeToGround;
+                    int randomExtra = DrownerEntity.this.random.nextBetween(1,51);
+
+                        DrownerEntity.this.ReturnToGround_Ticks=this.ticksBeforeToGround + randomExtra;
+
                     super.attack(target,squaredDistance);
                 }
             }
@@ -358,7 +363,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             }
         }
     }
-
     //To manage the lunge attack
     private class Drowner_Lunge extends Goal {
         private final DrownerEntity mob;
@@ -381,7 +385,10 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                 //So 7.5/1.5=5
             return !DrownerEntity.this.cooldownBetweenLunges && this.mob.isAttacking() && !this.mob.getSwimmingDataTracker()
                     && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
-                    && (this.mob.getTarget().getY() - this.mob.getY()) <= 1;}
+                    && (this.mob.getTarget().getY() - this.mob.getY()) <= 1
+                    && !this.mob.getIsEmerging()
+                    && !this.mob.getInGroundDataTracker()
+                    ;}
             else {
                 return false;
             }
@@ -474,7 +481,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             return (double)(this.mob.getWidth() * 2.0F * this.mob.getWidth() * 2.0F + entity.getWidth());
         }
     }
-
     //Makes the drowner flee after a hit that it make
     private static class Drowner_FleeFromTarget extends SwimAroundGoal{
         private final DrownerEntity drowner;
@@ -507,10 +513,10 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     }
 
     //Makes the drowner occult in ground
-    private class Drowner_DigOnGround extends Goal{
+    private class Drowner_ReturnToGround extends Goal{
         private final DrownerEntity drowner;
 
-        private Drowner_DigOnGround(DrownerEntity mob) {
+        private Drowner_ReturnToGround(DrownerEntity mob) {
             this.drowner = mob;
         }
 
@@ -527,20 +533,152 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         @Override
         public void start(){
             drowner.getNavigation().stop();
+            drowner.getLookControl().lookAt(0,0,0);
         }
 
         @Override
         public void stop(){
-
         }
 
         @Override
         public void tick(){
-            System.out.println("InsideGround");
+//            System.out.println("InsideGround");
         }
 
 
     }
+    //Makes the drowner emerge from ground
+    private class Drowner_EmergeFromGround extends Goal{
+
+        private final DrownerEntity drowner;
+
+        protected final PathAwareEntity mob;
+
+        int AnimationTicks=36;
+
+        private Drowner_EmergeFromGround(DrownerEntity mob) {
+            this.drowner = mob;
+            this.mob = mob;
+
+        }
+
+        @Override
+        public boolean canStart() {
+            return canStartO() && drowner.getInGroundDataTracker();
+        }
+        public boolean canStartO(){
+            long l = this.mob.getWorld().getTime();
+
+                LivingEntity livingEntity = this.mob.getTarget();
+                //If it doesn't have target
+                if (livingEntity == null) {
+                    return false;
+                }
+                //If it's the target dead
+                else if (!livingEntity.isAlive()) {
+                    return false;
+                }
+                else {
+                    return this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ()) <= 80;
+                }
+        }
+
+        @Override
+        public void start(){
+            AnimationTicks=38;
+            drowner.setIsEmerging(true);
+//            System.out.println("EmergingFromGroundStarted");
+        }
+
+        @Override
+        public boolean shouldContinue(){
+            return shouldContinueO() && drowner.getInGroundDataTracker();
+        }
+        public boolean shouldContinueO(){
+            LivingEntity livingEntity = this.mob.getTarget();
+            if (livingEntity == null) {
+                return false;
+            } else if (!livingEntity.isAlive()) {
+                return false;
+            } else {
+                return !(livingEntity instanceof PlayerEntity) || !livingEntity.isSpectator() && !((PlayerEntity)livingEntity).isCreative();
+            }
+        }
+
+        @Override
+        public void tick(){
+            if (AnimationTicks > 0) {
+//                System.out.println("AnimationTicks"+AnimationTicks);
+                --AnimationTicks;
+            }else {
+                  stop();
+            }
+        }
+
+        @Override
+        public void stop(){
+            drowner.setIsEmerging(false);
+            if(DrownerEntity.this.getInGroundDataTracker()){
+                DrownerEntity.this.ReturnToGround_Ticks=100;
+                DrownerEntity.this.setInGroundDataTracker(false);}
+        }
+
+        @Override
+        public boolean shouldRunEveryTick() {
+            return true;
+        }
+    }
+
+    private class Drowner_WanderAroundGoal extends WanderAroundGoal{
+
+        public Drowner_WanderAroundGoal(PathAwareEntity mob, double speed, int chance) {
+            super(mob, speed, chance);
+        }
+
+        @Override
+        public boolean canStart(){
+            return super.canStart() && !DrownerEntity.this.getInGroundDataTracker();
+        }
+
+        @Override
+        public boolean shouldContinue(){
+            return super.shouldContinue() && !DrownerEntity.this.getInGroundDataTracker();
+        }
+    }
+    private class Drowner_LookAroundGoal extends  LookAroundGoal{
+
+        public Drowner_LookAroundGoal(MobEntity mob) {
+            super(mob);
+        }
+
+        @Override
+        public boolean canStart(){
+            return super.canStart() && !DrownerEntity.this.getInGroundDataTracker();
+        }
+
+        @Override
+        public boolean shouldContinue(){
+            return super.shouldContinue() && !DrownerEntity.this.getInGroundDataTracker();
+        }
+
+    }
+    private class Drowner_SwimAroundGoal extends SwimAroundGoal{
+
+        public Drowner_SwimAroundGoal(PathAwareEntity pathAwareEntity, double d, int i) {
+            super(pathAwareEntity, d, i);
+        }
+
+        @Override
+        public boolean canStart(){
+            return super.canStart() && !DrownerEntity.this.getInGroundDataTracker();
+        }
+
+        @Override
+        public boolean shouldContinue(){
+            return super.shouldContinue() && !DrownerEntity.this.getInGroundDataTracker();
+        }
+    }
+
 
     //This way don't reset every time it reenter the world, causing clipping
     @Override
@@ -555,6 +693,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
         super.readCustomDataFromNbt(nbt);
     }
+
+
     public boolean getSwimmingDataTracker() {
         return this.dataTracker.get(SWIM);
     }
@@ -568,6 +708,13 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         this.dataTracker.set(LUGGING, wasLugging);
     }
 
+    public final boolean getIsEmerging(){
+        return this.dataTracker.get(EMERGING);
+    }
+    public final void setIsEmerging(boolean wasEmerging){
+        this.dataTracker.set(EMERGING, wasEmerging);
+    }
+
     public boolean getInGroundDataTracker() {
         return this.dataTracker.get(InGROUND);
     }
@@ -575,7 +722,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
-    public boolean IsInGround = true;
     //Dynamic hitbox
     @Override
     protected Box calculateBoundingBox() {
@@ -596,19 +742,19 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
     }
 
-
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(SWIM, Boolean.FALSE);
         this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
+        this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
     }
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);
-        if (dataTracker.get(SWIM) || dataTracker.get(InGROUND)) {
-            System.out.println("InsideOnTrackedDataSet: "+DrownerEntity.this.getInGroundDataTracker());
+        if (dataTracker.get(SWIM) || !dataTracker.get(InGROUND) || dataTracker.get(InGROUND)) {
+//            System.out.println("InsideOnTrackedDataSet: "+DrownerEntity.this.getInGroundDataTracker());
             this.setBoundingBox(this.calculateBoundingBox());
         }
 
@@ -627,8 +773,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
         //Walk/Idle Controller
-        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5,
-                state->{
+        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, state->{
                     if(this.getSwimmingDataTracker()){
                         if(state.isMoving()){
                             return state.setAndContinue(SWIMMING);
@@ -638,10 +783,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                         }
                     }
                     else{
-//                        if(this.getIsLugging()) {
-//                            return PlayState.STOP;
-//                        }
-//                        else{
                             //If it's aggressive and it is moving
                             if (this.isAttacking() && state.isMoving()) {
                                 return state.setAndContinue(RUNNING);
@@ -658,7 +799,12 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                                     }
                                     //Anything else
                                     else {
-                                        return state.setAndContinue(IDLE);
+                                        if(this.getInGroundDataTracker() && !this.getIsEmerging()){
+                                            state.setAnimation(DIGGING_IN);
+                                            return PlayState.CONTINUE;
+                                        }else{
+                                            return state.setAndContinue(IDLE);
+                                        }
                                     }
                                 }
                             }
@@ -706,38 +852,23 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                     return PlayState.CONTINUE;
                 })
         );
+
+        //DiggingOut Controller
+        controllerRegistrar.add(
+                new AnimationController<>(this, "DiggingOutController", 1, state -> {
+//                    state.getController().forceAnimationReset();
+                    if (this.getIsEmerging()){
+                        state.setAnimation(DIGGING_OUT);
+                        return PlayState.CONTINUE;
+                    }
+                    else{
+                        state.getController().forceAnimationReset();
+                        return PlayState.STOP;
+                    }
+                })
+        );
     }
 
-    //Sounds
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return TCOTS_Sounds.DROWNER_IDLE;
-    }
-    @Override
-    protected SoundEvent getSwimSound() {
-        return SoundEvents.ENTITY_PLAYER_SWIM;
-    }
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return TCOTS_Sounds.DROWNER_HURT;
-    }
-    @Override
-    protected SoundEvent getDeathSound() {
-        return TCOTS_Sounds.DROWNER_DEATH;
-    }
-    //Footsteps sounds
-    protected SoundEvent getStepSound() {
-            return TCOTS_Sounds.DROWNER_FOOTSTEP;
-        }
-    protected void playStepSound(BlockPos pos, BlockState state) {
-            this.playSound(this.getStepSound(), 0.15F, 1.0F);
-        }
-    //Attack Sound
-    @Override
-    public boolean tryAttack(Entity target) {
-        this.playSound(TCOTS_Sounds.DROWNER_ATTACK, 1.0F, 1.0F);
-        return super.tryAttack(target);
-    }
     //Water creature things
     @Override
     public boolean canBreatheInWater() {
@@ -774,24 +905,32 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         if (DrownerEntity.this.LungeTicks > 0) {
             DrownerEntity.this.setIsLugging(false);
             --DrownerEntity.this.LungeTicks;
-        } else {
+        }else {
             DrownerEntity.this.cooldownBetweenLunges = false;
         }
-
+        super.tick();
+    }
+    @Override
+    public void mobTick(){
         //Only timer for return to ground if it's not swimming
         if(!DrownerEntity.this.getSwimmingDataTracker()) {
-            if (DrownerEntity.this.ReturnToGround_Ticks > 0) {
+            if (DrownerEntity.this.ReturnToGround_Ticks > 0
+            && !this.getIsEmerging()
+            && !this.isAttacking()
+            ) {
                 --DrownerEntity.this.ReturnToGround_Ticks;
-                System.out.println(DrownerEntity.this.ReturnToGround_Ticks);
-//                DrownerEntity.this.setInGroundDataTracker(false);
-                this.dataTracker.set(InGROUND,false);
-            }
-            else{
-                this.dataTracker.set(InGROUND, true);
+//                System.out.println("mobTicks"+DrownerEntity.this.ReturnToGround_Ticks);
+            }else{
+                if(DrownerEntity.this.ReturnToGround_Ticks==0){
+                    this.setInGroundDataTracker(true);
+                }
             }
         }
-
-        super.tick();
+        else{
+            if(this.getInGroundDataTracker()){
+                this.setInGroundDataTracker(false);}
+        }
+        super.mobTick();
     }
 
     //Natural Spawn
@@ -840,5 +979,37 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
+    }
+
+
+    //Sounds
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return TCOTS_Sounds.DROWNER_IDLE;
+    }
+    @Override
+    protected SoundEvent getSwimSound() {
+        return SoundEvents.ENTITY_PLAYER_SWIM;
+    }
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return TCOTS_Sounds.DROWNER_HURT;
+    }
+    @Override
+    protected SoundEvent getDeathSound() {
+        return TCOTS_Sounds.DROWNER_DEATH;
+    }
+    //Footsteps sounds
+    protected SoundEvent getStepSound() {
+        return TCOTS_Sounds.DROWNER_FOOTSTEP;
+    }
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(this.getStepSound(), 0.15F, 1.0F);
+    }
+    //Attack Sound
+    @Override
+    public boolean tryAttack(Entity target) {
+        this.playSound(TCOTS_Sounds.DROWNER_ATTACK, 1.0F, 1.0F);
+        return super.tryAttack(target);
     }
 }
