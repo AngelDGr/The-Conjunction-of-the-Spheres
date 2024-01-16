@@ -1,6 +1,7 @@
 package TCOTS.entity.necrophages;
 
 import TCOTS.sounds.TCOTS_Sounds;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
@@ -26,6 +27,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
@@ -52,9 +54,12 @@ import java.util.EnumSet;
 
 public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 //XTODO: Make it faster when walking in water
-//TODO: Make it that it don't sink in water
-//TODO: Fix the datatracker
-//TODO: Add the digging in ground goal
+//XTODO: Make it that it don't sink in water
+//xTODO: Fix the datatracker
+//xTODO: Add the digging in ground goal
+//TODO: Add particles when digging
+//TODO: Add sounds when digging
+
 //TODO: Add drops
 //XTODO: Add spawn
 
@@ -512,6 +517,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
     }
 
+
     //Makes the drowner occult in ground
     private class Drowner_ReturnToGround extends Goal{
         private final DrownerEntity drowner;
@@ -628,6 +634,17 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             return true;
         }
     }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource);
+    }
+
+    @Override
+    public boolean isPushable() {
+        return !this.getIsEmerging() && !this.getInGroundDataTracker();
+    }
+
 
     private class Drowner_WanderAroundGoal extends WanderAroundGoal{
 
@@ -919,9 +936,15 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             && !this.isAttacking()
             ) {
                 --DrownerEntity.this.ReturnToGround_Ticks;
-//                System.out.println("mobTicks"+DrownerEntity.this.ReturnToGround_Ticks);
             }else{
-                if(DrownerEntity.this.ReturnToGround_Ticks==0){
+                BlockPos entityPos = new BlockPos((int)this.getX(), (int)this.getY(), (int)this.getZ());
+
+                //Makes the Drowner return to the dirt
+                if(DrownerEntity.this.ReturnToGround_Ticks==0 && (
+                this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DIRT) ||
+                this.getWorld().getBlockState(entityPos.down()).isOf(Blocks.SAND)
+                )
+                ){
                     this.setInGroundDataTracker(true);
                 }
             }
@@ -951,8 +974,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                 }
         //If it's in another spawneable biome
         else{
-
-
             return
                     spawnReason == SpawnReason.SPAWNER ||(
                     world.getDifficulty() != Difficulty.PEACEFUL &&
@@ -980,8 +1001,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
-
-
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
