@@ -1,8 +1,10 @@
 package TCOTS;
 
+import TCOTS.entity.misc.Drowner_Puddle.Drowner_Puddle_Entity;
 import TCOTS.entity.necrophages.DrownerEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
+import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.fabricmc.api.ModInitializer;
 
@@ -28,9 +30,13 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_ItemsGroups.registerGroupItems();
 		TCOTS_Sounds.init();
 		TCOTS_Entities.addSpawns();
+		TCOTS_Particles.registerParticles();
 //		LOGGER.info("Hello Fabric world!");
 
 		//Drowner
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.DROWNER, DrownerEntity.setAttributes());
+
+		//DrownerPuddle
+//		FabricDefaultAttributeRegistry.register(TCOTS_Entities.DROWNER_PUDDLE, Drowner_Puddle_Entity.setAttributes());
 	}
 }

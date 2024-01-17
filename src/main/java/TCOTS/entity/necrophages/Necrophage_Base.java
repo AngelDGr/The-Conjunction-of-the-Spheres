@@ -8,6 +8,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.world.World;
 
 public class Necrophage_Base extends PathAwareEntity implements Monster {
@@ -40,5 +41,9 @@ public class Necrophage_Base extends PathAwareEntity implements Monster {
 
     }
 
+    @Override
+    public SoundCategory getSoundCategory() {
+        return SoundCategory.HOSTILE;
+    }
 
 }

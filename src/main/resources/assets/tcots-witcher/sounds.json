@@ -48,6 +48,22 @@
     ]
   },
 
+  "drowner_emerging": {
+    "subtitle": "tcots-witcher.sounds.drowner_emerging",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/drowner/drowner_emerging1",
+      "tcots-witcher:entity/necrophages/drowner/drowner_emerging2"
+    ]
+  },
+
+  "drowner_digging": {
+    "subtitle": "tcots-witcher.sounds.drowner_digging",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/drowner/drowner_digging1",
+      "tcots-witcher:entity/necrophages/drowner/drowner_digging2"
+    ]
+  },
+
   "drowner_scream": {
     "subtitle": "tcots-witcher.sounds.drowner_scream",
     "sounds": [

@@ -2,8 +2,10 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.*;
 
 import net.minecraft.entity.ai.brain.task.LookTargetUtil;
@@ -25,10 +27,16 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.nbt.NbtCompound;
@@ -57,8 +65,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 //XTODO: Make it that it don't sink in water
 //xTODO: Fix the datatracker
 //xTODO: Add the digging in ground goal
-//TODO: Add particles when digging
-//TODO: Add sounds when digging
+//xTODO: Add sounds when digging
+//TODO: Make the puddle entity spawn when digging
 
 //TODO: Add drops
 //XTODO: Add spawn
@@ -521,7 +529,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     //Makes the drowner occult in ground
     private class Drowner_ReturnToGround extends Goal{
         private final DrownerEntity drowner;
-
         private Drowner_ReturnToGround(DrownerEntity mob) {
             this.drowner = mob;
         }
@@ -530,14 +537,14 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         public boolean canStart() {
             return drowner.getInGroundDataTracker();
         }
-
         @Override
         public boolean shouldContinue(){
             return drowner.getInGroundDataTracker();
         }
-
         @Override
         public void start(){
+            drowner.playSound(TCOTS_Sounds.DROWNER_DIGGING,1.0F,1.0F);
+
             drowner.getNavigation().stop();
             drowner.getLookControl().lookAt(0,0,0);
         }
@@ -548,8 +555,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 
         @Override
         public void tick(){
-//            System.out.println("InsideGround");
         }
+
 
 
     }
@@ -591,6 +598,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 
         @Override
         public void start(){
+            this.drowner.playSound(TCOTS_Sounds.DROWNER_EMERGING, 1.0F, 1.0F);
+            this.drowner.spawnGroundParticles();
             AnimationTicks=38;
             drowner.setIsEmerging(true);
 //            System.out.println("EmergingFromGroundStarted");
@@ -634,6 +643,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             return true;
         }
     }
+
+
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
@@ -817,6 +828,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                                     //Anything else
                                     else {
                                         if(this.getInGroundDataTracker() && !this.getIsEmerging()){
+
                                             state.setAnimation(DIGGING_IN);
                                             return PlayState.CONTINUE;
                                         }else{
@@ -915,7 +927,31 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         return super.damage(source, amount);
     }
 
+
+    private void spawnGroundParticles() {
+        Random random = this.getRandom();
+        BlockState blockState = this.getSteppingBlockState();
+        if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
+            for(int i = 0; i < 11; ++i) {
+                double d = this.getX() + (double)MathHelper.nextBetween(random, -0.7F, 0.7F);
+                double e = this.getY();
+                double f = this.getZ() + (double)MathHelper.nextBetween(random, -0.7F, 0.7F);
+
+                if(i==5
+                ){
+                    this.getWorld().addParticle(ParticleTypes.SPLASH, d, e, f, 0.0, 0.0, 0.0);
+                }
+                else{
+                    this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+
+                }
+
+            }
+        }
+    }
+
     //Timers
+    int AnimationParticlesTicks=36;
     @Override
     public void tick(){
         //Start the counter for the Lunge attack
@@ -925,8 +961,26 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }else {
             DrownerEntity.this.cooldownBetweenLunges = false;
         }
+
+        //Particles when return to ground
+        if(this.AnimationParticlesTicks > 0 && this.getInGroundDataTracker()){
+            this.spawnGroundParticles();
+            --this.AnimationParticlesTicks;
+        }
+
+        if(!this.getInGroundDataTracker() && !this.getIsEmerging()){
+            AnimationParticlesTicks=36;
+        }
+
+        //Particles when emerges from ground
+        if(this.getIsEmerging()){
+            this.spawnGroundParticles();
+        }
+
         super.tick();
     }
+
+
     @Override
     public void mobTick(){
         //Only timer for return to ground if it's not swimming
@@ -1001,10 +1055,16 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
+
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
-        return TCOTS_Sounds.DROWNER_IDLE;
+        if(!this.getInGroundDataTracker()){
+            return TCOTS_Sounds.DROWNER_IDLE;
+        }
+        else{
+            return null;
+        }
     }
     @Override
     protected SoundEvent getSwimSound() {
