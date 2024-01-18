@@ -63,7 +63,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 //xTODO: Add sounds when digging
 //xTODO: Make the puddle entity spawn when digging
 
-//TODO: Add drops
+//TODO: Add drops (Add loot tables)
 //xTODO: Add spawn
 
     protected final SwimNavigation waterNavigation;

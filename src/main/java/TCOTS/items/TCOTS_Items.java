@@ -11,9 +11,12 @@ import net.minecraft.util.Identifier;
 
 public class TCOTS_Items {
 
-    //#8db1c0
-    //#9fa3ae
-    // 0xD57E36, 0x1D0D00,
+    //TODO: Add use to the items
+        //TODO: Drowner Tongue usable for water breathing potion, maybe a shorter one?
+        //TODO: Drowner Brain usable for a new potion, Swallow:
+            //TODO: Add the Swallow effect, works like regeneration, it's a lot slower but the potion it's more durable
+
+
     public static final Item DROWNER_SPAWN_EGG = registerItem("drowner_spawn_egg",
             new SpawnEggItem(TCOTS_Entities.DROWNER, 0x8db1c0, 0x9fa3ae,
                     new FabricItemSettings()));

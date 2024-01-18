@@ -28,7 +28,6 @@ public class TCOTS_ItemsGroups {
 
                         //Spawn Eggs
                         registerModItem(entries,TCOTS_Items.DROWNER_SPAWN_EGG)
-
                         ;
 
                     }).build());
