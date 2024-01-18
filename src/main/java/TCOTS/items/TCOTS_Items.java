@@ -18,6 +18,14 @@ public class TCOTS_Items {
             new SpawnEggItem(TCOTS_Entities.DROWNER, 0x8db1c0, 0x9fa3ae,
                     new FabricItemSettings()));
 
+    public static final Item DROWNER_TONGUE = registerItem("drowner_tongue",
+            new Item(
+                    new FabricItemSettings().maxCount(64)));
+
+    public static final Item DROWNER_BRAIN = registerItem("drowner_brain",
+            new Item(
+                    new FabricItemSettings().maxCount(16)));
+
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(TCOTS_Main.MOD_ID, name), item);
     }

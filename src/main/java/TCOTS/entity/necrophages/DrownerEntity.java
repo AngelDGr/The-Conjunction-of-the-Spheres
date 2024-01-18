@@ -2,11 +2,9 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.sounds.TCOTS_Sounds;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.*;
 
 import net.minecraft.entity.ai.brain.task.LookTargetUtil;
@@ -22,23 +20,17 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.EvokerEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 
-import net.minecraft.item.ItemUsageContext;
 import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.nbt.NbtCompound;
@@ -61,17 +53,18 @@ import software.bernie.geckolib.core.object.PlayState;
 
 
 import java.util.EnumSet;
+import java.util.List;
 
 public class DrownerEntity extends Necrophage_Base implements GeoEntity {
-//XTODO: Make it faster when walking in water
-//XTODO: Make it that it don't sink in water
-//xTODO: Fix the datatracker
+//xTODO: Make it faster when walking in water
+//xTODO: Make it that it don't sink in water
+//xTODO: Fix the data tracker
 //xTODO: Add the digging in ground goal
 //xTODO: Add sounds when digging
-//TODO: Make the puddle entity spawn when digging
+//xTODO: Make the puddle entity spawn when digging
 
 //TODO: Add drops
-//XTODO: Add spawn
+//xTODO: Add spawn
 
     protected final SwimNavigation waterNavigation;
     protected final MobNavigation landNavigation;
@@ -93,10 +86,11 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> SPAWNED_PUDDLE = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
 
     public DrownerEntity(EntityType<? extends DrownerEntity> entityType, World world) {
         super(entityType, world);
-        net.minecraft.util.math.random.Random random = world.getRandom();
 
         this.setPathfindingPenalty(PathNodeType.WATER, 0.0F);
         this.moveControl = new WaterOrLand_MoveControl(this, 0.07F);
@@ -119,7 +113,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         //Returns to ground
         this.goalSelector.add(2, new Drowner_ReturnToGround(this));
 
-        this.goalSelector.add(3, new Drowner_LandWaterAttackGoal(this, 1.2D, false, 40, 20));
+        this.goalSelector.add(3, new Drowner_LandWaterAttackGoal(this, 1.2D, false, 40, 3000));
 
 
         this.goalSelector.add(4, new Drowner_SwimAroundGoal(this, 1.0, 10));
@@ -185,9 +179,9 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             double length = Math.sqrt(dXtoTarget * dXtoTarget + dYtoTarget * dYtoTarget + dZtoTarget * dZtoTarget);
 
             //Movement Vector
-            Vec3d vec3D_movementUnderwater = new Vec3d((double)(dXtoTarget / length) * waterSpeed,
-                                                       (double)(dYtoTarget / length) * waterSpeed,
-                                                       (double)(dZtoTarget / length) * waterSpeed);
+            Vec3d vec3D_movementUnderwater = new Vec3d((dXtoTarget / length) * waterSpeed,
+                                                       (dYtoTarget / length) * waterSpeed,
+                                                       (dZtoTarget / length) * waterSpeed);
 
             //Makes it go up if it's attacking
             if(target != null
@@ -204,10 +198,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                 if (drowner.canDrownerUnderwaterAttackTarget(target)) {
                     this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.1, 0.0));
                 }
-//                if (!entity.isAttacking()) {
-//                    //It's on water, not underwater, but it doesn't see any target
-//                    this.entity.setVelocity(this.entity.getVelocity().add(0.0, -0.008, 0.0));
-//                }
             }
 
             if(entity.isOnGround() && drowner.getSwimmingDataTracker() && !entity.isAttacking()){
@@ -380,19 +370,19 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         private final int cooldownBetweenLungesAttacks;
         private final double SpeedLungeMultiplier;
 
-        private Drowner_Lunge(DrownerEntity mob, int cooldownBetweenLungesAttacks, double lungeimpulse) {
+        private Drowner_Lunge(DrownerEntity mob, int cooldownBetweenLungesAttacks, double lungeImpulse) {
             this.mob = mob;
             this.cooldownBetweenLungesAttacks=cooldownBetweenLungesAttacks;
             this.setControls(EnumSet.of(Control.MOVE, Control.JUMP));
-            this.SpeedLungeMultiplier=lungeimpulse;
+            this.SpeedLungeMultiplier=lungeImpulse;
         }
 
         @Override
         public boolean canStart() {
             LivingEntity target = this.mob.getTarget();
             if(target!=null){
-                //5 square distance like 1.5 blocks aprox
-                //I want 7.5 blocks aprox
+                //5 square distance like 1.5 blocks approx
+                //I want 7.5 blocks approx
                 //So 7.5/1.5=5
             return !DrownerEntity.this.cooldownBetweenLunges && this.mob.isAttacking() && !this.mob.getSwimmingDataTracker()
                     && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
@@ -409,8 +399,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         public boolean shouldContinue(){
             LivingEntity target = this.mob.getTarget();
             if(target!=null){
-                //5 square distance like 1.5 blocks aprox
-                //I want 7.5 blocks aprox
+                //5 square distance like 1.5 blocks approx
+                //I want 7.5 blocks approx
                 //So 7.5/1.5=5
                 return !DrownerEntity.this.cooldownBetweenLunges && this.mob.isAttacking() && !this.mob.getSwimmingDataTracker()
                         && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
@@ -443,8 +433,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             LivingEntity livingEntity = this.mob.getTarget();
 
             if(livingEntity!=null){
-                double d = this.mob.getSquaredDistanceToAttackPosOf(livingEntity);
-                LungeAttack(livingEntity,d);
+//                double d = this.mob.getSquaredDistanceToAttackPosOf(livingEntity);
+                LungeAttack(livingEntity);
             }
         }
 
@@ -456,21 +446,17 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             double length = Math.sqrt(dXtoTarget * dXtoTarget + dYtoTarget * dYtoTarget + dZtoTarget * dZtoTarget);
 
             //Movement Vector
-            return new Vec3d((double)(dXtoTarget / length) * SpeedLungeMultiplier,
-                                (double)(dYtoTarget / length),
-                             (double)(dZtoTarget / length) * SpeedLungeMultiplier);
+            return new Vec3d((dXtoTarget / length) * SpeedLungeMultiplier,
+                                (dYtoTarget / length),
+                             (dZtoTarget / length) * SpeedLungeMultiplier);
         }
 
-        private void LungeAttack(LivingEntity target, double squaredDistance){
-            double d = this.getSquaredMaxAttackDistance(target);
+        private void LungeAttack(LivingEntity target){
             //Check if it can do a lunge
             if(!DrownerEntity.this.cooldownBetweenLunges){
                 //Makes the lunge
-//                if()
-
                     //Extra random ticks in cooldown
                     randomExtra = DrownerEntity.this.random.nextInt(51);
-//                    randomExtra = 0;
                     //0.35 Y default
                     vec3D_lunge = getVec3d(target).normalize();
                     DrownerEntity.this.setIsLugging(true);
@@ -488,9 +474,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 
         }
 
-        protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-            return (double)(this.mob.getWidth() * 2.0F * this.mob.getWidth() * 2.0F + entity.getWidth());
-        }
+
     }
     //Makes the drowner flee after a hit that it make
     private static class Drowner_FleeFromTarget extends SwimAroundGoal{
@@ -523,10 +507,11 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
     }
 
-
+    DrownerPuddleEntity puddle;
     //Makes the drowner occult in ground
-    private class Drowner_ReturnToGround extends Goal{
+    private class Drowner_ReturnToGround extends Goal {
         private final DrownerEntity drowner;
+        int ticks=35;
         private Drowner_ReturnToGround(DrownerEntity mob) {
             this.drowner = mob;
         }
@@ -540,7 +525,10 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
         @Override
         public void start(){
-            spawnPuddle(drowner.getWorld(),drowner);
+            ticks=35;
+            if(!drowner.getSpawnedPuddleDataTracker() && !drowner.isTouchingWater()){
+                spawnPuddle(drowner.getWorld(),drowner);
+            }
             drowner.playSound(TCOTS_Sounds.DROWNER_DIGGING,1.0F,1.0F);
             drowner.getNavigation().stop();
             drowner.getLookControl().lookAt(0,0,0);
@@ -548,15 +536,25 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 
         @Override
         public void stop(){
+
         }
 
         @Override
         public void tick(){
+
         }
 
         public void spawnPuddle(World world, LivingEntity entity){
+            float yaw=DrownerEntity.this.random.nextInt(361);
 
-            world.spawnEntity(new DrownerPuddleEntity(world,entity.getX(), entity.getY(), entity.getZ(), DrownerEntity.this));
+            DrownerEntity.this.puddle = new DrownerPuddleEntity(world, entity.getX(), entity.getY(), entity.getZ(), DrownerEntity.this);
+
+            if (!world.isClient) {
+                world.spawnEntity(DrownerEntity.this.puddle);
+
+                DrownerEntity.this.puddle.setSpawnControlDataTracker(true);
+                drowner.setSpawnedPuddleDataTracker(true);
+            }
 
         }
 
@@ -582,7 +580,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             return canStartO() && drowner.getInGroundDataTracker();
         }
         public boolean canStartO(){
-            long l = this.mob.getWorld().getTime();
 
                 LivingEntity livingEntity = this.mob.getTarget();
                 //If it doesn't have target
@@ -601,10 +598,13 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         @Override
         public void start(){
             this.drowner.playSound(TCOTS_Sounds.DROWNER_EMERGING, 1.0F, 1.0F);
+            if(DrownerEntity.this.puddle!=null){
+                DrownerEntity.this.puddle.setSpawnControlDataTracker(false);
+            }
+
             this.drowner.spawnGroundParticles();
-            AnimationTicks=38;
+            AnimationTicks=36;
             drowner.setIsEmerging(true);
-//            System.out.println("EmergingFromGroundStarted");
         }
 
         @Override
@@ -635,6 +635,10 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         @Override
         public void stop(){
             drowner.setIsEmerging(false);
+            if(DrownerEntity.this.puddle!=null){
+                destroyPuddle();
+            }
+
             if(DrownerEntity.this.getInGroundDataTracker()){
                 DrownerEntity.this.ReturnToGround_Ticks=100;
                 DrownerEntity.this.setInGroundDataTracker(false);}
@@ -646,22 +650,37 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
 
         public void destroyPuddle(){
-
+            DrownerEntity.this.puddle.discard();
+            drowner.setSpawnedPuddleDataTracker(false);
         }
     }
 
+    public DrownerPuddleEntity DetectOwnPuddle() {
+        List<DrownerPuddleEntity> list = this.getWorld().getEntitiesByClass(DrownerPuddleEntity.class,
+                new Box(this.getX() + 2, this.getY() + 2, this.getZ() + 2,
+                        this.getX() - 2, this.getY() - 2, this.getZ() - 2),
+                (T) -> true);
 
+        //Detect
+        if (!list.isEmpty()) {
+            for (DrownerPuddleEntity puddleEntity : list) {
+                if (puddleEntity.getOwnerUUID() != null && puddleEntity.getOwnerUUID().equals(this.getUuid())) {
+                    return puddleEntity;
+                }
+            }
+        }
+
+        return null;
+    }
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
         return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource);
     }
-
     @Override
     public boolean isPushable() {
         return !this.getIsEmerging() && !this.getInGroundDataTracker();
     }
-
 
     private class Drowner_WanderAroundGoal extends WanderAroundGoal{
 
@@ -720,14 +739,15 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Swimming", this.dataTracker.get(SWIM));
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
+        nbt.putBoolean("PuddleSpawned",this.dataTracker.get(SPAWNED_PUDDLE));
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setSwimmingDataTracker(nbt.getBoolean("Swimming"));
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
+        this.setSpawnedPuddleDataTracker(nbt.getBoolean("PuddleSpawned"));
         super.readCustomDataFromNbt(nbt);
     }
-
 
     public boolean getSwimmingDataTracker() {
         return this.dataTracker.get(SWIM);
@@ -756,6 +776,11 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
+    public boolean getSpawnedPuddleDataTracker() {
+        return this.dataTracker.get(SPAWNED_PUDDLE);
+    }
+    public void setSpawnedPuddleDataTracker(boolean puddleSpawned) {this.dataTracker.set(SPAWNED_PUDDLE, puddleSpawned);}
+
     //Dynamic hitbox
     @Override
     protected Box calculateBoundingBox() {
@@ -783,6 +808,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
+        this.dataTracker.startTracking(SPAWNED_PUDDLE, Boolean.FALSE);
     }
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
@@ -833,8 +859,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                                     }
                                     //Anything else
                                     else {
+                                        //It's in the ground and not emerging
                                         if(this.getInGroundDataTracker() && !this.getIsEmerging()){
-
                                             state.setAnimation(DIGGING_IN);
                                             return PlayState.CONTINUE;
                                         }else{
@@ -960,6 +986,10 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     int AnimationParticlesTicks=36;
     @Override
     public void tick(){
+        if(this.puddle==null){
+            this.puddle=DetectOwnPuddle();
+        }
+
         //Start the counter for the Lunge attack
         if (DrownerEntity.this.LungeTicks > 0) {
             DrownerEntity.this.setIsLugging(false);
@@ -1097,4 +1127,43 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         this.playSound(TCOTS_Sounds.DROWNER_ATTACK, 1.0F, 1.0F);
         return super.tryAttack(target);
     }
+
+
+    @Override
+    public void checkDespawn() {
+        if (this.getWorld().getDifficulty() == Difficulty.PEACEFUL && this.isDisallowedInPeaceful()) {
+            if(DrownerEntity.this.puddle!=null){
+                DrownerEntity.this.puddle.discard();
+            }
+            this.discard();
+        } else if (!this.isPersistent() && !this.cannotDespawn()) {
+            Entity entity = this.getWorld().getClosestPlayer(this, -1.0);
+            if (entity != null) {
+                double d = entity.squaredDistanceTo(this);
+                int i = this.getType().getSpawnGroup().getImmediateDespawnRange();
+                int j = i * i;
+                if (d > (double)j && this.canImmediatelyDespawn(d)) {
+                    if(DrownerEntity.this.puddle!=null){
+                        DrownerEntity.this.puddle.discard();
+                    }
+                    this.discard();
+                }
+
+                int k = this.getType().getSpawnGroup().getDespawnStartRange();
+                int l = k * k;
+                if (this.despawnCounter > 600 && this.random.nextInt(800) == 0 && d > (double)l && this.canImmediatelyDespawn(d)) {
+                    if(DrownerEntity.this.puddle!=null){
+                        DrownerEntity.this.puddle.discard();
+                    }
+                    this.discard();
+                } else if (d < (double)l) {
+                    this.despawnCounter = 0;
+                }
+            }
+
+        } else {
+            this.despawnCounter = 0;
+        }
+    }
+
 }

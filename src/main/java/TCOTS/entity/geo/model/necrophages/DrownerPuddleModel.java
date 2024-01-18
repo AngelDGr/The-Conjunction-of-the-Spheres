@@ -26,4 +26,5 @@ public class DrownerPuddleModel extends GeoModel<DrownerPuddleEntity> {
     public RenderLayer getRenderType(DrownerPuddleEntity animatable, Identifier texture) {
         return RenderLayer.getEntityTranslucent(texture);
     }
+
 }

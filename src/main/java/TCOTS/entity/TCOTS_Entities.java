@@ -32,7 +32,7 @@ public class TCOTS_Entities {
             FabricEntityTypeBuilder.<DrownerPuddleEntity>create(SpawnGroup.MISC, DrownerPuddleEntity::new
                     )
                     // Hitbox
-                    .dimensions(EntityDimensions.changing(0.1f, 0.1f)).build());
+                    .dimensions(EntityDimensions.changing(0.78f, 0.1f)).build());
 
 
 

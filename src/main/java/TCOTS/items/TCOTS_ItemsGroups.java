@@ -23,8 +23,13 @@ public class TCOTS_ItemsGroups {
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.tcots-witcher"))
                     .icon(() -> new ItemStack(TCOTS_Items.DROWNER_SPAWN_EGG))
                     .entries((displayContext, entries) -> {
+                        registerModItem(entries, TCOTS_Items.DROWNER_BRAIN);
+                        registerModItem(entries, TCOTS_Items.DROWNER_TONGUE);
+
                         //Spawn Eggs
-                        registerModItem(entries,TCOTS_Items.DROWNER_SPAWN_EGG);
+                        registerModItem(entries,TCOTS_Items.DROWNER_SPAWN_EGG)
+
+                        ;
 
                     }).build());
 

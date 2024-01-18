@@ -11,6 +11,8 @@
     "tcots-witcher.sounds.drowner_lunge": "Drowner lunges",
     "tcots-witcher.sounds.drowner_emerging": "Drowner emerges from ground",
     "tcots-witcher.sounds.drowner_digging": "Drowner return to ground",
-    "tcots-witcher.sounds.drowner_scream": "Drowner screams"
+    "tcots-witcher.sounds.drowner_scream": "Drowner screams",
 
+    "item.tcots-witcher.drowner_brain": "Drowner Brain",
+    "item.tcots-witcher.drowner_tongue": "Drowner Tongue"
 }
