@@ -1,14 +1,12 @@
 package TCOTS.entity;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.entity.misc.Drowner_Puddle.Drowner_Puddle_Entity;
+import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.entity.necrophages.DrownerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.*;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -18,8 +16,6 @@ import net.minecraft.world.biome.BiomeKeys;
 public class TCOTS_Entities {
     public static final EntityGroup NECROPHAGES = new EntityGroup();
 
-
-
     public static final EntityType<DrownerEntity> DROWNER = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "drowner"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DrownerEntity::new)
@@ -27,11 +23,11 @@ public class TCOTS_Entities {
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
 
-    public static final EntityType<Drowner_Puddle_Entity> DROWNER_PUDDLE = Registry.register(
+    public static final EntityType<DrownerPuddleEntity> DROWNER_PUDDLE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "drowner_puddle"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, Drowner_Puddle_Entity::new)
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, DrownerPuddleEntity::new)
                     //Hitbox
-                    .dimensions(EntityDimensions.changing(0.78f, 0.1f)).build());
+                    .dimensions(EntityDimensions.changing(0.1f, 0.1f)).build());
 
 
     public static void addSpawns() {

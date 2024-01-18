@@ -1,6 +1,5 @@
 package TCOTS;
 
-import TCOTS.entity.misc.Drowner_Puddle.Drowner_Puddle_Entity;
 import TCOTS.entity.necrophages.DrownerEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
