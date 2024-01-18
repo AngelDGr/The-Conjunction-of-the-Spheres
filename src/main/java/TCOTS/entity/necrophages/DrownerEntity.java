@@ -1,5 +1,6 @@
 package TCOTS.entity.necrophages;
 
+import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -21,6 +22,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.EvokerEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.*;
@@ -74,7 +76,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     protected final SwimNavigation waterNavigation;
     protected final MobNavigation landNavigation;
 
-
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation WATER_IDLE = RawAnimation.begin().thenLoop("idle.water");
     public static final RawAnimation RUNNING= RawAnimation.begin().thenLoop("move.running");
@@ -85,7 +86,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     public static final RawAnimation LUNGE = RawAnimation.begin().thenPlay("attack.lunge");
     public static final RawAnimation WATER_ATTACK1 = RawAnimation.begin().thenPlay("attack.waterswing1");
     public static final RawAnimation WATER_ATTACK2 = RawAnimation.begin().thenPlay("attack.waterswing2");
-
     public static final RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
     public static final RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
 
@@ -119,9 +119,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         //Returns to ground
         this.goalSelector.add(2, new Drowner_ReturnToGround(this));
 
-
         this.goalSelector.add(3, new Drowner_LandWaterAttackGoal(this, 1.2D, false, 40, 20));
-
 
 
         this.goalSelector.add(4, new Drowner_SwimAroundGoal(this, 1.0, 10));
@@ -532,7 +530,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         private Drowner_ReturnToGround(DrownerEntity mob) {
             this.drowner = mob;
         }
-
         @Override
         public boolean canStart() {
             return drowner.getInGroundDataTracker();
@@ -543,8 +540,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
         @Override
         public void start(){
+            spawnPuddle(drowner.getWorld(),drowner);
             drowner.playSound(TCOTS_Sounds.DROWNER_DIGGING,1.0F,1.0F);
-
             drowner.getNavigation().stop();
             drowner.getLookControl().lookAt(0,0,0);
         }
@@ -557,6 +554,11 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         public void tick(){
         }
 
+        public void spawnPuddle(World world, LivingEntity entity){
+
+            world.spawnEntity(new DrownerPuddleEntity(world,entity.getX(), entity.getY(), entity.getZ(), DrownerEntity.this));
+
+        }
 
 
     }
@@ -641,6 +643,10 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         @Override
         public boolean shouldRunEveryTick() {
             return true;
+        }
+
+        public void destroyPuddle(){
+
         }
     }
 

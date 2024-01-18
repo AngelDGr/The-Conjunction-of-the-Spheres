@@ -6,11 +6,14 @@ import TCOTS.entity.necrophages.DrownerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.impl.object.builder.FabricEntityType;
 import net.minecraft.entity.*;
+import net.minecraft.entity.mob.EvokerFangsEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeKeys;
 
 public class TCOTS_Entities {
@@ -23,11 +26,15 @@ public class TCOTS_Entities {
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
 
+
     public static final EntityType<DrownerPuddleEntity> DROWNER_PUDDLE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "drowner_puddle"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MISC, DrownerPuddleEntity::new)
-                    //Hitbox
+            FabricEntityTypeBuilder.<DrownerPuddleEntity>create(SpawnGroup.MISC, DrownerPuddleEntity::new
+                    )
+                    // Hitbox
                     .dimensions(EntityDimensions.changing(0.1f, 0.1f)).build());
+
+
 
 
     public static void addSpawns() {
