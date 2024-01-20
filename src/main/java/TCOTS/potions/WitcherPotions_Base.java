@@ -185,7 +185,7 @@ public class WitcherPotions_Base extends PotionItem {
         NbtList nbtList = potionNBT.getList("CustomPotionEffects", 9);
         nbtList.add(this.getStatusEffect().writeNbt(new NbtCompound()));
 
-        itemStack.getOrCreateNbt().putString("Potion","minecraft:water");
+        itemStack.getOrCreateNbt().putInt("CustomPotionColor",this.getStatusEffect().getEffectType().getColor());
         itemStack.getOrCreateNbt().put("CustomPotionEffects", nbtList);
 
         return itemStack;

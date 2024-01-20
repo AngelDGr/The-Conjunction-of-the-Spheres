@@ -17,7 +17,6 @@ public class BrewingStandPotionSlotMixin {
     private static void matches(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 
         if(stack.getItem().getClass() == WitcherPotions_Base.class || stack.getItem().getClass() == WitcherPotionsSplash_Base.class
-//                || stack.getItem().getClass() == Item.class
         )
         {
             cir.setReturnValue(true);
