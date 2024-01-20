@@ -3,7 +3,9 @@
 	"package": "TCOTS.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+		"BrewingRecipeRegistryMixin",
+		"BrewingStandIngredientSlotMixin",
+		"BrewingStandPotionSlotMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

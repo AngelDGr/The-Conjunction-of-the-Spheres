@@ -14,5 +14,19 @@
     "tcots-witcher.sounds.drowner_scream": "Drowner screams",
 
     "item.tcots-witcher.drowner_brain": "Drowner Brain",
-    "item.tcots-witcher.drowner_tongue": "Drowner Tongue"
+    "item.tcots-witcher.drowner_tongue": "Drowner Tongue",
+
+
+    "item.tcots-witcher.swallow_potion": "Swallow",
+    "item.tcots-witcher.killer_whale_potion": "Killer Whale",
+    "item.tcots-witcher.swallow_splash": "Splash Swallow",
+    "item.tcots-witcher.killer_whale_splash": "Splash Killer Whale",
+
+
+    "item.minecraft.splash_potion.effect.killer_whale_potion": "Splash Killer Whale",
+    "item.minecraft.splash_potion.effect.swallow": "Splash Swallow",
+
+
+    "effect.tcots-witcher.swallow": "Swallow",
+    "effect.tcots-witcher.killer_whale": "Killer Whale"
 }

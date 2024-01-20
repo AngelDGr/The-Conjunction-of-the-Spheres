@@ -18,17 +18,26 @@ public class TCOTS_ItemsGroups {
     }
 
     //ItemGroup
-    public static final ItemGroup WitcherMedallions = Registry.register(Registries.ITEM_GROUP,
+    public static final ItemGroup TheConjunctionOfTheSpheres = Registry.register(Registries.ITEM_GROUP,
             new Identifier(TCOTS_Main.MOD_ID, "tcots-witcher"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.tcots-witcher"))
-                    .icon(() -> new ItemStack(TCOTS_Items.DROWNER_SPAWN_EGG))
+                    .icon(() -> new ItemStack(TCOTS_Items.DROWNER_BRAIN))
                     .entries((displayContext, entries) -> {
-                        registerModItem(entries, TCOTS_Items.DROWNER_BRAIN);
-                        registerModItem(entries, TCOTS_Items.DROWNER_TONGUE);
+                        //Drops
+                        entries.add(TCOTS_Items.DROWNER_BRAIN);
+                        entries.add(TCOTS_Items.DROWNER_TONGUE);
+
 
                         //Spawn Eggs
-                        registerModItem(entries,TCOTS_Items.DROWNER_SPAWN_EGG)
-                        ;
+                        entries.add(TCOTS_Items.DROWNER_SPAWN_EGG);
+
+                        //Potions
+                        entries.add(TCOTS_Items.SWALLOW_POTION.getDefaultStack());
+                        entries.add(TCOTS_Items.KILLER_WHALE_POTION.getDefaultStack());
+
+                        entries.add(TCOTS_Items.SWALLOW_SPLASH.getDefaultStack());
+                        entries.add(TCOTS_Items.KILLER_WHALE_SPLASH.getDefaultStack());
+
 
                     }).build());
 

@@ -26,6 +26,7 @@
 	"mixins": [
 		"tcots-witcher.mixins.json"
 	],
+	"accessWidener" : "tcots-witcher.accesswidener",
 	"depends": {
 		"fabricloader": ">=0.15.0",
 		"minecraft": "~1.20.1",
