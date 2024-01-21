@@ -1,5 +1,8 @@
 package TCOTS.potions;
 
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.WorldEvents;
 
 
@@ -13,6 +16,9 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class WitcherPotionsSplash_Base extends WitcherPotions_Base {
     public WitcherPotionsSplash_Base(Settings settings, StatusEffectInstance effect) {
@@ -37,9 +43,5 @@ public class WitcherPotionsSplash_Base extends WitcherPotions_Base {
 
         return TypedActionResult.success(itemStack, world.isClient());
     }
-
-
-
-
 
 }

@@ -16,15 +16,21 @@
     "item.tcots-witcher.drowner_brain": "Drowner Brain",
     "item.tcots-witcher.drowner_tongue": "Drowner Tongue",
 
+    "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",
+    "tooltip.tcots-witcher.dwarven_spirit": "Base to brew Witcher Potions",
+
 
     "item.tcots-witcher.swallow_potion": "Swallow",
-    "item.tcots-witcher.killer_whale_potion": "Killer Whale",
+    "item.tcots-witcher.swallow_potion_enhanced": "Enhanced Swallow",
+    "item.tcots-witcher.swallow_potion_superior": "Superior Swallow",
+    "tooltip.effect.tcots-witcher.swallow.first":  "Accelerates health regeneration",
+    "tooltip.effect.tcots-witcher.swallow.second": "but it consumes a lot of energy",
     "item.tcots-witcher.swallow_splash": "Splash Swallow",
+
+    "item.tcots-witcher.killer_whale_potion": "Killer Whale",
+    "tooltip.effect.tcots-witcher.killer_whale.first":  "Increases breath supply, attack",
+    "tooltip.effect.tcots-witcher.killer_whale.second": "and vision while underwater",
     "item.tcots-witcher.killer_whale_splash": "Splash Killer Whale",
-
-
-    "item.minecraft.splash_potion.effect.killer_whale_potion": "Splash Killer Whale",
-    "item.minecraft.splash_potion.effect.swallow": "Splash Swallow",
 
 
     "effect.tcots-witcher.swallow": "Swallow",

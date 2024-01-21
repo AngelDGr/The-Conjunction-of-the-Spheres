@@ -4,8 +4,10 @@
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
 		"BrewingRecipeRegistryMixin",
-		"BrewingStandIngredientSlotMixin",
-		"BrewingStandPotionSlotMixin"
+		"BrewingStandPotionSlotMixin",
+		"PotionEntityMixin",
+		"InGameHudMixin",
+		"LivingEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

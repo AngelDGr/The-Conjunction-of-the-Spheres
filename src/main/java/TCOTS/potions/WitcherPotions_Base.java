@@ -54,7 +54,6 @@ public class WitcherPotions_Base extends PotionItem {
         return effectInstance;
     }
 
-
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         PlayerEntity playerEntity = user instanceof PlayerEntity ? (PlayerEntity)user : null;
@@ -63,17 +62,14 @@ public class WitcherPotions_Base extends PotionItem {
         }
 
         if (!world.isClient) {
-            List<StatusEffectInstance> list = this.getPotionEffects();
-            Iterator var6 = list.iterator();
 
-            while(var6.hasNext()) {
-                StatusEffectInstance statusEffectInstance = (StatusEffectInstance)var6.next();
-                if (statusEffectInstance.getEffectType().isInstant()) {
-                    statusEffectInstance.getEffectType().applyInstantEffect(playerEntity, playerEntity, user, statusEffectInstance.getAmplifier(), 1.0);
-                } else {
-                    user.addStatusEffect(new StatusEffectInstance(statusEffectInstance));
-                }
+            if(getStatusEffect().getEffectType().isInstant()){
+                this.getStatusEffect().getEffectType().applyInstantEffect(playerEntity, playerEntity, user, this.getStatusEffect().getAmplifier(), 1.0);
             }
+            else{
+                user.addStatusEffect(new StatusEffectInstance(getStatusEffect()));
+            }
+
         }
 
         if (playerEntity != null) {
@@ -171,25 +167,15 @@ public class WitcherPotions_Base extends PotionItem {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         buildTooltip(stack, tooltip, 1.0F);
+        tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first").formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second").formatted(Formatting.GRAY));
     }
 
     @Override
     public ItemStack getDefaultStack() {
-        return setCustomEffects();
+        return new ItemStack(this);
     }
 
-    public ItemStack setCustomEffects() {
-        ItemStack itemStack = new ItemStack(this);
-
-        NbtCompound potionNBT = itemStack.getOrCreateNbt();
-        NbtList nbtList = potionNBT.getList("CustomPotionEffects", 9);
-        nbtList.add(this.getStatusEffect().writeNbt(new NbtCompound()));
-
-        itemStack.getOrCreateNbt().putInt("CustomPotionColor",this.getStatusEffect().getEffectType().getColor());
-        itemStack.getOrCreateNbt().put("CustomPotionEffects", nbtList);
-
-        return itemStack;
-    }
     @Override
     public String getTranslationKey(ItemStack stack) {
         return this.getTranslationKey();

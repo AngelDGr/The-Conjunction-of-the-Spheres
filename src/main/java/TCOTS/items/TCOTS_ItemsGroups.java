@@ -13,10 +13,6 @@ import net.minecraft.util.Identifier;
 
 public class TCOTS_ItemsGroups {
 
-    public static void registerModItem(ItemGroup.Entries entries,Item item){
-        entries.add(item);
-    }
-
     //ItemGroup
     public static final ItemGroup TheConjunctionOfTheSpheres = Registry.register(Registries.ITEM_GROUP,
             new Identifier(TCOTS_Main.MOD_ID, "tcots-witcher"),
@@ -32,7 +28,12 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.DROWNER_SPAWN_EGG);
 
                         //Potions
+                        entries.add(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack());
+
                         entries.add(TCOTS_Items.SWALLOW_POTION.getDefaultStack());
+                        entries.add(TCOTS_Items.SWALLOW_POTION_ENHANCED.getDefaultStack());
+                        entries.add(TCOTS_Items.SWALLOW_POTION_SUPERIOR.getDefaultStack());
+
                         entries.add(TCOTS_Items.KILLER_WHALE_POTION.getDefaultStack());
 
                         entries.add(TCOTS_Items.SWALLOW_SPLASH.getDefaultStack());

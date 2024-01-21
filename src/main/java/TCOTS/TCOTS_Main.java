@@ -32,7 +32,8 @@ public class TCOTS_Main implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 		TCOTS_Effects.registerEffects();
-		TCOTS_Items.registerModItems();
+		TCOTS_Items.registerDrops();
+		TCOTS_Items.registerPotions();
 		TCOTS_ItemsGroups.registerGroupItems();
 		WitcherPotions_Recipes.registerPotionRecipes();
 		TCOTS_Sounds.init();
