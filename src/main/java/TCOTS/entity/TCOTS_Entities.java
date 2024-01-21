@@ -6,18 +6,38 @@ import TCOTS.entity.necrophages.DrownerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.fabricmc.fabric.impl.object.builder.FabricEntityType;
 import net.minecraft.entity.*;
-import net.minecraft.entity.mob.EvokerFangsEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeKeys;
 
 public class TCOTS_Entities {
+
+//    0.2.0- Necrophages & Ogroids
+// Necrophages
+    //xTODO: Drowner
+    //TODO: Rotfiend
+    //TODO: Water Hag
+    //TODO: Grave Hag
+    //TODO: Foglet
+    //TODO: Ghoul
+    //TODO: Wights
+    //TODO: Scurvers
+    //TODO: Devourer?
+    //TODO: Graveir?
+
+//  Ogroids
+    //TODO: Nekkers
+    //TODO: Cyclopses
+    //TODO: Ice Giant
+    //TODO: Rock troll
+    //TODO: Ice troll
+
     public static final EntityGroup NECROPHAGES = new EntityGroup();
+
+    public static final EntityGroup OGROIDS = new EntityGroup();
 
     public static final EntityType<DrownerEntity> DROWNER = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "drowner"),

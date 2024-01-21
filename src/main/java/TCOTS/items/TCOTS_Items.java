@@ -18,10 +18,15 @@ import net.minecraft.util.Identifier;
 
 public class TCOTS_Items {
 
+    //TODO: Add new way to craft the potions
+        //TODO: Add new alchemy ingredients (mushrooms, flowers? and alcohol)
+
+
     //TODO: Add use to the items
-        //xTODO: Drowner Tongue usable for water breathing potion
+        //xTODO: Drowner Tongue usable for Killer Whale potion
+            //TODO: Add the Killer Whale effect, improves respiration, attack and vision underwater
         //xTODO: Drowner Brain usable for a new potion, Swallow:
-            //TODO: Add the Swallow effect, works like regeneration, it's a lot slower but the potion it's more durable
+            //xTODO: Add the Swallow effect, works like regeneration, it's a lot slower but the potion it's more durable
 
     public static Item DROWNER_SPAWN_EGG;
     public static Item DROWNER_TONGUE;
