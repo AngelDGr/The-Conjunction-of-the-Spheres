@@ -26,6 +26,7 @@ public class TCOTS_Sounds {
     public static SoundEvent ROTFIEND_IDLE = registerSoundEvent("rotfiend_idle");
     public static SoundEvent ROTFIEND_DEATH = registerSoundEvent("rotfiend_death");
     public static SoundEvent ROTFIEND_LUNGE = registerSoundEvent("rotfiend_lunge");
+    public static SoundEvent ROTFIEND_EXPLOSION = registerSoundEvent("rotfiend_explosion");
     public static SoundEvent ROTFIEND_EMERGING = registerSoundEvent("rotfiend_emerging");
     public static SoundEvent ROTFIEND_DIGGING = registerSoundEvent("rotfiend_digging");
 

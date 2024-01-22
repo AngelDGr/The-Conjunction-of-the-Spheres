@@ -60,7 +60,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 //        this.goalSelector.add(0, new DrownerEntity.Drowner_EmergeFromGround(this));
         this.goalSelector.add(0, new SwimGoal(this));
 
-        this.goalSelector.add(1, new RotfiendEntity.Attack_Lunge(this,100, 0.9));
+        this.goalSelector.add(1, new RotfiendEntity.Attack_Lunge(this,100, 0.6));
 
         //Returns to ground
 //        this.goalSelector.add(2, new DrownerEntity.Drowner_ReturnToGround(this));

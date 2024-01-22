@@ -78,14 +78,16 @@
     "subtitle": "tcots-witcher.sounds.rotfiend_attack",
     "sounds": [
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_attack1",
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_attack2"
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_attack2",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_attack3"
     ]
   },
   "rotfiend_hurt": {
     "subtitle": "tcots-witcher.sounds.rotfiend_hurt",
     "sounds": [
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_hurt1",
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_hurt2"
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_hurt2",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_hurt3"
     ]
   },
   "rotfiend_idle": {
@@ -93,7 +95,8 @@
     "sounds": [
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_idle1",
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_idle2",
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_idle3"
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_idle3",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_idle4"
     ]
   },
   "rotfiend_death": {
@@ -108,7 +111,17 @@
     "subtitle": "tcots-witcher.sounds.rotfiend_lunge",
     "sounds": [
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_lunge1",
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_lunge2"
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_lunge2",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_lunge3"
+    ]
+  },
+
+  "rotfiend_explosion": {
+    "subtitle": "tcots-witcher.sounds.rotfiend_lunge",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_explosion1",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_explosion2",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_explosion3"
     ]
   },
 
