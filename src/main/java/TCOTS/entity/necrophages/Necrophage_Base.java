@@ -42,6 +42,11 @@ public class Necrophage_Base extends PathAwareEntity implements Monster {
     }
 
     @Override
+    protected boolean isDisallowedInPeaceful() {
+        return true;
+    }
+
+    @Override
     public SoundCategory getSoundCategory() {
         return SoundCategory.HOSTILE;
     }

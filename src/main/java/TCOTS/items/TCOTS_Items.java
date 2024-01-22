@@ -24,13 +24,17 @@ public class TCOTS_Items {
 
     //TODO: Add use to the items
         //xTODO: Drowner Tongue usable for Killer Whale potion
-            //TODO: Add the Killer Whale effect, improves respiration, attack and vision underwater
+            //xTODO: Add the Killer Whale effect, improves respiration and attack underwater
         //xTODO: Drowner Brain usable for a new potion, Swallow:
             //xTODO: Add the Swallow effect, works like regeneration, it's a lot slower but the potion it's more durable
 
     public static Item DROWNER_SPAWN_EGG;
     public static Item DROWNER_TONGUE;
     public static Item DROWNER_BRAIN;
+
+    public static Item ROTFIEND_SPAWN_EGG;
+
+
     //Potions
     public static Item DWARVEN_SPIRIT;
     public static Item SWALLOW_POTION;
@@ -110,6 +114,10 @@ public class TCOTS_Items {
         DROWNER_BRAIN = registerItem("drowner_brain",
                 new Item(
                         new FabricItemSettings().maxCount(16)));
+
+        ROTFIEND_SPAWN_EGG = registerItem("rotfiend_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.ROTFIEND, 0xb3867b, 0xe6e1bc,
+                        new FabricItemSettings()));
     }
 
     private static Item registerItem(String name, Item item) {

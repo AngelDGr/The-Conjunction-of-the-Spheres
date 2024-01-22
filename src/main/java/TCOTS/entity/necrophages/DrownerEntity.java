@@ -108,7 +108,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         //Emerge from ground
         this.goalSelector.add(0, new Drowner_EmergeFromGround(this));
 
-        this.goalSelector.add(1, new Drowner_Lunge(this,100, 0.9));
+        this.goalSelector.add(1, new Attack_Lunge(this,100, 0.9));
 
         //Returns to ground
         this.goalSelector.add(2, new Drowner_ReturnToGround(this));
@@ -365,12 +365,12 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
     }
     //To manage the lunge attack
-    private class Drowner_Lunge extends Goal {
+    private class Attack_Lunge extends Goal {
         private final DrownerEntity mob;
         private final int cooldownBetweenLungesAttacks;
         private final double SpeedLungeMultiplier;
 
-        private Drowner_Lunge(DrownerEntity mob, int cooldownBetweenLungesAttacks, double lungeImpulse) {
+        private Attack_Lunge(DrownerEntity mob, int cooldownBetweenLungesAttacks, double lungeImpulse) {
             this.mob = mob;
             this.cooldownBetweenLungesAttacks=cooldownBetweenLungesAttacks;
             this.setControls(EnumSet.of(Control.MOVE, Control.JUMP));
@@ -424,11 +424,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
 
         @Override
-        public void stop(){
-//            Drowner_MeleeAttackGoal.start();
-        }
-
-        @Override
         public void tick(){
             LivingEntity livingEntity = this.mob.getTarget();
 
@@ -473,7 +468,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             }
 
         }
-
 
     }
     //Makes the drowner flee after a hit that it make
@@ -1083,11 +1077,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     }
 
     @Override
-    protected boolean isDisallowedInPeaceful() {
-        return true;
-    }
-
-    @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
@@ -1118,6 +1107,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
     protected SoundEvent getStepSound() {
         return TCOTS_Sounds.DROWNER_FOOTSTEP;
     }
+
+    @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }

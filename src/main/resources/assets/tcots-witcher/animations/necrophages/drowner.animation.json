@@ -742,7 +742,8 @@
 							"vector": [20, 0, 0]
 						},
 						"0.25": {
-							"vector": [50, 0, 0]
+							"vector": [50, 0, 0],
+							"easing": "easeInOutBack"
 						},
 						"0.5": {
 							"vector": [20, 0, 0]
@@ -755,7 +756,8 @@
 							"vector": [-10, 0, -10]
 						},
 						"0.25": {
-							"vector": [40, 0, -10]
+							"vector": [40, 0, -10],
+							"easing": "easeInOutBack"
 						},
 						"0.5": {
 							"vector": [-10, 0, -10]
@@ -835,7 +837,8 @@
 							"vector": [20, 0, 0]
 						},
 						"0.25": {
-							"vector": [50, 0, 0]
+							"vector": [50, 0, 0],
+							"easing": "easeInOutBack"
 						},
 						"0.5": {
 							"vector": [20, 0, 0]
@@ -862,7 +865,8 @@
 							"vector": [-10, 0, 10]
 						},
 						"0.25": {
-							"vector": [40, 0, -10]
+							"vector": [40, 0, -10],
+							"easing": "easeInOutBack"
 						},
 						"0.5": {
 							"vector": [-10, 0, 10]

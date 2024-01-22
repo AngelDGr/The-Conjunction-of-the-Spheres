@@ -8,20 +8,26 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class TCOTS_Sounds {
+
+    //Drowner
     public static SoundEvent DROWNER_ATTACK = registerSoundEvent("drowner_attack");
     public static SoundEvent DROWNER_HURT = registerSoundEvent("drowner_hurt");
     public static SoundEvent DROWNER_IDLE = registerSoundEvent("drowner_idle");
     public static SoundEvent DROWNER_DEATH = registerSoundEvent("drowner_death");
-
     public static SoundEvent DROWNER_FOOTSTEP = registerSoundEvent("drowner_footstep");
-
+    public static SoundEvent DROWNER_LUNGE = registerSoundEvent("drowner_lunge");
+    public static SoundEvent DROWNER_EMERGING = registerSoundEvent("drowner_emerging");
+    public static SoundEvent DROWNER_DIGGING = registerSoundEvent("drowner_digging");
     public static SoundEvent DROWNER_SCREAM = registerSoundEvent("drowner_scream");
 
-    public static SoundEvent DROWNER_LUNGE = registerSoundEvent("drowner_lunge");
-
-    public static SoundEvent DROWNER_EMERGING = registerSoundEvent("drowner_emerging");
-
-    public static SoundEvent DROWNER_DIGGING = registerSoundEvent("drowner_digging");
+    //Rotfiend
+    public static SoundEvent ROTFIEND_ATTACK = registerSoundEvent("rotfiend_attack");
+    public static SoundEvent ROTFIEND_HURT = registerSoundEvent("rotfiend_hurt");
+    public static SoundEvent ROTFIEND_IDLE = registerSoundEvent("rotfiend_idle");
+    public static SoundEvent ROTFIEND_DEATH = registerSoundEvent("rotfiend_death");
+    public static SoundEvent ROTFIEND_LUNGE = registerSoundEvent("rotfiend_lunge");
+    public static SoundEvent ROTFIEND_EMERGING = registerSoundEvent("rotfiend_emerging");
+    public static SoundEvent ROTFIEND_DIGGING = registerSoundEvent("rotfiend_digging");
 
 //    public static final BlockSoundGroup ANIMATED_BLOCK_SOUNDS = new BlockSoundGroup(1f, 1f,
 //            ModSounds.ANIMATED_BLOCK_BREAK, ModSounds.ANIMATED_BLOCK_WALK, ModSounds.ANIMATED_BLOCK_PLACE,

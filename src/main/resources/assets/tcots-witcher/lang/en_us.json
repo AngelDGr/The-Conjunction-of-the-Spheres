@@ -1,7 +1,7 @@
 {
     "itemgroup.tcots-witcher": "The Conjunction of the Spheres",
-    "item.tcots-witcher.drowner_spawn_egg": "Drowner Spawn Egg",
 
+    "item.tcots-witcher.drowner_spawn_egg": "Drowner Spawn Egg",
     "entity.tcots-witcher.drowner": "Drowner",
     "tcots-witcher.sounds.drowner_footstep": "Footsteps",
     "tcots-witcher.sounds.drowner_attack": "Drowner attacks",
@@ -16,6 +16,17 @@
     "item.tcots-witcher.drowner_brain": "Drowner Brain",
     "item.tcots-witcher.drowner_tongue": "Drowner Tongue",
 
+    "item.tcots-witcher.rotfiend_spawn_egg": "Rotfiend Spawn Egg",
+    "entity.tcots-witcher.rotfiend": "Rotfiend",
+    "tcots-witcher.sounds.rotfiend_attack": "Rotfiend attacks",
+    "tcots-witcher.sounds.rotfiend_hurt": "Rotfiend hurts",
+    "tcots-witcher.sounds.rotfiend_idle": "Rotfiend groans",
+    "tcots-witcher.sounds.rotfiend_death": "Rotfiend dies",
+    "tcots-witcher.sounds.rotfiend_lunge": "Rotfiend lunges",
+    "tcots-witcher.sounds.rotfiend_emerging": "Rotfiend emerges from ground",
+    "tcots-witcher.sounds.rotfiend_digging": "Rotfiend return to ground",
+
+
     "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",
     "tooltip.tcots-witcher.dwarven_spirit": "Base to brew Witcher Potions",
 
@@ -28,8 +39,8 @@
     "item.tcots-witcher.swallow_splash": "Splash Swallow",
 
     "item.tcots-witcher.killer_whale_potion": "Killer Whale",
-    "tooltip.effect.tcots-witcher.killer_whale.first":  "Increases breath supply, attack",
-    "tooltip.effect.tcots-witcher.killer_whale.second": "and vision while underwater",
+    "tooltip.effect.tcots-witcher.killer_whale.first":  "Increases breath supply and",
+    "tooltip.effect.tcots-witcher.killer_whale.second": "attack while underwater",
     "item.tcots-witcher.killer_whale_splash": "Splash Killer Whale",
 
 

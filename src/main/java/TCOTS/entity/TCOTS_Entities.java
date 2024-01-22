@@ -3,6 +3,7 @@ package TCOTS.entity;
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.entity.necrophages.DrownerEntity;
+import TCOTS.entity.necrophages.RotfiendEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -54,7 +55,11 @@ public class TCOTS_Entities {
                     // Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 0.1f)).build());
 
-
+    public static final EntityType<RotfiendEntity> ROTFIEND = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "rotfiend"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, RotfiendEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
 
     public static void addSpawns() {
@@ -72,7 +77,7 @@ public class TCOTS_Entities {
                                                                 BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,
                                                                 BiomeKeys.COLD_OCEAN,BiomeKeys.DEEP_COLD_OCEAN,
                                                                 BiomeKeys.RIVER), SpawnGroup.MONSTER,
-                DROWNER, 20, 2, 3);
+                DROWNER, 10, 2, 3);
 
         SpawnRestriction.register(DROWNER, SpawnRestriction.Location.NO_RESTRICTIONS,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DrownerEntity::canSpawnDrowner);

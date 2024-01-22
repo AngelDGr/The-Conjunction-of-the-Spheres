@@ -26,6 +26,7 @@ public class TCOTS_ItemsGroups {
 
                         //Spawn Eggs
                         entries.add(TCOTS_Items.DROWNER_SPAWN_EGG);
+                        entries.add(TCOTS_Items.ROTFIEND_SPAWN_EGG);
 
                         //Potions
                         entries.add(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack());
