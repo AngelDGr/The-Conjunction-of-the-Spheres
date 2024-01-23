@@ -1,6 +1,7 @@
 package TCOTS.entity.necrophages;
 
 import TCOTS.sounds.TCOTS_Sounds;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -12,15 +13,23 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
+import net.minecraft.world.explosion.ExplosionBehavior;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -42,36 +51,41 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     public static final RawAnimation ATTACK2 = RawAnimation.begin().thenPlay("attack.swing2");
     public static final RawAnimation ATTACK3 = RawAnimation.begin().thenPlay("attack.swing3");
     public static final RawAnimation LUNGE = RawAnimation.begin().thenPlay("attack.lunge");
+
+    public static final RawAnimation EXPLOSION = RawAnimation.begin().thenPlayAndHold("special.explosion");
     public static final RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
     public static final RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
 
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> EXPLODING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    protected static final TrackedData<Boolean> TRIGGER_EXPLOSION = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     public RotfiendEntity(EntityType<? extends RotfiendEntity> entityType, World world) {
         super(entityType, world);
     }
 
     @Override
-    protected void initGoals()
-    {
+    protected void initGoals() {
         //Attack
 
         //Emerge from ground
 //        this.goalSelector.add(0, new DrownerEntity.Drowner_EmergeFromGround(this));
-        this.goalSelector.add(0, new SwimGoal(this));
+        this.goalSelector.add(0, new Rotfiend_Explosion(this));
+        this.goalSelector.add(1, new SwimGoal(this));
 
-        this.goalSelector.add(1, new RotfiendEntity.Attack_Lunge(this,100, 0.6));
+
+        this.goalSelector.add(2, new RotfiendEntity.Attack_Lunge(this, 100, 0.6));
 
         //Returns to ground
 //        this.goalSelector.add(2, new DrownerEntity.Drowner_ReturnToGround(this));
 
-        this.goalSelector.add(2, new MeleeAttackGoal(this, 1.2D, false));
+        this.goalSelector.add(3, new MeleeAttackGoal(this, 1.2D, false));
 
 
+        this.goalSelector.add(4, new WanderAroundGoal(this, 0.75f, 20));
 
-        this.goalSelector.add(5, new WanderAroundGoal(this, 0.75f, 20));
-
-        this.goalSelector.add(6, new LookAroundGoal(this));
+        this.goalSelector.add(5, new LookAroundGoal(this));
 
         //Objectives
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
@@ -79,8 +93,9 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
 
-    public boolean cooldownBetweenLunges=false;
+    public boolean cooldownBetweenLunges = false;
     public int LungeTicks;
+
     private class Attack_Lunge extends Goal {
         private final RotfiendEntity mob;
         private final int cooldownBetweenLungesAttacks;
@@ -88,15 +103,15 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
         private Attack_Lunge(RotfiendEntity mob, int cooldownBetweenLungesAttacks, double lungeImpulse) {
             this.mob = mob;
-            this.cooldownBetweenLungesAttacks=cooldownBetweenLungesAttacks;
+            this.cooldownBetweenLungesAttacks = cooldownBetweenLungesAttacks;
             this.setControls(EnumSet.of(Control.MOVE, Control.JUMP));
-            this.SpeedLungeMultiplier=lungeImpulse;
+            this.SpeedLungeMultiplier = lungeImpulse;
         }
 
         @Override
         public boolean canStart() {
             LivingEntity target = this.mob.getTarget();
-            if(target!=null){
+            if (target != null) {
                 //5 square distance like 1.5 blocks approx
                 //I want 7.5 blocks approx
                 //So 7.5/1.5=5
@@ -105,23 +120,23 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
                         && (this.mob.getTarget().getY() - this.mob.getY()) <= 1
 //                        && !this.mob.getIsEmerging()
 //                        && !this.mob.getInGroundDataTracker()
-                        ;}
-            else {
+                        ;
+            } else {
                 return false;
             }
         }
 
         @Override
-        public boolean shouldContinue(){
+        public boolean shouldContinue() {
             LivingEntity target = this.mob.getTarget();
-            if(target!=null){
+            if (target != null) {
                 //5 square distance like 1.5 blocks approx
                 //I want 7.5 blocks approx
                 //So 7.5/1.5=5
                 return !RotfiendEntity.this.cooldownBetweenLunges && this.mob.isAttacking()
                         && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
-                        && (this.mob.getTarget().getY() - this.mob.getY()) <= 1;}
-            else {
+                        && (this.mob.getTarget().getY() - this.mob.getY()) <= 1;
+            } else {
                 return false;
             }
         }
@@ -135,15 +150,15 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         }
 
         @Override
-        public void start(){
+        public void start() {
             this.mob.getNavigation().stop();
         }
 
         @Override
-        public void tick(){
+        public void tick() {
             LivingEntity livingEntity = this.mob.getTarget();
 
-            if(livingEntity!=null){
+            if (livingEntity != null) {
 //                double d = this.mob.getSquaredDistanceToAttackPosOf(livingEntity);
                 LungeAttack(livingEntity);
             }
@@ -162,9 +177,9 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
                     (dZtoTarget / length) * SpeedLungeMultiplier);
         }
 
-        private void LungeAttack(LivingEntity target){
+        private void LungeAttack(LivingEntity target) {
             //Check if it can do a lunge
-            if(!RotfiendEntity.this.cooldownBetweenLunges){
+            if (!RotfiendEntity.this.cooldownBetweenLunges) {
                 //Makes the lunge
                 //Extra random ticks in cooldown
                 randomExtra = RotfiendEntity.this.random.nextInt(51);
@@ -187,44 +202,85 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
     }
 
+    private class Rotfiend_Explosion extends Goal {
+        int AnimationTicks = 30;
+
+        private final RotfiendEntity rotfiend;
+
+        private Rotfiend_Explosion(RotfiendEntity mob) {
+            this.rotfiend = mob;
+            this.setControls(EnumSet.of(Goal.Control.MOVE));
+        }
+
+        @Override
+        public boolean canStart() {
+            return RotfiendEntity.this.getHealth() < (RotfiendEntity.this.getMaxHealth() * 0.5);
+        }
+
+        @Override
+        public void start() {
+            this.rotfiend.playSound(TCOTS_Sounds.ROTFIEND_EXPLOSION, 1.0F, 1.0F);
+            this.rotfiend.setIsExploding(true);
+            rotfiend.getNavigation().stop();
+            rotfiend.getLookControl().lookAt(0, 0, 0);
+            AnimationTicks = 30;
+        }
+
+        @Override
+        public void tick() {
+            if (AnimationTicks > 0) {
+//                System.out.println("AnimationTicks: " + AnimationTicks);
+                --AnimationTicks;
+            } else {
+                stop();
+            }
+        }
+
+        @Override
+        public void stop() {
+            rotfiend.setIsTriggerExplosion(true);
+        }
+    }
+
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3.0f) //Amount of health that hurts you
 //                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 2.0f)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.30f);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.28f);
     }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         //Walk/Idle Controller
-        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, state->{
+        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, state -> {
 
-                //If it's aggressive and it is moving
-                if (this.isAttacking() && state.isMoving()) {
+            //If it's aggressive and it is moving
+            if (this.isAttacking() && state.isMoving()) {
+                return state.setAndContinue(RUNNING);
+            }
+            //It's not attacking and/or it's no moving
+            else {
+                //If it's attacking but NO moving
+                if (isAttacking()) {
                     return state.setAndContinue(RUNNING);
-                }
-                //It's not attacking and/or it's no moving
-                else {
-                    //If it's attacking but NO moving
-                    if (isAttacking()) {
-                        return state.setAndContinue(RUNNING);
-                    } else {
-                        //If it's just moving
-                        if (state.isMoving()) {
-                            return state.setAndContinue(WALKING);
-                        }
-                        //Anything else
-                        else {
+                } else {
+                    //If it's just moving
+                    if (state.isMoving()) {
+                        return state.setAndContinue(WALKING);
+                    }
+                    //Anything else
+                    else {
 //                            //It's in the ground and not emerging
 //                            if(this.getInGroundDataTracker() && !this.getIsEmerging()){
 //                                state.setAnimation(DIGGING_IN);
 //                                return PlayState.CONTINUE;
 //                            }else{
-                                return state.setAndContinue(IDLE);
+                        return state.setAndContinue(IDLE);
 //                            }
-                        }
                     }
                 }
+            }
 //                        }
 
         }
@@ -236,9 +292,9 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
                     state.getController().forceAnimationReset();
                     // Random instance
                     // Generates three random numbers
-                    if (this.handSwinging){
+                    if (this.handSwinging) {
                         int r = RotfiendEntity.this.random.nextInt(3);
-                        switch (r){
+                        switch (r) {
                             case 0:
                                 return state.setAndContinue(ATTACK1);
 
@@ -256,7 +312,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         //Lunge Controller
         controllerRegistrar.add(
                 new AnimationController<>(this, "LungeController", 1, state -> {
-                    if (this.getIsLugging()){
+                    if (this.getIsLugging()) {
                         state.setAnimation(LUNGE);
                         return PlayState.CONTINUE;
                     }
@@ -265,34 +321,64 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
                     return PlayState.CONTINUE;
                 })
         );
+
+        //Explosion Controller
+        controllerRegistrar.add(
+                new AnimationController<>(this, "ExplosionController", 1, state -> {
+                    if (this.getIsExploding()) {
+                        state.setAnimation(EXPLOSION);
+                        return PlayState.CONTINUE;
+                    }
+
+                    state.getController().forceAnimationReset();
+                    return PlayState.CONTINUE;
+                })
+        );
+
     }
 
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
+        this.dataTracker.startTracking(EXPLODING, Boolean.FALSE);
+        this.dataTracker.startTracking(TRIGGER_EXPLOSION, Boolean.FALSE);
+        ;
 //        this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
 //        this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
 
     }
 
-    public final boolean getIsLugging(){
+    public final boolean getIsLugging() {
         return this.dataTracker.get(LUGGING);
     }
-    public final void setIsLugging(boolean wasLugging){
+
+    public final void setIsLugging(boolean wasLugging) {
         this.dataTracker.set(LUGGING, wasLugging);
     }
 
+    public final boolean getIsExploding() {
+        return this.dataTracker.get(EXPLODING);
+    }
+    public final void setIsExploding(boolean wasExploding) {
+        this.dataTracker.set(EXPLODING, wasExploding);
+    }
 
+    public final boolean getIsTriggerExplosion() {
+        return this.dataTracker.get(TRIGGER_EXPLOSION);
+    }
+    public final void setIsTriggerExplosion(boolean wasParticles) {
+        this.dataTracker.set(TRIGGER_EXPLOSION, wasParticles);
+    }
 
 
     @Override
-    public void tick(){
+    public void tick() {
         //Start the counter for the Lunge attack
         if (RotfiendEntity.this.LungeTicks > 0) {
             RotfiendEntity.this.setIsLugging(false);
             --RotfiendEntity.this.LungeTicks;
-        }else {
+        } else {
             RotfiendEntity.this.cooldownBetweenLunges = false;
         }
 
@@ -310,20 +396,83 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 //        if(this.getIsEmerging()){
 //            this.spawnGroundParticles();
 //        }
-
+        if(this.getIsTriggerExplosion()) {
+            this.explode();
+        }
         super.tick();
     }
 
 
+    private void explode() {
+//        if (!this.getWorld().isClient) {
+//            float f = this.shouldRenderOverlay() ? 2.0f : 1.0f;
+            this.dead = true;
+            this.createExplosion(this, this.getX(), this.getY(), this.getZ(), (float) 2, World.ExplosionSourceType.MOB);
+//            this.spawnGroundParticles();
+
+            this.discard();
+//            this.spawnEffectsCloud();
+//        }
+    }
+
+    private void spawnGroundParticles() {
+        Random random = this.getRandom();
+        BlockState blockState = this.getSteppingBlockState();
+        if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
+            for(int i = 0; i < 11; ++i) {
+                double d = this.getX() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
+                double e = this.getY();
+                double f = this.getZ() + (double)MathHelper.nextBetween(random, -0.7F, 0.7F);
+
+                if(i==5
+                ){
+                    this.getWorld().addParticle(ParticleTypes.SPLASH, d, e, f, 0.0, 0.0, 0.0);
+                }
+                else{
+                    this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+
+                }
+
+            }
+        }
+    }
+
+    public Explosion createExplosion(@Nullable Entity entity, double x, double y, double z, float power, World.ExplosionSourceType explosionSourceType) {
+        return this.createExplosion(entity, null, null, x, y, z, power, false, explosionSourceType);
+    }
+
+
+    public Explosion createExplosion(@Nullable Entity entity, @Nullable DamageSource damageSource, @Nullable ExplosionBehavior behavior, double x, double y, double z, float power, boolean createFire, World.ExplosionSourceType explosionSourceType) {
+        return this.createExplosion(entity, damageSource, behavior, x, y, z, power, createFire, explosionSourceType, true);
+    }
+
+
+    public Explosion createExplosion(@Nullable Entity entity, @Nullable DamageSource damageSource, @Nullable ExplosionBehavior behavior, double x, double y, double z, float power, boolean createFire, World.ExplosionSourceType explosionSourceType, boolean particles) {
+        Explosion.DestructionType destructionType = Explosion.DestructionType.KEEP;
+        Explosion explosion = new Explosion(this.getWorld(), entity, damageSource, behavior, x, y, z, power, createFire, destructionType);
+        explosion.collectBlocksAndDamageEntities();
+        explosion.affectWorld(particles);
+        if (this.getWorld().isClient) {
+            this.getWorld().playSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_ALLAY_DEATH, SoundCategory.HOSTILE, 4.0f, (1.0f + (this.getWorld().random.nextFloat() - getWorld().random.nextFloat()) * 0.2f) * 0.7f, false);
+        }
+        return explosion;
+    }
+
+
+    @Override
+    public boolean canExplosionDestroyBlock(Explosion explosion, BlockView world, BlockPos pos, BlockState state, float explosionPower) {
+        return false;
+    }
+
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
-//        if(!this.getInGroundDataTracker()){
+        if(!this.getIsExploding()){
             return TCOTS_Sounds.ROTFIEND_IDLE;
-//        }
-//        else{
-//            return null;
-//        }
+        }
+        else{
+            return null;
+        }
     }
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
@@ -343,7 +492,19 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     }
 
     @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return this.getIsExploding() || super.isInvulnerableTo(damageSource);
+    }
+
+    @Override
+    public boolean isPushable() {
+        return !this.getIsExploding();
+    }
+
+    @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
+
+
 }

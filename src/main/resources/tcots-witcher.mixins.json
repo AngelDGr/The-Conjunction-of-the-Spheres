@@ -7,7 +7,9 @@
 		"BrewingStandPotionSlotMixin",
 		"PotionEntityMixin",
 		"InGameHudMixin",
-		"LivingEntityMixin"
+		"LivingEntityMixin",
+		"WorldMixin",
+		"ServerWorldMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
