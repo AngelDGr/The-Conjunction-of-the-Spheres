@@ -1,22 +1,25 @@
 package TCOTS.entity.necrophages;
 
 import TCOTS.sounds.TCOTS_Sounds;
+import com.mojang.logging.LogUtils;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -26,10 +29,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionBehavior;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -214,7 +219,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
         @Override
         public boolean canStart() {
-            return RotfiendEntity.this.getHealth() < (RotfiendEntity.this.getMaxHealth() * 0.5);
+            return (RotfiendEntity.this.getHealth() < (RotfiendEntity.this.getMaxHealth() * 0.5) && !rotfiend.isOnFire());
         }
 
         @Override
@@ -360,6 +365,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     public final boolean getIsExploding() {
         return this.dataTracker.get(EXPLODING);
     }
+
     public final void setIsExploding(boolean wasExploding) {
         this.dataTracker.set(EXPLODING, wasExploding);
     }
@@ -367,6 +373,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     public final boolean getIsTriggerExplosion() {
         return this.dataTracker.get(TRIGGER_EXPLOSION);
     }
+
     public final void setIsTriggerExplosion(boolean wasParticles) {
         this.dataTracker.set(TRIGGER_EXPLOSION, wasParticles);
     }
@@ -396,7 +403,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 //        if(this.getIsEmerging()){
 //            this.spawnGroundParticles();
 //        }
-        if(this.getIsTriggerExplosion()) {
+        if (this.getIsTriggerExplosion()) {
             this.explode();
         }
         super.tick();
@@ -404,31 +411,37 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
 
     private void explode() {
-//        if (!this.getWorld().isClient) {
-//            float f = this.shouldRenderOverlay() ? 2.0f : 1.0f;
-            this.dead = true;
-            this.createExplosion(this, this.getX(), this.getY(), this.getZ(), (float) 2, World.ExplosionSourceType.MOB);
-//            this.spawnGroundParticles();
-
-            this.discard();
-//            this.spawnEffectsCloud();
+//        if (this.getWorld().isClient) {
+//            this.getWorld().playSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_ALLAY_DEATH, SoundCategory.HOSTILE, 4.0f, (1.0f + (this.getWorld().random.nextFloat() - getWorld().random.nextFloat()) * 0.2f) * 0.7f, false);
 //        }
+//
+//        if (!this.getWorld().isClient) {
+////            float f = this.shouldRenderOverlay() ? 2.0f : 1.0f;
+//            this.dead = true;
+//            this.createExplosion(this, this.getX(), this.getY(), this.getZ(), (float) 2, World.ExplosionSourceType.MOB);
+////            this.spawnGroundParticles();
+//
+//            this.discard();
+////            this.spawnEffectsCloud();
+//        }
+        this.dead = true;
+        this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 2f, World.ExplosionSourceType.MOB);
+        this.discard();
     }
 
     private void spawnGroundParticles() {
         Random random = this.getRandom();
         BlockState blockState = this.getSteppingBlockState();
         if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
-            for(int i = 0; i < 11; ++i) {
+            for (int i = 0; i < 11; ++i) {
                 double d = this.getX() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
                 double e = this.getY();
-                double f = this.getZ() + (double)MathHelper.nextBetween(random, -0.7F, 0.7F);
+                double f = this.getZ() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
 
-                if(i==5
-                ){
+                if (i == 5
+                ) {
                     this.getWorld().addParticle(ParticleTypes.SPLASH, d, e, f, 0.0, 0.0, 0.0);
-                }
-                else{
+                } else {
                     this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
 
                 }
@@ -452,9 +465,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         Explosion explosion = new Explosion(this.getWorld(), entity, damageSource, behavior, x, y, z, power, createFire, destructionType);
         explosion.collectBlocksAndDamageEntities();
         explosion.affectWorld(particles);
-        if (this.getWorld().isClient) {
-            this.getWorld().playSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_ALLAY_DEATH, SoundCategory.HOSTILE, 4.0f, (1.0f + (this.getWorld().random.nextFloat() - getWorld().random.nextFloat()) * 0.2f) * 0.7f, false);
-        }
+
         return explosion;
     }
 
@@ -467,22 +478,26 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
-        if(!this.getIsExploding()){
+        if (!this.getIsExploding()) {
             return TCOTS_Sounds.ROTFIEND_IDLE;
-        }
-        else{
+        } else {
             return null;
         }
     }
+
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return TCOTS_Sounds.ROTFIEND_HURT;
     }
+
     @Override
     protected SoundEvent getDeathSound() {
-        return TCOTS_Sounds.ROTFIEND_DEATH;
+        if (!this.isOnFire()) {
+            return null;
+        } else {
+            return TCOTS_Sounds.ROTFIEND_DEATH;
+        }
     }
-
 
     //Attack Sound
     @Override
@@ -501,10 +516,34 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         return !this.getIsExploding();
     }
 
+    boolean killedWithoutFire = true;
+    private static final Logger LOGGER = LogUtils.getLogger();
+
+    public int ticksSinceDeath=60;
+    @Override
+    protected void updatePostDeath() {
+        if(!this.isOnFire()) {
+            if (ticksSinceDeath == 60) {
+                this.playSound(TCOTS_Sounds.ROTFIEND_EXPLOSION, 1.0F, 1.0F);
+                this.setIsExploding(true);
+                this.getNavigation().stop();
+                this.getLookControl().lookAt(0, 0, 0);
+            }
+            if (ticksSinceDeath > 0) {
+//                System.out.println("AnimationTicks: " + AnimationTicks);
+                --this.ticksSinceDeath;
+            } else {
+                this.setIsTriggerExplosion(true);
+            }
+        }
+        else {
+            super.updatePostDeath();
+        }
+    }
+
+
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
-
-
 }
