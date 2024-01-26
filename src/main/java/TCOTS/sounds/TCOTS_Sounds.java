@@ -3,7 +3,6 @@ package TCOTS.sounds;
 import TCOTS.TCOTS_Main;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
@@ -26,7 +25,9 @@ public class TCOTS_Sounds {
     public static SoundEvent ROTFIEND_IDLE = registerSoundEvent("rotfiend_idle");
     public static SoundEvent ROTFIEND_DEATH = registerSoundEvent("rotfiend_death");
     public static SoundEvent ROTFIEND_LUNGE = registerSoundEvent("rotfiend_lunge");
-    public static SoundEvent ROTFIEND_EXPLOSION = registerSoundEvent("rotfiend_explosion");
+    public static SoundEvent ROTFIEND_EXPLODING = registerSoundEvent("rotfiend_exploding");
+
+    public static SoundEvent ROTFIEND_BLOOD_EXPLOSION = registerSoundEvent("rotfiend_blood_explosion");
     public static SoundEvent ROTFIEND_EMERGING = registerSoundEvent("rotfiend_emerging");
     public static SoundEvent ROTFIEND_DIGGING = registerSoundEvent("rotfiend_digging");
 

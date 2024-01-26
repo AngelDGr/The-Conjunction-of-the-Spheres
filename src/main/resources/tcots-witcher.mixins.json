@@ -8,7 +8,9 @@
 		"PotionEntityMixin",
 		"InGameHudMixin",
 		"LivingEntityMixin",
+		"ExplosionMixin",
 		"WorldMixin",
+		"ClientPlayNetworkHandlerMixin",
 		"ServerWorldMixin"
 	],
 	"injectors": {

@@ -116,12 +116,19 @@
     ]
   },
 
-  "rotfiend_explosion": {
-    "subtitle": "tcots-witcher.sounds.rotfiend_lunge",
+  "rotfiend_exploding": {
+    "subtitle": "tcots-witcher.sounds.rotfiend_exploding",
     "sounds": [
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_explosion1",
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_explosion2",
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_explosion3"
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_exploding1",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_exploding2",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_exploding3"
+    ]
+  },
+
+  "rotfiend_blood_explosion": {
+    "subtitle": "tcots-witcher.sounds.rotfiend_blood_explosion",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_blood_explosion1"
     ]
   },
 

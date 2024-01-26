@@ -1,7 +1,6 @@
 package TCOTS.entity.necrophages;
 
 import TCOTS.sounds.TCOTS_Sounds;
-import com.mojang.logging.LogUtils;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -9,32 +8,22 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.explosion.Explosion;
-import net.minecraft.world.explosion.ExplosionBehavior;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -46,6 +35,10 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.EnumSet;
 
 public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
+
+    //TODO: Add Emerging animation (And digging?)
+    //TODO: Add drops
+    //TODO: Add spawning
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -65,6 +58,8 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     protected static final TrackedData<Boolean> EXPLODING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     protected static final TrackedData<Boolean> TRIGGER_EXPLOSION = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+
 
     public RotfiendEntity(EntityType<? extends RotfiendEntity> entityType, World world) {
         super(entityType, world);
@@ -224,7 +219,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
         @Override
         public void start() {
-            this.rotfiend.playSound(TCOTS_Sounds.ROTFIEND_EXPLOSION, 1.0F, 1.0F);
+            this.rotfiend.playSound(TCOTS_Sounds.ROTFIEND_EXPLODING, 1.0F, 1.0F);
             this.rotfiend.setIsExploding(true);
             rotfiend.getNavigation().stop();
             rotfiend.getLookControl().lookAt(0, 0, 0);
@@ -348,7 +343,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
         this.dataTracker.startTracking(EXPLODING, Boolean.FALSE);
         this.dataTracker.startTracking(TRIGGER_EXPLOSION, Boolean.FALSE);
-        ;
 //        this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
 //        this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
 
@@ -374,10 +368,14 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         return this.dataTracker.get(TRIGGER_EXPLOSION);
     }
 
-    public final void setIsTriggerExplosion(boolean wasParticles) {
-        this.dataTracker.set(TRIGGER_EXPLOSION, wasParticles);
+    public final void setIsTriggerExplosion(boolean wasExplosion) {
+        this.dataTracker.set(TRIGGER_EXPLOSION, wasExplosion);
     }
 
+    @Override
+    public void onTrackedDataSet(TrackedData<?> data) {
+        super.onTrackedDataSet(data);
+    }
 
     @Override
     public void tick() {
@@ -409,24 +407,40 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         super.tick();
     }
 
+//    @Override
+//    public void mobTick(){
+//
+//        super.mobTick();
+//    }
+
 
     private void explode() {
-//        if (this.getWorld().isClient) {
-//            this.getWorld().playSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_ALLAY_DEATH, SoundCategory.HOSTILE, 4.0f, (1.0f + (this.getWorld().random.nextFloat() - getWorld().random.nextFloat()) * 0.2f) * 0.7f, false);
-//        }
-//
-//        if (!this.getWorld().isClient) {
-////            float f = this.shouldRenderOverlay() ? 2.0f : 1.0f;
-//            this.dead = true;
-//            this.createExplosion(this, this.getX(), this.getY(), this.getZ(), (float) 2, World.ExplosionSourceType.MOB);
-////            this.spawnGroundParticles();
-//
-//            this.discard();
-////            this.spawnEffectsCloud();
-//        }
-        this.dead = true;
-        this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 2f, World.ExplosionSourceType.MOB);
-        this.discard();
+        if (!this.getWorld().isClient) {
+            this.dead = true;
+            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), (float) 3, World.ExplosionSourceType.MOB);
+            this.discard();
+        }
+    }
+
+    public int ticksSinceDeath=60;
+    @Override
+    protected void updatePostDeath() {
+        if(!this.isOnFire()) {
+            if (ticksSinceDeath == 60) {
+                this.playSound(TCOTS_Sounds.ROTFIEND_EXPLODING, 1.0F, 1.0F);
+                this.setIsExploding(true);
+                this.getNavigation().stop();
+                this.getLookControl().lookAt(0, 0, 0);
+            }
+            if (ticksSinceDeath > 0) {
+                --this.ticksSinceDeath;
+            } else {
+                this.setIsTriggerExplosion(true);
+            }
+        }
+        else {
+            super.updatePostDeath();
+        }
     }
 
     private void spawnGroundParticles() {
@@ -448,25 +462,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
             }
         }
-    }
-
-    public Explosion createExplosion(@Nullable Entity entity, double x, double y, double z, float power, World.ExplosionSourceType explosionSourceType) {
-        return this.createExplosion(entity, null, null, x, y, z, power, false, explosionSourceType);
-    }
-
-
-    public Explosion createExplosion(@Nullable Entity entity, @Nullable DamageSource damageSource, @Nullable ExplosionBehavior behavior, double x, double y, double z, float power, boolean createFire, World.ExplosionSourceType explosionSourceType) {
-        return this.createExplosion(entity, damageSource, behavior, x, y, z, power, createFire, explosionSourceType, true);
-    }
-
-
-    public Explosion createExplosion(@Nullable Entity entity, @Nullable DamageSource damageSource, @Nullable ExplosionBehavior behavior, double x, double y, double z, float power, boolean createFire, World.ExplosionSourceType explosionSourceType, boolean particles) {
-        Explosion.DestructionType destructionType = Explosion.DestructionType.KEEP;
-        Explosion explosion = new Explosion(this.getWorld(), entity, damageSource, behavior, x, y, z, power, createFire, destructionType);
-        explosion.collectBlocksAndDamageEntities();
-        explosion.affectWorld(particles);
-
-        return explosion;
     }
 
 
@@ -517,29 +512,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     }
 
     boolean killedWithoutFire = true;
-    private static final Logger LOGGER = LogUtils.getLogger();
 
-    public int ticksSinceDeath=60;
-    @Override
-    protected void updatePostDeath() {
-        if(!this.isOnFire()) {
-            if (ticksSinceDeath == 60) {
-                this.playSound(TCOTS_Sounds.ROTFIEND_EXPLOSION, 1.0F, 1.0F);
-                this.setIsExploding(true);
-                this.getNavigation().stop();
-                this.getLookControl().lookAt(0, 0, 0);
-            }
-            if (ticksSinceDeath > 0) {
-//                System.out.println("AnimationTicks: " + AnimationTicks);
-                --this.ticksSinceDeath;
-            } else {
-                this.setIsTriggerExplosion(true);
-            }
-        }
-        else {
-            super.updatePostDeath();
-        }
-    }
 
 
     @Override
