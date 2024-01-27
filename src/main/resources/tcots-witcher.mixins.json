@@ -11,7 +11,8 @@
 		"ExplosionMixin",
 		"WorldMixin",
 		"ClientPlayNetworkHandlerMixin",
-		"ServerWorldMixin"
+		"ServerWorldMixin",
+		"ServerPlayerEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

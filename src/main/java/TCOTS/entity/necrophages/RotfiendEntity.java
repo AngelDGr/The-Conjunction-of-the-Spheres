@@ -11,6 +11,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -21,6 +22,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.NotNull;
@@ -37,8 +40,8 @@ import java.util.EnumSet;
 public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
     //TODO: Add Emerging animation (And digging?)
-    //TODO: Add drops
-    //TODO: Add spawning
+    //xTODO: Add drops
+    //xTODO: Add spawning
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -71,7 +74,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
         //Emerge from ground
 //        this.goalSelector.add(0, new DrownerEntity.Drowner_EmergeFromGround(this));
-        this.goalSelector.add(0, new Rotfiend_Explosion(this));
+        this.goalSelector.add(0, new Rotfiend_Explosion(this, 0.25f));
         this.goalSelector.add(1, new SwimGoal(this));
 
 
@@ -205,16 +208,19 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     private class Rotfiend_Explosion extends Goal {
         int AnimationTicks = 30;
 
+        final float percentageHealth;
+
         private final RotfiendEntity rotfiend;
 
-        private Rotfiend_Explosion(RotfiendEntity mob) {
+        private Rotfiend_Explosion(RotfiendEntity mob, float percentageHealth) {
             this.rotfiend = mob;
+            this.percentageHealth=percentageHealth;
             this.setControls(EnumSet.of(Goal.Control.MOVE));
         }
 
         @Override
         public boolean canStart() {
-            return (RotfiendEntity.this.getHealth() < (RotfiendEntity.this.getMaxHealth() * 0.5) && !rotfiend.isOnFire());
+            return (RotfiendEntity.this.getHealth() < (RotfiendEntity.this.getMaxHealth() * percentageHealth) && !rotfiend.isOnFire());
         }
 
         @Override
@@ -511,8 +517,20 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         return !this.getIsExploding();
     }
 
-    boolean killedWithoutFire = true;
+    @Override
+    protected void dropLoot(DamageSource damageSource, boolean causedByPlayer) {
+        if(this.isOnFire()){
+            super.dropLoot(damageSource, causedByPlayer);
+        }
+    }
 
+    @Override
+    public int getXpToDrop() {
+        if(this.isOnFire()){
+            return super.getXpToDrop();
+        }
+        return 0;
+    }
 
 
     @Override

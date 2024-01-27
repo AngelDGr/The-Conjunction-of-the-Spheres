@@ -22,6 +22,7 @@ public class TCOTS_ItemsGroups {
                         //Drops
                         entries.add(TCOTS_Items.DROWNER_BRAIN);
                         entries.add(TCOTS_Items.DROWNER_TONGUE);
+                        entries.add(TCOTS_Items.ROTFIEND_BLOOD);
 
 
                         //Spawn Eggs

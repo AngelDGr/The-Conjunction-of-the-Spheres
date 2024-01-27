@@ -3,6 +3,7 @@ package TCOTS.entity;
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.entity.necrophages.DrownerEntity;
+import TCOTS.entity.necrophages.Necrophage_Base;
 import TCOTS.entity.necrophages.RotfiendEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -10,6 +11,7 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
@@ -63,26 +65,39 @@ public class TCOTS_Entities {
 
 
     public static void addSpawns() {
-        //Drowners in swamps
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP,
-                                                                BiomeKeys.MANGROVE_SWAMP), SpawnGroup.MONSTER,
-                DROWNER, 130, 3, 5);
-
-        //Drowners in beaches
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.BEACH), SpawnGroup.MONSTER,
-                DROWNER, 50, 2, 4);
-
-        //Drowners swimming in oceans
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.DEEP_OCEAN,
-                                                                BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,
-                                                                BiomeKeys.COLD_OCEAN,BiomeKeys.DEEP_COLD_OCEAN,
-                                                                BiomeKeys.RIVER), SpawnGroup.MONSTER,
-                DROWNER, 10, 2, 3);
-
+        //Drowners
         SpawnRestriction.register(DROWNER, SpawnRestriction.Location.NO_RESTRICTIONS,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DrownerEntity::canSpawnDrowner);
 
+            //In swamps
+            BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP,
+                                                                    BiomeKeys.MANGROVE_SWAMP), SpawnGroup.MONSTER,
+                    DROWNER, 130, 3, 5);
 
+            //In beaches
+            BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.BEACH), SpawnGroup.MONSTER,
+                    DROWNER, 50, 2, 4);
+
+            //Swimming in oceans/rivers
+            BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.DEEP_OCEAN,
+                                                                    BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,
+                                                                    BiomeKeys.COLD_OCEAN,BiomeKeys.DEEP_COLD_OCEAN,
+                                                                    BiomeKeys.RIVER), SpawnGroup.MONSTER,
+                    DROWNER, 10, 2, 3);
+
+
+
+        //Rotfiends
+            SpawnRestriction.register(ROTFIEND, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Necrophage_Base::canSpawnInDark);
+
+            //In night
+            BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                                                    BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST, BiomeKeys.DARK_FOREST,
+                                                                    BiomeKeys.DRIPSTONE_CAVES,
+                                                                    BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
+                                                                    BiomeKeys.PLAINS, BiomeKeys.SAVANNA, BiomeKeys.TAIGA), SpawnGroup.MONSTER,
+                    ROTFIEND, 80, 3, 3);
 
 
     }

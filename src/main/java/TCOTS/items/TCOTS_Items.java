@@ -33,7 +33,7 @@ public class TCOTS_Items {
     public static Item DROWNER_BRAIN;
 
     public static Item ROTFIEND_SPAWN_EGG;
-
+    public static Item ROTFIEND_BLOOD;
 
     //Potions
     public static Item DWARVEN_SPIRIT;
@@ -118,6 +118,10 @@ public class TCOTS_Items {
         ROTFIEND_SPAWN_EGG = registerItem("rotfiend_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.ROTFIEND, 0xb3867b, 0xe6e1bc,
                         new FabricItemSettings()));
+
+        ROTFIEND_BLOOD = registerItem("rotfiend_blood",
+                new Item(
+                        new FabricItemSettings().maxCount(64)));
     }
 
     private static Item registerItem(String name, Item item) {
