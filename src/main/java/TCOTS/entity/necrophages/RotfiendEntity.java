@@ -3,6 +3,7 @@ package TCOTS.entity.necrophages;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -11,7 +12,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.util.math.Box;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -20,10 +24,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.NotNull;
@@ -39,7 +40,7 @@ import java.util.EnumSet;
 
 public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
-    //TODO: Add Emerging animation (And digging?)
+    //xTODO: Add Emerging animation (And digging?)
     //xTODO: Add drops
     //xTODO: Add spawning
 
@@ -59,8 +60,10 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EXPLODING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-
     protected static final TrackedData<Boolean> TRIGGER_EXPLOSION = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
 
 
@@ -75,20 +78,23 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         //Emerge from ground
 //        this.goalSelector.add(0, new DrownerEntity.Drowner_EmergeFromGround(this));
         this.goalSelector.add(0, new Rotfiend_Explosion(this, 0.25f));
+        this.goalSelector.add(0, new Rotfiend_EmergeFromGround(this));
         this.goalSelector.add(1, new SwimGoal(this));
 
 
         this.goalSelector.add(2, new RotfiendEntity.Attack_Lunge(this, 100, 0.6));
 
         //Returns to ground
+        this.goalSelector.add(3, new Rotfiend_ReturnToGround(this));
+        //Returns to ground
 //        this.goalSelector.add(2, new DrownerEntity.Drowner_ReturnToGround(this));
 
-        this.goalSelector.add(3, new MeleeAttackGoal(this, 1.2D, false));
+        this.goalSelector.add(4, new Rotfiend_MeleeAttackGoal(this, 1.2D, false));
 
 
-        this.goalSelector.add(4, new WanderAroundGoal(this, 0.75f, 20));
+        this.goalSelector.add(5, new Rotfiend_WanderAroundGoal(this, 0.75f, 20));
 
-        this.goalSelector.add(5, new LookAroundGoal(this));
+        this.goalSelector.add(6, new LookAroundGoal(this));
 
         //Objectives
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
@@ -121,8 +127,8 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
                 return !RotfiendEntity.this.cooldownBetweenLunges && this.mob.isAttacking()
                         && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
                         && (this.mob.getTarget().getY() - this.mob.getY()) <= 1
-//                        && !this.mob.getIsEmerging()
-//                        && !this.mob.getInGroundDataTracker()
+                        && !this.mob.getIsEmerging()
+                        && !this.mob.getInGroundDataTracker()
                         ;
             } else {
                 return false;
@@ -248,6 +254,151 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         }
     }
 
+
+    //Makes the rotfiend occult in ground
+    private class Rotfiend_ReturnToGround extends Goal {
+        private final RotfiendEntity rotfiend;
+        int ticks=35;
+        private Rotfiend_ReturnToGround(RotfiendEntity mob) {
+            this.rotfiend = mob;
+        }
+        @Override
+        public boolean canStart() {
+            return rotfiend.getInGroundDataTracker();
+        }
+        @Override
+        public boolean shouldContinue(){
+            return rotfiend.getInGroundDataTracker();
+        }
+        @Override
+        public void start(){
+            ticks=35;
+            rotfiend.playSound(TCOTS_Sounds.ROTFIEND_DIGGING,1.0F,1.0F);
+            rotfiend.getNavigation().stop();
+            rotfiend.getLookControl().lookAt(0,0,0);
+        }
+
+    }
+
+    //Makes the rotfiend emerge from ground
+    private class Rotfiend_EmergeFromGround extends Goal{
+
+        private final RotfiendEntity rotfiend;
+
+        protected final PathAwareEntity mob;
+
+        int AnimationTicks=36;
+
+        private Rotfiend_EmergeFromGround(RotfiendEntity mob) {
+            this.rotfiend = mob;
+            this.mob = mob;
+
+        }
+
+        @Override
+        public boolean canStart() {
+            return canStartO() && rotfiend.getInGroundDataTracker();
+        }
+        public boolean canStartO(){
+
+            LivingEntity livingEntity = this.mob.getTarget();
+            //If it doesn't have target
+            if (livingEntity == null) {
+                return false;
+            }
+            //If it's the target dead
+            else if (!livingEntity.isAlive()) {
+                return false;
+            }
+            else {
+                return this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ()) <= 80;
+            }
+        }
+
+        @Override
+        public void start(){
+            this.rotfiend.playSound(TCOTS_Sounds.ROTFIEND_EMERGING, 1.0F, 1.0F);
+            this.rotfiend.spawnGroundParticles();
+            AnimationTicks=36;
+            rotfiend.setIsEmerging(true);
+        }
+
+        @Override
+        public boolean shouldContinue(){
+            return shouldContinueO() && rotfiend.getInGroundDataTracker();
+        }
+        public boolean shouldContinueO(){
+            LivingEntity livingEntity = this.mob.getTarget();
+            if (livingEntity == null) {
+                return false;
+            } else if (!livingEntity.isAlive()) {
+                return false;
+            } else {
+                return !(livingEntity instanceof PlayerEntity) || !livingEntity.isSpectator() && !((PlayerEntity)livingEntity).isCreative();
+            }
+        }
+
+        @Override
+        public void tick(){
+            if (AnimationTicks > 0) {
+//                System.out.println("AnimationTicks"+AnimationTicks);
+                --AnimationTicks;
+            }else {
+                stop();
+            }
+        }
+
+        @Override
+        public void stop(){
+            rotfiend.setIsEmerging(false);
+
+            if(RotfiendEntity.this.getInGroundDataTracker()){
+                RotfiendEntity.this.ReturnToGround_Ticks=500;
+                RotfiendEntity.this.setInGroundDataTracker(false);}
+        }
+
+        @Override
+        public boolean shouldRunEveryTick() {
+            return true;
+        }
+
+    }
+
+    private class Rotfiend_WanderAroundGoal extends WanderAroundGoal{
+
+        public Rotfiend_WanderAroundGoal(PathAwareEntity mob, double speed, int chance) {
+            super(mob, speed, chance);
+        }
+
+        @Override
+        public boolean canStart(){
+            return super.canStart() && !RotfiendEntity.this.getInGroundDataTracker();
+        }
+
+        @Override
+        public boolean shouldContinue(){
+            return super.shouldContinue() && !RotfiendEntity.this.getInGroundDataTracker();
+        }
+    }
+
+    private class Rotfiend_MeleeAttackGoal extends MeleeAttackGoal{
+        private final RotfiendEntity rotfiend;
+
+        public Rotfiend_MeleeAttackGoal(RotfiendEntity mob, double speed, boolean pauseWhenMobIdle) {
+            super(mob, speed, pauseWhenMobIdle);
+            this.rotfiend = mob;
+        }
+
+        @Override
+        public boolean canStart() {
+                return super.canStart()
+                        && !this.rotfiend.getIsEmerging()
+                        && !this.rotfiend.getInGroundDataTracker();
+        }
+    }
+
+    public int ReturnToGround_Ticks=20;
+
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
@@ -341,6 +492,34 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
                 })
         );
 
+        //DiggingIn Controller
+        controllerRegistrar.add(
+                new AnimationController<>(this,"DiggingInController",1, state -> {
+
+                    if(this.getInGroundDataTracker() && !this.getIsEmerging()){
+                        state.setAnimation(DIGGING_IN);
+                        return PlayState.CONTINUE;
+                    }else{
+                        state.getController().forceAnimationReset();
+                        return PlayState.STOP;
+                    }
+                })
+        );
+
+        //DiggingOut Controller
+        controllerRegistrar.add(
+                new AnimationController<>(this, "DiggingOutController", 1, state -> {
+                    if (this.getIsEmerging()){
+                        state.setAnimation(DIGGING_OUT);
+                        return PlayState.CONTINUE;
+                    }
+                    else{
+                        state.getController().forceAnimationReset();
+                        return PlayState.STOP;
+                    }
+                })
+        );
+
     }
 
     @Override
@@ -349,10 +528,10 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
         this.dataTracker.startTracking(EXPLODING, Boolean.FALSE);
         this.dataTracker.startTracking(TRIGGER_EXPLOSION, Boolean.FALSE);
-//        this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
-//        this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
-
+        this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
+        this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
     }
+
 
     public final boolean getIsLugging() {
         return this.dataTracker.get(LUGGING);
@@ -365,7 +544,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     public final boolean getIsExploding() {
         return this.dataTracker.get(EXPLODING);
     }
-
     public final void setIsExploding(boolean wasExploding) {
         this.dataTracker.set(EXPLODING, wasExploding);
     }
@@ -373,16 +551,46 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     public final boolean getIsTriggerExplosion() {
         return this.dataTracker.get(TRIGGER_EXPLOSION);
     }
-
     public final void setIsTriggerExplosion(boolean wasExplosion) {
         this.dataTracker.set(TRIGGER_EXPLOSION, wasExplosion);
+    }
+
+    public final boolean getIsEmerging(){
+        return this.dataTracker.get(EMERGING);
+    }
+    public final void setIsEmerging(boolean wasEmerging){
+        this.dataTracker.set(EMERGING, wasEmerging);
+    }
+
+    public boolean getInGroundDataTracker() {
+        return this.dataTracker.get(InGROUND);
+    }
+    public void setInGroundDataTracker(boolean wasInGround) {
+        this.dataTracker.set(InGROUND, wasInGround);
     }
 
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);
+        if (!dataTracker.get(InGROUND) || dataTracker.get(InGROUND)) {
+            this.setBoundingBox(this.calculateBoundingBox());
+        }
     }
 
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
+        nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
+    }
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        this.setInGroundDataTracker(nbt.getBoolean("InGround"));
+        this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
+        super.readCustomDataFromNbt(nbt);
+    }
+
+    int AnimationParticlesTicks=36;
     @Override
     public void tick() {
         //Start the counter for the Lunge attack
@@ -393,32 +601,58 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
             RotfiendEntity.this.cooldownBetweenLunges = false;
         }
 
-        //Particles when return to ground
-//        if(this.AnimationParticlesTicks > 0 && this.getInGroundDataTracker()){
-//            this.spawnGroundParticles();
-//            --this.AnimationParticlesTicks;
-//        }
-
-//        if(!this.getInGroundDataTracker() && !this.getIsEmerging()){
-//            AnimationParticlesTicks=36;
-//        }
-
-        //Particles when emerges from ground
-//        if(this.getIsEmerging()){
-//            this.spawnGroundParticles();
-//        }
+        //Triggers the blood explosion
         if (this.getIsTriggerExplosion()) {
             this.explode();
+        }
+
+        //Particles when return to ground
+        if(this.AnimationParticlesTicks > 0 && this.getInGroundDataTracker()){
+            this.spawnGroundParticles();
+            --this.AnimationParticlesTicks;
+        }
+
+        //Particles when emerges from ground
+        if(this.getIsEmerging()){
+            this.spawnGroundParticles();
         }
         super.tick();
     }
 
-//    @Override
-//    public void mobTick(){
-//
-//        super.mobTick();
-//    }
+    @Override
+    public void mobTick(){
+            if (RotfiendEntity.this.ReturnToGround_Ticks > 0
+                    && RotfiendEntity.this.ReturnToGround_Ticks < 200
+                    && !this.getIsEmerging()
+                    && !this.isAttacking()
+            ) {
+                --RotfiendEntity.this.ReturnToGround_Ticks;
+            }else{
+                BlockPos entityPos = new BlockPos((int)this.getX(), (int)this.getY(), (int)this.getZ());
 
+                //Makes the Rotfiend return to the dirt/sand/stone
+                if(RotfiendEntity.this.ReturnToGround_Ticks==0 && (
+                        this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DIRT) ||
+                        this.getWorld().getBlockState(entityPos.down()).isOf(Blocks.SAND) ||
+                        this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.STONE_ORE_REPLACEABLES)
+                )
+                ){
+                    this.setInGroundDataTracker(true);
+                }
+            }
+    }
+
+    @Override
+    protected Box calculateBoundingBox() {
+        if (dataTracker.get(InGROUND)) {
+            return new Box(this.getX() - 0.39, this.getY() + 0.1, this.getZ() - 0.39,
+                    this.getX() + 0.39, this.getY(), this.getZ() + 0.39);
+        }
+        else{
+            // Normal hit-box otherwise
+            return super.calculateBoundingBox();
+        }
+    }
 
     private void explode() {
         if (!this.getWorld().isClient) {
@@ -450,7 +684,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     }
 
     private void spawnGroundParticles() {
-        Random random = this.getRandom();
         BlockState blockState = this.getSteppingBlockState();
         if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
             for (int i = 0; i < 11; ++i) {
@@ -458,14 +691,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
                 double e = this.getY();
                 double f = this.getZ() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
 
-                if (i == 5
-                ) {
-                    this.getWorld().addParticle(ParticleTypes.SPLASH, d, e, f, 0.0, 0.0, 0.0);
-                } else {
-                    this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
-
-                }
-
+                this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
             }
         }
     }
@@ -479,7 +705,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
-        if (!this.getIsExploding()) {
+        if (!this.getIsExploding() && !this.getInGroundDataTracker()) {
             return TCOTS_Sounds.ROTFIEND_IDLE;
         } else {
             return null;
@@ -509,12 +735,12 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getIsExploding() || super.isInvulnerableTo(damageSource);
+        return this.getIsEmerging() || this.getInGroundDataTracker() || this.getIsExploding() || super.isInvulnerableTo(damageSource);
     }
 
     @Override
     public boolean isPushable() {
-        return !this.getIsExploding();
+        return !this.getIsExploding() && !this.getIsEmerging() && !this.getInGroundDataTracker();
     }
 
     @Override
@@ -531,6 +757,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         }
         return 0;
     }
+
 
 
     @Override

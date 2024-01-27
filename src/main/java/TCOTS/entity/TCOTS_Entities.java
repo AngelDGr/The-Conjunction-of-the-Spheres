@@ -21,7 +21,7 @@ public class TCOTS_Entities {
 //    0.2.0- Necrophages & Ogroids
 // Necrophages
     //xTODO: Drowner
-    //TODO: Rotfiend
+    //xTODO: Rotfiend
     //TODO: Water Hag
     //TODO: Grave Hag
     //TODO: Foglet

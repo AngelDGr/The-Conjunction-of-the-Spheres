@@ -46,6 +46,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -528,16 +529,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             drowner.getLookControl().lookAt(0,0,0);
         }
 
-        @Override
-        public void stop(){
-
-        }
-
-        @Override
-        public void tick(){
-
-        }
-
         public void spawnPuddle(World world, LivingEntity entity){
             float yaw=DrownerEntity.this.random.nextInt(361);
 
@@ -551,7 +542,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
             }
 
         }
-
 
     }
     //Makes the drowner emerge from ground
@@ -733,12 +723,14 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Swimming", this.dataTracker.get(SWIM));
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
+        nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
         nbt.putBoolean("PuddleSpawned",this.dataTracker.get(SPAWNED_PUDDLE));
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setSwimmingDataTracker(nbt.getBoolean("Swimming"));
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
+        this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setSpawnedPuddleDataTracker(nbt.getBoolean("PuddleSpawned"));
         super.readCustomDataFromNbt(nbt);
     }
@@ -854,12 +846,12 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
                                     //Anything else
                                     else {
                                         //It's in the ground and not emerging
-                                        if(this.getInGroundDataTracker() && !this.getIsEmerging()){
-                                            state.setAnimation(DIGGING_IN);
-                                            return PlayState.CONTINUE;
-                                        }else{
+//                                        if(this.getInGroundDataTracker() && !this.getIsEmerging()){
+//                                            state.setAnimation(DIGGING_IN);
+//                                            return PlayState.CONTINUE;
+//                                        }else{
                                             return state.setAndContinue(IDLE);
-                                        }
+//                                        }
                                     }
                                 }
                             }
@@ -905,6 +897,20 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 
                     state.getController().forceAnimationReset();
                     return PlayState.CONTINUE;
+                })
+        );
+
+        //DiggingIn Controller
+        controllerRegistrar.add(
+                new AnimationController<>(this,"DiggingInController",1, state -> {
+
+                    if(this.getInGroundDataTracker() && !this.getIsEmerging()){
+                        state.setAnimation(DIGGING_IN);
+                        return PlayState.CONTINUE;
+                    }else{
+                        state.getController().forceAnimationReset();
+                        return PlayState.STOP;
+                    }
                 })
         );
 
