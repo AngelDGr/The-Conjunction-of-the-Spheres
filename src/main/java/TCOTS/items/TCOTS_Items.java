@@ -27,7 +27,11 @@ public class TCOTS_Items {
             //xTODO: Add the Killer Whale effect, improves respiration and attack underwater
         //xTODO: Drowner Brain usable for a new potion, Swallow:
             //xTODO: Add the Swallow effect, works like regeneration, it's a lot slower but the potion it's more durable
+        //TODO: Nekker eye usable for Hanged Man Oil
+        //TODO: Nekker Hearth usable for the White Raffard's Decoction
+            //TODO: Add the White Raffard's Decoction, works similar to the instant health, but works with percentage
 
+    //TODO: Fix the achievement to mobs works with Monster Hunter
     public static Item DROWNER_SPAWN_EGG;
     public static Item DROWNER_TONGUE;
     public static Item DROWNER_BRAIN;
