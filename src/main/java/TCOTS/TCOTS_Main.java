@@ -3,6 +3,7 @@ package TCOTS;
 import TCOTS.access.BrewingRecipeRegistryAccess;
 import TCOTS.entity.necrophages.DrownerEntity;
 import TCOTS.entity.necrophages.RotfiendEntity;
+import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
 import TCOTS.mixin.BrewingRecipeRegistryMixin;
@@ -50,6 +51,10 @@ public class TCOTS_Main implements ModInitializer {
 
 		//Rotfiend
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.ROTFIEND, RotfiendEntity.setAttributes());
+
+		//Nekker
+		FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
+
 //		WitcherPotions_Recipes.getWitcherRecipesInputItems();
 	}
 //	public void getWitcherRecipesInputItems(BrewingRecipeRegistry instance) {

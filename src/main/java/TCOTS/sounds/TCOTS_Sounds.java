@@ -30,6 +30,15 @@ public class TCOTS_Sounds {
     public static SoundEvent ROTFIEND_EMERGING = registerSoundEvent("rotfiend_emerging");
     public static SoundEvent ROTFIEND_DIGGING = registerSoundEvent("rotfiend_digging");
 
+
+
+    //Nekker
+    public static SoundEvent NEKKER_ATTACK = registerSoundEvent("nekker_attack");
+    public static SoundEvent NEKKER_HURT = registerSoundEvent("nekker_hurt");
+    public static SoundEvent NEKKER_IDLE = registerSoundEvent("nekker_idle");
+    public static SoundEvent NEKKER_DEATH = registerSoundEvent("nekker_death");
+    public static SoundEvent NEKKER_LUNGE = registerSoundEvent("nekker_lunge");
+
 //    public static final BlockSoundGroup ANIMATED_BLOCK_SOUNDS = new BlockSoundGroup(1f, 1f,
 //            ModSounds.ANIMATED_BLOCK_BREAK, ModSounds.ANIMATED_BLOCK_WALK, ModSounds.ANIMATED_BLOCK_PLACE,
 //            ModSounds.ANIMATED_BLOCK_HIT, ModSounds.ANIMATED_BLOCK_WALK);

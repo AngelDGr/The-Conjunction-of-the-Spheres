@@ -35,6 +35,11 @@ public class TCOTS_Items {
     public static Item ROTFIEND_SPAWN_EGG;
     public static Item ROTFIEND_BLOOD;
 
+
+    public static Item NEKKER_SPAWN_EGG;
+    public static Item NEKKER_HEART;
+    public static Item NEKKER_EYE;
+
     //Potions
     public static Item DWARVEN_SPIRIT;
     public static Item SWALLOW_POTION;
@@ -115,6 +120,8 @@ public class TCOTS_Items {
                 new Item(
                         new FabricItemSettings().maxCount(16)));
 
+
+
         ROTFIEND_SPAWN_EGG = registerItem("rotfiend_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.ROTFIEND, 0xb3867b, 0xe6e1bc,
                         new FabricItemSettings()));
@@ -122,6 +129,20 @@ public class TCOTS_Items {
         ROTFIEND_BLOOD = registerItem("rotfiend_blood",
                 new Item(
                         new FabricItemSettings().maxCount(64)));
+
+
+
+        NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
+                        new FabricItemSettings()));
+
+        NEKKER_EYE = registerItem("nekker_eye",
+                new Item(
+                        new FabricItemSettings().maxCount(64)));
+
+        NEKKER_HEART = registerItem("nekker_heart",
+                new Item(
+                        new FabricItemSettings().maxCount(16)));
     }
 
     private static Item registerItem(String name, Item item) {

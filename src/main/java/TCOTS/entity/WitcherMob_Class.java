@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 public class WitcherMob_Class extends PathAwareEntity implements Monster {
     protected WitcherMob_Class(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
+        this.experiencePoints = 5;
     }
 
     @Override

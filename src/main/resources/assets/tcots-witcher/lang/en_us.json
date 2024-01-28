@@ -30,6 +30,20 @@
 
     "item.tcots-witcher.rotfiend_blood": "Rotfiend Blood",
 
+
+    "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
+    "entity.tcots-witcher.nekker": "Nekker",
+    "tcots-witcher.sounds.nekker_attack": "Nekker attacks",
+    "tcots-witcher.sounds.nekker_hurt": "Nekker hurts",
+    "tcots-witcher.sounds.nekker_idle": "Nekker groans",
+    "tcots-witcher.sounds.nekker_death": "Nekker dies",
+    "tcots-witcher.sounds.nekker_lunge": "Nekker lunges",
+
+    "item.tcots-witcher.nekker_eye": "Nekker Eye",
+    "item.tcots-witcher.nekker_heart": "Nekker Heart",
+
+
+
     "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",
     "tooltip.tcots-witcher.dwarven_spirit": "Base to brew Witcher Potions",
 

@@ -7,6 +7,8 @@ import TCOTS.entity.geo.renderer.necrophages.DrownerRenderer;
 //import TCOTS.entity.misc.Drowner_Puddle.client.Drowner_Puddle_Renderer;
 //import TCOTS.entity.misc.Drowner_Puddle.client.ModModelLayers;
 import TCOTS.entity.geo.renderer.necrophages.RotfiendRenderer;
+import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
+import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.particles.Drowner_PuddleParticle;
 import TCOTS.particles.Rotfiend_BloodEmitterParticle;
 import TCOTS.particles.Rotfiend_BloodExplosionParticle;
@@ -26,10 +28,11 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.ROTFIEND, RotfiendRenderer::new);
 
+        EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
+
+
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DROWNER_PUDDLE_PARTICLE, Drowner_PuddleParticle.Factory::new);
-
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION, Rotfiend_BloodExplosionParticle.Factory::new);
-
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, new Rotfiend_BloodEmitterParticle.Factory());
 
     }

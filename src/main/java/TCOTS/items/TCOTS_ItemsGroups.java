@@ -20,14 +20,17 @@ public class TCOTS_ItemsGroups {
                     .icon(() -> new ItemStack(TCOTS_Items.DROWNER_BRAIN))
                     .entries((displayContext, entries) -> {
                         //Drops
-                        entries.add(TCOTS_Items.DROWNER_BRAIN);
                         entries.add(TCOTS_Items.DROWNER_TONGUE);
+                        entries.add(TCOTS_Items.DROWNER_BRAIN);
                         entries.add(TCOTS_Items.ROTFIEND_BLOOD);
+                        entries.add(TCOTS_Items.NEKKER_EYE);
+                        entries.add(TCOTS_Items.NEKKER_HEART);
 
 
                         //Spawn Eggs
                         entries.add(TCOTS_Items.DROWNER_SPAWN_EGG);
                         entries.add(TCOTS_Items.ROTFIEND_SPAWN_EGG);
+                        entries.add(TCOTS_Items.NEKKER_SPAWN_EGG);
 
                         //Potions
                         entries.add(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack());

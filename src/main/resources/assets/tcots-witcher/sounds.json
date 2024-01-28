@@ -146,5 +146,50 @@
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_digging1",
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_digging2"
     ]
+  },
+
+
+
+
+  "nekker_attack": {
+    "subtitle": "tcots-witcher.sounds.nekker_attack",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker/nekker_attack1",
+      "tcots-witcher:entity/ogroids/nekker/nekker_attack2",
+      "tcots-witcher:entity/ogroids/nekker/nekker_attack3"
+    ]
+  },
+  "nekker_hurt": {
+    "subtitle": "tcots-witcher.sounds.nekker_hurt",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker/nekker_hurt1",
+      "tcots-witcher:entity/ogroids/nekker/nekker_hurt2",
+      "tcots-witcher:entity/ogroids/nekker/nekker_hurt3"
+    ]
+  },
+  "nekker_idle": {
+    "subtitle": "tcots-witcher.sounds.nekker_idle",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker/nekker_idle1",
+      "tcots-witcher:entity/ogroids/nekker/nekker_idle2",
+      "tcots-witcher:entity/ogroids/nekker/nekker_idle3",
+      "tcots-witcher:entity/ogroids/nekker/nekker_idle4"
+    ]
+  },
+  "nekker_death": {
+    "subtitle": "tcots-witcher.sounds.nekker_death",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker/nekker_death1",
+      "tcots-witcher:entity/ogroids/nekker/nekker_death2"
+    ]
+  },
+
+  "nekker_lunge": {
+    "subtitle": "tcots-witcher.sounds.nekker_lunge",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker/nekker_lunge1",
+      "tcots-witcher:entity/ogroids/nekker/nekker_lunge2",
+      "tcots-witcher:entity/ogroids/nekker/nekker_lunge3"
+    ]
   }
 }

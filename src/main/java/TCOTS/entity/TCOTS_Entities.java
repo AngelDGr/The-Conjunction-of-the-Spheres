@@ -5,6 +5,7 @@ import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.entity.necrophages.DrownerEntity;
 import TCOTS.entity.necrophages.Necrophage_Base;
 import TCOTS.entity.necrophages.RotfiendEntity;
+import TCOTS.entity.ogroids.NekkerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -42,6 +43,7 @@ public class TCOTS_Entities {
 
     public static final EntityGroup OGROIDS = new EntityGroup();
 
+    //Necrophages
     public static final EntityType<DrownerEntity> DROWNER = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "drowner"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DrownerEntity::new)
@@ -63,6 +65,13 @@ public class TCOTS_Entities {
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
+
+    //Ogroids
+    public static final EntityType<NekkerEntity> NEKKER = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "nekker"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, NekkerEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(0.65f, 0.9f)).build());
 
     public static void addSpawns() {
         //Drowners

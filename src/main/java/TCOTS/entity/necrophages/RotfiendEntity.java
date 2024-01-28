@@ -86,8 +86,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
         //Returns to ground
         this.goalSelector.add(3, new Rotfiend_ReturnToGround(this));
-        //Returns to ground
-//        this.goalSelector.add(2, new DrownerEntity.Drowner_ReturnToGround(this));
 
         this.goalSelector.add(4, new Rotfiend_MeleeAttackGoal(this, 1.2D, false));
 
@@ -428,17 +426,10 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
                     }
                     //Anything else
                     else {
-//                            //It's in the ground and not emerging
-//                            if(this.getInGroundDataTracker() && !this.getIsEmerging()){
-//                                state.setAnimation(DIGGING_IN);
-//                                return PlayState.CONTINUE;
-//                            }else{
                         return state.setAndContinue(IDLE);
-//                            }
                     }
                 }
             }
-//                        }
 
         }
         ));

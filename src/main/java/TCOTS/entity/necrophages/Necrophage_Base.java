@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class Necrophage_Base extends WitcherMob_Class {
     protected Necrophage_Base(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
-        this.experiencePoints = 5;
+
     }
 
     @Override
