@@ -42,6 +42,9 @@
     "item.tcots-witcher.nekker_eye": "Nekker Eye",
     "item.tcots-witcher.nekker_heart": "Nekker Heart",
 
+    "block.tcots-witcher.nest_slab": "Nest Slab",
+    "block.tcots-witcher.nest_skull": "Nest Skull",
+
 
     "tcots-witcher.tooltip.toxicity": "Toxicity: %s",
     "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",

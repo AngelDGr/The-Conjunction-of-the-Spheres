@@ -1,16 +1,20 @@
 package TCOTS.items;
 
 import TCOTS.TCOTS_Main;
+import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.potions.DwarvenSpiritItem;
 import TCOTS.potions.TCOTS_Effects;
 import TCOTS.potions.WitcherPotionsSplash_Base;
 import TCOTS.potions.WitcherPotions_Base;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.block.Block;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.SkullItem;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -187,6 +191,17 @@ public class TCOTS_Items {
         NEKKER_HEART = registerItem("nekker_heart",
                 new Item(
                         new FabricItemSettings().maxCount(16)));
+    }
+
+    public static Item NEST_SLAB_ITEM;
+    public static Item NEST_SKULL_ITEM;
+    public static void registerItemsMisc(){
+        NEST_SLAB_ITEM  = registerBlockItem("nest_slab", TCOTS_Blocks.NEST_SLAB);
+        NEST_SKULL_ITEM = registerBlockItem("nest_skull", TCOTS_Blocks.NEST_SKULL);
+    }
+
+    private static Item registerBlockItem(String name, Block block){
+        return Registry.register(Registries.ITEM, new Identifier(TCOTS_Main.MOD_ID, name), new BlockItem(block, new FabricItemSettings()));
     }
 
     private static Item registerItem(String name, Item item) {

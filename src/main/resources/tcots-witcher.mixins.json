@@ -12,7 +12,8 @@
 		"WorldMixin",
 		"ClientPlayNetworkHandlerMixin",
 		"ServerWorldMixin",
-		"ServerPlayerEntityMixin"
+		"ServerPlayerEntityMixin",
+		"BlockEntityTypeMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

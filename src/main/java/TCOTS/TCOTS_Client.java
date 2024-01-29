@@ -1,5 +1,6 @@
 package TCOTS;
 
+import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.DrownerPuddleRenderer;
 import TCOTS.entity.geo.renderer.necrophages.DrownerRenderer;
@@ -16,8 +17,12 @@ import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
 
 public class TCOTS_Client implements ClientModInitializer {
     @Override
@@ -30,6 +35,7 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
 
+        BlockEntityRendererFactories.register(TCOTS_Blocks.SKULL, SkullBlockEntityRenderer::new);
 
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DROWNER_PUDDLE_PARTICLE, Drowner_PuddleParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION, Rotfiend_BloodExplosionParticle.Factory::new);

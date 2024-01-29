@@ -1,6 +1,7 @@
 package TCOTS;
 
 import TCOTS.access.BrewingRecipeRegistryAccess;
+import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.necrophages.DrownerEntity;
 import TCOTS.entity.necrophages.RotfiendEntity;
 import TCOTS.entity.ogroids.NekkerEntity;
@@ -24,16 +25,19 @@ public class TCOTS_Main implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
-    public static final Logger LOGGER = LoggerFactory.getLogger("modid");
+
 
 	public static String MOD_ID = "tcots-witcher";
 
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+		TCOTS_Blocks.registerBlocks();
 		TCOTS_Effects.registerEffects();
+		TCOTS_Items.registerItemsMisc();
 		TCOTS_Items.registerDrops();
 		TCOTS_Items.registerPotions();
 		TCOTS_ItemsGroups.registerGroupItems();
