@@ -29,7 +29,7 @@ public class TCOTS_Items {
             //xTODO: Add the Swallow effect, works like regeneration, it's a lot slower but the potion it's more durable
         //TODO: Nekker eye usable for Hanged Man Oil
         //TODO: Nekker Hearth usable for the White Raffard's Decoction
-            //TODO: Add the White Raffard's Decoction, works similar to the instant health, but works with percentage
+            //xTODO: Add the White Raffard's Decoction, works similar to the instant health, but works with percentage
 
     //TODO: Fix the achievement to mobs works with Monster Hunter
     public static Item DROWNER_SPAWN_EGG;
@@ -49,10 +49,15 @@ public class TCOTS_Items {
     public static Item SWALLOW_POTION;
     public static Item SWALLOW_POTION_ENHANCED;
     public static Item SWALLOW_POTION_SUPERIOR;
+    public static Item WHITE_RAFFARDS_DECOCTION;
+    public static Item WHITE_RAFFARDS_DECOCTION_ENHANCED;
+    public static Item WHITE_RAFFARDS_DECOCTION_SUPERIOR;
     public static Item KILLER_WHALE_POTION;
+
     //Splash Potions
     public static Item SWALLOW_SPLASH;
     public static Item KILLER_WHALE_SPLASH;
+    public static Item WHITE_RAFFARDS_DECOCTION_SPLASH;
 
     //Register Witcher Potion Items
     public static void registerPotions() {
@@ -82,6 +87,26 @@ public class TCOTS_Items {
                 2
         );
 
+        WHITE_RAFFARDS_DECOCTION = registerItemPotion("white_raffards_decoction",
+                new FabricItemSettings().maxCount(2),
+                TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                1,
+                0
+        );
+
+        WHITE_RAFFARDS_DECOCTION_ENHANCED = registerItemPotion("white_raffards_decoction_enhanced",
+                new FabricItemSettings().maxCount(2),
+                TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                1,
+                1
+        );
+
+        WHITE_RAFFARDS_DECOCTION_SUPERIOR = registerItemPotion("white_raffards_decoction_superior",
+                new FabricItemSettings().maxCount(3),
+                TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                1,
+                2
+        );
 
         KILLER_WHALE_POTION = registerItemPotion("killer_whale_potion",
                 new FabricItemSettings().maxCount(3),
@@ -92,18 +117,23 @@ public class TCOTS_Items {
 
 
 
-
-
         //Splash Potions
         SWALLOW_SPLASH = registerSplashPotion("swallow_splash",
-                new FabricItemSettings().maxCount(1),
+                new FabricItemSettings().maxCount(5),
                 TCOTS_Effects.SWALLOW_EFFECT,
                 18,
                 0
         );
 
+        WHITE_RAFFARDS_DECOCTION_SPLASH = registerSplashPotion("white_raffards_splash",
+                new FabricItemSettings().maxCount(5),
+                TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                1,
+                0
+        );
+
         KILLER_WHALE_SPLASH = registerSplashPotion("killer_whale_splash",
-                new FabricItemSettings().maxCount(1),
+                new FabricItemSettings().maxCount(5),
                 TCOTS_Effects.KILLER_WHALE_EFFECT,
                 75,
                 0

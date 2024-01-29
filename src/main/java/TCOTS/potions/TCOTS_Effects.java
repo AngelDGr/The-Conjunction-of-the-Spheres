@@ -3,9 +3,7 @@ package TCOTS.potions;
 import TCOTS.TCOTS_Main;
 import TCOTS.potions.effects.KillerWhaleEffect;
 import TCOTS.potions.effects.SwallowEffect;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.DamageModifierStatusEffect;
+import TCOTS.potions.effects.WhiteRaffardsEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;
@@ -17,17 +15,16 @@ public class TCOTS_Effects {
 
     public static StatusEffect SWALLOW_EFFECT;
 
+    public static StatusEffect WHITE_RAFFARDS_EFFECT;
+
     public static void registerEffects() {
         //Effects
-
-//        KILLER_WHALE_EFFECT = register( "killer_whale", (new
-//                KillerWhaleEffect(StatusEffectCategory.BENEFICIAL, 0xe9b044, 2.0))
-//                .addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE, "648D7064-6A60-4F59-8ABE-C2C23A6DD7A9", 0.0, EntityAttributeModifier.Operation.ADDITION));
-
 
         KILLER_WHALE_EFFECT=registerStatusEffect_Modifier("killer_whale", KillerWhaleEffect.class, StatusEffectCategory.BENEFICIAL, 0xe9b044,1);
 
         SWALLOW_EFFECT = registerStatusEffect("swallow", SwallowEffect.class, StatusEffectCategory.BENEFICIAL, 0xcc624a);
+
+        WHITE_RAFFARDS_EFFECT = registerStatusEffect("white_raffards", WhiteRaffardsEffect.class, StatusEffectCategory.BENEFICIAL, 0xb4b093);
 
     }
 
@@ -36,6 +33,7 @@ public class TCOTS_Effects {
             return Registry.register(Registries.STATUS_EFFECT, new Identifier(TCOTS_Main.MOD_ID, name),
                     effectClass.getConstructor(StatusEffectCategory.class, int.class).newInstance(category, color));
         } catch (Exception e) {
+            System.out.println("EFFECT DON'T CREATED");
             e.printStackTrace();
             return null;
         }

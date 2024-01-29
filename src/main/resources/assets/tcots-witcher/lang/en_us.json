@@ -60,7 +60,14 @@
     "tooltip.effect.tcots-witcher.killer_whale.second": "attack while underwater",
     "item.tcots-witcher.killer_whale_splash": "Splash Killer Whale",
 
+    "item.tcots-witcher.white_raffards_decoction": "White Raffard's Decoction",
+    "item.tcots-witcher.white_raffards_decoction_enhanced": "Enhanced White Raffard's Decoction",
+    "item.tcots-witcher.white_raffards_decoction_superior": "Superior White Raffard's Decoction",
+    "tooltip.effect.tcots-witcher.white_raffards.first":  "Immediately restores a large",
+    "tooltip.effect.tcots-witcher.white_raffards.second": "percentage of health",
+    "item.tcots-witcher.white_raffards_splash": "Splash White Raffard's",
 
     "effect.tcots-witcher.swallow": "Swallow",
-    "effect.tcots-witcher.killer_whale": "Killer Whale"
+    "effect.tcots-witcher.killer_whale": "Killer Whale",
+    "effect.tcots-witcher.white_raffards": "White Raffard's"
 }
