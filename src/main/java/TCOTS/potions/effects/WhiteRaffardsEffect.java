@@ -1,7 +1,6 @@
 package TCOTS.potions.effects;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
@@ -14,8 +13,6 @@ public class WhiteRaffardsEffect extends StatusEffect {
         super(category, color);
     }
 
-    boolean invulnerabilityActivated;
-
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier){
         if(!entity.isUndead()) {
@@ -26,22 +23,10 @@ public class WhiteRaffardsEffect extends StatusEffect {
             }
             else {
                 entity.heal(entity.getMaxHealth());
-//                if(amplifier>=3){
-//                    entity.setInvulnerable(true);
-//                    invulnerabilityActivated = true;
-//                }
             }
         }
         super.applyUpdateEffect(entity, amplifier);
     }
-
-//    @Override
-//    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-//        if(entity.isInvulnerable() && invulnerabilityActivated){
-//            entity.setInvulnerable(false);
-//        }
-//        super.onRemoved(entity,attributes,amplifier);
-//    }
 
     @Override
     public boolean isInstant() {
