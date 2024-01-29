@@ -43,10 +43,9 @@
     "item.tcots-witcher.nekker_heart": "Nekker Heart",
 
 
-
+    "tcots-witcher.tooltip.toxicity": "Toxicity: %s",
     "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",
     "tooltip.tcots-witcher.dwarven_spirit": "Base to brew Witcher Potions",
-
 
     "item.tcots-witcher.swallow_potion": "Swallow",
     "item.tcots-witcher.swallow_potion_enhanced": "Enhanced Swallow",

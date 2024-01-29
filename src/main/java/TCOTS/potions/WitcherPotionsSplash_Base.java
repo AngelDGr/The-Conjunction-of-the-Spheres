@@ -21,8 +21,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class WitcherPotionsSplash_Base extends WitcherPotions_Base {
-    public WitcherPotionsSplash_Base(Settings settings, StatusEffectInstance effect) {
-        super(settings, effect);
+
+    public WitcherPotionsSplash_Base(Settings settings, StatusEffectInstance effect, int toxicity) {
+        super(settings, effect, toxicity);
     }
 
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {

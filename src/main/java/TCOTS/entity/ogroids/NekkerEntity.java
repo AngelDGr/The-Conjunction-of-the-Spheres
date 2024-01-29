@@ -35,7 +35,7 @@ import java.util.EnumSet;
 public class NekkerEntity extends Ogroid_Base implements GeoEntity {
 
     //TODO: Add spawn
-    //TODO: Add drops
+    //xTODO: Add drops
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation RUNNING = RawAnimation.begin().thenLoop("move.running");

@@ -28,6 +28,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.StringHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
@@ -45,9 +46,12 @@ public class WitcherPotions_Base extends PotionItem {
 
     StatusEffectInstance effectInstance;
 
-    public WitcherPotions_Base(Settings settings, StatusEffectInstance effect){
+    int toxicity;
+
+    public WitcherPotions_Base(Settings settings, StatusEffectInstance effect, int toxicity){
         super(settings);
         this.effectInstance=effect;
+        this.toxicity=toxicity;
     }
 
     public StatusEffectInstance getStatusEffect(){
@@ -164,11 +168,14 @@ public class WitcherPotions_Base extends PotionItem {
 
     }
 
+
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+
         buildTooltip(stack, tooltip, 1.0F);
         tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first").formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second").formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable("tcots-witcher.tooltip.toxicity", this.toxicity).formatted(Formatting.DARK_GREEN));
     }
 
     @Override

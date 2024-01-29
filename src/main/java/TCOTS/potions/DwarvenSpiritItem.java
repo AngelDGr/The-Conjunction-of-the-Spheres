@@ -18,8 +18,8 @@ import java.util.List;
 
 public class DwarvenSpiritItem extends WitcherPotions_Base {
 
-    public DwarvenSpiritItem(Settings settings, StatusEffectInstance effect) {
-        super(settings, effect);
+    public DwarvenSpiritItem(Settings settings, StatusEffectInstance effect, int toxicity) {
+        super(settings, effect, toxicity);
     }
 
     @Override

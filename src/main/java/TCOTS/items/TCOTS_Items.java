@@ -63,12 +63,13 @@ public class TCOTS_Items {
     public static void registerPotions() {
         //Potions
         DWARVEN_SPIRIT = registerItem("dwarven_spirit",
-                new DwarvenSpiritItem(new FabricItemSettings().maxCount(16), new StatusEffectInstance(StatusEffects.NAUSEA,200)));
+                new DwarvenSpiritItem(new FabricItemSettings().maxCount(16), new StatusEffectInstance(StatusEffects.NAUSEA,200), 0));
 
 
         SWALLOW_POTION = registerItemPotion("swallow_potion",
                 new FabricItemSettings().maxCount(3),
                 TCOTS_Effects.SWALLOW_EFFECT,
+                20,
                 20,
                 0
         );
@@ -77,6 +78,7 @@ public class TCOTS_Items {
                 new FabricItemSettings().maxCount(4),
                 TCOTS_Effects.SWALLOW_EFFECT,
                 20,
+                20,
                 1
         );
 
@@ -84,12 +86,14 @@ public class TCOTS_Items {
                 new FabricItemSettings().maxCount(5),
                 TCOTS_Effects.SWALLOW_EFFECT,
                 20,
+                20,
                 2
         );
 
         WHITE_RAFFARDS_DECOCTION = registerItemPotion("white_raffards_decoction",
                 new FabricItemSettings().maxCount(2),
                 TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                25,
                 1,
                 0
         );
@@ -97,6 +101,7 @@ public class TCOTS_Items {
         WHITE_RAFFARDS_DECOCTION_ENHANCED = registerItemPotion("white_raffards_decoction_enhanced",
                 new FabricItemSettings().maxCount(2),
                 TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                25,
                 1,
                 1
         );
@@ -104,6 +109,7 @@ public class TCOTS_Items {
         WHITE_RAFFARDS_DECOCTION_SUPERIOR = registerItemPotion("white_raffards_decoction_superior",
                 new FabricItemSettings().maxCount(3),
                 TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                25,
                 1,
                 2
         );
@@ -111,6 +117,7 @@ public class TCOTS_Items {
         KILLER_WHALE_POTION = registerItemPotion("killer_whale_potion",
                 new FabricItemSettings().maxCount(3),
                 TCOTS_Effects.KILLER_WHALE_EFFECT,
+                15,
                 90,
                 0
         );
@@ -121,6 +128,7 @@ public class TCOTS_Items {
         SWALLOW_SPLASH = registerSplashPotion("swallow_splash",
                 new FabricItemSettings().maxCount(5),
                 TCOTS_Effects.SWALLOW_EFFECT,
+                10,
                 18,
                 0
         );
@@ -128,6 +136,7 @@ public class TCOTS_Items {
         WHITE_RAFFARDS_DECOCTION_SPLASH = registerSplashPotion("white_raffards_splash",
                 new FabricItemSettings().maxCount(5),
                 TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                15,
                 1,
                 0
         );
@@ -135,6 +144,7 @@ public class TCOTS_Items {
         KILLER_WHALE_SPLASH = registerSplashPotion("killer_whale_splash",
                 new FabricItemSettings().maxCount(5),
                 TCOTS_Effects.KILLER_WHALE_EFFECT,
+                10,
                 75,
                 0
         );
@@ -183,9 +193,9 @@ public class TCOTS_Items {
         return Registry.register(Registries.ITEM, new Identifier(TCOTS_Main.MOD_ID, name), item);
     }
 
-    private static Item registerItemPotion(String name, Item.Settings settings, StatusEffect effect, int durationInSecs, int amplifier) {
+    private static Item registerItemPotion(String name, Item.Settings settings, StatusEffect effect, int toxicity, int durationInSecs, int amplifier) {
         try {
-            WitcherPotions_Base witcherPotion = new WitcherPotions_Base(settings, new StatusEffectInstance(effect, (int)(durationInSecs/0.05), amplifier));
+            WitcherPotions_Base witcherPotion = new WitcherPotions_Base(settings, new StatusEffectInstance(effect, (int)(durationInSecs/0.05), amplifier), toxicity);
 
 
             return Registry.register(Registries.ITEM, new Identifier(TCOTS_Main.MOD_ID, name), witcherPotion);
@@ -196,9 +206,9 @@ public class TCOTS_Items {
         }
     }
 
-    private static Item registerSplashPotion(String name, Item.Settings settings, StatusEffect effect, int durationInSecs, int amplifier){
+    private static Item registerSplashPotion(String name, Item.Settings settings, StatusEffect effect, int toxicity, int durationInSecs, int amplifier){
         try {
-            WitcherPotions_Base witcherPotion = new WitcherPotionsSplash_Base(settings, new StatusEffectInstance(effect, (int)(durationInSecs/0.05),amplifier));
+            WitcherPotions_Base witcherPotion = new WitcherPotionsSplash_Base(settings, new StatusEffectInstance(effect, (int)(durationInSecs/0.05),amplifier), toxicity);
             return Registry.register(Registries.ITEM, new Identifier(TCOTS_Main.MOD_ID, name), witcherPotion);
         } catch (Exception e) {
             e.printStackTrace();
