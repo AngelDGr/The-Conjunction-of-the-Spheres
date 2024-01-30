@@ -18,7 +18,7 @@ import net.minecraft.util.Identifier;
 public class TCOTS_Blocks {
     public static final Block NEST_SLAB  = new SlabBlock(FabricBlockSettings.create().strength(0.2f).sounds(BlockSoundGroup.GRAVEL).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block NEST_SKULL  = new NestSkullBlock(FabricBlockSettings.create().strength(0.2f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY));
-    public static final Block NEST_WALL_SKULL = new NestWallSkullBlock(FabricBlockSettings.create().strength(0.2f).sounds(BlockSoundGroup.BONE).dropsLike(NEST_SKULL).pistonBehavior(PistonBehavior.DESTROY));
+    public static final Block NEST_WALL_SKULL = new NestWallSkullBlock(FabricBlockSettings.create().strength(0.2f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).dropsLike(NEST_SKULL).pistonBehavior(PistonBehavior.DESTROY));
 
     public static BlockEntityType<NestSkullBlockEntity> SKULL_NEST_ENTITY;
 
@@ -32,7 +32,7 @@ public class TCOTS_Blocks {
         SKULL_NEST_ENTITY = Registry.register(
                 Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(TCOTS_Main.MOD_ID, "nest_skull"),
-                FabricBlockEntityTypeBuilder.create(NestSkullBlockEntity::new, NEST_SKULL).build());
+                FabricBlockEntityTypeBuilder.create(NestSkullBlockEntity::new, NEST_SKULL, NEST_WALL_SKULL).build());
 
 
     }

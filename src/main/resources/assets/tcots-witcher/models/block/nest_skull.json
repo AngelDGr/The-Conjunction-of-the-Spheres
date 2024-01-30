@@ -72,7 +72,7 @@
     "gui": {
       "rotation": [
         30,
-        45,
+        -135,
         0
       ],
       "translation": [
@@ -82,11 +82,6 @@
       ]
     },
     "fixed": {
-      "rotation": [
-        0,
-        180,
-        0
-      ],
       "translation": [
         0,
         -3.5,

@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.SkullBlockEntity;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -31,9 +32,22 @@ public class NestSkullBlockEntity extends BlockEntity implements GeoBlockEntity 
         return PlayState.CONTINUE;
     }
 
+    public BlockEntityUpdateS2CPacket toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
+    }
+
+    private int poweredTicks;
+    private boolean powered;
+    public float getPoweredTicks(float tickDelta) {
+        if (this.powered) {
+            return (float)this.poweredTicks + tickDelta;
+        }
+        return this.poweredTicks;
     }
 
     @Override
