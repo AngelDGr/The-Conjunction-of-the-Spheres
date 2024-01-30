@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "minecraft:block/skull"
+      "model": "tcots-witcher:block/nest_skull"
     }
   }
 }

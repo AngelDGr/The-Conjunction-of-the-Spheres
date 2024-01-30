@@ -1,6 +1,7 @@
 package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.blocks.geo.NestSkullBlockRenderer;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.DrownerPuddleRenderer;
 import TCOTS.entity.geo.renderer.necrophages.DrownerRenderer;
@@ -9,25 +10,18 @@ import TCOTS.entity.geo.renderer.necrophages.DrownerRenderer;
 //import TCOTS.entity.misc.Drowner_Puddle.client.ModModelLayers;
 import TCOTS.entity.geo.renderer.necrophages.RotfiendRenderer;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
-import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.particles.Drowner_PuddleParticle;
 import TCOTS.particles.Rotfiend_BloodEmitterParticle;
 import TCOTS.particles.Rotfiend_BloodExplosionParticle;
 import TCOTS.particles.TCOTS_Particles;
-import TCOTS.sounds.TCOTS_Sounds;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
-import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
 
 public class TCOTS_Client implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-//        TCOTS_Sounds.init();
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER, DrownerRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER_PUDDLE, DrownerPuddleRenderer::new);
 
@@ -35,7 +29,7 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
 
-        BlockEntityRendererFactories.register(TCOTS_Blocks.SKULL, SkullBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(TCOTS_Blocks.SKULL_NEST_ENTITY, NestSkullBlockRenderer::new);
 
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DROWNER_PUDDLE_PARTICLE, Drowner_PuddleParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION, Rotfiend_BloodExplosionParticle.Factory::new);

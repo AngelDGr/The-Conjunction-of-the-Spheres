@@ -15,11 +15,13 @@ import TCOTS.sounds.TCOTS_Sounds;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.potion.Potions;
 import net.minecraft.recipe.BrewingRecipeRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import TCOTS.entity.TCOTS_Entities;
+import software.bernie.geckolib.GeckoLib;
 
 public class TCOTS_Main implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -35,6 +37,7 @@ public class TCOTS_Main implements ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+		GeckoLib.initialize();
 		TCOTS_Blocks.registerBlocks();
 		TCOTS_Effects.registerEffects();
 		TCOTS_Items.registerItemsMisc();
@@ -45,7 +48,6 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_Sounds.init();
 		TCOTS_Entities.addSpawns();
 		TCOTS_Particles.registerParticles();
-
 //		LOGGER.info("Hello Fabric world!");
 
 //		getWitcherRecipesInputItems(new BrewingRecipeRegistry());
