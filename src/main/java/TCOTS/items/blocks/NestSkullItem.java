@@ -1,15 +1,11 @@
 package TCOTS.items.blocks;
 
-import TCOTS.blocks.geo.NestSkullBlockRenderer;
-import TCOTS.blocks.skull.NestSkullBlockEntity;
 import TCOTS.items.geo.NestSkullItemRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Equipment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.util.math.BlockPos;
@@ -43,13 +39,6 @@ public class NestSkullItem extends BlockItem implements GeoItem {
         this.wallBlock = wallBlock;
         this.verticalAttachmentDirection = verticalAttachmentDirection;
     }
-
-//    public NestSkullItem(Block block, Settings settings) {
-//        super(block, settings);
-//        SingletonGeoAnimatable.registerSyncedAnimatable(this);
-////        this.wallBlock = wallBlock;
-////        this.verticalAttachmentDirection = verticalAttachmentDirection;
-//    }
 
     @Override
     public void createRenderer(Consumer<Object> consumer) {

@@ -1,15 +1,8 @@
 package TCOTS.items.geo;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.blocks.skull.NestSkullBlockEntity;
-import TCOTS.blocks.skull.NestWallSkullBlock;
 import TCOTS.items.blocks.NestSkullItem;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SkullBlock;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.RotationPropertyHelper;
-import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;

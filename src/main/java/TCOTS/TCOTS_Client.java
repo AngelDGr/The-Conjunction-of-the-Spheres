@@ -1,7 +1,8 @@
 package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
-import TCOTS.blocks.geo.NestSkullBlockRenderer;
+import TCOTS.blocks.geo.renderer.MonsterNestRenderer;
+import TCOTS.blocks.geo.renderer.NestSkullBlockRenderer;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.DrownerPuddleRenderer;
 import TCOTS.entity.geo.renderer.necrophages.DrownerRenderer;
@@ -22,6 +23,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 public class TCOTS_Client implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        //Monsters
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER, DrownerRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER_PUDDLE, DrownerPuddleRenderer::new);
 
@@ -29,8 +31,11 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
 
+        //BlockEntity
         BlockEntityRendererFactories.register(TCOTS_Blocks.SKULL_NEST_ENTITY, NestSkullBlockRenderer::new);
+        BlockEntityRendererFactories.register(TCOTS_Blocks.MONSTER_NEST_ENTITY, MonsterNestRenderer::new);
 
+        //Particles
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DROWNER_PUDDLE_PARTICLE, Drowner_PuddleParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION, Rotfiend_BloodExplosionParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, new Rotfiend_BloodEmitterParticle.Factory());

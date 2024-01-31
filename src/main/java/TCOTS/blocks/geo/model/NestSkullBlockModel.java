@@ -1,7 +1,7 @@
-package TCOTS.blocks.geo;
+package TCOTS.blocks.geo.model;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.blocks.skull.NestSkullBlockEntity;
+import TCOTS.blocks.entity.NestSkullBlockEntity;
 import TCOTS.blocks.skull.NestWallSkullBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SkullBlock;
@@ -25,7 +25,7 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
 
     @Override
     public Identifier getAnimationResource(NestSkullBlockEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/misc/nest_skull.animation.json");
+        return new Identifier(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 
 

@@ -1,5 +1,6 @@
 package TCOTS.blocks.skull;
 
+import TCOTS.blocks.entity.NestSkullBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EquipmentSlot;
