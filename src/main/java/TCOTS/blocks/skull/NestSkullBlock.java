@@ -2,7 +2,6 @@ package TCOTS.blocks.skull;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.Equipment;

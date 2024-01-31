@@ -3,16 +3,11 @@ package TCOTS.blocks.geo;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.skull.NestSkullBlockEntity;
 import TCOTS.blocks.skull.NestWallSkullBlock;
-import net.minecraft.block.AbstractSkullBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SkullBlock;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.RotationPropertyHelper;
-import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
@@ -33,13 +28,6 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
         return new Identifier(TCOTS_Main.MOD_ID, "animations/misc/nest_skull.animation.json");
     }
 
-
-//    public void setHeadRotation(float animationProgress, float yaw, float pitch) {
-//        this.head.setRotZ(yaw * ((float)Math.PI / 180));
-////        this.head.pitch = ;
-//        this.head.setRotX(pitch * ((float)Math.PI / 180));
-//
-//    }
 
     @Override
     public void setCustomAnimations(NestSkullBlockEntity animatable, long instanceId, AnimationState<NestSkullBlockEntity> animationState) {
@@ -74,9 +62,8 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
             head.setPosZ(3.999f);
         }
         else{
-            if(head.getPosY()!=0){
-                head.setPosY(0);
-            }
+            head.setPosY(0.001f);
+
             if(head.getPosX()!=0){
                 head.setPosX(0);
             }
