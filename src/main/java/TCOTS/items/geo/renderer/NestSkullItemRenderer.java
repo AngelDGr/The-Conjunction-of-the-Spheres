@@ -1,8 +1,7 @@
-package TCOTS.items.geo;
+package TCOTS.items.geo.renderer;
 
 import TCOTS.items.blocks.NestSkullItem;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.model.GeoModel;
+import TCOTS.items.geo.model.NestSkullItemModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
 public class NestSkullItemRenderer extends GeoItemRenderer<NestSkullItem> {

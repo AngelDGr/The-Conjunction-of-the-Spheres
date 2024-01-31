@@ -1,6 +1,6 @@
 package TCOTS.items.blocks;
 
-import TCOTS.items.geo.NestSkullItemRenderer;
+import TCOTS.items.geo.renderer.NestSkullItemRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -54,7 +54,6 @@ public class NestSkullItem extends BlockItem implements GeoItem {
     }
 
 
-
     @Override
     public Supplier<Object> getRenderProvider() {
         return renderProvider;
@@ -63,12 +62,10 @@ public class NestSkullItem extends BlockItem implements GeoItem {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
-    }
-
-    private PlayState predicate(AnimationState<NestSkullItem> nestSkullItemAnimationState) {
-        nestSkullItemAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
+        controllers.add(new AnimationController<>(this, "controller", 0, state ->{
+            state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }));
     }
 
     @Override

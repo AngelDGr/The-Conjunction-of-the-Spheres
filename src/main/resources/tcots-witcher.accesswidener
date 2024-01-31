@@ -1,5 +1,16 @@
 accessWidener v2 named
 
+
 accessible class net/minecraft/recipe/BrewingRecipeRegistry$Recipe
 accessible class net/minecraft/screen/BrewingStandScreenHandler$PotionSlot
 accessible class net/minecraft/screen/BrewingStandScreenHandler$IngredientSlot
+accessible method net/minecraft/world/MobSpawnerLogic getSpawnEntry (Lnet/minecraft/world/World;Lnet/minecraft/util/math/random/Random;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/world/MobSpawnerEntry;
+accessible field net/minecraft/world/MobSpawnerLogic spawnDelay I
+accessible field net/minecraft/world/MobSpawnerLogic minSpawnDelay I
+accessible field net/minecraft/world/MobSpawnerLogic maxSpawnDelay I
+accessible field net/minecraft/world/MobSpawnerLogic spawnCount I
+accessible field net/minecraft/world/MobSpawnerLogic maxNearbyEntities I
+accessible field net/minecraft/world/MobSpawnerLogic requiredPlayerRange I
+accessible field net/minecraft/world/MobSpawnerLogic spawnRange I
+accessible field net/minecraft/world/MobSpawnerLogic spawnEntry Lnet/minecraft/world/MobSpawnerEntry;
+accessible field net/minecraft/world/MobSpawnerLogic spawnPotentials Lnet/minecraft/util/collection/DataPool;

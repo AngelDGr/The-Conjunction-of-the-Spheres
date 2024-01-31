@@ -1,4 +1,4 @@
-package TCOTS.items.geo;
+package TCOTS.items.geo.model;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.items.blocks.NestSkullItem;

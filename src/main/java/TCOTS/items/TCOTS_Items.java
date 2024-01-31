@@ -3,6 +3,7 @@ package TCOTS.items;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
 import TCOTS.potions.DwarvenSpiritItem;
 import TCOTS.potions.TCOTS_Effects;
@@ -196,13 +197,14 @@ public class TCOTS_Items {
 
     public static Item NEST_SLAB_ITEM;
     public static Item NEST_SKULL_ITEM;
+
+    public static Item MONSTER_NEST_ITEM;
     public static void registerItemsMisc(){
         NEST_SLAB_ITEM  = registerBlockItem("nest_slab", TCOTS_Blocks.NEST_SLAB);
-//        NEST_SKULL_ITEM = registerBlockItem("nest_skull", TCOTS_Blocks.NEST_SKULL);
+
         NEST_SKULL_ITEM = registerItem("nest_skull", new NestSkullItem(TCOTS_Blocks.NEST_SKULL, TCOTS_Blocks.NEST_WALL_SKULL, new FabricItemSettings(), Direction.DOWN));
-//        NEST_SKULL_ITEM = registerItem("nest_skull", new NestSkullItem(TCOTS_Blocks.NEST_SKULL, new FabricItemSettings()));
-//        NEST_SKULL_ITEM = registerItem("nest_skull", new VerticallyAttachableBlockItem(TCOTS_Blocks.NEST_SKULL, TCOTS_Blocks.NEST_WALL_SKULL, new Item.Settings(), Direction.DOWN));
-//        NEST_SKULL_ITEM = Items.register(new VerticallyAttachableBlockItem(TCOTS_Blocks.NEST_SKULL, TCOTS_Blocks.NEST_WALL_SKULL, new Item.Settings().rarity(Rarity.UNCOMMON), Direction.DOWN));
+
+        MONSTER_NEST_ITEM = registerItem("monster_nest", new MonsterNestItem(TCOTS_Blocks.MONSTER_NEST, new FabricItemSettings()));
     }
 
     private static Item registerBlockItem(String name, Block block){

@@ -20,7 +20,7 @@ public class TCOTS_Blocks {
     public static final Block NEST_SLAB  = new SlabBlock(FabricBlockSettings.create().strength(0.2f).sounds(BlockSoundGroup.GRAVEL).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block NEST_SKULL  = new NestSkullBlock(FabricBlockSettings.create().strength(0.2f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block NEST_WALL_SKULL = new NestWallSkullBlock(FabricBlockSettings.create().strength(0.2f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).dropsLike(NEST_SKULL).pistonBehavior(PistonBehavior.DESTROY));
-    public static final Block MONSTER_NEST  = new MonsterNestBlock(FabricBlockSettings.create().strength(0.2f).sounds(BlockSoundGroup.GRAVEL).pistonBehavior(PistonBehavior.IGNORE));
+    public static final Block MONSTER_NEST  = new MonsterNestBlock(FabricBlockSettings.create().strength(0.2f).sounds(BlockSoundGroup.GRAVEL));
 
     public static BlockEntityType<NestSkullBlockEntity> SKULL_NEST_ENTITY;
 
