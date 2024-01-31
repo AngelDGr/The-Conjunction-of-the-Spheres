@@ -49,8 +49,21 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
         BlockState blockState = animatable.getCachedState();
         boolean bl = blockState.getBlock() instanceof NestWallSkullBlock;
 
-        Direction direction = bl ? blockState.get(NestWallSkullBlock.FACING) : null;
-        int k = bl ? RotationPropertyHelper.fromDirection(direction.getOpposite()) : blockState.get(SkullBlock.ROTATION);
+        Direction direction;
+        if(bl){
+            direction=blockState.get(NestWallSkullBlock.FACING);
+        }
+        else{
+            direction= null;
+        }
+
+        int k;
+
+        if (bl) {
+            k = RotationPropertyHelper.fromDirection(direction.getOpposite());
+        } else {
+            k = blockState.get(SkullBlock.ROTATION);
+        }
 
         float h = RotationPropertyHelper.toDegrees(k);
 
@@ -61,16 +74,20 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
             head.setPosZ(3.999f);
         }
         else{
-            head.setRotY(h);
+            if(head.getPosY()!=0){
+                head.setPosY(0);
+            }
+            if(head.getPosX()!=0){
+                head.setPosX(0);
+            }
+            if(head.getPosZ()!=0){
+                head.setPosZ(0);
+            }
+            head.setRotY( h * ((float)Math.PI / -180));
         }
 
 
-//        SkullBlock.SkullType skullType = ((AbstractSkullBlock)blockState.getBlock()).getSkullType();
-//        SkullBlockEntityModel skullBlockEntityModel = this.MODELS.get(skullType);
+
     }
 
-//    @Override
-//    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-//        this.root.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-//    }
 }
