@@ -182,6 +182,7 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
+
         NbtCompound nbtCompound = this.createNbt();
         nbtCompound.remove("SpawnPotentials");
         return nbtCompound;
@@ -203,6 +204,8 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
     public void setEntityType(EntityType<?> entityType, Random random) {
         this.logic.setEntityId(entityType, this.world, random, this.pos);
     }
+
+
 
     public MobSpawnerLogic getLogic() {
         return this.logic;

@@ -35,14 +35,14 @@ public class NestSkullBlockEntity extends BlockEntity implements GeoBlockEntity 
         return cache;
     }
 
-    private int poweredTicks;
-    private boolean powered;
-    public float getPoweredTicks(float tickDelta) {
-        if (this.powered) {
-            return (float)this.poweredTicks + tickDelta;
-        }
-        return this.poweredTicks;
-    }
+//    private int poweredTicks;
+//    private boolean powered;
+//    public float getPoweredTicks(float tickDelta) {
+//        if (this.powered) {
+//            return (float)this.poweredTicks + tickDelta;
+//        }
+//        return this.poweredTicks;
+//    }
 
     @Override
     public double getTick(Object blockEntity) {

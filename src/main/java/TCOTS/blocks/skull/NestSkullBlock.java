@@ -3,10 +3,15 @@ package TCOTS.blocks.skull;
 import TCOTS.blocks.entity.NestSkullBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ai.pathing.NavigationType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Equipment;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
@@ -20,6 +25,7 @@ import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
 public class NestSkullBlock extends BlockWithEntity implements Equipment {
+
     public static final int MAX_ROTATION_INDEX = RotationPropertyHelper.getMax();
     private static final int MAX_ROTATIONS = MAX_ROTATION_INDEX + 1;
     public static final IntProperty ROTATION = Properties.ROTATION;
@@ -70,6 +76,14 @@ public class NestSkullBlock extends BlockWithEntity implements Equipment {
         builder.add(ROTATION);
     }
 
+
+    @Override
+    public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos) {
+        if (player.getMainHandStack().getItem() instanceof SwordItem) {
+            return 0.8f;
+        }
+        return super.calcBlockBreakingDelta(state, player, world, pos);
+    }
 
 
     @Override

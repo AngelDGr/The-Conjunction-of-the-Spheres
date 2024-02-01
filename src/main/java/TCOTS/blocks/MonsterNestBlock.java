@@ -8,9 +8,12 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShovelItem;
+import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.Registries;
@@ -58,6 +61,20 @@ public class MonsterNestBlock extends BlockWithEntity {
     }
 
     @Override
+    public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos) {
+        if (
+                player.getMainHandStack().getItem() instanceof ShovelItem &&
+                EnchantmentHelper.getEfficiency(player) >= 3
+        ) {
+
+            return super.calcBlockBreakingDelta(state, player, world, pos);
+        }
+        else{
+            return 0.0f;
+        }
+    }
+
+    @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return MonsterNestBlock.checkType(type, TCOTS_Blocks.MONSTER_NEST_ENTITY, world.isClient ? MonsterNestBlockEntity::clientTick : MonsterNestBlockEntity::serverTick);
@@ -94,6 +111,6 @@ public class MonsterNestBlock extends BlockWithEntity {
             int i = 15 + world.random.nextInt(15) + world.random.nextInt(15);
             this.dropExperience(world, pos, i);
         }
-    }
 
+    }
 }
