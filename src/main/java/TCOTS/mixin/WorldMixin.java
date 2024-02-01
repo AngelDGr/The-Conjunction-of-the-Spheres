@@ -45,12 +45,5 @@ public class WorldMixin {
     public Explosion createExplosion(@Nullable Entity entity, @Nullable DamageSource damageSource, @Nullable ExplosionBehavior behavior, double x, double y, double z, float power, boolean createFire, World.ExplosionSourceType explosionSourceType, boolean particles) {return null;
     }
 
-//    @ModifyVariable(
-//            method = "createExplosion(Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/damage/DamageSource;Lnet/minecraft/world/explosion/ExplosionBehavior;DDDFZLnet/minecraft/world/World$ExplosionSourceType;Z)Lnet/minecraft/world/explosion/Explosion;",
-//            at = @At("STORE"), ordinal = 0)
-//    private Explosion injected(Explosion value) {
-//        return null;
-//    }
-
 
 }

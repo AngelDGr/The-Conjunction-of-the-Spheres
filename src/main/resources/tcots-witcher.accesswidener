@@ -14,3 +14,10 @@ accessible field net/minecraft/world/MobSpawnerLogic requiredPlayerRange I
 accessible field net/minecraft/world/MobSpawnerLogic spawnRange I
 accessible field net/minecraft/world/MobSpawnerLogic spawnEntry Lnet/minecraft/world/MobSpawnerEntry;
 accessible field net/minecraft/world/MobSpawnerLogic spawnPotentials Lnet/minecraft/util/collection/DataPool;
+accessible field net/minecraft/world/MobSpawnerLogic lastRotation D
+accessible field net/minecraft/world/MobSpawnerLogic rotation D
+accessible method net/minecraft/world/MobSpawnerLogic isPlayerInRange (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Z
+accessible field net/minecraft/world/MobSpawnerLogic renderedEntity Lnet/minecraft/entity/Entity;
+
+accessible method net/minecraft/util/collection/DataPool <init> (Ljava/util/List;)V
+accessible method net/minecraft/world/MobSpawnerLogic updateSpawns (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V

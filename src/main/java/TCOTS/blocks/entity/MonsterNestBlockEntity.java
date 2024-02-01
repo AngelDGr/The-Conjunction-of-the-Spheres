@@ -1,5 +1,6 @@
 package TCOTS.blocks.entity;
 
+import TCOTS.blocks.MonsterNestSpawnerLogic;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import net.minecraft.block.Block;
@@ -8,18 +9,26 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.SpawnRestriction;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.MobSpawnerEntry;
-import net.minecraft.world.MobSpawnerLogic;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -30,6 +39,8 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
+import java.util.Optional;
+
 public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public MonsterNestBlockEntity(BlockPos pos, BlockState state) {
@@ -37,7 +48,6 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
     }
 
     private final MobSpawnerLogic logic = new MobSpawnerLogic(){
-
 
         @Override
         public void sendStatus(World world, BlockPos pos, int status) {
@@ -55,11 +65,12 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
 
         @Override
         public NbtCompound writeNbt(NbtCompound nbt) {
-//            this.spawnEntry=new MobSpawnerEntry(MobSpawnerEntry.CustomSpawnRules);
+            this.minSpawnDelay = 50;
+            this.maxSpawnDelay = 100;
 
             this.spawnEntry=new MobSpawnerEntry();
+            this.spawnEntry.getNbt().putString("id", "tcots-witcher:nekker");
 
-            System.out.println(this.spawnEntry);
             nbt.putShort("Delay", (short)this.spawnDelay);
             nbt.putShort("MinSpawnDelay", (short)this.minSpawnDelay);
             nbt.putShort("MaxSpawnDelay", (short)this.maxSpawnDelay);
@@ -73,6 +84,78 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
             nbt.put("SpawnPotentials", MobSpawnerEntry.DATA_POOL_CODEC.encodeStart(NbtOps.INSTANCE, this.spawnPotentials).result().orElseThrow());
             return nbt;
         }
+
+        @Override
+        public void serverTick(ServerWorld world, BlockPos pos) {
+            if (!this.isPlayerInRange(world, pos)) {
+                return;
+            }
+            if (this.spawnDelay == -1) {
+                this.updateSpawns(world, pos);
+            }
+            if (this.spawnDelay > 0) {
+                --this.spawnDelay;
+                return;
+            }
+            boolean bl = false;
+            Random random = world.getRandom();
+            MobSpawnerEntry mobSpawnerEntry = this.getSpawnEntry(world, random, pos);
+            for (int i = 0; i < this.spawnCount; ++i) {
+                MobSpawnerEntry.CustomSpawnRules customSpawnRules;
+                double f;
+                NbtCompound nbtCompound = mobSpawnerEntry.getNbt();
+                Optional<EntityType<?>> optional = EntityType.fromNbt(nbtCompound);
+                if (optional.isEmpty()) {
+                    this.updateSpawns(world, pos);
+                    return;
+                }
+                NbtList nbtList = nbtCompound.getList("Pos", NbtElement.DOUBLE_TYPE);
+                int j = nbtList.size();
+                double d = j >= 1 ? nbtList.getDouble(0) : (double)pos.getX() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
+                double e = j >= 2 ? nbtList.getDouble(1) : (double)(pos.getY() + random.nextInt(3) - 1);
+                double d2 = f = j >= 3 ? nbtList.getDouble(2) : (double)pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
+                if (!world.isSpaceEmpty(optional.get().createSimpleBoundingBox(d, e, f))) continue;
+                BlockPos blockPos = BlockPos.ofFloored(d, e, f);
+                if (!mobSpawnerEntry.getCustomSpawnRules().isPresent() ? !SpawnRestriction.canSpawn(optional.get(), world, SpawnReason.SPAWNER, blockPos, world.getRandom()) : !optional.get().getSpawnGroup().isPeaceful() && world.getDifficulty() == Difficulty.PEACEFUL || !(customSpawnRules = mobSpawnerEntry.getCustomSpawnRules().get()).blockLightLimit().contains(world.getLightLevel(LightType.BLOCK, blockPos)) || !customSpawnRules.skyLightLimit().contains(world.getLightLevel(LightType.SKY, blockPos))) continue;
+                Entity entity2 = EntityType.loadEntityWithPassengers(nbtCompound, world, entity -> {
+                    entity.refreshPositionAndAngles(d, e, f, entity.getYaw(), entity.getPitch());
+                    return entity;
+                });
+                if (entity2 == null) {
+                    this.updateSpawns(world, pos);
+                    return;
+                }
+                int k = world.getNonSpectatingEntities(entity2.getClass(), new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).expand(this.spawnRange)).size();
+                if (k >= this.maxNearbyEntities) {
+                    this.updateSpawns(world, pos);
+                    return;
+                }
+                entity2.refreshPositionAndAngles(entity2.getX(), entity2.getY(), entity2.getZ(), random.nextFloat() * 360.0f, 0.0f);
+                if (entity2 instanceof MobEntity) {
+                    MobEntity mobEntity = (MobEntity)entity2;
+                    if (mobSpawnerEntry.getCustomSpawnRules().isEmpty() && !mobEntity.canSpawn(world, SpawnReason.SPAWNER) || !mobEntity.canSpawn(world)) continue;
+                    if (mobSpawnerEntry.getNbt().getSize() == 1 && mobSpawnerEntry.getNbt().contains("id", NbtElement.STRING_TYPE)) {
+                        ((MobEntity)entity2).initialize(world, world.getLocalDifficulty(entity2.getBlockPos()), SpawnReason.SPAWNER, null, null);
+                    }
+                }
+                if (!world.spawnNewEntityAndPassengers(entity2)) {
+                    this.updateSpawns(world, pos);
+                    return;
+                }
+                //8642097 it's the event id for the particles, numbers completely random
+                world.syncWorldEvent(8642097, pos, 0);
+                world.emitGameEvent(entity2, GameEvent.ENTITY_PLACE, blockPos);
+                if (entity2 instanceof MobEntity) {
+                    ((MobEntity)entity2).playSpawnEffects();
+                }
+                bl = true;
+            }
+            if (bl) {
+                this.updateSpawns(world, pos);
+            }
+        }
+
+
     };
 
     @Override

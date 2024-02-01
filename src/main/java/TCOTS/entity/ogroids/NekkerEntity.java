@@ -3,7 +3,10 @@ package TCOTS.entity.ogroids;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
 import TCOTS.entity.necrophages.RotfiendEntity;
 import TCOTS.sounds.TCOTS_Sounds;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
@@ -18,7 +21,11 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -332,6 +339,32 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
     public boolean tryAttack(Entity target) {
         this.playSound(TCOTS_Sounds.NEKKER_ATTACK, 1.0F, 1.0F);
         return super.tryAttack(target);
+    }
+
+    public void playSpawnEffects() {
+        if (this.getWorld().isClient) {
+//            for (int i = 0; i < 20; ++i) {
+//                double d = this.random.nextGaussian() * 0.02;
+//                double e = this.random.nextGaussian() * 0.02;
+//                double f = this.random.nextGaussian() * 0.02;
+//                double g = 10.0;
+//                this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, this.getSteppingBlockState()), this.offsetX(1.0) - d * 10.0, this.getRandomBodyY() - e * 10.0, this.getParticleZ(1.0) - f * 10.0, d, e, f);
+//            }
+
+            BlockState blockState = this.getSteppingBlockState();
+            if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
+
+                for (int i = 0; i < 40; ++i) {
+                    double d = this.getX() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
+                    double e = this.getY()+0.5;
+                    double f = this.getZ() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
+
+                    this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+                }
+            }
+        } else {
+            this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_SPAWN_EFFECTS);
+        }
     }
 
     @Override
