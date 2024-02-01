@@ -14,7 +14,8 @@
 		"ServerWorldMixin",
 		"ServerPlayerEntityMixin",
 		"BlockEntityTypeMixin",
-		"WorldRendererMixin"
+		"WorldRendererMixin",
+		"SpawnEggItemMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

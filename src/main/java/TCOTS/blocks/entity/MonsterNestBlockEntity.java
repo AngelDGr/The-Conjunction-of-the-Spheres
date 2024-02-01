@@ -1,14 +1,9 @@
 package TCOTS.blocks.entity;
 
-import TCOTS.blocks.MonsterNestSpawnerLogic;
 import TCOTS.blocks.TCOTS_Blocks;
-import TCOTS.entity.TCOTS_Entities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -18,11 +13,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -65,11 +55,10 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
 
         @Override
         public NbtCompound writeNbt(NbtCompound nbt) {
-            this.minSpawnDelay = 50;
-            this.maxSpawnDelay = 100;
-
-            this.spawnEntry=new MobSpawnerEntry();
-            this.spawnEntry.getNbt().putString("id", "tcots-witcher:nekker");
+            this.spawnRange = 3;
+            this.requiredPlayerRange = 64;
+            this.minSpawnDelay = 1200;
+            this.maxSpawnDelay = 2000;
 
             nbt.putShort("Delay", (short)this.spawnDelay);
             nbt.putShort("MinSpawnDelay", (short)this.minSpawnDelay);
@@ -78,6 +67,7 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
             nbt.putShort("MaxNearbyEntities", (short)this.maxNearbyEntities);
             nbt.putShort("RequiredPlayerRange", (short)this.requiredPlayerRange);
             nbt.putShort("SpawnRange", (short)this.spawnRange);
+
             if (this.spawnEntry != null) {
                 nbt.put(SPAWN_DATA_KEY, MobSpawnerEntry.CODEC.encodeStart(NbtOps.INSTANCE, this.spawnEntry).result().orElseThrow(() -> new IllegalStateException("Invalid SpawnData")));
             }
@@ -125,7 +115,7 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
                     this.updateSpawns(world, pos);
                     return;
                 }
-                int k = world.getNonSpectatingEntities(entity2.getClass(), new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).expand(this.spawnRange)).size();
+                int k = world.getNonSpectatingEntities(entity2.getClass(), new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).expand(15)).size();
                 if (k >= this.maxNearbyEntities) {
                     this.updateSpawns(world, pos);
                     return;
@@ -154,7 +144,6 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
                 this.updateSpawns(world, pos);
             }
         }
-
 
     };
 
@@ -191,10 +180,6 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
         blockEntity.logic.serverTick((ServerWorld)world, pos);
     }
 
-//    public BlockEntityUpdateS2CPacket toUpdatePacket() {
-//        return BlockEntityUpdateS2CPacket.create(this);
-//    }
-
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         NbtCompound nbtCompound = this.createNbt();
@@ -223,7 +208,4 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
         return this.logic;
     }
 
-//    public /* synthetic */ Packet toUpdatePacket() {
-//        return this.toUpdatePacket();
-//    }
 }

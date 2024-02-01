@@ -183,13 +183,26 @@
       "tcots-witcher:entity/ogroids/nekker/nekker_death2"
     ]
   },
-
   "nekker_lunge": {
     "subtitle": "tcots-witcher.sounds.nekker_lunge",
     "sounds": [
       "tcots-witcher:entity/ogroids/nekker/nekker_lunge1",
       "tcots-witcher:entity/ogroids/nekker/nekker_lunge2",
       "tcots-witcher:entity/ogroids/nekker/nekker_lunge3"
+    ]
+  },
+  "nekker_emerging": {
+    "subtitle": "tcots-witcher.sounds.nekker_emerging",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker/nekker_emerging1",
+      "tcots-witcher:entity/ogroids/nekker/nekker_emerging2"
+    ]
+  },
+  "nekker_digging": {
+    "subtitle": "tcots-witcher.sounds.nekker_digging",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker/nekker_digging1",
+      "tcots-witcher:entity/ogroids/nekker/nekker_digging2"
     ]
   }
 }

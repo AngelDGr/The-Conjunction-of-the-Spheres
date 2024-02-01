@@ -38,6 +38,8 @@
     "tcots-witcher.sounds.nekker_idle": "Nekker groans",
     "tcots-witcher.sounds.nekker_death": "Nekker dies",
     "tcots-witcher.sounds.nekker_lunge": "Nekker lunges",
+    "tcots-witcher.sounds.nekker_emerging": "Nekker emerges from ground",
+    "tcots-witcher.sounds.nekker_digging": "Nekker return to ground",
 
     "item.tcots-witcher.nekker_eye": "Nekker Eye",
     "item.tcots-witcher.nekker_heart": "Nekker Heart",

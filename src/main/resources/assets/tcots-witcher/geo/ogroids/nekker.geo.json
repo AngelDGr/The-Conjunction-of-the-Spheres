@@ -454,7 +454,7 @@
 				{
 					"name": "DownBody",
 					"parent": "FullBody",
-					"pivot": [0, 0, 1.5]
+					"pivot": [0, 6, 1.5]
 				},
 				{
 					"name": "right_leg",

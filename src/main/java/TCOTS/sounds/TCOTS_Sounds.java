@@ -38,6 +38,8 @@ public class TCOTS_Sounds {
     public static SoundEvent NEKKER_IDLE = registerSoundEvent("nekker_idle");
     public static SoundEvent NEKKER_DEATH = registerSoundEvent("nekker_death");
     public static SoundEvent NEKKER_LUNGE = registerSoundEvent("nekker_lunge");
+    public static SoundEvent NEKKER_EMERGING = registerSoundEvent("nekker_emerging");
+    public static SoundEvent NEKKER_DIGGING = registerSoundEvent("nekker_digging");
 
 //    public static final BlockSoundGroup ANIMATED_BLOCK_SOUNDS = new BlockSoundGroup(1f, 1f,
 //            ModSounds.ANIMATED_BLOCK_BREAK, ModSounds.ANIMATED_BLOCK_WALK, ModSounds.ANIMATED_BLOCK_PLACE,
