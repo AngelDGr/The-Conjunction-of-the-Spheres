@@ -1,0 +1,63 @@
+{
+
+  "fallback": "minecraft:empty",
+
+
+  "elements": [
+    {
+      "weight": 2,
+      "element": {
+
+        "location": "tcots-witcher:nekker_nest_1",
+
+        "processors": "minecraft:empty",
+
+        "projection": "terrain_matching",
+
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+
+        "location": "tcots-witcher:nekker_nest_2",
+
+        "processors": "minecraft:empty",
+
+        "projection": "terrain_matching",
+
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+
+        "location": "tcots-witcher:nekker_nest_3",
+
+        "processors": "minecraft:empty",
+
+        "projection": "terrain_matching",
+
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+
+
+        "location": "tcots-witcher:nekker_nest_4",
+
+        "processors": "minecraft:empty",
+
+
+        "projection": "terrain_matching",
+
+
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

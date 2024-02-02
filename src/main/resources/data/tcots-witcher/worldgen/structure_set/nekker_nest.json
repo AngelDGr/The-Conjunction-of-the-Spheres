@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "tcots-witcher:nekker_nest",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1224466880,
+
+    "spacing": 24,
+
+    "separation": 12,
+
+    "type": "minecraft:random_spread"
+  }
+}

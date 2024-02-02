@@ -17,10 +17,10 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 
 public class TCOTS_Blocks {
-    public static final Block NEST_SLAB  = new SlabBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).pistonBehavior(PistonBehavior.DESTROY));
+    public static final Block NEST_SLAB  = new SlabBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).pistonBehavior(PistonBehavior.DESTROY).mapColor(MapColor.DIRT_BROWN));
     public static final Block NEST_SKULL  = new NestSkullBlock(FabricBlockSettings.create().strength(0.4f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block NEST_WALL_SKULL = new NestWallSkullBlock(FabricBlockSettings.create().strength(0.4f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY).dropsLike(NEST_SKULL));
-    public static final Block MONSTER_NEST  = new MonsterNestBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL));
+    public static final Block MONSTER_NEST  = new MonsterNestBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).mapColor(MapColor.DIRT_BROWN));
 
     public static BlockEntityType<NestSkullBlockEntity> SKULL_NEST_ENTITY;
     public static BlockEntityType<MonsterNestBlockEntity> MONSTER_NEST_ENTITY;

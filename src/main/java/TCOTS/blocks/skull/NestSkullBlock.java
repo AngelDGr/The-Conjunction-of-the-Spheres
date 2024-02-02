@@ -11,6 +11,7 @@ import net.minecraft.item.Equipment;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
@@ -23,6 +24,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class NestSkullBlock extends BlockWithEntity implements Equipment {
 
@@ -39,6 +42,13 @@ public class NestSkullBlock extends BlockWithEntity implements Equipment {
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new NestSkullBlockEntity(pos, state);
+    }
+
+    @Override
+    public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
+
+
+        return super.getDroppedStacks(state, builder);
     }
 
     @Override
