@@ -1,23 +1,18 @@
 package TCOTS;
 
-import TCOTS.access.BrewingRecipeRegistryAccess;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.necrophages.DrownerEntity;
 import TCOTS.entity.necrophages.RotfiendEntity;
 import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
-import TCOTS.mixin.BrewingRecipeRegistryMixin;
 import TCOTS.potions.TCOTS_Effects;
 import TCOTS.particles.TCOTS_Particles;
-import TCOTS.potions.WitcherPotions_Recipes;
+import TCOTS.potions.screen.WitcherPotions_Recipes;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.potion.Potions;
-import net.minecraft.recipe.BrewingRecipeRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import TCOTS.entity.TCOTS_Entities;

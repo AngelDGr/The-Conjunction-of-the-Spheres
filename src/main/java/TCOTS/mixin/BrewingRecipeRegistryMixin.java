@@ -1,24 +1,7 @@
 package TCOTS.mixin;
 
-import TCOTS.access.BrewingRecipeRegistryAccess;
-import TCOTS.potions.WitcherPotions_CustomBrewingRecipe;
-import TCOTS.potions.WitcherPotions_Recipes;
-import com.google.common.collect.Lists;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.BrewingRecipeRegistry;
-import net.minecraft.recipe.Ingredient;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.List;
 
 
 @Mixin(BrewingRecipeRegistry.class)

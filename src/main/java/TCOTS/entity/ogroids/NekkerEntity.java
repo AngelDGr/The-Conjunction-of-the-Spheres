@@ -1,14 +1,11 @@
 package TCOTS.entity.ogroids;
 
-import TCOTS.entity.necrophages.RotfiendEntity;
+import TCOTS.entity.necrophages.Necrophage_Base;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -16,6 +13,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
@@ -30,6 +28,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -44,7 +45,7 @@ import java.util.EnumSet;
 
 public class NekkerEntity extends Ogroid_Base implements GeoEntity {
 
-    //TODO: Add spawn
+    //xTODO: Add spawn
     //xTODO: Add drops
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
@@ -121,8 +122,8 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
                 return !NekkerEntity.this.cooldownBetweenLunges && this.mob.isAttacking()
                         && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
                         && (this.mob.getTarget().getY() - this.mob.getY()) <= 1
-//                        && !this.mob.getIsEmerging()
-//                        && !this.mob.getInGroundDataTracker()
+                        && !this.mob.getIsEmerging()
+                        && !this.mob.getInGroundDataTracker()
                         ;
             } else {
                 return false;
@@ -629,6 +630,18 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
         } else {
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_SPAWN_EFFECTS);
         }
+    }
+
+
+    public static boolean canSpawnNekker(EntityType<? extends Ogroid_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        if (world.getDifficulty() != Difficulty.PEACEFUL) {
+
+            if (spawnReason.equals(SpawnReason.SPAWNER)) {
+                return true;
+            }
+            return HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
+        }
+        return false;
     }
 
     @Override

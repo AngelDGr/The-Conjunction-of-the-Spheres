@@ -36,7 +36,6 @@ public class DrownerModel extends GeoModel<DrownerEntity> {
         CoreGeoBone head = getAnimationProcessor().getBone("head");
         CoreGeoBone wholeBody = getAnimationProcessor().getBone("wholeBody");
         EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
-
         if(head!=null) {
             //Swimming
             if (entity.getSwimmingDataTracker()) {

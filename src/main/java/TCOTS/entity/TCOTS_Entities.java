@@ -110,7 +110,16 @@ public class TCOTS_Entities {
 
 
         //Nekkers
-            //Caves
-//            BiomeModifications.addSpawn(BiomeSelectors.includeByKey());
+        SpawnRestriction.register(NEKKER, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NekkerEntity::canSpawnNekker);
+
+            //In night
+            BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                                                BiomeKeys.SAVANNA, BiomeKeys.PLAINS,
+                                                                BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE,
+                                                                BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
+                                                                BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys. OLD_GROWTH_BIRCH_FOREST, BiomeKeys.DARK_FOREST), SpawnGroup.MONSTER,
+                    NEKKER, 5, 4,6);
+
     }
 }

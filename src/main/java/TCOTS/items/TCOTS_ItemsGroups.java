@@ -52,6 +52,7 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.NEST_SLAB_ITEM);
                         entries.add(TCOTS_Items.NEST_SKULL_ITEM);
                         entries.add(TCOTS_Items.MONSTER_NEST_ITEM);
+                        entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
 
                     }).build());
 

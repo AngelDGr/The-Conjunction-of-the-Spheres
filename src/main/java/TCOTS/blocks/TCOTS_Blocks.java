@@ -1,6 +1,7 @@
 package TCOTS.blocks;
 
 import TCOTS.TCOTS_Main;
+import TCOTS.blocks.entity.AlchemyTableBlockEntity;
 import TCOTS.blocks.entity.MonsterNestBlockEntity;
 import TCOTS.blocks.skull.NestSkullBlock;
 import TCOTS.blocks.entity.NestSkullBlockEntity;
@@ -21,9 +22,12 @@ public class TCOTS_Blocks {
     public static final Block NEST_SKULL  = new NestSkullBlock(FabricBlockSettings.create().strength(0.4f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block NEST_WALL_SKULL = new NestWallSkullBlock(FabricBlockSettings.create().strength(0.4f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY).dropsLike(NEST_SKULL));
     public static final Block MONSTER_NEST  = new MonsterNestBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).mapColor(MapColor.DIRT_BROWN));
+    public static final Block ALCHEMY_TABLE  = new AlchemyTableBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOD).mapColor(MapColor.DARK_GREEN));
 
     public static BlockEntityType<NestSkullBlockEntity> SKULL_NEST_ENTITY;
     public static BlockEntityType<MonsterNestBlockEntity> MONSTER_NEST_ENTITY;
+
+    public static BlockEntityType<AlchemyTableBlockEntity> ALCHEMY_TABLE_ENTITY;
 
     public static void registerBlocks(){
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "nest_slab"), NEST_SLAB);
@@ -33,6 +37,8 @@ public class TCOTS_Blocks {
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "nest_wall_skull"), NEST_WALL_SKULL);
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "monster_nest"), MONSTER_NEST);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "alchemy_table"), ALCHEMY_TABLE);
 
 
         SKULL_NEST_ENTITY = Registry.register(
@@ -44,6 +50,12 @@ public class TCOTS_Blocks {
                 Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(TCOTS_Main.MOD_ID, "monster_nest"),
                 FabricBlockEntityTypeBuilder.create(MonsterNestBlockEntity::new, MONSTER_NEST).build());
+
+        ALCHEMY_TABLE_ENTITY = Registry.register(
+                Registries.BLOCK_ENTITY_TYPE,
+                new Identifier(TCOTS_Main.MOD_ID, "alchemy_table"),
+                FabricBlockEntityTypeBuilder.create(AlchemyTableBlockEntity::new, ALCHEMY_TABLE).build());
+
 
     }
 }

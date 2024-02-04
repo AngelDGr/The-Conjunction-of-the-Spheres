@@ -3,6 +3,7 @@ package TCOTS.items;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.items.blocks.AlchemyTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
 import TCOTS.potions.DwarvenSpiritItem;
@@ -197,14 +198,17 @@ public class TCOTS_Items {
 
     public static Item NEST_SLAB_ITEM;
     public static Item NEST_SKULL_ITEM;
-
     public static Item MONSTER_NEST_ITEM;
+    public static Item ALCHEMY_TABLE_ITEM;
+
     public static void registerItemsMisc(){
         NEST_SLAB_ITEM  = registerBlockItem("nest_slab", TCOTS_Blocks.NEST_SLAB);
 
         NEST_SKULL_ITEM = registerItem("nest_skull", new NestSkullItem(TCOTS_Blocks.NEST_SKULL, TCOTS_Blocks.NEST_WALL_SKULL, new FabricItemSettings(), Direction.DOWN));
 
         MONSTER_NEST_ITEM = registerItem("monster_nest", new MonsterNestItem(TCOTS_Blocks.MONSTER_NEST, new FabricItemSettings()));
+
+        ALCHEMY_TABLE_ITEM = registerItem("alchemy_table", new AlchemyTableItem(TCOTS_Blocks.ALCHEMY_TABLE, new FabricItemSettings()));
     }
 
     private static Item registerBlockItem(String name, Block block){
