@@ -48,7 +48,7 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
         if(handler.isCrafting()) {
             context.drawTexture(TEXTURE,
 
-                    x + 148, y + 16,
+                    x + 145, y + 16,
 
                     176, 0, 8, handler.getScaledProgress());
         }

@@ -16,13 +16,11 @@ import TCOTS.particles.Drowner_PuddleParticle;
 import TCOTS.particles.Rotfiend_BloodEmitterParticle;
 import TCOTS.particles.Rotfiend_BloodExplosionParticle;
 import TCOTS.particles.TCOTS_Particles;
+import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
 import TCOTS.potions.screen.AlchemyTableScreen;
-import TCOTS.potions.screen.AlchemyTableScreenHandler;
-import TCOTS.potions.screen.WitcherPotions_Recipes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 
@@ -47,7 +45,7 @@ public class TCOTS_Client implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION, Rotfiend_BloodExplosionParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, new Rotfiend_BloodEmitterParticle.Factory());
 
-        HandledScreens.register(WitcherPotions_Recipes.ALCHEMY_TABLE_SCREEN_HANDLER, AlchemyTableScreen::new);
+        HandledScreens.register(AlchemyTableRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, AlchemyTableScreen::new);
     }
 }
 

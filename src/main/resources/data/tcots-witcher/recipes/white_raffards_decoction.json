@@ -3,19 +3,20 @@
 
   "ingredients": [
     {
-      "item": "tcots-witcher:drowner_brain"
+      "item": "tcots-witcher:nekker_heart"
     },
     {
-      "item": "minecraft:dandelion"
+      "item": "minecraft:lily_of_the_valley"
     }
   ],
 
   "ingredient_counters": [
+
     {
-      "count": 1
+      "count": 4
     },
     {
-      "count": 5
+      "count": 2
     }
   ],
 
@@ -24,6 +25,6 @@
   },
 
   "result": {
-    "item": "tcots-witcher:swallow_potion"
+    "item": "tcots-witcher:white_raffards_decoction"
   }
 }

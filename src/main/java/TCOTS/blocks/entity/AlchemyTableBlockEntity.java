@@ -1,6 +1,7 @@
 package TCOTS.blocks.entity;
 
 import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.screen.AlchemyTableScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -13,6 +14,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Recipe;
@@ -25,6 +27,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEvents;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -139,8 +142,7 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
         if(world.isClient()) {
             return;
         }
-
-        if(isOutputSlotEmptyOrReceivable()) {
+//        if(isOutputSlotEmptyOrReceivable()) {
             if(this.hasRecipe()) {
                 this.increaseCraftProgress();
                 markDirty(world, pos, state);
@@ -152,84 +154,130 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
             } else {
                 this.resetProgress();
             }
-        } else {
-            this.resetProgress();
-            markDirty(world, pos, state);
-        }
+//        } else {
+//            this.resetProgress();
+//            markDirty(world, pos, state);
+//        }
     }
 
     private boolean hasRecipe() {
+//        ItemStack result = new ItemStack(TCOTS_Items.KILLER_WHALE_POTION);
+//        boolean hasInput1 = getStack(INGREDIENT_SLOT_1).getItem() == TCOTS_Items.DROWNER_BRAIN;
+//        boolean hasInput2 = getStack(INGREDIENT_SLOT_2).getItem() == Items.RED_MUSHROOM;
+//        boolean hasOutput = getStack(OUTPUT_POTION_SLOT).getItem() == TCOTS_Items.DWARVEN_SPIRIT;
+//
+//        return hasInput1 && hasInput2 && hasOutput
+////                && canInsertAmountIntoOutputSlot(result) && canInsertItemIntoOutputSlot(result.getItem())
+
         SimpleInventory inventory = new SimpleInventory(this.size());
-        Optional<AlchemyTableRecipe> recipe = this.getWorld().getRecipeManager().getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, getWorld());
 
-        for (int i = 0; i < this.size(); i++) {
-        inventory.setStack(i, this.getStack(i));
-        }
-
-//        recipe.get().matches()
-//
-//        getWorld().getRecipeManager().getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, getWorld());
-
-        return recipe.isPresent() && canInsertAmountIntoOutputSlot(inventory.getStack(INGREDIENT_SLOT_1))
-                && canInsertAmountIntoOutputSlot(inventory.getStack(INGREDIENT_SLOT_2))
-                && canInsertAmountIntoOutputSlot(inventory.getStack(INGREDIENT_SLOT_3))
-                && canInsertAmountIntoOutputSlot(inventory.getStack(INGREDIENT_SLOT_4))
-                && canInsertAmountIntoOutputSlot(inventory.getStack(INGREDIENT_SLOT_5))
-                && canInsertItemIntoOutputSlot(inventory.getStack(OUTPUT_POTION_SLOT).getItem());
-    }
-
-
-//    SimpleInventory inventory = new SimpleInventory(entity.size());
-//        for (int i = 0; i < entity.size(); i++) {
-//        inventory.setStack(i, entity.getStack(i));
-//    }
-//
-//    Optional<GemInfusingRecipe> match = entity.getWorld().getRecipeManager()
-//            .getFirstMatch(GemInfusingRecipe.Type.INSTANCE, inventory, entity.getWorld());
-//
-//        return match.isPresent() && canInsertAmountIntoOutputSlot(inventory)
-//                && canInsertItemIntoOutputSlot(inventory, match.get().getOutput().getItem());
-
-//    private Optional<RecipeEntry<GemPolishingRecipe>> getCurrentRecipe() {
-//        SimpleInventory inv = new SimpleInventory(this.size());
-//        for(int i = 0; i < this.size(); i++) {
-//            inv.setStack(i, this.getStack(i));
-//        }
-//
-//        return getWorld().getRecipeManager().getFirstMatch(GemPolishingRecipe.Type.INSTANCE, inv, getWorld());
-//    }
-//        private Optional<AlchemyTableRecipe> getCurrentRecipe() {
-//        SimpleInventory inventory = new SimpleInventory(this.size());
-//        Optional<AlchemyTableRecipe> recipe = this.getWorld().getRecipeManager().getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, getWorld());
-//
-//
-//        for (int i = 0; i < this.size(); i++) {
-//            inventory.setStack(i, this.getStack(i));
-//        }
-//
-//        return recipe;
-//    }
-
-    private void craftItem() {
-        SimpleInventory inventory = new SimpleInventory(this.size());
         for (int i = 0; i < this.size(); i++) {
             inventory.setStack(i, this.getStack(i));
         }
 
-        Optional<AlchemyTableRecipe> recipe = this.getWorld().getRecipeManager()
-                .getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, this.getWorld());
+        Optional<AlchemyTableRecipe> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager().getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, getWorld());
+
+        return recipe.isPresent();
+    }
+
+
+    private void craftItem() {
+//        SimpleInventory inventory = new SimpleInventory(this.size());
+//        for (int i = 0; i < this.size(); i++) {
+//            inventory.setStack(i, this.getStack(i));
+//        }
+//
+//        Optional<AlchemyTableRecipe> recipe = this.getWorld().getRecipeManager()
+//                .getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, this.getWorld());
+//
+//        if(hasRecipe()) {
+//            this.removeStack(INGREDIENT_SLOT_1, 1);
+//            this.removeStack(INGREDIENT_SLOT_2, 1);
+//            this.removeStack(INGREDIENT_SLOT_3, 1);
+//            this.removeStack(INGREDIENT_SLOT_4, 1);
+//            this.removeStack(INGREDIENT_SLOT_5, 1);
+//
+//
+//            this.setStack(OUTPUT_POTION_SLOT, new ItemStack(recipe.get().getRawOutput().getItem(),
+//                    this.getStack(2).getCount() + 1));
+//
+//            this.resetProgress();
+//        }
+//        if(this.getStack(INGREDIENT_SLOT_1) != null){
+//            this.removeStack(INGREDIENT_SLOT_1, 1);
+//        }
+//
+//        if(this.getStack(INGREDIENT_SLOT_2) != null){
+//            this.removeStack(INGREDIENT_SLOT_2, 1);
+//        }
+//
+//        if(this.getStack(INGREDIENT_SLOT_3) != null){
+//            this.removeStack(INGREDIENT_SLOT_3, 1);
+//        }
+//
+//        if(this.getStack(INGREDIENT_SLOT_4) != null){
+//            this.removeStack(INGREDIENT_SLOT_4, 1);
+//        }
+//
+//        if(this.getStack(INGREDIENT_SLOT_5) != null){
+//            this.removeStack(INGREDIENT_SLOT_5, 1);
+//        }
+//
+//        if(this.getStack(INGREDIENT_SLOT_5) != null){
+//            this.removeStack(INGREDIENT_SLOT_5, 1);
+//        }
+//
+//        if(this.getStack(OUTPUT_POTION_SLOT) != null){
+//            this.removeStack(OUTPUT_POTION_SLOT, 1);
+//        }
+//
+//        ItemStack result = new ItemStack(TCOTS_Items.KILLER_WHALE_POTION);
+//
+//        this.setStack(OUTPUT_POTION_SLOT, new ItemStack(result.getItem(), getStack(OUTPUT_POTION_SLOT).getCount() + result.getCount()));
+//        assert world != null;
+//        world.syncWorldEvent(WorldEvents.BREWING_STAND_BREWS, pos, 0);
 
         if(hasRecipe()) {
-            this.removeStack(INGREDIENT_SLOT_1, 1);
-            this.removeStack(INGREDIENT_SLOT_2, 1);
-            this.removeStack(INGREDIENT_SLOT_3, 1);
-            this.removeStack(INGREDIENT_SLOT_4, 1);
-            this.removeStack(INGREDIENT_SLOT_5, 1);
+        SimpleInventory inventory = new SimpleInventory(this.size());
+
+            for (int i = 0; i < this.size(); i++) {
+                inventory.setStack(i, this.getStack(i));
+            }
+
+        Optional<AlchemyTableRecipe> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager()
+                    .getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, this.getWorld());
 
 
-            this.setStack(OUTPUT_POTION_SLOT, new ItemStack(recipe.get().getRawOutput().getItem(),
-                    this.getStack(2).getCount() + 1));
+        if(this.getStack(INGREDIENT_SLOT_1) != null ){
+            this.removeStack(INGREDIENT_SLOT_1, recipe.get().getIngredientsCounts()[0]);
+        }
 
+        if(this.getStack(INGREDIENT_SLOT_2) != null){
+            this.removeStack(INGREDIENT_SLOT_2, recipe.get().getIngredientsCounts()[1]);
+        }
+
+        if(this.getStack(INGREDIENT_SLOT_3) != null){
+            this.removeStack(INGREDIENT_SLOT_3, recipe.get().getIngredientsCounts()[2]);
+        }
+
+        if(this.getStack(INGREDIENT_SLOT_4) != null){
+            this.removeStack(INGREDIENT_SLOT_4, recipe.get().getIngredientsCounts()[3]);
+        }
+
+        if(this.getStack(INGREDIENT_SLOT_5) != null){
+            this.removeStack(INGREDIENT_SLOT_5, recipe.get().getIngredientsCounts()[4]);
+        }
+
+        if(this.getStack(OUTPUT_POTION_SLOT) != null){
+            this.removeStack(OUTPUT_POTION_SLOT, 1);
+        }
+
+
+            ItemStack result = new ItemStack(recipe.get().getOutput(null).getItem());
+
+            this.setStack(OUTPUT_POTION_SLOT, new ItemStack(result.getItem(), getStack(OUTPUT_POTION_SLOT).getCount() + result.getCount()));
+            assert world != null;
+            world.syncWorldEvent(WorldEvents.BREWING_STAND_BREWS, pos, 0);
             this.resetProgress();
         }
     }

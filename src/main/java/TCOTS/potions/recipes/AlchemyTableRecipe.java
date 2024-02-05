@@ -1,36 +1,52 @@
 package TCOTS.potions.recipes;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.google.common.collect.Lists;
+import com.google.gson.*;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class AlchemyTableRecipe implements Recipe<SimpleInventory> {
     private final ItemStack output;
+    private final ItemStack base;
     private final List<Ingredient> recipeItems;
-
+    private final int[] recipeCounts;
     private final Identifier id;
+    public static final String ID_STRING = "alchemy_table";
 
-
-    public AlchemyTableRecipe(Identifier id, List<Ingredient> ingredients, ItemStack itemStack) {
-        this.output = itemStack;
+    public AlchemyTableRecipe(Identifier id, List<Ingredient> ingredients, int[] IngredientCount, ItemStack base, ItemStack output) {
+        this.output = output;
         this.recipeItems = ingredients;
         this.id = id;
+        this.base = base;
+        this.recipeCounts= IngredientCount;
+    }
+
+    public static class Type implements RecipeType<AlchemyTableRecipe> {
+        private Type() {}
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "alchemy_table";
+    }
+    @Override
+    public RecipeType<?> getType() {
+        return Type.INSTANCE;
     }
 
     @Override
@@ -38,28 +54,154 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory> {
         return this.id;
     }
 
+
+    //If a given inventory satisfies a recipe's input.
     @Override
-    public boolean matches(SimpleInventory inventory, World world) {
+    public boolean matches(SimpleInventory recipeInputInventory, World world) {
         if(world.isClient()) {
             return false;
         }
+        Ingredient Ing1;
+        Ingredient Ing2;
+        Ingredient Ing3;
+        Ingredient Ing4;
+        Ingredient Ing5;
 
-//        return recipeItems.get(0).test(inventory.getStack(0));
+        Item Item1;
+        Item Item2;
+        Item Item3;
+        Item Item4;
+        Item Item5;
 
-        RecipeMatcher recipeMatcher = new RecipeMatcher();
-        int i = 0;
-        for (int j = 0; j < inventory.size(); ++j) {
-            ItemStack itemStack = inventory.getStack(j);
-            if (itemStack.isEmpty()) continue;
-            ++i;
-            recipeMatcher.addInput(itemStack, 1);
+        Item BaseItem = getBaseItem().getItem();
+
+//        Ingredient Ing1 = getIngredients().get(0);
+//        Ingredient Ing2 = getIngredients().get(1);
+//        Ingredient Ing3 = getIngredients().get(2);
+//        Ingredient Ing4 = getIngredients().get(3);
+//        Ingredient Ing5 = getIngredients().get(4);
+
+        switch (getIngredients().size()){
+            case 1:
+                Ing1 = getIngredients().get(0);
+                Item1 = Ing1.getMatchingStacks()[0].getItem();
+
+                return Item1.equals(recipeInputInventory.getStack(0).getItem()) &&
+                        recipeInputInventory.getStack(0).getCount() == getIngredientsCounts()[0] &&
+                        recipeInputInventory.getStack(1).isEmpty() &&
+                        recipeInputInventory.getStack(2).isEmpty() &&
+                        recipeInputInventory.getStack(3).isEmpty() &&
+                        recipeInputInventory.getStack(4).isEmpty() &&
+                        BaseItem.equals(recipeInputInventory.getStack(5).getItem());
+            case 2:
+                Ing1 = getIngredients().get(0);
+                Item1 = Ing1.getMatchingStacks()[0].getItem();
+                Ing2 = getIngredients().get(1);
+                Item2 = Ing2.getMatchingStacks()[0].getItem();
+
+                return Item1.equals(recipeInputInventory.getStack(0).getItem()) &&
+                        recipeInputInventory.getStack(0).getCount() == getIngredientsCounts()[0] &&
+                        Item2.equals(recipeInputInventory.getStack(1).getItem()) &&
+                        recipeInputInventory.getStack(1).getCount() == getIngredientsCounts()[1] &&
+                        recipeInputInventory.getStack(2).isEmpty() &&
+                        recipeInputInventory.getStack(3).isEmpty() &&
+                        recipeInputInventory.getStack(4).isEmpty() &&
+                        BaseItem.equals(recipeInputInventory.getStack(5).getItem());
+            case 3:
+                Ing1 = getIngredients().get(0);
+                Item1 = Ing1.getMatchingStacks()[0].getItem();
+                Ing2 = getIngredients().get(1);
+                Item2 = Ing2.getMatchingStacks()[0].getItem();
+                Ing3 = getIngredients().get(2);
+                Item3 = Ing3.getMatchingStacks()[0].getItem();
+
+                return Item1.equals(recipeInputInventory.getStack(0).getItem()) &&
+                        recipeInputInventory.getStack(0).getCount() == getIngredientsCounts()[0] &&
+                        Item2.equals(recipeInputInventory.getStack(1).getItem()) &&
+                        recipeInputInventory.getStack(1).getCount() == getIngredientsCounts()[1] &&
+                        Item3.equals(recipeInputInventory.getStack(2).getItem()) &&
+                        recipeInputInventory.getStack(2).getCount() == getIngredientsCounts()[2] &&
+                        recipeInputInventory.getStack(3).isEmpty() &&
+                        recipeInputInventory.getStack(4).isEmpty() &&
+                        BaseItem.equals(recipeInputInventory.getStack(5).getItem());
+            case 4:
+                Ing1 = getIngredients().get(0);
+                Item1 = Ing1.getMatchingStacks()[0].getItem();
+                Ing2 = getIngredients().get(1);
+                Item2 = Ing2.getMatchingStacks()[0].getItem();
+                Ing3 = getIngredients().get(2);
+                Item3 = Ing3.getMatchingStacks()[0].getItem();
+                Ing4 = getIngredients().get(3);
+                Item4 = Ing4.getMatchingStacks()[0].getItem();
+
+                return Item1.equals(recipeInputInventory.getStack(0).getItem()) &&
+                        recipeInputInventory.getStack(0).getCount() == getIngredientsCounts()[0] &&
+                        Item2.equals(recipeInputInventory.getStack(1).getItem()) &&
+                        recipeInputInventory.getStack(1).getCount() == getIngredientsCounts()[1] &&
+                        Item3.equals(recipeInputInventory.getStack(2).getItem()) &&
+                        recipeInputInventory.getStack(2).getCount() == getIngredientsCounts()[2] &&
+                        Item4.equals(recipeInputInventory.getStack(3).getItem()) &&
+                        recipeInputInventory.getStack(3).getCount() == getIngredientsCounts()[3] &&
+                        recipeInputInventory.getStack(4).isEmpty() &&
+                        BaseItem.equals(recipeInputInventory.getStack(5).getItem());
+            case 5:
+                Ing1 = getIngredients().get(0);
+                Item1 = Ing1.getMatchingStacks()[0].getItem();
+                Ing2 = getIngredients().get(1);
+                Item2 = Ing2.getMatchingStacks()[0].getItem();
+                Ing3 = getIngredients().get(2);
+                Item3 = Ing3.getMatchingStacks()[0].getItem();
+                Ing4 = getIngredients().get(3);
+                Item4 = Ing4.getMatchingStacks()[0].getItem();
+                Ing5 = getIngredients().get(4);
+                Item5 = Ing5.getMatchingStacks()[0].getItem();
+
+                return Item1.equals(recipeInputInventory.getStack(0).getItem()) &&
+                        recipeInputInventory.getStack(0).getCount() == getIngredientsCounts()[0] &&
+                        Item2.equals(recipeInputInventory.getStack(1).getItem()) &&
+                        recipeInputInventory.getStack(1).getCount() == getIngredientsCounts()[1] &&
+                        Item3.equals(recipeInputInventory.getStack(2).getItem()) &&
+                        recipeInputInventory.getStack(2).getCount() == getIngredientsCounts()[2] &&
+                        Item4.equals(recipeInputInventory.getStack(3).getItem()) &&
+                        recipeInputInventory.getStack(3).getCount() == getIngredientsCounts()[3] &&
+                        Item5.equals(recipeInputInventory.getStack(4).getItem()) &&
+                        recipeInputInventory.getStack(4).getCount() == getIngredientsCounts()[4] &&
+                        BaseItem.equals(recipeInputInventory.getStack(5).getItem());
         }
-        return i == this.recipeItems.size() && recipeMatcher.match(this, null);
+
+
+//        Item Item1 = Ing1.getMatchingStacks()[0].getItem();
+//        Item Item2 = Ing2.getMatchingStacks()[0].getItem();
+//        Item Item3 = Ing3.getMatchingStacks()[0].getItem();
+//        Item Item4 = Ing4.getMatchingStacks()[0].getItem();
+//        Item Item5 = Ing5.getMatchingStacks()[0].getItem();
+
+
+
+//        if(
+//                Item1.equals(recipeInputInventory.getStack(0).getItem()) &&
+//                        recipeInputInventory.getStack(0).getCount() == getIngredientsCounts()[0] &&
+//                Item2.equals(recipeInputInventory.getStack(1).getItem()) &&
+//                        recipeInputInventory.getStack(1).getCount() == getIngredientsCounts()[1] &&
+//                Item3.equals(recipeInputInventory.getStack(2).getItem()) &&
+//                        recipeInputInventory.getStack(2).getCount() == getIngredientsCounts()[2] &&
+//                Item4.equals(recipeInputInventory.getStack(3).getItem()) &&
+//                        recipeInputInventory.getStack(3).getCount() == getIngredientsCounts()[3] &&
+//                Item5.equals(recipeInputInventory.getStack(4).getItem()) &&
+//                        recipeInputInventory.getStack(4).getCount() == getIngredientsCounts()[4] &&
+//                BaseItem.equals(recipeInputInventory.getStack(5).getItem())
+//        ){
+//            return true;
+//        }
+//        else{
+//            return false;
+//        }
+        return false;
     }
 
     @Override
     public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) {
-        return output;
+        return this.getOutput(registryManager).copy();
     }
 
     @Override
@@ -72,12 +214,6 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory> {
         return output;
     }
 
-    public ItemStack getRawOutput() {
-        return output;
-    }
-
-
-
     @Override
     public DefaultedList<Ingredient> getIngredients() {
         DefaultedList<Ingredient> list = DefaultedList.ofSize(this.recipeItems.size());
@@ -85,14 +221,12 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory> {
         return list;
     }
 
-    public static class Type implements RecipeType<AlchemyTableRecipe> {
-        public static final Type INSTANCE = new Type();
-        public static final String ID = "alchemy_table-witcher";
+    public int[] getIngredientsCounts() {
+        return this.recipeCounts;
     }
 
-    @Override
-    public RecipeType<?> getType() {
-        return Type.INSTANCE;
+    public ItemStack getBaseItem() {
+        return this.base;
     }
 
     @Override
@@ -102,53 +236,88 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory> {
 
     public static class Serializer implements RecipeSerializer<AlchemyTableRecipe>{
         public static final Serializer INSTANCE = new Serializer();
-        public static final String ID = "alchemy_table-witcher";
+        public static final String ID = "alchemy_table";
+
+        // Turns json into Recipe
         @Override
         public AlchemyTableRecipe read(Identifier identifier, JsonObject jsonObject) {
+            DefaultedList<Ingredient> ingredientsList = getIngredients(JsonHelper.getArray(jsonObject, "ingredients"));
 
-            DefaultedList<Ingredient> defaultedList = AlchemyTableRecipe.Serializer.getIngredients(JsonHelper.getArray(jsonObject, "ingredients"));
-            if (defaultedList.isEmpty()) {
+            int[] ingredientCounts = getIngredientsCounters(JsonHelper.getArray(jsonObject, "ingredient_counters"));
+
+            if (ingredientsList.isEmpty()) {
                 throw new JsonParseException("No ingredients for witcher potion recipe");
             }
-            if (defaultedList.size() > 5) {
-                throw new JsonParseException("Too many ingredients for witcher potions recipe");
+            if (ingredientsList.size() > 5) {
+                throw new JsonParseException("Too many ingredients for witcher potion recipe");
             }
-            ItemStack itemStack = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
-            return new AlchemyTableRecipe(identifier, defaultedList, itemStack);
-        }
 
+            if (ingredientCounts.length > 5) {
+                throw new JsonParseException("Too many ingredients counter for witcher potion recipe");
+            }
+
+            ItemStack base = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "base"));
+            ItemStack result = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
+
+            return new AlchemyTableRecipe(identifier, ingredientsList, ingredientCounts, base, result);
+        }
 
         private static DefaultedList<Ingredient> getIngredients(JsonArray json) {
             DefaultedList<Ingredient> defaultedList = DefaultedList.of();
             for (int i = 0; i < json.size(); ++i) {
-                Ingredient ingredient = Ingredient.fromJson(json.get(i), false);
+                Ingredient ingredient = Ingredient.fromJson(json.get(i), true);
                 if (ingredient.isEmpty()) continue;
                 defaultedList.add(ingredient);
             }
             return defaultedList;
         }
 
-        @Override
-        public AlchemyTableRecipe read(Identifier id, PacketByteBuf buf) {
-            DefaultedList<Ingredient> inputs = DefaultedList.ofSize(buf.readInt(), Ingredient.EMPTY);
-
-            for(int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromPacket(buf));
+        private static int[] getIngredientsCounters(JsonArray json) {
+            int[] defaultedList={1,1,1,1,1};
+            for (int i = 0; i < json.size(); ++i) {
+                defaultedList[i] = JsonHelper.getInt((JsonObject) json.get(i), "count");
             }
-
-            ItemStack output = buf.readItemStack();
-            return new AlchemyTableRecipe(id, inputs, output);
+            return defaultedList;
         }
 
+        // Turns Recipe into PacketByteBuf
         @Override
         public void write(PacketByteBuf buf, AlchemyTableRecipe recipe) {
-            buf.writeInt(recipe.getIngredients().size());
+            recipe.getIngredients().get(0).write(buf);
+            recipe.getIngredients().get(1).write(buf);
+            recipe.getIngredients().get(2).write(buf);
+            recipe.getIngredients().get(3).write(buf);
+            recipe.getIngredients().get(4).write(buf);
 
-            for (Ingredient ingredient : recipe.getIngredients()) {
-                ingredient.write(buf);
-            }
+            buf.writeIntArray(recipe.getIngredientsCounts());
 
+            buf.writeItemStack(recipe.getBaseItem());
             buf.writeItemStack(recipe.getOutput(null));
+        }
+
+
+        // Turns PacketByteBuf into Recipe(InGame)
+        @Override
+        public AlchemyTableRecipe read(Identifier id, PacketByteBuf buf) {
+            // Make sure the read in the same order you have written!
+            List<Ingredient> ingredientList = Lists.newArrayList();
+            Ingredient I1 = Ingredient.fromPacket(buf);
+            Ingredient I2 = Ingredient.fromPacket(buf);
+            Ingredient I3 = Ingredient.fromPacket(buf);
+            Ingredient I4 = Ingredient.fromPacket(buf);
+            Ingredient I5 = Ingredient.fromPacket(buf);
+            ingredientList.add(I1);
+            ingredientList.add(I2);
+            ingredientList.add(I3);
+            ingredientList.add(I4);
+            ingredientList.add(I5);
+
+            int[] inputsCount = buf.readIntArray();
+
+            ItemStack base = buf.readItemStack();
+            ItemStack output = buf.readItemStack();
+
+            return new AlchemyTableRecipe(id, ingredientList, inputsCount, base, output);
         }
     }
 

@@ -1,0 +1,24 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+
+  "ingredients": [
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+
+  "ingredient_counters": [
+
+    {
+      "count": 1
+    }
+  ],
+
+  "base": {
+    "item": "tcots-witcher:killer_whale_potion"
+  },
+
+  "result": {
+    "item": "tcots-witcher:killer_whale_splash"
+  }
+}

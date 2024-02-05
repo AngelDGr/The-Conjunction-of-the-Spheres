@@ -1,11 +1,11 @@
 package TCOTS.potions.screen;
 
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
+import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ArrayPropertyDelegate;
@@ -26,7 +26,7 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
 
     public AlchemyTableScreenHandler(int syncId, PlayerInventory playerInventory,
                                      BlockEntity blockEntity, PropertyDelegate arrayPropertyDelegate) {
-        super(WitcherPotions_Recipes.ALCHEMY_TABLE_SCREEN_HANDLER, syncId);
+        super(AlchemyTableRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, syncId);
 
         checkSize((Inventory) blockEntity, 6);
 
@@ -36,12 +36,21 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
         this.blockEntity = ((AlchemyTableBlockEntity) blockEntity);
 
 
-        this.addSlot(new Slot(inventory, 0, 31,  17));
+//        //Ingredients
+//        this.addSlot(new Slot(inventory, 0, 31,  17));
+//        this.addSlot(new Slot(inventory, 1, 55,  17));
+//        this.addSlot(new Slot(inventory, 2, 79,  17));
+//        this.addSlot(new Slot(inventory, 3, 103, 17));
+//        this.addSlot(new Slot(inventory, 4, 127, 17));
+
+        //Ingredients
+        this.addSlot(new Slot(inventory, 3, 31,  17));
         this.addSlot(new Slot(inventory, 1, 55,  17));
-        this.addSlot(new Slot(inventory, 2, 79,  17));
-        this.addSlot(new Slot(inventory, 3, 103, 17));
+        this.addSlot(new Slot(inventory, 0, 79,  17));
+        this.addSlot(new Slot(inventory, 2, 103, 17));
         this.addSlot(new Slot(inventory, 4, 127, 17));
-        this.addSlot(new Slot(inventory, 5, 79, 58));
+        //Output
+        this.addSlot(new PotionWitcherSlot(inventory, 5, 79, 58));
 
         //Add Player Inventory
         for (int i = 0; i < 3; ++i) {
@@ -99,6 +108,18 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
     @Override
     public boolean canUse(PlayerEntity player) {
         return this.inventory.canPlayerUse(player);
+    }
+
+    public static class PotionWitcherSlot extends Slot {
+        public PotionWitcherSlot(Inventory inventory, int i, int j, int k) {
+            super(inventory, i, j, k);
+        }
+
+        @Override
+        public int getMaxItemCount() {
+            return 1;
+        }
+
     }
 
 }

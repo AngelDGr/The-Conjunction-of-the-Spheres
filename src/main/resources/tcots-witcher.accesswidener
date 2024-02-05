@@ -21,3 +21,8 @@ accessible field net/minecraft/world/MobSpawnerLogic renderedEntity Lnet/minecra
 
 accessible method net/minecraft/util/collection/DataPool <init> (Ljava/util/List;)V
 accessible method net/minecraft/world/MobSpawnerLogic updateSpawns (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V
+accessible method net/minecraft/recipe/Ingredient ofEntries (Ljava/util/stream/Stream;)Lnet/minecraft/recipe/Ingredient;
+accessible method net/minecraft/recipe/Ingredient entryFromJson (Lcom/google/gson/JsonObject;)Lnet/minecraft/recipe/Ingredient$Entry;
+accessible class net/minecraft/recipe/Ingredient$Entry
+accessible class net/minecraft/recipe/Ingredient$StackEntry
+accessible class net/minecraft/recipe/Ingredient$TagEntry

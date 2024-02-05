@@ -1,6 +1,5 @@
 package TCOTS.access;
 
-import TCOTS.potions.WitcherPotions_CustomBrewingRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import org.spongepowered.asm.mixin.Unique;
