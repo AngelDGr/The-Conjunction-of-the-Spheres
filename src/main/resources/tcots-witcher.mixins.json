@@ -1,23 +1,26 @@
 {
-	"required": true,
-	"package": "TCOTS.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-		"BrewingRecipeRegistryMixin",
-		"BrewingStandPotionSlotMixin",
-		"PotionEntityMixin",
-		"InGameHudMixin",
-		"LivingEntityMixin",
-		"ExplosionMixin",
-		"WorldMixin",
-		"ClientPlayNetworkHandlerMixin",
-		"ServerWorldMixin",
-		"ServerPlayerEntityMixin",
-		"BlockEntityTypeMixin",
-		"WorldRendererMixin",
-		"SpawnEggItemMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "package": "TCOTS.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BlockEntityTypeMixin",
+    "BrewingRecipeRegistryMixin",
+    "BrewingStandPotionSlotMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "ExplosionMixin",
+    "InGameHudMixin",
+    "LivingEntityMixin",
+    "PotionEntityMixin",
+    "ServerPlayerEntityMixin",
+    "ServerWorldMixin",
+    "SpawnEggItemMixin",
+    "WorldMixin",
+    "WorldRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "ClientRecipeBookClientMixin"
+  ]
 }

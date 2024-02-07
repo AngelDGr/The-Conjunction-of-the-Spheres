@@ -50,6 +50,7 @@
 
     "block.tcots-witcher.alchemy_table": "Alchemy Table",
     "block.tcots-witcher.alchemy_table.tooltip": "Station to make Witcher Potions",
+    "gui.recipe-book.tooltip.alchemy_table": "Recipe Book",
 
 
 

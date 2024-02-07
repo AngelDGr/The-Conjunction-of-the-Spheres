@@ -1,0 +1,39 @@
+{
+  //Type of recipe
+  "type": "tcots-witcher:alchemy_table",
+
+  //Category for the recipe book, you can choose between bombs, potions, decoctions or misc  
+  "category": "misc",
+
+  //Ingredients list, the order it's:
+  // 1st: Center
+  // 2nd: Center-Left
+  // 3rd: Center-Right
+  // 4th: Far-Left
+  // 5th: Far-Right
+  "ingredients": [
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+
+  //Quantity of items, the order it's the same
+  "ingredient_counters": [
+
+    {
+      "count": 1
+    }
+  ],
+
+ //Base to be converted in the result
+  "base": {
+    "item": "tcots-witcher:killer_whale_potion",
+    //You can put a count, but the slot just supports 5, so don't put more than that
+    "count": 1
+  },
+
+  //Output Item
+  "result": {
+    "item": "tcots-witcher:killer_whale_splash"
+  }
+}

@@ -26,3 +26,4 @@ accessible method net/minecraft/recipe/Ingredient entryFromJson (Lcom/google/gso
 accessible class net/minecraft/recipe/Ingredient$Entry
 accessible class net/minecraft/recipe/Ingredient$StackEntry
 accessible class net/minecraft/recipe/Ingredient$TagEntry
+accessible method net/minecraft/client/gui/screen/recipebook/RecipeBookResults forEachButton (Ljava/util/function/Consumer;)V

@@ -33,6 +33,8 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.NEKKER_SPAWN_EGG);
 
                         //Potions
+                        entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
+
                         entries.add(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack());
 
                         entries.add(TCOTS_Items.SWALLOW_POTION.getDefaultStack());
@@ -52,7 +54,7 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.NEST_SLAB_ITEM);
                         entries.add(TCOTS_Items.NEST_SKULL_ITEM);
                         entries.add(TCOTS_Items.MONSTER_NEST_ITEM);
-                        entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
+
 
                     }).build());
 

@@ -2,6 +2,8 @@ package TCOTS.potions.screen;
 
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
 import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
+import TCOTS.potions.recipes.recipebook.AbstractRecipeAlchemyScreenHandler;
+import TCOTS.potions.recipes.recipebook.RecipeBookCategoryAlchemy;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -10,18 +12,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
-public class AlchemyTableScreenHandler extends ScreenHandler {
+public class AlchemyTableScreenHandler extends AbstractRecipeAlchemyScreenHandler<Inventory> {
     private final Inventory inventory;
     private final PropertyDelegate propertyDelegate;
     private final AlchemyTableBlockEntity blockEntity;
 
-
+    private RecipeBookCategoryAlchemy category = RecipeBookCategoryAlchemy.ALCHEMY;
     public AlchemyTableScreenHandler(int syncId, PlayerInventory inventory, PacketByteBuf buf) {
         this(syncId, inventory, inventory.player.getWorld().getBlockEntity(buf.readBlockPos()),
                 new ArrayPropertyDelegate(6));
+
     }
 
     public AlchemyTableScreenHandler(int syncId, PlayerInventory playerInventory,
@@ -34,14 +36,6 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
         inventory.onOpen(playerInventory.player);
         this.propertyDelegate = arrayPropertyDelegate;
         this.blockEntity = ((AlchemyTableBlockEntity) blockEntity);
-
-
-//        //Ingredients
-//        this.addSlot(new Slot(inventory, 0, 31,  17));
-//        this.addSlot(new Slot(inventory, 1, 55,  17));
-//        this.addSlot(new Slot(inventory, 2, 79,  17));
-//        this.addSlot(new Slot(inventory, 3, 103, 17));
-//        this.addSlot(new Slot(inventory, 4, 127, 17));
 
         //Ingredients
         this.addSlot(new Slot(inventory, 3, 31,  17));
@@ -117,7 +111,7 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
 
         @Override
         public int getMaxItemCount() {
-            return 1;
+            return 5;
         }
 
     }
