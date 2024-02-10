@@ -55,6 +55,7 @@
 
 
     "tcots-witcher.tooltip.toxicity": "Toxicity: %s",
+    "tcots-witcher.tooltip.gui.formula": "%s Formula",
     "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",
     "tooltip.tcots-witcher.dwarven_spirit": "Base to brew Witcher Potions",
 

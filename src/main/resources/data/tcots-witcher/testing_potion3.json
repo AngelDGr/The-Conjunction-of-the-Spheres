@@ -1,0 +1,48 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "category":"potions",
+
+  "ingredients": [
+    {
+      "item": "minecraft:seagrass"
+    },
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "tcots-witcher:drowner_tongue"
+    },
+    {
+      "item": "minecraft:seagrass"
+    },
+    {
+      "item": "minecraft:sweet_berries"
+    }
+  ],
+
+  "ingredient_counters": [
+    {
+      "count": 6
+    },
+    {
+      "count": 5
+    },
+    {
+      "count": 5
+    },
+    {
+      "count": 5
+    },
+    {
+      "count": 5
+    }
+  ],
+
+  "base": {
+    "item": "tcots-witcher:dwarven_spirit"
+  },
+
+  "result": {
+    "item": "minecraft:bone_block"
+  }
+}

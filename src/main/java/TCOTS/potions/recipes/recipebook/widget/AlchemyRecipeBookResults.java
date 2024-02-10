@@ -1,5 +1,6 @@
 package TCOTS.potions.recipes.recipebook.widget;
 
+import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.recipes.recipebook.RecipeAlchemyResultCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -8,92 +9,93 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.recipebook.*;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ToggleButtonWidget;
+import net.minecraft.client.recipebook.RecipeBookGroup;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.book.RecipeBook;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class AlchemyRecipeBookResults {
-    public static final int field_32411 = 20;
-    private final List<AnimatedResultButton> resultButtons = Lists.newArrayListWithCapacity(20);
+    private final List<AlchemyRecipeResultButton> resultButtons = Lists.newArrayListWithCapacity(5);
+    private final List<AlchemyTableRecipe> listRecipes = new ArrayList<>();
+    private final List<AlchemyTableRecipe> ActiveRecipesList = new ArrayList<>();
+    public AlchemyRecipeBookButton recipeBookButton;
     @Nullable
-    private AnimatedResultButton hoveredResultButton;
+    private AlchemyRecipeResultButton hoveredResultButton;
     private final RecipeAlternativesWidget alternatesWidget = new RecipeAlternativesWidget();
+
+    private List<RecipeResultCollection> resultCollections = ImmutableList.of();
     private MinecraftClient client;
-    private final List<RecipeDisplayListener> recipeDisplayListeners = Lists.newArrayList();
-    private List<RecipeAlchemyResultCollection> resultCollections = ImmutableList.of();
+//    private final List<RecipeDisplayListener> recipeDisplayListeners = Lists.newArrayList();
+//    private List<RecipeResultCollection> resultCollections = ImmutableList.of();
     private ToggleButtonWidget nextPageButton;
+    private final List<RecipeDisplayListener> recipeDisplayListeners = Lists.newArrayList();
     private ToggleButtonWidget prevPageButton;
     private int pageCount;
-    private int currentPage;
+    public int currentPage;
     private RecipeBook recipeBook;
-    @Nullable
-    private Recipe<?> lastClickedRecipe;
-    @Nullable
-    private RecipeAlchemyResultCollection resultCollection;
+//    @Nullable
+//    private Recipe<?> lastClickedRecipe;
+//    @Nullable
+//    private RecipeResultCollection resultCollection;
+
+
+    private int parentI;
+
+    private int parentJ;
 
     public AlchemyRecipeBookResults() {
-        for (int i = 0; i < 20; ++i) {
-            this.resultButtons.add(new AnimatedResultButton());
+        for (int i = 0; i < 5; ++i) {
+            this.resultButtons.add(new AlchemyRecipeResultButton());
         }
     }
 
-    public void initialize(MinecraftClient client, int parentLeft, int parentTop) {
+    public void initialize(MinecraftClient client, int parentI, int parentJ) {
         this.client = client;
         this.recipeBook = client.player.getRecipeBook();
         for (int i = 0; i < this.resultButtons.size(); ++i) {
-            this.resultButtons.get(i).setPosition(parentLeft + 11 + 25 * (i % 5), parentTop + 31 + 25 * (i / 5));
+                this.resultButtons.get(i).setPosition(parentI + 14, (parentJ + 26) + (i * 23 ));
         }
-        this.nextPageButton = new ToggleButtonWidget(parentLeft + 93, parentTop + 137, 12, 17, false);
-        this.nextPageButton.setTextureUV(1, 208, 13, 18, AlchemyRecipeBookWidget.TEXTURE);
-        this.prevPageButton = new ToggleButtonWidget(parentLeft + 38, parentTop + 137, 12, 17, true);
-        this.prevPageButton.setTextureUV(1, 208, 13, 18, AlchemyRecipeBookWidget.TEXTURE);
+        this.nextPageButton = new ToggleButtonWidget(parentI + 90, parentJ + 139, 12, 17, false);
+        this.nextPageButton.setTextureUV(1, 208, 13, 18, AlchemyRecipeBookWidget.RECIPE_GUI_TEXTURE);
+        this.prevPageButton = new ToggleButtonWidget(parentI + 47, parentJ + 139, 12, 17, true);
+        this.prevPageButton.setTextureUV(1, 208, 13, 18, AlchemyRecipeBookWidget.RECIPE_GUI_TEXTURE);
+        this.parentI=parentI;
+        this.parentJ=parentJ;
+
     }
 
-    public void setGui(AlchemyRecipeBookWidget widget) {
-        this.recipeDisplayListeners.remove(widget);
-        this.recipeDisplayListeners.add(widget);
-    }
+    public void setResults(boolean resetCurrentPage) {
+        this.pageCount = (int)Math.ceil((double)listRecipes.size() / 5.0);
 
-    public void setResults(List<RecipeAlchemyResultCollection> resultCollections, boolean resetCurrentPage) {
-        this.resultCollections = resultCollections;
-        this.pageCount = (int)Math.ceil((double)resultCollections.size() / 20.0);
         if (this.pageCount <= this.currentPage || resetCurrentPage) {
             this.currentPage = 0;
         }
         this.refreshResultButtons();
     }
 
-    private void refreshResultButtons() {
-        int i = 20 * this.currentPage;
-        for (int j = 0; j < this.resultButtons.size(); ++j) {
-            AnimatedResultButton animatedResultButton = this.resultButtons.get(j);
-//            if (i + j < this.resultCollections.size()) {
-//                RecipeAlchemyResultCollection recipeResultCollection = this.resultCollections.get(i + j);
-//                animatedResultButton.showResultCollection(recipeResultCollection, this);
-//                animatedResultButton.visible = true;
-//                continue;
-//            }
-//            animatedResultButton.visible = false;
+    public void sendList(List<AlchemyTableRecipe> listRecipes){
+        if(this.listRecipes.isEmpty()) {
+            this.listRecipes.addAll(listRecipes);
+            for (int i = 0; i < this.listRecipes.size() && i < 5; i++) {
+//            this.resultButtons.get(i).receiveRecipe(listRecipes.get(i));
+                this.resultButtons.get(i).receiveTextRenderer(client.textRenderer);
+            }
         }
-        this.hideShowPageButtons();
-    }
-
-    private void hideShowPageButtons() {
-        this.nextPageButton.visible = this.pageCount > 1 && this.currentPage < this.pageCount - 1;
-        this.prevPageButton.visible = this.pageCount > 1 && this.currentPage > 0;
     }
 
     public void draw(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
         if (this.pageCount > 1) {
             String string = this.currentPage + 1 + "/" + this.pageCount;
             int i = this.client.textRenderer.getWidth(string);
-            context.drawText(this.client.textRenderer, string, x - i / 2 + 73, y + 141, -1, false);
+            context.drawText(this.client.textRenderer, string, x - i / 2 + 73, y + 143, 0xffffff, true);
         }
         this.hoveredResultButton = null;
-        for (AnimatedResultButton animatedResultButton : this.resultButtons) {
+        for (AlchemyRecipeResultButton animatedResultButton : this.resultButtons) {
             animatedResultButton.render(context, mouseX, mouseY, delta);
             if (!animatedResultButton.visible || !animatedResultButton.isSelected()) continue;
             this.hoveredResultButton = animatedResultButton;
@@ -103,38 +105,47 @@ public class AlchemyRecipeBookResults {
         this.alternatesWidget.render(context, mouseX, mouseY, delta);
     }
 
-    public void drawTooltip(DrawContext context, int x, int y) {
-        if (this.client.currentScreen != null && this.hoveredResultButton != null && !this.alternatesWidget.isVisible()) {
-            context.drawTooltip(this.client.textRenderer, this.hoveredResultButton.getTooltip(), x, y);
+    protected void forEachButton(Consumer<ClickableWidget> consumer) {
+        consumer.accept(this.nextPageButton);
+        consumer.accept(this.prevPageButton);
+        this.resultButtons.forEach(consumer);
+    }
+
+    public void onRecipesDisplayed(List<Recipe<?>> recipes) {
+        for (RecipeDisplayListener recipeDisplayListener : this.recipeDisplayListeners) {
+            recipeDisplayListener.onRecipesDisplayed(recipes);
         }
     }
 
-    @Nullable
-    public Recipe<?> getLastClickedRecipe() {
-        return this.lastClickedRecipe;
+    private void refreshResultButtons() {
+
+        this.resultButtons.forEach(
+                button ->{
+                    button.receiveRecipe(null);
+                }
+        );
+
+
+        int b=0;
+        for (int j = 5 * this.currentPage; j < listRecipes.size(); ++j) {
+            if(b==5){
+                break;
+            }
+
+            this.resultButtons.get(b).receiveRecipe(listRecipes.get(j));
+            b=b+1;
+        }
+
+        this.hideShowPageButtons();
     }
 
-    @Nullable
-    public RecipeAlchemyResultCollection getLastClickedResults() {
-        return this.resultCollection;
-    }
-
-    public void hideAlternates() {
-        this.alternatesWidget.setVisible(false);
+    private void hideShowPageButtons() {
+        this.nextPageButton.visible = this.pageCount > 1 && this.currentPage < this.pageCount - 1;
+        this.prevPageButton.visible = this.pageCount > 1 && this.currentPage > 0;
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button, int areaLeft, int areaTop, int areaWidth, int areaHeight) {
-        this.lastClickedRecipe = null;
-        this.resultCollection = null;
-        if (this.alternatesWidget.isVisible()) {
-//            if (this.alternatesWidget.mouseClicked(mouseX, mouseY, button)) {
-//                this.lastClickedRecipe = this.alternatesWidget.getLastClickedRecipe();
-//                this.resultCollection = this.alternatesWidget.getResults();
-//            } else {
-//                this.alternatesWidget.setVisible(false);
-//            }
-            return true;
-        }
+
         if (this.nextPageButton.mouseClicked(mouseX, mouseY, button)) {
             ++this.currentPage;
             this.refreshResultButtons();
@@ -145,36 +156,14 @@ public class AlchemyRecipeBookResults {
             this.refreshResultButtons();
             return true;
         }
-        for (AnimatedResultButton animatedResultButton : this.resultButtons) {
-            if (!animatedResultButton.mouseClicked(mouseX, mouseY, button)) continue;
-            if (button == 0) {
-                this.lastClickedRecipe = animatedResultButton.currentRecipe();
-//                this.resultCollection = animatedResultButton.getResultCollection();
-            } else if (button == 1 && !this.alternatesWidget.isVisible() && !animatedResultButton.hasResults()) {
-                this.alternatesWidget.showAlternativesForResult(this.client, animatedResultButton.getResultCollection(), animatedResultButton.getX(), animatedResultButton.getY(), areaLeft + areaWidth / 2, areaTop + 13 + areaHeight / 2, animatedResultButton.getWidth());
-            }
-            return true;
-        }
+
         return false;
-    }
-
-    public void onRecipesDisplayed(List<Recipe<?>> recipes) {
-        for (RecipeDisplayListener recipeDisplayListener : this.recipeDisplayListeners) {
-            recipeDisplayListener.onRecipesDisplayed(recipes);
-        }
-    }
-
-    public MinecraftClient getClient() {
-        return this.client;
     }
 
     public RecipeBook getRecipeBook() {
         return this.recipeBook;
     }
-
-    protected void forEachButton(Consumer<ClickableWidget> consumer) {
-        consumer.accept(this.nextPageButton);
-        consumer.accept(this.prevPageButton);
-        this.resultButtons.forEach(consumer);
+    public MinecraftClient getClient() {
+        return this.client;
     }
 }
