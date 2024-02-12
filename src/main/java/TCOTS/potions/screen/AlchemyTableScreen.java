@@ -1,39 +1,15 @@
 package TCOTS.potions.screen;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.potions.recipes.AlchemyTableRecipe;
-import TCOTS.potions.recipes.recipebook.RecipeAlchemyResultCollection;
-import TCOTS.potions.recipes.recipebook.widget.AlchemyRecipeBookButton;
 import TCOTS.potions.recipes.recipebook.widget.AlchemyRecipeBookButtonTextured;
-import TCOTS.potions.recipes.recipebook.widget.AlchemyRecipeBookResults;
 import TCOTS.potions.recipes.recipebook.widget.AlchemyRecipeBookWidget;
-import com.google.common.collect.Lists;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.font.FontManager;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.screen.recipebook.*;
-import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.TextWidget;
-import net.minecraft.client.gui.widget.TexturedButtonWidget;
-import net.minecraft.client.recipebook.RecipeBookGroup;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeMatcher;
-import net.minecraft.screen.AbstractRecipeScreenHandler;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-
-import java.util.*;
 
 @Environment(EnvType.CLIENT)
 public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler> {
@@ -47,14 +23,14 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
 
     public AlchemyTableScreen(AlchemyTableScreenHandler handler,  PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-//        this.background=TEXTURE;
     }
 
     @Override
     protected void init() {
         this.narrow = this.width < 379;
         super.init();
-        recipeBook.init(this.height,this.width, this.textRenderer, this.client);
+        assert this.client != null;
+        recipeBook.init(this.height,this.width, this.textRenderer, this.client, this.handler);
         addDrawableChild(new AlchemyRecipeBookButtonTextured(this.x + 5, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE,
                 //Action when press
                 button -> {
@@ -74,13 +50,7 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         recipeBook.drawBackground(context, delta, mouseX, mouseY);
-//        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-//        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
-//        RenderSystem.setShaderTexture(0, TEXTURE);
-//        int x = (width - backgroundWidth) / 2;
-//        int y = (height - backgroundHeight) / 2;
-//
-//        context.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
+
 
         int i = this.x;
         int j =(this.height - this.backgroundHeight) / 2;
@@ -89,9 +59,13 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
 
         renderProgressArrow(context, x, y);
         recipeBook.render(context, mouseX, mouseY, delta);
-//        renderRecipeBook(context, x, y);
     }
 
+    @Override
+    public void handledScreenTick() {
+        super.handledScreenTick();
+        this.recipeBook.update();
+    }
 
     private void renderProgressArrow(DrawContext context, int x, int y) {
         if(handler.isCrafting()) {

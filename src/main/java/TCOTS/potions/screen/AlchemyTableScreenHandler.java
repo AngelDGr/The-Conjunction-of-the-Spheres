@@ -13,17 +13,24 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.util.collection.DefaultedList;
+
+import java.util.List;
 
 public class AlchemyTableScreenHandler extends AbstractRecipeAlchemyScreenHandler<Inventory> {
     private final Inventory inventory;
     private final PropertyDelegate propertyDelegate;
     private final AlchemyTableBlockEntity blockEntity;
 
-    private RecipeBookCategoryAlchemy category = RecipeBookCategoryAlchemy.ALCHEMY;
     public AlchemyTableScreenHandler(int syncId, PlayerInventory inventory, PacketByteBuf buf) {
         this(syncId, inventory, inventory.player.getWorld().getBlockEntity(buf.readBlockPos()),
                 new ArrayPropertyDelegate(6));
-
+    }
+    public Inventory getInventory() {
+        return inventory;
+    }
+    public int getChangeCount() {
+        return blockEntity.getChangeCount();
     }
 
     public AlchemyTableScreenHandler(int syncId, PlayerInventory playerInventory,
@@ -34,6 +41,7 @@ public class AlchemyTableScreenHandler extends AbstractRecipeAlchemyScreenHandle
 
         this.inventory = ((Inventory) blockEntity);
         inventory.onOpen(playerInventory.player);
+
         this.propertyDelegate = arrayPropertyDelegate;
         this.blockEntity = ((AlchemyTableBlockEntity) blockEntity);
 
@@ -64,6 +72,11 @@ public class AlchemyTableScreenHandler extends AbstractRecipeAlchemyScreenHandle
 
     public boolean isCrafting() {
         return propertyDelegate.get(0) > 0;
+    }
+
+    @Override
+    public void onContentChanged(Inventory inventory) {
+        super.onContentChanged(inventory);
     }
 
     public int getScaledProgress() {
@@ -115,5 +128,4 @@ public class AlchemyTableScreenHandler extends AbstractRecipeAlchemyScreenHandle
         }
 
     }
-
 }

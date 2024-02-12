@@ -6,7 +6,9 @@ public enum AlchemyTableRecipeCategory implements StringIdentifiable
 {
     POTIONS("potions"),
     BOMBS("bombs"),
-    MISC("misc");
+    DECOCTIONS("decoctions"),
+    MISC("misc"),
+    ALL("all");
 
     public static final StringIdentifiable.Codec<AlchemyTableRecipeCategory> CODEC;
     private final String id;

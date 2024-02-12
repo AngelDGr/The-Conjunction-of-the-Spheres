@@ -85,6 +85,16 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
             }
         };
     }
+    private int changeCount;
+    @Override
+    public void markDirty() {
+        ++changeCount;
+        super.markDirty();
+    }
+
+    public int getChangeCount() {
+        return changeCount;
+    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
@@ -141,7 +151,7 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
         if(world.isClient()) {
             return;
         }
-//        if(isOutputSlotEmptyOrReceivable()) {
+
             if(this.hasRecipe()) {
                 this.increaseCraftProgress();
                 markDirty(world, pos, state);
@@ -153,10 +163,7 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
             } else {
                 this.resetProgress();
             }
-//        } else {
-//            this.resetProgress();
-//            markDirty(world, pos, state);
-//        }
+
     }
 
     private boolean hasRecipe() {

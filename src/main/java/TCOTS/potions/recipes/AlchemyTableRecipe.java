@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable {
+public class AlchemyTableRecipe implements Recipe<SimpleInventory>{
     private final ItemStack output;
     private final ItemStack base;
     private final List<Ingredient> recipeItems;
@@ -35,15 +35,14 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable {
         this.category = category;
     }
 
-    @Override
-    public int compareTo(@NotNull Object o) {
-        // Obtener el hash code de tu objeto y del objeto pasado como argumento
-        int hashCodeThis = this.getId().hashCode();
-        int hashCodeOther = o.hashCode();
-
-        // Comparar los hash codes
-        return Integer.compare(hashCodeThis, hashCodeOther);
-    }
+//    @Override
+//    public int compareTo(@NotNull Object o) {
+//
+//        int hashCodeThis = this.getId().hashCode();
+//        int hashCodeOther = o.hashCode();
+//
+//        return Integer.compare(hashCodeThis, hashCodeOther);
+//    }
 
     public static class Type implements RecipeType<AlchemyTableRecipe> {
         private Type() {}
@@ -173,34 +172,6 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable {
                         BaseItem.equals(recipeInputInventory.getStack(5).getItem())
                         && recipeInputInventory.getStack(5).getCount() == getBaseItem().getCount();
         }
-
-
-//        Item Item1 = Ing1.getMatchingStacks()[0].getItem();
-//        Item Item2 = Ing2.getMatchingStacks()[0].getItem();
-//        Item Item3 = Ing3.getMatchingStacks()[0].getItem();
-//        Item Item4 = Ing4.getMatchingStacks()[0].getItem();
-//        Item Item5 = Ing5.getMatchingStacks()[0].getItem();
-
-
-
-//        if(
-//                Item1.equals(recipeInputInventory.getStack(0).getItem()) &&
-//                        recipeInputInventory.getStack(0).getCount() == getIngredientsCounts()[0] &&
-//                Item2.equals(recipeInputInventory.getStack(1).getItem()) &&
-//                        recipeInputInventory.getStack(1).getCount() == getIngredientsCounts()[1] &&
-//                Item3.equals(recipeInputInventory.getStack(2).getItem()) &&
-//                        recipeInputInventory.getStack(2).getCount() == getIngredientsCounts()[2] &&
-//                Item4.equals(recipeInputInventory.getStack(3).getItem()) &&
-//                        recipeInputInventory.getStack(3).getCount() == getIngredientsCounts()[3] &&
-//                Item5.equals(recipeInputInventory.getStack(4).getItem()) &&
-//                        recipeInputInventory.getStack(4).getCount() == getIngredientsCounts()[4] &&
-//                BaseItem.equals(recipeInputInventory.getStack(5).getItem())
-//        ){
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
         return false;
     }
 

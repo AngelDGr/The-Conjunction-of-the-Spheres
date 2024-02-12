@@ -1,36 +1,33 @@
 package TCOTS.potions.recipes.recipebook.widget;
 
-import TCOTS.items.TCOTS_Items;
+import TCOTS.potions.recipes.AlchemyTableRecipeCategory;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
-import net.minecraft.client.gui.screen.recipebook.RecipeResultCollection;
+
 import net.minecraft.client.gui.widget.ToggleButtonWidget;
 import net.minecraft.client.recipebook.ClientRecipeBook;
-import net.minecraft.client.recipebook.RecipeBookGroup;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.screen.AbstractRecipeScreenHandler;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.client.sound.SoundManager;
+import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvents;
+
 
 public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
 
-    private static final float field_32412 = 15.0f;
+    private final AlchemyTableRecipeCategory category;
 
 
     ItemStack icon;
     private float bounce;
 
-    public AlchemyRecipeGroupButton(ItemStack icon) {
+    public AlchemyRecipeGroupButton(ItemStack icon, AlchemyTableRecipeCategory category) {
         super(0, 0, 39, 27, false);
 
         this.icon=icon;
-
+        this.category = category;
         this.setTextureUV(153, 2, 39, 0, AlchemyRecipeBookWidget.RECIPE_GUI_TEXTURE);
 
     }
@@ -48,6 +45,10 @@ public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
 //                return;
 //            }
 //        }
+    }
+
+    public AlchemyTableRecipeCategory getCategory(){
+        return this.category;
     }
 
     @Override
@@ -89,7 +90,7 @@ public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
 //        List<ItemStack> list = this.category.getIcons();
         int n = i = this.toggled ? -2 : 0;
 //        if (list.size() == 1) {
-            context.drawItemWithoutEntity(this.icon, this.getX() + 16 + i, this.getY() + 5);
+            context.drawItemWithoutEntity(this.icon, this.getX() + 17 + i, this.getY() + 5);
 ////        } else if (list.size() == 2) {
 //            context.drawItemWithoutEntity(iconslist.get(0), this.getX() + 3 + i, this.getY() + 5);
 //            context.drawItemWithoutEntity(iconslist.get(1), this.getX() + 14 + i, this.getY() + 5);
@@ -112,4 +113,8 @@ public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
 //        }
 //        return this.visible;
 //    }
+
+    public void playDownSound(SoundManager soundManager) {
+        soundManager.play(PositionedSoundInstance.master(SoundEvents.ITEM_BOOK_PAGE_TURN, 0.7f));
+    }
 }

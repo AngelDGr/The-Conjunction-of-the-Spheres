@@ -3,9 +3,10 @@ package TCOTS.potions.recipes.recipebook.widget;
 import TCOTS.TCOTS_Main;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
-import TCOTS.potions.recipes.recipebook.RecipeAlchemyResultCollection;
+import TCOTS.potions.recipes.AlchemyTableRecipeCategory;
+import TCOTS.potions.recipes.recipebook.AbstractRecipeAlchemyScreenHandler;
+import TCOTS.potions.screen.AlchemyTableScreenHandler;
 import com.google.common.collect.Lists;
-import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -17,28 +18,14 @@ import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.recipebook.*;
-import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.TexturedButtonWidget;
-import net.minecraft.client.gui.widget.ToggleButtonWidget;
-import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.client.recipebook.RecipeBookGroup;
-import net.minecraft.client.resource.language.LanguageDefinition;
-import net.minecraft.client.resource.language.LanguageManager;
-import net.minecraft.client.search.SearchManager;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.RecipeCategoryOptionsC2SPacket;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeGridAligner;
 import net.minecraft.recipe.RecipeMatcher;
-import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.screen.AbstractRecipeScreenHandler;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
@@ -46,7 +33,6 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 @Environment(value= EnvType.CLIENT)
 public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
@@ -55,10 +41,9 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         Selectable,
         RecipeDisplayListener {
     public static final Identifier RECIPE_GUI_TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/alchemy_recipe_book.png");
-    private static final Text SEARCH_HINT_TEXT = Text.translatable("gui.recipebook.search_hint").formatted(Formatting.ITALIC).formatted(Formatting.GRAY);
-    @Nullable
-    private TextFieldWidget searchField;
-    private String searchText = "";
+
+    private final RecipeMatcher recipeFinder = new RecipeMatcher();
+
     private final List<AlchemyTableRecipe> listRecipes = new ArrayList<>();
     private boolean open=false;
     private boolean narrow;
@@ -73,17 +58,38 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
 
     protected MinecraftClient client;
     private TextRenderer parenttextRenderer;
+    private int cachedInvChangeCount;
+    private int cachedInvBlockChangeCount;
+    protected AlchemyTableScreenHandler craftingScreenHandler;
 
+    List<Integer> handlerInventory= new ArrayList<>();
 
+    public void update() {
+        if(!isOpen()){
+            return;
+        }
 
-    public void init(int height, int width, TextRenderer parenttextRenderer, MinecraftClient client) {
+        if (this.cachedInvChangeCount != this.client.player.getInventory().getChangeCount()
+                || this.cachedInvBlockChangeCount != this.craftingScreenHandler.getChangeCount()) {
+
+            recipesArea.updateCantCraft();
+            this.cachedInvChangeCount = this.client.player.getInventory().getChangeCount();
+            this.cachedInvBlockChangeCount = this.craftingScreenHandler.getChangeCount();
+        }
+    }
+
+    public void init(int height, int width, TextRenderer parenttextRenderer, MinecraftClient client, AlchemyTableScreenHandler craftingScreenHandler) {
         int i = (parentWidth - 147) / 2 - this.leftOffset;
         int j = (parentHeight - 166) / 2;
         this.narrow = width < 379;
         this.parentWidth=width;
         this.parentHeight=height;
+        this.craftingScreenHandler=craftingScreenHandler;
         this.parenttextRenderer=parenttextRenderer;
         this.client=client;
+        this.cachedInvChangeCount = client.player.getInventory().getChangeCount();
+        this.cachedInvBlockChangeCount = craftingScreenHandler.getChangeCount();
+
 
         if(listRecipes.isEmpty()){
             assert client.player != null;
@@ -101,7 +107,6 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         if (this.open) {
             this.reset();
         }
-//        this.recipesArea.setResults(list2, resetCurrentPage);
     }
 
     public int findLeftEdge(int width, int backgroundWidth) {
@@ -128,9 +133,30 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         }
         context.getMatrices().push();
         context.getMatrices().translate(0,0,100);
-        this.searchField.render(context, mouseX, mouseY, delta);
+//        this.searchField.render(context, mouseX, mouseY, delta);
         int i = (parentWidth - 147) / 2 - this.leftOffset;
         int j = (parentHeight - 166) / 2;
+
+        int color = 0x395026;
+
+        switch (currentTab.getCategory()){
+            case POTIONS:
+                context.drawText(this.parenttextRenderer, "Potions", i+18,j+15, color,false);
+                break;
+            case DECOCTIONS:
+                context.drawText(this.parenttextRenderer, "Decoctions", i+18,j+15, color,false);
+                break;
+            case BOMBS:
+                context.drawText(this.parenttextRenderer, "Bombs", i+18,j+15, color,false);
+                break;
+            case MISC:
+                context.drawText(this.parenttextRenderer, "Misc", i+18,j+15, color,false);
+                break;
+
+            default:
+                break;
+        }
+
         for (AlchemyRecipeGroupButton recipeGroupButtonWidget : this.tabButtons) {
             recipeGroupButtonWidget.render(context, mouseX, mouseY, delta);
         }
@@ -157,24 +183,23 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         int i = (parentWidth - 147) / 2 - this.leftOffset;
         int j = (parentHeight - 166) / 2;
 
-        this.searchField = new TextFieldWidget(this.client.textRenderer, i + 30, j + 11, 79, this.client.textRenderer.fontHeight + 3, Text.translatable("itemGroup.search"));
-        String string = this.searchField != null ? this.searchField.getText() : "";
-        this.searchField.setMaxLength(50);
-        this.searchField.setVisible(true);
-        this.searchField.setEditableColor(0xFFFFFF);
-        this.searchField.setText(string);
-        this.searchField.setPlaceholder(SEARCH_HINT_TEXT);
-
         if(this.tabButtons.isEmpty()){
-            this.tabButtons.add(new AlchemyRecipeGroupButton(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack()));
-            this.tabButtons.add(new AlchemyRecipeGroupButton(Items.GUNPOWDER.getDefaultStack()));
-//            this.tabButtons.add(new AlchemyRecipeGroupButton());
-
+            //Potions
+            this.tabButtons.add(0,new AlchemyRecipeGroupButton(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack(), AlchemyTableRecipeCategory.POTIONS));
+            //Decoctions
+            this.tabButtons.add(1,new AlchemyRecipeGroupButton(Items.SPIDER_EYE.getDefaultStack(), AlchemyTableRecipeCategory.DECOCTIONS));
+            //Bombs
+            this.tabButtons.add(2,new AlchemyRecipeGroupButton(Items.TNT.getDefaultStack(), AlchemyTableRecipeCategory.BOMBS));
+            //Misc
+            this.tabButtons.add(3,new AlchemyRecipeGroupButton(Items.GLOWSTONE.getDefaultStack(), AlchemyTableRecipeCategory.MISC));
         }
+        if(currentTab!=null) {currentTab.setToggled(false);}
+        this.currentTab = tabButtons.get(0);
+        currentTab.setToggled(true);
 
-        this.recipesArea.initialize(this.client, i, j);
+        this.recipesArea.initialize(this.client, i, j, craftingScreenHandler);
         this.recipesArea.sendList(listRecipes);
-        this.recipesArea.setResults(false);
+        this.recipesArea.setResults(false, currentTab.getCategory());
 
         this.refreshTabButtons();
     }
@@ -184,12 +209,9 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
             this.reset();
         }
         this.open = opened;
-//        this.recipeBook.setGuiOpen(this.craftingScreenHandler.getCategory(), opened);
-//        if (!opened) {
-//            this.recipesArea.hideAlternates();
-//        }
-//        this.sendBookDataPacket();
     }
+
+
 
     @Override
     public void setFocused(boolean focused) {
@@ -203,25 +225,47 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-//        assert this.searchField != null;
-//        if (this.searchField.mouseClicked(mouseX, mouseY, button)) {
-//            this.searchField.setFocused(true);
-//            return true;
-//        }
         if (!this.isOpen() || this.client.player.isSpectator()) {
             return false;
         }
 
+
         if(this.recipesArea.mouseClicked(mouseX, mouseY, button,
                 (this.parentWidth - 147) / 2 - this.leftOffset,
                 (this.parentHeight - 166) / 2,
-                147, 166)){
-//            System.out.println("Pressed");
+                147, 166, currentTab.getCategory())){
+            System.out.println("Pressed");
+        }
+
+        if(this.tabButtons.get(0).mouseClicked(mouseX, mouseY, button)){
+            currentTab.setToggled(false);
+            currentTab = this.tabButtons.get(0);
+            currentTab.setToggled(true);
+            this.recipesArea.setResults(true, currentTab.getCategory());
+        }
+
+        if(this.tabButtons.get(1).mouseClicked(mouseX, mouseY, button)){
+            currentTab.setToggled(false);
+            currentTab = this.tabButtons.get(1);
+            currentTab.setToggled(true);
+            this.recipesArea.setResults(true, currentTab.getCategory());
+        }
+
+        if(this.tabButtons.get(2).mouseClicked(mouseX, mouseY, button)){
+            currentTab.setToggled(false);
+            currentTab = this.tabButtons.get(2);
+            currentTab.setToggled(true);
+            this.recipesArea.setResults(true, currentTab.getCategory());
+        }
+
+        if(this.tabButtons.get(3).mouseClicked(mouseX, mouseY, button)){
+            currentTab.setToggled(false);
+            currentTab = this.tabButtons.get(3);
+            currentTab.setToggled(true);
+            this.recipesArea.setResults(true, currentTab.getCategory());
         }
 
 
-//        assert this.searchField != null;
-//        this.searchField.setFocused(false);
         for (AlchemyRecipeGroupButton recipeGroupButtonWidget : this.tabButtons) {
             if (!recipeGroupButtonWidget.mouseClicked(mouseX, mouseY, button)) continue;
             if (this.currentTab != recipeGroupButtonWidget) {
@@ -230,7 +274,6 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
                 }
                 this.currentTab = recipeGroupButtonWidget;
                 this.currentTab.setToggled(true);
-//                this.refreshResults(true);
             }
             return true;
         }
@@ -250,7 +293,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
                 list.add((ClickableWidget)button);
             }
         });
-        list.add(this.searchField);
+//        list.add(this.searchField);
 //        list.add(this.toggleCraftableButton);
 //        list.addAll(this.tabButtons);
         Screen.SelectedElementNarrationData selectedElementNarrationData = Screen.findSelectedElementData(list, null);
@@ -279,18 +322,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
             this.setOpen(false);
             return true;
         }
-        if (this.searchField.keyPressed(keyCode, scanCode, modifiers)) {
-//            this.refreshSearchResults();
-            return true;
-        }
-        if (this.searchField.isFocused() && this.searchField.isVisible() && keyCode != GLFW.GLFW_KEY_ESCAPE) {
-            return true;
-        }
-        if (this.client.options.chatKey.matchesKey(keyCode, scanCode) && !this.searchField.isFocused()) {
-            this.searching = true;
-            this.searchField.setFocused(true);
-            return true;
-        }
+
         return false;
     }
 
@@ -327,10 +359,10 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         if (!this.isOpen() || this.client.player.isSpectator()) {
             return false;
         }
-        if (this.searchField.charTyped(chr, modifiers)) {
+//        if (this.searchField.charTyped(chr, modifiers)) {
 //            this.refreshSearchResults();
-            return true;
-        }
+//            return true;
+//        }
         return Element.super.charTyped(chr, modifiers);
     }
 
