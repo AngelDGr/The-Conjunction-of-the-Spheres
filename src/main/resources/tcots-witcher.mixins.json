@@ -12,6 +12,7 @@
     "LivingEntityMixin",
     "PotionEntityMixin",
     "ServerPlayerEntityMixin",
+    "ServerPlayNetworkHandlerMixin",
     "ServerWorldMixin",
     "SpawnEggItemMixin",
     "WorldMixin",

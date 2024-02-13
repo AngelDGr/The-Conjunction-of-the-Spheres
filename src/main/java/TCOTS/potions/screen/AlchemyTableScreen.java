@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler> {
-
+    private static final int[] BUBBLE_PROGRESS = new int[]{29, 24, 20, 16, 11, 6, 0};
     private static final Identifier TEXTURE =
             new Identifier(TCOTS_Main.MOD_ID, "textures/gui/alchemy_table.png");
     private static final Identifier RECIPE_BUTTON_TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/alchemy_recipe_button.png");
@@ -44,9 +44,6 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
     }
 
-
-
-
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         recipeBook.drawBackground(context, delta, mouseX, mouseY);
@@ -67,18 +64,21 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
         this.recipeBook.update();
     }
 
+
+
     private void renderProgressArrow(DrawContext context, int x, int y) {
         if(handler.isCrafting()) {
             context.drawTexture(TEXTURE,
 
                     //Top left where it will draw
-                    x + 145, y + 16,
+                    x + 153, y + 16,
 
                     //Position where it is the texture
                     176, 0,
 
                     //Size of the texture
-                    8, handler.getScaledProgress());
+                    10, handler.getScaledProgress());
+
         }
     }
 

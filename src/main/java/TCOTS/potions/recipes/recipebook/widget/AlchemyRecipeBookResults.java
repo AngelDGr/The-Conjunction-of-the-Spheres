@@ -2,7 +2,6 @@ package TCOTS.potions.recipes.recipebook.widget;
 
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.recipes.AlchemyTableRecipeCategory;
-import TCOTS.potions.recipes.recipebook.AbstractRecipeAlchemyScreenHandler;
 import TCOTS.potions.screen.AlchemyTableScreenHandler;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -11,6 +10,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.recipebook.*;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ToggleButtonWidget;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
@@ -31,17 +31,10 @@ public class AlchemyRecipeBookResults {
     private final List<AlchemyTableRecipe> listRecipesDecoctions = new ArrayList<>();
     private final List<AlchemyTableRecipe> listRecipesMisc = new ArrayList<>();
     private final List<AlchemyTableRecipe> Active_listRecipes = new ArrayList<>();
-    public AlchemyRecipeBookButton recipeBookButton;
     private final RecipeMatcher recipeFinder = new RecipeMatcher();
-    private int cachedInvChangeCount;
-    @Nullable
-    private AlchemyRecipeResultButton hoveredResultButton;
     private final RecipeAlternativesWidget alternatesWidget = new RecipeAlternativesWidget();
 
-    private List<RecipeResultCollection> resultCollections = ImmutableList.of();
     private MinecraftClient client;
-//    private final List<RecipeDisplayListener> recipeDisplayListeners = Lists.newArrayList();
-//    private List<RecipeResultCollection> resultCollections = ImmutableList.of();
     private ToggleButtonWidget nextPageButton;
     private final List<RecipeDisplayListener> recipeDisplayListeners = Lists.newArrayList();
     private ToggleButtonWidget prevPageButton;
@@ -49,17 +42,11 @@ public class AlchemyRecipeBookResults {
     public int currentPage;
     private RecipeBook recipeBook;
 
-//    @Nullable
-//    private Recipe<?> lastClickedRecipe;
-//    @Nullable
-//    private RecipeResultCollection resultCollection;
-
     public DefaultedList<ItemStack> PlayerInventoryItems;
     public List<ItemStack> TotalInventoryItems=new ArrayList<>();
     public List<ItemStack> AlchemyTableInventoryItems = new ArrayList<>();
     protected AlchemyTableScreenHandler craftingScreenHandler;
     private int parentI;
-
     private int parentJ;
 
     public AlchemyRecipeBookResults() {
@@ -90,9 +77,6 @@ public class AlchemyRecipeBookResults {
             recipeFinder.addInput(stack, stack.getCount());
         }
 
-
-        this.cachedInvChangeCount = client.player.getInventory().getChangeCount();
-
         for (int i = 0; i < this.resultButtons.size(); ++i) {
                 this.resultButtons.get(i).setPosition(parentI + 14, (parentJ + 26) + (i * 23 ));
         }
@@ -114,14 +98,13 @@ public class AlchemyRecipeBookResults {
         this.resetPageCount(resetCurrentPage);
     }
 
-    public void updateCantCraft() {
+    public void updateCanCraft() {
 
         assert this.client.player != null;
 
         AlchemyTableInventoryItems.clear();
         for (int i=0;i<craftingScreenHandler.getInventory().size();i++){
             AlchemyTableInventoryItems.add(craftingScreenHandler.getInventory().getStack(i));}
-
 
 
         PlayerInventoryItems = this.client.player.getInventory().main;
@@ -151,7 +134,6 @@ public class AlchemyRecipeBookResults {
                             if(recipeFinder.inputs.get(Item.getRawId(button.getRecipe().getBaseItem().getItem())) >= 1){
                                 craftable = true;
                                 button.setCraftable(craftable);
-
                             }
                         } else {
                             craftable = false;
@@ -189,7 +171,6 @@ public class AlchemyRecipeBookResults {
         if(this.listRecipes.isEmpty()) {
             this.listRecipes.addAll(listRecipes);
             for (int i = 0; i < 5; i++) {
-//            this.resultButtons.get(i).receiveRecipe(listRecipes.get(i));
                 this.resultButtons.get(i).receiveTextRenderer(client.textRenderer);
             }
 
@@ -225,12 +206,12 @@ public class AlchemyRecipeBookResults {
             int i = this.client.textRenderer.getWidth(string);
             context.drawText(this.client.textRenderer, string, x - i / 2 + 73, y + 143, 0xffffff, true);
         }
-        this.hoveredResultButton = null;
+//        this.hoveredResultButton = null;
         for (AlchemyRecipeResultButton animatedResultButton : this.resultButtons) {
 
             animatedResultButton.render(context, mouseX, mouseY, delta);
             if (!animatedResultButton.visible || !animatedResultButton.isSelected()) continue;
-            this.hoveredResultButton = animatedResultButton;
+//            this.hoveredResultButton = animatedResultButton;
         }
         this.prevPageButton.render(context, mouseX, mouseY, delta);
         this.nextPageButton.render(context, mouseX, mouseY, delta);
@@ -336,26 +317,37 @@ public class AlchemyRecipeBookResults {
 
         this.resetPageCount(false);
         this.hideShowPageButtons();
-        this.updateCantCraft();
+        this.updateCanCraft();
     }
 
     private void hideShowPageButtons() {
         this.nextPageButton.visible = this.pageCount > 1 && this.currentPage < this.pageCount - 1;
         this.prevPageButton.visible = this.pageCount > 1 && this.currentPage > 0;
     }
-
+    AlchemyTableRecipe recipe;
     public boolean mouseClicked(double mouseX, double mouseY, int button, int areaLeft, int areaTop, int areaWidth, int areaHeight, AlchemyTableRecipeCategory category) {
 
         if (this.nextPageButton.mouseClicked(mouseX, mouseY, button)) {
+            recipe = null;
             ++this.currentPage;
             this.refreshResultButtons(category);
             return true;
         }
 
         if (this.prevPageButton.mouseClicked(mouseX, mouseY, button)) {
+            recipe = null;
             --this.currentPage;
             this.refreshResultButtons(category);
             return true;
+        }
+
+        for(AlchemyRecipeResultButton resultButton: this.resultButtons){
+            if(resultButton.mouseClicked(mouseX, mouseY, button) && resultButton.getCraftable()){
+                if(resultButton.getRecipe() != null){
+                    recipe = resultButton.getRecipe();
+                    return true;
+                }
+            }
         }
 
         return false;

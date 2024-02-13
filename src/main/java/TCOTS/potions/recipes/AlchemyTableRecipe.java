@@ -14,6 +14,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlchemyTableRecipe implements Recipe<SimpleInventory>{
@@ -35,14 +36,19 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>{
         this.category = category;
     }
 
-//    @Override
-//    public int compareTo(@NotNull Object o) {
-//
-//        int hashCodeThis = this.getId().hashCode();
-//        int hashCodeOther = o.hashCode();
-//
-//        return Integer.compare(hashCodeThis, hashCodeOther);
-//    }
+    public List<ItemStack> returnItemStackWithQuantity(){
+        List<ItemStack> list = new ArrayList<>();
+
+        for(int i=0;i<getIngredients().size();i++){
+            Item itemForStack = getIngredients().get(i).getMatchingStacks()[0].getItem();
+            int count = getIngredientsCounts()[i];
+
+            ItemStack stack = new ItemStack(itemForStack, count);
+            list.add(stack);
+        }
+
+        return list;
+    }
 
     public static class Type implements RecipeType<AlchemyTableRecipe> {
         private Type() {}

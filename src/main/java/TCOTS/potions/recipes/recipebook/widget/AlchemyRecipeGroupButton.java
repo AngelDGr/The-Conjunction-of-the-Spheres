@@ -18,8 +18,6 @@ import net.minecraft.sound.SoundEvents;
 public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
 
     private final AlchemyTableRecipeCategory category;
-
-
     ItemStack icon;
     private float bounce;
 
@@ -34,17 +32,6 @@ public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
 
     public void checkForNewRecipes(MinecraftClient client) {
         ClientRecipeBook clientRecipeBook = client.player.getRecipeBook();
-//        List<RecipeResultCollection> list = clientRecipeBook.getResultsForGroup(this.category);
-//        if (!(client.player.currentScreenHandler instanceof AbstractRecipeScreenHandler)) {
-//            return;
-//        }
-//        for (RecipeResultCollection recipeResultCollection : list) {
-//            for (Recipe<?> recipe : recipeResultCollection.getResults(clientRecipeBook.isFilteringCraftable((AbstractRecipeScreenHandler)client.player.currentScreenHandler))) {
-//                if (!clientRecipeBook.shouldDisplay(recipe)) continue;
-//                this.bounce = 15.0f;
-//                return;
-//            }
-//        }
     }
 
     public AlchemyTableRecipeCategory getCategory(){
@@ -97,22 +84,6 @@ public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
 //        }
     }
 
-//    public RecipeBookGroup getCategory() {
-//        return this.category;
-//    }
-
-//    public boolean hasKnownRecipes(ClientRecipeBook recipeBook) {
-//        List<RecipeResultCollection> list = recipeBook.getResultsForGroup(this.category);
-//        this.visible = false;
-//        if (list != null) {
-//            for (RecipeResultCollection recipeResultCollection : list) {
-//                if (!recipeResultCollection.isInitialized() || !recipeResultCollection.hasFittingRecipes()) continue;
-//                this.visible = true;
-//                break;
-//            }
-//        }
-//        return this.visible;
-//    }
 
     public void playDownSound(SoundManager soundManager) {
         soundManager.play(PositionedSoundInstance.master(SoundEvents.ITEM_BOOK_PAGE_TURN, 0.7f));

@@ -4,7 +4,6 @@ import TCOTS.TCOTS_Main;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.recipes.AlchemyTableRecipeCategory;
-import TCOTS.potions.recipes.recipebook.AbstractRecipeAlchemyScreenHandler;
 import TCOTS.potions.screen.AlchemyTableScreenHandler;
 import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
@@ -24,8 +23,6 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeGridAligner;
-import net.minecraft.recipe.RecipeMatcher;
-import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
@@ -42,7 +39,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         RecipeDisplayListener {
     public static final Identifier RECIPE_GUI_TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/alchemy_recipe_book.png");
 
-    private final RecipeMatcher recipeFinder = new RecipeMatcher();
+    //TODO: Fix the order of the recipes
 
     private final List<AlchemyTableRecipe> listRecipes = new ArrayList<>();
     private boolean open=false;
@@ -62,8 +59,6 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
     private int cachedInvBlockChangeCount;
     protected AlchemyTableScreenHandler craftingScreenHandler;
 
-    List<Integer> handlerInventory= new ArrayList<>();
-
     public void update() {
         if(!isOpen()){
             return;
@@ -72,7 +67,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         if (this.cachedInvChangeCount != this.client.player.getInventory().getChangeCount()
                 || this.cachedInvBlockChangeCount != this.craftingScreenHandler.getChangeCount()) {
 
-            recipesArea.updateCantCraft();
+            recipesArea.updateCanCraft();
             this.cachedInvChangeCount = this.client.player.getInventory().getChangeCount();
             this.cachedInvBlockChangeCount = this.craftingScreenHandler.getChangeCount();
         }
@@ -133,7 +128,6 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         }
         context.getMatrices().push();
         context.getMatrices().translate(0,0,100);
-//        this.searchField.render(context, mouseX, mouseY, delta);
         int i = (parentWidth - 147) / 2 - this.leftOffset;
         int j = (parentHeight - 166) / 2;
 
@@ -211,8 +205,6 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         this.open = opened;
     }
 
-
-
     @Override
     public void setFocused(boolean focused) {
 
@@ -234,7 +226,10 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
                 (this.parentWidth - 147) / 2 - this.leftOffset,
                 (this.parentHeight - 166) / 2,
                 147, 166, currentTab.getCategory())){
-            System.out.println("Pressed");
+
+            if(recipesArea.recipe != null ){
+            this.client.interactionManager.clickRecipe(this.client.player.currentScreenHandler.syncId, recipesArea.recipe, Screen.hasShiftDown());
+            }
         }
 
         if(this.tabButtons.get(0).mouseClicked(mouseX, mouseY, button)){
@@ -338,14 +333,6 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         int k = 27;
         int l = 0;
         for (AlchemyRecipeGroupButton recipeGroupButtonWidget : this.tabButtons) {
-//            RecipeBookGroup recipeBookGroup = recipeGroupButtonWidget.getCategory();
-//            if (recipeBookGroup == RecipeBookGroup.CRAFTING_SEARCH || recipeBookGroup == RecipeBookGroup.FURNACE_SEARCH) {
-//                recipeGroupButtonWidget.visible = true;
-//                recipeGroupButtonWidget.setPosition(i, j + 27 * l++);
-//                continue;
-//            }
-//            if (!recipeGroupButtonWidget.hasKnownRecipes(this.recipeBook)) continue;
-
             recipeGroupButtonWidget.setPosition(i, j + 14 + (l++ * 28));
             recipeGroupButtonWidget.checkForNewRecipes(this.client);
         }
@@ -359,10 +346,6 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         if (!this.isOpen() || this.client.player.isSpectator()) {
             return false;
         }
-//        if (this.searchField.charTyped(chr, modifiers)) {
-//            this.refreshSearchResults();
-//            return true;
-//        }
         return Element.super.charTyped(chr, modifiers);
     }
 

@@ -54,7 +54,7 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
 
     protected final PropertyDelegate propertyDelegate;
     private int progress = 0;
-    private int maxProgress = 72;
+    private int maxProgress = 160;
 
     //Gecko stuff
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
@@ -192,27 +192,27 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
 
 
         if(this.getStack(INGREDIENT_SLOT_1) != null ){
-            this.removeStack(INGREDIENT_SLOT_1, recipe.get().getIngredientsCounts()[0]);
+            this.setStack(INGREDIENT_SLOT_1, ItemStack.EMPTY);
         }
 
         if(this.getStack(INGREDIENT_SLOT_2) != null){
-            this.removeStack(INGREDIENT_SLOT_2, recipe.get().getIngredientsCounts()[1]);
+            this.setStack(INGREDIENT_SLOT_2, ItemStack.EMPTY);
         }
 
         if(this.getStack(INGREDIENT_SLOT_3) != null){
-            this.removeStack(INGREDIENT_SLOT_3, recipe.get().getIngredientsCounts()[2]);
+            this.setStack(INGREDIENT_SLOT_3, ItemStack.EMPTY);
         }
 
         if(this.getStack(INGREDIENT_SLOT_4) != null){
-            this.removeStack(INGREDIENT_SLOT_4, recipe.get().getIngredientsCounts()[3]);
+            this.setStack(INGREDIENT_SLOT_4, ItemStack.EMPTY);
         }
 
         if(this.getStack(INGREDIENT_SLOT_5) != null){
-            this.removeStack(INGREDIENT_SLOT_5, recipe.get().getIngredientsCounts()[4]);
+            this.setStack(INGREDIENT_SLOT_5, ItemStack.EMPTY);
         }
 
         if(this.getStack(OUTPUT_POTION_SLOT) != null){
-            this.removeStack(OUTPUT_POTION_SLOT, recipe.get().getBaseItem().getCount());
+            this.setStack(OUTPUT_POTION_SLOT, ItemStack.EMPTY);
         }
 
             ItemStack result = new ItemStack(recipe.get().getOutput(null).getItem());
@@ -232,18 +232,6 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
         progress++;
     }
 
-//    private boolean canInsertItemIntoOutputSlot(Item item) {
-//        return this.getStack(OUTPUT_POTION_SLOT).getItem() == item || this.getStack(OUTPUT_POTION_SLOT).isEmpty();
-//    }
-//
-//
-//    private boolean canInsertAmountIntoOutputSlot(ItemStack result) {
-//        return this.getStack(OUTPUT_POTION_SLOT).getCount() + result.getCount() <= getStack(OUTPUT_POTION_SLOT).getMaxCount();
-//    }
-//
-//    private boolean isOutputSlotEmptyOrReceivable() {
-//        return this.getStack(OUTPUT_POTION_SLOT).isEmpty() || this.getStack(OUTPUT_POTION_SLOT).getCount() < this.getStack(OUTPUT_POTION_SLOT).getMaxCount();
-//    }
 
     private void resetProgress() {
         this.progress = 0;

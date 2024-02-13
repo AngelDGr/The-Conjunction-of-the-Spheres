@@ -6,8 +6,11 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.client.sound.SoundManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenTexts;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -40,6 +43,10 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
     public void setCraftable(boolean craftable){
         this.craftable=craftable;
+    }
+
+    public boolean getCraftable(){
+        return this.craftable;
     }
 
     public AlchemyTableRecipe getRecipe(){
@@ -221,6 +228,11 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
     }
 
     @Override
+    public void playDownSound(SoundManager soundManager) {
+        soundManager.play(PositionedSoundInstance.master(SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, 1.0f));
+    }
+
+    @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         return super.mouseClicked(mouseX, mouseY, button);
     }
@@ -241,7 +253,7 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
     @Override
     protected boolean isValidClickButton(int button) {
-        return button == 0 || button == 1;
+        return craftable;
     }
 
 
