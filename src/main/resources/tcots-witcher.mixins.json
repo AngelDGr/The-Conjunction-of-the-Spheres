@@ -10,6 +10,7 @@
     "ExplosionMixin",
     "InGameHudMixin",
     "LivingEntityMixin",
+    "PlayerEntityMixin",
     "PotionEntityMixin",
     "ServerPlayerEntityMixin",
     "ServerPlayNetworkHandlerMixin",

@@ -33,7 +33,7 @@ public class TCOTS_Entities {
     //TODO: Graveir?
 
 //  Ogroids
-    //TODO: Nekkers
+    //xTODO: Nekkers
     //TODO: Cyclopses
     //TODO: Ice Giant
     //TODO: Rock troll

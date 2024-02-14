@@ -110,6 +110,8 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
     }
 
 
+
+
     //Crafting stuff
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
@@ -151,7 +153,6 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
         if(world.isClient()) {
             return;
         }
-
             if(this.hasRecipe()) {
                 this.increaseCraftProgress();
                 markDirty(world, pos, state);
@@ -215,9 +216,7 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
             this.setStack(OUTPUT_POTION_SLOT, ItemStack.EMPTY);
         }
 
-            ItemStack result = new ItemStack(recipe.get().getOutput(null).getItem());
-
-            this.setStack(OUTPUT_POTION_SLOT, new ItemStack(result.getItem(), getStack(OUTPUT_POTION_SLOT).getCount() + result.getCount()));
+            this.setStack(OUTPUT_POTION_SLOT, new ItemStack(recipe.get().getOutput(null).getItem(), recipe.get().getOutput(null).getCount()));
             assert world != null;
             world.syncWorldEvent(WorldEvents.BREWING_STAND_BREWS, pos, 0);
             this.resetProgress();

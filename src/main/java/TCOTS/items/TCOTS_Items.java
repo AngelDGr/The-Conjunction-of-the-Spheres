@@ -6,10 +6,7 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.blocks.AlchemyTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
-import TCOTS.potions.DwarvenSpiritItem;
-import TCOTS.potions.TCOTS_Effects;
-import TCOTS.potions.WitcherPotionsSplash_Base;
-import TCOTS.potions.WitcherPotions_Base;
+import TCOTS.potions.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -25,7 +22,7 @@ import net.minecraft.util.math.Direction;
 
 public class TCOTS_Items {
 
-    //TODO: Add new way to craft the potions
+    //xTODO: Add new way to craft the potions
         //TODO: Add new alchemy ingredients (mushrooms, flowers? and alcohol)
 
 
@@ -61,6 +58,12 @@ public class TCOTS_Items {
     public static Item WHITE_RAFFARDS_DECOCTION_SUPERIOR;
     public static Item KILLER_WHALE_POTION;
 
+    public static Item ALCOHEST;
+
+    public static Item AETHER;
+
+    public static Item EMPTY_WITCHER_POTION;
+
     //Splash Potions
     public static Item SWALLOW_SPLASH;
     public static Item KILLER_WHALE_SPLASH;
@@ -68,11 +71,23 @@ public class TCOTS_Items {
 
     //Register Witcher Potion Items
     public static void registerPotions() {
-        //Potions
+        //Ingredients
         DWARVEN_SPIRIT = registerItem("dwarven_spirit",
                 new DwarvenSpiritItem(new FabricItemSettings().maxCount(16), new StatusEffectInstance(StatusEffects.NAUSEA,200), 0));
 
+        ALCOHEST = registerItem("alcohest",
+                new AlcohestItem(new FabricItemSettings().maxCount(16), new StatusEffectInstance(StatusEffects.NAUSEA, 600, 3), 0));
 
+        AETHER = registerItem("aether",
+                new Item(new FabricItemSettings())
+        );
+
+
+        EMPTY_WITCHER_POTION = registerItem("empty_witcher_potion",
+                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(2))
+        );
+
+        //Potions
         SWALLOW_POTION = registerItemPotion("swallow_potion",
                 new FabricItemSettings().maxCount(3),
                 TCOTS_Effects.SWALLOW_EFFECT,
@@ -221,10 +236,12 @@ public class TCOTS_Items {
 
     private static Item registerItemPotion(String name, Item.Settings settings, StatusEffect effect, int toxicity, int durationInSecs, int amplifier) {
         try {
+            Identifier identifier = new Identifier(TCOTS_Main.MOD_ID, name);
+
             WitcherPotions_Base witcherPotion = new WitcherPotions_Base(settings, new StatusEffectInstance(effect, (int)(durationInSecs/0.05), amplifier), toxicity);
 
 
-            return Registry.register(Registries.ITEM, new Identifier(TCOTS_Main.MOD_ID, name), witcherPotion);
+            return Registry.register(Registries.ITEM, identifier, witcherPotion);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -234,8 +251,10 @@ public class TCOTS_Items {
 
     private static Item registerSplashPotion(String name, Item.Settings settings, StatusEffect effect, int toxicity, int durationInSecs, int amplifier){
         try {
+            Identifier identifier = new Identifier(TCOTS_Main.MOD_ID, name);
+
             WitcherPotions_Base witcherPotion = new WitcherPotionsSplash_Base(settings, new StatusEffectInstance(effect, (int)(durationInSecs/0.05),amplifier), toxicity);
-            return Registry.register(Registries.ITEM, new Identifier(TCOTS_Main.MOD_ID, name), witcherPotion);
+            return Registry.register(Registries.ITEM, identifier, witcherPotion);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

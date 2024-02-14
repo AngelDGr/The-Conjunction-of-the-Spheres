@@ -6,30 +6,29 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
-import net.minecraft.util.*;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class DwarvenSpiritItem extends WitcherPotions_Base {
+public class AlcohestItem extends WitcherPotions_Base{
 
 
-    public DwarvenSpiritItem(Settings settings, StatusEffectInstance effect, int toxicity) {
+    public AlcohestItem(Settings settings, StatusEffectInstance effect, int toxicity) {
         super(settings, effect, toxicity);
     }
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("tooltip.tcots-witcher.dwarven_spirit").formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable("tooltip.tcots-witcher.alcohest").formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("tooltip.tcots-witcher.refill").formatted(Formatting.GRAY));
     }
 
@@ -57,9 +56,6 @@ public class DwarvenSpiritItem extends WitcherPotions_Base {
                 stack.decrement(1);
             }
         }
-
-
-
 
         if (playerEntity == null || !playerEntity.getAbilities().creativeMode) {
             if (stack.isEmpty()) {

@@ -1,4 +1,17 @@
 {
+
+  "potion_refill": {
+    "subtitle": "tcots-witcher.sounds.potion_refill",
+    "sounds": [
+      "minecraft:block/pointed_dripstone/drip_lava1",
+      "minecraft:block/pointed_dripstone/drip_lava2",
+      "minecraft:block/pointed_dripstone/drip_lava3",
+      "minecraft:block/pointed_dripstone/drip_lava4",
+      "minecraft:block/pointed_dripstone/drip_lava5",
+      "minecraft:block/pointed_dripstone/drip_lava6"
+    ]
+  },
+
   "drowner_attack": {
     "subtitle": "tcots-witcher.sounds.drowner_attack",
     "sounds": [

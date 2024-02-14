@@ -41,9 +41,8 @@ public class TCOTS_Sounds {
     public static SoundEvent NEKKER_EMERGING = registerSoundEvent("nekker_emerging");
     public static SoundEvent NEKKER_DIGGING = registerSoundEvent("nekker_digging");
 
-//    public static final BlockSoundGroup ANIMATED_BLOCK_SOUNDS = new BlockSoundGroup(1f, 1f,
-//            ModSounds.ANIMATED_BLOCK_BREAK, ModSounds.ANIMATED_BLOCK_WALK, ModSounds.ANIMATED_BLOCK_PLACE,
-//            ModSounds.ANIMATED_BLOCK_HIT, ModSounds.ANIMATED_BLOCK_WALK);
+
+    public static SoundEvent POTION_REFILLED = registerSoundEvent("potion_refill");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(TCOTS_Main.MOD_ID, name);

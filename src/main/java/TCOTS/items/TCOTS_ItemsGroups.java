@@ -36,6 +36,8 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
 
                         entries.add(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack());
+                        entries.add(TCOTS_Items.ALCOHEST.getDefaultStack());
+                        entries.add(TCOTS_Items.AETHER);
 
                         entries.add(TCOTS_Items.SWALLOW_POTION.getDefaultStack());
                         entries.add(TCOTS_Items.SWALLOW_POTION_ENHANCED.getDefaultStack());

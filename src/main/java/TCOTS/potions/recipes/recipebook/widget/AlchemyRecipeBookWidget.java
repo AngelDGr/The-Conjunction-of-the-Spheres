@@ -27,9 +27,7 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Environment(value= EnvType.CLIENT)
 public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
@@ -39,7 +37,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         RecipeDisplayListener {
     public static final Identifier RECIPE_GUI_TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/alchemy_recipe_book.png");
 
-    //TODO: Fix the order of the recipes
+    //xTODO: Fix the order of the recipes
 
     private final List<AlchemyTableRecipe> listRecipes = new ArrayList<>();
     private boolean open=false;
@@ -144,7 +142,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
                 context.drawText(this.parenttextRenderer, "Bombs", i+18,j+15, color,false);
                 break;
             case MISC:
-                context.drawText(this.parenttextRenderer, "Misc", i+18,j+15, color,false);
+                context.drawText(this.parenttextRenderer, "Ingredients", i+18,j+15, color,false);
                 break;
 
             default:
@@ -185,14 +183,16 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
             //Bombs
             this.tabButtons.add(2,new AlchemyRecipeGroupButton(Items.TNT.getDefaultStack(), AlchemyTableRecipeCategory.BOMBS));
             //Misc
-            this.tabButtons.add(3,new AlchemyRecipeGroupButton(Items.GLOWSTONE.getDefaultStack(), AlchemyTableRecipeCategory.MISC));
+            this.tabButtons.add(3,new AlchemyRecipeGroupButton(TCOTS_Items.AETHER.getDefaultStack(), AlchemyTableRecipeCategory.MISC));
         }
         if(currentTab!=null) {currentTab.setToggled(false);}
         this.currentTab = tabButtons.get(0);
         currentTab.setToggled(true);
 
         this.recipesArea.initialize(this.client, i, j, craftingScreenHandler);
+        Collections.sort(listRecipes);
         this.recipesArea.sendList(listRecipes);
+
         this.recipesArea.setResults(false, currentTab.getCategory());
 
         this.refreshTabButtons();
@@ -288,9 +288,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
                 list.add((ClickableWidget)button);
             }
         });
-//        list.add(this.searchField);
-//        list.add(this.toggleCraftableButton);
-//        list.addAll(this.tabButtons);
+
         Screen.SelectedElementNarrationData selectedElementNarrationData = Screen.findSelectedElementData(list, null);
         if (selectedElementNarrationData != null) {
             selectedElementNarrationData.selectable.appendNarrations(builder.nextMessage());

@@ -1,5 +1,7 @@
 package TCOTS.potions.recipes.recipebook.widget;
 
+import TCOTS.potions.AlcohestItem;
+import TCOTS.potions.DwarvenSpiritItem;
 import TCOTS.potions.WitcherPotions_Base;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import net.minecraft.client.font.TextRenderer;
@@ -117,7 +119,7 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
             }
 
 
-            if(this.recipe.getOutput(null).getItem() instanceof WitcherPotions_Base){
+            if(this.recipe.getOutput(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getOutput(null).getItem() instanceof AlcohestItem) && !(this.recipe.getOutput(null).getItem() instanceof DwarvenSpiritItem)){
                 List<Text> list= new ArrayList<>();
                 int tox = ((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).getToxicity();
                 int maxCount = this.recipe.getOutput(null).getMaxCount();
@@ -236,20 +238,6 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         return super.mouseClicked(mouseX, mouseY, button);
     }
-
-//    @Override
-//    public void onClick(double mouseX, double mouseY) {
-//        super.onClick(mouseX, mouseY);
-//        MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f));
-//    }
-
-//    private List<Recipe<?>> getResults() {
-//        List<Recipe<?>> list = this.resultCollection.getRecipes(true);
-//        if (!this.recipeBook.isFilteringCraftable(this.craftingScreenHandler)) {
-//            list.addAll(this.resultCollection.getRecipes(false));
-//        }
-//        return list;
-//    }
 
     @Override
     protected boolean isValidClickButton(int button) {

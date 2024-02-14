@@ -1,5 +1,6 @@
 package TCOTS.potions;
 
+import TCOTS.items.TCOTS_Items;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancement.criterion.Criteria;
@@ -12,12 +13,14 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +35,7 @@ public class WitcherPotions_Base extends PotionItem {
     StatusEffectInstance effectInstance;
 
     int toxicity;
+
 
     public WitcherPotions_Base(Settings settings, StatusEffectInstance effect, int toxicity){
         super(settings);
@@ -68,13 +72,22 @@ public class WitcherPotions_Base extends PotionItem {
             }
         }
 
+
+        ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION);
+
+        stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
+
+
+
+
         if (playerEntity == null || !playerEntity.getAbilities().creativeMode) {
             if (stack.isEmpty()) {
-                return new ItemStack(Items.GLASS_BOTTLE);
+                return stack_Empty;
+
             }
 
             if (playerEntity != null) {
-                playerEntity.getInventory().insertStack(new ItemStack(Items.GLASS_BOTTLE));
+                playerEntity.getInventory().insertStack(stack_Empty);
             }
         }
 
@@ -165,10 +178,6 @@ public class WitcherPotions_Base extends PotionItem {
 
     public int getToxicity(){
         return this.toxicity;
-    }
-
-    public boolean getToxTooltip(List<Text> tooltip){
-        return tooltip.add(Text.translatable("tcots-witcher.tooltip.toxicity", getToxicity()).formatted(Formatting.DARK_GREEN));
     }
 
     @Override

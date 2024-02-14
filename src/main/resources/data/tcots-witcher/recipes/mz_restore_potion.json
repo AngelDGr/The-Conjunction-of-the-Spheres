@@ -1,0 +1,24 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "category":"misc",
+
+  "ingredients": [
+    {
+      "item": "minecraft:poppy"
+    }
+  ],
+
+  "ingredient_counters": [
+    {
+      "count": 1
+    }
+  ],
+
+  "base": {
+    "item": "tcots-witcher:empty_witcher_potion"
+  },
+
+  "result": {
+    "item": "minecraft:glass_bottle"
+  }
+}

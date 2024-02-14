@@ -59,7 +59,19 @@
     "tcots-witcher.tooltip.max_stack": "Max stack: %s",
 
     "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",
-    "tooltip.tcots-witcher.dwarven_spirit": "Base to brew Witcher Potions",
+    "tooltip.tcots-witcher.dwarven_spirit": "Base to brew most Witcher Potions",
+    "item.tcots-witcher.alcohest": "Alcohest",
+    "tooltip.tcots-witcher.alcohest": "Strong alcohol used in potions",
+    "tooltip.tcots-witcher.refill": "Can be used to refill potions",
+    "tooltip.tcots-witcher.empty_witcher_bottle_1": "Refilled in the Alchemy Table or",
+    "tooltip.tcots-witcher.empty_witcher_bottle_2": "by sleeping, uses strong alcohol",
+
+    "tcots-witcher.sounds.potion_refill": "Potion refilled",
+
+    "item.tcots-witcher.aether": "Aether",
+
+    "item.tcots-witcher.empty_witcher_potion": "Empty %s",
+
 
     "item.tcots-witcher.swallow_potion": "Swallow",
     "item.tcots-witcher.swallow_potion_enhanced": "Enhanced Swallow",

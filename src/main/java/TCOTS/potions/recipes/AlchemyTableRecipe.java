@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlchemyTableRecipe implements Recipe<SimpleInventory>{
+public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<AlchemyTableRecipe>{
     private final ItemStack output;
     private final ItemStack base;
     private final List<Ingredient> recipeItems;
@@ -48,6 +48,11 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>{
         }
 
         return list;
+    }
+
+    @Override
+    public int compareTo(@NotNull AlchemyTableRecipe o) {
+        return this.getId().toString().compareTo(o.getId().toString());
     }
 
     public static class Type implements RecipeType<AlchemyTableRecipe> {

@@ -3,23 +3,21 @@ package TCOTS.potions.recipes.recipebook.widget;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.recipes.AlchemyTableRecipeCategory;
 import TCOTS.potions.screen.AlchemyTableScreenHandler;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.recipebook.*;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ToggleButtonWidget;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeMatcher;
 import net.minecraft.recipe.book.RecipeBook;
 import net.minecraft.util.collection.DefaultedList;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -195,6 +193,7 @@ public class AlchemyRecipeBookResults {
             );
             Active_listRecipes.clear();
             Active_listRecipes.addAll(listRecipesPotions);
+            Active_listRecipes.sort(null);
             this.resetPageCount(false);
 
         }
@@ -245,6 +244,7 @@ public class AlchemyRecipeBookResults {
                     if(b==5){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesPotions);
+                        Collections.sort(Active_listRecipes);
                         break;
                     }
 
@@ -253,12 +253,14 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesPotions);
+                Collections.sort(Active_listRecipes);
                 break;
             case DECOCTIONS:
                 for (int j = 5 * this.currentPage; j < listRecipesDecoctions.size(); ++j) {
                     if(b==5){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesDecoctions);
+                        Collections.sort(Active_listRecipes);
                         break;
                     }
 
@@ -267,6 +269,7 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesDecoctions);
+                Collections.sort(Active_listRecipes);
                 break;
 
             case BOMBS:
@@ -274,6 +277,7 @@ public class AlchemyRecipeBookResults {
                     if(b==5){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesBombs);
+                        Collections.sort(Active_listRecipes);
                         break;
                     }
 
@@ -282,6 +286,7 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesBombs);
+                Collections.sort(Active_listRecipes);
                 break;
 
             case MISC:
@@ -289,6 +294,7 @@ public class AlchemyRecipeBookResults {
                     if(b==5){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesMisc);
+                        Collections.sort(Active_listRecipes);
                         break;
                     }
 
@@ -297,6 +303,7 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesMisc);
+                Collections.sort(Active_listRecipes);
                 break;
 
             case ALL:
@@ -304,6 +311,7 @@ public class AlchemyRecipeBookResults {
                     if(b==5){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipes);
+                        Collections.sort(Active_listRecipes);
                         break;
                     }
 
@@ -312,6 +320,7 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipes);
+                Collections.sort(Active_listRecipes);
                 break;
         }
 
