@@ -168,6 +168,8 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                 }
             }
 
+
+            //Screen opener
             NamedScreenHandlerFactory screenHandlerFactory = ((AlchemyTableBlockEntity) world.getBlockEntity(pos));
             if (screenHandlerFactory != null) {
                 player.openHandledScreen(screenHandlerFactory);

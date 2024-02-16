@@ -138,8 +138,8 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
             case DECOCTIONS:
                 context.drawText(this.parenttextRenderer, "Decoctions", i+18,j+15, color,false);
                 break;
-            case BOMBS:
-                context.drawText(this.parenttextRenderer, "Bombs", i+18,j+15, color,false);
+            case BOMBS_OILS:
+                context.drawText(this.parenttextRenderer, "Bombs & Oils", i+18,j+15, color,false);
                 break;
             case MISC:
                 context.drawText(this.parenttextRenderer, "Ingredients", i+18,j+15, color,false);
@@ -181,7 +181,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
             //Decoctions
             this.tabButtons.add(1,new AlchemyRecipeGroupButton(Items.SPIDER_EYE.getDefaultStack(), AlchemyTableRecipeCategory.DECOCTIONS));
             //Bombs
-            this.tabButtons.add(2,new AlchemyRecipeGroupButton(Items.TNT.getDefaultStack(), AlchemyTableRecipeCategory.BOMBS));
+            this.tabButtons.add(2,new AlchemyRecipeGroupButton(Items.TNT.getDefaultStack(), AlchemyTableRecipeCategory.BOMBS_OILS));
             //Misc
             this.tabButtons.add(3,new AlchemyRecipeGroupButton(TCOTS_Items.AETHER.getDefaultStack(), AlchemyTableRecipeCategory.MISC));
         }

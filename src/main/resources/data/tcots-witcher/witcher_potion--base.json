@@ -2,7 +2,7 @@
   //Type of recipe
   "type": "tcots-witcher:alchemy_table",
 
-  //Category for the recipe book, you can choose between potions, decoctions, bombs or misc  
+  //Category for the recipe book, you can choose between potions, decoctions, bombs_oils or misc  
   "category": "misc",
 
   //Ingredients list, the order it's:

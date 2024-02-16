@@ -65,12 +65,23 @@
     "tooltip.tcots-witcher.refill": "Can be used to refill potions",
     "tooltip.tcots-witcher.empty_witcher_bottle_1": "Refilled in the Alchemy Table or",
     "tooltip.tcots-witcher.empty_witcher_bottle_2": "by sleeping, uses strong alcohol",
+    "tooltip.tcots-witcher.oils": "%s attack against %s",
+    "tooltip.tcots-witcher.oils.uses": "It last %s hits",
+
 
     "tcots-witcher.sounds.potion_refill": "Potion refilled",
 
     "item.tcots-witcher.aether": "Aether",
 
     "item.tcots-witcher.empty_witcher_potion": "Empty %s",
+
+    "item.tcots-witcher.oil_necrophage": "Necrophage Oil",
+    "item.tcots-witcher.oil_necrophage_enhanced": "Enhanced Necrophage Oil",
+    "item.tcots-witcher.oil_necrophage_superior": "Superior Necrophage Oil",
+
+    "item.tcots-witcher.oil_ogroid": "Ogroid Oil",
+    "item.tcots-witcher.oil_ogroid_enhanced": "Enhanced Ogroid Oil",
+    "item.tcots-witcher.oil_ogroid_superior": "Superior Ogroid Oil",
 
 
     "item.tcots-witcher.swallow_potion": "Swallow",

@@ -40,8 +40,16 @@ public class TCOTS_Entities {
     //TODO: Ice troll
 
     public static final EntityGroup NECROPHAGES = new EntityGroup();
-
     public static final EntityGroup OGROIDS = new EntityGroup();
+    public static final EntityGroup SPECTERS = new EntityGroup();
+    public static final EntityGroup VAMPIRES = new EntityGroup();
+    public static final EntityGroup INSECTOIDS = new EntityGroup();
+    public static final EntityGroup BEASTS = new EntityGroup();
+    public static final EntityGroup ELEMENTA = new EntityGroup();
+    public static final EntityGroup CURSED_ONES = new EntityGroup();
+    public static final EntityGroup HYBRIDS = new EntityGroup();
+    public static final EntityGroup DRACONIDS = new EntityGroup();
+    public static final EntityGroup RELICTS = new EntityGroup();
 
     //Necrophages
     public static final EntityType<DrownerEntity> DROWNER = Registry.register(

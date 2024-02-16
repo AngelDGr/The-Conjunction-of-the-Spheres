@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "tcots-witcher:item/alchemy/white_raffards_splash"
+    "layer0": "tcots-witcher:item/alchemy/potions/white_raffards_splash"
   }
 
 }

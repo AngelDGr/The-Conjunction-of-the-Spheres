@@ -5,7 +5,7 @@ import net.minecraft.util.StringIdentifiable;
 public enum AlchemyTableRecipeCategory implements StringIdentifiable
 {
     POTIONS("potions"),
-    BOMBS("bombs"),
+    BOMBS_OILS("bombs_oils"),
     DECOCTIONS("decoctions"),
     MISC("misc"),
     ALL("all");

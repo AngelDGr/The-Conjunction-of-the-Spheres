@@ -182,7 +182,7 @@ public class AlchemyRecipeBookResults {
                             listRecipesDecoctions.add(recipe);
                         }
 
-                        if(recipe.getCategory() == AlchemyTableRecipeCategory.BOMBS){
+                        if(recipe.getCategory() == AlchemyTableRecipeCategory.BOMBS_OILS){
                             listRecipesBombs.add(recipe);
                         }
 
@@ -272,7 +272,7 @@ public class AlchemyRecipeBookResults {
                 Collections.sort(Active_listRecipes);
                 break;
 
-            case BOMBS:
+            case BOMBS_OILS:
                 for (int j = 5 * this.currentPage; j < listRecipesBombs.size(); ++j) {
                     if(b==5){
                         Active_listRecipes.clear();

@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "tcots-witcher:item/alchemy/swallow_splash"
+    "layer0": "tcots-witcher:item/alchemy/potions/swallow_splash"
   }
 
 }

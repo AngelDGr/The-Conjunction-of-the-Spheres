@@ -59,10 +59,19 @@ public class TCOTS_Items {
     public static Item KILLER_WHALE_POTION;
 
     public static Item ALCOHEST;
-
     public static Item AETHER;
-
     public static Item EMPTY_WITCHER_POTION;
+
+
+    public static Item NECROPHAGE_OIL;
+    public static Item ENHANCED_NECROPHAGE_OIL;
+    public static Item SUPERIOR_NECROPHAGE_OIL;
+
+    public static Item OGROID_OIL;
+    public static Item ENHANCED_OGROID_OIL;
+    public static Item SUPERIOR_OGROID_OIL;
+
+    public static Item EMPTY_OIL;
 
     //Splash Potions
     public static Item SWALLOW_SPLASH;
@@ -81,6 +90,33 @@ public class TCOTS_Items {
         AETHER = registerItem("aether",
                 new Item(new FabricItemSettings())
         );
+
+
+        //Oils
+        EMPTY_OIL = registerItem("empty_oil",
+                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(1))
+        );
+
+        NECROPHAGE_OIL=registerItem("oil_necrophage",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 20,1)
+        );
+        ENHANCED_NECROPHAGE_OIL=registerItem("oil_necrophage_enhanced",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 40,2)
+        );
+        SUPERIOR_NECROPHAGE_OIL=registerItem("oil_necrophage_superior",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 60,3)
+        );
+
+        OGROID_OIL=registerItem("oil_ogroid",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 20,1)
+        );
+        ENHANCED_OGROID_OIL=registerItem("oil_ogroid_enhanced",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 40,2)
+        );
+        SUPERIOR_OGROID_OIL=registerItem("oil_ogroid_superior",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 60,3)
+        );
+
 
 
         EMPTY_WITCHER_POTION = registerItem("empty_witcher_potion",

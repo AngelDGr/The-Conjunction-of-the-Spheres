@@ -16,6 +16,7 @@
     "ServerPlayNetworkHandlerMixin",
     "ServerWorldMixin",
     "SpawnEggItemMixin",
+    "SwordItemMixin",
     "WorldMixin",
     "WorldRendererMixin"
   ],

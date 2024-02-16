@@ -1,0 +1,31 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "category":"misc",
+
+  "ingredients": [
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item":"tcots-witcher:dwarven_spirit"
+    }
+  ],
+
+  "ingredient_counters": [
+    {
+      "count": 2
+    },
+    {
+      "count": 1
+    }
+  ],
+
+  "base": {
+    "item": "minecraft:glass_bottle"
+  },
+
+  "result": {
+    "item": "tcots-witcher:alcohest",
+    "count": 2
+  }
+}

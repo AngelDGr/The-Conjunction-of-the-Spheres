@@ -53,6 +53,15 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH.getDefaultStack());
                         entries.add(TCOTS_Items.KILLER_WHALE_SPLASH.getDefaultStack());
 
+                        entries.add(TCOTS_Items.NECROPHAGE_OIL);
+                        entries.add(TCOTS_Items.ENHANCED_NECROPHAGE_OIL);
+                        entries.add(TCOTS_Items.SUPERIOR_NECROPHAGE_OIL);
+
+                        entries.add(TCOTS_Items.OGROID_OIL);
+                        entries.add(TCOTS_Items.ENHANCED_OGROID_OIL);
+                        entries.add(TCOTS_Items.SUPERIOR_OGROID_OIL);
+
+
                         entries.add(TCOTS_Items.NEST_SLAB_ITEM);
                         entries.add(TCOTS_Items.NEST_SKULL_ITEM);
                         entries.add(TCOTS_Items.MONSTER_NEST_ITEM);
