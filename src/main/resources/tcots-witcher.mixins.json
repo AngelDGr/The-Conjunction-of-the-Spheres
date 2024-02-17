@@ -9,6 +9,7 @@
     "ClientPlayNetworkHandlerMixin",
     "ExplosionMixin",
     "InGameHudMixin",
+    "ItemStackMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "PotionEntityMixin",

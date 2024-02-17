@@ -10,6 +10,7 @@ import TCOTS.potions.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -71,6 +72,14 @@ public class TCOTS_Items {
     public static Item ENHANCED_OGROID_OIL;
     public static Item SUPERIOR_OGROID_OIL;
 
+    public static Item BEAST_OIL;
+    public static Item ENHANCED_BEAST_OIL;
+    public static Item SUPERIOR_BEAST_OIL;
+
+    public static Item HANGED_OIL;
+    public static Item ENHANCED_HANGED_OIL;
+    public static Item SUPERIOR_HANGED_OIL;
+
     public static Item EMPTY_OIL;
 
     //Splash Potions
@@ -115,6 +124,26 @@ public class TCOTS_Items {
         );
         SUPERIOR_OGROID_OIL=registerItem("oil_ogroid_superior",
                 new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 60,3)
+        );
+
+        BEAST_OIL=registerItem("oil_beast",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 20,1)
+        );
+        ENHANCED_BEAST_OIL=registerItem("oil_beast_enhanced",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 40,2)
+        );
+        SUPERIOR_BEAST_OIL=registerItem("oil_beast_superior",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 60,3)
+        );
+
+        HANGED_OIL=registerItem("oil_hanged",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 20,1)
+        );
+        ENHANCED_HANGED_OIL=registerItem("oil_hanged_enhanced",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 40,2)
+        );
+        SUPERIOR_HANGED_OIL=registerItem("oil_hanged_superior",
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 60,3)
         );
 
 

@@ -67,6 +67,7 @@
     "tooltip.tcots-witcher.empty_witcher_bottle_2": "by sleeping, uses strong alcohol",
     "tooltip.tcots-witcher.oils": "%s attack against %s",
     "tooltip.tcots-witcher.oils.uses": "It last %s hits",
+    "tooltip.item.tcots-witcher.oils.uses": "Uses: %s",
 
 
     "tcots-witcher.sounds.potion_refill": "Potion refilled",
@@ -83,6 +84,13 @@
     "item.tcots-witcher.oil_ogroid_enhanced": "Enhanced Ogroid Oil",
     "item.tcots-witcher.oil_ogroid_superior": "Superior Ogroid Oil",
 
+    "item.tcots-witcher.oil_beast": "Beast Oil",
+    "item.tcots-witcher.oil_beast_enhanced": "Enhanced Beast Oil",
+    "item.tcots-witcher.oil_beast_superior": "Superior Beast Oil",
+
+    "item.tcots-witcher.oil_hanged": "Hanged Man's Venom",
+    "item.tcots-witcher.oil_hanged_enhanced": "Enhanced Hanged Man's Venom",
+    "item.tcots-witcher.oil_hanged_superior": "Superior Hanged Man's Venom",
 
     "item.tcots-witcher.swallow_potion": "Swallow",
     "item.tcots-witcher.swallow_potion_enhanced": "Enhanced Swallow",

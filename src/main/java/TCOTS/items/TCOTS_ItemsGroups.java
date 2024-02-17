@@ -61,6 +61,14 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.ENHANCED_OGROID_OIL);
                         entries.add(TCOTS_Items.SUPERIOR_OGROID_OIL);
 
+                        entries.add(TCOTS_Items.BEAST_OIL);
+                        entries.add(TCOTS_Items.ENHANCED_BEAST_OIL);
+                        entries.add(TCOTS_Items.SUPERIOR_BEAST_OIL);
+
+                        entries.add(TCOTS_Items.HANGED_OIL);
+                        entries.add(TCOTS_Items.ENHANCED_HANGED_OIL);
+                        entries.add(TCOTS_Items.SUPERIOR_HANGED_OIL);
+
 
                         entries.add(TCOTS_Items.NEST_SLAB_ITEM);
                         entries.add(TCOTS_Items.NEST_SKULL_ITEM);

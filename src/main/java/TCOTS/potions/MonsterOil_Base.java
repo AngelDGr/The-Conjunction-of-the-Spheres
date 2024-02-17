@@ -3,9 +3,7 @@ package TCOTS.potions;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.TCOTS_Items;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.*;
@@ -123,6 +121,8 @@ public class MonsterOil_Base extends Item {
             stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
 
+
+
             user.playSound(SoundEvents.ITEM_HONEYCOMB_WAX_ON, 1,1 );
             NbtCompound nbtOil= new NbtCompound();
 
@@ -130,12 +130,20 @@ public class MonsterOil_Base extends Item {
             nbtOil.putInt("Id", group_value);
             nbtOil.putInt("Uses", uses);
             nbtOil.putInt("Level", level);
+            nbtOil.putString("Item", Registries.ITEM.getId(this).toString());
 
             user.getMainHandStack().getOrCreateNbt().put("Monster Oil", nbtOil);
 
             if(!user.getAbilities().creativeMode){
                 user.getOffHandStack().decrement(1);
-                user.giveItemStack(stack_Empty);
+
+                //If the player inventory it's full
+                if(user.getInventory().getEmptySlot() == -1){
+                    user.getWorld().spawnEntity(new ItemEntity(user.getWorld(), user.getX(), user.getY(), user.getZ(), stack_Empty));
+                } else{
+                    user.giveItemStack(stack_Empty);
+                }
+
             }
 
 
@@ -177,12 +185,18 @@ public class MonsterOil_Base extends Item {
             nbtOil.putInt("Id", group_value);
             nbtOil.putInt("Uses", uses);
             nbtOil.putInt("Level", level);
+            nbtOil.putString("Item", Registries.ITEM.getId(this).toString());
 
             otherStack.getOrCreateNbt().put("Monster Oil", nbtOil);
 
             stack.decrement(1);
 
-            player.giveItemStack(stack_Empty);
+            //If the player inventory it's full
+            if(player.getInventory().getEmptySlot() == -1){
+                player.getWorld().spawnEntity(new ItemEntity(player.getWorld(), player.getX(), player.getY(), player.getZ(), stack_Empty));
+            } else{
+                player.giveItemStack(stack_Empty);
+            }
 
         }
         return true;
@@ -195,8 +209,6 @@ public class MonsterOil_Base extends Item {
         }
         NbtCompound nbt;
         ItemStack itemStackInSlot = slot.getStack();
-
-
 
         if(itemStackInSlot.getItem() instanceof SwordItem || itemStackInSlot.getItem() instanceof AxeItem){
             if(itemStackInSlot.hasNbt()){
@@ -215,6 +227,7 @@ public class MonsterOil_Base extends Item {
                 ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL);
                 stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
+
                 player.playSound(SoundEvents.ITEM_HONEYCOMB_WAX_ON, 1,1 );
                 NbtCompound nbtOil= new NbtCompound();
 
@@ -222,12 +235,18 @@ public class MonsterOil_Base extends Item {
                 nbtOil.putInt("Id", group_value);
                 nbtOil.putInt("Uses", uses);
                 nbtOil.putInt("Level", level);
+                nbtOil.putString("Item", Registries.ITEM.getId(this).toString());
 
                 itemStackInSlot.getOrCreateNbt().put("Monster Oil", nbtOil);
 
                 stack.decrement(1);
 
-                player.giveItemStack(stack_Empty);
+                //If the player inventory it's full
+                if(player.getInventory().getEmptySlot() == -1){
+                    player.getWorld().spawnEntity(new ItemEntity(player.getWorld(), player.getX(), player.getY(), player.getZ(), stack_Empty));
+                } else{
+                    player.giveItemStack(stack_Empty);
+                }
 
             }
 

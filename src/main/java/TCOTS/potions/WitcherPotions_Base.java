@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -87,7 +88,12 @@ public class WitcherPotions_Base extends PotionItem {
             }
 
             if (playerEntity != null) {
-                playerEntity.getInventory().insertStack(stack_Empty);
+                //If the player inventory it's full
+                if(playerEntity.getInventory().getEmptySlot() == -1){
+                    playerEntity.getWorld().spawnEntity(new ItemEntity(playerEntity.getWorld(), playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), stack_Empty));
+                } else{
+                    playerEntity.getInventory().insertStack(stack_Empty);
+                }
             }
         }
 
