@@ -31,6 +31,16 @@ public class TCOTS_Sounds {
     public static SoundEvent ROTFIEND_DIGGING = registerSoundEvent("rotfiend_digging");
 
 
+    //Grave Hag
+    public static SoundEvent GRAVE_HAG_ATTACK = registerSoundEvent("grave_hag_attack");
+    public static SoundEvent GRAVE_HAG_HURT = registerSoundEvent("grave_hag_hurt");
+    public static SoundEvent GRAVE_HAG_IDLE = registerSoundEvent("grave_hag_idle");
+    public static SoundEvent GRAVE_HAG_DEATH = registerSoundEvent("grave_hag_death");
+
+    public static SoundEvent GRAVE_HAG_RUN = registerSoundEvent("grave_hag_run");
+    public static SoundEvent GRAVE_HAG_TONGUE = registerSoundEvent("grave_hag_tongue");
+    public static SoundEvent GRAVE_HAG_TONGUE_ATTACK = registerSoundEvent("grave_hag_tongue_attack");
+
 
     //Nekker
     public static SoundEvent NEKKER_ATTACK = registerSoundEvent("nekker_attack");
@@ -42,7 +52,14 @@ public class TCOTS_Sounds {
     public static SoundEvent NEKKER_DIGGING = registerSoundEvent("nekker_digging");
 
 
+
+
+
     public static SoundEvent POTION_REFILLED = registerSoundEvent("potion_refill");
+
+    public static SoundEvent OIL_APPLIED = registerSoundEvent("oil_applied");
+
+    public static SoundEvent OIL_RAN_OUT = registerSoundEvent("oil_ran_out");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(TCOTS_Main.MOD_ID, name);

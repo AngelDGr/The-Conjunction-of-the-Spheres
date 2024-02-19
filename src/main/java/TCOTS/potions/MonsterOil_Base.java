@@ -2,6 +2,7 @@ package TCOTS.potions;
 
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.TCOTS_Items;
+import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
@@ -77,7 +78,7 @@ public class MonsterOil_Base extends Item {
             id_group = "Relicts";
             this.group_value = 10;
         }else if(group == EntityGroup.ILLAGER){
-            id_group = "Illagers & Villagers";
+            id_group = "Illagers & Humans";
             this.group_value = 11;
         }
         else{
@@ -123,7 +124,7 @@ public class MonsterOil_Base extends Item {
 
 
 
-            user.playSound(SoundEvents.ITEM_HONEYCOMB_WAX_ON, 1,1 );
+            user.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1 );
             NbtCompound nbtOil= new NbtCompound();
 
 
@@ -178,7 +179,7 @@ public class MonsterOil_Base extends Item {
             ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL);
             stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
-            player.playSound(SoundEvents.ITEM_HONEYCOMB_WAX_ON, 1,1);
+            player.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1);
             NbtCompound nbtOil= new NbtCompound();
 
 
@@ -228,7 +229,7 @@ public class MonsterOil_Base extends Item {
                 stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
 
-                player.playSound(SoundEvents.ITEM_HONEYCOMB_WAX_ON, 1,1 );
+                player.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1 );
                 NbtCompound nbtOil= new NbtCompound();
 
 

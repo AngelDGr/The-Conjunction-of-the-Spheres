@@ -3,6 +3,7 @@ package TCOTS.entity;
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.entity.necrophages.DrownerEntity;
+import TCOTS.entity.necrophages.GraveHagEntity;
 import TCOTS.entity.necrophages.Necrophage_Base;
 import TCOTS.entity.necrophages.RotfiendEntity;
 import TCOTS.entity.ogroids.NekkerEntity;
@@ -23,8 +24,8 @@ public class TCOTS_Entities {
 // Necrophages
     //xTODO: Drowner
     //xTODO: Rotfiend
-    //TODO: Water Hag
     //TODO: Grave Hag
+    //TODO: Water Hag
     //TODO: Foglet
     //TODO: Ghoul
     //TODO: Wights
@@ -57,9 +58,6 @@ public class TCOTS_Entities {
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DrownerEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
-
-
-
     public static final EntityType<DrownerPuddleEntity> DROWNER_PUDDLE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "drowner_puddle"),
             FabricEntityTypeBuilder.<DrownerPuddleEntity>create(SpawnGroup.MISC, DrownerPuddleEntity::new
@@ -67,11 +65,22 @@ public class TCOTS_Entities {
                     // Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 0.1f)).build());
 
+
+
     public static final EntityType<RotfiendEntity> ROTFIEND = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "rotfiend"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, RotfiendEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
+
+
+
+    public static final EntityType<GraveHagEntity> GRAVE_HAG = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "grave_hag"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, GraveHagEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
+
 
 
     //Ogroids

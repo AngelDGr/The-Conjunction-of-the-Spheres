@@ -10,6 +10,7 @@ import TCOTS.entity.geo.renderer.necrophages.DrownerRenderer;
 //import TCOTS.entity.misc.Drowner_Puddle.client.Drowner_Puddle_Model;
 //import TCOTS.entity.misc.Drowner_Puddle.client.Drowner_Puddle_Renderer;
 //import TCOTS.entity.misc.Drowner_Puddle.client.ModModelLayers;
+import TCOTS.entity.geo.renderer.necrophages.GraveHagRenderer;
 import TCOTS.entity.geo.renderer.necrophages.RotfiendRenderer;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
 import TCOTS.particles.Drowner_PuddleParticle;
@@ -32,6 +33,8 @@ public class TCOTS_Client implements ClientModInitializer {
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER_PUDDLE, DrownerPuddleRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.ROTFIEND, RotfiendRenderer::new);
+
+        EntityRendererRegistry.register(TCOTS_Entities.GRAVE_HAG, GraveHagRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
 

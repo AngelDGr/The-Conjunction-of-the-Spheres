@@ -1,7 +1,6 @@
 package TCOTS.entity.geo.model.necrophages;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.entity.necrophages.DrownerEntity;
 import TCOTS.entity.necrophages.RotfiendEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;

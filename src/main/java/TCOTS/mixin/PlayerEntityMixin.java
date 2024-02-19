@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.RavagerEntity;
 import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.GolemEntity;
@@ -57,11 +58,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         player.getMainHandStack().getSubNbt("Monster Oil").putInt("Uses", Uses-1);
 
 
-        player.playSound(SoundEvents.BLOCK_HONEY_BLOCK_HIT, 1, 1);
+//        player.playSound(SoundEvents.BLOCK_HONEY_BLOCK_HIT, 1, 1);
         if(player.getMainHandStack().getSubNbt("Monster Oil").getInt("Uses") == 0){
 
             player.getMainHandStack().getNbt().remove("Monster Oil");
-            player.playSound(SoundEvents.BLOCK_HONEY_BLOCK_BREAK, 1, 1);
+            player.playSound(TCOTS_Sounds.OIL_RAN_OUT, 1, 2);
         }
     }
 
@@ -128,7 +129,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                                 break;
 
                             case 5:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.BEASTS || target instanceof AnimalEntity){
+                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.BEASTS || target instanceof AnimalEntity || target instanceof RavagerEntity){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
@@ -164,7 +165,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                                 break;
 
                             case 11:
-                                if(((LivingEntity) target).getGroup() == EntityGroup.ILLAGER || target instanceof MerchantEntity || target instanceof WitchEntity){
+                                if(((LivingEntity) target).getGroup() == EntityGroup.ILLAGER || target instanceof MerchantEntity || target instanceof WitchEntity || target instanceof PlayerEntity){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;

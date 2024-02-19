@@ -1,14 +1,26 @@
 {
+  "oil_applied": {
+    "subtitle": "tcots-witcher.sounds.oil_applied",
+    "sounds": [
+      "minecraft:item/honeycomb/wax_on1",
+      "minecraft:item/honeycomb/wax_on2",
+      "minecraft:item/honeycomb/wax_on3"
+    ]
+  },
+
+  "oil_ran_out": {
+    "subtitle": "tcots-witcher.sounds.oil_ran_out",
+    "sounds": [
+      "minecraft:item/axe/scrape1",
+      "minecraft:item/axe/scrape2",
+      "minecraft:item/axe/scrape3"
+    ]
+  },
 
   "potion_refill": {
     "subtitle": "tcots-witcher.sounds.potion_refill",
     "sounds": [
-      "minecraft:block/pointed_dripstone/drip_lava1",
-      "minecraft:block/pointed_dripstone/drip_lava2",
-      "minecraft:block/pointed_dripstone/drip_lava3",
-      "minecraft:block/pointed_dripstone/drip_lava4",
-      "minecraft:block/pointed_dripstone/drip_lava5",
-      "minecraft:block/pointed_dripstone/drip_lava6"
+      "tcots-witcher:gui/potion_refill1"
     ]
   },
 
@@ -158,6 +170,59 @@
     "sounds": [
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_digging1",
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_digging2"
+    ]
+  },
+
+
+
+  "grave_hag_attack": {
+    "subtitle": "tcots-witcher.sounds.grave_hag_attack",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_attack1",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_attack2",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_attack3"
+    ]
+  },
+  "grave_hag_hurt": {
+    "subtitle": "tcots-witcher.sounds.grave_hag_hurt",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_hurt1",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_hurt2",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_hurt3",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_hurt4"
+    ]
+  },
+  "grave_hag_idle": {
+    "subtitle": "tcots-witcher.sounds.grave_hag_idle",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_idle1",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_idle2",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_idle3",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_idle4"
+    ]
+  },
+  "grave_hag_death": {
+    "subtitle": "tcots-witcher.sounds.grave_hag_death",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_death1",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_death2",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_death3"
+    ]
+  },
+  "grave_hag_tongue": {
+    "subtitle": "tcots-witcher.sounds.grave_hag_tongue",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue1",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue2",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue3"
+    ]
+  },
+  "grave_hag_tongue_attack": {
+    "subtitle": "tcots-witcher.sounds.grave_hag_tongue",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue_attack1",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue_attack2",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue_attack3"
     ]
   },
 

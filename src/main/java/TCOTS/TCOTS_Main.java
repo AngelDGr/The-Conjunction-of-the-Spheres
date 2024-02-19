@@ -2,6 +2,7 @@ package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.necrophages.DrownerEntity;
+import TCOTS.entity.necrophages.GraveHagEntity;
 import TCOTS.entity.necrophages.RotfiendEntity;
 import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.items.TCOTS_Items;
@@ -52,6 +53,9 @@ public class TCOTS_Main implements ModInitializer {
 
 		//Rotfiend
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.ROTFIEND, RotfiendEntity.setAttributes());
+
+		//Grave Hag
+		FabricDefaultAttributeRegistry.register(TCOTS_Entities.GRAVE_HAG, GraveHagEntity.setAttributes());
 
 		//Nekker
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());

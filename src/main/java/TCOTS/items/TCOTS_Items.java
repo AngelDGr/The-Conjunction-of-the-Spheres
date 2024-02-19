@@ -45,6 +45,8 @@ public class TCOTS_Items {
     public static Item ROTFIEND_BLOOD;
 
 
+    public static Item GRAVE_HAG_SPAWN_EGG;
+
     public static Item NEKKER_SPAWN_EGG;
     public static Item NEKKER_HEART;
     public static Item NEKKER_EYE;
@@ -260,6 +262,11 @@ public class TCOTS_Items {
         ROTFIEND_BLOOD = registerItem("rotfiend_blood",
                 new Item(
                         new FabricItemSettings().maxCount(64)));
+
+
+        GRAVE_HAG_SPAWN_EGG = registerItem("grave_hag_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.GRAVE_HAG, 0xcfcfb4, 0x8e8480,
+                        new FabricItemSettings()));
 
 
 

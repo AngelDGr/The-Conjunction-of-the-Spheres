@@ -30,6 +30,15 @@
 
     "item.tcots-witcher.rotfiend_blood": "Rotfiend Blood",
 
+    "item.tcots-witcher.grave_hag_spawn_egg": "Grave Hag Spawn Egg",
+    "entity.tcots-witcher.grave_hag": "Grave Hag",
+    "tcots-witcher.sounds.grave_hag_attack": "Grave Hag attacks",
+    "tcots-witcher.sounds.grave_hag_hurt": "Grave Hag hurts",
+    "tcots-witcher.sounds.grave_hag_idle": "Grave Hag groans",
+    "tcots-witcher.sounds.grave_hag_death": "Grave Hag dies",
+    "tcots-witcher.sounds.grave_hag_tongue": "Grave Hag tongue",
+    "tcots-witcher.sounds.grave_hag_tongue_attack": "Grave Hag tongue attack",
+
 
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
     "entity.tcots-witcher.nekker": "Nekker",
@@ -71,6 +80,9 @@
 
 
     "tcots-witcher.sounds.potion_refill": "Potion refilled",
+    "tcots-witcher.sounds.oil_applied": "Monster oil applied",
+    "tcots-witcher.sounds.oil_ran_out": "Monster oil ran out ",
+
 
     "item.tcots-witcher.aether": "Aether",
 
