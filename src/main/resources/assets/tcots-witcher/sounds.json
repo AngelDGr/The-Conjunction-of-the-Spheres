@@ -218,7 +218,7 @@
     ]
   },
   "grave_hag_tongue_attack": {
-    "subtitle": "tcots-witcher.sounds.grave_hag_tongue",
+    "subtitle": "tcots-witcher.sounds.grave_hag_tongue_attack",
     "sounds": [
       "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue_attack1",
       "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue_attack2",

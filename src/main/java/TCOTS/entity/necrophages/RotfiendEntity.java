@@ -381,7 +381,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
         }
     }
 
-    private class Rotfiend_MeleeAttackGoal extends MeleeAttackGoal{
+    private static class Rotfiend_MeleeAttackGoal extends MeleeAttackGoal{
         private final RotfiendEntity rotfiend;
 
         public Rotfiend_MeleeAttackGoal(RotfiendEntity mob, double speed, boolean pauseWhenMobIdle) {

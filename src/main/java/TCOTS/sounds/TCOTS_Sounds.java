@@ -54,7 +54,6 @@ public class TCOTS_Sounds {
 
 
 
-
     public static SoundEvent POTION_REFILLED = registerSoundEvent("potion_refill");
 
     public static SoundEvent OIL_APPLIED = registerSoundEvent("oil_applied");

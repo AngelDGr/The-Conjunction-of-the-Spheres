@@ -330,7 +330,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
         }
     }
 
-    private class Nekker_MeleeAttackGoal extends MeleeAttackGoal{
+    private static class Nekker_MeleeAttackGoal extends MeleeAttackGoal{
         private final NekkerEntity nekker;
 
         public Nekker_MeleeAttackGoal(NekkerEntity mob, double speed, boolean pauseWhenMobIdle) {
