@@ -28,7 +28,6 @@ public class ServerPlayNetworkHandlerMixin {
     @Inject(method = "onCraftRequest", at = @At("HEAD"), cancellable = true)
     private void manageAlchemyTableRecipes(CraftRequestC2SPacket packet, CallbackInfo ci){
         if(player.currentScreenHandler instanceof AlchemyTableScreenHandler){
-
             ServerPlayNetworkHandler thisObject = (ServerPlayNetworkHandler)(Object)this;
             NetworkThreadUtils.forceMainThread(packet, thisObject, this.player.getServerWorld());
             this.player.updateLastActionTime();
@@ -36,9 +35,6 @@ public class ServerPlayNetworkHandlerMixin {
                 return;
             }
 
-//            AlchemyTableRecipe recipe= (AlchemyTableRecipe) this.server.getRecipeManager().get(packet.getRecipe()).get();
-//            System.out.println("You are here");
-//            System.out.println("Recipe: "+recipe);
             this.server.getRecipeManager().get(packet.getRecipe()).ifPresent(recipe -> ((AlchemyTableScreenHandler)this.player.currentScreenHandler).Craft(packet.shouldCraftAll(), (AlchemyTableRecipe)recipe, this.player));
 
 //            ((AlchemyTableScreenHandler) player.currentScreenHandler).getInventory().setStack(0, player.getInventory().getStack(0).copyAndEmpty());player.getInventory().markDirty();

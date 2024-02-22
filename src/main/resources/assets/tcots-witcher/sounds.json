@@ -209,20 +209,20 @@
       "tcots-witcher:entity/necrophages/grave_hag/grave_hag_death3"
     ]
   },
-  "grave_hag_tongue": {
-    "subtitle": "tcots-witcher.sounds.grave_hag_tongue",
-    "sounds": [
-      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue1",
-      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue2",
-      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue3"
-    ]
-  },
   "grave_hag_tongue_attack": {
     "subtitle": "tcots-witcher.sounds.grave_hag_tongue_attack",
     "sounds": [
       "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue_attack1",
       "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue_attack2",
       "tcots-witcher:entity/necrophages/grave_hag/grave_hag_tongue_attack3"
+    ]
+  },
+  "grave_hag_run": {
+    "subtitle": "tcots-witcher.sounds.grave_hag_run",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_run1",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_run2",
+      "tcots-witcher:entity/necrophages/grave_hag/grave_hag_run3"
     ]
   },
 

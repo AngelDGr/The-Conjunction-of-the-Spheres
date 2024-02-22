@@ -13,10 +13,7 @@ import TCOTS.entity.geo.renderer.necrophages.DrownerRenderer;
 import TCOTS.entity.geo.renderer.necrophages.GraveHagRenderer;
 import TCOTS.entity.geo.renderer.necrophages.RotfiendRenderer;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
-import TCOTS.particles.Drowner_PuddleParticle;
-import TCOTS.particles.Rotfiend_BloodEmitterParticle;
-import TCOTS.particles.Rotfiend_BloodExplosionParticle;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.*;
 import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
 import TCOTS.potions.screen.AlchemyTableScreen;
 import net.fabricmc.api.ClientModInitializer;
@@ -44,9 +41,9 @@ public class TCOTS_Client implements ClientModInitializer {
         BlockEntityRendererFactories.register(TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, AlchemyTableRenderer::new);
 
         //Particles
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DROWNER_PUDDLE_PARTICLE, Drowner_PuddleParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION, Rotfiend_BloodExplosionParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, new Rotfiend_BloodEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.GRAVE_HAG_GREEN_SALIVA, GraveHag_GreenSaliva.Factory::new);
 
         HandledScreens.register(AlchemyTableRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, AlchemyTableScreen::new);
     }

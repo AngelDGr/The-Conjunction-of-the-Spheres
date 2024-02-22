@@ -38,7 +38,6 @@ public class TCOTS_Sounds {
     public static SoundEvent GRAVE_HAG_DEATH = registerSoundEvent("grave_hag_death");
 
     public static SoundEvent GRAVE_HAG_RUN = registerSoundEvent("grave_hag_run");
-    public static SoundEvent GRAVE_HAG_TONGUE = registerSoundEvent("grave_hag_tongue");
     public static SoundEvent GRAVE_HAG_TONGUE_ATTACK = registerSoundEvent("grave_hag_tongue_attack");
 
 

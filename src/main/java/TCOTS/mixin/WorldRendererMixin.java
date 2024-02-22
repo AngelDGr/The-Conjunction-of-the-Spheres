@@ -37,7 +37,6 @@ public class WorldRendererMixin {
                 //Mycelium
                 this.world.addParticle(ParticleTypes.MYCELIUM, ac, ad, ae, 0.0, 0.0, 0.0);
             }
-//            break;
             ci.cancel();
         }
 
@@ -45,6 +44,8 @@ public class WorldRendererMixin {
         if(eventId==5829147){
             this.world.playSoundAtBlockCenter(pos, SoundEvents.BLOCK_GRAVEL_FALL, SoundCategory.HOSTILE, 1.0f, 1.0f, false);
         }
+
+
     }
 
 }

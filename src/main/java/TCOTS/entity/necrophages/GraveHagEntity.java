@@ -1,22 +1,32 @@
 package TCOTS.entity.necrophages;
 
+import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -26,14 +36,17 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
+import java.util.EnumSet;
+import java.util.List;
+
 public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
 
-    //TODO: Add tongue attack
-    //TODO: Add running attack
+    //xTODO: Add tongue attack
+    //xTODO: Add running attack
     //TODO: Add drops
     //TODO: Add spawn
 
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
@@ -44,120 +57,334 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
     public static final RawAnimation ATTACK_TONGUE2 = RawAnimation.begin().thenPlay("attack.tongue2");
     public static final RawAnimation ATTACK_RUN = RawAnimation.begin().thenPlay("attack.run");
 
-    protected static final TrackedData<Boolean> TONGE_ATTACK = DataTracker.registerData(GraveHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> TONGUE_ATTACK = DataTracker.registerData(GraveHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> RUNNING = DataTracker.registerData(GraveHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public GraveHagEntity(EntityType<? extends GraveHagEntity> entityType, World world) {
         super(entityType, world);
     }
 
     @Override
     protected void initGoals() {
-
-
         this.goalSelector.add(0, new SwimGoal(this));
 
-//        this.goalSelector.add(1, new GraveHag_TongueAttack(this, 80, 5));
-
-//        this.goalSelector.add(2, new MeleeAttackGoal(this, 1.2D, false));
-        this.goalSelector.add(2, new GraveHag_MeleeAttack(this, 1.2D, false, 80));
+        this.goalSelector.add(2, new GraveHag_MeleeAttack(this, 1.2D, false,
+                200, 6f, 300, 1.8f));
 
         this.goalSelector.add(3, new WanderAroundGoal(this, 0.75, 20));
 
         this.goalSelector.add(4, new LookAroundGoal(this));
 
         //Objectives
+        this.targetSelector.add(1, new RevengeGoal(this, new Class[0]));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
 
     boolean cooldownTongueAttack=false;
+    boolean cooldownRunningAttack=false;
     int tongueAttackCooldownTicks;
+    int runningAttackCooldownTicks;
 
-    private static class GraveHag_MeleeAttack extends MeleeAttackGoal{
-        private final GraveHagEntity graveHag;
-        private final int timeBetweenAttacks;
-        public GraveHag_MeleeAttack(GraveHagEntity mob, double speed, boolean pauseWhenMobIdle, int timeBetweenAttacks) {
-            super(mob, speed, pauseWhenMobIdle);
-            this.graveHag=mob;
-            this.timeBetweenAttacks=timeBetweenAttacks;
+    private static class GraveHag_MeleeAttack extends Goal{
+        private final int timeBetweenTongueAttacks;
+        private final float damageWithTongue;
+        private final int timeBetweenRunningAttacks;
+        protected final GraveHagEntity graveHag;
+        private final double speed;
+        private final boolean pauseWhenMobIdle;
+        private Path path;
+        private double targetX;
+        private double targetY;
+        private double targetZ;
+        private int updateCountdownTicks;
+        private int cooldown;
+        private final int attackIntervalTicks = 20;
+        private long lastUpdateTime;
+        private static final long MAX_ATTACK_TIME = 20L;
+        int AnimationTicks = 5;
+        float speedMultiplierBase =1;
+        private final float speedMultiplier;
+        boolean tongueTriggered=false;
+        public GraveHag_MeleeAttack(GraveHagEntity graveHag, double speed, boolean pauseWhenMobIdle, int timeBetweenTongueAttacks, float damageWithTongue, int timeBetweenRunningAttacks, float speedMultiplierWhenRun) {
+            this.graveHag = graveHag;
+            this.speed = speed;
+            this.pauseWhenMobIdle = pauseWhenMobIdle;
+            this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK));
+            this.timeBetweenTongueAttacks = timeBetweenTongueAttacks;
+            this.damageWithTongue = damageWithTongue;
+            this.timeBetweenRunningAttacks=timeBetweenRunningAttacks;
+            this.speedMultiplier=speedMultiplierWhenRun;
         }
 
-        int AnimationTicks = 5;
+        @Override
+        public boolean canStart() {
+            long l = this.graveHag.getWorld().getTime();
+            if (l - this.lastUpdateTime < 20L) {
+                return false;
+            }
+            this.lastUpdateTime = l;
+            LivingEntity livingEntity = this.graveHag.getTarget();
+            if (livingEntity == null) {
+                return false;
+            }
+            if (!livingEntity.isAlive()) {
+                return false;
+            }
+            this.path = this.graveHag.getNavigation().findPathTo(livingEntity, 0);
+            if (this.path != null) {
+                return true;
+            }
+            return this.getSquaredMaxAttackDistance(livingEntity) >= this.graveHag.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
+        }
 
-        boolean tongueTriggered=false;
+        @Override
+        public boolean shouldContinue() {
+            LivingEntity livingEntity = this.graveHag.getTarget();
+            if (livingEntity == null) {
+                return false;
+            }
+            if (!livingEntity.isAlive()) {
+                return false;
+            }
+            if (!this.pauseWhenMobIdle) {
+                return !this.graveHag.getNavigation().isIdle();
+            }
+            if (!this.graveHag.isInWalkTargetRange(livingEntity.getBlockPos())) {
+                return false;
+            }
+            return !(livingEntity instanceof PlayerEntity) || !livingEntity.isSpectator() && !((PlayerEntity)livingEntity).isCreative();
+        }
+
+        @Override
+        public void start() {
+            this.graveHag.getNavigation().startMovingAlong(this.path, this.speed * speedMultiplierBase);
+            this.graveHag.setAttacking(true);
+
+            this.updateCountdownTicks = 0;
+            this.cooldown = 0;
+        }
+
+        @Override
+        public void stop() {
+            if(graveHag.getTongueAttack()){graveHag.setTongueAttack(false);}
+            if(graveHag.getIsRunning()){graveHag.setIsRunning(false);}
+            speedMultiplierBase = 1;
+            runTriggered = false;
+
+            LivingEntity livingEntity = this.graveHag.getTarget();
+            if (!EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.test(livingEntity)) {
+                this.graveHag.setTarget(null);
+            }
+            this.graveHag.setAttacking(false);
+            this.graveHag.getNavigation().stop();
+        }
+
+        @Override
+        public boolean shouldRunEveryTick() {
+            return true;
+        }
+
+        public void tickO(LivingEntity livingEntity){
+            if (livingEntity == null) {
+                return;
+            }
+            this.graveHag.getLookControl().lookAt(livingEntity, 30.0f, 30.0f);
+            double d = this.graveHag.getSquaredDistanceToAttackPosOf(livingEntity);
+            this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);
+            if ((this.pauseWhenMobIdle || this.graveHag.getVisibilityCache().canSee(livingEntity)) && this.updateCountdownTicks <= 0 && (this.targetX == 0.0 && this.targetY == 0.0 && this.targetZ == 0.0 || livingEntity.squaredDistanceTo(this.targetX, this.targetY, this.targetZ) >= 1.0 || this.graveHag.getRandom().nextFloat() < 0.05f)) {
+                this.targetX = livingEntity.getX();
+                this.targetY = livingEntity.getY();
+                this.targetZ = livingEntity.getZ();
+                this.updateCountdownTicks = 4 + this.graveHag.getRandom().nextInt(7);
+                if (d > 1024.0) {
+                    this.updateCountdownTicks += 10;
+                } else if (d > 256.0) {
+                    this.updateCountdownTicks += 5;
+                }
+                if (!this.graveHag.getNavigation().startMovingTo(livingEntity, this.speed* speedMultiplierBase)) {
+                    this.updateCountdownTicks += 15;
+                }
+                this.updateCountdownTicks = this.getTickCount(this.updateCountdownTicks);
+            }
+            this.cooldown = Math.max(this.cooldown - 1, 0);
+            this.attack(livingEntity, d);
+        }
+
+        protected void attack(LivingEntity target, double squaredDistance) {
+            double d = this.getSquaredMaxAttackDistance(target);
+            if (squaredDistance <= d && this.cooldown <= 0) {
+                this.resetCooldown();
+                this.graveHag.swingHand(Hand.MAIN_HAND);
+                this.graveHag.tryAttack(target);
+            }
+        }
+
         @Override
         public void tick() {
-            LivingEntity livingEntity = this.mob.getTarget();
-            double d = this.mob.squaredDistanceTo(livingEntity);
-            double d2 = this.mob.getSquaredDistanceToAttackPosOf(livingEntity);
+            LivingEntity target = this.graveHag.getTarget();
+            double d = this.graveHag.squaredDistanceTo(target);
 
-            if(!graveHag.cooldownTongueAttack && AnimationTicks==5 && d < 20){
+            tongue_attack(d);
+            running_attack(d);
+
+            tickO(target);
+        }
+
+        private void tongue_attack(double d) {
+            if(!graveHag.cooldownTongueAttack && AnimationTicks== 5 && d < 5){
                 graveHag.getNavigation().stop();
-                this.mob.getLookControl().lookAt(livingEntity, 30.0f, 30.0f);
                 graveHag.setTongueAttack(true);
-                graveHag.tryAttack(livingEntity);
 
-                graveHag.playSound(TCOTS_Sounds.GRAVE_HAG_TONGUE_ATTACK, 1, 1);
 
+                if (graveHag.isAlive()) {
+                    List<LivingEntity> listTargets = graveHag.getWorld().getEntitiesByClass(LivingEntity.class, graveHag.getBoundingBox().expand(2.0),
+                            livingEntity -> livingEntity.isAlive() && !(livingEntity instanceof GraveHagEntity));
+
+                    for (LivingEntity livingEntity : listTargets) {
+                        if (!(livingEntity instanceof Necrophage_Base)) {
+                            livingEntity.damage(graveHag.getDamageSources().mobAttack(graveHag), damageWithTongue);
+                            if(livingEntity.isBlocking() && livingEntity instanceof PlayerEntity){
+
+                                ((PlayerEntity) livingEntity).disableShield(true);
+
+                            }
+                        }
+                        this.knockBack(livingEntity);
+                    }
+                }
+
+                graveHag.playSound(TCOTS_Sounds.GRAVE_HAG_TONGUE_ATTACK, 1.5f, 1);
                 --AnimationTicks;
-
-
                 tongueTriggered=true;
             }
 
-
-
             if (AnimationTicks > 0 && !graveHag.cooldownTongueAttack && tongueTriggered) {
-                System.out.println("AnimationTicks: " + AnimationTicks);
                 graveHag.getNavigation().stop();
                 --AnimationTicks;
             } else if(AnimationTicks==0){
                 AnimationTicks = 5;
-                tongueTriggered=false;
-                graveHag.setTongueAttack(false);
-                graveHag.tongueAttackCooldownTicks = timeBetweenAttacks;
+                tongueTriggered = false;
+                graveHag.tongueAttackCooldownTicks = timeBetweenTongueAttacks;
                 graveHag.cooldownTongueAttack = true;
             }
+        }
+        boolean runTriggered=false;
 
-            super.tick();
+        private void running_attack(double d){
+            if((!graveHag.cooldownRunningAttack) && d > 40 && !runTriggered){
+                graveHag.setIsRunning(true);
+                speedMultiplierBase=speedMultiplier;
+                graveHag.playSound(TCOTS_Sounds.GRAVE_HAG_RUN, 1f, 1);
+                runTriggered=true;
+            }
 
+            if(runTriggered && d < 8){
+                graveHag.cooldownRunningAttack = true;
+                graveHag.runningAttackCooldownTicks = timeBetweenRunningAttacks;
+                speedMultiplierBase = 1;
+                runTriggered=false;
+                graveHag.setIsRunning(false);
+            }
+        }
+
+        private void knockBack(Entity entity) {
+            double d = entity.getX() - graveHag.getX();
+            double e = entity.getZ() - graveHag.getZ();
+            double f = Math.max(d * d + e * e, 0.001);
+            entity.addVelocity(d / f * 0.5, 0.1, e / f * 0.5);
+        }
+
+        protected void resetCooldown() {
+            this.cooldown = this.getTickCount(20);
+        }
+
+        protected boolean isCooledDown() {
+            return this.cooldown <= 0;
+        }
+
+        protected int getCooldown() {
+            return this.cooldown;
+        }
+
+        protected int getMaxCooldown() {
+            return this.getTickCount(20);
+        }
+
+        protected double getSquaredMaxAttackDistance(LivingEntity entity) {
+            return this.graveHag.getWidth() * 2.0f * (this.graveHag.getWidth() * 2.0f) + entity.getWidth();
         }
     }
-
-
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 26.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f) //Amount of health that hurts you
 //                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 2.0f)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20f)
-        .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5);
+        .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5)
+        .add(EntityAttributes.GENERIC_ARMOR,4f);
+
     }
 
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(TONGE_ATTACK, Boolean.FALSE);
+        this.dataTracker.startTracking(TONGUE_ATTACK, Boolean.FALSE);
+        this.dataTracker.startTracking(RUNNING, Boolean.FALSE);
     }
 
     public final boolean getTongueAttack() {
-        return this.dataTracker.get(TONGE_ATTACK);
+        return this.dataTracker.get(TONGUE_ATTACK);
     }
 
     public final void setTongueAttack(boolean wasAttacking) {
-        this.dataTracker.set(TONGE_ATTACK, wasAttacking);
+        this.dataTracker.set(TONGUE_ATTACK, wasAttacking);
+    }
+
+    public final boolean getIsRunning() {
+        return this.dataTracker.get(RUNNING);
+    }
+
+    public final void setIsRunning(boolean wasRunning) {
+        this.dataTracker.set(RUNNING, wasRunning);
+    }
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("TongueAttack", this.dataTracker.get(TONGUE_ATTACK));
+        nbt.putInt("TongueAttackCooldown", tongueAttackCooldownTicks);
+        nbt.putBoolean("Running", this.dataTracker.get(RUNNING));
+        nbt.putInt("RunningAttackCooldown", runningAttackCooldownTicks);
+    }
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        this.setTongueAttack(nbt.getBoolean("TongueAttack"));
+        this.tongueAttackCooldownTicks = nbt.getInt("TongueAttackCooldown");
+        this.setIsRunning(nbt.getBoolean("Running"));
+        this.runningAttackCooldownTicks = nbt.getInt("RunningAttackCooldown");
+        super.readCustomDataFromNbt(nbt);
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         //Walk/Idle Controller
-        controllers.add(new AnimationController<>(this, "Idle/Walk", 5, state -> {
+        controllers.add(new AnimationController<>(this, "Idle/Walk/Run", 5, state -> {
+            //If it's running
+            if(this.isAttacking() && this.getIsRunning()){
+             state.setControllerSpeed(2f);
+             return state.setAndContinue(ATTACK_RUN);
+            }
             //If it's moving
-            if (state.isMoving()) {
+            else if (state.isMoving() && this.isAttacking()) {
+                state.setControllerSpeed(0.8f);
+                return state.setAndContinue(WALKING);
+            } else if (state.isMoving()) {
+                state.setControllerSpeed(0.5f);
                 return state.setAndContinue(WALKING);
             }
             //Anything else
             else {
+                state.setControllerSpeed(0.8f);
                 return state.setAndContinue(IDLE);
             }
 
@@ -197,17 +424,56 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         }));
     }
 
+    private void spawnGroundParticles() {
+        BlockState blockState = this.getSteppingBlockState();
+        if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
+            for (int i = 0; i < 8; ++i) {
+                double d = this.getX() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
+                double e = this.getY();
+                double f = this.getZ() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
 
+                this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+            }
+        }
+    }
     @Override
     public void tick() {
+        if(this.getTongueAttack()){
+            Vec3d vec3dCenter = this.getBoundingBox().getCenter();
+                int var3_5=0;
+                while (var3_5 < 20) {
+                    double xOffset = Math.cos(this.lookDirection);
+                    double zOffset = Math.sin(this.lookDirection);
+
+                    this.getWorld().addParticle(TCOTS_Particles.GRAVE_HAG_GREEN_SALIVA,
+                            vec3dCenter.x,
+                            this.getEyeY()-0.2,
+                            vec3dCenter.z,
+                            xOffset,0,zOffset);
+
+                    ++var3_5;
+            }
+        }
+
         if (GraveHagEntity.this.tongueAttackCooldownTicks > 0) {
-            System.out.println(tongueAttackCooldownTicks);
+            if(this.getTongueAttack()){this.setTongueAttack(false);}
             --GraveHagEntity.this.tongueAttackCooldownTicks;
         } else {
-//            System.out.println("Cooldown restored");
-//            System.out.println(tongueAttackCooldownTicks);
             GraveHagEntity.this.cooldownTongueAttack = false;
         }
+
+        if(getIsRunning()){
+            spawnGroundParticles();
+        }
+
+
+        if (GraveHagEntity.this.runningAttackCooldownTicks > 0) {
+            --GraveHagEntity.this.runningAttackCooldownTicks;
+        } else {
+            GraveHagEntity.this.cooldownRunningAttack = false;
+        }
+
+
 
         super.tick();
     }

@@ -44,7 +44,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
     //xTODO: Add drops
     //xTODO: Add spawning
 
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation RUNNING = RawAnimation.begin().thenLoop("move.running");
@@ -256,7 +256,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
 
 
     //Makes the rotfiend occult in ground
-    private class Rotfiend_ReturnToGround extends Goal {
+    private static class Rotfiend_ReturnToGround extends Goal {
         private final RotfiendEntity rotfiend;
         int ticks=35;
         private Rotfiend_ReturnToGround(RotfiendEntity mob) {
