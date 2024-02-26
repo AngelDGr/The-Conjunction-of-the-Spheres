@@ -50,9 +50,6 @@ public class TCOTS_Sounds {
     public static SoundEvent NEKKER_EMERGING = registerSoundEvent("nekker_emerging");
     public static SoundEvent NEKKER_DIGGING = registerSoundEvent("nekker_digging");
 
-
-
-
     public static SoundEvent POTION_REFILLED = registerSoundEvent("potion_refill");
 
     public static SoundEvent OIL_APPLIED = registerSoundEvent("oil_applied");

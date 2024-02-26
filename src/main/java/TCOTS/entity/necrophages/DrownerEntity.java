@@ -46,7 +46,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -55,6 +54,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 //xTODO: Make it faster when walking in water
@@ -66,7 +66,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
 
 //xTODO: Add drops (Add loot tables)
 //xTODO: Add spawn
-
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     protected final SwimNavigation waterNavigation;
     protected final MobNavigation landNavigation;
 
@@ -117,10 +117,12 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         this.goalSelector.add(3, new Drowner_LandWaterAttackGoal(this, 1.2D, false, 40, 3000));
 
 
-        this.goalSelector.add(4, new Drowner_SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(5, new Drowner_WanderAroundGoal(this, 0.75f, 20));
 
-        this.goalSelector.add(6, new Drowner_LookAroundGoal(this));
+        this.goalSelector.add(4, new FollowWaterHag(this, 20, 5,1, 0.75));
+        this.goalSelector.add(5, new Drowner_SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(6, new Drowner_WanderAroundGoal(this, 0.75f, 20));
+
+        this.goalSelector.add(7, new Drowner_LookAroundGoal(this));
 
         //Objectives
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
@@ -716,6 +718,99 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
     }
 
+    //Makes the drowner follow the nearest Water Hag
+    private class FollowWaterHag extends Goal {
+
+        DrownerEntity drowner;
+        private final Predicate<MobEntity> targetPredicate;
+        private final double maxDistance;
+        private final double minDistance;
+        double detectionDistance;
+
+        @Nullable
+        private WaterHagEntity waterHag;
+        private final double speed;
+        private int updateCountdownTicks;
+        private Path path;
+        private final EntityNavigation navigation;
+
+        //TODO: Tweak this follow goal
+        public FollowWaterHag(DrownerEntity mob, double detectionDistance, double minDistance, double maxDistance, double speed) {
+            this.drowner=mob;
+            this.maxDistance=maxDistance;
+            this.minDistance=minDistance;
+            this.targetPredicate = target -> target != null && mob.getClass() != target.getClass();
+            this.speed=speed;
+            this.navigation=drowner.getNavigation();
+            this.detectionDistance=detectionDistance;
+        }
+        @Override
+        public boolean canStart(){
+            return WaterHagDetected() && !DrownerEntity.this.getInGroundDataTracker() && !drowner.getSwimmingDataTracker() && !drowner.isAttacking();
+        }
+
+        private boolean WaterHagDetected(){
+            List<WaterHagEntity> list = this.drowner.getWorld().getEntitiesByClass(WaterHagEntity.class, this.drowner.getBoundingBox().expand(this.detectionDistance), this.targetPredicate);
+            if (!list.isEmpty()) {
+
+                this.waterHag = list.get(0);
+
+                this.path = this.drowner.getNavigation().findPathTo(waterHag, 0);
+                if (drowner.squaredDistanceTo(waterHag) < 10){
+                    return false;
+                }
+                return this.path != null;
+            }
+
+            return false;
+        }
+        @Override
+        public boolean shouldRunEveryTick() {
+            return true;
+        }
+        @Override
+        public void start() {
+            this.drowner.getNavigation().startMovingAlong(this.path, this.speed);
+            this.updateCountdownTicks = 0;
+            super.start();
+        }
+
+        @Override
+        public void tick() {
+            this.drowner.getLookControl().lookAt(this.waterHag, 10.0f, this.drowner.getMaxLookPitchChange());
+            if (--this.updateCountdownTicks > 0) {
+                return;
+            }
+            this.updateCountdownTicks = this.getTickCount(10);
+//            if (this.drowner.squaredDistanceTo(this.owner) >= 144.0) {
+//                this.tryTeleport();
+//            } else {
+                this.navigation.startMovingTo(this.waterHag, this.speed);
+//            }
+        }
+
+        @Override
+        public boolean shouldContinue(){
+            return super.shouldContinue() && shouldContinueFollow() && !DrownerEntity.this.getInGroundDataTracker() && waterHag != null && waterHag.isAlive() ;
+        }
+
+        private boolean shouldContinueFollow(){
+            if (this.navigation.isIdle()) {
+                return false;
+            }
+
+            if(this.drowner.isAttacking()){
+                return false;
+            }
+
+            return !(this.drowner.squaredDistanceTo(this.waterHag) <= (double)(5));
+        }
+        @Override
+        public void stop() {
+            this.waterHag=null;
+            this.drowner.getNavigation().stop();
+        }
+    }
 
     //This way don't reset every time it reenter the world, causing clipping
     @Override
@@ -805,7 +900,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity {
         }
 
     }
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)

@@ -39,6 +39,11 @@
     "tcots-witcher.sounds.grave_hag_tongue_attack": "Grave Hag attacks with tongue",
     "tcots-witcher.sounds.grave_hag_run": "Grave Hag screams",
 
+    "item.tcots-witcher.grave_hag_mutagen": "Grave Hag Mutagen",
+
+    "item.tcots-witcher.water_hag_spawn_egg": "Water Hag Spawn Egg",
+    "entity.tcots-witcher.water_hag": "Water Hag",
+
 
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
     "entity.tcots-witcher.nekker": "Nekker",
@@ -83,10 +88,14 @@
     "tcots-witcher.sounds.oil_applied": "Monster oil applied",
     "tcots-witcher.sounds.oil_ran_out": "Monster oil ran out ",
 
-
     "item.tcots-witcher.aether": "Aether",
 
     "item.tcots-witcher.empty_witcher_potion": "Empty %s",
+
+    "item.tcots-witcher.grave_hag_decoction": "Grave Hag Decoction",
+    "tooltip.effect.tcots-witcher.grave_hag_decoction.first":  "Increases regeneration for each",
+    "tooltip.effect.tcots-witcher.grave_hag_decoction.second": "enemy killed during combat",
+
 
     "item.tcots-witcher.oil_necrophage": "Necrophage Oil",
     "item.tcots-witcher.oil_necrophage_enhanced": "Enhanced Necrophage Oil",
@@ -125,5 +134,8 @@
 
     "effect.tcots-witcher.swallow": "Swallow",
     "effect.tcots-witcher.killer_whale": "Killer Whale",
-    "effect.tcots-witcher.white_raffards": "White Raffard's"
+    "effect.tcots-witcher.white_raffards": "White Raffard's",
+
+    "effect.tcots-witcher.grave_hag_decoction": "Grave Hag Vitality",
+    "effect.tcots-witcher.gui.grave_hag_decoction": "Grave Hag Vitality (%s kills)"
 }

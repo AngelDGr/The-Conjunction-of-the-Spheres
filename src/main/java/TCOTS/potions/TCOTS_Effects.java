@@ -4,6 +4,7 @@ import TCOTS.TCOTS_Main;
 import TCOTS.potions.effects.KillerWhaleEffect;
 import TCOTS.potions.effects.SwallowEffect;
 import TCOTS.potions.effects.WhiteRaffardsEffect;
+import TCOTS.potions.effects.decoctions.GraveHagDecoctionEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;
@@ -12,20 +13,23 @@ import net.minecraft.util.Identifier;
 
 public class TCOTS_Effects {
     public static StatusEffect KILLER_WHALE_EFFECT;
-
     public static StatusEffect SWALLOW_EFFECT;
-
     public static StatusEffect WHITE_RAFFARDS_EFFECT;
 
-    public static void registerEffects() {
-        //Effects
+    public static StatusEffect GRAVE_HAG_DECOCTION_EFFECT;
 
+    static final int decoctionColor=0x0b7000;
+
+    public static void registerEffects() {
+
+        //Effects
         KILLER_WHALE_EFFECT=registerStatusEffect_Modifier("killer_whale", KillerWhaleEffect.class, StatusEffectCategory.BENEFICIAL, 0xe9b044,1);
 
         SWALLOW_EFFECT = registerStatusEffect("swallow", SwallowEffect.class, StatusEffectCategory.BENEFICIAL, 0xcc624a);
 
         WHITE_RAFFARDS_EFFECT = registerStatusEffect("white_raffards", WhiteRaffardsEffect.class, StatusEffectCategory.BENEFICIAL, 0xb4b093);
 
+        GRAVE_HAG_DECOCTION_EFFECT = registerStatusEffect("grave_hag_decoction", GraveHagDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
     }
 
     public static StatusEffect registerStatusEffect(String name, Class<? extends StatusEffect> effectClass, StatusEffectCategory category, int color) {

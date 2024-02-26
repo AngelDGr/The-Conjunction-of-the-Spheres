@@ -32,7 +32,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.Optional;
 
 public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntity {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public MonsterNestBlockEntity(BlockPos pos, BlockState state) {
         super(TCOTS_Blocks.MONSTER_NEST_ENTITY, pos, state);
     }

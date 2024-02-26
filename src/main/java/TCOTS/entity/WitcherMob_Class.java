@@ -1,11 +1,8 @@
 package TCOTS.entity;
 
 import TCOTS.entity.necrophages.Necrophage_Base;
-import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.mob.PathAwareEntity;
@@ -16,6 +13,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+
 
 public class WitcherMob_Class extends PathAwareEntity implements Monster {
     protected WitcherMob_Class(EntityType<? extends PathAwareEntity> entityType, World world) {
@@ -51,9 +49,18 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
         return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
     }
 
+    public static boolean canSpawnInDarkNotDeepslate(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random) &&
+                pos.getY() >= 0;
+    }
+
+    public static boolean canSpawnInDarkNotDeepDeepslate(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random) &&
+                pos.getY() >= -20;
+    }
+
     @Override
     public SoundCategory getSoundCategory() {
         return SoundCategory.HOSTILE;
     }
-
 }

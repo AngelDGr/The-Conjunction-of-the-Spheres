@@ -57,7 +57,7 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
     private int maxProgress = 160;
 
     //Gecko stuff
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public AlchemyTableBlockEntity(BlockPos pos, BlockState state) {
         super(TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, pos, state);

@@ -2,10 +2,7 @@ package TCOTS.entity;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.DrownerPuddleEntity;
-import TCOTS.entity.necrophages.DrownerEntity;
-import TCOTS.entity.necrophages.GraveHagEntity;
-import TCOTS.entity.necrophages.Necrophage_Base;
-import TCOTS.entity.necrophages.RotfiendEntity;
+import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -24,7 +21,7 @@ public class TCOTS_Entities {
 // Necrophages
     //xTODO: Drowner
     //xTODO: Rotfiend
-    //TODO: Grave Hag
+    //xTODO: Grave Hag
     //TODO: Water Hag
     //TODO: Foglet
     //TODO: Ghoul
@@ -81,6 +78,12 @@ public class TCOTS_Entities {
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
+    public static final EntityType<WaterHagEntity> WATER_HAG = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "water_hag"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, WaterHagEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
+
 
 
     //Ogroids
@@ -124,6 +127,23 @@ public class TCOTS_Entities {
                                                                     BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
                                                                     BiomeKeys.PLAINS, BiomeKeys.SAVANNA, BiomeKeys.TAIGA), SpawnGroup.MONSTER,
                     ROTFIEND, 80, 3, 3);
+
+
+        //Grave Hags
+        SpawnRestriction.register(GRAVE_HAG, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Necrophage_Base::canSpawnInDarkNotDeepDeepslate);
+
+            //In night
+            BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                                                    BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST, BiomeKeys.DARK_FOREST,
+                                                                    BiomeKeys.DRIPSTONE_CAVES,
+                                                                    BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
+                                                                    BiomeKeys.PLAINS, BiomeKeys.SAVANNA, BiomeKeys.TAIGA), SpawnGroup.MONSTER,
+                GRAVE_HAG, 80, 1, 2);
+
+
+
+
 
 
         //Nekkers

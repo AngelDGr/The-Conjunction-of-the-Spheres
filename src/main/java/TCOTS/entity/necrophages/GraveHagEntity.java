@@ -43,8 +43,11 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
 
     //xTODO: Add tongue attack
     //xTODO: Add running attack
-    //TODO: Add drops
-    //TODO: Add spawn
+    //xTODO: Add drops
+        //xTODO: Add mutagen and decoction
+    //xTODO: Add spawn
+
+
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -61,6 +64,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
     protected static final TrackedData<Boolean> RUNNING = DataTracker.registerData(GraveHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public GraveHagEntity(EntityType<? extends GraveHagEntity> entityType, World world) {
         super(entityType, world);
+        this.experiencePoints = 10;
     }
 
     @Override
@@ -317,13 +321,12 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 26.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f) //Amount of health that hurts you
 //                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 2.0f)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20f)
         .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5)
         .add(EntityAttributes.GENERIC_ARMOR,4f);
-
     }
 
     @Override

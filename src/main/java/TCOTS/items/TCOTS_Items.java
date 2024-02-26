@@ -24,7 +24,8 @@ import net.minecraft.util.math.Direction;
 public class TCOTS_Items {
 
     //xTODO: Add new way to craft the potions
-        //TODO: Add new alchemy ingredients (mushrooms, flowers? and alcohol)
+        //TODO: Add new alchemy ingredients (mushrooms, flowers?
+        //and alcohol)
 
 
     //TODO: Add use to the items
@@ -46,10 +47,17 @@ public class TCOTS_Items {
 
 
     public static Item GRAVE_HAG_SPAWN_EGG;
+    public static Item GRAVE_HAG_MUTAGEN;
+
+    public static Item WATER_HAG_SPAWN_EGG;
 
     public static Item NEKKER_SPAWN_EGG;
     public static Item NEKKER_HEART;
     public static Item NEKKER_EYE;
+
+    //Decoctions
+    public static Item EMPTY_MONSTER_DECOCTION;
+    public static Item GRAVE_HAG_DECOCTION;
 
     //Potions
     public static Item DWARVEN_SPIRIT;
@@ -160,7 +168,8 @@ public class TCOTS_Items {
                 TCOTS_Effects.SWALLOW_EFFECT,
                 20,
                 20,
-                0
+                0,
+                false
         );
 
         SWALLOW_POTION_ENHANCED = registerItemPotion("swallow_potion_enhanced",
@@ -168,7 +177,8 @@ public class TCOTS_Items {
                 TCOTS_Effects.SWALLOW_EFFECT,
                 20,
                 20,
-                1
+                1,
+                false
         );
 
         SWALLOW_POTION_SUPERIOR = registerItemPotion("swallow_potion_superior",
@@ -176,7 +186,8 @@ public class TCOTS_Items {
                 TCOTS_Effects.SWALLOW_EFFECT,
                 20,
                 20,
-                2
+                2,
+                false
         );
 
         WHITE_RAFFARDS_DECOCTION = registerItemPotion("white_raffards_decoction",
@@ -184,7 +195,8 @@ public class TCOTS_Items {
                 TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
                 25,
                 1,
-                0
+                0,
+                false
         );
 
         WHITE_RAFFARDS_DECOCTION_ENHANCED = registerItemPotion("white_raffards_decoction_enhanced",
@@ -192,7 +204,8 @@ public class TCOTS_Items {
                 TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
                 25,
                 1,
-                1
+                1,
+                false
         );
 
         WHITE_RAFFARDS_DECOCTION_SUPERIOR = registerItemPotion("white_raffards_decoction_superior",
@@ -200,7 +213,8 @@ public class TCOTS_Items {
                 TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
                 25,
                 1,
-                2
+                2,
+                false
         );
 
         KILLER_WHALE_POTION = registerItemPotion("killer_whale_potion",
@@ -208,7 +222,8 @@ public class TCOTS_Items {
                 TCOTS_Effects.KILLER_WHALE_EFFECT,
                 15,
                 90,
-                0
+                0,
+                false
         );
 
 
@@ -236,6 +251,20 @@ public class TCOTS_Items {
                 10,
                 75,
                 0
+        );
+
+        //Decoctions
+        EMPTY_MONSTER_DECOCTION = registerItem("empty_monster_decoction",
+                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(1))
+        );
+
+        GRAVE_HAG_DECOCTION = registerItemPotion("grave_hag_decoction",
+                new FabricItemSettings().maxCount(1),
+                TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT,
+                50,
+                1200,
+                0,
+                true
         );
     }
 
@@ -265,7 +294,11 @@ public class TCOTS_Items {
 
 
         GRAVE_HAG_SPAWN_EGG = registerItem("grave_hag_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.GRAVE_HAG, 0xcfcfb4, 0x8e8480,
+                new SpawnEggItem(TCOTS_Entities.GRAVE_HAG, 0xb6b692, 0x8e8480,
+                        new FabricItemSettings()));
+
+        WATER_HAG_SPAWN_EGG = registerItem("water_hag_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.WATER_HAG, 0x8d93c0, 0x780b17,
                         new FabricItemSettings()));
 
 
@@ -281,6 +314,10 @@ public class TCOTS_Items {
         NEKKER_HEART = registerItem("nekker_heart",
                 new Item(
                         new FabricItemSettings().maxCount(16)));
+
+        GRAVE_HAG_MUTAGEN = registerItem("grave_hag_mutagen",
+                new Item(
+                        new FabricItemSettings().maxCount(8)));
     }
 
     public static Item NEST_SLAB_ITEM;
@@ -306,11 +343,11 @@ public class TCOTS_Items {
         return Registry.register(Registries.ITEM, new Identifier(TCOTS_Main.MOD_ID, name), item);
     }
 
-    private static Item registerItemPotion(String name, Item.Settings settings, StatusEffect effect, int toxicity, int durationInSecs, int amplifier) {
+    private static Item registerItemPotion(String name, Item.Settings settings, StatusEffect effect, int toxicity, int durationInSecs, int amplifier, boolean decoction) {
         try {
             Identifier identifier = new Identifier(TCOTS_Main.MOD_ID, name);
 
-            WitcherPotions_Base witcherPotion = new WitcherPotions_Base(settings, new StatusEffectInstance(effect, (int)(durationInSecs/0.05), amplifier), toxicity);
+            WitcherPotions_Base witcherPotion = new WitcherPotions_Base(settings, new StatusEffectInstance(effect, (int)(durationInSecs/0.05), amplifier), toxicity, decoction);
 
 
             return Registry.register(Registries.ITEM, identifier, witcherPotion);

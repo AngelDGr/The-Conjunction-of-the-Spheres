@@ -37,11 +37,13 @@ public class WitcherPotions_Base extends PotionItem {
 
     int toxicity;
 
+    boolean decoction;
 
-    public WitcherPotions_Base(Settings settings, StatusEffectInstance effect, int toxicity){
+    public WitcherPotions_Base(Settings settings, StatusEffectInstance effect, int toxicity, boolean decoction){
         super(settings);
         this.effectInstance=effect;
         this.toxicity=toxicity;
+        this.decoction=decoction;
     }
 
     public StatusEffectInstance getStatusEffect(){
@@ -72,9 +74,14 @@ public class WitcherPotions_Base extends PotionItem {
                 stack.decrement(1);
             }
         }
+        ItemStack stack_Empty;
 
-
-        ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION);
+        if(!decoction){
+            stack_Empty = new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION);
+        }
+        else {
+            stack_Empty = new ItemStack(TCOTS_Items.EMPTY_MONSTER_DECOCTION);
+        }
 
         stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 

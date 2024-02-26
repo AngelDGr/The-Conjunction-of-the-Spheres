@@ -179,7 +179,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
             //Potions
             this.tabButtons.add(0,new AlchemyRecipeGroupButton(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack(), AlchemyTableRecipeCategory.POTIONS));
             //Decoctions
-            this.tabButtons.add(1,new AlchemyRecipeGroupButton(Items.SPIDER_EYE.getDefaultStack(), AlchemyTableRecipeCategory.DECOCTIONS));
+            this.tabButtons.add(1,new AlchemyRecipeGroupButton(TCOTS_Items.GRAVE_HAG_DECOCTION.getDefaultStack(), AlchemyTableRecipeCategory.DECOCTIONS));
             //Bombs
             this.tabButtons.add(2,new AlchemyRecipeGroupButton(Items.TNT.getDefaultStack(), AlchemyTableRecipeCategory.BOMBS_OILS));
             //Misc

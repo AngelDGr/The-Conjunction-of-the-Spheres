@@ -44,6 +44,9 @@
 			"links": {
 				"modmenu.curseforge": "https://legacy.curseforge.com/members/tenebris_mors/projects"
 			}
+		},
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1309": ["TCOTS/interfaces/LivingEntityMixinInterface"]
 		}
 	}
 }

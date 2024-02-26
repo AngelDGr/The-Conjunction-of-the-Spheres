@@ -23,7 +23,7 @@ public class AlcohestItem extends WitcherPotions_Base{
 
 
     public AlcohestItem(Settings settings, StatusEffectInstance effect, int toxicity) {
-        super(settings, effect, toxicity);
+        super(settings, effect, toxicity, false);
     }
 
     @Override

@@ -58,7 +58,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
     public static final RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
     public static final RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
 
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -70,7 +70,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
 
     @Override
     protected void initGoals() {
-        //Attack
+
 
         //Emerge from ground
         this.goalSelector.add(0, new Nekker_EmergeFromGround(this));
@@ -82,7 +82,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
         //Returns to ground
         this.goalSelector.add(3, new Nekker_ReturnToGround(this));
 
-
+        //Attack
         this.goalSelector.add(4, new Nekker_MeleeAttackGoal(this, 1.2D, false));
 
 

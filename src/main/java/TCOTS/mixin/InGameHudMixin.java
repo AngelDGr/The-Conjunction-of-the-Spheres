@@ -26,6 +26,13 @@ public class InGameHudMixin {
         PlayerEntity playerEntity = this.getCameraPlayer();
         int i = MathHelper.ceil(playerEntity.getHealth());
         float f = Math.max((float)playerEntity.getAttributeValue(EntityAttributes.GENERIC_MAX_HEALTH), (float)Math.max(j, i));
+
+            if(playerEntity.hasStatusEffect(TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT)){
+                return this.ticks % MathHelper.ceil(
+                        ( f + 5.0f ) -
+                        ((playerEntity.theConjunctionOfTheSpheres$getKillCount())*0.7));
+            }
+
             if (playerEntity.hasStatusEffect(TCOTS_Effects.SWALLOW_EFFECT)) {
                 return this.ticks % MathHelper.ceil(f - 5.0F);
             }

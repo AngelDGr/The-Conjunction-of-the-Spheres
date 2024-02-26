@@ -24,7 +24,7 @@ public class DwarvenSpiritItem extends WitcherPotions_Base {
 
 
     public DwarvenSpiritItem(Settings settings, StatusEffectInstance effect, int toxicity) {
-        super(settings, effect, toxicity);
+        super(settings, effect, toxicity, false);
     }
 
     @Override

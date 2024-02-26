@@ -25,7 +25,7 @@ public class WitcherPotionsSplash_Base extends WitcherPotions_Base {
 
 
     public WitcherPotionsSplash_Base(Settings settings, StatusEffectInstance effect, int toxicity) {
-        super(settings, effect, toxicity);
+        super(settings, effect, toxicity, false);
     }
 
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {

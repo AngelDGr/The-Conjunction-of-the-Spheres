@@ -18,6 +18,14 @@ public class TCOTS_ItemsGroups {
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.tcots-witcher"))
                     .icon(() -> new ItemStack(TCOTS_Items.DROWNER_BRAIN))
                     .entries((displayContext, entries) -> {
+                        //Spawn Eggs
+                        entries.add(TCOTS_Items.DROWNER_SPAWN_EGG);
+                        entries.add(TCOTS_Items.ROTFIEND_SPAWN_EGG);
+                        entries.add(TCOTS_Items.NEKKER_SPAWN_EGG);
+                        entries.add(TCOTS_Items.GRAVE_HAG_SPAWN_EGG);
+                        entries.add(TCOTS_Items.WATER_HAG_SPAWN_EGG);
+
+
                         //Drops
                         entries.add(TCOTS_Items.DROWNER_TONGUE);
                         entries.add(TCOTS_Items.DROWNER_BRAIN);
@@ -25,12 +33,8 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.NEKKER_EYE);
                         entries.add(TCOTS_Items.NEKKER_HEART);
 
-
-                        //Spawn Eggs
-                        entries.add(TCOTS_Items.DROWNER_SPAWN_EGG);
-                        entries.add(TCOTS_Items.ROTFIEND_SPAWN_EGG);
-                        entries.add(TCOTS_Items.NEKKER_SPAWN_EGG);
-                        entries.add(TCOTS_Items.GRAVE_HAG_SPAWN_EGG);
+                        //Mutagens
+                        entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);
 
                         //Potions
                         entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
@@ -70,6 +74,10 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.HANGED_OIL);
                         entries.add(TCOTS_Items.ENHANCED_HANGED_OIL);
                         entries.add(TCOTS_Items.SUPERIOR_HANGED_OIL);
+
+
+                        //Decoctions
+                        entries.add(TCOTS_Items.GRAVE_HAG_DECOCTION);
 
 
                         //Misc/Blocks

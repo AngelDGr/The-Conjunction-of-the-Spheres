@@ -627,7 +627,8 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity {
                 if(RotfiendEntity.this.ReturnToGround_Ticks==0 && (
                         this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DIRT) ||
                         this.getWorld().getBlockState(entityPos.down()).isOf(Blocks.SAND) ||
-                        this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.STONE_ORE_REPLACEABLES)
+                        this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.STONE_ORE_REPLACEABLES) ||
+                        this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
                 )
                 ){
                     this.setInGroundDataTracker(true);
