@@ -16,4 +16,9 @@ public class GraveHagRenderer extends GeoEntityRenderer<GraveHagEntity> {
     public Identifier getTextureLocation(GraveHagEntity animatable) {
         return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/grave_hag/grave_hag.png");
     }
+
+    @Override
+    public float getMotionAnimThreshold(GraveHagEntity animatable) {
+        return 0.005f;
+    }
 }

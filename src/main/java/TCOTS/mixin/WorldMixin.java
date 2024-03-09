@@ -4,7 +4,6 @@ import TCOTS.entity.misc.RotfiendExplosionBehavior;
 import TCOTS.entity.necrophages.RotfiendEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionBehavior;
@@ -19,12 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Debug(export = true) // Enables exporting for the targets of this mixin
 @Mixin(World.class)
 public class WorldMixin {
-
-    @Shadow
-    private Explosion.DestructionType getDestructionType(GameRules.Key<GameRules.BooleanRule> gameRuleKey){return null;}
-
-    @Shadow
-    public GameRules getGameRules() {return null;}
 
     @Inject(method = "createExplosion(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/world/World$ExplosionSourceType;)Lnet/minecraft/world/explosion/Explosion;",
     at = @At("HEAD"), cancellable = true)

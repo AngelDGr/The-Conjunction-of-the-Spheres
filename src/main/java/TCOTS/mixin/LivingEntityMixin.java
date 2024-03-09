@@ -113,7 +113,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         LivingEntity THIS = (LivingEntity)(Object)this;
         if(THIS.hasStatusEffect(TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT)) {
             int count = THIS.theConjunctionOfTheSpheres$getKillCountdown();
-//            System.out.println("Countdown: "+THIS.theConjunctionOfTheSpheres$getKillCountdown());
             if (THIS.theConjunctionOfTheSpheres$getKillCountdown() > 0) {
 
                 THIS.theConjunctionOfTheSpheres$setKillCountdown(count - 1);

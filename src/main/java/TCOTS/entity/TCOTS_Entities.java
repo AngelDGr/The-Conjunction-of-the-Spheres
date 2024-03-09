@@ -2,6 +2,7 @@ package TCOTS.entity;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.DrownerPuddleEntity;
+import TCOTS.entity.misc.WaterHag_MudBallEntity;
 import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -10,7 +11,6 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
@@ -22,7 +22,7 @@ public class TCOTS_Entities {
     //xTODO: Drowner
     //xTODO: Rotfiend
     //xTODO: Grave Hag
-    //TODO: Water Hag
+    //xTODO: Water Hag
     //TODO: Foglet
     //TODO: Ghoul
     //TODO: Wights
@@ -84,6 +84,19 @@ public class TCOTS_Entities {
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
+    public static final EntityType<WaterHag_MudBallEntity> WATER_HAG_MUD_BALL = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "water_hag_mud_ball"),
+            FabricEntityTypeBuilder.<WaterHag_MudBallEntity>create(SpawnGroup.MISC, WaterHag_MudBallEntity::new
+                    )
+                    // Hitbox
+                    .dimensions(EntityDimensions.changing(0.25f, 0.25f)).build());
+
+
+    public static final EntityType<FogletEntity> FOGLET = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "foglet"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, FogletEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
 
     //Ogroids
@@ -141,7 +154,14 @@ public class TCOTS_Entities {
                                                                     BiomeKeys.PLAINS, BiomeKeys.SAVANNA, BiomeKeys.TAIGA), SpawnGroup.MONSTER,
                 GRAVE_HAG, 80, 1, 2);
 
+        //Water Hags
+        SpawnRestriction.register(WATER_HAG, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DrownerEntity::canSpawnDrowner);
 
+        //In swamps
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP,
+                                                                BiomeKeys.MANGROVE_SWAMP), SpawnGroup.MONSTER,
+                WATER_HAG, 80, 1, 2);
 
 
 

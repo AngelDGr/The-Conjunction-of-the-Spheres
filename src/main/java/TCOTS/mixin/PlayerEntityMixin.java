@@ -1,13 +1,21 @@
 package TCOTS.mixin;
 
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.EmptyWitcherPotionItem;
+import TCOTS.potions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.RavagerEntity;
 import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -20,7 +28,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
@@ -32,8 +39,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.UUID;
+
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity {
+public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityMixinInterface {
 
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
@@ -43,7 +52,30 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Shadow
     private PlayerInventory inventory;
 
+    @Unique
+    private static final TrackedData<Integer> MUD_TICKS = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
+
+    @Inject(method = "initDataTracker", at = @At("TAIL"))
+    private void injectKillCountDataTracker(CallbackInfo ci){
+        this.dataTracker.startTracking(MUD_TICKS, 0);
+    }
+
     @Shadow public abstract void playSound(SoundEvent sound, float volume, float pitch);
+
+    @Override
+    public int theConjunctionOfTheSpheres$getMudInFace() {
+        return this.dataTracker.get(MUD_TICKS);
+    }
+
+    @Override
+    public void theConjunctionOfTheSpheres$setMudInFace(int ticks) {
+        this.dataTracker.set(MUD_TICKS, ticks);
+    }
+
+    @Override
+    public float theConjunctionOfTheSpheres$getMudTransparency() {
+        return  (float) theConjunctionOfTheSpheres$getMudInFace()/100;
+    }
 
     @Unique
     private int potionTimer;
@@ -181,7 +213,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         }
     }
 
-
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 0)
     private float injectMonsterOilAttack(float value){
         return value + oilDamageAdded;
@@ -192,8 +223,39 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         oilDamageAdded = 0;
     }
 
+    @Unique
+    private final EntityAttributeModifier entityAttributeModifierWaterHag = new EntityAttributeModifier(
+            UUID.fromString("648D7064-6A60-4F59-8ABE-C2C23A6DD7A9"),
+            "water_hag_decoction",
+            6,
+            EntityAttributeModifier.Operation.ADDITION);
+
+    @Unique
+    private final EntityAttributeModifier entityAttributeModifierKillerWhale= new EntityAttributeModifier(
+            UUID.fromString("648D7064-6A60-4F59-8ABE-C2C23A6DD7A9"),
+            "killer_whale_effect",
+            4,
+            EntityAttributeModifier.Operation.ADDITION);
+
     @Inject(method = "tick", at = @At("HEAD"))
-    private void injectPotionTimer(CallbackInfo ci){
+    private void removeModifiers(CallbackInfo ci){
+        if(!this.hasStatusEffect(TCOTS_Effects.WATER_HAG_DECOCTION_EFFECT)){
+            EntityAttributeInstance entityAttributeInstance = this.getAttributes().getCustomInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            if(entityAttributeInstance != null && entityAttributeInstance.hasModifier(entityAttributeModifierWaterHag)){
+                entityAttributeInstance.removeModifier(entityAttributeModifierWaterHag);
+            }
+        }
+
+        if(!this.hasStatusEffect(TCOTS_Effects.KILLER_WHALE_EFFECT)){
+            EntityAttributeInstance entityAttributeInstance = this.getAttributes().getCustomInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            if(entityAttributeInstance != null && entityAttributeInstance.hasModifier(entityAttributeModifierKillerWhale)){
+                entityAttributeInstance.removeModifier(entityAttributeModifierKillerWhale);
+            }
+        }
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void injectInTick(CallbackInfo ci){
         if (this.isSleeping()) {
             if(this.potionTimer < 100) {
                 ++this.potionTimer;
@@ -204,6 +266,23 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                 potionTimer=0;
             }
         }
+
+        if(this.theConjunctionOfTheSpheres$getMudInFace() > 0 && this.isTouchingWaterOrRain()){
+            theConjunctionOfTheSpheres$setMudInFace(theConjunctionOfTheSpheres$getMudInFace() - 10);
+        }
+        else if(this.theConjunctionOfTheSpheres$getMudInFace() > 0){
+            theConjunctionOfTheSpheres$setMudInFace(theConjunctionOfTheSpheres$getMudInFace() -1);
+        }
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+    private void injectReadNBT(NbtCompound nbt, CallbackInfo ci){
+        theConjunctionOfTheSpheres$setMudInFace(nbt.getInt("MudTicks"));
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void injectWriteNBT(NbtCompound nbt, CallbackInfo ci){
+        nbt.putInt("MudTicks", theConjunctionOfTheSpheres$getMudInFace());
     }
 
     @Inject(method = "wakeUp(ZZ)V", at = @At("TAIL"))

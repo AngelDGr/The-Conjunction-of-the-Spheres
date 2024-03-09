@@ -36,9 +36,19 @@ public class TCOTS_Sounds {
     public static SoundEvent GRAVE_HAG_HURT = registerSoundEvent("grave_hag_hurt");
     public static SoundEvent GRAVE_HAG_IDLE = registerSoundEvent("grave_hag_idle");
     public static SoundEvent GRAVE_HAG_DEATH = registerSoundEvent("grave_hag_death");
-
     public static SoundEvent GRAVE_HAG_RUN = registerSoundEvent("grave_hag_run");
     public static SoundEvent GRAVE_HAG_TONGUE_ATTACK = registerSoundEvent("grave_hag_tongue_attack");
+
+    //Water Hag
+    public static SoundEvent WATER_HAG_ATTACK = registerSoundEvent("water_hag_attack");
+    public static SoundEvent WATER_HAG_HURT = registerSoundEvent("water_hag_hurt");
+    public static SoundEvent WATER_HAG_IDLE = registerSoundEvent("water_hag_idle");
+    public static SoundEvent WATER_HAG_DEATH = registerSoundEvent("water_hag_death");
+    public static SoundEvent WATER_HAG_EMERGING = registerSoundEvent("water_hag_emerging");
+    public static SoundEvent WATER_HAG_DIGGING = registerSoundEvent("water_hag_digging");
+
+    public static SoundEvent WATER_HAG_MUD_BALL_LAUNCH = registerSoundEvent("water_hag_mud_ball_launch");
+    public static SoundEvent WATER_HAG_MUD_BALL_HIT = registerSoundEvent("water_hag_mud_ball_hit");
 
 
     //Nekker

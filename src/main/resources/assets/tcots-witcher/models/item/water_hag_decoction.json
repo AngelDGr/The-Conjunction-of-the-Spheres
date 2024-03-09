@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "tcots-witcher:item/alchemy/potions/decoctions/water_hag_decoction"
+  }
+
+}

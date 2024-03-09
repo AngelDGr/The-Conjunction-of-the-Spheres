@@ -16,4 +16,9 @@ public class WaterHagRenderer extends GeoEntityRenderer<WaterHagEntity> {
     public Identifier getTextureLocation(WaterHagEntity animatable) {
         return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/water_hag/water_hag.png");
     }
+
+    @Override
+    public float getMotionAnimThreshold(WaterHagEntity animatable) {
+        return 0.005f;
+    }
 }

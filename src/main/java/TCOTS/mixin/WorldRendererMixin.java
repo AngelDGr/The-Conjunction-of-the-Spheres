@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
-//    Lnet/minecraft/client/render/WorldRenderer;processWorldEvent(ILnet/minecraft/util/math/BlockPos;I)V
 
     @Shadow
     private ClientWorld world;

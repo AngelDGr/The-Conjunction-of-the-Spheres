@@ -5,9 +5,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.client.render.GameRenderer;
 
 import java.util.Map;
+import java.util.UUID;
 
 
 public class KillerWhaleEffect extends StatusEffect {
@@ -19,8 +19,6 @@ public class KillerWhaleEffect extends StatusEffect {
     //Works like Respiration II
     protected final double modifier;
 
-    private final Map<EntityAttribute, EntityAttributeModifier> attributeModifiers = Maps.newHashMap();
-
 
     public KillerWhaleEffect(StatusEffectCategory category, int color, double modifier) {
         super(category, color);
@@ -29,7 +27,6 @@ public class KillerWhaleEffect extends StatusEffect {
 
     EntityAttributeInstance entityAttributeInstance;
     EntityAttributeModifier entityAttributeModifierInfo;
-    boolean appliedStrength =false;
     //It's called every tick
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
@@ -39,14 +36,12 @@ public class KillerWhaleEffect extends StatusEffect {
         }
 
         if(entity.isTouchingWater()){
-            if (entityAttributeInstance != null && !appliedStrength) {
+            if (entityAttributeInstance != null && !entityAttributeInstance.hasModifier(entityAttributeModifierInfo)) {
                 entityAttributeInstance.addPersistentModifier(entityAttributeModifierInfo);
-                appliedStrength=true;
             }
         }else{
-            if(entityAttributeInstance != null && appliedStrength){
+            if(entityAttributeInstance != null && entityAttributeInstance.hasModifier(entityAttributeModifierInfo)){
                 entityAttributeInstance.removeModifier(entityAttributeModifierInfo);
-                appliedStrength=false;
             }
         }
 
@@ -63,9 +58,8 @@ public class KillerWhaleEffect extends StatusEffect {
     //Called when removed
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        if(appliedStrength){
+        if(entityAttributeInstance.hasModifier(entityAttributeModifierInfo)){
             entityAttributeInstance.removeModifier(entityAttributeModifierInfo);
-            appliedStrength=false;
         }
         super.onRemoved(entity,attributes,amplifier);
     }
@@ -73,7 +67,8 @@ public class KillerWhaleEffect extends StatusEffect {
 
     public void addAttributeAttackModifier(int amplifier) {
         entityAttributeModifierInfo = new EntityAttributeModifier(
-                "648D7064-6A60-4F59-8ABE-C2C23A6DD7A9",
+                UUID.fromString("648D7064-6A60-4F59-8ABE-C2C23A6DD7A9"),
+                "killer_whale_effect",
                 4*(amplifier+1),
                 EntityAttributeModifier.Operation.ADDITION);
     }
@@ -83,6 +78,7 @@ public class KillerWhaleEffect extends StatusEffect {
         return true;
     }
 
+    @Override
     public double adjustModifierAmount(int amplifier, EntityAttributeModifier modifier) {
         return this.modifier * (double)(amplifier + 1);
     }

@@ -43,6 +43,23 @@
 
     "item.tcots-witcher.water_hag_spawn_egg": "Water Hag Spawn Egg",
     "entity.tcots-witcher.water_hag": "Water Hag",
+    "tcots-witcher.sounds.water_hag_attack": "Water Hag attacks",
+    "tcots-witcher.sounds.water_hag_hurt": "Water Hag hurts",
+    "tcots-witcher.sounds.water_hag_idle": "Water Hag groans",
+    "tcots-witcher.sounds.water_hag_death": "Water Hag dies",
+    "tcots-witcher.sounds.water_hag_emerging": "Water Hag emerges from ground",
+    "tcots-witcher.sounds.water_hag_digging": "Water Hag return to ground",
+
+    "entity.tcots-witcher.water_hag_mud_ball": "Mudball",
+    "item.tcots-witcher.water_hag_mud_ball": "Mudball",
+    "tcots-witcher.sounds.water_hag_mud_ball_hit": "Mudball hits",
+
+    "tcots-witcher.sounds.water_hag_mud_ball_launch": "Mudball flies",
+    "item.tcots-witcher.water_hag_mutagen": "Water Hag Mutagen",
+
+    "item.tcots-witcher.foglet_spawn_egg": "Foglet Spawn Egg",
+    "entity.tcots-witcher.foglet": "Foglet",
+
 
 
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
@@ -96,6 +113,9 @@
     "tooltip.effect.tcots-witcher.grave_hag_decoction.first":  "Increases regeneration for each",
     "tooltip.effect.tcots-witcher.grave_hag_decoction.second": "enemy killed during combat",
 
+    "item.tcots-witcher.water_hag_decoction": "Water Hag Decoction",
+    "tooltip.effect.tcots-witcher.water_hag_decoction.first":  "Increases attack when health",
+    "tooltip.effect.tcots-witcher.water_hag_decoction.second": "it is full",
 
     "item.tcots-witcher.oil_necrophage": "Necrophage Oil",
     "item.tcots-witcher.oil_necrophage_enhanced": "Enhanced Necrophage Oil",
@@ -137,5 +157,7 @@
     "effect.tcots-witcher.white_raffards": "White Raffard's",
 
     "effect.tcots-witcher.grave_hag_decoction": "Grave Hag Vitality",
-    "effect.tcots-witcher.gui.grave_hag_decoction": "Grave Hag Vitality (%s kills)"
+    "effect.tcots-witcher.gui.grave_hag_decoction": "Grave Hag Vitality (%s kills)",
+
+    "effect.tcots-witcher.water_hag_decoction": "Water Hag Ferocity"
 }

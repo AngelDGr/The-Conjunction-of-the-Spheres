@@ -3,9 +3,6 @@
   "package": "TCOTS.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BlockEntityTypeMixin",
-    "BrewingRecipeRegistryMixin",
-    "BrewingStandPotionSlotMixin",
     "ClientPlayNetworkHandlerMixin",
     "ExplosionMixin",
     "InGameHudMixin",
@@ -17,7 +14,6 @@
     "ServerPlayNetworkHandlerMixin",
     "ServerWorldMixin",
     "SpawnEggItemMixin",
-    "SwordItemMixin",
     "WorldMixin",
     "WorldRendererMixin"
   ],

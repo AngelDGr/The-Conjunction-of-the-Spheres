@@ -1,6 +1,8 @@
 package TCOTS.entity.ogroids;
 
-import TCOTS.entity.necrophages.Necrophage_Base;
+import TCOTS.entity.goals.*;
+import TCOTS.entity.interfaces.ExcavatorMob;
+import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -14,7 +16,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
@@ -27,12 +28,10 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -41,9 +40,8 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
-import java.util.EnumSet;
 
-public class NekkerEntity extends Ogroid_Base implements GeoEntity {
+public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob, LungeMob {
 
     //xTODO: Add spawn
     //xTODO: Add drops
@@ -58,6 +56,15 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
     public static final RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
     public static final RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
 
+    @Override
+    public RawAnimation getDiggingAnimation() {
+        return DIGGING_IN;
+    }
+
+    @Override
+    public RawAnimation getEmergingAnimation() {
+        return DIGGING_OUT;
+    }
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -71,282 +78,61 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
     @Override
     protected void initGoals() {
 
-
         //Emerge from ground
-        this.goalSelector.add(0, new Nekker_EmergeFromGround(this));
+        this.goalSelector.add(0, new EmergeFromGroundGoal_Excavator(this,500));
         this.goalSelector.add(1, new SwimGoal(this));
 
-
-        this.goalSelector.add(2, new NekkerEntity.Attack_Lunge(this, 200, 1.2));
+        this.goalSelector.add(2, new LungeAttackGoal(this, 200, 1.2));
 
         //Returns to ground
-        this.goalSelector.add(3, new Nekker_ReturnToGround(this));
+        this.goalSelector.add(3, new ReturnToGroundGoal_Excavator(this));
 
         //Attack
-        this.goalSelector.add(4, new Nekker_MeleeAttackGoal(this, 1.2D, false));
+        this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false));
 
 
-        this.goalSelector.add(5, new Nekker_WanderAroundGoal(this, 0.75f, 20));
+        this.goalSelector.add(5, new WanderAroundGoal_Excavator(this, 0.75f, 20));
 
-        this.goalSelector.add(6, new LookAroundGoal(this));
+        this.goalSelector.add(6, new LookAroundGoal_Excavator(this));
 
         //Objectives
-        this.targetSelector.add(1, new RevengeGoal(this, new Class[0]).setGroupRevenge(new Class[0]));
+        this.targetSelector.add(1, new RevengeGoal(this, NekkerEntity.class).setGroupRevenge());
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
 
     public boolean cooldownBetweenLunges = false;
+
+    public boolean getCooldownBetweenLunges() {
+        return cooldownBetweenLunges;
+    }
+
+    public void setCooldownBetweenLunges(boolean cooldownBetweenLunges) {
+        this.cooldownBetweenLunges = cooldownBetweenLunges;
+    }
+
     public int LungeTicks;
 
-    private class Attack_Lunge extends Goal {
-        private final NekkerEntity mob;
-        private final int cooldownBetweenLungesAttacks;
-        private final double SpeedLungeMultiplier;
-
-        private Attack_Lunge(NekkerEntity mob, int cooldownBetweenLungesAttacks, double lungeImpulse) {
-            this.mob = mob;
-            this.cooldownBetweenLungesAttacks = cooldownBetweenLungesAttacks;
-            this.setControls(EnumSet.of(Control.MOVE, Control.JUMP));
-            this.SpeedLungeMultiplier = lungeImpulse;
-        }
-
-        @Override
-        public boolean canStart() {
-            LivingEntity target = this.mob.getTarget();
-            if (target != null) {
-                //5 square distance like 1.5 blocks approx
-                //I want 7.5 blocks approx
-                //So 7.5/1.5=5
-                return !NekkerEntity.this.cooldownBetweenLunges && this.mob.isAttacking()
-                        && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
-                        && (this.mob.getTarget().getY() - this.mob.getY()) <= 1
-                        && !this.mob.getIsEmerging()
-                        && !this.mob.getInGroundDataTracker()
-                        ;
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public boolean shouldContinue() {
-            LivingEntity target = this.mob.getTarget();
-            if (target != null) {
-                //5 square distance like 1.5 blocks approx
-                //I want 7.5 blocks approx
-                //So 7.5/1.5=5
-                return !NekkerEntity.this.cooldownBetweenLunges && this.mob.isAttacking()
-                        && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
-                        && (this.mob.getTarget().getY() - this.mob.getY()) <= 1;
-            } else {
-                return false;
-            }
-        }
-
-        Vec3d vec3D_lunge;
-        int randomExtra;
-
-        @Override
-        public boolean shouldRunEveryTick() {
-            return true;
-        }
-
-        @Override
-        public void start() {
-            this.mob.getNavigation().stop();
-        }
-
-        @Override
-        public void tick() {
-            LivingEntity livingEntity = this.mob.getTarget();
-
-            if (livingEntity != null) {
-//                double d = this.mob.getSquaredDistanceToAttackPosOf(livingEntity);
-                LungeAttack(livingEntity);
-            }
-        }
-
-        @NotNull
-        private Vec3d getVec3d(LivingEntity target) {
-            double dXtoTarget = target.getX() - this.mob.getEyePos().x;
-            double dYtoTarget = target.getY() - this.mob.getEyePos().y;
-            double dZtoTarget = target.getZ() - this.mob.getEyePos().z;
-            double length = Math.sqrt(dXtoTarget * dXtoTarget + dYtoTarget * dYtoTarget + dZtoTarget * dZtoTarget);
-
-            //Movement Vector
-            return new Vec3d((dXtoTarget / length) * SpeedLungeMultiplier,
-                    (dYtoTarget / length),
-                    (dZtoTarget / length) * SpeedLungeMultiplier);
-        }
-
-        private void LungeAttack(LivingEntity target) {
-            //Check if it can do a lunge
-            if (!NekkerEntity.this.cooldownBetweenLunges) {
-                //Makes the lunge
-                //Extra random ticks in cooldown
-                randomExtra = NekkerEntity.this.random.nextInt(51);
-                //0.35 Y default
-                vec3D_lunge = getVec3d(target).normalize();
-                NekkerEntity.this.setIsLugging(true);
-
-                NekkerEntity.this.setVelocity(NekkerEntity.this.getVelocity().add(vec3D_lunge.x, 0.35, vec3D_lunge.z));
-                this.mob.getLookControl().lookAt(target, 30.0F, 30.0F);
-
-                NekkerEntity.this.playSound(TCOTS_Sounds.NEKKER_LUNGE, 1.0F, 1.0F);
-
-                //Put the cooldown
-                LungeTicks = cooldownBetweenLungesAttacks + randomExtra;
-                NekkerEntity.this.cooldownBetweenLunges = true;
-            }
-
-        }
-
+    @Override
+    public int getLungeTicks() {
+        return LungeTicks;
     }
 
-    //Makes the nekker occult in ground
-    private class Nekker_ReturnToGround extends Goal {
-        private final NekkerEntity nekker;
-        int ticks=35;
-        private Nekker_ReturnToGround(NekkerEntity mob) {
-            this.nekker = mob;
-        }
-        @Override
-        public boolean canStart() {
-            return nekker.getInGroundDataTracker();
-        }
-        @Override
-        public boolean shouldContinue(){
-            return nekker.getInGroundDataTracker();
-        }
-        @Override
-        public void start(){
-            ticks=35;
-            nekker.playSound(TCOTS_Sounds.NEKKER_DIGGING,1.0F,1.0F);
-            nekker.getNavigation().stop();
-            nekker.getLookControl().lookAt(0,0,0);
-        }
-
-    }
-
-    //Makes the nekker emerge from ground
-    private class Nekker_EmergeFromGround extends Goal{
-
-        private final NekkerEntity nekker;
-
-        protected final PathAwareEntity mob;
-
-        int AnimationTicks=36;
-
-        private Nekker_EmergeFromGround(NekkerEntity mob) {
-            this.nekker = mob;
-            this.mob = mob;
-        }
-
-        @Override
-        public boolean canStart() {
-            return canStartO() && nekker.getInGroundDataTracker();
-        }
-        public boolean canStartO(){
-
-            LivingEntity livingEntity = this.mob.getTarget();
-            //If it doesn't have target
-            if (livingEntity == null) {
-                return false;
-            }
-            //If it's the target dead
-            else if (!livingEntity.isAlive()) {
-                return false;
-            }
-            else {
-                return this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ()) <= 80;
-            }
-        }
-
-        @Override
-        public void start(){
-            this.nekker.playSound(TCOTS_Sounds.NEKKER_EMERGING, 1.0F, 1.0F);
-            this.nekker.spawnGroundParticles();
-            AnimationTicks=36;
-            nekker.setIsEmerging(true);
-        }
-
-        @Override
-        public boolean shouldContinue(){
-            return shouldContinueO() && nekker.getInGroundDataTracker();
-        }
-        public boolean shouldContinueO(){
-            LivingEntity livingEntity = this.mob.getTarget();
-            if (livingEntity == null) {
-                return false;
-            } else if (!livingEntity.isAlive()) {
-                return false;
-            } else {
-                return !(livingEntity instanceof PlayerEntity) || !livingEntity.isSpectator() && !((PlayerEntity)livingEntity).isCreative();
-            }
-        }
-
-        @Override
-        public void tick(){
-            if (AnimationTicks > 0) {
-//                System.out.println("AnimationTicks"+AnimationTicks);
-                --AnimationTicks;
-            }else {
-                stop();
-            }
-        }
-
-        @Override
-        public void stop(){
-            nekker.setIsEmerging(false);
-            if(NekkerEntity.this.getInGroundDataTracker()){
-                NekkerEntity.this.ReturnToGround_Ticks=500;
-                NekkerEntity.this.setInGroundDataTracker(false);}
-        }
-
-        @Override
-        public boolean shouldRunEveryTick() {
-            return true;
-        }
-
-    }
-
-
-    private class Nekker_WanderAroundGoal extends WanderAroundGoal{
-
-        public Nekker_WanderAroundGoal(PathAwareEntity mob, double speed, int chance) {
-            super(mob, speed, chance);
-        }
-
-        @Override
-        public boolean canStart(){
-            return super.canStart() && !NekkerEntity.this.getInGroundDataTracker();
-        }
-
-        @Override
-        public boolean shouldContinue(){
-            return super.shouldContinue() && !NekkerEntity.this.getInGroundDataTracker();
-        }
-    }
-
-    private static class Nekker_MeleeAttackGoal extends MeleeAttackGoal{
-        private final NekkerEntity nekker;
-
-        public Nekker_MeleeAttackGoal(NekkerEntity mob, double speed, boolean pauseWhenMobIdle) {
-            super(mob, speed, pauseWhenMobIdle);
-            this.nekker = mob;
-        }
-
-        @Override
-        public boolean canStart() {
-            return super.canStart()
-                    && !this.nekker.getIsEmerging()
-                    && !this.nekker.getInGroundDataTracker();
-        }
+    @Override
+    public void setLungeTicks(int lungeTicks) {
+        LungeTicks = lungeTicks;
     }
 
     public int ReturnToGround_Ticks=20;
+
+    public int getReturnToGround_Ticks() {
+        return ReturnToGround_Ticks;
+    }
+
+    public void setReturnToGround_Ticks(int returnToGround_Ticks) {
+        ReturnToGround_Ticks = returnToGround_Ticks;
+    }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
@@ -425,32 +211,14 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
                 })
         );
 
-        //DiggingIn Controller
+        //Digging Controller
         controllerRegistrar.add(
-                new AnimationController<>(this,"DiggingInController",1, state -> {
-
-                    if(this.getInGroundDataTracker() && !this.getIsEmerging()){
-                        state.setAnimation(DIGGING_IN);
-                        return PlayState.CONTINUE;
-                    }else{
-                        state.getController().forceAnimationReset();
-                        return PlayState.STOP;
-                    }
-                })
+                new AnimationController<>(this,"DiggingController",1, this::animationDiggingPredicate)
         );
 
-        //DiggingOut Controller
+        //Emerging Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "DiggingOutController", 1, state -> {
-                    if (this.getIsEmerging()){
-                        state.setAnimation(DIGGING_OUT);
-                        return PlayState.CONTINUE;
-                    }
-                    else{
-                        state.getController().forceAnimationReset();
-                        return PlayState.STOP;
-                    }
-                })
+                new AnimationController<>(this, "EmergingController", 1, this::animationEmergingPredicate)
         );
     }
 
@@ -486,8 +254,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
     @Override
     protected Box calculateBoundingBox() {
         if (dataTracker.get(InGROUND)) {
-            return new Box(this.getX() - 0.39, this.getY() + 0.1, this.getZ() - 0.39,
-                    this.getX() + 0.39, this.getY(), this.getZ() + 0.39);
+            return groundBox(this);
         }
         else{
             // Normal hit-box otherwise
@@ -516,7 +283,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
-    private void spawnGroundParticles() {
+    public void spawnGroundParticles() {
         BlockState blockState = this.getSteppingBlockState();
         if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
             for (int i = 0; i < 11; ++i) {
@@ -568,7 +335,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
             if(NekkerEntity.this.ReturnToGround_Ticks==0 && (
                     this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DIRT) ||
                             this.getWorld().getBlockState(entityPos.down()).isOf(Blocks.SAND)
-//                            || this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.STONE_ORE_REPLACEABLES)
             )
             ){
                 this.setInGroundDataTracker(true);
@@ -596,6 +362,20 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity {
         return TCOTS_Sounds.NEKKER_DEATH;
     }
 
+    @Override
+    public SoundEvent getEmergingSound() {
+        return TCOTS_Sounds.NEKKER_EMERGING;
+    }
+
+    @Override
+    public SoundEvent getDiggingSound() {
+        return TCOTS_Sounds.NEKKER_DIGGING;
+    }
+
+    @Override
+    public SoundEvent getLungeSound() {
+        return TCOTS_Sounds.NEKKER_LUNGE;
+    }
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {

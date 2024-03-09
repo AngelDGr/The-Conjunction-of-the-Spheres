@@ -1,10 +1,7 @@
 package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
-import TCOTS.entity.necrophages.DrownerEntity;
-import TCOTS.entity.necrophages.GraveHagEntity;
-import TCOTS.entity.necrophages.RotfiendEntity;
-import TCOTS.entity.necrophages.WaterHagEntity;
+import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
@@ -45,9 +42,6 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_Sounds.init();
 		TCOTS_Entities.addSpawns();
 		TCOTS_Particles.registerParticles();
-//		LOGGER.info("Hello Fabric world!");
-
-//		getWitcherRecipesInputItems(new BrewingRecipeRegistry());
 
 		//Drowner
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.DROWNER, DrownerEntity.setAttributes());
@@ -61,14 +55,13 @@ public class TCOTS_Main implements ModInitializer {
 		//Water Hag
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.WATER_HAG, WaterHagEntity.setAttributes());
 
+		//Water Hag
+		FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLET, FogletEntity.setAttributes());
+
 		//Nekker
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
 
-//		WitcherPotions_Recipes.getWitcherRecipesInputItems();
+
 	}
-//	public void getWitcherRecipesInputItems(BrewingRecipeRegistry instance) {
-//
-//		((BrewingRecipeRegistryAccess)instance).registerWitcherPotionRecipe_PotionInput(Potions.AWKWARD, TCOTS_Items.DROWNER_BRAIN, TCOTS_Items.SWALLOW_POTION);
-//	}
 
 }

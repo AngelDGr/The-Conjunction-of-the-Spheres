@@ -5,6 +5,7 @@ import TCOTS.potions.effects.KillerWhaleEffect;
 import TCOTS.potions.effects.SwallowEffect;
 import TCOTS.potions.effects.WhiteRaffardsEffect;
 import TCOTS.potions.effects.decoctions.GraveHagDecoctionEffect;
+import TCOTS.potions.effects.decoctions.WaterHagDecoctionEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;
@@ -17,6 +18,7 @@ public class TCOTS_Effects {
     public static StatusEffect WHITE_RAFFARDS_EFFECT;
 
     public static StatusEffect GRAVE_HAG_DECOCTION_EFFECT;
+    public static StatusEffect WATER_HAG_DECOCTION_EFFECT;
 
     static final int decoctionColor=0x0b7000;
 
@@ -30,6 +32,8 @@ public class TCOTS_Effects {
         WHITE_RAFFARDS_EFFECT = registerStatusEffect("white_raffards", WhiteRaffardsEffect.class, StatusEffectCategory.BENEFICIAL, 0xb4b093);
 
         GRAVE_HAG_DECOCTION_EFFECT = registerStatusEffect("grave_hag_decoction", GraveHagDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+
+        WATER_HAG_DECOCTION_EFFECT = registerStatusEffect_Modifier("water_hag_decoction", WaterHagDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor,1);
     }
 
     public static StatusEffect registerStatusEffect(String name, Class<? extends StatusEffect> effectClass, StatusEffectCategory category, int color) {
@@ -37,9 +41,7 @@ public class TCOTS_Effects {
             return Registry.register(Registries.STATUS_EFFECT, new Identifier(TCOTS_Main.MOD_ID, name),
                     effectClass.getConstructor(StatusEffectCategory.class, int.class).newInstance(category, color));
         } catch (Exception e) {
-            System.out.println("EFFECT DON'T CREATED");
-            e.printStackTrace();
-            return null;
+            throw new IllegalArgumentException("Effect didn't create");
         }
     }
 
@@ -48,12 +50,8 @@ public class TCOTS_Effects {
             return Registry.register(Registries.STATUS_EFFECT, new Identifier(TCOTS_Main.MOD_ID, name),
                     effectClass.getConstructor(StatusEffectCategory.class, int.class, double.class).newInstance(category, color, modifier));
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new IllegalArgumentException("Effect didn't create");
         }
     }
 
-    private static StatusEffect register(String id, StatusEffect entry) {
-        return (StatusEffect)Registry.register(Registries.STATUS_EFFECT, id, entry);
-    }
 }

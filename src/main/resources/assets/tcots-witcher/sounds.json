@@ -227,6 +227,73 @@
   },
 
 
+  "water_hag_attack": {
+    "subtitle": "tcots-witcher.sounds.water_hag_attack",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_attack1",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_attack2",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_attack3"
+    ]
+  },
+  "water_hag_hurt": {
+    "subtitle": "tcots-witcher.sounds.water_hag_hurt",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_hurt1",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_hurt2",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_hurt3",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_hurt4"
+    ]
+  },
+  "water_hag_idle": {
+    "subtitle": "tcots-witcher.sounds.water_hag_idle",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_idle1",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_idle2",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_idle3",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_idle4"
+    ]
+  },
+  "water_hag_death": {
+    "subtitle": "tcots-witcher.sounds.water_hag_death",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_death1",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_death2",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_death3"
+    ]
+  },
+  "water_hag_emerging": {
+    "subtitle": "tcots-witcher.sounds.water_hag_emerging",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_emerging1",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_emerging2"
+    ]
+  },
+  "water_hag_digging": {
+    "subtitle": "tcots-witcher.sounds.water_hag_digging",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_digging1",
+      "tcots-witcher:entity/necrophages/water_hag/water_hag_digging2"
+    ]
+  },
+  "water_hag_mud_ball_launch": {
+    "subtitle": "tcots-witcher.sounds.water_hag_mud_ball_launch",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/water_hag/mud_ball_launch1",
+      "tcots-witcher:entity/necrophages/water_hag/mud_ball_launch2",
+      "tcots-witcher:entity/necrophages/water_hag/mud_ball_launch3"
+    ]
+  },
+  "water_hag_mud_ball_hit": {
+    "subtitle": "tcots-witcher.sounds.water_hag_mud_ball_hit",
+    "sounds": [
+      "minecraft:block/mud/hit1",
+      "minecraft:block/mud/hit2",
+      "minecraft:block/mud/hit3",
+      "minecraft:block/mud/hit4"
+    ]
+  },
+
+
 
 
   "nekker_attack": {

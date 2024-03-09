@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 
 public class TCOTS_Client implements ClientModInitializer {
     @Override
@@ -32,7 +33,10 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.WATER_HAG, WaterHagRenderer::new);
 
+        EntityRendererRegistry.register(TCOTS_Entities.FOGLET, FogletRenderer::new);
 
+
+        EntityRendererRegistry.register(TCOTS_Entities.WATER_HAG_MUD_BALL, FlyingItemEntityRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
 
@@ -40,6 +44,7 @@ public class TCOTS_Client implements ClientModInitializer {
         BlockEntityRendererFactories.register(TCOTS_Blocks.SKULL_NEST_ENTITY, NestSkullBlockRenderer::new);
         BlockEntityRendererFactories.register(TCOTS_Blocks.MONSTER_NEST_ENTITY, MonsterNestRenderer::new);
         BlockEntityRendererFactories.register(TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, AlchemyTableRenderer::new);
+
 
         //Particles
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION, Rotfiend_BloodExplosionParticle.Factory::new);

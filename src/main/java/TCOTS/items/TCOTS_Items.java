@@ -3,13 +3,13 @@ package TCOTS.items;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.items.blocks.AlchemyTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
 import TCOTS.potions.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -18,7 +18,6 @@ import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
 import net.minecraft.util.math.Direction;
 
 public class TCOTS_Items {
@@ -50,6 +49,13 @@ public class TCOTS_Items {
     public static Item GRAVE_HAG_MUTAGEN;
 
     public static Item WATER_HAG_SPAWN_EGG;
+    public static Item WATER_HAG_MUD_BALL;
+
+    public static Item WATER_HAG_MUTAGEN;
+
+
+    public static Item FOGLET_SPAWN_EGG;
+
 
     public static Item NEKKER_SPAWN_EGG;
     public static Item NEKKER_HEART;
@@ -58,6 +64,8 @@ public class TCOTS_Items {
     //Decoctions
     public static Item EMPTY_MONSTER_DECOCTION;
     public static Item GRAVE_HAG_DECOCTION;
+
+    public static Item WATER_HAG_DECOCTION;
 
     //Potions
     public static Item DWARVEN_SPIRIT;
@@ -266,6 +274,15 @@ public class TCOTS_Items {
                 0,
                 true
         );
+
+        WATER_HAG_DECOCTION = registerItemPotion("water_hag_decoction",
+                new FabricItemSettings().maxCount(1),
+                TCOTS_Effects.WATER_HAG_DECOCTION_EFFECT,
+                50,
+                1200,
+                0,
+                true
+        );
     }
 
     //Register Drops from monsters
@@ -273,11 +290,9 @@ public class TCOTS_Items {
         DROWNER_SPAWN_EGG = registerItem("drowner_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.DROWNER, 0x8db1c0, 0x9fa3ae,
                         new FabricItemSettings()));
-
         DROWNER_TONGUE = registerItem("drowner_tongue",
                 new Item(
                         new FabricItemSettings().maxCount(64)));
-
         DROWNER_BRAIN = registerItem("drowner_brain",
                 new Item(
                         new FabricItemSettings().maxCount(16)));
@@ -287,7 +302,6 @@ public class TCOTS_Items {
         ROTFIEND_SPAWN_EGG = registerItem("rotfiend_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.ROTFIEND, 0xb3867b, 0xe6e1bc,
                         new FabricItemSettings()));
-
         ROTFIEND_BLOOD = registerItem("rotfiend_blood",
                 new Item(
                         new FabricItemSettings().maxCount(64)));
@@ -296,12 +310,24 @@ public class TCOTS_Items {
         GRAVE_HAG_SPAWN_EGG = registerItem("grave_hag_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.GRAVE_HAG, 0xb6b692, 0x8e8480,
                         new FabricItemSettings()));
+        GRAVE_HAG_MUTAGEN = registerItem("grave_hag_mutagen",
+                new Item(
+                        new FabricItemSettings().maxCount(8)));
+
 
         WATER_HAG_SPAWN_EGG = registerItem("water_hag_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.WATER_HAG, 0x8d93c0, 0x780b17,
                         new FabricItemSettings()));
+        WATER_HAG_MUD_BALL = registerItem("water_hag_mud_ball",
+                new WaterHag_MudBallItem(
+                        new FabricItemSettings().maxCount(16)));
+        WATER_HAG_MUTAGEN = registerItem("water_hag_mutagen",
+                new Item(
+                        new FabricItemSettings().maxCount(8)));
 
-
+        FOGLET_SPAWN_EGG = registerItem("foglet_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.FOGLET, 0x4a3f3f, 0x211c1c,
+                        new FabricItemSettings()));
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
@@ -315,9 +341,7 @@ public class TCOTS_Items {
                 new Item(
                         new FabricItemSettings().maxCount(16)));
 
-        GRAVE_HAG_MUTAGEN = registerItem("grave_hag_mutagen",
-                new Item(
-                        new FabricItemSettings().maxCount(8)));
+
     }
 
     public static Item NEST_SLAB_ITEM;
@@ -353,8 +377,8 @@ public class TCOTS_Items {
             return Registry.register(Registries.ITEM, identifier, witcherPotion);
         } catch (Exception e) {
 
-            e.printStackTrace();
-            return null;
+            throw new IllegalArgumentException("Error registering potion");
+//            return null;
         }
     }
 
@@ -365,8 +389,7 @@ public class TCOTS_Items {
             WitcherPotions_Base witcherPotion = new WitcherPotionsSplash_Base(settings, new StatusEffectInstance(effect, (int)(durationInSecs/0.05),amplifier), toxicity);
             return Registry.register(Registries.ITEM, identifier, witcherPotion);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new IllegalArgumentException("Error registering Splash potion");
         }
     }
 }

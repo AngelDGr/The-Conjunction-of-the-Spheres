@@ -55,9 +55,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
     public static final RawAnimation ATTACK1 = RawAnimation.begin().thenPlay("attack.swing1");
     public static final RawAnimation ATTACK2 = RawAnimation.begin().thenPlay("attack.swing2");
-
-    public static final RawAnimation ATTACK_TONGUE1 = RawAnimation.begin().thenPlay("attack.tongue1");
-    public static final RawAnimation ATTACK_TONGUE2 = RawAnimation.begin().thenPlay("attack.tongue2");
+    public static final RawAnimation ATTACK_TONGUE = RawAnimation.begin().thenPlay("attack.tongue2");
     public static final RawAnimation ATTACK_RUN = RawAnimation.begin().thenPlay("attack.run");
 
     protected static final TrackedData<Boolean> TONGUE_ATTACK = DataTracker.registerData(GraveHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -79,7 +77,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         this.goalSelector.add(4, new LookAroundGoal(this));
 
         //Objectives
-        this.targetSelector.add(1, new RevengeGoal(this, new Class[0]));
+        this.targetSelector.add(1, new RevengeGoal(this, GraveHagEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
@@ -103,9 +101,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         private double targetZ;
         private int updateCountdownTicks;
         private int cooldown;
-        private final int attackIntervalTicks = 20;
         private long lastUpdateTime;
-        private static final long MAX_ATTACK_TIME = 20L;
         int AnimationTicks = 5;
         float speedMultiplierBase =1;
         private final float speedMultiplier;
@@ -303,17 +299,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
             this.cooldown = this.getTickCount(20);
         }
 
-        protected boolean isCooledDown() {
-            return this.cooldown <= 0;
-        }
 
-        protected int getCooldown() {
-            return this.cooldown;
-        }
-
-        protected int getMaxCooldown() {
-            return this.getTickCount(20);
-        }
 
         protected double getSquaredMaxAttackDistance(LivingEntity entity) {
             return this.graveHag.getWidth() * 2.0f * (this.graveHag.getWidth() * 2.0f) + entity.getWidth();
@@ -322,8 +308,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f) //Amount of health that hurts you
-//                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 2.0f)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20f)
         .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5)
         .add(EntityAttributes.GENERIC_ARMOR,4f);
@@ -419,7 +404,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
 
             if (this.getTongueAttack()) {
 
-                return state.setAndContinue(ATTACK_TONGUE2);
+                return state.setAndContinue(ATTACK_TONGUE);
             }
 
             state.getController().forceAnimationReset();

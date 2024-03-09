@@ -9,10 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
@@ -22,8 +20,8 @@ import java.util.List;
 
 public class MonsterOil_Base extends Item {
 
-    //TODO: Add tooltip about the oils to the swords
-    //TODO: Add the Hanged Man's and Beast Oils
+    //xTODO: Add tooltip about the oils to the swords
+    //xTODO: Add the Hanged Man's and Beast Oils
 
     //Levels:
         //Normal:   10% ---> 2.0 damage = 1.00 hearts                Smite I  : 2.5  damage

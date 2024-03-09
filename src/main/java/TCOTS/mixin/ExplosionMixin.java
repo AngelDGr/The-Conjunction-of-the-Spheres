@@ -3,34 +3,14 @@ package TCOTS.mixin;
 import TCOTS.entity.misc.RotfiendExplosionBehavior;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
-import com.mojang.datafixers.util.Pair;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.NetworkThreadUtils;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionBehavior;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.List;
@@ -41,11 +21,7 @@ import java.util.Objects;
 @Mixin(Explosion.class)
 public abstract class ExplosionMixin {
 
-//    @Accessor("entity")
-//    public abstract void setparticle(ParticleEffect particle);
-//
 
-    @Shadow @Final private @Nullable Entity entity;
     @Shadow @Final private ExplosionBehavior behavior;
 
     @Shadow public abstract List<BlockPos> getAffectedBlocks();
@@ -59,7 +35,7 @@ public abstract class ExplosionMixin {
         if(this.behavior.getClass() == RotfiendExplosionBehavior.class)
         {
             return true;
-        };
+        }
 
         if(this.getAffectedBlocks().size()==5) {
             return Objects.equals(this.getAffectedBlocks().get(0), check) &&

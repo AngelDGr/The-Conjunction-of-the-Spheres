@@ -24,6 +24,7 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.NEKKER_SPAWN_EGG);
                         entries.add(TCOTS_Items.GRAVE_HAG_SPAWN_EGG);
                         entries.add(TCOTS_Items.WATER_HAG_SPAWN_EGG);
+                        entries.add(TCOTS_Items.FOGLET_SPAWN_EGG);
 
 
                         //Drops
@@ -32,9 +33,11 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.ROTFIEND_BLOOD);
                         entries.add(TCOTS_Items.NEKKER_EYE);
                         entries.add(TCOTS_Items.NEKKER_HEART);
+                        entries.add(TCOTS_Items.WATER_HAG_MUD_BALL);
 
                         //Mutagens
                         entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);
+                        entries.add(TCOTS_Items.WATER_HAG_MUTAGEN);
 
                         //Potions
                         entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
@@ -78,6 +81,7 @@ public class TCOTS_ItemsGroups {
 
                         //Decoctions
                         entries.add(TCOTS_Items.GRAVE_HAG_DECOCTION);
+                        entries.add(TCOTS_Items.WATER_HAG_DECOCTION);
 
 
                         //Misc/Blocks
