@@ -294,6 +294,56 @@
   },
 
 
+  "foglet_attack": {
+    "subtitle": "tcots-witcher.sounds.foglet_attack",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/foglet/foglet_attack1",
+      "tcots-witcher:entity/necrophages/foglet/foglet_attack2",
+      "tcots-witcher:entity/necrophages/foglet/foglet_attack3",
+      "tcots-witcher:entity/necrophages/foglet/foglet_attack4"
+    ]
+  },
+  "foglet_hurt": {
+    "subtitle": "tcots-witcher.sounds.foglet_hurt",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/foglet/foglet_hurt1",
+      "tcots-witcher:entity/necrophages/foglet/foglet_hurt2",
+      "tcots-witcher:entity/necrophages/foglet/foglet_hurt3"
+    ]
+  },
+  "foglet_idle": {
+    "subtitle": "tcots-witcher.sounds.foglet_idle",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/foglet/foglet_idle1",
+      "tcots-witcher:entity/necrophages/foglet/foglet_idle2",
+      "tcots-witcher:entity/necrophages/foglet/foglet_idle3",
+      "tcots-witcher:entity/necrophages/foglet/foglet_idle4"
+    ]
+  },
+  "foglet_death": {
+    "subtitle": "tcots-witcher.sounds.foglet_death",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/foglet/foglet_death1",
+      "tcots-witcher:entity/necrophages/foglet/foglet_death2",
+      "tcots-witcher:entity/necrophages/foglet/foglet_death3"
+    ]
+  },
+  "foglet_fog": {
+    "subtitle": "tcots-witcher.sounds.foglet_fog",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/foglet/foglet_fog1",
+      "tcots-witcher:entity/necrophages/foglet/foglet_fog2",
+      "tcots-witcher:entity/necrophages/foglet/foglet_fog3"
+    ]
+  },
+  "fogling_disappear": {
+    "subtitle": "tcots-witcher.sounds.fogling_disappear",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/foglet/foglet_poof1",
+      "tcots-witcher:entity/necrophages/foglet/foglet_poof2",
+      "tcots-witcher:entity/necrophages/foglet/foglet_poof3"
+    ]
+  },
 
 
   "nekker_attack": {

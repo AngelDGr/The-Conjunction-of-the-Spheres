@@ -2,6 +2,7 @@ package TCOTS.entity.geo.model.necrophages;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.necrophages.FogletEntity;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import software.bernie.geckolib.constant.DataTickets;
@@ -27,6 +28,11 @@ public class FogletModel extends GeoModel<FogletEntity> {
     }
 
     @Override
+    public RenderLayer getRenderType(FogletEntity animatable, Identifier texture) {
+        return RenderLayer.getEntityTranslucent(texture);
+    }
+
+    @Override
     public void setCustomAnimations(FogletEntity entity, long instanceId, AnimationState<FogletEntity> animationState) {
 
         CoreGeoBone head = getAnimationProcessor().getBone("head");
@@ -34,8 +40,14 @@ public class FogletModel extends GeoModel<FogletEntity> {
 
         if (head != null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
-            head.setRotX(entityData.headPitch() * MathHelper.RADIANS_PER_DEGREE);
-            head.setRotY(entityData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE);
+            if(animationState.isMoving()){
+                head.setRotY(((entityData.netHeadYaw()+17.5f) * MathHelper.RADIANS_PER_DEGREE));
+                head.setRotX((entityData.headPitch() * MathHelper.RADIANS_PER_DEGREE));
+            }
+            else{
+                head.setRotY(entityData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE);
+                head.setRotX((entityData.headPitch() * MathHelper.RADIANS_PER_DEGREE));
+            }
         }
     }
 }

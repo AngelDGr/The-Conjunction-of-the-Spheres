@@ -14,6 +14,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -23,6 +24,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -164,5 +166,23 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
         THIS.theConjunctionOfTheSpheres$setKillCountdown(nbt.getInt("KillCountdown"));
     }
+
+    @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private float injectFoggyResistance(float amount){
+        if(this.hasStatusEffect(TCOTS_Effects.FOGLET_DECOCTION_EFFECT)
+                && this.getWorld() instanceof ServerWorld
+                && (this.getWorld().isRaining() || this.getWorld().isThundering())
+        ){
+            return amount/2;
+        }
+
+        return amount;
+    }
+
+    @Inject(method = "damage", at = @At("TAIL"))
+    private void printDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+        System.out.println("Amount: "+amount);
+    }
+
 
 }

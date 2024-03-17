@@ -1,6 +1,7 @@
 package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.entity.misc.FoglingEntity;
 import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.items.TCOTS_Items;
@@ -55,8 +56,9 @@ public class TCOTS_Main implements ModInitializer {
 		//Water Hag
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.WATER_HAG, WaterHagEntity.setAttributes());
 
-		//Water Hag
+		//Foglet
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLET, FogletEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLING, FoglingEntity.setAttributes());
 
 		//Nekker
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());

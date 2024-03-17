@@ -34,10 +34,12 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.NEKKER_EYE);
                         entries.add(TCOTS_Items.NEKKER_HEART);
                         entries.add(TCOTS_Items.WATER_HAG_MUD_BALL);
+                        entries.add(TCOTS_Items.FOGLET_TEETH);
 
                         //Mutagens
                         entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);
                         entries.add(TCOTS_Items.WATER_HAG_MUTAGEN);
+                        entries.add(TCOTS_Items.FOGLET_MUTAGEN);
 
                         //Potions
                         entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
@@ -53,6 +55,10 @@ public class TCOTS_ItemsGroups {
                         entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION.getDefaultStack());
                         entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED.getDefaultStack());
                         entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SUPERIOR.getDefaultStack());
+
+                        entries.add(TCOTS_Items.CAT_POTION.getDefaultStack());
+                        entries.add(TCOTS_Items.CAT_POTION_ENHANCED.getDefaultStack());
+                        entries.add(TCOTS_Items.CAT_POTION_SUPERIOR.getDefaultStack());
 
                         entries.add(TCOTS_Items.KILLER_WHALE_POTION.getDefaultStack());
 
@@ -82,6 +88,7 @@ public class TCOTS_ItemsGroups {
                         //Decoctions
                         entries.add(TCOTS_Items.GRAVE_HAG_DECOCTION);
                         entries.add(TCOTS_Items.WATER_HAG_DECOCTION);
+                        entries.add(TCOTS_Items.FOGLET_DECOCTION);
 
 
                         //Misc/Blocks

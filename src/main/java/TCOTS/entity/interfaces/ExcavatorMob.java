@@ -96,4 +96,8 @@ public interface ExcavatorMob {
      int getReturnToGround_Ticks();
 
      void setReturnToGround_Ticks(int returnToGround_Ticks);
+
+    boolean getInvisibleData();
+
+    void setInvisibleData(boolean isInvisible);
 }

@@ -3,7 +3,6 @@ package TCOTS.items;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
-import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.items.blocks.AlchemyTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
@@ -25,6 +24,30 @@ public class TCOTS_Items {
     //xTODO: Add new way to craft the potions
         //TODO: Add new alchemy ingredients (mushrooms, flowers?
         //and alcohol)
+        //TODO: Add more Potions
+            //Witcher 3 Potions
+            //xTODO: Swallow: Add when added Drowners
+            //xTODO: White Raffard's Decoction: Add when added Nekkers
+            //xTODO: Killer Whale: Add when added Drowners
+            //TODO: Cat: Can be added, crafted with Water essence
+            //TODO: Black Blood: Add when added Ghouls
+            //TODO: Maribor Forest: Add when added Alghouls
+            //TODO: White Honey: Add when added toxicity mechanic
+
+            //TODO: Petri's Philter: Add when added specters
+            //TODO: Full Moon: Add when added Nightwraiths
+            //TODO: Golden Oriole: Add when added Noonwraiths
+
+            //TODO: Tawny Owl: Add when added Arachas
+            //TODO: Thunderbolt: Add when added Endregas
+            //TODO: Blizzard: Add when added Golems
+
+            //Witcher 2 Potions
+            //TODO: Rook: Increases damage with swords
+
+            //Witcher 1 Potions
+            //TODO: Willow: Makes you immune to knockback
+            //TODO: Wolverine: Makes you stronger when you have less health?
 
 
     //TODO: Add use to the items
@@ -50,11 +73,12 @@ public class TCOTS_Items {
 
     public static Item WATER_HAG_SPAWN_EGG;
     public static Item WATER_HAG_MUD_BALL;
-
     public static Item WATER_HAG_MUTAGEN;
 
 
     public static Item FOGLET_SPAWN_EGG;
+    public static Item FOGLET_TEETH;
+    public static Item FOGLET_MUTAGEN;
 
 
     public static Item NEKKER_SPAWN_EGG;
@@ -64,8 +88,8 @@ public class TCOTS_Items {
     //Decoctions
     public static Item EMPTY_MONSTER_DECOCTION;
     public static Item GRAVE_HAG_DECOCTION;
-
     public static Item WATER_HAG_DECOCTION;
+    public static Item FOGLET_DECOCTION;
 
     //Potions
     public static Item DWARVEN_SPIRIT;
@@ -75,6 +99,9 @@ public class TCOTS_Items {
     public static Item WHITE_RAFFARDS_DECOCTION;
     public static Item WHITE_RAFFARDS_DECOCTION_ENHANCED;
     public static Item WHITE_RAFFARDS_DECOCTION_SUPERIOR;
+    public static Item CAT_POTION;
+    public static Item CAT_POTION_ENHANCED;
+    public static Item CAT_POTION_SUPERIOR;
     public static Item KILLER_WHALE_POTION;
 
     public static Item ALCOHEST;
@@ -225,6 +252,34 @@ public class TCOTS_Items {
                 false
         );
 
+        CAT_POTION = registerItemPotion("cat_potion",
+                new FabricItemSettings().maxCount(3),
+                TCOTS_Effects.CAT_EFFECT,
+                15,
+                60,
+                0,
+                false
+        );
+
+        CAT_POTION_ENHANCED = registerItemPotion("cat_potion_enhanced",
+                new FabricItemSettings().maxCount(4),
+                TCOTS_Effects.CAT_EFFECT,
+                15,
+                120,
+                1,
+                false
+        );
+
+        CAT_POTION_SUPERIOR = registerItemPotion("cat_potion_superior",
+                new FabricItemSettings().maxCount(5),
+                TCOTS_Effects.CAT_EFFECT,
+                15,
+                180,
+                2,
+                false
+        );
+
+
         KILLER_WHALE_POTION = registerItemPotion("killer_whale_potion",
                 new FabricItemSettings().maxCount(3),
                 TCOTS_Effects.KILLER_WHALE_EFFECT,
@@ -283,6 +338,15 @@ public class TCOTS_Items {
                 0,
                 true
         );
+
+        FOGLET_DECOCTION = registerItemPotion("foglet_decoction",
+                new FabricItemSettings().maxCount(1),
+                TCOTS_Effects.FOGLET_DECOCTION_EFFECT,
+                50,
+                1200,
+                0,
+                true
+        );
     }
 
     //Register Drops from monsters
@@ -328,6 +392,12 @@ public class TCOTS_Items {
         FOGLET_SPAWN_EGG = registerItem("foglet_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.FOGLET, 0x4a3f3f, 0x211c1c,
                         new FabricItemSettings()));
+        FOGLET_TEETH = registerItem("foglet_teeth",
+                new Item(
+                        new FabricItemSettings()));
+        FOGLET_MUTAGEN = registerItem("foglet_mutagen",
+                new Item(
+                        new FabricItemSettings().maxCount(8)));
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,

@@ -59,6 +59,16 @@
 
     "item.tcots-witcher.foglet_spawn_egg": "Foglet Spawn Egg",
     "entity.tcots-witcher.foglet": "Foglet",
+    "tcots-witcher.sounds.foglet_attack": "Foglet attacks",
+    "tcots-witcher.sounds.foglet_hurt": "Foglet hurts",
+    "tcots-witcher.sounds.foglet_idle": "Foglet groans",
+    "tcots-witcher.sounds.foglet_death": "Foglet dies",
+    "tcots-witcher.sounds.foglet_fog": "Foglet creates fog",
+    "entity.tcots-witcher.fogling": "Foglet",
+    "tcots-witcher.sounds.fogling_disappear": "Foglet illusion vanish",
+
+    "item.tcots-witcher.foglet_teeth": "Foglet Teeth",
+    "item.tcots-witcher.foglet_mutagen": "Foglet Mutagen",
 
 
 
@@ -88,6 +98,8 @@
     "tcots-witcher.tooltip.toxicity": "Toxicity: %s",
     "tcots-witcher.tooltip.gui.formula": "%s Formula",
     "tcots-witcher.tooltip.max_stack": "Max stack: %s",
+    "tcots-witcher.tooltip.gui.oil_damage": "Damage: %s",
+    "tcots-witcher.tooltip.gui.oil_uses": "Uses: %s",
 
     "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",
     "tooltip.tcots-witcher.dwarven_spirit": "Base to brew most Witcher Potions",
@@ -116,6 +128,10 @@
     "item.tcots-witcher.water_hag_decoction": "Water Hag Decoction",
     "tooltip.effect.tcots-witcher.water_hag_decoction.first":  "Increases attack when health",
     "tooltip.effect.tcots-witcher.water_hag_decoction.second": "it is full",
+
+    "item.tcots-witcher.foglet_decoction": "Foglet Decoction",
+    "tooltip.effect.tcots-witcher.foglet_decoction.first":  "Reduces damage taken by half",
+    "tooltip.effect.tcots-witcher.foglet_decoction.second": "only if it is raining",
 
     "item.tcots-witcher.oil_necrophage": "Necrophage Oil",
     "item.tcots-witcher.oil_necrophage_enhanced": "Enhanced Necrophage Oil",
@@ -152,12 +168,22 @@
     "tooltip.effect.tcots-witcher.white_raffards.second": "percentage of health",
     "item.tcots-witcher.white_raffards_splash": "Splash White Raffard's",
 
+    "item.tcots-witcher.cat_potion": "Cat",
+    "item.tcots-witcher.cat_potion_enhanced": "Enhanced Cat",
+    "item.tcots-witcher.cat_potion_superior": "Superior Cat",
+    "tooltip.effect.tcots-witcher.cat_effect.first":  "Grants sight in total darkness,",
+    "tooltip.effect.tcots-witcher.cat_effect.second": "you can see your enemies",
+
     "effect.tcots-witcher.swallow": "Swallow",
     "effect.tcots-witcher.killer_whale": "Killer Whale",
     "effect.tcots-witcher.white_raffards": "White Raffard's",
+    "effect.tcots-witcher.cat_effect": "Cat",
+
 
     "effect.tcots-witcher.grave_hag_decoction": "Grave Hag Vitality",
     "effect.tcots-witcher.gui.grave_hag_decoction": "Grave Hag Vitality (%s kills)",
 
-    "effect.tcots-witcher.water_hag_decoction": "Water Hag Ferocity"
+    "effect.tcots-witcher.water_hag_decoction": "Water Hag Ferocity",
+    "effect.tcots-witcher.foglet_decoction": "Foglet Foggy Resistance"
+
 }

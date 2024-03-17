@@ -73,7 +73,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
 
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-
+    protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
 
     public RotfiendEntity(EntityType<? extends RotfiendEntity> entityType, World world) {
@@ -291,6 +291,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         this.dataTracker.startTracking(TRIGGER_EXPLOSION, Boolean.FALSE);
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
+        this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
     }
 
 
@@ -330,6 +331,12 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
+    public final boolean getInvisibleData() {
+        return this.dataTracker.get(INVISIBLE);
+    }
+    public final void setInvisibleData(boolean isInvisible) {
+        this.dataTracker.set(INVISIBLE, isInvisible);
+    }
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);
@@ -371,6 +378,9 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         if(this.AnimationParticlesTicks > 0 && this.getInGroundDataTracker()){
             this.spawnGroundParticles();
             --this.AnimationParticlesTicks;
+        } else if (AnimationParticlesTicks==0) {
+            this.setInvisibleData(true);
+            AnimationParticlesTicks=-1;
         }
 
         //Particles when emerges from ground
@@ -402,6 +412,8 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
                     this.setInGroundDataTracker(true);
                 }
             }
+            this.setInvisible(this.getInvisibleData());
+            super.mobTick();
     }
 
     @Override

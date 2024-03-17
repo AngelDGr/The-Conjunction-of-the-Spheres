@@ -17,7 +17,7 @@ public class TCOTS_Sounds {
     public static SoundEvent DROWNER_LUNGE = registerSoundEvent("drowner_lunge");
     public static SoundEvent DROWNER_EMERGING = registerSoundEvent("drowner_emerging");
     public static SoundEvent DROWNER_DIGGING = registerSoundEvent("drowner_digging");
-    public static SoundEvent DROWNER_SCREAM = registerSoundEvent("drowner_scream");
+//    public static SoundEvent DROWNER_SCREAM = registerSoundEvent("drowner_scream");
 
     //Rotfiend
     public static SoundEvent ROTFIEND_ATTACK = registerSoundEvent("rotfiend_attack");
@@ -46,10 +46,17 @@ public class TCOTS_Sounds {
     public static SoundEvent WATER_HAG_DEATH = registerSoundEvent("water_hag_death");
     public static SoundEvent WATER_HAG_EMERGING = registerSoundEvent("water_hag_emerging");
     public static SoundEvent WATER_HAG_DIGGING = registerSoundEvent("water_hag_digging");
-
     public static SoundEvent WATER_HAG_MUD_BALL_LAUNCH = registerSoundEvent("water_hag_mud_ball_launch");
-    public static SoundEvent WATER_HAG_MUD_BALL_HIT = registerSoundEvent("water_hag_mud_ball_hit");
+//    public static SoundEvent WATER_HAG_MUD_BALL_HIT = registerSoundEvent("water_hag_mud_ball_hit");
 
+    //Foglet
+    public static SoundEvent FOGLET_ATTACK = registerSoundEvent("foglet_attack");
+    public static SoundEvent FOGLET_HURT = registerSoundEvent("foglet_hurt");
+    public static SoundEvent FOGLET_IDLE = registerSoundEvent("foglet_idle");
+    public static SoundEvent FOGLET_DEATH = registerSoundEvent("foglet_death");
+    public static SoundEvent FOGLET_FOG = registerSoundEvent("foglet_fog");
+
+    public static SoundEvent FOGLET_FOGLING_DISAPPEAR = registerSoundEvent("fogling_disappear");
 
     //Nekker
     public static SoundEvent NEKKER_ATTACK = registerSoundEvent("nekker_attack");

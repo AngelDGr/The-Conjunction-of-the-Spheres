@@ -2,6 +2,7 @@ package TCOTS.entity;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.DrownerPuddleEntity;
+import TCOTS.entity.misc.FoglingEntity;
 import TCOTS.entity.misc.WaterHag_MudBallEntity;
 import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
@@ -23,7 +24,7 @@ public class TCOTS_Entities {
     //xTODO: Rotfiend
     //xTODO: Grave Hag
     //xTODO: Water Hag
-    //TODO: Foglet
+    //xTODO: Foglet
     //TODO: Ghoul
     //TODO: Wights
     //TODO: Scurvers
@@ -33,9 +34,9 @@ public class TCOTS_Entities {
 //  Ogroids
     //xTODO: Nekkers
     //TODO: Cyclopses
-    //TODO: Ice Giant
     //TODO: Rock troll
     //TODO: Ice troll
+    //TODO: Ice Giant (Boss)
 
     public static final EntityGroup NECROPHAGES = new EntityGroup();
     public static final EntityGroup OGROIDS = new EntityGroup();
@@ -95,6 +96,11 @@ public class TCOTS_Entities {
     public static final EntityType<FogletEntity> FOGLET = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "foglet"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, FogletEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
+    public static final EntityType<FoglingEntity> FOGLING = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "fogling"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, FoglingEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
@@ -163,6 +169,27 @@ public class TCOTS_Entities {
                                                                 BiomeKeys.MANGROVE_SWAMP), SpawnGroup.MONSTER,
                 WATER_HAG, 80, 1, 2);
 
+
+        //Foglets
+        SpawnRestriction.register(FOGLET, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Necrophage_Base::canSpawnInDark_NotCaves);
+
+        //In swamps/rivers
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP,
+                                                                BiomeKeys.RIVER
+                                                                ), SpawnGroup.MONSTER,
+                FOGLET, 80, 1, 3);
+
+        //In forests/mountains
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.OLD_GROWTH_BIRCH_FOREST,
+                                                                BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS
+                                                                ), SpawnGroup.MONSTER,
+                FOGLET, 50, 1, 2);
+
+        //In dark forests
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST
+                                                                ), SpawnGroup.MONSTER,
+                FOGLET, 120, 1, 2);
 
 
 

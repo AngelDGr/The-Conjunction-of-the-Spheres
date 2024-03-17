@@ -50,11 +50,11 @@ public class ReturnToGroundGoal_Excavator extends Goal {
 
 
     public void spawnPuddle(World world, LivingEntity entity){
-
-        excavatorMob.setPuddle(new DrownerPuddleEntity(world, entity.getX(), entity.getY(), entity.getZ(), mob));
+        DrownerPuddleEntity puddle=new DrownerPuddleEntity(world, entity.getX(), entity.getY(), entity.getZ(), mob);
+        excavatorMob.setPuddle(puddle);
         if (!world.isClient) {
-            world.spawnEntity(excavatorMob.getPuddle());
-            excavatorMob.getPuddle().setSpawnControlDataTracker(true);
+            world.spawnEntity(puddle);
+
             excavatorMob.setSpawnedPuddleDataTracker(true);
         }
 

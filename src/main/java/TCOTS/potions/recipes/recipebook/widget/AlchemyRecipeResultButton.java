@@ -2,6 +2,7 @@ package TCOTS.potions.recipes.recipebook.widget;
 
 import TCOTS.potions.AlcohestItem;
 import TCOTS.potions.DwarvenSpiritItem;
+import TCOTS.potions.MonsterOil_Base;
 import TCOTS.potions.WitcherPotions_Base;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import net.minecraft.client.font.TextRenderer;
@@ -121,14 +122,44 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
             if(this.recipe.getOutput(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getOutput(null).getItem() instanceof AlcohestItem) && !(this.recipe.getOutput(null).getItem() instanceof DwarvenSpiritItem)){
                 List<Text> list= new ArrayList<>();
-                int tox = ((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).getToxicity();
-                int maxCount = this.recipe.getOutput(null).getMaxCount();
+                int tooltipY;
+                if((((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).isDecoction())){
+                    tooltipY=12;
+                }else {
+                    tooltipY=22;
+                }
+
+                //Name
                 list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()));
+
+                //Toxicity
+                int tox = ((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).getToxicity();
                 list.add(Text.translatable("tcots-witcher.tooltip.toxicity", tox).formatted(Formatting.DARK_GREEN));
-                list.add(Text.translatable("tcots-witcher.tooltip.max_stack", maxCount).formatted(Formatting.DARK_BLUE));
+
+                //Stack
+                int maxCount = this.recipe.getOutput(null).getMaxCount();
+                if(!(((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).isDecoction())){
+                    list.add(Text.translatable("tcots-witcher.tooltip.max_stack", maxCount).formatted(Formatting.DARK_BLUE));
+                }
+
+
+                context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-tooltipY);
+
+            } else if (this.recipe.getOutput(null).getItem() instanceof MonsterOil_Base) {
+
+                List<Text> list= new ArrayList<>();
+                //Name
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()));
+
+                //Damage
+                int damage = ((MonsterOil_Base) this.recipe.getOutput(null).getItem()).getLevel() * 2;
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.oil_damage", damage).formatted(Formatting.RED));
+
+                //Uses
+                int uses = ((MonsterOil_Base) this.recipe.getOutput(null).getItem()).getUses();
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.oil_uses", uses).formatted(Formatting.DARK_BLUE));
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-22);
-            }
-            else{
+            } else{
                 context.drawTooltip(textRenderer, Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()), this.getX()-20, this.getY());
             }
         }

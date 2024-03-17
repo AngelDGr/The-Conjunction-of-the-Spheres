@@ -1,49 +1,39 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"misc.idle": {
-			"loop": true,
+		"misc.spawn": {
+			"animation_length": 1.75,
 			"bones": {
 				"puddle": {
 					"scale": {
-						"vector": [0, 0, 0]
+						"0.25": {
+							"vector": [0.0625, 0.0625, 0.0625]
+						},
+						"1.75": {
+							"vector": [1, 1, 1],
+							"easing": "easeInElastic",
+							"easingArgs": [1.2]
+						}
 					}
 				}
 			}
 		},
-		"misc.puddleDespawn": {
+		"misc.despawn": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 1.75,
 			"bones": {
 				"puddle": {
 					"scale": {
 						"0.0": {
-							"vector": [16, 0.15, 16]
+							"vector": [1, 1, 1]
 						},
 						"0.25": {
-							"vector": [16, 16, 16]
+							"vector": [1, 1, 1]
 						},
 						"1.75": {
 							"vector": [0, 0, 0],
 							"easing": "easeInBack",
 							"easingArgs": [1]
-						}
-					}
-				}
-			}
-		},
-		"misc.puddleSpawn": {
-			"animation_length": 1.75,
-			"bones": {
-				"puddle": {
-					"scale": {
-						"0.25": {
-							"vector": [1, 1, 1]
-						},
-						"1.75": {
-							"vector": [16, 0.15, 16],
-							"easing": "easeInElastic",
-							"easingArgs": [1.2]
 						}
 					}
 				}

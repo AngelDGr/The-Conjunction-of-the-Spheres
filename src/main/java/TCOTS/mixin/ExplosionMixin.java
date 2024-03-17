@@ -26,9 +26,6 @@ public abstract class ExplosionMixin {
 
     @Shadow public abstract List<BlockPos> getAffectedBlocks();
 
-//    //Lnet/minecraft/world/explosion/Explosion;affectWorld
-//    //Lnet/minecraft/world/World;playSound(DDDLnet/minecraft/sound/SoundEvent;Lnet/minecraft/sound/SoundCategory;FFZ)V
-
     @Unique
     private boolean conditionRotfiend(){
         BlockPos check = new BlockPos(0,0,0);

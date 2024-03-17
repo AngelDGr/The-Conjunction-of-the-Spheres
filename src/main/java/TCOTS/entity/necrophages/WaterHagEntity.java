@@ -78,10 +78,11 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     }
 
     protected static final TrackedData<Boolean> MUD_ATTACK = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> SPAWNED_PUDDLE = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     public WaterHagEntity(EntityType<? extends WaterHagEntity> entityType, World world) {
         super(entityType, world);
@@ -240,6 +241,7 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
         this.dataTracker.startTracking(SPAWNED_PUDDLE, Boolean.FALSE);
+        this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
     }
 
     @Override
@@ -286,6 +288,13 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         return this.dataTracker.get(SPAWNED_PUDDLE);
     }
     public void setSpawnedPuddleDataTracker(boolean puddleSpawned) {this.dataTracker.set(SPAWNED_PUDDLE, puddleSpawned);}
+
+    public final boolean getInvisibleData() {
+        return this.dataTracker.get(INVISIBLE);
+    }
+    public final void setInvisibleData(boolean isInvisible) {
+        this.dataTracker.set(INVISIBLE, isInvisible);
+    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
@@ -397,6 +406,9 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         if(this.AnimationParticlesTicks > 0 && this.getInGroundDataTracker()){
             this.spawnGroundParticles();
             --this.AnimationParticlesTicks;
+        } else if (AnimationParticlesTicks==0) {
+            this.setInvisibleData(true);
+            AnimationParticlesTicks=-1;
         }
 
         if(!this.getInGroundDataTracker() && !this.getIsEmerging()){
@@ -433,7 +445,6 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
             }
         }
 
-
         if(AnimationTicks > 0){
             --AnimationTicks;
         }
@@ -442,6 +453,8 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
                 this.setMudAttack(false);
             }
         }
+
+        this.setInvisible(this.getInvisibleData());
         super.mobTick();
     }
 

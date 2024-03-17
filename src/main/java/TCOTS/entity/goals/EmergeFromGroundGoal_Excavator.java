@@ -50,10 +50,14 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
 
     @Override
     public void start(){
+        if(excavatorMob.getInvisibleData()){
+            excavatorMob.setInvisibleData(false);
+        }
+
         this.mob.playSound(excavatorMob.getEmergingSound(), 1.0F, 1.0F);
 
         if(excavatorMob.getPuddle()!=null){
-            excavatorMob.getPuddle().setSpawnControlDataTracker(false);
+            excavatorMob.getPuddle().setDespawnPuddle(true);
         }
 
         this.excavatorMob.spawnGroundParticles();

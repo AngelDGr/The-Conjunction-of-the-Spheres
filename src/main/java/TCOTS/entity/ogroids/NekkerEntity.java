@@ -70,7 +70,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-
+    protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public NekkerEntity(EntityType<? extends NekkerEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -228,6 +228,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
+        this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
     }
 
     @Override
@@ -283,6 +284,13 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
+    public final boolean getInvisibleData() {
+        return this.dataTracker.get(INVISIBLE);
+    }
+    public final void setInvisibleData(boolean isInvisible) {
+        this.dataTracker.set(INVISIBLE, isInvisible);
+    }
+
     public void spawnGroundParticles() {
         BlockState blockState = this.getSteppingBlockState();
         if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
@@ -311,6 +319,9 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         if(this.AnimationParticlesTicks > 0 && this.getInGroundDataTracker()){
             this.spawnGroundParticles();
             --this.AnimationParticlesTicks;
+        } else if (AnimationParticlesTicks==0) {
+            this.setInvisibleData(true);
+            AnimationParticlesTicks=-1;
         }
 
         //Particles when emerges from ground
@@ -340,6 +351,9 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
                 this.setInGroundDataTracker(true);
             }
         }
+
+        this.setInvisible(this.getInvisibleData());
+        super.mobTick();
     }
 
     //Sounds

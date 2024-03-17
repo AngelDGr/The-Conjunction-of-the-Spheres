@@ -100,6 +100,14 @@ public class MonsterOil_Base extends Item {
 
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public int getUses() {
+        return uses;
+    }
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         NbtCompound nbt;

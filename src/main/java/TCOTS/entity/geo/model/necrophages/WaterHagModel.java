@@ -33,7 +33,6 @@ public class WaterHagModel extends GeoModel<WaterHagEntity> {
 
 
         if (head != null) {
-
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
                 if(animationState.isMoving()){
                 head.setRotY(((entityData.netHeadYaw()+17.5f) * MathHelper.RADIANS_PER_DEGREE));
@@ -43,10 +42,6 @@ public class WaterHagModel extends GeoModel<WaterHagEntity> {
                 head.setRotY(entityData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE);
                 head.setRotX((entityData.headPitch() * MathHelper.RADIANS_PER_DEGREE));
             }
-
-
-
-
         }
     }
 }

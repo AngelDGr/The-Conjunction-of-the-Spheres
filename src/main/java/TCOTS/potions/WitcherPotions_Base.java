@@ -21,7 +21,6 @@ import net.minecraft.stat.Stats;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
@@ -191,6 +190,10 @@ public class WitcherPotions_Base extends PotionItem {
 
     public int getToxicity(){
         return this.toxicity;
+    }
+
+    public boolean isDecoction() {
+        return decoction;
     }
 
     @Override

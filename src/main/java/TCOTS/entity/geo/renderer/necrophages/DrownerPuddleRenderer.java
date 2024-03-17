@@ -39,4 +39,5 @@ public class DrownerPuddleRenderer extends GeoEntityRenderer<DrownerPuddleEntity
 
         super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, redWater, greenWater, blueWater, alpha);
     }
+
 }
