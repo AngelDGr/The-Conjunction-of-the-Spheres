@@ -13,6 +13,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.random.Random;
@@ -45,6 +46,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @Shadow public abstract Random getRandom();
 
     @Shadow public abstract void kill();
+
+    @Shadow public boolean handSwinging;
 
     //Killer Whale
     @Inject(method = "getNextAirUnderwater", at = @At("TAIL"), cancellable = true)
@@ -181,7 +184,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     @Inject(method = "damage", at = @At("TAIL"))
     private void printDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
-        System.out.println("Amount: "+amount);
+
     }
 
 

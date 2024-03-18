@@ -55,6 +55,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Unique
     private static final TrackedData<Integer> MUD_TICKS = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
+
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     private void injectKillCountDataTracker(CallbackInfo ci){
         this.dataTracker.startTracking(MUD_TICKS, 0);
@@ -288,7 +289,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Inject(method = "wakeUp(ZZ)V", at = @At("TAIL"))
     private void injectPotionRefilling(boolean skipSleepTimer, boolean updateSleepingPlayers, CallbackInfo ci){
         if(((inventory.getSlotWithStack(TCOTS_Items.ALCOHEST.getDefaultStack()) != -1) || (inventory.getSlotWithStack(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack()) != -1)) && potionTimer>90){
-
             int loopP=0;
             boolean refilled=false;
             int slot=0;
@@ -347,4 +347,5 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             }
         }
     }
+
 }

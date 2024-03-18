@@ -21,6 +21,9 @@
     "defaultRequire": 1
   },
   "client": [
-    "ClientRecipeBookClientMixin"
+    "BackgroundRendererMixin",
+    "ClientRecipeBookClientMixin",
+    "GameRendererMixin",
+    "LightmapTextureManagerMixin"
   ]
 }

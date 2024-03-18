@@ -1,6 +1,6 @@
 accessWidener v2 named
 
-
+#1.20
 accessible class net/minecraft/recipe/BrewingRecipeRegistry$Recipe
 accessible class net/minecraft/screen/BrewingStandScreenHandler$PotionSlot
 accessible class net/minecraft/screen/BrewingStandScreenHandler$IngredientSlot
@@ -18,11 +18,28 @@ accessible field net/minecraft/world/MobSpawnerLogic lastRotation D
 accessible field net/minecraft/world/MobSpawnerLogic rotation D
 accessible method net/minecraft/world/MobSpawnerLogic isPlayerInRange (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Z
 accessible field net/minecraft/world/MobSpawnerLogic renderedEntity Lnet/minecraft/entity/Entity;
+accessible method net/minecraft/world/MobSpawnerLogic updateSpawns (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V
+
+#1.20.3
+#accessible method net/minecraft/block/spawner/MobSpawnerLogic getSpawnEntry (Lnet/minecraft/world/World;Lnet/minecraft/util/math/random/Random;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/spawner/MobSpawnerEntry;
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic spawnDelay I
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic minSpawnDelay I
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic maxSpawnDelay I
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic spawnCount I
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic maxNearbyEntities I
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic requiredPlayerRange I
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic spawnRange I
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic spawnEntry Lnet/minecraft/block/spawner/MobSpawnerEntry;
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic spawnPotentials Lnet/minecraft/util/collection/DataPool;
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic lastRotation D
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic rotation D
+#accessible method net/minecraft/block/spawner/MobSpawnerLogic isPlayerInRange (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Z
+#accessible field net/minecraft/block/spawner/MobSpawnerLogic renderedEntity Lnet/minecraft/entity/Entity;
+#accessible method net/minecraft/block/spawner/MobSpawnerLogic updateSpawns (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V
 
 accessible method net/minecraft/util/collection/DataPool <init> (Ljava/util/List;)V
-accessible method net/minecraft/world/MobSpawnerLogic updateSpawns (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V
 accessible method net/minecraft/recipe/Ingredient ofEntries (Ljava/util/stream/Stream;)Lnet/minecraft/recipe/Ingredient;
-accessible method net/minecraft/recipe/Ingredient entryFromJson (Lcom/google/gson/JsonObject;)Lnet/minecraft/recipe/Ingredient$Entry;
+#accessible method net/minecraft/recipe/Ingredient entryFromJson (Lcom/google/gson/JsonObject;)Lnet/minecraft/recipe/Ingredient$Entry;
 accessible class net/minecraft/recipe/Ingredient$Entry
 accessible class net/minecraft/recipe/Ingredient$StackEntry
 accessible class net/minecraft/recipe/Ingredient$TagEntry

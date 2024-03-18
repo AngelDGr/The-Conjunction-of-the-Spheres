@@ -58,7 +58,7 @@ public class KillerWhaleEffect extends StatusEffect {
     //Called when removed
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        if(entityAttributeInstance.hasModifier(entityAttributeModifierInfo)){
+        if(this.entityAttributeInstance != null && entityAttributeInstance.hasModifier(entityAttributeModifierInfo)){
             entityAttributeInstance.removeModifier(entityAttributeModifierInfo);
         }
         super.onRemoved(entity,attributes,amplifier);

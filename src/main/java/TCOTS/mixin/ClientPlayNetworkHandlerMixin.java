@@ -28,6 +28,7 @@ public class ClientPlayNetworkHandlerMixin {
         PlayerEntity entity = this.client.player;
         BlockPos check = new BlockPos(0,0,0);
 
+
         if(packet.getAffectedBlocks().size()==5) {
             if (
                 Objects.equals(packet.getAffectedBlocks().get(0), check) &&
