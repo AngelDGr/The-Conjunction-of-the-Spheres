@@ -10,7 +10,9 @@ public enum AlchemyTableRecipeCategory implements StringIdentifiable
     MISC("misc"),
     ALL("all");
 
-    public static final StringIdentifiable.Codec<AlchemyTableRecipeCategory> CODEC;
+    public static final StringIdentifiable.EnumCodec<AlchemyTableRecipeCategory> CODEC;
+
+//    public static final StringIdentifiable.Codec<AlchemyTableRecipeCategory> CODEC;
     private final String id;
 
     private AlchemyTableRecipeCategory(String id) {

@@ -1,7 +1,6 @@
 package TCOTS.items.blocks;
 
 import TCOTS.items.geo.renderer.MonsterNestItemRenderer;
-import TCOTS.items.geo.renderer.NestSkullItemRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.item.BlockItem;
@@ -21,7 +20,7 @@ import java.util.function.Supplier;
 
 public class MonsterNestItem extends BlockItem implements GeoItem {
 
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     private final Supplier<Object> renderProvider= GeoItem.makeRenderer(this);
     public MonsterNestItem(Block block, Settings settings) {

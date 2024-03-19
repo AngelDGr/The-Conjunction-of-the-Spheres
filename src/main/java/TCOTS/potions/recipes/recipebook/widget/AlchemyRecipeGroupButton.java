@@ -16,7 +16,7 @@ import net.minecraft.sound.SoundEvents;
 
 
 public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
-
+    //TODO: Fix this
     private final AlchemyTableRecipeCategory category;
     ItemStack icon;
     private float bounce;
@@ -26,7 +26,7 @@ public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
 
         this.icon=icon;
         this.category = category;
-        this.setTextureUV(153, 2, 39, 0, AlchemyRecipeBookWidget.RECIPE_GUI_TEXTURE);
+//        this.setTextureUV(153, 2, 39, 0, AlchemyRecipeBookWidget.RECIPE_GUI_TEXTURE);
 
     }
 
@@ -39,37 +39,43 @@ public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
     }
 
     @Override
-    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
-        if (this.bounce > 0.0f) {
-            float f = 1.0f + 0.1f * (float)Math.sin(this.bounce / 15.0f * (float)Math.PI);
-            context.getMatrices().push();
-            context.getMatrices().translate(this.getX() + 8, this.getY() + 12, 0.0f);
-            context.getMatrices().scale(1.0f, f, 1.0f);
-            context.getMatrices().translate(-(this.getX() + 8), -(this.getY() + 12), 0.0f);
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+//        if (this.bounce > 0.0f) {
+//            float f = 1.0f + 0.1f * (float)Math.sin(this.bounce / 15.0f * (float)Math.PI);
+//            context.getMatrices().push();
+//            context.getMatrices().translate(this.getX() + 8, this.getY() + 12, 0.0f);
+//            context.getMatrices().scale(1.0f, f, 1.0f);
+//            context.getMatrices().translate(-(this.getX() + 8), -(this.getY() + 12), 0.0f);
+//        }
+//        MinecraftClient minecraftClient = MinecraftClient.getInstance();
+////        RenderSystem.disableDepthTest();
+//        int i = this.u;
+//        int j = this.v;
+//        if (this.toggled) {
+//            i += this.pressedUOffset;
+//        }
+//        if (this.isSelected()) {
+//            j += this.hoverVOffset;
+//        }
+//        int k = this.getX();
+//        if (this.toggled) {
+//            k -= 2;
+//        }
+//
+//        context.drawTexture(this.texture, k, this.getY(), i, j, this.width, this.height);
+//
+////        RenderSystem.enableDepthTest();
+//        this.renderIcons(context, minecraftClient.getItemRenderer());
+//        if (this.bounce > 0.0f) {
+//            context.getMatrices().pop();
+//            this.bounce -= delta;
+//        }
+        if (this.textures == null) {
+            return;
         }
-        MinecraftClient minecraftClient = MinecraftClient.getInstance();
-//        RenderSystem.disableDepthTest();
-        int i = this.u;
-        int j = this.v;
-        if (this.toggled) {
-            i += this.pressedUOffset;
-        }
-        if (this.isSelected()) {
-            j += this.hoverVOffset;
-        }
-        int k = this.getX();
-        if (this.toggled) {
-            k -= 2;
-        }
-
-        context.drawTexture(this.texture, k, this.getY(), i, j, this.width, this.height);
-
-//        RenderSystem.enableDepthTest();
-        this.renderIcons(context, minecraftClient.getItemRenderer());
-        if (this.bounce > 0.0f) {
-            context.getMatrices().pop();
-            this.bounce -= delta;
-        }
+        RenderSystem.disableDepthTest();
+        context.drawGuiTexture(this.textures.get(this.toggled, this.isSelected()), this.getX(), this.getY(), this.width, this.height);
+        RenderSystem.enableDepthTest();
     }
 
     private void renderIcons(DrawContext context, ItemRenderer itemRenderer) {

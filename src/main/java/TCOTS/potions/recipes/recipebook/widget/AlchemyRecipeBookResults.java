@@ -79,9 +79,10 @@ public class AlchemyRecipeBookResults {
                 this.resultButtons.get(i).setPosition(parentI + 14, (parentJ + 26) + (i * 23 ));
         }
         this.nextPageButton = new AlchemyRecipeBookButtonPage(parentI + 100, parentJ + 143, 18, 10, false);
-        this.nextPageButton.setTextureUV(157, 80, 23, 13, AlchemyRecipeBookWidget.RECIPE_GUI_TEXTURE);
-        this.prevPageButton = new AlchemyRecipeBookButtonPage(parentI + 30, parentJ + 143, 18, 10, true);
-        this.prevPageButton.setTextureUV(157, 80, 23, 13, AlchemyRecipeBookWidget.RECIPE_GUI_TEXTURE);
+        //TODO: Fix this
+//        this.nextPageButton.setTextureUV(157, 80, 23, 13, AlchemyRecipeBookWidget.RECIPE_GUI_TEXTURE);
+//        this.prevPageButton = new AlchemyRecipeBookButtonPage(parentI + 30, parentJ + 143, 18, 10, true);
+//        this.prevPageButton.setTextureUV(157, 80, 23, 13, AlchemyRecipeBookWidget.RECIPE_GUI_TEXTURE);
         this.parentI=parentI;
         this.parentJ=parentJ;
     }
@@ -223,10 +224,11 @@ public class AlchemyRecipeBookResults {
         this.resultButtons.forEach(consumer);
     }
 
+    //TODO: Fix this
     public void onRecipesDisplayed(List<Recipe<?>> recipes) {
-        for (RecipeDisplayListener recipeDisplayListener : this.recipeDisplayListeners) {
-            recipeDisplayListener.onRecipesDisplayed(recipes);
-        }
+//        for (RecipeDisplayListener recipeDisplayListener : this.recipeDisplayListeners) {
+//            recipeDisplayListener.onRecipesDisplayed(recipes);
+//        }
     }
 
 

@@ -107,7 +107,7 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
     }
 
     @Override
-    protected void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
+    protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         if(recipe == null){
             return;
         }
@@ -120,47 +120,47 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
             }
 
 
-            if(this.recipe.getOutput(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getOutput(null).getItem() instanceof AlcohestItem) && !(this.recipe.getOutput(null).getItem() instanceof DwarvenSpiritItem)){
+            if(this.recipe.getResult(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getResult(null).getItem() instanceof AlcohestItem) && !(this.recipe.getResult(null).getItem() instanceof DwarvenSpiritItem)){
                 List<Text> list= new ArrayList<>();
                 int tooltipY;
-                if((((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).isDecoction())){
+                if((((WitcherPotions_Base) this.recipe.getResult(null).getItem()).isDecoction())){
                     tooltipY=12;
                 }else {
                     tooltipY=22;
                 }
 
                 //Name
-                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()));
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()));
 
                 //Toxicity
-                int tox = ((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).getToxicity();
+                int tox = ((WitcherPotions_Base) this.recipe.getResult(null).getItem()).getToxicity();
                 list.add(Text.translatable("tcots-witcher.tooltip.toxicity", tox).formatted(Formatting.DARK_GREEN));
 
                 //Stack
-                int maxCount = this.recipe.getOutput(null).getMaxCount();
-                if(!(((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).isDecoction())){
+                int maxCount = this.recipe.getResult(null).getMaxCount();
+                if(!(((WitcherPotions_Base) this.recipe.getResult(null).getItem()).isDecoction())){
                     list.add(Text.translatable("tcots-witcher.tooltip.max_stack", maxCount).formatted(Formatting.DARK_BLUE));
                 }
 
 
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-tooltipY);
 
-            } else if (this.recipe.getOutput(null).getItem() instanceof MonsterOil_Base) {
+            } else if (this.recipe.getResult(null).getItem() instanceof MonsterOil_Base) {
 
                 List<Text> list= new ArrayList<>();
                 //Name
-                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()));
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()));
 
                 //Damage
-                int damage = ((MonsterOil_Base) this.recipe.getOutput(null).getItem()).getLevel() * 2;
+                int damage = ((MonsterOil_Base) this.recipe.getResult(null).getItem()).getLevel() * 2;
                 list.add(Text.translatable("tcots-witcher.tooltip.gui.oil_damage", damage).formatted(Formatting.RED));
 
                 //Uses
-                int uses = ((MonsterOil_Base) this.recipe.getOutput(null).getItem()).getUses();
+                int uses = ((MonsterOil_Base) this.recipe.getResult(null).getItem()).getUses();
                 list.add(Text.translatable("tcots-witcher.tooltip.gui.oil_uses", uses).formatted(Formatting.DARK_BLUE));
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-22);
             } else{
-                context.drawTooltip(textRenderer, Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()), this.getX()-20, this.getY());
+                context.drawTooltip(textRenderer, Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()), this.getX()-20, this.getY());
             }
         }
         else{
@@ -185,7 +185,7 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
         //Recipes Render
                     //DrawOutput
-                    context.drawItemWithoutEntity(recipe.getOutput(null),
+                    context.drawItemWithoutEntity(recipe.getResult(null),
                             this.getX() + 3,
                             this.getY() + 3);
 

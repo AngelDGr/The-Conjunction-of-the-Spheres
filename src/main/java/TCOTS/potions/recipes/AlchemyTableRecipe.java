@@ -2,6 +2,7 @@ package TCOTS.potions.recipes;
 
 import com.google.common.collect.Lists;
 import com.google.gson.*;
+import com.mojang.serialization.Codec;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -65,7 +66,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
         return Type.INSTANCE;
     }
 
-    @Override
+//    @Override
     public Identifier getId() {
         return this.id;
     }
@@ -188,7 +189,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
 
     @Override
     public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) {
-        return this.getOutput(registryManager).copy();
+        return this.getResult(registryManager).copy();
     }
 
     @Override
@@ -197,7 +198,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
     }
 
     @Override
-    public ItemStack getOutput(DynamicRegistryManager registryManager) {
+    public ItemStack getResult(DynamicRegistryManager registryManager) {
         return output;
     }
 
@@ -225,52 +226,67 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
         return Serializer.INSTANCE;
     }
 
+    //TODO: Fix this
     public static class Serializer implements RecipeSerializer<AlchemyTableRecipe>{
         public static final Serializer INSTANCE = new Serializer();
         public static final String ID = "alchemy_table";
 
-        // Turns json into Recipe
         @Override
-        public AlchemyTableRecipe read(Identifier identifier, JsonObject jsonObject) {
-            DefaultedList<Ingredient> ingredientsList = getIngredients(JsonHelper.getArray(jsonObject, "ingredients"));
-            AlchemyTableRecipeCategory alchemyTableRecipeCategory = AlchemyTableRecipeCategory.CODEC.byId(JsonHelper.getString(jsonObject, "category", null), AlchemyTableRecipeCategory.MISC);
-
-            int[] ingredientCounts = getIngredientsCounters(JsonHelper.getArray(jsonObject, "ingredient_counters"));
-
-            if (ingredientsList.isEmpty()) {
-                throw new JsonParseException("No ingredients for witcher potion recipe");
-            }
-            if (ingredientsList.size() > 5) {
-                throw new JsonParseException("Too many ingredients for witcher potion recipe");
-            }
-
-            if (ingredientCounts.length > 5) {
-                throw new JsonParseException("Too many ingredients counter for witcher potion recipe");
-            }
-
-            ItemStack base = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "base"));
-            ItemStack result = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
-
-            return new AlchemyTableRecipe(identifier, ingredientsList, ingredientCounts, base, result, alchemyTableRecipeCategory);
+        public Codec<AlchemyTableRecipe> codec() {
+            return null;
         }
 
-        private static DefaultedList<Ingredient> getIngredients(JsonArray json) {
-            DefaultedList<Ingredient> defaultedList = DefaultedList.of();
-            for (int i = 0; i < json.size(); ++i) {
-                Ingredient ingredient = Ingredient.fromJson(json.get(i), true);
-                if (ingredient.isEmpty()) continue;
-                defaultedList.add(ingredient);
-            }
-            return defaultedList;
+        @Override
+        public AlchemyTableRecipe read(PacketByteBuf buf) {
+            return null;
         }
 
-        private static int[] getIngredientsCounters(JsonArray json) {
-            int[] defaultedList={1,1,1,1,1};
-            for (int i = 0; i < json.size(); ++i) {
-                defaultedList[i] = JsonHelper.getInt((JsonObject) json.get(i), "count");
-            }
-            return defaultedList;
-        }
+        //TODO: Fix this
+
+        // Turns json into Recipe
+//        @Override
+//        public AlchemyTableRecipe read(Identifier identifier, JsonObject jsonObject) {
+//            DefaultedList<Ingredient> ingredientsList = getIngredients(JsonHelper.getArray(jsonObject, "ingredients"));
+//            AlchemyTableRecipeCategory alchemyTableRecipeCategory = AlchemyTableRecipeCategory.CODEC.byId(JsonHelper.getString(jsonObject, "category", null), AlchemyTableRecipeCategory.MISC);
+//
+//            int[] ingredientCounts = getIngredientsCounters(JsonHelper.getArray(jsonObject, "ingredient_counters"));
+//
+//            if (ingredientsList.isEmpty()) {
+//                throw new JsonParseException("No ingredients for witcher potion recipe");
+//            }
+//            if (ingredientsList.size() > 5) {
+//                throw new JsonParseException("Too many ingredients for witcher potion recipe");
+//            }
+//
+//            if (ingredientCounts.length > 5) {
+//                throw new JsonParseException("Too many ingredients counter for witcher potion recipe");
+//            }
+//
+//            ItemStack base = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "base"));
+//            ItemStack result = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
+//
+//            return new AlchemyTableRecipe(identifier, ingredientsList, ingredientCounts, base, result, alchemyTableRecipeCategory);
+//        }
+//
+//        private static DefaultedList<Ingredient> getIngredients(JsonArray json) {
+//            DefaultedList<Ingredient> defaultedList = DefaultedList.of();
+//            for (int i = 0; i < json.size(); ++i) {
+//                Ingredient ingredient = Ingredient.fromJson(json.get(i), true);
+//                if (ingredient.isEmpty()) continue;
+//                defaultedList.add(ingredient);
+//            }
+//            return defaultedList;
+//        }
+//
+//        private static int[] getIngredientsCounters(JsonArray json) {
+//            int[] defaultedList={1,1,1,1,1};
+//            for (int i = 0; i < json.size(); ++i) {
+//                defaultedList[i] = JsonHelper.getInt((JsonObject) json.get(i), "count");
+//            }
+//            return defaultedList;
+//        }
+//
+
 
         // Turns Recipe into PacketByteBuf
         @Override
@@ -284,35 +300,36 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
             buf.writeIntArray(recipe.getIngredientsCounts());
 
             buf.writeItemStack(recipe.getBaseItem());
-            buf.writeItemStack(recipe.getOutput(null));
+            buf.writeItemStack(recipe.getResult(null));
             buf.writeEnumConstant((recipe).getCategory());
         }
 
+        //TODO: Fix this
 
         // Turns PacketByteBuf into Recipe(InGame)
-        @Override
-        public AlchemyTableRecipe read(Identifier id, PacketByteBuf buf) {
-            // Make sure the read in the same order you have written!
-            List<Ingredient> ingredientList = Lists.newArrayList();
-            Ingredient I1 = Ingredient.fromPacket(buf);
-            Ingredient I2 = Ingredient.fromPacket(buf);
-            Ingredient I3 = Ingredient.fromPacket(buf);
-            Ingredient I4 = Ingredient.fromPacket(buf);
-            Ingredient I5 = Ingredient.fromPacket(buf);
-            ingredientList.add(I1);
-            ingredientList.add(I2);
-            ingredientList.add(I3);
-            ingredientList.add(I4);
-            ingredientList.add(I5);
-
-            int[] inputsCount = buf.readIntArray();
-
-            ItemStack base = buf.readItemStack();
-            ItemStack output = buf.readItemStack();
-            AlchemyTableRecipeCategory alchemyTableRecipeCategory = buf.readEnumConstant(AlchemyTableRecipeCategory.class);
-
-            return new AlchemyTableRecipe(id, ingredientList, inputsCount, base, output, alchemyTableRecipeCategory);
-        }
+//        @Override
+//        public AlchemyTableRecipe read(Identifier id, PacketByteBuf buf) {
+//            // Make sure the read in the same order you have written!
+//            List<Ingredient> ingredientList = Lists.newArrayList();
+//            Ingredient I1 = Ingredient.fromPacket(buf);
+//            Ingredient I2 = Ingredient.fromPacket(buf);
+//            Ingredient I3 = Ingredient.fromPacket(buf);
+//            Ingredient I4 = Ingredient.fromPacket(buf);
+//            Ingredient I5 = Ingredient.fromPacket(buf);
+//            ingredientList.add(I1);
+//            ingredientList.add(I2);
+//            ingredientList.add(I3);
+//            ingredientList.add(I4);
+//            ingredientList.add(I5);
+//
+//            int[] inputsCount = buf.readIntArray();
+//
+//            ItemStack base = buf.readItemStack();
+//            ItemStack output = buf.readItemStack();
+//            AlchemyTableRecipeCategory alchemyTableRecipeCategory = buf.readEnumConstant(AlchemyTableRecipeCategory.class);
+//
+//            return new AlchemyTableRecipe(id, ingredientList, inputsCount, base, output, alchemyTableRecipeCategory);
+//        }
     }
 
 }

@@ -22,6 +22,7 @@ import net.minecraft.client.recipebook.RecipeBookGroup;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeGridAligner;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -35,6 +36,8 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         Element,
         Selectable,
         RecipeDisplayListener {
+    //TODO: Fix this
+
     public static final Identifier RECIPE_GUI_TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/alchemy_recipe_book.png");
 
     //xTODO: Fix the order of the recipes
@@ -89,10 +92,11 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
             List<RecipeResultCollection> list= client.player.getRecipeBook().getResultsForGroup(RecipeBookGroup.UNKNOWN);
             list.forEach(
                     recipeResultCollection -> {
-                        if(recipeResultCollection.getAllRecipes().get(0).getType() == AlchemyTableRecipe.Type.INSTANCE){
-
-                            listRecipes.add((AlchemyTableRecipe) recipeResultCollection.getAllRecipes().get(0));
-                        }
+                        //TODO: Fix this
+//                        if(recipeResultCollection.getAllRecipes().get(0).getType() == AlchemyTableRecipe.Type.INSTANCE){
+//
+//                            listRecipes.add((AlchemyTableRecipe) recipeResultCollection.getAllRecipes().get(0));
+//                        }
                     }
             );
         }
@@ -227,9 +231,10 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
                 (this.parentHeight - 166) / 2,
                 147, 166, currentTab.getCategory())){
 
-            if(recipesArea.recipe != null ){
-            this.client.interactionManager.clickRecipe(this.client.player.currentScreenHandler.syncId, recipesArea.recipe, Screen.hasShiftDown());
-            }
+            //TODO: Fix this
+//            if(recipesArea.recipe != null ){
+//            this.client.interactionManager.clickRecipe(this.client.player.currentScreenHandler.syncId, recipesArea.recipe, Screen.hasShiftDown());
+//            }
         }
 
         if(this.tabButtons.get(0).mouseClicked(mouseX, mouseY, button)){
@@ -295,10 +300,11 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         }
     }
 
-    @Override
-    public void onRecipesDisplayed(List<Recipe<?>> recipes) {
-
-    }
+    //TODO: Fix this
+//    @Override
+//    public void onRecipesDisplayed(List<Recipe<?>> recipes) {
+//
+//    }
 
     @Override
     public void acceptAlignedInput(Iterator<Ingredient> inputs, int slot, int amount, int gridX, int gridY) {
@@ -347,4 +353,9 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         return Element.super.charTyped(chr, modifiers);
     }
 
+    //TODO: Fix this
+    @Override
+    public void onRecipesDisplayed(List<RecipeEntry<?>> recipes) {
+
+    }
 }

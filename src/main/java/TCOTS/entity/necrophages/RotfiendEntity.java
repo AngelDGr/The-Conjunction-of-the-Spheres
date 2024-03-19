@@ -3,6 +3,8 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
+import TCOTS.particles.TCOTS_Particles;
+import TCOTS.potions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -28,6 +30,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
+import net.minecraft.world.explosion.ExplosionBehavior;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -430,7 +433,9 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     private void explode() {
         if (!this.getWorld().isClient) {
             this.dead = true;
-            this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), (float) 3, World.ExplosionSourceType.MOB);
+            this.getWorld().createExplosion(this, null, null,
+                    this.getX(), this.getY(), this.getZ(), (float)3, false, World.ExplosionSourceType.MOB,
+                    TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION, TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Sounds.ROTFIEND_EXPLODING);
             this.discard();
         }
     }

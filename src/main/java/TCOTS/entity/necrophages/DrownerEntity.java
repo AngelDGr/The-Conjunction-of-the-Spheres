@@ -365,11 +365,11 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
         }
 
         @Override
-        protected void attack(LivingEntity target, double squaredDistance) {
+        protected void attack(LivingEntity target) {
             //Special logic for water attack
             if (drowner.getSwimmingDataTracker()) {
                 if(target!=null){
-                WaterAttackLogic(target, squaredDistance);}
+                WaterAttackLogic(target);}
             } else {
                 //Lunge and land attack
                 if(target!=null){
@@ -377,16 +377,16 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
 
                         DrownerEntity.this.ReturnToGround_Ticks=this.ticksBeforeToGround + randomExtra;
 
-                    super.attack(target,squaredDistance);
+                    super.attack(target);
                 }
             }
         }
 
         //Method for water attack
-        private void WaterAttackLogic(LivingEntity target, double squaredDistance) {
+        private void WaterAttackLogic(LivingEntity target) {
             if(!drowner.hasAttackedOnWater) {
-                double d = this.getSquaredMaxAttackDistance(target);
-                if (squaredDistance <= d && super.getCooldown() <= 0) {
+
+                if (this.canAttack(target)) {
                     this.resetCooldown();
                     this.mob.swingHand(Hand.MAIN_HAND);
                     //Makes the target go down on water
@@ -687,10 +687,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     }
 
     //Water creature things
-    @Override
-    public boolean canBreatheInWater() {
-        return true;
-    }
     @Override
     public boolean isPushedByFluids() {
         return false;

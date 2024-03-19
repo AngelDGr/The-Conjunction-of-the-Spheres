@@ -1,6 +1,8 @@
 package TCOTS.blocks.skull;
 
+import TCOTS.blocks.AlchemyTableBlock;
 import TCOTS.blocks.entity.NestSkullBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -28,6 +30,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class NestSkullBlock extends BlockWithEntity implements Equipment {
+
+    public static final MapCodec<NestSkullBlock> CODEC = NestSkullBlock.createCodec(NestSkullBlock::new);
+
+    public MapCodec<NestSkullBlock> getCodec() {
+        return CODEC;
+    }
 
     public static final int MAX_ROTATION_INDEX = RotationPropertyHelper.getMax();
     private static final int MAX_ROTATIONS = MAX_ROTATION_INDEX + 1;

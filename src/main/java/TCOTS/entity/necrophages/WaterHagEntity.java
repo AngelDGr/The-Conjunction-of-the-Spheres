@@ -119,7 +119,7 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
 
     //Projectile Attack
     @Override
-    public void attack(LivingEntity target, float pullProgress) {
+    public void shootAt(LivingEntity target, float pullProgress) {
         this.getNavigation().stop();
         WaterHag_MudBallEntity mud_ballEntity = new WaterHag_MudBallEntity(this.getWorld(), this, 6);
         double d = target.getEyeY() - (double)1.1f;
@@ -478,13 +478,10 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
 
     //Water creature things
     @Override
-    public boolean canBreatheInWater() {
-        return true;
-    }
-    @Override
     public boolean isPushedByFluids() {
         return false;
     }
+
     //Speed on water
     @Override
     protected float getBaseMovementSpeedMultiplier() {

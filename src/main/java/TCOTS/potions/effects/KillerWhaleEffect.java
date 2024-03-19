@@ -11,6 +11,7 @@ import java.util.UUID;
 
 
 public class KillerWhaleEffect extends StatusEffect {
+    //TODO: See if it works
     //xTODO: Add attack power to the player
     //xTODO???: Add improved vision underwater (like with water breathing)
 
@@ -41,7 +42,7 @@ public class KillerWhaleEffect extends StatusEffect {
             }
         }else{
             if(entityAttributeInstance != null && entityAttributeInstance.hasModifier(entityAttributeModifierInfo)){
-                entityAttributeInstance.removeModifier(entityAttributeModifierInfo);
+                entityAttributeInstance.removeModifier(entityAttributeModifierInfo.getId());
             }
         }
 
@@ -50,18 +51,18 @@ public class KillerWhaleEffect extends StatusEffect {
 
     //Called when applied
     @Override
-    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+    public void onApplied(LivingEntity entity, int amplifier) {
         entityAttributeInstance = entity.getAttributes().getCustomInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-        super.onApplied(entity,attributes,amplifier);
+        super.onApplied(entity,amplifier);
     }
 
     //Called when removed
     @Override
-    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+    public void onRemoved(AttributeContainer attributes) {
         if(this.entityAttributeInstance != null && entityAttributeInstance.hasModifier(entityAttributeModifierInfo)){
-            entityAttributeInstance.removeModifier(entityAttributeModifierInfo);
+            entityAttributeInstance.removeModifier(entityAttributeModifierInfo.getId());
         }
-        super.onRemoved(entity,attributes,amplifier);
+        super.onRemoved(attributes);
     }
 
 
@@ -78,8 +79,8 @@ public class KillerWhaleEffect extends StatusEffect {
         return true;
     }
 
-    @Override
-    public double adjustModifierAmount(int amplifier, EntityAttributeModifier modifier) {
-        return this.modifier * (double)(amplifier + 1);
-    }
+//    @Override
+//    public double adjustModifierAmount(int amplifier, EntityAttributeModifier modifier) {
+//        return this.modifier * (double)(amplifier + 1);
+//    }
 }

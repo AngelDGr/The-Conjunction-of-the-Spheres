@@ -49,10 +49,10 @@ public class GraveHagDecoctionEffect extends StatusEffect {
     }
 
     @Override
-    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+    public void onRemoved(AttributeContainer attributes) {
         killCounterIn=0;
 
-        super.onRemoved(entity, attributes, amplifier);
+        super.onRemoved(attributes);
     }
 
     @Override

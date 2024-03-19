@@ -243,14 +243,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         if(!this.hasStatusEffect(TCOTS_Effects.WATER_HAG_DECOCTION_EFFECT)){
             EntityAttributeInstance entityAttributeInstance = this.getAttributes().getCustomInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
             if(entityAttributeInstance != null && entityAttributeInstance.hasModifier(entityAttributeModifierWaterHag)){
-                entityAttributeInstance.removeModifier(entityAttributeModifierWaterHag);
+                entityAttributeInstance.removeModifier(entityAttributeModifierWaterHag.getId());
             }
         }
 
         if(!this.hasStatusEffect(TCOTS_Effects.KILLER_WHALE_EFFECT)){
             EntityAttributeInstance entityAttributeInstance = this.getAttributes().getCustomInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
             if(entityAttributeInstance != null && entityAttributeInstance.hasModifier(entityAttributeModifierKillerWhale)){
-                entityAttributeInstance.removeModifier(entityAttributeModifierKillerWhale);
+                entityAttributeInstance.removeModifier(entityAttributeModifierKillerWhale.getId());
             }
         }
     }

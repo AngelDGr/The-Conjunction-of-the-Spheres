@@ -7,7 +7,9 @@ import TCOTS.potions.AlcohestItem;
 import TCOTS.potions.DwarvenSpiritItem;
 import TCOTS.potions.EmptyWitcherPotionItem;
 import TCOTS.sounds.TCOTS_Sounds;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BeehiveBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -38,6 +40,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityProvider {
+    public static final MapCodec<AlchemyTableBlock> CODEC = AlchemyTableBlock.createCodec(AlchemyTableBlock::new);
+
+    public MapCodec<AlchemyTableBlock> getCodec() {
+        return CODEC;
+    }
+
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
@@ -178,11 +186,12 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
         return ActionResult.SUCCESS;
     }
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, TCOTS_Blocks.ALCHEMY_TABLE_ENTITY,
-                (world1, pos, state1, blockEntity) -> blockEntity.tick(world1, pos, state1));
-    }
+//    @Nullable
+//    @Override
+//    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+////        return checkType(type, TCOTS_Blocks.ALCHEMY_TABLE_ENTITY,
+////                (world1, pos, state1, blockEntity) -> blockEntity.tick(world1, pos, state1));
+//        return world.isClient ? null : AlchemyTableBlock.validateTicker(type, TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, AlchemyTableBlockEntity::serverTick);
+//    }
 
 }

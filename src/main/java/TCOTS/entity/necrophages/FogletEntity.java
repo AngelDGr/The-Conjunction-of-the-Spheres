@@ -308,7 +308,9 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
 
         private void meleeAttack(LivingEntity livingEntity){
             this.mob.getLookControl().lookAt(livingEntity, 30.0f, 30.0f);
-            double d = this.mob.getSquaredDistanceToAttackPosOf(livingEntity);
+            double d =
+//                    this.mob.getSquaredDistanceToAttackPosOf(livingEntity);
+            this.mob.squaredDistanceTo(livingEntity);
             this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);
             if ((this.pauseWhenMobIdle || this.mob.getVisibilityCache().canSee(livingEntity)) && this.updateCountdownTicks <= 0 && (this.targetX == 0.0 && this.targetY == 0.0 && this.targetZ == 0.0 || livingEntity.squaredDistanceTo(this.targetX, this.targetY, this.targetZ) >= 1.0 || this.mob.getRandom().nextFloat() < 0.05f)) {
                 this.targetX = livingEntity.getX();
@@ -567,10 +569,7 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
     public boolean canWalkOnFluid(FluidState state) {
         return ((state.isIn(FluidTags.LAVA) || state.isIn(FluidTags.WATER)) && this.getIsFog());
     }
-    @Override
-    public boolean canBreatheInWater() {
-        return true;
-    }
+
     protected void updateFloating() {
         if ((this.isInLava() || this.isInWater()) && this.getIsFog()) {
             ShapeContext shapeContext = ShapeContext.of(this);

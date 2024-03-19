@@ -1,7 +1,6 @@
 package TCOTS.potions.recipes.recipebook.widget;
 
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -37,7 +36,7 @@ public class AlchemyRecipeBookButtonTextured extends AlchemyRecipeBookButton{
     }
 
     @Override
-    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.drawTexture(context, this.texture, this.getX(), this.getY(), this.u, this.v, this.hoveredVOffset, this.width, this.height, this.textureWidth, this.textureHeight);
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+        context.drawTexture(this.texture, this.getX(), this.getY(), this.u, this.v, this.hoveredVOffset, this.width, this.height, this.textureWidth, this.textureHeight);
     }
 }

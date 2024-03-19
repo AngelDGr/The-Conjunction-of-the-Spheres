@@ -11,7 +11,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import java.util.UUID;
 
 public class WaterHagDecoctionEffect extends StatusEffect {
-
+    //TODO: See if it works
     protected final double modifier;
 
     private final EntityAttributeModifier entityAttributeModifier;
@@ -40,7 +40,7 @@ public class WaterHagDecoctionEffect extends StatusEffect {
                 entityAttributeInstance.addPersistentModifier(entityAttributeModifier);
             }
         } else if(entityAttributeInstance.hasModifier(entityAttributeModifier)) {
-                entityAttributeInstance.removeModifier(entityAttributeModifier);
+                entityAttributeInstance.removeModifier(entityAttributeModifier.getId());
             }
 
         super.applyUpdateEffect(entity, amplifier);
@@ -48,21 +48,21 @@ public class WaterHagDecoctionEffect extends StatusEffect {
 
     //Called when applied
     @Override
-    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+    public void onApplied(LivingEntity entity, int amplifier) {
         entityAttributeInstance = entity.getAttributes().getCustomInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
         assert entityAttributeInstance != null;
-        entityAttributeInstance.removeModifier(entityAttributeModifier);
+        entityAttributeInstance.removeModifier(entityAttributeModifier.getId());
 
-        super.onApplied(entity,attributes,amplifier);
+        super.onApplied(entity,amplifier);
     }
 
     //Called when removed
     @Override
-    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+    public void onRemoved(AttributeContainer attributes) {
         if(entityAttributeInstance.hasModifier(entityAttributeModifier)){
-            entityAttributeInstance.removeModifier(entityAttributeModifier);
+            entityAttributeInstance.removeModifier(entityAttributeModifier.getId());
         }
-        super.onRemoved(entity,attributes,amplifier);
+        super.onRemoved(attributes);
     }
 
     @Override

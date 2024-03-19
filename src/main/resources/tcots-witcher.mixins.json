@@ -3,8 +3,6 @@
   "package": "TCOTS.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ClientPlayNetworkHandlerMixin",
-    "ExplosionMixin",
     "InGameHudMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
@@ -12,9 +10,7 @@
     "PotionEntityMixin",
     "ServerPlayerEntityMixin",
     "ServerPlayNetworkHandlerMixin",
-    "ServerWorldMixin",
     "SpawnEggItemMixin",
-    "WorldMixin",
     "WorldRendererMixin"
   ],
   "injectors": {

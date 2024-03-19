@@ -190,7 +190,9 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
                 return;
             }
             this.graveHag.getLookControl().lookAt(livingEntity, 30.0f, 30.0f);
-            double d = this.graveHag.getSquaredDistanceToAttackPosOf(livingEntity);
+            double d =
+//                    this.graveHag.getSquaredDistanceToAttackPosOf(livingEntity);
+            this.graveHag.squaredDistanceTo(livingEntity);
             this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);
             if ((this.pauseWhenMobIdle || this.graveHag.getVisibilityCache().canSee(livingEntity)) && this.updateCountdownTicks <= 0 && (this.targetX == 0.0 && this.targetY == 0.0 && this.targetZ == 0.0 || livingEntity.squaredDistanceTo(this.targetX, this.targetY, this.targetZ) >= 1.0 || this.graveHag.getRandom().nextFloat() < 0.05f)) {
                 this.targetX = livingEntity.getX();

@@ -174,9 +174,11 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
             inventory.setStack(i, this.getStack(i));
         }
 
-        Optional<AlchemyTableRecipe> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager().getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, getWorld());
+        //TODO: Fix this
+//        Optional<AlchemyTableRecipe> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager().getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, getWorld());
 
-        return recipe.isPresent();
+//        return recipe.isPresent();
+        return false;
     }
 
 
@@ -187,9 +189,10 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
             for (int i = 0; i < this.size(); i++) {
                 inventory.setStack(i, this.getStack(i));
             }
+//TODO: Fix this
 
-        Optional<AlchemyTableRecipe> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager()
-                    .getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, this.getWorld());
+//        Optional<AlchemyTableRecipe> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager()
+//                    .getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, this.getWorld());
 
 
         if(this.getStack(INGREDIENT_SLOT_1) != null ){
@@ -215,11 +218,12 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
         if(this.getStack(OUTPUT_POTION_SLOT) != null){
             this.setStack(OUTPUT_POTION_SLOT, ItemStack.EMPTY);
         }
+//TODO: Fix this
 
-            this.setStack(OUTPUT_POTION_SLOT, new ItemStack(recipe.get().getOutput(null).getItem(), recipe.get().getOutput(null).getCount()));
-            assert world != null;
-            world.syncWorldEvent(WorldEvents.BREWING_STAND_BREWS, pos, 0);
-            this.resetProgress();
+//            this.setStack(OUTPUT_POTION_SLOT, new ItemStack(recipe.get().getOutput(null).getItem(), recipe.get().getOutput(null).getCount()));
+//            assert world != null;
+//            world.syncWorldEvent(WorldEvents.BREWING_STAND_BREWS, pos, 0);
+//            this.resetProgress();
         }
     }
 

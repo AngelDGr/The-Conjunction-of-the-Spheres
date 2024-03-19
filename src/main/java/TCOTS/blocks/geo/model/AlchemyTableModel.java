@@ -2,8 +2,6 @@ package TCOTS.blocks.geo.model;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
-import TCOTS.blocks.entity.MonsterNestBlockEntity;
-import TCOTS.entity.misc.DrownerPuddleEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.model.GeoModel;
