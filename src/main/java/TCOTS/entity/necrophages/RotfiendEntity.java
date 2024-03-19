@@ -435,7 +435,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
             this.dead = true;
             this.getWorld().createExplosion(this, null, null,
                     this.getX(), this.getY(), this.getZ(), (float)3, false, World.ExplosionSourceType.MOB,
-                    TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION, TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Sounds.ROTFIEND_EXPLODING);
+                    TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Sounds.ROTFIEND_BLOOD_EXPLOSION);
             this.discard();
         }
     }

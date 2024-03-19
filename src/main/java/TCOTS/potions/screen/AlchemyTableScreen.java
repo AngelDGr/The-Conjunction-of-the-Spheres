@@ -1,8 +1,8 @@
 package TCOTS.potions.screen;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.potions.recipes.recipebook.widget.AlchemyRecipeBookButtonTextured;
-import TCOTS.potions.recipes.recipebook.widget.AlchemyRecipeBookWidget;
+//import TCOTS.potions.recipes.recipebook.widget.AlchemyRecipeBookButtonTextured;
+//import TCOTS.potions.recipes.recipebook.widget.AlchemyRecipeBookWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
@@ -18,7 +18,7 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
             new Identifier(TCOTS_Main.MOD_ID, "textures/gui/alchemy_table.png");
     private static final Identifier RECIPE_BUTTON_TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/alchemy_recipe_button.png");
 
-    private final AlchemyRecipeBookWidget recipeBook = new AlchemyRecipeBookWidget();
+//    private final AlchemyRecipeBookWidget recipeBook = new AlchemyRecipeBookWidget();
     private boolean narrow;
 
     public AlchemyTableScreen(AlchemyTableScreenHandler handler,  PlayerInventory inventory, Text title) {
@@ -29,39 +29,39 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
     protected void init() {
         this.narrow = this.width < 379;
         super.init();
-        assert this.client != null;
-        recipeBook.init(this.height,this.width, this.textRenderer, this.client, this.handler);
-        addDrawableChild(new AlchemyRecipeBookButtonTextured(this.x + 5, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE,
-                //Action when press
-                button -> {
-                    recipeBook.toggleOpen();
-                    this.x = recipeBook.findLeftEdge(this.width, this.backgroundWidth);
-                    button.setPosition(this.x + 5, this.height / 2 - 49);
-                }));
-
-        this.addSelectableChild(this.recipeBook);
-        this.setInitialFocus(this.recipeBook);
-        titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
+//        assert this.client != null;
+//        recipeBook.init(this.height,this.width, this.textRenderer, this.client, this.handler);
+//        addDrawableChild(new AlchemyRecipeBookButtonTextured(this.x + 5, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE,
+//                //Action when press
+//                button -> {
+//                    recipeBook.toggleOpen();
+//                    this.x = recipeBook.findLeftEdge(this.width, this.backgroundWidth);
+//                    button.setPosition(this.x + 5, this.height / 2 - 49);
+//                }));
+//
+//        this.addSelectableChild(this.recipeBook);
+//        this.setInitialFocus(this.recipeBook);
+//        titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
     }
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        recipeBook.drawBackground(context, delta, mouseX, mouseY);
-
-
-        int i = this.x;
-        int j =(this.height - this.backgroundHeight) / 2;
-
-        context.drawTexture(TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
-
-        renderProgressArrow(context, x, y);
-        recipeBook.render(context, mouseX, mouseY, delta);
+//        recipeBook.drawBackground(context, delta, mouseX, mouseY);
+//
+//
+//        int i = this.x;
+//        int j =(this.height - this.backgroundHeight) / 2;
+//
+//        context.drawTexture(TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
+//
+//        renderProgressArrow(context, x, y);
+//        recipeBook.render(context, mouseX, mouseY, delta);
     }
 
     @Override
     public void handledScreenTick() {
         super.handledScreenTick();
-        this.recipeBook.update();
+//        this.recipeBook.update();
     }
 
 

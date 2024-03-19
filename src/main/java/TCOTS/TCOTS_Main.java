@@ -8,7 +8,7 @@ import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
 import TCOTS.potions.TCOTS_Effects;
 import TCOTS.particles.TCOTS_Particles;
-import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
+//import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.fabricmc.api.ModInitializer;
 
@@ -39,7 +39,7 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_Items.registerDrops();
 		TCOTS_Items.registerPotions();
 		TCOTS_ItemsGroups.registerGroupItems();
-		AlchemyTableRecipesRegister.registerPotionRecipes();
+//		AlchemyTableRecipesRegister.registerPotionRecipes();
 		TCOTS_Sounds.init();
 		TCOTS_Entities.addSpawns();
 		TCOTS_Particles.registerParticles();

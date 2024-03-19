@@ -1,6 +1,5 @@
 package TCOTS.blocks.skull;
 
-import TCOTS.blocks.AlchemyTableBlock;
 import TCOTS.blocks.entity.NestSkullBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;

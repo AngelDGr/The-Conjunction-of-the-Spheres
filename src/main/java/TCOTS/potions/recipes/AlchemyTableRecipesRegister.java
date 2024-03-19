@@ -17,13 +17,13 @@ public class AlchemyTableRecipesRegister {
                 new ExtendedScreenHandlerType<>(AlchemyTableScreenHandler::new));
 
         //RecipeSerializer
-        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(TCOTS_Main.MOD_ID, AlchemyTableRecipe.Serializer.ID),
-                AlchemyTableRecipe.Serializer.INSTANCE);
-
-        //RecipeType register                                    //Recipe string/id
-        Registry.register(Registries.RECIPE_TYPE, new Identifier(TCOTS_Main.MOD_ID, AlchemyTableRecipe.ID_STRING),
-                //TypeInstance
-                AlchemyTableRecipe.Type.INSTANCE);
+//        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(TCOTS_Main.MOD_ID, AlchemyTableRecipe.Serializer.ID),
+//                AlchemyTableRecipe.Serializer.INSTANCE);
+//
+//        //RecipeType register                                    //Recipe string/id
+//        Registry.register(Registries.RECIPE_TYPE, new Identifier(TCOTS_Main.MOD_ID, AlchemyTableRecipe.ID_STRING),
+//                //TypeInstance
+//                AlchemyTableRecipe.Type.INSTANCE);
 
 
     }
