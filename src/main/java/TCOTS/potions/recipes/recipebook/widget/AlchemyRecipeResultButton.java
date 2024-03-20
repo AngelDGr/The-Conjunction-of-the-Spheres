@@ -17,14 +17,17 @@ import net.minecraft.screen.ScreenTexts;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlchemyRecipeResultButton extends ClickableWidget {
 
+    @Nullable
     private AlchemyTableRecipe recipe;
 
+    @Nullable
     private RecipeEntry<AlchemyTableRecipe> recipeEntry;
 
     private TextRenderer textRenderer;
@@ -32,15 +35,17 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
     public AlchemyRecipeResultButton() {
         super(0,0,134, 22, ScreenTexts.EMPTY);
         craftable=false;
-
     }
 
     int j = 173;
 
-
-    public void receiveRecipe(AlchemyTableRecipe recipe){
-//        this.recipeEntry=recipe;
-        this.recipe=recipe;
+    public void receiveRecipe(RecipeEntry<AlchemyTableRecipe> recipe){
+        this.recipeEntry=recipe;
+        if(recipe != null){
+        this.recipe=recipe.value();}
+        else {
+            this.recipe=null;
+        }
     }
 
     public void receiveTextRenderer(TextRenderer renderer){
@@ -55,11 +60,11 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
         return this.craftable;
     }
 
-    public  AlchemyTableRecipe getRecipe(){
+    public @Nullable AlchemyTableRecipe getRecipe(){
         return this.recipe;
     }
 
-    public  RecipeEntry<AlchemyTableRecipe> getRecipeEntry(){
+    public @Nullable RecipeEntry<AlchemyTableRecipe> getRecipeEntry(){
         return this.recipeEntry;
     }
 
@@ -115,7 +120,7 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
     @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
-        if(recipe == null){
+        if(recipeEntry == null || recipe == null){
             return;
         }
 

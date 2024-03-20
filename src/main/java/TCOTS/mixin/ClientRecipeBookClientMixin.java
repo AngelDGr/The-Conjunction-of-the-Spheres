@@ -3,7 +3,6 @@ package TCOTS.mixin;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.client.recipebook.RecipeBookGroup;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeEntry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +16,6 @@ public class ClientRecipeBookClientMixin {
     private static void fixWarning(RecipeEntry<?> recipe, CallbackInfoReturnable<RecipeBookGroup> cir){
 
         if (recipe.value() instanceof AlchemyTableRecipe) {
-//            LOGGER.info("alchemy recipe: {}/{}", LogUtils.defer(() -> Registries.RECIPE_TYPE.getId(recipe.getType())), LogUtils.defer(recipe::getId));
             cir.setReturnValue(RecipeBookGroup.UNKNOWN);
         }
 

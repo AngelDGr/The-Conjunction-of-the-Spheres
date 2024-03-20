@@ -1,14 +1,12 @@
 package TCOTS.blocks;
 
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
-import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.AlcohestItem;
 import TCOTS.potions.DwarvenSpiritItem;
 import TCOTS.potions.EmptyWitcherPotionItem;
 import TCOTS.sounds.TCOTS_Sounds;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BeehiveBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -20,9 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenTexts;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.text.Text;
@@ -36,7 +32,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Optional;
 
 public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityProvider {
     public static final MapCodec<AlchemyTableBlock> CODEC = AlchemyTableBlock.createCodec(AlchemyTableBlock::new);
@@ -51,7 +46,7 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
 
     protected AlchemyTableBlock(Settings settings) {
         super(settings);
-        this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH)));
+        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
     }
 
     @Nullable
@@ -79,12 +74,12 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState)this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
     }
 
     @Override
     public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return (BlockState)state.with(FACING, rotation.rotate(state.get(FACING)));
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
     }
 
     @Override
@@ -120,20 +115,22 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
             if(player.getMainHandStack().getItem() instanceof AlcohestItem || player.getMainHandStack().getItem() instanceof DwarvenSpiritItem){
                 int loopP=0;
                 boolean refilled=false;
-                if(player.getMainHandStack().getItem() instanceof AlcohestItem){
-                    //Refill
-                    loopP = 0;
-                }
-                else if(player.getMainHandStack().getItem() instanceof DwarvenSpiritItem){
+//                if(player.getMainHandStack().getItem() instanceof AlcohestItem){
+//                    //Refill
+////                    loopP = 0;
+//                }
+//                else
+                    if(player.getMainHandStack().getItem() instanceof DwarvenSpiritItem){
                     loopP = 2;
                 }
 
                 //Makes a loop across all the inventory
                 for(int i=0; i<player.getInventory().size(); i++){
-                    //If found a Empty Potion with NBT
+                    //If found an Empty Potion with NBT
                     if(player.getInventory().getStack(i).getItem() instanceof EmptyWitcherPotionItem && player.getInventory().getStack(i).hasNbt()){
                         NbtCompound nbtCompoundI= player.getInventory().getStack(i).getNbt();
                         //Checks if the NBT contains the "Potion" string
+                        assert nbtCompoundI != null;
                         if(nbtCompoundI.contains("Potion")){
                             //Save the potion type
                             Item PotionI = Registries.ITEM.get(new Identifier(nbtCompoundI.getString("Potion")));
@@ -175,7 +172,6 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                 }
             }
 
-
             //Screen opener
             NamedScreenHandlerFactory screenHandlerFactory = ((AlchemyTableBlockEntity) world.getBlockEntity(pos));
             if (screenHandlerFactory != null) {
@@ -188,7 +184,6 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-
         return world.isClient ? null : AlchemyTableBlock.validateTicker(type, TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, AlchemyTableBlockEntity::tick);
     }
 

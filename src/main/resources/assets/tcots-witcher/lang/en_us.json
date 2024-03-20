@@ -1,6 +1,10 @@
 {
     "itemgroup.tcots-witcher": "The Conjunction of the Spheres",
 
+    "item.tcots-witcher.witcher_bestiary": "Monster Bestiary",
+    "tooltip.tcots-witcher.witcher_bestiary": "Learn about this new world",
+
+
     "item.tcots-witcher.drowner_spawn_egg": "Drowner Spawn Egg",
     "entity.tcots-witcher.drowner": "Drowner",
     "tcots-witcher.sounds.drowner_footstep": "Footsteps",

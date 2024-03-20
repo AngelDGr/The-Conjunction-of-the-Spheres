@@ -1,30 +1,18 @@
 package TCOTS.blocks.entity;
 
 import TCOTS.blocks.TCOTS_Blocks;
-import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.screen.AlchemyTableScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.BrewingStandBlockEntity;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.screen.CrafterScreenHandler;
-import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -33,7 +21,6 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -147,7 +134,7 @@ public class AlchemyTableBlockEntity extends LockableContainerBlockEntity implem
 
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new AlchemyTableScreenHandler<>(syncId, playerInventory, this, this.propertyDelegate);
+        return new AlchemyTableScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
 
 
@@ -218,11 +205,12 @@ public class AlchemyTableBlockEntity extends LockableContainerBlockEntity implem
         if(this.getStack(OUTPUT_POTION_SLOT) != null){
             this.setStack(OUTPUT_POTION_SLOT, ItemStack.EMPTY);
         }
-
-            this.setStack(OUTPUT_POTION_SLOT, new ItemStack(recipe.get().value().getResult(null).getItem(), recipe.get().value().getResult(null).getCount()));
-            assert world != null;
-            world.syncWorldEvent(WorldEvents.BREWING_STAND_BREWS, pos, 0);
-            this.resetProgress();
+            if(recipe.isPresent()) {
+                this.setStack(OUTPUT_POTION_SLOT, new ItemStack(recipe.get().value().getResult(null).getItem(), recipe.get().value().getResult(null).getCount()));
+                assert world != null;
+                world.syncWorldEvent(WorldEvents.BREWING_STAND_BREWS, pos, 0);
+                this.resetProgress();
+            }
         }
     }
 

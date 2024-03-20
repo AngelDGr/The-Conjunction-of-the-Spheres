@@ -20,9 +20,7 @@ import net.minecraft.client.gui.screen.recipebook.*;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.recipebook.RecipeBookGroup;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.RecipeGridAligner;
+import net.minecraft.recipe.*;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
@@ -40,7 +38,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
 
     //xTODO: Fix the order of the recipes
 
-    private final List<AlchemyTableRecipe> listRecipes = new ArrayList<>();
+    private final List<RecipeEntry<AlchemyTableRecipe>> listRecipes = new ArrayList<>();
     private boolean open=false;
     private boolean narrow;
     private int leftOffset;
@@ -63,6 +61,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
             return;
         }
 
+        assert this.client.player != null;
         if (this.cachedInvChangeCount != this.client.player.getInventory().getChangeCount()
                 || this.cachedInvBlockChangeCount != this.craftingScreenHandler.getChangeCount()) {
 
@@ -73,30 +72,33 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
     }
 
     public void init(int height, int width, TextRenderer parenttextRenderer, MinecraftClient client, AlchemyTableScreenHandler craftingScreenHandler) {
-        int i = (parentWidth - 147) / 2 - this.leftOffset;
-        int j = (parentHeight - 166) / 2;
+//        int i = (parentWidth - 147) / 2 - this.leftOffset;
+//        int j = (parentHeight - 166) / 2;
         this.narrow = width < 379;
         this.parentWidth=width;
         this.parentHeight=height;
         this.craftingScreenHandler=craftingScreenHandler;
         this.parenttextRenderer=parenttextRenderer;
         this.client=client;
+        assert client.player != null;
         this.cachedInvChangeCount = client.player.getInventory().getChangeCount();
         this.cachedInvBlockChangeCount = craftingScreenHandler.getChangeCount();
 
 
         if(listRecipes.isEmpty()){
-            assert client.player != null;
-            List<RecipeResultCollection> list= client.player.getRecipeBook().getResultsForGroup(RecipeBookGroup.UNKNOWN);
-            list.forEach(
-                    recipeResultCollection -> {
-                        recipeResultCollection.getAllRecipes();
-                        if(recipeResultCollection.getAllRecipes().get(0).value() instanceof AlchemyTableRecipe){
+            assert this.client.player != null;
 
-                            listRecipes.add((AlchemyTableRecipe) recipeResultCollection.getAllRecipes().get(0).value());
-                        }
-                    }
-            );
+            List<RecipeResultCollection> list= client.player.getRecipeBook().getResultsForGroup(RecipeBookGroup.UNKNOWN);
+
+
+            for (RecipeResultCollection resultCollection: list){
+                if(resultCollection.getAllRecipes().get(0).value() instanceof AlchemyTableRecipe){
+
+                    listRecipes.add((RecipeEntry<AlchemyTableRecipe>) resultCollection.getAllRecipes().get(0));
+
+                }
+            }
+
         }
 
         if (this.open) {
@@ -132,7 +134,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
 
         int color = 0x395026;
 
-        switch (currentTab.getCategory()){
+        switch (Objects.requireNonNull(currentTab).getCategory()){
             case POTIONS:
                 context.drawText(this.parenttextRenderer, "Potions", i+18,j+15, color,false);
                 break;
@@ -156,10 +158,10 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         context.getMatrices().pop();
 
 
-        renderRecipeBook(context, this.parentWidth, this.parentHeight, this.parenttextRenderer, i, j);
+        renderRecipeBook(context, this.parentWidth, this.parentHeight, i, j);
         this.recipesArea.draw(context, i,j,mouseX,mouseY,delta);
     }
-    public void renderRecipeBook(DrawContext context, int width, int height, TextRenderer textRenderer, int i, int j){
+    public void renderRecipeBook(DrawContext context, int width, int height, int i, int j){
         if (open) {
             context.getMatrices().push();
             context.getMatrices().translate(0,0,0);
@@ -191,7 +193,9 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         currentTab.setToggled(true);
 
         this.recipesArea.initialize(this.client, i, j, craftingScreenHandler);
-        Collections.sort(listRecipes);
+
+        listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+
         this.recipesArea.receiveRecipesList(listRecipes);
 
         this.recipesArea.setResults(false, currentTab.getCategory());
@@ -218,17 +222,15 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (!this.isOpen() || this.client.player.isSpectator()) {
+        if (!this.isOpen() || Objects.requireNonNull(this.client.player).isSpectator()) {
             return false;
         }
 
 
+        assert currentTab != null;
         if(this.recipesArea.mouseClicked(mouseX, mouseY, button,
-                (this.parentWidth - 147) / 2 - this.leftOffset,
-                (this.parentHeight - 166) / 2,
-                147, 166, currentTab.getCategory())){
+                currentTab.getCategory())){
 
-            //TODO: Fix this
             if(recipesArea.recipe != null ){
                 assert this.client.interactionManager != null;
                 this.client.interactionManager.clickRecipe(this.client.player.currentScreenHandler.syncId, recipesArea.recipe, Screen.hasShiftDown());
@@ -289,7 +291,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         ArrayList<ClickableWidget> list = Lists.newArrayList();
         this.recipesArea.forEachButton(button -> {
             if (button.isNarratable()) {
-                list.add((ClickableWidget)button);
+                list.add(button);
             }
         });
 
@@ -307,7 +309,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         this.searching = false;
-        if (!this.isOpen() || this.client.player.isSpectator()) {
+        if (!this.isOpen() || Objects.requireNonNull(this.client.player).isSpectator()) {
             return false;
         }
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
@@ -327,7 +329,6 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
     private void refreshTabButtons() {
         int i = (this.parentWidth - 147) / 2 - this.leftOffset - 32;
         int j = (this.parentHeight - 166) / 2 + 3;
-        int k = 27;
         int l = 0;
         for (AlchemyRecipeGroupButton recipeGroupButtonWidget : this.tabButtons) {
             recipeGroupButtonWidget.setPosition(i, j + 14 + (l++ * 28));
@@ -340,7 +341,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         if (this.searching) {
             return false;
         }
-        if (!this.isOpen() || this.client.player.isSpectator()) {
+        if (!this.isOpen() || Objects.requireNonNull(this.client.player).isSpectator()) {
             return false;
         }
         return Element.super.charTyped(chr, modifiers);

@@ -16,8 +16,11 @@ public class TCOTS_ItemsGroups {
     public static final ItemGroup TheConjunctionOfTheSpheres = Registry.register(Registries.ITEM_GROUP,
             new Identifier(TCOTS_Main.MOD_ID, "tcots-witcher"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.tcots-witcher"))
-                    .icon(() -> new ItemStack(TCOTS_Items.DROWNER_BRAIN))
+                    .icon(() -> new ItemStack(TCOTS_Items.WITCHER_BESTIARY))
                     .entries((displayContext, entries) -> {
+                        //Book
+                        entries.add(TCOTS_Items.WITCHER_BESTIARY);
+
                         //Spawn Eggs
                         entries.add(TCOTS_Items.DROWNER_SPAWN_EGG);
                         entries.add(TCOTS_Items.ROTFIEND_SPAWN_EGG);

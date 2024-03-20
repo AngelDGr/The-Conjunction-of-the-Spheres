@@ -7,15 +7,13 @@ public enum AlchemyTableRecipeCategory implements StringIdentifiable
     POTIONS("potions"),
     BOMBS_OILS("bombs_oils"),
     DECOCTIONS("decoctions"),
-    MISC("misc"),
-    ALL("all");
+    MISC("misc");
 
     public static final StringIdentifiable.EnumCodec<AlchemyTableRecipeCategory> CODEC;
 
-//    public static final StringIdentifiable.Codec<AlchemyTableRecipeCategory> CODEC;
     private final String id;
 
-    private AlchemyTableRecipeCategory(String id) {
+    AlchemyTableRecipeCategory(String id) {
         this.id = id;
     }
 

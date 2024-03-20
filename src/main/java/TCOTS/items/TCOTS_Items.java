@@ -418,6 +418,7 @@ public class TCOTS_Items {
     public static Item NEST_SKULL_ITEM;
     public static Item MONSTER_NEST_ITEM;
     public static Item ALCHEMY_TABLE_ITEM;
+    public static Item WITCHER_BESTIARY;
 
     public static void registerItemsMisc(){
         NEST_SLAB_ITEM  = registerBlockItem("nest_slab", TCOTS_Blocks.NEST_SLAB);
@@ -427,6 +428,8 @@ public class TCOTS_Items {
         MONSTER_NEST_ITEM = registerItem("monster_nest", new MonsterNestItem(TCOTS_Blocks.MONSTER_NEST, new FabricItemSettings()));
 
         ALCHEMY_TABLE_ITEM = registerItem("alchemy_table", new AlchemyTableItem(TCOTS_Blocks.ALCHEMY_TABLE, new FabricItemSettings()));
+
+        WITCHER_BESTIARY = WitcherBestiaryItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), new FabricItemSettings().maxCount(1));
     }
 
     private static Item registerBlockItem(String name, Block block){

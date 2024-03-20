@@ -1,17 +1,14 @@
 package TCOTS.potions.effects;
 
-import com.google.common.collect.Maps;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
-import java.util.Map;
 import java.util.UUID;
 
 
 public class KillerWhaleEffect extends StatusEffect {
-    //TODO: See if it works
     //xTODO: Add attack power to the player
     //xTODO???: Add improved vision underwater (like with water breathing)
 
@@ -79,8 +76,4 @@ public class KillerWhaleEffect extends StatusEffect {
         return true;
     }
 
-//    @Override
-//    public double adjustModifierAmount(int amplifier, EntityAttributeModifier modifier) {
-//        return this.modifier * (double)(amplifier + 1);
-//    }
 }

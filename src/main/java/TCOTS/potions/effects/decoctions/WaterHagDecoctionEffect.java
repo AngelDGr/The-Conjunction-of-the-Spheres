@@ -11,7 +11,6 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import java.util.UUID;
 
 public class WaterHagDecoctionEffect extends StatusEffect {
-    //TODO: See if it works
     protected final double modifier;
 
     private final EntityAttributeModifier entityAttributeModifier;

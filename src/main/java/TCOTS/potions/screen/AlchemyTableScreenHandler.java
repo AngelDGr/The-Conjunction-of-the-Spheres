@@ -20,7 +20,7 @@ import net.minecraft.util.collection.DefaultedList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlchemyTableScreenHandler <C extends Inventory> extends ScreenHandler {
+public class AlchemyTableScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final PropertyDelegate propertyDelegate;
     private final AlchemyTableBlockEntity blockEntity;
@@ -99,7 +99,7 @@ public class AlchemyTableScreenHandler <C extends Inventory> extends ScreenHandl
     public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(invSlot);
-        if (slot != null && slot.hasStack()) {
+        if (slot.hasStack()) {
             ItemStack originalStack = slot.getStack();
             newStack = originalStack.copy();
             if (invSlot < this.inventory.size()) {
@@ -128,7 +128,7 @@ public class AlchemyTableScreenHandler <C extends Inventory> extends ScreenHandl
     public List<ItemStack> TotalInventoryItems=new ArrayList<>();
     public List<ItemStack> AlchemyTableInventoryItems = new ArrayList<>();
 
-    public void CraftWithBook(boolean craftAll, AlchemyTableRecipe recipe, ServerPlayerEntity player){
+    public void CraftWithBook(AlchemyTableRecipe recipe, ServerPlayerEntity player){
         AlchemyTableInventoryItems.clear();
         for (int i=0;i<this.getInventory().size();i++){
             AlchemyTableInventoryItems.add(this.getInventory().getStack(i));}
