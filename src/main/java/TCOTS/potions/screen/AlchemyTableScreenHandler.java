@@ -1,8 +1,7 @@
 package TCOTS.potions.screen;
 
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
-//import TCOTS.potions.recipes.AlchemyTableRecipe;
-//import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
+import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,7 +9,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeMatcher;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
@@ -41,7 +39,7 @@ public class AlchemyTableScreenHandler <C extends Inventory> extends ScreenHandl
     public AlchemyTableScreenHandler(int syncId, PlayerInventory playerInventory,
                                      BlockEntity blockEntity, PropertyDelegate arrayPropertyDelegate) {
         super(AlchemyTableRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, syncId);
-//        super(null, syncId);
+
         checkSize((Inventory) blockEntity, 6);
 
         this.inventory = ((Inventory) blockEntity);
@@ -130,113 +128,113 @@ public class AlchemyTableScreenHandler <C extends Inventory> extends ScreenHandl
     public List<ItemStack> TotalInventoryItems=new ArrayList<>();
     public List<ItemStack> AlchemyTableInventoryItems = new ArrayList<>();
 
-//    public void Craft(boolean craftAll, AlchemyTableRecipe recipe, ServerPlayerEntity player){
-//        AlchemyTableInventoryItems.clear();
-//        for (int i=0;i<this.getInventory().size();i++){
-//            AlchemyTableInventoryItems.add(this.getInventory().getStack(i));}
-//
-//        PlayerInventoryItems = player.getInventory().main;
-//
-//        TotalInventoryItems.clear();
-//        TotalInventoryItems.addAll(PlayerInventoryItems);
-//        TotalInventoryItems.addAll(AlchemyTableInventoryItems);
-//
-//        this.recipeFinder.clear();
-//        for(ItemStack stack: this.TotalInventoryItems){
-//            recipeFinder.addInput(stack, stack.getCount());
-//        }
-//
-//        if (recipeFinder.match(recipe, null)) {
-//
-//            List<ItemStack> itemStackList = recipe.returnItemStackWithQuantity();
-//            //To put ingredients in place
-//            for(int i=0; i < itemStackList.size(); i++){
-//                int count =  itemStackList.get(i).getCount();
-//                if(this.inventory.getStack(i) == ItemStack.EMPTY) {
-//
-//                    ItemStack stack = player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).copyWithCount(count);
-//
-//                    player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).decrement(count);
-//
-//                    this.inventory.setStack(i, stack);
-//                }
-//                else{
-//                    ItemStack stackInsideSlot = this.inventory.getStack(i);
-//
-//                    if(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot) != -1){
-//                        player.getInventory().insertStack(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot), stackInsideSlot);
-//                        this.inventory.setStack(i, ItemStack.EMPTY);
-//
-//                        ItemStack stack = player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).copyWithCount(count);
-//
-//                        player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).decrement(count);
-//
-//                        this.inventory.setStack(i, stack);
-//                    } else if(player.getInventory().getEmptySlot()!=-1){
-//                        player.getInventory().insertStack(player.getInventory().getEmptySlot(), stackInsideSlot);
-//                        this.inventory.setStack(i, ItemStack.EMPTY);
-//
-//                        ItemStack stack = player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).copyWithCount(count);
-//
-//                        player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).decrement(count);
-//
-//                        this.inventory.setStack(i, stack);
-//                    }
-//                }
-//            }
-//
-//            for(int i=itemStackList.size(); i < 5; i++){
-//                ItemStack stackInsideSlot = this.inventory.getStack(i);
-//                if(this.inventory.getStack(i) != ItemStack.EMPTY){
-//
-//                    if(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot) != -1){
-//                        player.getInventory().insertStack(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot), stackInsideSlot);
-//                        this.inventory.setStack(i, ItemStack.EMPTY);
-//                    }
-//                    else if(player.getInventory().getEmptySlot()!=-1){
-//                        player.getInventory().insertStack(player.getInventory().getEmptySlot(), stackInsideSlot);
-//                    }
-//                }
-//            }
-//
-//            //To put the base in place
-//            if(this.inventory.getStack(5) == ItemStack.EMPTY) {
-//
-//                ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(1);
-//
-//                player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(1);
-//
-//                this.inventory.setStack(5, base);
-//            }
-//            else{
-//                ItemStack stackInsideSlot = this.inventory.getStack(5);
-//                if(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot) != -1){
-//
-//                    player.getInventory().insertStack(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot), stackInsideSlot);
-//                    this.inventory.setStack(5, ItemStack.EMPTY);
-//
-//                    ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(1);
-//
-//                    player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(1);
-//
-//                    this.inventory.setStack(5, base);
-//                }
-//                else if(player.getInventory().getEmptySlot()!=-1){
-//                    player.getInventory().insertStack(player.getInventory().getEmptySlot(), stackInsideSlot);
-//
-//                    this.inventory.setStack(5, ItemStack.EMPTY);
-//
-//                    ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(1);
-//
-//                    player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(1);
-//
-//                    this.inventory.setStack(5, base);
-//                }
-//            }
-//        }
-//
-//        player.getInventory().markDirty();
-//    }
+    public void CraftWithBook(boolean craftAll, AlchemyTableRecipe recipe, ServerPlayerEntity player){
+        AlchemyTableInventoryItems.clear();
+        for (int i=0;i<this.getInventory().size();i++){
+            AlchemyTableInventoryItems.add(this.getInventory().getStack(i));}
+
+        PlayerInventoryItems = player.getInventory().main;
+
+        TotalInventoryItems.clear();
+        TotalInventoryItems.addAll(PlayerInventoryItems);
+        TotalInventoryItems.addAll(AlchemyTableInventoryItems);
+
+        this.recipeFinder.clear();
+        for(ItemStack stack: this.TotalInventoryItems){
+            recipeFinder.addInput(stack, stack.getCount());
+        }
+
+        if (recipeFinder.match(recipe, null)) {
+
+            List<ItemStack> itemStackList = recipe.returnItemStackWithQuantity();
+            //To put ingredients in place
+            for(int i=0; i < itemStackList.size(); i++){
+                int count =  itemStackList.get(i).getCount();
+                if(this.inventory.getStack(i) == ItemStack.EMPTY) {
+
+                    ItemStack stack = player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).copyWithCount(count);
+
+                    player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).decrement(count);
+
+                    this.inventory.setStack(i, stack);
+                }
+                else{
+                    ItemStack stackInsideSlot = this.inventory.getStack(i);
+
+                    if(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot) != -1){
+                        player.getInventory().insertStack(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot), stackInsideSlot);
+                        this.inventory.setStack(i, ItemStack.EMPTY);
+
+                        ItemStack stack = player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).copyWithCount(count);
+
+                        player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).decrement(count);
+
+                        this.inventory.setStack(i, stack);
+                    } else if(player.getInventory().getEmptySlot()!=-1){
+                        player.getInventory().insertStack(player.getInventory().getEmptySlot(), stackInsideSlot);
+                        this.inventory.setStack(i, ItemStack.EMPTY);
+
+                        ItemStack stack = player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).copyWithCount(count);
+
+                        player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).decrement(count);
+
+                        this.inventory.setStack(i, stack);
+                    }
+                }
+            }
+
+            for(int i=itemStackList.size(); i < 5; i++){
+                ItemStack stackInsideSlot = this.inventory.getStack(i);
+                if(this.inventory.getStack(i) != ItemStack.EMPTY){
+
+                    if(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot) != -1){
+                        player.getInventory().insertStack(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot), stackInsideSlot);
+                        this.inventory.setStack(i, ItemStack.EMPTY);
+                    }
+                    else if(player.getInventory().getEmptySlot()!=-1){
+                        player.getInventory().insertStack(player.getInventory().getEmptySlot(), stackInsideSlot);
+                    }
+                }
+            }
+
+            //To put the base in place
+            if(this.inventory.getStack(5) == ItemStack.EMPTY) {
+
+                ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(1);
+
+                player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(1);
+
+                this.inventory.setStack(5, base);
+            }
+            else{
+                ItemStack stackInsideSlot = this.inventory.getStack(5);
+                if(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot) != -1){
+
+                    player.getInventory().insertStack(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot), stackInsideSlot);
+                    this.inventory.setStack(5, ItemStack.EMPTY);
+
+                    ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(1);
+
+                    player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(1);
+
+                    this.inventory.setStack(5, base);
+                }
+                else if(player.getInventory().getEmptySlot()!=-1){
+                    player.getInventory().insertStack(player.getInventory().getEmptySlot(), stackInsideSlot);
+
+                    this.inventory.setStack(5, ItemStack.EMPTY);
+
+                    ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(1);
+
+                    player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(1);
+
+                    this.inventory.setStack(5, base);
+                }
+            }
+        }
+
+        player.getInventory().markDirty();
+    }
 
     public static class PotionWitcherSlot extends Slot {
         public PotionWitcherSlot(Inventory inventory, int i, int j, int k) {

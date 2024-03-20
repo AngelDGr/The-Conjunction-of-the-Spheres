@@ -1,7 +1,6 @@
 package TCOTS.blocks;
 
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
-import TCOTS.blocks.entity.MonsterNestBlockEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.AlcohestItem;
 import TCOTS.potions.DwarvenSpiritItem;
@@ -186,12 +185,11 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
         return ActionResult.SUCCESS;
     }
 
-//    @Nullable
-//    @Override
-//    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-////        return checkType(type, TCOTS_Blocks.ALCHEMY_TABLE_ENTITY,
-////                (world1, pos, state1, blockEntity) -> blockEntity.tick(world1, pos, state1));
-//        return world.isClient ? null : AlchemyTableBlock.validateTicker(type, TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, AlchemyTableBlockEntity::serverTick);
-//    }
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+
+        return world.isClient ? null : AlchemyTableBlock.validateTicker(type, TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, AlchemyTableBlockEntity::tick);
+    }
 
 }

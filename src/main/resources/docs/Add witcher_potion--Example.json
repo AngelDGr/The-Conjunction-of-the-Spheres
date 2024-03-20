@@ -2,6 +2,9 @@
   //Type of recipe
   "type": "tcots-witcher:alchemy_table",
 
+  //(Optional) Put here a decimal number to put the recipe in a specific place in the recipe book
+  "order": 0.1,
+
   //Category for the recipe book, you can choose between potions, decoctions, bombs_oils or misc  
   "category": "misc",
 
@@ -18,12 +21,7 @@
   ],
 
   //Quantity of items, the order it's the same
-  "ingredient_counters": [
-
-    {
-      "count": 1
-    }
-  ],
+  "ingredient_counters": [1],
 
  //Base to be converted in the result
   "base": {

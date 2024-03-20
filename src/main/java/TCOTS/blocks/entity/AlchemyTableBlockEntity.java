@@ -2,15 +2,18 @@ package TCOTS.blocks.entity;
 
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.items.TCOTS_Items;
-//import TCOTS.potions.recipes.AlchemyTableRecipe;
+import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.screen.AlchemyTableScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.BrewingStandBlockEntity;
+import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +21,9 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.screen.CrafterScreenHandler;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -41,7 +46,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.Objects;
 import java.util.Optional;
 
-public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEntity, ExtendedScreenHandlerFactory, ImplementedInventory  {
+public class AlchemyTableBlockEntity extends LockableContainerBlockEntity implements GeoBlockEntity, ExtendedScreenHandlerFactory, ImplementedInventory  {
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(6, ItemStack.EMPTY);
 
@@ -109,9 +114,6 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
         return cache;
     }
 
-
-
-
     //Crafting stuff
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
@@ -124,7 +126,7 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
     }
 
     @Override
-    public Text getDisplayName() {
+    protected Text getContainerName() {
         return Text.translatable("block.tcots-witcher.alchemy_table");
     }
 
@@ -142,27 +144,28 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
         progress = nbt.getInt("alchemy_table.progress");
     }
 
-    @Nullable
+
     @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory Pinv, PlayerEntity player) {
-        return new AlchemyTableScreenHandler(syncId, Pinv, this, this.propertyDelegate);
+    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+        return new AlchemyTableScreenHandler<>(syncId, playerInventory, this, this.propertyDelegate);
     }
 
 
-    public void tick(World world, BlockPos pos, BlockState state) {
+    public static void tick(World world, BlockPos pos, BlockState state, AlchemyTableBlockEntity blockEntity) {
+
         if(world.isClient()) {
             return;
         }
-            if(this.hasRecipe()) {
-                this.increaseCraftProgress();
+            if(blockEntity.hasRecipe()) {
+                blockEntity.increaseCraftProgress();
                 markDirty(world, pos, state);
 
-                if(hasCraftingFinished()) {
-                    this.craftItem();
-                    this.resetProgress();
+                if(blockEntity.hasCraftingFinished()) {
+                    blockEntity.craftItem();
+                    blockEntity.resetProgress();
                 }
             } else {
-                this.resetProgress();
+                blockEntity.resetProgress();
             }
 
     }
@@ -174,11 +177,9 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
             inventory.setStack(i, this.getStack(i));
         }
 
-        //TODO: Fix this
-//        Optional<AlchemyTableRecipe> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager().getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, getWorld());
+        Optional<RecipeEntry<AlchemyTableRecipe>> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager().getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, getWorld());
 
-//        return recipe.isPresent();
-        return false;
+        return recipe.isPresent();
     }
 
 
@@ -189,10 +190,9 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
             for (int i = 0; i < this.size(); i++) {
                 inventory.setStack(i, this.getStack(i));
             }
-//TODO: Fix this
 
-//        Optional<AlchemyTableRecipe> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager()
-//                    .getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, this.getWorld());
+        Optional<RecipeEntry<AlchemyTableRecipe>> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager()
+                    .getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, this.getWorld());
 
 
         if(this.getStack(INGREDIENT_SLOT_1) != null ){
@@ -218,12 +218,11 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
         if(this.getStack(OUTPUT_POTION_SLOT) != null){
             this.setStack(OUTPUT_POTION_SLOT, ItemStack.EMPTY);
         }
-//TODO: Fix this
 
-//            this.setStack(OUTPUT_POTION_SLOT, new ItemStack(recipe.get().getOutput(null).getItem(), recipe.get().getOutput(null).getCount()));
-//            assert world != null;
-//            world.syncWorldEvent(WorldEvents.BREWING_STAND_BREWS, pos, 0);
-//            this.resetProgress();
+            this.setStack(OUTPUT_POTION_SLOT, new ItemStack(recipe.get().value().getResult(null).getItem(), recipe.get().value().getResult(null).getCount()));
+            assert world != null;
+            world.syncWorldEvent(WorldEvents.BREWING_STAND_BREWS, pos, 0);
+            this.resetProgress();
         }
     }
 

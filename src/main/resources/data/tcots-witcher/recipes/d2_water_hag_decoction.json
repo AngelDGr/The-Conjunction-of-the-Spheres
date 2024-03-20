@@ -1,5 +1,6 @@
 {
   "type": "tcots-witcher:alchemy_table",
+  "order": 0.1,
   "category":"decoctions",
 
   "ingredients": [
@@ -14,19 +15,7 @@
     }
   ],
 
-  "ingredient_counters": [
-
-    {
-      "count": 1
-    },
-    {
-      "count": 1
-    },
-    {
-      "count": 1
-    }
-
-  ],
+  "ingredient_counters": [1,1,1],
 
   "base": {
     "item": "tcots-witcher:dwarven_spirit"

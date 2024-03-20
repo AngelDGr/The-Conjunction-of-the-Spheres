@@ -1,5 +1,6 @@
 {
   "type": "tcots-witcher:alchemy_table",
+  "order": 0.11,
   "category":"potions",
 
   "ingredients": [
@@ -8,12 +9,7 @@
     }
   ],
 
-  "ingredient_counters": [
-
-    {
-      "count": 1
-    }
-  ],
+  "ingredient_counters": [1],
 
   "base": {
     "item": "tcots-witcher:swallow_potion"
