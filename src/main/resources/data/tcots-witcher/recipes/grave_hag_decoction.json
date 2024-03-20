@@ -1,0 +1,30 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.2,
+  "category":"decoctions",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:grave_hag_mutagen"
+    },
+    {
+      "item": "minecraft:brown_mushroom"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    }
+  ],
+
+  "ingredient_counters": [1,3,2,1],
+
+  "base": {
+    "item": "tcots-witcher:dwarven_spirit"
+  },
+
+  "result": {
+    "item": "tcots-witcher:grave_hag_decoction"
+  }
+}

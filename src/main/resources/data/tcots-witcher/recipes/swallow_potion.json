@@ -1,0 +1,24 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.1,
+  "category":"potions",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:drowner_brain"
+    },
+    {
+      "item": "minecraft:dandelion"
+    }
+  ],
+
+  "ingredient_counters": [1,5],
+
+  "base": {
+    "item": "tcots-witcher:dwarven_spirit"
+  },
+
+  "result": {
+    "item": "tcots-witcher:swallow_potion"
+  }
+}

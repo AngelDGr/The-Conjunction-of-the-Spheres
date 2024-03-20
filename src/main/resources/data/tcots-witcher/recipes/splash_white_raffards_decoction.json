@@ -1,0 +1,21 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.22,
+  "category":"potions",
+
+  "ingredients": [
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+
+  "ingredient_counters": [1],
+
+  "base": {
+    "item": "tcots-witcher:white_raffards_decoction"
+  },
+
+  "result": {
+    "item": "tcots-witcher:white_raffards_splash"
+  }
+}
