@@ -9,6 +9,8 @@ public enum AlchemyTableRecipeCategory implements StringIdentifiable
     DECOCTIONS("decoctions"),
     MISC("misc");
 
+
+
     public static final StringIdentifiable.EnumCodec<AlchemyTableRecipeCategory> CODEC;
 
     private final String id;

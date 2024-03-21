@@ -5,7 +5,8 @@
   "category": "tcots-witcher:alchemy",
   "associated_items": [
     "tcots-witcher:alchemy_table"
-  ]
+  ],
+  "ordinal": 1
 }
 ```
 
@@ -16,5 +17,3 @@ First of all you will need to craft an {green}Alchemy Table{}
 <recipe;tcots-witcher:alchemy_table>
 
 ;;;;;
-**markdown-formatted**
-*standard*
