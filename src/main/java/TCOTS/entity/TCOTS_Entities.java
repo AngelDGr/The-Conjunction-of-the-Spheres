@@ -145,7 +145,7 @@ public class TCOTS_Entities {
                                                                     BiomeKeys.DRIPSTONE_CAVES,
                                                                     BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
                                                                     BiomeKeys.PLAINS, BiomeKeys.SAVANNA, BiomeKeys.TAIGA), SpawnGroup.MONSTER,
-                    ROTFIEND, 80, 3, 3);
+                    ROTFIEND, 80, 4, 6);
 
 
         //Grave Hags

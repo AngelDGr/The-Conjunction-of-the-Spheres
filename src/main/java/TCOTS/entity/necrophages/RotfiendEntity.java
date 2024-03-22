@@ -88,7 +88,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         //Attack
 
         //Emerge from ground
-//        this.goalSelector.add(0, new DrownerEntity.Drowner_EmergeFromGround(this));
         this.goalSelector.add(0, new Rotfiend_Explosion(this, 0.25f));
         this.goalSelector.add(0, new EmergeFromGroundGoal_Excavator(this, 500));
         this.goalSelector.add(1, new SwimGoal(this));
@@ -112,7 +111,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
 
-    SoundEvent explosionSound = TCOTS_Sounds.ROTFIEND_EXPLODING;
+    private final SoundEvent explosionSound = TCOTS_Sounds.ROTFIEND_EXPLODING;
 
     public boolean cooldownBetweenLunges = false;
     @Override
@@ -192,7 +191,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3.0f) //Amount of health that hurts you
-//                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 2.0f)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.28f);
     }
 

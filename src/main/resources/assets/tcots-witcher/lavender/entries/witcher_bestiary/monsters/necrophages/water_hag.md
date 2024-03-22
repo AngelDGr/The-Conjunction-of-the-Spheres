@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Water Hag",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/water_hag",
+  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/water_hag",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:water_hag_mutagen",

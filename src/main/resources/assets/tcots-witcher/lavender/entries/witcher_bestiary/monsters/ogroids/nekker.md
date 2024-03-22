@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Nekker",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/nekker",
+  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/nekker",
   "category": "tcots-witcher:ogroids",
   "associated_items": [
     "tcots-witcher:nekker_heart",
