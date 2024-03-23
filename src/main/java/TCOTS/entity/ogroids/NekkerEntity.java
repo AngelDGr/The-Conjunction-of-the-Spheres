@@ -82,13 +82,13 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         this.goalSelector.add(0, new EmergeFromGroundGoal_Excavator(this,500));
         this.goalSelector.add(1, new SwimGoal(this));
 
-        this.goalSelector.add(2, new LungeAttackGoal(this, 200, 1.2));
+        this.goalSelector.add(2, new LungeAttackGoal(this, 150, 1.8,5,40));
 
         //Returns to ground
         this.goalSelector.add(3, new ReturnToGroundGoal_Excavator(this));
 
         //Attack
-        this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false));
+        this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false, 2400));
 
 
         this.goalSelector.add(5, new WanderAroundGoal_Excavator(this, 0.75f, 20));
@@ -244,11 +244,13 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
+        nbt.putBoolean("Invisible",this.dataTracker.get(INVISIBLE));
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
+        this.setInvisibleData(nbt.getBoolean("Invisible"));
         super.readCustomDataFromNbt(nbt);
     }
 
@@ -334,7 +336,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     @Override
     public void mobTick(){
         if (NekkerEntity.this.ReturnToGround_Ticks > 0
-                && NekkerEntity.this.ReturnToGround_Ticks < 200
+//                && NekkerEntity.this.ReturnToGround_Ticks < 200
                 && !this.getIsEmerging()
                 && !this.isAttacking()
         ) {
@@ -342,7 +344,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         }else{
             BlockPos entityPos = new BlockPos((int)this.getX(), (int)this.getY(), (int)this.getZ());
 
-            //Makes the Rotfiend return to the dirt/sand/stone
+            //Makes the Nekker return to the dirt/sand/stone
             if(NekkerEntity.this.ReturnToGround_Ticks==0 && (
                     this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DIRT) ||
                             this.getWorld().getBlockState(entityPos.down()).isOf(Blocks.SAND)

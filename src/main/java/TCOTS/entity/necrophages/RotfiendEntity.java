@@ -93,7 +93,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         this.goalSelector.add(1, new SwimGoal(this));
 
 
-        this.goalSelector.add(2, new LungeAttackGoal(this, 100, 0.6));
+        this.goalSelector.add(2, new LungeAttackGoal(this, 100, 0.6,5,25));
 
         //Returns to ground
         this.goalSelector.add(3, new ReturnToGroundGoal_Excavator(this));
@@ -351,11 +351,13 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
+        nbt.putBoolean("Invisible",this.dataTracker.get(INVISIBLE));
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
+        this.setInvisibleData(nbt.getBoolean("Invisible"));
         super.readCustomDataFromNbt(nbt);
     }
 
@@ -388,6 +390,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         if(this.getIsEmerging()){
             this.spawnGroundParticles();
         }
+
         super.tick();
     }
 

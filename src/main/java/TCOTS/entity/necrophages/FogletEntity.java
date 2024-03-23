@@ -630,7 +630,7 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getAnimationTicks() > 0 || super.isInvulnerableTo(damageSource);
+        return this.getAnimationTicks() > 0 || this.getIsFog() || super.isInvulnerableTo(damageSource);
     }
 
     @Override

@@ -19,7 +19,11 @@ public class LungeAttackGoal extends Goal {
     private final int cooldownBetweenLungesAttacks;
     private final double SpeedLungeMultiplier;
 
-    public LungeAttackGoal(PathAwareEntity mob, int cooldownBetweenLungesAttacks, double lungeImpulse) {
+    private final int minDistance;
+
+    private final int maxDistance;
+
+    public LungeAttackGoal(PathAwareEntity mob, int cooldownBetweenLungesAttacks, double lungeImpulse, int minDistance, int maxDistance) {
         this.mob = mob;
         if(mob instanceof ExcavatorMob){
             this.excavatorMob= (ExcavatorMob) mob;
@@ -35,6 +39,8 @@ public class LungeAttackGoal extends Goal {
         this.cooldownBetweenLungesAttacks = cooldownBetweenLungesAttacks;
         this.setControls(EnumSet.of(Control.MOVE, Control.JUMP));
         this.SpeedLungeMultiplier = lungeImpulse;
+        this.minDistance=minDistance;
+        this.maxDistance=maxDistance;
     }
 
     @Override
@@ -45,7 +51,7 @@ public class LungeAttackGoal extends Goal {
             //I want 7.5 blocks approx
             //So 7.5/1.5=5
             return !lungeMob.getCooldownBetweenLunges() && this.mob.isAttacking()
-                    && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
+                    && this.mob.squaredDistanceTo(target) > minDistance && this.mob.squaredDistanceTo(target) < maxDistance
                     && (this.mob.getTarget().getY() - this.mob.getY()) <= 1
                     && isExcavator();
         } else {

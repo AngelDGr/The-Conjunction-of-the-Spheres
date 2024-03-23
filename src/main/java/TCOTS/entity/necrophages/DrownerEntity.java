@@ -412,7 +412,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     private class Drowner_Attack_Lunge extends LungeAttackGoal {
 
         public Drowner_Attack_Lunge(PathAwareEntity mob, int cooldownBetweenLungesAttacks, double lungeImpulse) {
-            super(mob, cooldownBetweenLungesAttacks, lungeImpulse);
+            super(mob, cooldownBetweenLungesAttacks, lungeImpulse,5,25);
         }
 
 
@@ -501,6 +501,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
         nbt.putBoolean("PuddleSpawned",this.dataTracker.get(SPAWNED_PUDDLE));
+        nbt.putBoolean("Invisible",this.dataTracker.get(INVISIBLE));
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
@@ -508,6 +509,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setSpawnedPuddleDataTracker(nbt.getBoolean("PuddleSpawned"));
+        this.setInvisibleData(nbt.getBoolean("Invisible"));
         super.readCustomDataFromNbt(nbt);
     }
 

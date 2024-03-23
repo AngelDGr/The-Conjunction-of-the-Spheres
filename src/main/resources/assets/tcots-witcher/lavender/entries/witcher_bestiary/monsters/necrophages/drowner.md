@@ -37,7 +37,7 @@ It is often thought drowners arise from the bodies of those who drown in shallow
 
 The drowner enjoy killing other water creatures, but when doesn't find a creature to attack, 
 it will dig a hole in the ground and enter in.
-These holess leave a tiny puddle.
+These holes leave a tiny puddle.
 If you get too close to the puddle, the drowner will emerge from it to attack you.
 
 

@@ -10,5 +10,68 @@
 }
 ```
 
-Lol
+A lone nekker is harmless. Five are dangerous. Ten can kill even a veteran monster slayer.
 
+
+The nekkers' basic tactic is to strike en masse. They burrow from beneath the ground and swarm upon their prey. 
+Though primitive, the tactic is surprisingly effective. One must be ready to repel many foes at once.
+
+;;;;;
+
+They live in nests of several individuals. So if you found one rest assure that you are
+going to find more.
+
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_main.png,fit)
+
+;;;;;
+
+{dark_green}**Habitat**{}
+- Forests
+- Plains
+- Nekker nests, found in plains or forests
+  ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_lunging.png,fit)
+
+;;;;;
+
+{red}**Behavior**{}
+
+Be careful with this nasty creature. As without a target it's going to be buried
+underground, waiting for a prey. With it long claws it's a great digger and fast
+attacker, and with their tiny size can be a real problem.
+
+
+If you get far enough it will try to launch itself to you with a great force, this attack it's pretty common 
+to these agile creatures.
+
+;;;;;
+
+Avoid being overwhelmed with the quantity of these tiny creatures and you can manage to defeat them easily.
+
+
+{blue}**Loot**{}
+> <item;tcots-witcher:nekker_eye> <item;tcots-witcher:nekker_heart> 
+
+;;;;;
+
+
+
+
+![Nekker](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_full.png,fit)
+
+;;;;;
+
+{dark_green}**Monster Nests**{}
+
+These awful creatures live in nests made from dirt and bones around the world.
+The nest will host more and more monsters until it's destroyed.
+
+
+A monster nest it's very hard to break, and while it's well-known than a nest can be destroyed with an explosion, 
+some rumours says that can also be destroyed with an efficiency enchantment strong enough. 
+
+;;;;;
+
+But breaking one has a reward, the Nekkers usually hide magic goods inside they.
+
+
+![Monster Nest](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/monster_nest.png,fit)

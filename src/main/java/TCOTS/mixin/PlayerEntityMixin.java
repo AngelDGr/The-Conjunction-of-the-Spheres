@@ -16,6 +16,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.RavagerEntity;
 import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -138,7 +139,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                 break;
 
                             case 1:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.OGROIDS){
+                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.OGROIDS || target instanceof AbstractPiglinEntity){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;

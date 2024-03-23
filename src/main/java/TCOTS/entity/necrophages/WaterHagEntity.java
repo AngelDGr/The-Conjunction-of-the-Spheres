@@ -228,7 +228,6 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f) //Amount of health that hurts you
-//                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 2.0f)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5)
                 .add(EntityAttributes.GENERIC_ARMOR,2f);
@@ -466,6 +465,7 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
         nbt.putBoolean("PuddleSpawned",this.dataTracker.get(SPAWNED_PUDDLE));
+        nbt.putBoolean("Invisible",this.dataTracker.get(INVISIBLE));
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
@@ -474,6 +474,7 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setSpawnedPuddleDataTracker(nbt.getBoolean("PuddleSpawned"));
+        this.setInvisibleData(nbt.getBoolean("Invisible"));
     }
 
     //Water creature things

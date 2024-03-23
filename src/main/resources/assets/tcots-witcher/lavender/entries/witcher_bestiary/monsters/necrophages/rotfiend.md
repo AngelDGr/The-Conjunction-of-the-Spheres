@@ -44,6 +44,7 @@ when they damaged enough its body thrashes around in uncontrollable tremors, lea
 
 The resulting explosion will hurt a lot, but it might also kill nearby rotfiends, creating something of a chain reaction.
 
+
 The only way to prevent this explosion it's {#0A880E}killing it when the creature it's on flames.{}
 
 
