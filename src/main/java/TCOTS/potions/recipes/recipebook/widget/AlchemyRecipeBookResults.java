@@ -3,7 +3,7 @@ package TCOTS.potions.recipes.recipebook.widget;
 import TCOTS.TCOTS_Main;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.recipes.AlchemyTableRecipeCategory;
-import TCOTS.potions.screen.AlchemyTableScreenHandler;
+import TCOTS.screen.AlchemyTableScreenHandler;
 import com.google.common.collect.Lists;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

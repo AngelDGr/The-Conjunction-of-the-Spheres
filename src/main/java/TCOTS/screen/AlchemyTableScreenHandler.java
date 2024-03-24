@@ -1,4 +1,4 @@
-package TCOTS.potions.screen;
+package TCOTS.screen;
 
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
@@ -75,6 +75,10 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
 
     public boolean isCrafting() {
         return propertyDelegate.get(0) > 0;
+    }
+
+    public AlchemyTableBlockEntity getBlockEntity() {
+        return blockEntity;
     }
 
     @Override

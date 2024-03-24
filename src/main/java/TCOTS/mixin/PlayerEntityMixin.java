@@ -5,6 +5,7 @@ import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.EmptyWitcherPotionItem;
 import TCOTS.potions.TCOTS_Effects;
+import TCOTS.potions.WitcherAlcohol_Base;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -40,6 +41,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Mixin(PlayerEntity.class)
@@ -89,13 +93,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private void OilCounter(PlayerEntity player, NbtCompound nbt){
 
         int Uses =  nbt.getInt("Uses");
-        player.getMainHandStack().getSubNbt("Monster Oil").putInt("Uses", Uses-1);
+        Objects.requireNonNull(player.getMainHandStack().getSubNbt("Monster Oil")).putInt("Uses", Uses-1);
 
 
 //        player.playSound(SoundEvents.BLOCK_HONEY_BLOCK_HIT, 1, 1);
-        if(player.getMainHandStack().getSubNbt("Monster Oil").getInt("Uses") == 0){
+        if(Objects.requireNonNull(player.getMainHandStack().getSubNbt("Monster Oil")).getInt("Uses") == 0){
 
-            player.getMainHandStack().getNbt().remove("Monster Oil");
+            Objects.requireNonNull(player.getMainHandStack().getNbt()).remove("Monster Oil");
             player.playSound(TCOTS_Sounds.OIL_RAN_OUT, 1, 2);
         }
     }
@@ -130,6 +134,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 assert nbt != null;
                 if(nbt.contains("Monster Oil")){
                     NbtCompound monsterOil = thisObject.getMainHandStack().getSubNbt("Monster Oil");
+                    assert monsterOil != null;
                     if(monsterOil.contains("Id") && monsterOil.contains("Level") && monsterOil.contains("Uses")){
                         switch (monsterOil.getInt("Id")){
                             case 0:
@@ -273,7 +278,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             theConjunctionOfTheSpheres$setMudInFace(theConjunctionOfTheSpheres$getMudInFace() - 10);
         }
         else if(this.theConjunctionOfTheSpheres$getMudInFace() > 0){
-            theConjunctionOfTheSpheres$setMudInFace(theConjunctionOfTheSpheres$getMudInFace() -1);
+            theConjunctionOfTheSpheres$setMudInFace(theConjunctionOfTheSpheres$getMudInFace() - 1);
         }
     }
 
@@ -287,63 +292,70 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         nbt.putInt("MudTicks", theConjunctionOfTheSpheres$getMudInFace());
     }
 
+    @Unique
+    List<WitcherAlcohol_Base> list_alcohol = Arrays.asList(
+            TCOTS_Items.ALCOHEST,
+            TCOTS_Items.DWARVEN_SPIRIT
+    );
+
     @Inject(method = "wakeUp(ZZ)V", at = @At("TAIL"))
     private void injectPotionRefilling(boolean skipSleepTimer, boolean updateSleepingPlayers, CallbackInfo ci){
-        if(((inventory.getSlotWithStack(TCOTS_Items.ALCOHEST.getDefaultStack()) != -1) || (inventory.getSlotWithStack(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack()) != -1)) && potionTimer>90){
-            int loopP=0;
-            boolean refilled=false;
-            int slot=0;
-            if(inventory.getSlotWithStack(TCOTS_Items.ALCOHEST.getDefaultStack()) != -1){
-                //Refill
-                loopP = 0;
-                slot = inventory.getSlotWithStack(TCOTS_Items.ALCOHEST.getDefaultStack());
-            }
-            else if(inventory.getSlotWithStack(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack()) != -1){
-                loopP = 2;
-                slot = inventory.getSlotWithStack(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack());
-            }
 
-            //Makes a loop across all the inventory
-            for(int i=0; i<inventory.size(); i++){
-                //If found an Empty Potion with NBT
-                if(inventory.getStack(i).getItem() instanceof EmptyWitcherPotionItem && inventory.getStack(i).hasNbt()){
-                    NbtCompound nbtCompoundI= inventory.getStack(i).getNbt();
-                    //Checks if the NBT contains the "Potion" string
-                    if(nbtCompoundI.contains("Potion")){
-                        //Save the potion type
-                        Item PotionI = Registries.ITEM.get(new Identifier(nbtCompoundI.getString("Potion")));
-                        //Saves the count of empty bottles
-                        int countI = inventory.getStack(i).getCount();
+        boolean refilled=false;
 
-                        //Erases the slot
-                        inventory.getStack(i).decrement(inventory.getStack(i).getCount());
-                        //Put the potion in the slot
-                        inventory.setStack(i,new ItemStack(PotionI, countI));
+        //Iterates list with all the alcohols
+        for(WitcherAlcohol_Base alcoholBase: list_alcohol){
+            //Get if the player has some alcohol
+            if(((inventory.getSlotWithStack(alcoholBase.getDefaultStack()) != -1))
+                    && !refilled
+                    && potionTimer>90){
+                int loopP = alcoholBase.getRefillQuantity();
 
-                        //Increases in 1
-                        loopP=loopP+1;
+                int slot = inventory.getSlotWithStack(alcoholBase.getDefaultStack());
 
-                        //Put the refilled boolean in true
-                        refilled=true;
+                //Makes a loop across all the inventory
+                for(int i=0; i<inventory.size(); i++){
+                    //If found an Empty Potion with NBT
+                    if(inventory.getStack(i).getItem() instanceof EmptyWitcherPotionItem && inventory.getStack(i).hasNbt()){
+                        NbtCompound nbtCompoundI= inventory.getStack(i).getNbt();
+                        //Checks if the NBT contains the "Potion" string
+                        assert nbtCompoundI != null;
+                        if(nbtCompoundI.contains("Potion")){
+                            //Save the potion type
+                            Item PotionI = Registries.ITEM.get(new Identifier(nbtCompoundI.getString("Potion")));
+                            //Saves the count of empty bottles
+                            int countI = inventory.getStack(i).getCount();
 
-                        //If it has already filled 4 slots, it stops
-                        if(loopP > 3){
-                            //Decrements the alcohol in inventory
-                            inventory.getStack(slot).decrement(1);
-                            //Play a sound
-                            playSound(TCOTS_Sounds.POTION_REFILLED, 3.0f, 1.0f);
-                            //Breaks the loop
-                            break;
+                            //Erases the slot
+                            inventory.getStack(i).decrement(inventory.getStack(i).getCount());
+                            //Put the potion in the slot
+                            inventory.setStack(i,new ItemStack(PotionI, countI));
+
+                            //Increases in 1
+                            loopP=loopP-1;
+
+                            //Put the refilled boolean in true
+                            refilled=true;
+
+                            //If it has already filled 4 slots, it stops
+                            if(loopP < 1){
+                                //Decrements the alcohol in inventory
+                                inventory.getStack(slot).decrement(1);
+                                //Play a sound
+                                playSound(TCOTS_Sounds.POTION_REFILLED, 3.0f, 1.0f);
+                                //Breaks the loop
+                                break;
+                            }
                         }
                     }
-                }
 
-                //If it doesn't fulfill all the maximum potions
-                if(i == inventory.size() - 1 && refilled){
-                    //Decrements the alcohol in inventory
-                    inventory.getStack(slot).decrement(1);
-                    //Play a sound
-                    playSound(TCOTS_Sounds.POTION_REFILLED, 3.0f, 1.0f);
+                    //If it doesn't fulfill all the maximum potions
+                    if(i == inventory.size() - 1 && refilled){
+                        //Decrements the alcohol in inventory
+                        inventory.getStack(slot).decrement(1);
+                        //Play a sound
+                        playSound(TCOTS_Sounds.POTION_REFILLED, 3.0f, 1.0f);
+                    }
                 }
             }
         }

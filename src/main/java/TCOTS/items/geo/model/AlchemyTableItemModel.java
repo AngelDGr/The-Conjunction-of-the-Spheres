@@ -1,10 +1,11 @@
 package TCOTS.items.geo.model;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.blocks.entity.AlchemyTableBlockEntity;
 import TCOTS.items.blocks.AlchemyTableItem;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 
 public class AlchemyTableItemModel extends GeoModel<AlchemyTableItem> {
@@ -28,4 +29,10 @@ public class AlchemyTableItemModel extends GeoModel<AlchemyTableItem> {
         return RenderLayer.getEntityTranslucent(texture);
     }
 
+    @Override
+    public void setCustomAnimations(AlchemyTableItem animatable, long instanceId, AnimationState<AlchemyTableItem> animationState) {
+        CoreGeoBone book = getAnimationProcessor().getBone("Book");
+        book.setHidden(true);
+        super.setCustomAnimations(animatable, instanceId, animationState);
+    }
 }

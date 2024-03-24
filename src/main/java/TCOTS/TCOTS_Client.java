@@ -9,7 +9,7 @@ import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
 import TCOTS.particles.*;
 import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
-import TCOTS.potions.screen.AlchemyTableScreen;
+import TCOTS.screen.AlchemyTableScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;

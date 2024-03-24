@@ -18,8 +18,9 @@ public class TCOTS_ItemsGroups {
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.tcots-witcher"))
                     .icon(() -> new ItemStack(TCOTS_Items.WITCHER_BESTIARY))
                     .entries((displayContext, entries) -> {
-                        //Book
+                        //Books
                         entries.add(TCOTS_Items.WITCHER_BESTIARY);
+                        entries.add(TCOTS_Items.ALCHEMY_BOOK);
 
                         //Spawn Eggs
                         entries.add(TCOTS_Items.DROWNER_SPAWN_EGG);

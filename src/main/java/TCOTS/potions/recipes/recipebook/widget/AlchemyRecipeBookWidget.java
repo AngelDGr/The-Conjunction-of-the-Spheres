@@ -4,7 +4,7 @@ import TCOTS.TCOTS_Main;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.recipes.AlchemyTableRecipeCategory;
-import TCOTS.potions.screen.AlchemyTableScreenHandler;
+import TCOTS.screen.AlchemyTableScreenHandler;
 import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

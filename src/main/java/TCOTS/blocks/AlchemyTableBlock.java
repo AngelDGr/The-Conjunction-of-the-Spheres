@@ -1,9 +1,10 @@
 package TCOTS.blocks;
 
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
-import TCOTS.potions.AlcohestItem;
-import TCOTS.potions.DwarvenSpiritItem;
+import TCOTS.items.AlchemyBookItem;
+import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.EmptyWitcherPotionItem;
+import TCOTS.potions.WitcherAlcohol_Base;
 import TCOTS.sounds.TCOTS_Sounds;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
@@ -11,6 +12,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
@@ -19,7 +21,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
@@ -40,13 +44,18 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
         return CODEC;
     }
 
+    //Properties
+
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+
+    public static final BooleanProperty HAS_ALCHEMY_BOOK = BooleanProperty.of("has_alchemy_book");
 
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
 
     protected AlchemyTableBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
+        this.setDefaultState(getDefaultState().with(HAS_ALCHEMY_BOOK, false));
     }
 
     @Nullable
@@ -69,7 +78,7 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
     public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
         super.appendTooltip(stack, world, tooltip, options);
             tooltip.add(Text.translatable("block.tcots-witcher.alchemy_table.tooltip").formatted(Formatting.GRAY));
-
+            tooltip.add(Text.translatable("block.tcots-witcher.alchemy_table.tooltip_book").formatted(Formatting.GRAY));
     }
 
     @Override
@@ -89,7 +98,7 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, HAS_ALCHEMY_BOOK);
     }
 
 
@@ -102,7 +111,24 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                 ItemScatterer.spawn(world, pos, (AlchemyTableBlockEntity)blockEntity);
                 world.updateComparators(pos,this);
             }
+            if (state.get(HAS_ALCHEMY_BOOK).booleanValue()) {
+                this.dropBook(state, world, pos);
+            }
+
             super.onStateReplaced(state, world, pos, newState, moved);
+        }
+    }
+
+    private void dropBook(BlockState state, World world, BlockPos pos) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof AlchemyTableBlockEntity) {
+            ItemStack book = new ItemStack(TCOTS_Items.ALCHEMY_BOOK,1);
+            Direction direction = state.get(FACING);
+            float f = 0.25f * (float)direction.getOffsetX();
+            float g = 0.25f * (float)direction.getOffsetZ();
+            ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5 + (double)f, pos.getY() + 1, (double)pos.getZ() + 0.5 + (double)g, book);
+            itemEntity.setToDefaultPickupDelay();
+            world.spawnEntity(itemEntity);
         }
     }
 
@@ -111,18 +137,11 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                               PlayerEntity player, Hand hand, BlockHitResult hit) {
 
         if (!world.isClient) {
-            //If the player have an alcohol in the hand
-            if(player.getMainHandStack().getItem() instanceof AlcohestItem || player.getMainHandStack().getItem() instanceof DwarvenSpiritItem){
-                int loopP=0;
+            //If the player have an alcohol in the hand refill the potion
+            if(player.getMainHandStack().getItem() instanceof WitcherAlcohol_Base alcohol){
+
+                int loopP=alcohol.getRefillQuantity();
                 boolean refilled=false;
-//                if(player.getMainHandStack().getItem() instanceof AlcohestItem){
-//                    //Refill
-////                    loopP = 0;
-//                }
-//                else
-                    if(player.getMainHandStack().getItem() instanceof DwarvenSpiritItem){
-                    loopP = 2;
-                }
 
                 //Makes a loop across all the inventory
                 for(int i=0; i<player.getInventory().size(); i++){
@@ -143,13 +162,13 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                             player.getInventory().setStack(i,new ItemStack(PotionI, countI));
 
                             //Increases in 1
-                            loopP=loopP+1;
+                            loopP=loopP-1;
 
                             //Put the refilled boolean in true
                             refilled=true;
 
-                            //If it has already filled 4 slots, it stops
-                            if(loopP > 3){
+                            //If it has already filled the slots, it stops
+                            if(loopP < 1){
                                 //Decrements the alcohol in hand
                                 player.getMainHandStack().decrement(1);
                                 //Play a sound
@@ -172,12 +191,43 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                 }
             }
 
+
+            //For the Alchemy Book
+            if(world.getBlockEntity(pos) != null && world.getBlockEntity(pos) instanceof AlchemyTableBlockEntity){
+                //If the player has an alchemy book in hand
+                if(player.getMainHandStack().getItem() instanceof AlchemyBookItem &&
+                        !(world.getBlockState(pos).get(HAS_ALCHEMY_BOOK)) && !(player.isSneaking())) {
+
+                    player.getMainHandStack().decrement(1);
+
+                    world.playSound(null, pos, SoundEvents.ITEM_BOOK_PUT, SoundCategory.BLOCKS, 1.0f, 1.0f);
+
+                    world.setBlockState(pos, state.with(HAS_ALCHEMY_BOOK, true));
+
+                    return ActionResult.SUCCESS;
+                }
+
+                //If the table has already a book
+                if(world.getBlockState(pos).get(HAS_ALCHEMY_BOOK)
+                        && player.getMainHandStack().isEmpty() && player.isSneaking()){
+
+                    ItemStack book = new ItemStack(TCOTS_Items.ALCHEMY_BOOK,1);
+
+                    player.getInventory().insertStack(book);
+                    world.setBlockState(pos, state.with(HAS_ALCHEMY_BOOK, false));
+
+                    return ActionResult.SUCCESS;
+                }
+            }
+
+
             //Screen opener
             NamedScreenHandlerFactory screenHandlerFactory = ((AlchemyTableBlockEntity) world.getBlockEntity(pos));
             if (screenHandlerFactory != null) {
                 player.openHandledScreen(screenHandlerFactory);
             }
         }
+
         return ActionResult.SUCCESS;
     }
 

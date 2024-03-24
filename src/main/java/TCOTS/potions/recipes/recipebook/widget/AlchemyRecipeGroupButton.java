@@ -8,7 +8,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.widget.ToggleButtonWidget;
 
-import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.item.ItemStack;
@@ -59,9 +58,8 @@ public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
     }
 
     private void renderIcons(DrawContext context) {
-//        int i;
-//        i = this.toggled ? -2 : 0;
-        context.drawItemWithoutEntity(this.icon, this.getX() + 17, this.getY() + 5);
+
+        context.drawItemWithoutEntity(this.icon, this.getX() + 18, this.getY() + 6);
     }
 
 

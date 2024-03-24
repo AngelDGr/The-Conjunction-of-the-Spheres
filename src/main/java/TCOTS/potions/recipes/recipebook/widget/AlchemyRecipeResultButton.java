@@ -1,9 +1,6 @@
 package TCOTS.potions.recipes.recipebook.widget;
 
-import TCOTS.potions.AlcohestItem;
-import TCOTS.potions.DwarvenSpiritItem;
-import TCOTS.potions.MonsterOil_Base;
-import TCOTS.potions.WitcherPotions_Base;
+import TCOTS.potions.*;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -132,7 +129,7 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
             }
 
 
-            if(this.recipe.getResult(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getResult(null).getItem() instanceof AlcohestItem) && !(this.recipe.getResult(null).getItem() instanceof DwarvenSpiritItem)){
+            if(this.recipe.getResult(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getResult(null).getItem() instanceof WitcherAlcohol_Base)){
                 List<Text> list= new ArrayList<>();
                 int tooltipY;
                 if((((WitcherPotions_Base) this.recipe.getResult(null).getItem()).isDecoction())){

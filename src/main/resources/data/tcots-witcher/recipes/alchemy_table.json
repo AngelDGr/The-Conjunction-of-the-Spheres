@@ -1,16 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "GBG",
+    "G G",
     "SWS",
     "WWW"
   ],
   "key": {
     "G": {
       "item": "minecraft:glass_bottle"
-    },
-    "B": {
-      "item": "minecraft:book"
     },
     "S": {
       "item": "minecraft:cobblestone"

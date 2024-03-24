@@ -13,4 +13,4 @@ nests, they are know to have some kind of conscience.
 They share some similarities with the Piglins.
 
 
-{#0A880E}Susceptible to [Ogroid Oil](^tcots-witcher:alchemy/monster_oils){}.
+{#0A880E}Susceptible to {#cc341d}Ogroid Oil{}{}.

@@ -14,4 +14,4 @@ to the common zombie, skeleton, stray or husk but a lot more powerful.
 {red}No poison has effect on their rotten unlife{}.
 
 
-{#0A880E}Susceptible to [Necrophage Oil](^tcots-witcher:alchemy/monster_oils){}.
+{#0A880E}Susceptible to {#b71520}Necrophage Oil{}{}.

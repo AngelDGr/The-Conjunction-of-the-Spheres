@@ -92,7 +92,7 @@ public class TCOTS_Items {
     public static Item FOGLET_DECOCTION;
 
     //Potions
-    public static Item DWARVEN_SPIRIT;
+    public static WitcherAlcohol_Base DWARVEN_SPIRIT;
     public static Item SWALLOW_POTION;
     public static Item SWALLOW_POTION_ENHANCED;
     public static Item SWALLOW_POTION_SUPERIOR;
@@ -104,7 +104,7 @@ public class TCOTS_Items {
     public static Item CAT_POTION_SUPERIOR;
     public static Item KILLER_WHALE_POTION;
 
-    public static Item ALCOHEST;
+    public static WitcherAlcohol_Base ALCOHEST;
     public static Item AETHER;
     public static Item EMPTY_WITCHER_POTION;
 
@@ -135,11 +135,11 @@ public class TCOTS_Items {
     //Register Witcher Potion Items
     public static void registerPotions() {
         //Ingredients
-        DWARVEN_SPIRIT = registerItem("dwarven_spirit",
-                new DwarvenSpiritItem(new FabricItemSettings().maxCount(16), new StatusEffectInstance(StatusEffects.NAUSEA,200), 0));
+        DWARVEN_SPIRIT = (WitcherAlcohol_Base) registerItem("dwarven_spirit",
+                new DwarvenSpiritItem(new FabricItemSettings().maxCount(16), new StatusEffectInstance(StatusEffects.NAUSEA,200), 0, 2));
 
-        ALCOHEST = registerItem("alcohest",
-                new AlcohestItem(new FabricItemSettings().maxCount(16), new StatusEffectInstance(StatusEffects.NAUSEA, 600, 3), 0));
+        ALCOHEST = (WitcherAlcohol_Base) registerItem("alcohest",
+                new AlcohestItem(new FabricItemSettings().maxCount(16), new StatusEffectInstance(StatusEffects.NAUSEA, 600, 3), 0,4));
 
         AETHER = registerItem("aether",
                 new Item(new FabricItemSettings())
@@ -316,6 +316,7 @@ public class TCOTS_Items {
                 0
         );
 
+
         //Decoctions
         EMPTY_MONSTER_DECOCTION = registerItem("empty_monster_decoction",
                 new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(1))
@@ -410,8 +411,6 @@ public class TCOTS_Items {
         NEKKER_HEART = registerItem("nekker_heart",
                 new Item(
                         new FabricItemSettings().maxCount(16)));
-
-
     }
 
     public static Item NEST_SLAB_ITEM;
@@ -419,6 +418,7 @@ public class TCOTS_Items {
     public static Item MONSTER_NEST_ITEM;
     public static Item ALCHEMY_TABLE_ITEM;
     public static Item WITCHER_BESTIARY;
+    public static Item ALCHEMY_BOOK;
 
     public static void registerItemsMisc(){
         NEST_SLAB_ITEM  = registerBlockItem("nest_slab", TCOTS_Blocks.NEST_SLAB);
@@ -430,6 +430,8 @@ public class TCOTS_Items {
         ALCHEMY_TABLE_ITEM = registerItem("alchemy_table", new AlchemyTableItem(TCOTS_Blocks.ALCHEMY_TABLE, new FabricItemSettings()));
 
         WITCHER_BESTIARY = WitcherBestiaryItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), new FabricItemSettings().maxCount(1));
+
+        ALCHEMY_BOOK = AlchemyBookItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "alchemy_book"), new FabricItemSettings().maxCount(1));
     }
 
     private static Item registerBlockItem(String name, Block block){

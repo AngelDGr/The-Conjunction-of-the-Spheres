@@ -1,7 +1,7 @@
 package TCOTS.potions.recipes;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.potions.screen.AlchemyTableScreenHandler;
+import TCOTS.screen.AlchemyTableScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

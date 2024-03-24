@@ -2,7 +2,7 @@ package TCOTS.blocks.entity;
 
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
-import TCOTS.potions.screen.AlchemyTableScreenHandler;
+import TCOTS.screen.AlchemyTableScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
@@ -48,6 +48,7 @@ public class AlchemyTableBlockEntity extends LockableContainerBlockEntity implem
     private int progress = 0;
     private int maxProgress = 160;
 
+
     //Gecko stuff
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -76,6 +77,8 @@ public class AlchemyTableBlockEntity extends LockableContainerBlockEntity implem
                 return 2;
             }
         };
+
+
     }
     private int changeCount;
     @Override
@@ -169,7 +172,6 @@ public class AlchemyTableBlockEntity extends LockableContainerBlockEntity implem
         return recipe.isPresent();
     }
 
-
     private void craftItem() {
         if(hasRecipe()) {
         SimpleInventory inventory = new SimpleInventory(this.size());
@@ -222,10 +224,8 @@ public class AlchemyTableBlockEntity extends LockableContainerBlockEntity implem
         progress++;
     }
 
-
     private void resetProgress() {
         this.progress = 0;
     }
-
 
 }

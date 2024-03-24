@@ -2,7 +2,10 @@
     "itemgroup.tcots-witcher": "The Conjunction of the Spheres",
 
     "item.tcots-witcher.witcher_bestiary": "Monster Bestiary",
-    "tooltip.tcots-witcher.witcher_bestiary": "Learn about this new world",
+    "tooltip.tcots-witcher.witcher_bestiary": "Learn about the dangers of this new world",
+
+    "item.tcots-witcher.alchemy_book": "Alchemist Almanac",
+    "tooltip.tcots-witcher.alchemy_book": "Information about herbs and alchemy",
 
 
     "item.tcots-witcher.drowner_spawn_egg": "Drowner Spawn Egg",
@@ -95,6 +98,7 @@
 
     "block.tcots-witcher.alchemy_table": "Alchemy Table",
     "block.tcots-witcher.alchemy_table.tooltip": "Station to make Witcher Potions",
+    "block.tcots-witcher.alchemy_table.tooltip_book": "Put an Alchemy Almanac on it",
     "gui.recipe-book.tooltip.alchemy_table": "Recipe Book",
 
 
