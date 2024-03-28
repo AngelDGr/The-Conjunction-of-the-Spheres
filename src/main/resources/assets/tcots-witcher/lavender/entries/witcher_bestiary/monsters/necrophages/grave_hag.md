@@ -46,8 +46,40 @@ It can also use it tongue as weapon, making a sweep with it, causing a lot of kn
 and damaging a lot any shield that you could use.
 
 
-{dark_blue}**[Mutagen](^tcots-witcher:alchemy/decoctions)**{}
-> <item;tcots-witcher:grave_hag_mutagen>
+{dark_blue}**Mutagen**{}
+```xml owo-ui
+        <flow-layout direction="vertical">
+            <children>
+                <!--First Row-->
+                <flow-layout direction="horizontal">
+                    <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:grave_hag_mutagen
+                                    </stack>
+                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                    </children>
+                    <sizing>
+                        <horizontal method="content">1</horizontal>
+                        <vertical method="content">1</vertical>
+                    </sizing>
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+                </flow-layout>
+                
+            </children>
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>center</vertical-alignment>
+        </flow-layout>
+```
 
 ;;;;;
 

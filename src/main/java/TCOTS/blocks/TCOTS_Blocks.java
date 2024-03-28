@@ -3,6 +3,9 @@ package TCOTS.blocks;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
 import TCOTS.blocks.entity.MonsterNestBlockEntity;
+import TCOTS.blocks.plants.ArenariaBush;
+import TCOTS.blocks.plants.CelandinePlant;
+import TCOTS.blocks.plants.CrowsEyeFern;
 import TCOTS.blocks.skull.NestSkullBlock;
 import TCOTS.blocks.entity.NestSkullBlockEntity;
 import TCOTS.blocks.skull.NestWallSkullBlock;
@@ -18,6 +21,12 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 
 public class TCOTS_Blocks {
+
+    public static final Block ARENARIA_BUSH = new ArenariaBush(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH).pistonBehavior(PistonBehavior.DESTROY));
+    public static final Block CELANDINE_PLANT = new CelandinePlant(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY));
+    public static final Block CROWS_EYE_FERN = new CrowsEyeFern(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY));
+
+
     public static final Block NEST_SLAB  = new SlabBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).pistonBehavior(PistonBehavior.DESTROY).mapColor(MapColor.DIRT_BROWN));
     public static final Block NEST_SKULL  = new NestSkullBlock(FabricBlockSettings.create().strength(0.4f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block NEST_WALL_SKULL = new NestWallSkullBlock(FabricBlockSettings.create().strength(0.4f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY).dropsLike(NEST_SKULL));
@@ -26,10 +35,11 @@ public class TCOTS_Blocks {
 
     public static BlockEntityType<NestSkullBlockEntity> SKULL_NEST_ENTITY;
     public static BlockEntityType<MonsterNestBlockEntity> MONSTER_NEST_ENTITY;
-
     public static BlockEntityType<AlchemyTableBlockEntity> ALCHEMY_TABLE_ENTITY;
 
     public static void registerBlocks(){
+
+        //Blocks
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "nest_slab"), NEST_SLAB);
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "nest_skull"), NEST_SKULL);
@@ -40,7 +50,14 @@ public class TCOTS_Blocks {
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "alchemy_table"), ALCHEMY_TABLE);
 
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "celandine_plant"), CELANDINE_PLANT);
 
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "arenaria_bush"), ARENARIA_BUSH);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "crows_eye_fern"), CROWS_EYE_FERN);
+
+
+        //Block Entity
         SKULL_NEST_ENTITY = Registry.register(
                 Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(TCOTS_Main.MOD_ID, "nest_skull"),
@@ -55,7 +72,5 @@ public class TCOTS_Blocks {
                 Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(TCOTS_Main.MOD_ID, "alchemy_table"),
                 FabricBlockEntityTypeBuilder.create(AlchemyTableBlockEntity::new, ALCHEMY_TABLE).build());
-
-
     }
 }

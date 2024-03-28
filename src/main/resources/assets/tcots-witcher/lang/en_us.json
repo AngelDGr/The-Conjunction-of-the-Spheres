@@ -101,6 +101,42 @@
     "block.tcots-witcher.alchemy_table.tooltip_book": "Put an Alchemy Almanac on it",
     "gui.recipe-book.tooltip.alchemy_table": "Recipe Book",
 
+    "tcots-witcher.sounds.ingredient_pops": "Ingredients pop",
+    "item.tcots-witcher.allspice": "Allspice",
+
+    "item.tcots-witcher.arenaria": "Arenaria",
+    "block.tcots-witcher.arenaria_bush": "Arenaria Bush",
+
+    "item.tcots-witcher.celandine": "Celandine",
+    "block.tcots-witcher.celandine_plant": "Celandine Plant",
+
+    "item.tcots-witcher.lily_of_the_valley_petals": "Lily of the Valley Petals",
+    "item.tcots-witcher.allium_petals": "Allium Petals",
+
+    "item.tcots-witcher.crows_eye": "Crow's Eye",
+    "block.tcots-witcher.crows_eye_fern": "Crow's Eye Fern",
+
+    "item.tcots-witcher.aether": "Aether",
+    "item.tcots-witcher.vitriol": "Vitriol",
+
+    "item.tcots-witcher.icy_spirit": "Icy Spirit",
+    "tooltip.tcots-witcher:icy_spirit": "Usable to create Dwarven Spirit",
+    "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",
+    "tooltip.tcots-witcher:dwarven_spirit": "Base to brew most potions",
+    "item.tcots-witcher.alcohest": "Alcohest",
+    "tooltip.tcots-witcher:alcohest": "Strong alcohol used in potions",
+    "item.tcots-witcher.white_gull": "White Gull",
+    "tooltip.tcots-witcher:white_gull": "Strong alcohol used in superior potions",
+
+    "item.tcots-witcher.village_herbal": "Village Herbal",
+    "tooltip.tcots-witcher:village_herbal": "Relaxing beverage",
+    "item.tcots-witcher.cherry_cordial": "Cherry Cordial",
+    "tooltip.tcots-witcher:cherry_cordial": "Inspiring and sweet beverage",
+    "item.tcots-witcher.mandrake_cordial": "Mandrake Cordial",
+    "tooltip.tcots-witcher:mandrake_cordial": "Strong beverage",
+
+
+    "tooltip.tcots-witcher.refill": "Can be used to refill %s slots",
 
 
     "tcots-witcher.tooltip.toxicity": "Toxicity: %s",
@@ -109,11 +145,6 @@
     "tcots-witcher.tooltip.gui.oil_damage": "Damage: %s",
     "tcots-witcher.tooltip.gui.oil_uses": "Uses: %s",
 
-    "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",
-    "tooltip.tcots-witcher.dwarven_spirit": "Base to brew most Witcher Potions",
-    "item.tcots-witcher.alcohest": "Alcohest",
-    "tooltip.tcots-witcher.alcohest": "Strong alcohol used in potions",
-    "tooltip.tcots-witcher.refill": "Can be used to refill potions",
     "tooltip.tcots-witcher.empty_witcher_bottle_1": "Refilled in the Alchemy Table or",
     "tooltip.tcots-witcher.empty_witcher_bottle_2": "by sleeping, uses strong alcohol",
     "tooltip.tcots-witcher.oils": "%s attack against %s",
@@ -124,8 +155,6 @@
     "tcots-witcher.sounds.potion_refill": "Potion refilled",
     "tcots-witcher.sounds.oil_applied": "Monster oil applied",
     "tcots-witcher.sounds.oil_ran_out": "Monster oil ran out ",
-
-    "item.tcots-witcher.aether": "Aether",
 
     "item.tcots-witcher.empty_witcher_potion": "Empty %s",
 

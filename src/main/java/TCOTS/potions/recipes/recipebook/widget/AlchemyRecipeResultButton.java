@@ -198,6 +198,15 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
                             this.getX() + 3,
                             this.getY() + 3);
 
+                    int resultCount = recipe.getResult(null).getCount();
+
+                    //Draw result number
+                    if(resultCount>1){
+                        context.getMatrices().push();
+                        context.getMatrices().translate(0,0,200);
+                        context.drawText(textRenderer, String.valueOf(resultCount), this.getX() + 3, this.getY() + 11, 0xffffff, true);
+                        context.getMatrices().pop();}
+
                     //Draw ingredients
                     for (int l = 0; l < recipe.getIngredients().size(); l++) {
                         ItemStack stack = recipe.getIngredients().get(l).getMatchingStacks()[0];

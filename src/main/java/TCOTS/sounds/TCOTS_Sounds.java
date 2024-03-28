@@ -17,7 +17,6 @@ public class TCOTS_Sounds {
     public static SoundEvent DROWNER_LUNGE = registerSoundEvent("drowner_lunge");
     public static SoundEvent DROWNER_EMERGING = registerSoundEvent("drowner_emerging");
     public static SoundEvent DROWNER_DIGGING = registerSoundEvent("drowner_digging");
-//    public static SoundEvent DROWNER_SCREAM = registerSoundEvent("drowner_scream");
 
     //Rotfiend
     public static SoundEvent ROTFIEND_ATTACK = registerSoundEvent("rotfiend_attack");
@@ -67,18 +66,22 @@ public class TCOTS_Sounds {
     public static SoundEvent NEKKER_EMERGING = registerSoundEvent("nekker_emerging");
     public static SoundEvent NEKKER_DIGGING = registerSoundEvent("nekker_digging");
 
+
+    //Misc
     public static SoundEvent POTION_REFILLED = registerSoundEvent("potion_refill");
 
     public static SoundEvent OIL_APPLIED = registerSoundEvent("oil_applied");
 
     public static SoundEvent OIL_RAN_OUT = registerSoundEvent("oil_ran_out");
 
+    public static SoundEvent INGREDIENT_POPS = registerSoundEvent("ingredient_pops");
+
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(TCOTS_Main.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
 
-    public static void init() {
-        TCOTS_Main.LOGGER.debug("Registering sounds");
+    public static void registerSounds() {
+
     }
 }

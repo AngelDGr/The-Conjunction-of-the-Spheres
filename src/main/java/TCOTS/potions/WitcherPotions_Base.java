@@ -15,7 +15,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -23,22 +22,19 @@ import net.minecraft.stat.Stats;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 
 public class WitcherPotions_Base extends PotionItem {
-
     StatusEffectInstance effectInstance;
-
     int toxicity;
-
     boolean decoction;
 
     public WitcherPotions_Base(Settings settings, StatusEffectInstance effect, int toxicity, boolean decoction){
@@ -46,6 +42,25 @@ public class WitcherPotions_Base extends PotionItem {
         this.effectInstance=effect;
         this.toxicity=toxicity;
         this.decoction=decoction;
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        if(this.isDecoction()){
+         return Text.translatable(this.getTranslationKey()).withColor(0x41d331);
+        }
+        else {
+            return super.getName(stack);
+        }
+    }
+
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        return switch (effectInstance.getAmplifier()) {
+            case 0 -> Rarity.COMMON;
+            case 1, 2 -> Rarity.UNCOMMON;
+            default -> super.getRarity(stack);
+        };
     }
 
     public StatusEffectInstance getStatusEffect(){
@@ -60,14 +75,9 @@ public class WitcherPotions_Base extends PotionItem {
         }
 
         if (!world.isClient) {
-
             if(getStatusEffect().getEffectType().isInstant()){
-                this.getStatusEffect().getEffectType().applyInstantEffect(playerEntity, playerEntity, user, this.getStatusEffect().getAmplifier(), 1.0);
-            }
-            else{
-                user.addStatusEffect(new StatusEffectInstance(getStatusEffect()));
-            }
-
+                this.getStatusEffect().getEffectType().applyInstantEffect(playerEntity, playerEntity, user, this.getStatusEffect().getAmplifier(), 1.0);}
+            else{user.addStatusEffect(new StatusEffectInstance(getStatusEffect()));}
         }
 
         if (playerEntity != null) {
@@ -76,25 +86,25 @@ public class WitcherPotions_Base extends PotionItem {
                 stack.decrement(1);
             }
         }
+
         ItemStack stack_Empty;
 
         if(!decoction){
-            stack_Empty = new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION);
+            stack_Empty = switch (this.getMaxCount()) {
+                default -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_2);
+                case 3 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_3);
+                case 4 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_4);
+                case 5 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_5);
+            };
         }
-        else {
-            stack_Empty = new ItemStack(TCOTS_Items.EMPTY_MONSTER_DECOCTION);
-        }
+        else {stack_Empty = new ItemStack(TCOTS_Items.EMPTY_MONSTER_DECOCTION);}
 
         stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
-
-
-
         if (playerEntity == null || !playerEntity.getAbilities().creativeMode) {
-            if (stack.isEmpty()) {
-                return stack_Empty;
-
-            }
+//            if (stack.isEmpty()) {
+//                return stack_Empty;
+//            }
 
             if (playerEntity != null) {
                 //If the player inventory it's full

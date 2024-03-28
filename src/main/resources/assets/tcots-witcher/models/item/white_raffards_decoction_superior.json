@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "tcots-witcher:item/alchemy/potions/white_raffards_decoction"
+    "layer0": "tcots-witcher:item/alchemy/potions/white_raffards_decoction_superior"
   }
 
 }

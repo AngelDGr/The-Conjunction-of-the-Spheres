@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "tcots-witcher:block/plants/celandine_plant3"
+  }
+}

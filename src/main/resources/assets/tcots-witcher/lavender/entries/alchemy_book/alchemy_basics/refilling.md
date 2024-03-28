@@ -2,7 +2,15 @@
 {
   "title": "Refilling",
   "icon_sprite": "tcots-witcher:alchemy_almanac/category/refilling",
-  "ordinal": 8
+  "ordinal": 8,
+  "associated_items": [
+    "tcots-witcher:dwarven_spirit",
+    "tcots-witcher:alcohest",
+    "tcots-witcher:cherry_cordial",
+    "tcots-witcher:icy_spirit",
+    "tcots-witcher:mandrake_cordial",
+    "tcots-witcher:village_herbal"
+  ]
 }
 ```
 
@@ -33,11 +41,17 @@ and use it in the table.
 
 To refill them by sleeping, you also need to have some kind of alcohol with you,
 by staying in the bed for a while the concoctions are going to refill automatically.
+When you refill in this way, the __alcohest has priority for refilling over others__.
 
 ;;;;;
 
 As note, each type of alcohol it's different, and each one refill a different quantity of
 concoctions:
 
-- {#ef0007}Alcohest{}: 4 slots
-- {#209740}Dwarven Spirit{}: 2 slots
+- {#eecc59}Icy Spirit{}: {black}1 slot.{}
+- {#cc9395}Cherry Cordial{}: {black}2 slots.{}
+- {#209740}Dwarven Spirit{}: {black}2 slots.{}
+- {#ef0007}Alcohest{}: {black}4 slots.{}
+- {#db3800}Village Herbal{}: {black}4 slots.{}
+- {#101010}Mandrake Cordial{}: {black}6 slots.{}
+- {#4d4c3b}White Gull{}: {black}8 slots.{}

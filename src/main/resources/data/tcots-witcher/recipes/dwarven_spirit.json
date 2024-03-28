@@ -6,11 +6,14 @@
 
   "ingredients": [
     {
-      "item": "minecraft:oxeye_daisy"
+      "item": "tcots-witcher:icy_spirit"
+    },
+    {
+      "item": "tcots-witcher:lily_of_the_valley_petals"
     }
   ],
 
-  "ingredient_counters": [1],
+  "ingredient_counters": [2,1],
 
   "base": {
     "item": "minecraft:glass_bottle"

@@ -35,12 +35,14 @@ public class TCOTS_Main implements ModInitializer {
 		GeckoLib.initialize();
 		TCOTS_Blocks.registerBlocks();
 		TCOTS_Effects.registerEffects();
+		TCOTS_Items.registerAlchemyIngredients();
 		TCOTS_Items.registerItemsMisc();
 		TCOTS_Items.registerDrops();
 		TCOTS_Items.registerPotions();
 		TCOTS_ItemsGroups.registerGroupItems();
+		TCOTS_Items.modifyLootTables();
 		AlchemyTableRecipesRegister.registerPotionRecipes();
-		TCOTS_Sounds.init();
+		TCOTS_Sounds.registerSounds();
 		TCOTS_Entities.addSpawns();
 		TCOTS_Particles.registerParticles();
 
@@ -62,7 +64,6 @@ public class TCOTS_Main implements ModInitializer {
 
 		//Nekker
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
-
 
 	}
 

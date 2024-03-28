@@ -11,9 +11,11 @@ import TCOTS.particles.*;
 import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
 import TCOTS.screen.AlchemyTableScreen;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 
@@ -38,6 +40,13 @@ public class TCOTS_Client implements ClientModInitializer {
         EntityRendererRegistry.register(TCOTS_Entities.WATER_HAG_MUD_BALL, FlyingItemEntityRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
+
+
+        //Blocks
+        BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.ARENARIA_BUSH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.CELANDINE_PLANT, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.CROWS_EYE_FERN, RenderLayer.getCutout());
+
 
         //BlockEntity
         BlockEntityRendererFactories.register(TCOTS_Blocks.SKULL_NEST_ENTITY, NestSkullBlockRenderer::new);

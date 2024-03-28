@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+
+  "order": 0.2,
+  "category":"misc",
+
+  "ingredients": [
+    {
+      "item": "minecraft:moss_carpet"
+    },
+    {
+      "item":"tcots-witcher:allspice"
+    },
+    {
+      "item":"minecraft:fern"
+    },
+    {
+      "item":"tcots-witcher:allium_petals"
+    },
+    {
+      "item":"minecraft:lily_pad"
+    }
+  ],
+
+  "ingredient_counters": [1,1,1,1,1],
+
+  "base": {
+    "item": "tcots-witcher:white_gull"
+  },
+
+  "result": {
+    "item": "tcots-witcher:vitriol",
+    "count": 2
+  }
+}

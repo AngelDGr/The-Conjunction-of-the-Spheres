@@ -128,7 +128,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         PlayerEntity thisObject = (PlayerEntity)(Object)this;
         if(target instanceof LivingEntity){
             if(thisObject.getMainHandStack().hasNbt()){
-                float h = thisObject.getAttackCooldownProgress(0.5f);
                 NbtCompound nbt=thisObject.getMainHandStack().getNbt();
 
                 assert nbt != null;
@@ -295,7 +294,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Unique
     List<WitcherAlcohol_Base> list_alcohol = Arrays.asList(
             TCOTS_Items.ALCOHEST,
-            TCOTS_Items.DWARVEN_SPIRIT
+
+            TCOTS_Items.VILLAGE_HERBAL,
+            TCOTS_Items.CHERRY_CORDIAL,
+            TCOTS_Items.MANDRAKE_CORDIAL,
+
+            TCOTS_Items.ICY_SPIRIT,
+            TCOTS_Items.DWARVEN_SPIRIT,
+            TCOTS_Items.WHITE_GULL
     );
 
     @Inject(method = "wakeUp(ZZ)V", at = @At("TAIL"))

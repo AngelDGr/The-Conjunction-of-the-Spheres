@@ -51,10 +51,76 @@ The foglet and the two illusions are going to attack you, and only when they hit
 visible and vulnerable again, take this moment to {#0A880E}kill it rapidly before transforms again in fog.{}
 
 {blue}**Loot**{}
-> <item;tcots-witcher:foglet_teeth>
+```xml owo-ui
+        <flow-layout direction="vertical">
+            <children>
+                <!--First Row-->
+                <flow-layout direction="horizontal">
+                    <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:foglet_teeth
+                                    </stack>
+                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
+                    </children>
+                    <sizing>
+                        <horizontal method="content">1</horizontal>
+                        <vertical method="content">1</vertical>
+                    </sizing>
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+                </flow-layout>
+                
+            </children>
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>center</vertical-alignment>
+        </flow-layout>
+```
 
-{dark_blue}**[Mutagen](^tcots-witcher:alchemy/decoctions)**{}
-> <item;tcots-witcher:foglet_mutagen>
+{dark_blue}**Mutagen**{}
+```xml owo-ui
+        <flow-layout direction="vertical">
+            <children>
+                <!--First Row-->
+                <flow-layout direction="horizontal">
+                    <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:foglet_mutagen
+                                    </stack>
+                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
+                    </children>
+                    <sizing>
+                        <horizontal method="content">1</horizontal>
+                        <vertical method="content">1</vertical>
+                    </sizing>
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+                </flow-layout>
+                
+            </children>
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>center</vertical-alignment>
+        </flow-layout>
+```
 
 ;;;;;
 

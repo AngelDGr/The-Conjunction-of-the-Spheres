@@ -19,16 +19,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class MonsterOil_Base extends Item {
-
-    //xTODO: Add tooltip about the oils to the swords
-    //xTODO: Add the Hanged Man's and Beast Oils
-
     //Levels:
         //Normal:   10% ---> 2.0 damage = 1.00 hearts                Smite I  : 2.5  damage
         //Enhanced: 25% ---> 4.0 damage = 2.00 hearts                Smite II : 5.0  damage
         //Superior: 50% ---> 6.0 damage = 3.00 hearts                Smite III: 7.5  damage
         //                                                           Smite IV : 10.0 damage
         //                                                           Smite V  : 12.5 damage
+
 
     EntityGroup group;
     String id_group;
@@ -109,15 +106,25 @@ public class MonsterOil_Base extends Item {
     }
 
     @Override
+    public Rarity getRarity(ItemStack stack) {
+        return switch (this.level) {
+            case 2, 3 -> Rarity.UNCOMMON;
+            default -> Rarity.COMMON;
+        };
+    }
+
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         NbtCompound nbt;
         if(user.getMainHandStack().getItem() instanceof SwordItem || user.getMainHandStack().getItem() instanceof AxeItem){
             if(user.getMainHandStack().hasNbt()){
                 nbt = user.getMainHandStack().getNbt();
+                assert nbt != null;
                 if (nbt.contains("Monster Oil")){
                     NbtCompound monsterOil= user.getMainHandStack().getSubNbt("Monster Oil");
 
                     //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
+                    assert monsterOil != null;
                     if(monsterOil.getInt("Uses")==uses && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==level){
                         return TypedActionResult.fail(user.getStackInHand(hand));
                     }
@@ -171,10 +178,12 @@ public class MonsterOil_Base extends Item {
         if(otherStack.getItem() instanceof SwordItem || otherStack.getItem() instanceof AxeItem){
             if(otherStack.hasNbt()){
                 nbt = otherStack.getNbt();
+                assert nbt != null;
                 if (nbt.contains("Monster Oil")){
                     NbtCompound monsterOil= otherStack.getSubNbt("Monster Oil");
 
                     //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
+                    assert monsterOil != null;
                     if(monsterOil.getInt("Uses")==uses && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==level){
                         return false;
                     }
@@ -220,10 +229,12 @@ public class MonsterOil_Base extends Item {
         if(itemStackInSlot.getItem() instanceof SwordItem || itemStackInSlot.getItem() instanceof AxeItem){
             if(itemStackInSlot.hasNbt()){
                 nbt = itemStackInSlot.getNbt();
+                assert nbt != null;
                 if (nbt.contains("Monster Oil")){
                     NbtCompound monsterOil= itemStackInSlot.getSubNbt("Monster Oil");
 
                     //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
+                    assert monsterOil != null;
                     if(monsterOil.getInt("Uses")==uses && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==level){
                         return false;
                     }

@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "tcots-witcher:item/alchemy/ingredients/lily_of_the_valley_petals"
+  }
+
+}

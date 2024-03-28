@@ -24,6 +24,14 @@
     ]
   },
 
+  "ingredient_pops": {
+    "subtitle": "tcots-witcher.sounds.ingredient_pops",
+    "sounds": [
+      "minecraft:item/sweet_berries/pick_from_bush1",
+      "minecraft:item/sweet_berries/pick_from_bush2"
+    ]
+  },
+
   "drowner_attack": {
     "subtitle": "tcots-witcher.sounds.drowner_attack",
     "sounds": [

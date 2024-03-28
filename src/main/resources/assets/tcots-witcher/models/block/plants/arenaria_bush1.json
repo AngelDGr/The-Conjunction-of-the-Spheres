@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "tcots-witcher:block/plants/arenaria_bush1"
+  }
+}

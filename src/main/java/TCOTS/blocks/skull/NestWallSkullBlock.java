@@ -2,14 +2,11 @@ package TCOTS.blocks.skull;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import io.wispforest.owo.config.annotation.Nest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.SwordItem;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.BlockMirror;
@@ -28,7 +25,7 @@ public class NestWallSkullBlock extends NestSkullBlock {
     private static final Map<Direction, VoxelShape> FACING_TO_SHAPE = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.createCuboidShape(4.0, 4.0, 8.0, 12.0, 12.0, 16.0), Direction.SOUTH, Block.createCuboidShape(4.0, 4.0, 0.0, 12.0, 12.0, 8.0), Direction.EAST, Block.createCuboidShape(0.0, 4.0, 4.0, 8.0, 12.0, 12.0), Direction.WEST, Block.createCuboidShape(8.0, 4.0, 4.0, 16.0, 12.0, 12.0)));
     public NestWallSkullBlock(Settings settings) {
         super(settings);
-        this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
+        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
     }
     @Override
     public String getTranslationKey() {
@@ -42,14 +39,13 @@ public class NestWallSkullBlock extends NestSkullBlock {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction[] directions;
         BlockState blockState = this.getDefaultState();
         World blockView = ctx.getWorld();
         BlockPos blockPos = ctx.getBlockPos();
-        for (Direction direction : directions = ctx.getPlacementDirections()) {
+        for (Direction direction : ctx.getPlacementDirections()) {
             if (!direction.getAxis().isHorizontal()) continue;
             Direction direction2 = direction.getOpposite();
-            blockState = (BlockState)blockState.with(FACING, direction2);
+            blockState = blockState.with(FACING, direction2);
             if (blockView.getBlockState(blockPos.offset(direction)).canReplace(ctx)) continue;
             return blockState;
         }
@@ -58,7 +54,7 @@ public class NestWallSkullBlock extends NestSkullBlock {
 
     @Override
     public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return (BlockState)state.with(FACING, rotation.rotate(state.get(FACING)));
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
     }
 
     @Override

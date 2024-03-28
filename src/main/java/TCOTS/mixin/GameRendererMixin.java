@@ -28,8 +28,6 @@ public abstract class GameRendererMixin {
 
     @Shadow public abstract void disablePostProcessor();
 
-    @Shadow private float skyDarkness;
-
     @Inject(method =
             "tick",
             at = @At("TAIL"))

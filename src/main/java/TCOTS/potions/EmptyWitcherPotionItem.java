@@ -39,8 +39,7 @@ public class EmptyWitcherPotionItem extends Item {
 
             if(potion!=null){
                 return Text.translatable("item.tcots-witcher.empty_witcher_potion", potion.getName().getString());}
-            else{
-                return Text.translatable("item.tcots-witcher.empty_witcher_potion", "Missigno");}
+            else{return Text.translatable("item.tcots-witcher.empty_witcher_potion", "Missigno");}
         }
         else{
             return Text.translatable("item.tcots-witcher.empty_witcher_potion", "Missigno");}

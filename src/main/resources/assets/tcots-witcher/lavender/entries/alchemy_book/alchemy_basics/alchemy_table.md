@@ -24,7 +24,7 @@ for a while, and you get your concoction.
 
 ;;;;;
 
-The recipes can be very complex, so for an easy use __put this book lectern the table has,
+The recipes can be very complex, so for an easy use __put this book in the lectern the table has,
 that way you can access all the recipes easily.__
 
 

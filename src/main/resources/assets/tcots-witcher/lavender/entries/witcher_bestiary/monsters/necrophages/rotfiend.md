@@ -49,7 +49,40 @@ The only way to prevent this explosion it's {#0A880E}killing it when the creatur
 
 
 {blue}**Loot**{}
-> <item;tcots-witcher:rotfiend_blood> 
+```xml owo-ui
+        <flow-layout direction="vertical">
+            <children>
+                <!--First Row-->
+                <flow-layout direction="horizontal">
+                    <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:rotfiend_blood
+                                    </stack>
+                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                                               
+                    </children>
+                    <sizing>
+                        <horizontal method="content">1</horizontal>
+                        <vertical method="content">1</vertical>
+                    </sizing>
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+                </flow-layout>
+                
+            </children>
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>center</vertical-alignment>
+        </flow-layout>
+```
 
 ;;;;;
 

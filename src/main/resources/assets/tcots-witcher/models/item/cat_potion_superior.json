@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "tcots-witcher:item/alchemy/potions/cat_potion"
+    "layer0": "tcots-witcher:item/alchemy/potions/cat_potion_superior"
   }
 
 }

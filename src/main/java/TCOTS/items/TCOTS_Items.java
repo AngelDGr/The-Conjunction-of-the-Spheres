@@ -7,6 +7,13 @@ import TCOTS.items.blocks.AlchemyTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
 import TCOTS.potions.*;
+import TCOTS.potions.recipes.AlchemyTableRecipe;
+import io.wispforest.lavender.client.LavenderBookScreen;
+import io.wispforest.lavender.md.compiler.BookCompiler;
+import io.wispforest.lavender.md.features.RecipeFeature;
+import io.wispforest.owo.ui.component.Components;
+import io.wispforest.owo.ui.container.Containers;
+import io.wispforest.owo.ui.core.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityGroup;
@@ -14,22 +21,65 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.math.Direction;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class TCOTS_Items {
 
     //xTODO: Add new way to craft the potions
         //TODO: Add new alchemy ingredients (mushrooms, flowers?
+            //Plants
+            //xTODO: Allspice
+            //xTODO: Arenaria
+            //xTODO: Balisse fruit - Sweet Berries
+            //TODO: Beggartick blossoms - Rose Petals
+            //xTODO: Berbercane fruit - Glow Berries
+            //TODO: Bison grass - Bought
+            //?xTODO: Bloodmoss - Moss Carpet
+            //xTODO: Blowball - Dandelion
+            //TODO: Bryonia
+            //xTODO: Buckthorn - Kelp
+            //xTODO: Celandine
+            //xTODO: Cortinarius - Brown Mushroom
+            //xTODO: Crow's eye
+            //TODO: Ergot seeds - Poisonous potato like
+            //TODO: Fool's parsley leaves - Azure Bluet Petals
+            //TODO: Ginatia petals - Peony Petals
+            //xTODO: Green mold - Moss Block
+            //TODO: Han fiber
+            //xTODO: Hellebore petals - Allium Petals
+            //TODO: Honeysuckle
+            //TODO: Hop umbels
+            //xTODO: Hornwort - Lily pad
+            //xTODO: Longrube - Red mushroom
+            //TODO: Mandrake/ root
+            //TODO: Mistletoe - Oxeye Daisy Petals
+            //xTODO: Moleyarrow - Sunflower
+            //xTODO: Nostrix - Glow Lichen
+            //TODO: Puffball
+            //xTODO: Pringrape - Flowering Azalea
+            //xTODO: Ranogrin - Fern
+            //xTODO: Ribleaf - Leaves?
+            //TODO: Sewant mushrooms
+            //TODO: Verbena
+            //xTODO: White myrtle petals - Lily of the Valley Petals
+            //TODO: Wolfsbane
+
         //and alcohol)
         //TODO: Add more Potions
             //Witcher 3 Potions
             //xTODO: Swallow: Add when added Drowners
             //xTODO: White Raffard's Decoction: Add when added Nekkers
             //xTODO: Killer Whale: Add when added Drowners
-            //TODO: Cat: Can be added, crafted with Water essence
+            //xTODO: Cat: Can be added, crafted with Water essence
             //TODO: Black Blood: Add when added Ghouls
             //TODO: Maribor Forest: Add when added Alghouls
             //TODO: White Honey: Add when added toxicity mechanic
@@ -92,7 +142,6 @@ public class TCOTS_Items {
     public static Item FOGLET_DECOCTION;
 
     //Potions
-    public static WitcherAlcohol_Base DWARVEN_SPIRIT;
     public static Item SWALLOW_POTION;
     public static Item SWALLOW_POTION_ENHANCED;
     public static Item SWALLOW_POTION_SUPERIOR;
@@ -104,10 +153,17 @@ public class TCOTS_Items {
     public static Item CAT_POTION_SUPERIOR;
     public static Item KILLER_WHALE_POTION;
 
-    public static WitcherAlcohol_Base ALCOHEST;
-    public static Item AETHER;
-    public static Item EMPTY_WITCHER_POTION;
 
+    public static Item EMPTY_WITCHER_POTION_2;
+    public static Item EMPTY_WITCHER_POTION_3;
+    public static Item EMPTY_WITCHER_POTION_4;
+    public static Item EMPTY_WITCHER_POTION_5;
+
+
+    //Splash Potions
+    public static Item SWALLOW_SPLASH;
+    public static Item KILLER_WHALE_SPLASH;
+    public static Item WHITE_RAFFARDS_DECOCTION_SPLASH;
 
     public static Item NECROPHAGE_OIL;
     public static Item ENHANCED_NECROPHAGE_OIL;
@@ -127,24 +183,10 @@ public class TCOTS_Items {
 
     public static Item EMPTY_OIL;
 
-    //Splash Potions
-    public static Item SWALLOW_SPLASH;
-    public static Item KILLER_WHALE_SPLASH;
-    public static Item WHITE_RAFFARDS_DECOCTION_SPLASH;
+
 
     //Register Witcher Potion Items
     public static void registerPotions() {
-        //Ingredients
-        DWARVEN_SPIRIT = (WitcherAlcohol_Base) registerItem("dwarven_spirit",
-                new DwarvenSpiritItem(new FabricItemSettings().maxCount(16), new StatusEffectInstance(StatusEffects.NAUSEA,200), 0, 2));
-
-        ALCOHEST = (WitcherAlcohol_Base) registerItem("alcohest",
-                new AlcohestItem(new FabricItemSettings().maxCount(16), new StatusEffectInstance(StatusEffects.NAUSEA, 600, 3), 0,4));
-
-        AETHER = registerItem("aether",
-                new Item(new FabricItemSettings())
-        );
-
 
         //Oils
         EMPTY_OIL = registerItem("empty_oil",
@@ -152,7 +194,7 @@ public class TCOTS_Items {
         );
 
         NECROPHAGE_OIL=registerItem("oil_necrophage",
-                new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 20,1)
+                new MonsterOil_Base(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON), TCOTS_Entities.NECROPHAGES, 20,1)
         );
         ENHANCED_NECROPHAGE_OIL=registerItem("oil_necrophage_enhanced",
                 new MonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 40,2)
@@ -192,9 +234,20 @@ public class TCOTS_Items {
         );
 
 
-
-        EMPTY_WITCHER_POTION = registerItem("empty_witcher_potion",
+        EMPTY_WITCHER_POTION_2 = registerItem("empty_witcher_potion2",
                 new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(2))
+        );
+
+        EMPTY_WITCHER_POTION_3 = registerItem("empty_witcher_potion3",
+                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(3))
+        );
+
+        EMPTY_WITCHER_POTION_4 = registerItem("empty_witcher_potion4",
+                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(4))
+        );
+
+        EMPTY_WITCHER_POTION_5 = registerItem("empty_witcher_potion5",
+                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(5))
         );
 
         //Potions
@@ -413,6 +466,144 @@ public class TCOTS_Items {
                         new FabricItemSettings().maxCount(16)));
     }
 
+    //TODO: Add buy mechanic to alcohol
+    //Alcohol
+    public static WitcherAlcohol_Base ICY_SPIRIT;
+    public static WitcherAlcohol_Base DWARVEN_SPIRIT;
+    public static WitcherAlcohol_Base ALCOHEST;
+    public static WitcherAlcohol_Base WHITE_GULL;
+    public static WitcherAlcohol_Base VILLAGE_HERBAL;
+    public static WitcherAlcohol_Base CHERRY_CORDIAL;
+    public static WitcherAlcohol_Base MANDRAKE_CORDIAL;
+
+
+    //Substances
+    public static Item AETHER;
+    public static Item VITRIOL;
+
+    //TODO: Make the herbs spawn in the world
+    //Herbs
+    public static Item ALLSPICE;
+    public static Item ARENARIA;
+    public static Item CELANDINE;
+    public static Item LILY_OF_THE_VALLEY_PETALS;
+    public static Item CROWS_EYE;
+    public static Item ALLIUM_PETALS;
+
+    public static void registerAlchemyIngredients(){
+
+        //Ingredients
+        ICY_SPIRIT = (WitcherAlcohol_Base) registerItem("icy_spirit",
+                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(64),
+                        Arrays.asList(
+                        new StatusEffectInstance(StatusEffects.NAUSEA,200, 0),
+                        new StatusEffectInstance(StatusEffects.SATURATION,10, 1)),
+                        1));
+
+        DWARVEN_SPIRIT = (WitcherAlcohol_Base) registerItem("dwarven_spirit",
+                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(16),
+                        List.of(new StatusEffectInstance(StatusEffects.NAUSEA, 1, 200)),
+                        2));
+
+        ALCOHEST = (WitcherAlcohol_Base) registerItem("alcohest",
+                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(16),
+                        List.of(new StatusEffectInstance(StatusEffects.NAUSEA, 600, 2)),
+                        4));
+
+        WHITE_GULL = (WitcherAlcohol_Base) registerItem("white_gull",
+                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(8),
+                        Arrays.asList(
+                                new StatusEffectInstance(StatusEffects.NAUSEA, 1200, 3),
+                                new StatusEffectInstance(StatusEffects.POISON, 40, 1)),
+                        8));
+
+
+        VILLAGE_HERBAL = (WitcherAlcohol_Base) registerItem("village_herbal",
+                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(8),
+                        Arrays.asList(
+                                new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1),
+                                new StatusEffectInstance(StatusEffects.REGENERATION,200,0)),
+                        4));
+
+        CHERRY_CORDIAL = (WitcherAlcohol_Base) registerItem("cherry_cordial",
+                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(16),
+                        Arrays.asList(
+                                new StatusEffectInstance(StatusEffects.NAUSEA, 200,1),
+                                new StatusEffectInstance(StatusEffects.ABSORPTION, 200,0)),
+                        2));
+
+        MANDRAKE_CORDIAL = (WitcherAlcohol_Base) registerItem("mandrake_cordial",
+                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(8),
+                        Arrays.asList(
+                                new StatusEffectInstance(StatusEffects.NAUSEA, 400, 2),
+                                new StatusEffectInstance(StatusEffects.RESISTANCE, 400, 0)),
+                        6));
+
+
+        AETHER = registerItem("aether",
+                new Item(new FabricItemSettings()));
+
+        VITRIOL = registerItem("vitriol",
+                new Item(new FabricItemSettings()));
+
+
+        //Plants
+        ALLSPICE = registerItem("allspice",
+                new Item(
+                        new FabricItemSettings().maxCount(64)));
+
+        ARENARIA = registerItem("arenaria",
+                new AliasedBlockItem(TCOTS_Blocks.ARENARIA_BUSH,
+                        new FabricItemSettings().maxCount(64)));
+
+        CELANDINE = registerItem("celandine",
+                new AliasedBlockItem(TCOTS_Blocks.CELANDINE_PLANT,
+                        new FabricItemSettings().maxCount(64)));
+
+        CROWS_EYE = registerItem("crows_eye",
+                new AliasedBlockItem(TCOTS_Blocks.CROWS_EYE_FERN,
+                        new FabricItemSettings().maxCount(64)));
+
+        LILY_OF_THE_VALLEY_PETALS = registerItem("lily_of_the_valley_petals",
+                new Item(
+                        new FabricItemSettings().maxCount(64)));
+
+        ALLIUM_PETALS = registerItem("allium_petals",
+                new Item(
+                        new FabricItemSettings().maxCount(64)));
+    }
+
+    public static void modifyLootTables(){
+//        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) ->{
+//            if(Blocks.LILY_OF_THE_VALLEY.getLootTableId().equals(id) && source.isBuiltin()){
+//                LootPool.Builder Poolbuilder = LootPool.builder()
+//                        .rolls(ConstantLootNumberProvider.create(1))
+//                        .conditionally(RandomChanceLootCondition.builder(1))
+//                        .with(AlternativeEntry.builder(ItemEntry.builder(Items.LILY_OF_THE_VALLEY).conditionally(SurvivesExplosionLootCondition.builder())
+//                                        .alternatively(
+//                                                ItemEntry.builder(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS))
+//                                                .conditionally(AnyOfLootCondition.builder(
+//                                                        MatchToolLootCondition.builder(
+//                                                                ItemPredicate.Builder.create().items(Items.SHEARS))))
+//
+//                                        )
+//                        );
+//
+//                tableBuilder.modifyPools( builder -> {
+//                    builder
+//                            .rolls(ConstantLootNumberProvider.create(1))
+//                            .with(
+//                                    AlternativeEntry.builder(ItemEntry.builder(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS)))
+//                            .conditionally(AnyOfLootCondition.builder(
+//                                    MatchToolLootCondition.builder(
+//                                            ItemPredicate.Builder.create().items(Items.SHEARS))))
+//                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2,4)))
+//                    ;}
+//                );
+//            }
+//        });
+    }
+
     public static Item NEST_SLAB_ITEM;
     public static Item NEST_SKULL_ITEM;
     public static Item MONSTER_NEST_ITEM;
@@ -432,7 +623,128 @@ public class TCOTS_Items {
         WITCHER_BESTIARY = WitcherBestiaryItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), new FabricItemSettings().maxCount(1));
 
         ALCHEMY_BOOK = AlchemyBookItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "alchemy_book"), new FabricItemSettings().maxCount(1));
+
+        //Register Recipe Previews
+        LavenderBookScreen.registerRecipePreviewBuilder(new Identifier(TCOTS_Main.MOD_ID, "alchemy_book"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
+
+        LavenderBookScreen.registerRecipePreviewBuilder(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
     }
+
+    private static final RecipeFeature.RecipePreviewBuilder<AlchemyTableRecipe> alchemyTable_RecipePreviewBuilder = new RecipeFeature.RecipePreviewBuilder<>() {
+        @Override
+        public @NotNull Component buildRecipePreview(BookCompiler.ComponentSource componentSource, RecipeEntry<AlchemyTableRecipe> recipeEntry) {
+            Identifier TEXTURE_ID = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/alchemy_book_gui.png");
+            //Get the recipe
+            var recipe = recipeEntry.value();
+
+            //Makes how it's going to flow the content in root
+            //Size horizontal       and      vertical
+            var root = Containers.horizontalFlow(Sizing.content(), Sizing.fixed(41));
+            root.verticalAlignment(VerticalAlignment.CENTER).horizontalAlignment(HorizontalAlignment.CENTER);
+
+            //Makes how it's going to flow the content in resultContainer
+            //Horizontal
+            var resultContainer = Containers.horizontalFlow(Sizing.fixed(111), Sizing.fixed(41));
+            resultContainer.horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER);
+
+            root.child(resultContainer);
+
+            //Add child for result item
+            resultContainer.child(
+                    //Makes a container of Item Stack
+                    Containers.stack(Sizing.fixed(22), Sizing.fixed(22))
+                            //Add as child the result
+                            .child(Components.item(recipe.getResult(null)).showOverlay(true).setTooltipFromStack(true))
+                            //Add as child the texture
+                            .child(Components.texture(TEXTURE_ID,
+                                    435, 144,
+                                    22, 22,
+                                    512, 256).blend(true))
+                            //Put in the result specific place
+                            .positioning(Positioning.absolute(36, 0))
+                            //Align it
+                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
+
+            //Adds the texture
+            resultContainer.child(
+                    Containers.stack(Sizing.content(), Sizing.fixed(18))
+                            .child(Components.texture(TEXTURE_ID,
+                                    399, 167,
+                                    111, 18,
+                                    512, 256).blend(true))
+                            .positioning(Positioning.absolute(0, 23))
+                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
+
+
+            //Loop to assign each ingredient to a container
+            for (int i = 0; i < recipe.getIngredients().size(); i++) {
+                //Get the ingredient stack
+                ItemStack stack = recipe.getIngredients().get(i).getMatchingStacks()[0];
+                //Get the quantity
+                int count = recipe.getIngredientsCounts().get(i);
+                //Creates the stack with the correct quantity
+                ItemStack ingredientStack = new ItemStack(stack.getItem(), count);
+                switch (i) {
+                    case 0:
+                        resultContainer.child(
+                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                        .positioning(Positioning.absolute(38, 23))
+                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                        );
+                        break;
+
+                    case 1:
+                        resultContainer.child(
+                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                        .positioning(Positioning.absolute(19, 23))
+                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                        );
+                        break;
+
+                    case 2:
+                        resultContainer.child(
+                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                        .positioning(Positioning.absolute(57, 23))
+                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                        );
+                        break;
+
+                    case 3:
+                        resultContainer.child(
+                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                        .positioning(Positioning.absolute(0, 23))
+                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                        );
+                        break;
+
+                    case 4:
+                        resultContainer.child(
+                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                        .positioning(Positioning.absolute(76, 23))
+                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                        );
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //Base container
+            resultContainer.child(
+                    Containers.stack(Sizing.content(), Sizing.fixed(16))
+                            .child(Components.item(recipe.getBaseItem()).showOverlay(true).setTooltipFromStack(true))
+                            .positioning(Positioning.absolute(95, 24))
+                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+            );
+
+            return root;
+        }
+    };
 
     private static Item registerBlockItem(String name, Block block){
         return Registry.register(Registries.ITEM, new Identifier(TCOTS_Main.MOD_ID, name), new BlockItem(block, new FabricItemSettings()));
@@ -448,12 +760,9 @@ public class TCOTS_Items {
 
             WitcherPotions_Base witcherPotion = new WitcherPotions_Base(settings, new StatusEffectInstance(effect, (int)(durationInSecs/0.05), amplifier), toxicity, decoction);
 
-
             return Registry.register(Registries.ITEM, identifier, witcherPotion);
         } catch (Exception e) {
-
             throw new IllegalArgumentException("Error registering potion");
-//            return null;
         }
     }
 

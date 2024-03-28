@@ -9,11 +9,14 @@
       "item": "minecraft:sweet_berries"
     },
     {
-      "item":"tcots-witcher:dwarven_spirit"
+      "item":"tcots-witcher:cherry_cordial"
+    },
+    {
+      "item":"tcots-witcher:mandrake_cordial"
     }
   ],
 
-  "ingredient_counters": [2,1],
+  "ingredient_counters": [1,1,1,1],
 
   "base": {
     "item": "minecraft:glass_bottle"

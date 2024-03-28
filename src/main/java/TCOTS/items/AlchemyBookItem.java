@@ -19,6 +19,7 @@ public class AlchemyBookItem extends LavenderBookItem {
         super(settings, bookId);
     }
 
+
     public static LavenderBookItem registerForBook(@NotNull Identifier bookId, Settings settings) {
         return registerForBook(bookId, bookId, settings);
     }

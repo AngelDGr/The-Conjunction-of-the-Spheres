@@ -4,15 +4,18 @@ import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -25,15 +28,18 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base{
         return refillQuantity;
     }
 
+    private final List<StatusEffectInstance> effects = Lists.newArrayList();
 
-    public WitcherAlcohol_Base(Settings settings, StatusEffectInstance effect, int toxicity, int refillQuantity) {
-        super(settings, effect, toxicity, false);
+    public WitcherAlcohol_Base(Settings settings, List<StatusEffectInstance> effects, int refillQuantity) {
+        super(settings, new StatusEffectInstance(StatusEffects.BLINDNESS), 0, false);
         this.refillQuantity=refillQuantity;
+        this.effects.addAll(effects);
     }
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("tooltip.tcots-witcher.refill").formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable("tooltip."+Registries.ITEM.getId(this)).formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable("tooltip.tcots-witcher.refill", this.refillQuantity).formatted(Formatting.GRAY));
     }
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
@@ -43,11 +49,13 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base{
         }
 
         if (!world.isClient) {
-            if(getStatusEffect().getEffectType().isInstant()){
-                this.getStatusEffect().getEffectType().applyInstantEffect(playerEntity, playerEntity, user, this.getStatusEffect().getAmplifier(), 1.0);
-            }
-            else{
-                user.addStatusEffect(new StatusEffectInstance(getStatusEffect()));
+            for(StatusEffectInstance effect : this.effects){
+                if(effect.getEffectType().isInstant()){
+                    effect.getEffectType().applyInstantEffect(playerEntity, playerEntity, user, effect.getAmplifier(), 1.0);
+                }
+                else{
+                    user.addStatusEffect(new StatusEffectInstance(effect));
+                }
             }
         }
 

@@ -4,16 +4,12 @@ import TCOTS.blocks.entity.NestSkullBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Equipment;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
-import net.minecraft.loot.context.LootContextParameterSet;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
@@ -25,8 +21,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class NestSkullBlock extends BlockWithEntity implements Equipment {
 
@@ -42,7 +36,7 @@ public class NestSkullBlock extends BlockWithEntity implements Equipment {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 8.0, 12.0);
     public NestSkullBlock(Settings settings) {
         super(settings);
-        this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(ROTATION, 0));
+        this.setDefaultState(this.stateManager.getDefaultState().with(ROTATION, 0));
     }
 
     @Nullable
@@ -51,12 +45,6 @@ public class NestSkullBlock extends BlockWithEntity implements Equipment {
         return new NestSkullBlockEntity(pos, state);
     }
 
-    @Override
-    public List<ItemStack> getDroppedStacks(BlockState state, LootContextParameterSet.Builder builder) {
-
-
-        return super.getDroppedStacks(state, builder);
-    }
 
     @Override
     public BlockRenderType getRenderType(BlockState state){
@@ -75,17 +63,17 @@ public class NestSkullBlock extends BlockWithEntity implements Equipment {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState)this.getDefaultState().with(ROTATION, RotationPropertyHelper.fromYaw(ctx.getPlayerYaw()));
+        return this.getDefaultState().with(ROTATION, RotationPropertyHelper.fromYaw(ctx.getPlayerYaw()));
     }
 
     @Override
     public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return (BlockState)state.with(ROTATION, rotation.rotate(state.get(ROTATION), MAX_ROTATIONS));
+        return state.with(ROTATION, rotation.rotate(state.get(ROTATION), MAX_ROTATIONS));
     }
 
     @Override
     public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return (BlockState)state.with(ROTATION, mirror.mirror(state.get(ROTATION), MAX_ROTATIONS));
+        return state.with(ROTATION, mirror.mirror(state.get(ROTATION), MAX_ROTATIONS));
     }
 
     @Override
