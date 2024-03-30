@@ -1,0 +1,119 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"ambientocclusion": false,
+	"textures": {
+		"particle": "tcots-witcher:block/plants/bryonia_vine3",
+		"vine": "tcots-witcher:block/plants/bryonia_vine3",
+		"flower": "tcots-witcher:block/plants/bryonia_flower"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0.8],
+			"to": [16, 16, 0.8],
+			"shade": false,
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "texture": "#vine", "tintindex": 0},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#vine", "tintindex": 0}
+			}
+		},
+
+
+		{
+			"from": [3.68501, 5.65, 1.09527],
+			"to": [8.68501, 10.65, 1.09527],
+			"shade": false,
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [7.90381, 8.19042, 1.58238]},
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "rotation": 90, "texture": "#flower"},
+				"south": {"uv": [16, 16, 0, 0], "rotation": 270, "texture": "#flower"}
+			}
+		},
+		{
+			"from": [8.01526, 5.7, 0.6453],
+			"to": [13.01526, 10.7, 0.6453],
+			"shade": false,
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [7.90381, 8.19042, 1.58238]},
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "rotation": 270, "texture": "#flower"},
+				"south": {"uv": [16, 16, 0, 0], "rotation": 90, "texture": "#flower"}
+			}
+		},
+		{
+			"from": [5.9, 7.88553, 0.86843],
+			"to": [10.9, 12.88553, 0.86843],
+			"shade": false,
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [7.90381, 8.19042, 1.58238]},
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "rotation": 180, "texture": "#flower"},
+				"south": {"uv": [16, 16, 0, 0], "rotation": 180, "texture": "#flower"}
+			}
+		},
+		{
+			"from": [5.9, 3.48405, 0.89561],
+			"to": [10.9, 8.48405, 0.89561],
+			"shade": false,
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [7.90381, 8.19042, 1.58238]},
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "texture": "#flower"},
+				"south": {"uv": [16, 16, 0, 0], "texture": "#flower"}
+			}
+		}
+	],
+	"display": {},
+	"groups": [
+		{
+			"name": "bryonia_vine3",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"nbt": "{}",
+			"children": [
+				{
+					"name": "bryonia_vine3",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"nbt": "{}",
+					"children": [
+						0,
+						{
+							"name": "flower",
+							"origin": [8, 8, 8],
+							"color": 0,
+							"nbt": "{}",
+							"children": [
+								{
+									"name": "right_petal",
+									"origin": [8, 8, 8],
+									"color": 0,
+									"nbt": "{}",
+									"children": [1]
+								},
+								{
+									"name": "left_petal",
+									"origin": [8, 8, 8],
+									"color": 0,
+									"nbt": "{}",
+									"children": [2]
+								},
+								{
+									"name": "up_petal",
+									"origin": [8, 8, 8],
+									"color": 0,
+									"nbt": "{}",
+									"children": [3]
+								},
+								{
+									"name": "down_petal",
+									"origin": [8, 8, 8],
+									"color": 0,
+									"nbt": "{}",
+									"children": [4]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -25,3 +25,5 @@ accessible class net/minecraft/recipe/Ingredient$TagEntry
 accessible method net/minecraft/client/gui/screen/recipebook/RecipeBookResults forEachButton (Ljava/util/function/Consumer;)V
 accessible field net/minecraft/entity/ai/goal/MeleeAttackGoal speed D
 accessible class net/minecraft/entity/ai/goal/FollowMobGoal
+
+accessible method net/minecraft/block/MultifaceGrowthBlock withAllDirections (Lnet/minecraft/state/StateManager;)Lnet/minecraft/block/BlockState;

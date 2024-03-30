@@ -3,9 +3,7 @@ package TCOTS.blocks;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
 import TCOTS.blocks.entity.MonsterNestBlockEntity;
-import TCOTS.blocks.plants.ArenariaBush;
-import TCOTS.blocks.plants.CelandinePlant;
-import TCOTS.blocks.plants.CrowsEyeFern;
+import TCOTS.blocks.plants.*;
 import TCOTS.blocks.skull.NestSkullBlock;
 import TCOTS.blocks.entity.NestSkullBlockEntity;
 import TCOTS.blocks.skull.NestWallSkullBlock;
@@ -24,7 +22,9 @@ public class TCOTS_Blocks {
 
     public static final Block ARENARIA_BUSH = new ArenariaBush(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block CELANDINE_PLANT = new CelandinePlant(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY));
-    public static final Block CROWS_EYE_FERN = new CrowsEyeFern(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY));
+    public static final Block CROWS_EYE_FERN = new CrowsEyeFern(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY).offset(AbstractBlock.OffsetType.XZ));
+    public static final Block VERBENA_FLOWER = new VerbenaFlower(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY).offset(AbstractBlock.OffsetType.XZ));
+    public static final Block BRYONIA_VINE = new BryoniaVine(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY));
 
 
     public static final Block NEST_SLAB  = new SlabBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).pistonBehavior(PistonBehavior.DESTROY).mapColor(MapColor.DIRT_BROWN));
@@ -55,6 +55,10 @@ public class TCOTS_Blocks {
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "arenaria_bush"), ARENARIA_BUSH);
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "crows_eye_fern"), CROWS_EYE_FERN);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "bryonia_vine"), BRYONIA_VINE);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "verbena_flower"), VERBENA_FLOWER);
 
 
         //Block Entity

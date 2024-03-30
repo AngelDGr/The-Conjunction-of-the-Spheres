@@ -110,14 +110,29 @@
     "item.tcots-witcher.celandine": "Celandine",
     "block.tcots-witcher.celandine_plant": "Celandine Plant",
 
-    "item.tcots-witcher.lily_of_the_valley_petals": "Lily of the Valley Petals",
-    "item.tcots-witcher.allium_petals": "Allium Petals",
-
     "item.tcots-witcher.crows_eye": "Crow's Eye",
     "block.tcots-witcher.crows_eye_fern": "Crow's Eye Fern",
 
+    "item.tcots-witcher.bryonia": "Bryonia",
+    "block.tcots-witcher.bryonia_vine": "Bryonia Vine",
+
+    "item.tcots-witcher.verbena": "Verbena",
+    "block.tcots-witcher.verbena_flower": "Verbena Flower",
+
+    "item.tcots-witcher.ergot_seeds": "Ergot Seeds",
+
+    "item.tcots-witcher.lily_of_the_valley_petals": "Lily of the Valley Petals",
+    "item.tcots-witcher.allium_petals": "Allium Petals",
+    "item.tcots-witcher.poppy_petals": "Poppy Petals",
+    "item.tcots-witcher.bunch_of_leaves": "Bunch of Leaves",
+
+
+
+
     "item.tcots-witcher.aether": "Aether",
     "item.tcots-witcher.vitriol": "Vitriol",
+    "item.tcots-witcher.vermilion": "Vermilion",
+
 
     "item.tcots-witcher.icy_spirit": "Icy Spirit",
     "tooltip.tcots-witcher:icy_spirit": "Usable to create Dwarven Spirit",

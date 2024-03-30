@@ -55,9 +55,14 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.ALLSPICE);
                             entries.add(TCOTS_Items.ARENARIA);
                             entries.add(TCOTS_Items.CELANDINE);
+                            entries.add(TCOTS_Items.BRYONIA);
+                            entries.add(TCOTS_Items.ERGOT_SEEDS);
                             entries.add(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS);
                             entries.add(TCOTS_Items.ALLIUM_PETALS);
+                            entries.add(TCOTS_Items.POPPY_PETALS);
+                            entries.add(TCOTS_Items.BUNCH_OF_LEAVES);
                             entries.add(TCOTS_Items.CROWS_EYE);
+                            entries.add(TCOTS_Items.VERBENA);
 
                             //Potions
                             entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
@@ -71,6 +76,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.WHITE_GULL.getDefaultStack());
                             entries.add(TCOTS_Items.AETHER);
                             entries.add(TCOTS_Items.VITRIOL);
+                            entries.add(TCOTS_Items.VERMILION);
 
                             entries.add(TCOTS_Items.SWALLOW_POTION.getDefaultStack());
                             entries.add(TCOTS_Items.SWALLOW_POTION_ENHANCED.getDefaultStack());

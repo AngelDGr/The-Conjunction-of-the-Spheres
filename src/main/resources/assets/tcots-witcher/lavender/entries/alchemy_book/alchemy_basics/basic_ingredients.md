@@ -263,6 +263,20 @@
                     </padding>
                 </stack-layout>
 
+                <stack-layout>
+                    <children>
+                        <item>
+                            <stack>
+                                minecraft:wheat_seeds
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                        </item>
+                    </children>
+                    <padding>
+                        <all>5</all>
+                    </padding>
+                </stack-layout>
+
             </children>
             <sizing>
                 <horizontal method="content">1</horizontal>
@@ -374,9 +388,11 @@ Bought from alchemist villagers.</tooltip-text>
                             <children>
                                 <item>
                                     <stack>
-                                        minecraft:dandelion
+                                        tcots-witcher:bryonia
                                     </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+<tooltip-text>Bryonia:
+Found in caves and buildings,
+grows in the walls and ceiling.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -388,9 +404,11 @@ Bought from alchemist villagers.</tooltip-text>
                             <children>
                                 <item>
                                     <stack>
-                                        minecraft:kelp
+                                        tcots-witcher:ergot_seeds
                                     </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+<tooltip-text>Ergot Seeds:
+Harvested from wheat,
+similar to a poisonous potato.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -402,9 +420,11 @@ Bought from alchemist villagers.</tooltip-text>
                             <children>
                                 <item>
                                     <stack>
-                                        minecraft:brown_mushroom
+                                        tcots-witcher:verbena
                                     </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+<tooltip-text>Verbena:
+Found in Plains/Forests/Flower Forests,
+grows like a flower.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -522,13 +542,27 @@ Bought from alchemist villagers.</tooltip-text>
 
 *Flower petals*
 
-All of them can be harvested using some shears
+All of them can be harvested using shears in the respective plant
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
                 <!--First Row-->
                 <flow-layout direction="horizontal">
                     <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:poppy_petals
+                                    </stack>
+                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
                         <stack-layout>
                             <children>
                                 <item>
@@ -561,7 +595,7 @@ All of them can be harvested using some shears
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:arenaria
+                                        tcots-witcher:bunch_of_leaves
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>                               
                                 </item>
@@ -570,21 +604,7 @@ All of them can be harvested using some shears
                                 <all>5</all>
                             </padding>
                         </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        minecraft:moss_carpet
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
+                        
                     </children>
                     <sizing>
                         <horizontal method="content">1</horizontal>

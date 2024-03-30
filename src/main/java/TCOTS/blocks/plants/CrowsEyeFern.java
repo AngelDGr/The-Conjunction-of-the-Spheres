@@ -22,6 +22,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.*;
@@ -53,6 +54,7 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
 
     public CrowsEyeFern(Settings settings) {
         super(settings);
+        this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
@@ -62,10 +64,11 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        Vec3d offset = state.getModelOffset(world, pos);
+
         return state.get(HALF) == DoubleBlockHalf.UPPER ?
-                UPPER_OUTLINE_SHAPES[Math.min(Math.abs(4 - (state.get(AGE) + 1)),
-                        UPPER_OUTLINE_SHAPES.length - 1)] :
-                LOWER_OUTLINE_SHAPES[state.get(AGE)];
+                UPPER_OUTLINE_SHAPES[Math.min(Math.abs(4 - (state.get(AGE) + 1)), UPPER_OUTLINE_SHAPES.length - 1)].offset(offset.x, offset.y, offset.z) :
+                LOWER_OUTLINE_SHAPES[state.get(AGE)].offset(offset.x, offset.y, offset.z);
     }
 
     @Override
@@ -169,7 +172,7 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
 
     private boolean canGrow(WorldView world, BlockPos pos, BlockState state, int age) {
         return !this.isFullyGrown(state)
-//                && canPlaceAt(world, pos)
+                && canPlaceAt(state, world, pos)
                 && (!isDoubleTallAtAge(age) || canGrowAt(world, pos.up()));
     }
 
@@ -222,6 +225,8 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
             world.setBlockState(pos.up(), blockState.with(HALF, DoubleBlockHalf.UPPER), Block.NOTIFY_ALL);
         }
     }
+
+
 
     record LowerHalfContext(BlockPos pos, BlockState state) {
     }

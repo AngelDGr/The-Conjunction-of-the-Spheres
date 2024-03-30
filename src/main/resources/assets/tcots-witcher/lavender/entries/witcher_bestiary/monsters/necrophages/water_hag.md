@@ -69,7 +69,20 @@ Just don't be fooled during the time you don't have enough vision.
                                 <all>5</all>
                             </padding>
                         </stack-layout>
-                        
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:bunch_of_leaves
+                                    </stack>
+                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
                     </children>
                     <sizing>
                         <horizontal method="content">1</horizontal>

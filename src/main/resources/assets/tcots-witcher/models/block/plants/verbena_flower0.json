@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "tcots-witcher:block/plants/verbena_flower0"
+  }
+}

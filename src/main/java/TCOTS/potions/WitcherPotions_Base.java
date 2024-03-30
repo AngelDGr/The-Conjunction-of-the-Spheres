@@ -132,9 +132,6 @@ public class WitcherPotions_Base extends PotionItem {
 
     public void buildTooltip(List<StatusEffectInstance> statusEffects, List<Text> list, float durationMultiplier, float tickRate) {
         ArrayList<Pair<EntityAttribute, EntityAttributeModifier>> list2 = Lists.newArrayList();
-//        if (statusEffects.isEmpty()) {
-//            list.add(NONE_TEXT);
-//        } else {
             for (StatusEffectInstance statusEffectInstance : statusEffects) {
                 MutableText mutableText = Text.translatable(statusEffectInstance.getTranslationKey());
                 StatusEffect statusEffect = statusEffectInstance.getEffectType();

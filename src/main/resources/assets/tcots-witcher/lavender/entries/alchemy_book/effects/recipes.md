@@ -26,11 +26,13 @@ decoctions, monster oils, bombs and ingredients.***
 
 **{#395026}Potions{}**
 <recipe;tcots-witcher:white_raffards_decoction>
-<recipe;tcots-witcher:splash_white_raffards_decoction>
+<recipe;tcots-witcher:white_raffards_decoction_enhanced>
+<recipe;tcots-witcher:white_raffards_decoction_superior>
 
 ;;;;;
 
 **{#395026}Potions{}**
+<recipe;tcots-witcher:splash_white_raffards_decoction>
 <recipe;tcots-witcher:killer_whale_potion>
 <recipe;tcots-witcher:splash_killer_whale>
 

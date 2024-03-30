@@ -15,12 +15,21 @@ import io.wispforest.owo.ui.component.Components;
 import io.wispforest.owo.ui.container.Containers;
 import io.wispforest.owo.ui.core.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CropBlock;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.condition.*;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.function.ExplosionDecayLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.predicate.StatePredicate;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -40,17 +49,17 @@ public class TCOTS_Items {
             //xTODO: Allspice
             //xTODO: Arenaria
             //xTODO: Balisse fruit - Sweet Berries
-            //TODO: Beggartick blossoms - Rose Petals
+            //xTODO: Beggartick blossoms - Poppy Petals
             //xTODO: Berbercane fruit - Glow Berries
-            //TODO: Bison grass - Bought
+            //xTODO: Bison grass - Wheat Seeds
             //?xTODO: Bloodmoss - Moss Carpet
             //xTODO: Blowball - Dandelion
-            //TODO: Bryonia
+            //xTODO: Bryonia
             //xTODO: Buckthorn - Kelp
             //xTODO: Celandine
             //xTODO: Cortinarius - Brown Mushroom
             //xTODO: Crow's eye
-            //TODO: Ergot seeds - Poisonous potato like
+            //xTODO: Ergot seeds - Poisonous potato like
             //TODO: Fool's parsley leaves - Azure Bluet Petals
             //TODO: Ginatia petals - Peony Petals
             //xTODO: Green mold - Moss Block
@@ -69,7 +78,7 @@ public class TCOTS_Items {
             //xTODO: Ranogrin - Fern
             //xTODO: Ribleaf - Leaves?
             //TODO: Sewant mushrooms
-            //TODO: Verbena
+            //xTODO: Verbena
             //xTODO: White myrtle petals - Lily of the Valley Petals
             //TODO: Wolfsbane
 
@@ -480,19 +489,25 @@ public class TCOTS_Items {
     //Substances
     public static Item AETHER;
     public static Item VITRIOL;
+    public static Item VERMILION;
 
     //TODO: Make the herbs spawn in the world
     //Herbs
     public static Item ALLSPICE;
     public static Item ARENARIA;
     public static Item CELANDINE;
-    public static Item LILY_OF_THE_VALLEY_PETALS;
+    public static Item BRYONIA;
     public static Item CROWS_EYE;
+    public static Item VERBENA;
+    public static Item ERGOT_SEEDS;
+    public static Item LILY_OF_THE_VALLEY_PETALS;
     public static Item ALLIUM_PETALS;
+    public static Item POPPY_PETALS;
+    public static Item BUNCH_OF_LEAVES;
 
     public static void registerAlchemyIngredients(){
 
-        //Ingredients
+        //Alcohol
         ICY_SPIRIT = (WitcherAlcohol_Base) registerItem("icy_spirit",
                 new WitcherAlcohol_Base(new FabricItemSettings().maxCount(64),
                         Arrays.asList(
@@ -540,10 +555,14 @@ public class TCOTS_Items {
                         6));
 
 
+        //Substances
         AETHER = registerItem("aether",
                 new Item(new FabricItemSettings()));
 
         VITRIOL = registerItem("vitriol",
+                new Item(new FabricItemSettings()));
+
+        VERMILION = registerItem("vermilion",
                 new Item(new FabricItemSettings()));
 
 
@@ -564,6 +583,19 @@ public class TCOTS_Items {
                 new AliasedBlockItem(TCOTS_Blocks.CROWS_EYE_FERN,
                         new FabricItemSettings().maxCount(64)));
 
+        BRYONIA = registerItem("bryonia",
+                new AliasedBlockItem(TCOTS_Blocks.BRYONIA_VINE,
+                        new FabricItemSettings().maxCount(64)));
+
+        VERBENA = registerItem("verbena",
+                new AliasedBlockItem(TCOTS_Blocks.VERBENA_FLOWER,
+                        new FabricItemSettings().maxCount(64)));
+
+
+        ERGOT_SEEDS = registerItem("ergot_seeds",
+                new Item(
+                        new FabricItemSettings().maxCount(64)));
+
         LILY_OF_THE_VALLEY_PETALS = registerItem("lily_of_the_valley_petals",
                 new Item(
                         new FabricItemSettings().maxCount(64)));
@@ -571,37 +603,31 @@ public class TCOTS_Items {
         ALLIUM_PETALS = registerItem("allium_petals",
                 new Item(
                         new FabricItemSettings().maxCount(64)));
+
+        POPPY_PETALS = registerItem("poppy_petals",
+                new Item(
+                        new FabricItemSettings().maxCount(64)));
+
+        BUNCH_OF_LEAVES = registerItem("bunch_of_leaves",
+                new Item(
+                        new FabricItemSettings().maxCount(64)));
     }
 
     public static void modifyLootTables(){
-//        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) ->{
-//            if(Blocks.LILY_OF_THE_VALLEY.getLootTableId().equals(id) && source.isBuiltin()){
-//                LootPool.Builder Poolbuilder = LootPool.builder()
-//                        .rolls(ConstantLootNumberProvider.create(1))
-//                        .conditionally(RandomChanceLootCondition.builder(1))
-//                        .with(AlternativeEntry.builder(ItemEntry.builder(Items.LILY_OF_THE_VALLEY).conditionally(SurvivesExplosionLootCondition.builder())
-//                                        .alternatively(
-//                                                ItemEntry.builder(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS))
-//                                                .conditionally(AnyOfLootCondition.builder(
-//                                                        MatchToolLootCondition.builder(
-//                                                                ItemPredicate.Builder.create().items(Items.SHEARS))))
-//
-//                                        )
-//                        );
-//
-//                tableBuilder.modifyPools( builder -> {
-//                    builder
-//                            .rolls(ConstantLootNumberProvider.create(1))
-//                            .with(
-//                                    AlternativeEntry.builder(ItemEntry.builder(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS)))
-//                            .conditionally(AnyOfLootCondition.builder(
-//                                    MatchToolLootCondition.builder(
-//                                            ItemPredicate.Builder.create().items(Items.SHEARS))))
-//                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2,4)))
-//                    ;}
-//                );
-//            }
-//        });
+        LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) ->{
+            if(Blocks.WHEAT.getLootTableId().equals(id) && source.isBuiltin()){
+                LootPool.Builder ergotSeeds = LootPool.builder()
+                        .rolls(ConstantLootNumberProvider.create(1))
+                        .with(ItemEntry.builder(TCOTS_Items.ERGOT_SEEDS))
+                        .conditionally(RandomChanceLootCondition.builder(0.05f))
+                        .conditionally(BlockStatePropertyLootCondition.builder(Blocks.WHEAT)
+                                        .properties(StatePredicate.Builder.create()
+                                                .exactMatch(CropBlock.AGE,7)))
+                        .apply(ExplosionDecayLootFunction.builder());
+
+                tableBuilder.pool(ergotSeeds.build());
+            }
+        });
     }
 
     public static Item NEST_SLAB_ITEM;

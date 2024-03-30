@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.ShearsItem;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -35,6 +36,14 @@ public class ShearsItemMixin {
 
         dropPetals(context, world, blockPos, block, playerEntity, itemStack, cir,
                 Blocks.ALLIUM, TCOTS_Items.ALLIUM_PETALS, 3,8);
+
+        if(blockState.isIn(BlockTags.LEAVES)) {
+            dropPetals(context, world, blockPos, block, playerEntity, itemStack, cir,
+                    block, TCOTS_Items.BUNCH_OF_LEAVES, 4, 12);
+        }
+
+        dropPetals(context, world, blockPos, block, playerEntity, itemStack, cir,
+                Blocks.POPPY, TCOTS_Items.POPPY_PETALS, 2,4);
     }
 
     @Unique

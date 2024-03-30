@@ -46,6 +46,8 @@ public class TCOTS_Client implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.ARENARIA_BUSH, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.CELANDINE_PLANT, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.CROWS_EYE_FERN, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.BRYONIA_VINE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.VERBENA_FLOWER, RenderLayer.getCutout());
 
 
         //BlockEntity

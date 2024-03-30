@@ -9,6 +9,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
@@ -16,20 +17,30 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
-public class CelandinePlant extends PlantBlock implements Fertilizable {
-
-    public static final MapCodec<CelandinePlant> CODEC = CelandinePlant.createCodec(CelandinePlant::new);
-
-    private static final VoxelShape[] AGE_TO_SHAPE = new VoxelShape[]{Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0), Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0), Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0), Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)};
+public class VerbenaFlower extends PlantBlock implements Fertilizable {
 
     public static final IntProperty AGE = Properties.AGE_3;
 
-    protected IntProperty getAgeProperty() {
-        return AGE;
+    public static final MapCodec<VerbenaFlower> CODEC = VerbenaFlower.createCodec(VerbenaFlower::new);
+
+    private static final VoxelShape[] AGE_TO_SHAPE = new VoxelShape[]{
+            Block.createCuboidShape(5.0, 0.0, 5.0, 12, 4.0, 12),
+            Block.createCuboidShape(5.0, 0.0, 5.0, 12, 10.0, 12),
+            Block.createCuboidShape(5.0, 0.0, 5.0, 12, 12.0, 12),
+            Block.createCuboidShape(5.0, 0.0, 5.0, 12, 14.0, 12)};
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        Vec3d vec3d = state.getModelOffset(world, pos);
+        return AGE_TO_SHAPE[this.getAge(state)].offset(vec3d.x, vec3d.y, vec3d.z);
     }
 
     public int getAge(BlockState state) {
         return state.get(this.getAgeProperty());
+    }
+
+    protected IntProperty getAgeProperty() {
+        return AGE;
     }
 
     @Override
@@ -37,25 +48,21 @@ public class CelandinePlant extends PlantBlock implements Fertilizable {
         return CODEC;
     }
 
-    public CelandinePlant(Settings settings) {
+    public VerbenaFlower(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0));
-    }
-
-    @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
-        return new ItemStack(TCOTS_Items.CELANDINE);
-    }
-
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return AGE_TO_SHAPE[this.getAge(state)];
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(AGE);
     }
+
+    @Override
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+        return new ItemStack(TCOTS_Items.VERBENA);
+    }
+
     @Override
     public boolean hasRandomTicks(BlockState state) {
         return state.get(AGE) < 3;
@@ -75,6 +82,7 @@ public class CelandinePlant extends PlantBlock implements Fertilizable {
     public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
         return state.get(AGE) < 3;
     }
+
 
     @Override
     public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
