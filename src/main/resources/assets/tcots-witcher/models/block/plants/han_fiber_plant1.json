@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "tcots-witcher:block/plants/han_fiber_plant1"
+  }
+}

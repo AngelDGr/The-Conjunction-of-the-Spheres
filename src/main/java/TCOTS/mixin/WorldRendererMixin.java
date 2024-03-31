@@ -6,6 +6,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
@@ -57,11 +59,17 @@ public abstract class WorldRendererMixin {
 
     @Redirect(method= "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;hasOutline(Lnet/minecraft/entity/Entity;)Z"))
     private boolean injectCatEffectOutline(MinecraftClient instance, Entity entity){
-        assert this.client.player != null;
-        if( this.canDrawEntityOutlines() && this.canHaveCatEffect() && entity != this.client.player && this.client.player.distanceTo(entity) <= 30){
+        if( this.canDrawEntityOutlines() && this.canHaveCatEffect() && checkEntity(entity) ){
          return true;
         }
+
         return this.client.hasOutline(entity);
+    }
+
+    @Unique
+    private boolean checkEntity(Entity entity){
+        assert this.client.player != null;
+        return (entity instanceof LivingEntity && !(entity instanceof ArmorStandEntity)) && entity != this.client.player && this.client.player.distanceTo(entity) <= 30;
     }
 
     @Unique

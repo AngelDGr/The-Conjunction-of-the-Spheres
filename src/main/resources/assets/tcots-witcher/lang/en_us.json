@@ -62,6 +62,8 @@
     "tcots-witcher.sounds.water_hag_mud_ball_hit": "Mudball hits",
 
     "tcots-witcher.sounds.water_hag_mud_ball_launch": "Mudball flies",
+
+    "item.tcots-witcher.water_essence": "Water Essence",
     "item.tcots-witcher.water_hag_mutagen": "Water Hag Mutagen",
 
     "item.tcots-witcher.foglet_spawn_egg": "Foglet Spawn Egg",
@@ -109,6 +111,12 @@
 
     "item.tcots-witcher.celandine": "Celandine",
     "block.tcots-witcher.celandine_plant": "Celandine Plant",
+    "block.tcots-witcher.potted_celandine_flower": "Potted Celandine Flowers",
+
+    "item.tcots-witcher.han_fiber": "Han fiber",
+    "block.tcots-witcher.han_fiber_plant": "Han fiber plant",
+    "block.tcots-witcher.potted_han_fiber": "Potted Han fiber",
+
 
     "item.tcots-witcher.crows_eye": "Crow's Eye",
     "block.tcots-witcher.crows_eye_fern": "Crow's Eye Fern",
@@ -118,6 +126,14 @@
 
     "item.tcots-witcher.verbena": "Verbena",
     "block.tcots-witcher.verbena_flower": "Verbena Flower",
+    "block.tcots-witcher.potted_verbena_flower": "Potted Verbena Flower",
+
+    "item.tcots-witcher.puffball": "Puffball",
+    "block.tcots-witcher.puffball_mushroom": "Puffball Mushroom",
+    "block.tcots-witcher.potted_puffball_mushroom": "Potted Puffball Mushroom",
+    "block.tcots-witcher.puffball_mushroom_block": "Puffball Mushroom Block",
+
+
 
     "item.tcots-witcher.ergot_seeds": "Ergot Seeds",
 
@@ -178,6 +194,7 @@
     "tooltip.effect.tcots-witcher.grave_hag_decoction.second": "enemy killed during combat",
 
     "item.tcots-witcher.water_hag_decoction": "Water Hag Decoction",
+    "tooltip.effect.tcots-witcher.water_hag_decoction.applied": "At full health:",
     "tooltip.effect.tcots-witcher.water_hag_decoction.first":  "Increases attack when health",
     "tooltip.effect.tcots-witcher.water_hag_decoction.second": "it is full",
 
@@ -209,6 +226,7 @@
     "item.tcots-witcher.swallow_splash": "Splash Swallow",
 
     "item.tcots-witcher.killer_whale_potion": "Killer Whale",
+    "tooltip.effect.tcots-witcher.killer_whale.applied": "In Water:",
     "tooltip.effect.tcots-witcher.killer_whale.first":  "Increases breath supply and",
     "tooltip.effect.tcots-witcher.killer_whale.second": "attack while underwater",
     "item.tcots-witcher.killer_whale_splash": "Splash Killer Whale",

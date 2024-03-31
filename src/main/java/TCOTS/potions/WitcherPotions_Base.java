@@ -16,7 +16,6 @@ import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
-import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.MutableText;
@@ -151,9 +150,11 @@ public class WitcherPotions_Base extends PotionItem {
             }
 //        }
         if (!list2.isEmpty()) {
-            list.add(ScreenTexts.EMPTY);
-            list.add(Text.translatable("potion.whenDrank").formatted(Formatting.DARK_PURPLE));
+//            list.add(ScreenTexts.EMPTY);
+
             for (Pair pair : list2) {
+                list.add(Text.translatable("tooltip." + effectInstance.getEffectType().getTranslationKey() +".applied").formatted(Formatting.DARK_PURPLE));
+
                 EntityAttributeModifier entityAttributeModifier = (EntityAttributeModifier)pair.getSecond();
                 double d = entityAttributeModifier.getValue();
                 double e = entityAttributeModifier.getOperation() == EntityAttributeModifier.Operation.MULTIPLY_BASE || entityAttributeModifier.getOperation() == EntityAttributeModifier.Operation.MULTIPLY_TOTAL ? entityAttributeModifier.getValue() * 100.0 : entityAttributeModifier.getValue();

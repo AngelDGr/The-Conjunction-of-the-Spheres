@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/flower_pot_cross",
+  "textures": {
+    "plant": "tcots-witcher:block/plants/potted/celandine_flower"
+  }
+}

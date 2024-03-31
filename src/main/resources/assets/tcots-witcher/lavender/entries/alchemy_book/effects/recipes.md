@@ -36,6 +36,12 @@ decoctions, monster oils, bombs and ingredients.***
 <recipe;tcots-witcher:killer_whale_potion>
 <recipe;tcots-witcher:splash_killer_whale>
 
+;;;;;
+
+**{#395026}Potions{}**
+<recipe;tcots-witcher:cat_potion>
+<recipe;tcots-witcher:cat_potion_enhanced>
+<recipe;tcots-witcher:cat_potion_superior>
 
 ;;;;;
 
@@ -54,10 +60,12 @@ decoctions, monster oils, bombs and ingredients.***
 **{#395026}Ingredients{}**
 <recipe;tcots-witcher:dwarven_spirit>
 <recipe;tcots-witcher:alcohest>
-<recipe;tcots-witcher:vitriol>
+<recipe;tcots-witcher:white_gull>
 
 ;;;;;
 
 **{#395026}Ingredients{}**
-<recipe;tcots-witcher:white_gull>
+<recipe;tcots-witcher:vitriol>
+<recipe;tcots-witcher:vermilion>
+
 

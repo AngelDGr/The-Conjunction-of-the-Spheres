@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "tcots-witcher:block/puffball_mushroom_block"
+  }
+}

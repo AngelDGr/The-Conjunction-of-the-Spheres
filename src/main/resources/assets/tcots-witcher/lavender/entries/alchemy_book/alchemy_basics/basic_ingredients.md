@@ -436,9 +436,11 @@ grows like a flower.</tooltip-text>
                             <children>
                                 <item>
                                     <stack>
-                                        minecraft:moss_block
+                                        tcots-witcher:han_fiber
                                     </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+<tooltip-text>Han Fiber:
+Found in Plains/Forests/Flower Forests,
+grows like a flower.</tooltip-text>
                                 </item>
                             </children>
                             <padding>

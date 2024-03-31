@@ -9,34 +9,6 @@
           "type": "minecraft:item",
           "name": "tcots-witcher:celandine"
         }
-      ],
-      "functions": [
-        {
-          "function": "minecraft:set_count",
-          "count": {
-            "type": "minecraft:uniform",
-            "min": 2,
-            "max": 4
-          },
-          "add": false
-        },
-        {
-          "function": "minecraft:apply_bonus",
-          "enchantment": "minecraft:fortune",
-          "formula": "minecraft:uniform_bonus_count",
-          "parameters": {
-            "bonusMultiplier": 1
-          }
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "tcots-witcher:celandine_plant",
-          "properties": {
-            "age": "2"
-          }
-        }
       ]
     },
     {
@@ -45,26 +17,18 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "tcots-witcher:celandine"
-        }
-      ],
-      "functions": [
-        {
-          "function": "minecraft:set_count",
-          "count": {
-            "type": "minecraft:uniform",
-            "min": 4,
-            "max": 8
-          },
-          "add": false
-        },
-        {
-          "function": "minecraft:apply_bonus",
-          "enchantment": "minecraft:fortune",
-          "formula": "minecraft:uniform_bonus_count",
-          "parameters": {
-            "bonusMultiplier": 1
-          }
+          "name": "tcots-witcher:celandine",
+          "functions": [
+            {
+              "function": "minecraft:apply_bonus",
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:binomial_with_bonus_count",
+              "parameters": {
+                "extra": 5,
+                "probability": 0.5714286
+              }
+            }
+          ]
         }
       ],
       "conditions": [

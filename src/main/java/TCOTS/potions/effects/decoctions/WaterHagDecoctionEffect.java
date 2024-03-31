@@ -1,67 +1,41 @@
 package TCOTS.potions.effects.decoctions;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.AttributeContainer;
+import net.minecraft.entity.attribute.AttributeModifierCreator;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
-import java.util.UUID;
+import java.util.Map;
 
 public class WaterHagDecoctionEffect extends StatusEffect {
-    protected final double modifier;
 
-    private final EntityAttributeModifier entityAttributeModifier;
-    public WaterHagDecoctionEffect(StatusEffectCategory category, int color, double modifier) {
+    public WaterHagDecoctionEffect(StatusEffectCategory category, int color) {
         super(category, color);
-        this.modifier = modifier;
-        entityAttributeModifier = new EntityAttributeModifier(
-                UUID.fromString("648D7064-6A60-4F59-8ABE-C2C23A6DD7A9"),
-                "water_hag_decoction",
-                6,
-                EntityAttributeModifier.Operation.ADDITION);
     }
 
-    EntityAttributeInstance entityAttributeInstance;
 
     //It's called every tick
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 
-        if(entityAttributeInstance == null){
-            entityAttributeInstance = entity.getAttributes().getCustomInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-        }
-
         if(entity.getHealth() == entity.getMaxHealth()){
-            if (!entityAttributeInstance.hasModifier(entityAttributeModifier)) {
-                entityAttributeInstance.addPersistentModifier(entityAttributeModifier);
+            for (Map.Entry<EntityAttribute, AttributeModifierCreator> entry : this.getAttributeModifiers().entrySet()) {
+                EntityAttributeInstance entityAttributeInstance = entity.getAttributes().getCustomInstance(entry.getKey());
+                if (entityAttributeInstance == null) continue;
+                entityAttributeInstance.removeModifier(entry.getValue().getUuid());
+                entityAttributeInstance.addPersistentModifier(entry.getValue().createAttributeModifier(amplifier));
             }
-        } else if(entityAttributeInstance.hasModifier(entityAttributeModifier)) {
-                entityAttributeInstance.removeModifier(entityAttributeModifier.getId());
+        } else {
+            for (Map.Entry<EntityAttribute, AttributeModifierCreator> entry : this.getAttributeModifiers().entrySet()) {
+                EntityAttributeInstance entityAttributeInstance = entity.getAttributes().getCustomInstance(entry.getKey());
+                if (entityAttributeInstance == null) continue;
+                entityAttributeInstance.removeModifier(entry.getValue().getUuid());
             }
+        }
 
         super.applyUpdateEffect(entity, amplifier);
-    }
-
-    //Called when applied
-    @Override
-    public void onApplied(LivingEntity entity, int amplifier) {
-        entityAttributeInstance = entity.getAttributes().getCustomInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-        assert entityAttributeInstance != null;
-        entityAttributeInstance.removeModifier(entityAttributeModifier.getId());
-
-        super.onApplied(entity,amplifier);
-    }
-
-    //Called when removed
-    @Override
-    public void onRemoved(AttributeContainer attributes) {
-        if(entityAttributeInstance.hasModifier(entityAttributeModifier)){
-            entityAttributeInstance.removeModifier(entityAttributeModifier.getId());
-        }
-        super.onRemoved(attributes);
     }
 
     @Override

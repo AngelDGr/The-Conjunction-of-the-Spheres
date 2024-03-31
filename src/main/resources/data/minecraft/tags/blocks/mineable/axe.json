@@ -1,6 +1,7 @@
 {
     "replace": false,
   "values": [
-    "tcots-witcher:alchemy_table"
+    "tcots-witcher:alchemy_table",
+    "tcots-witcher:puffball_mushroom_block"
   ]
 }

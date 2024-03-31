@@ -17,6 +17,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
 public class TCOTS_Blocks {
 
@@ -25,6 +26,16 @@ public class TCOTS_Blocks {
     public static final Block CROWS_EYE_FERN = new CrowsEyeFern(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY).offset(AbstractBlock.OffsetType.XZ));
     public static final Block VERBENA_FLOWER = new VerbenaFlower(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY).offset(AbstractBlock.OffsetType.XZ));
     public static final Block BRYONIA_VINE = new BryoniaVine(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY));
+    public static final Block HAN_FIBER_PLANT = new HanFiberPlant(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY).offset(AbstractBlock.OffsetType.XZ));
+    public static final Block PUFFBALL_MUSHROOM = new PuffballMushroom(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM, AbstractBlock.Settings.create().mapColor(MapColor.WHITE).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS).luminance(state -> 1).postProcess(Blocks::always).pistonBehavior(PistonBehavior.DESTROY));
+    public static final Block PUFFBALL_MUSHROOM_BLOCK = new MushroomBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE_GRAY).instrument(Instrument.BASS).strength(0.2f).sounds(BlockSoundGroup.WOOD).burnable());
+
+
+    //Potted
+    public static final Block POTTED_VERBENA_FLOWER = Blocks.createFlowerPotBlock(VERBENA_FLOWER);
+    public static final Block POTTED_CELANDINE_FLOWER = Blocks.createFlowerPotBlock(CELANDINE_PLANT);
+    public static final Block POTTED_HAN_FIBER = Blocks.createFlowerPotBlock(HAN_FIBER_PLANT);
+    public static final Block POTTED_PUFFBALL_MUSHROOM = Blocks.createFlowerPotBlock(PUFFBALL_MUSHROOM);
 
 
     public static final Block NEST_SLAB  = new SlabBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).pistonBehavior(PistonBehavior.DESTROY).mapColor(MapColor.DIRT_BROWN));
@@ -59,6 +70,21 @@ public class TCOTS_Blocks {
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "bryonia_vine"), BRYONIA_VINE);
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "verbena_flower"), VERBENA_FLOWER);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "han_fiber_plant"), HAN_FIBER_PLANT);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "puffball_mushroom"), PUFFBALL_MUSHROOM);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "puffball_mushroom_block"), PUFFBALL_MUSHROOM_BLOCK);
+
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "potted_verbena_flower"), POTTED_VERBENA_FLOWER);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "potted_celandine_flower"), POTTED_CELANDINE_FLOWER);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "potted_han_fiber"), POTTED_HAN_FIBER);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "potted_puffball_mushroom"), POTTED_PUFFBALL_MUSHROOM);
 
 
         //Block Entity

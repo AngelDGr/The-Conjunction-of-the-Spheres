@@ -4,16 +4,12 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.EmptyWitcherPotionItem;
-import TCOTS.potions.TCOTS_Effects;
 import TCOTS.potions.WitcherAlcohol_Base;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -44,7 +40,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityMixinInterface {
@@ -227,37 +222,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Inject(method = "attack", at = @At("TAIL"))
     private void ResetMultiplier(Entity target, CallbackInfo ci){
         oilDamageAdded = 0;
-    }
-
-    @Unique
-    private final EntityAttributeModifier entityAttributeModifierWaterHag = new EntityAttributeModifier(
-            UUID.fromString("648D7064-6A60-4F59-8ABE-C2C23A6DD7A9"),
-            "water_hag_decoction",
-            6,
-            EntityAttributeModifier.Operation.ADDITION);
-
-    @Unique
-    private final EntityAttributeModifier entityAttributeModifierKillerWhale= new EntityAttributeModifier(
-            UUID.fromString("648D7064-6A60-4F59-8ABE-C2C23A6DD7A9"),
-            "killer_whale_effect",
-            4,
-            EntityAttributeModifier.Operation.ADDITION);
-
-    @Inject(method = "tick", at = @At("HEAD"))
-    private void removeModifiers(CallbackInfo ci){
-        if(!this.hasStatusEffect(TCOTS_Effects.WATER_HAG_DECOCTION_EFFECT)){
-            EntityAttributeInstance entityAttributeInstance = this.getAttributes().getCustomInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-            if(entityAttributeInstance != null && entityAttributeInstance.hasModifier(entityAttributeModifierWaterHag)){
-                entityAttributeInstance.removeModifier(entityAttributeModifierWaterHag.getId());
-            }
-        }
-
-        if(!this.hasStatusEffect(TCOTS_Effects.KILLER_WHALE_EFFECT)){
-            EntityAttributeInstance entityAttributeInstance = this.getAttributes().getCustomInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-            if(entityAttributeInstance != null && entityAttributeInstance.hasModifier(entityAttributeModifierKillerWhale)){
-                entityAttributeInstance.removeModifier(entityAttributeModifierKillerWhale.getId());
-            }
-        }
     }
 
     @Inject(method = "tick", at = @At("HEAD"))

@@ -85,7 +85,20 @@ crossbow shot.{}
                                 <all>5</all>
                             </padding>
                         </stack-layout>
-                        
+
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:water_essence
+                                    </stack>
+                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
                     </children>
                     <sizing>
                         <horizontal method="content">1</horizontal>

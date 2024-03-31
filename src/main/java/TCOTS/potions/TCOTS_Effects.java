@@ -8,6 +8,8 @@ import TCOTS.potions.effects.WhiteRaffardsEffect;
 import TCOTS.potions.effects.decoctions.FogletDecoctionEffect;
 import TCOTS.potions.effects.decoctions.GraveHagDecoctionEffect;
 import TCOTS.potions.effects.decoctions.WaterHagDecoctionEffect;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;
@@ -29,7 +31,13 @@ public class TCOTS_Effects {
     public static void registerEffects() {
 
         //Effects
-        KILLER_WHALE_EFFECT=registerStatusEffect_Modifier("killer_whale", KillerWhaleEffect.class, StatusEffectCategory.BENEFICIAL, 0xe9b044,1);
+
+        KILLER_WHALE_EFFECT = registerEffect("killer_whale",
+                new KillerWhaleEffect(StatusEffectCategory.BENEFICIAL, 0xe9b044)
+                .addAttributeModifier(
+                        EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                        "3F9D6A72-8C4E-4B17-A8ED-5D2C1F8B913D", 4.0,
+                        EntityAttributeModifier.Operation.ADDITION));
 
         SWALLOW_EFFECT = registerStatusEffect("swallow", SwallowEffect.class, StatusEffectCategory.BENEFICIAL, 0xcc624a);
 
@@ -39,7 +47,12 @@ public class TCOTS_Effects {
 
         GRAVE_HAG_DECOCTION_EFFECT = registerStatusEffect("grave_hag_decoction", GraveHagDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
 
-        WATER_HAG_DECOCTION_EFFECT = registerStatusEffect_Modifier("water_hag_decoction", WaterHagDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor,1);
+        WATER_HAG_DECOCTION_EFFECT = registerEffect("water_hag_decoction",
+                new WaterHagDecoctionEffect(StatusEffectCategory.BENEFICIAL, decoctionColor)
+                        .addAttributeModifier(
+                                EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                                "7B3F8E12-9A6D-4C5F-B2A9-1E7C9D4A6B8F", 5.0,
+                                EntityAttributeModifier.Operation.ADDITION));
 
         FOGLET_DECOCTION_EFFECT = registerStatusEffect("foglet_decoction", FogletDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
     }
@@ -53,13 +66,7 @@ public class TCOTS_Effects {
         }
     }
 
-    public static StatusEffect registerStatusEffect_Modifier(String name, Class<? extends StatusEffect> effectClass, StatusEffectCategory category, int color, double modifier) {
-        try {
-            return Registry.register(Registries.STATUS_EFFECT, new Identifier(TCOTS_Main.MOD_ID, name),
-                    effectClass.getConstructor(StatusEffectCategory.class, int.class, double.class).newInstance(category, color, modifier));
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Effect didn't create");
-        }
+    private static StatusEffect registerEffect(String name, StatusEffect statusEffect) {
+        return Registry.register(Registries.STATUS_EFFECT, new Identifier(TCOTS_Main.MOD_ID, name), statusEffect);
     }
-
 }

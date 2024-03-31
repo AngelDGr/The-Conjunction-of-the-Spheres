@@ -133,6 +133,7 @@ public class TCOTS_Items {
     public static Item WATER_HAG_SPAWN_EGG;
     public static Item WATER_HAG_MUD_BALL;
     public static Item WATER_HAG_MUTAGEN;
+    public static Item WATER_ESSENCE;
 
 
     public static Item FOGLET_SPAWN_EGG;
@@ -143,6 +144,77 @@ public class TCOTS_Items {
     public static Item NEKKER_SPAWN_EGG;
     public static Item NEKKER_HEART;
     public static Item NEKKER_EYE;
+
+
+    //Register Drops from monsters
+    public static void registerDrops() {
+        DROWNER_SPAWN_EGG = registerItem("drowner_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.DROWNER, 0x8db1c0, 0x9fa3ae,
+                        new FabricItemSettings()));
+        DROWNER_TONGUE = registerItem("drowner_tongue",
+                new Item(
+                        new FabricItemSettings()));
+        DROWNER_BRAIN = registerItem("drowner_brain",
+                new Item(
+                        new FabricItemSettings().maxCount(16)));
+
+
+        ROTFIEND_SPAWN_EGG = registerItem("rotfiend_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.ROTFIEND, 0xb3867b, 0xe6e1bc,
+                        new FabricItemSettings()));
+        ROTFIEND_BLOOD = registerItem("rotfiend_blood",
+                new Item(
+                        new FabricItemSettings().maxCount(64)));
+
+
+        GRAVE_HAG_SPAWN_EGG = registerItem("grave_hag_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.GRAVE_HAG, 0xb6b692, 0x8e8480,
+                        new FabricItemSettings()));
+        GRAVE_HAG_MUTAGEN = registerItem("grave_hag_mutagen",
+                new Item(
+                        new FabricItemSettings().maxCount(8)));
+
+
+        WATER_HAG_SPAWN_EGG = registerItem("water_hag_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.WATER_HAG, 0x8d93c0, 0x780b17,
+                        new FabricItemSettings()));
+        WATER_HAG_MUD_BALL = registerItem("water_hag_mud_ball",
+                new WaterHag_MudBallItem(
+                        new FabricItemSettings().maxCount(16)));
+        WATER_HAG_MUTAGEN = registerItem("water_hag_mutagen",
+                new Item(
+                        new FabricItemSettings().maxCount(8)));
+        WATER_ESSENCE = registerItem("water_essence",
+                new Item(
+                        new FabricItemSettings()));
+
+
+        FOGLET_SPAWN_EGG = registerItem("foglet_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.FOGLET, 0x4a3f3f, 0x211c1c,
+                        new FabricItemSettings()));
+        FOGLET_TEETH = registerItem("foglet_teeth",
+                new Item(
+                        new FabricItemSettings()));
+        FOGLET_MUTAGEN = registerItem("foglet_mutagen",
+                new Item(
+                        new FabricItemSettings().maxCount(8)));
+
+
+
+
+        NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
+                        new FabricItemSettings()));
+
+        NEKKER_EYE = registerItem("nekker_eye",
+                new Item(
+                        new FabricItemSettings()));
+
+        NEKKER_HEART = registerItem("nekker_heart",
+                new Item(
+                        new FabricItemSettings().maxCount(16)));
+    }
+
 
     //Decoctions
     public static Item EMPTY_MONSTER_DECOCTION;
@@ -412,68 +484,6 @@ public class TCOTS_Items {
         );
     }
 
-    //Register Drops from monsters
-    public static void registerDrops() {
-        DROWNER_SPAWN_EGG = registerItem("drowner_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.DROWNER, 0x8db1c0, 0x9fa3ae,
-                        new FabricItemSettings()));
-        DROWNER_TONGUE = registerItem("drowner_tongue",
-                new Item(
-                        new FabricItemSettings().maxCount(64)));
-        DROWNER_BRAIN = registerItem("drowner_brain",
-                new Item(
-                        new FabricItemSettings().maxCount(16)));
-
-
-
-        ROTFIEND_SPAWN_EGG = registerItem("rotfiend_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.ROTFIEND, 0xb3867b, 0xe6e1bc,
-                        new FabricItemSettings()));
-        ROTFIEND_BLOOD = registerItem("rotfiend_blood",
-                new Item(
-                        new FabricItemSettings().maxCount(64)));
-
-
-        GRAVE_HAG_SPAWN_EGG = registerItem("grave_hag_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.GRAVE_HAG, 0xb6b692, 0x8e8480,
-                        new FabricItemSettings()));
-        GRAVE_HAG_MUTAGEN = registerItem("grave_hag_mutagen",
-                new Item(
-                        new FabricItemSettings().maxCount(8)));
-
-
-        WATER_HAG_SPAWN_EGG = registerItem("water_hag_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.WATER_HAG, 0x8d93c0, 0x780b17,
-                        new FabricItemSettings()));
-        WATER_HAG_MUD_BALL = registerItem("water_hag_mud_ball",
-                new WaterHag_MudBallItem(
-                        new FabricItemSettings().maxCount(16)));
-        WATER_HAG_MUTAGEN = registerItem("water_hag_mutagen",
-                new Item(
-                        new FabricItemSettings().maxCount(8)));
-
-        FOGLET_SPAWN_EGG = registerItem("foglet_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.FOGLET, 0x4a3f3f, 0x211c1c,
-                        new FabricItemSettings()));
-        FOGLET_TEETH = registerItem("foglet_teeth",
-                new Item(
-                        new FabricItemSettings()));
-        FOGLET_MUTAGEN = registerItem("foglet_mutagen",
-                new Item(
-                        new FabricItemSettings().maxCount(8)));
-
-        NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
-                        new FabricItemSettings()));
-
-        NEKKER_EYE = registerItem("nekker_eye",
-                new Item(
-                        new FabricItemSettings().maxCount(64)));
-
-        NEKKER_HEART = registerItem("nekker_heart",
-                new Item(
-                        new FabricItemSettings().maxCount(16)));
-    }
 
     //TODO: Add buy mechanic to alcohol
     //Alcohol
@@ -499,6 +509,9 @@ public class TCOTS_Items {
     public static Item BRYONIA;
     public static Item CROWS_EYE;
     public static Item VERBENA;
+    public static Item HAN_FIBER;
+    public static Item PUFFBALL;
+    public static Item PUFFBALL_MUSHROOM_BLOCK_ITEM;
     public static Item ERGOT_SEEDS;
     public static Item LILY_OF_THE_VALLEY_PETALS;
     public static Item ALLIUM_PETALS;
@@ -591,6 +604,14 @@ public class TCOTS_Items {
                 new AliasedBlockItem(TCOTS_Blocks.VERBENA_FLOWER,
                         new FabricItemSettings().maxCount(64)));
 
+        HAN_FIBER = registerItem("han_fiber",
+                new AliasedBlockItem(TCOTS_Blocks.HAN_FIBER_PLANT,
+                        new FabricItemSettings().maxCount(64)));
+
+        PUFFBALL = registerItem("puffball",
+                new AliasedBlockItem(TCOTS_Blocks.PUFFBALL_MUSHROOM,
+                        new FabricItemSettings().maxCount(64)));
+
 
         ERGOT_SEEDS = registerItem("ergot_seeds",
                 new Item(
@@ -638,6 +659,9 @@ public class TCOTS_Items {
     public static Item ALCHEMY_BOOK;
 
     public static void registerItemsMisc(){
+
+        PUFFBALL_MUSHROOM_BLOCK_ITEM  = registerBlockItem("puffball_mushroom_block", TCOTS_Blocks.PUFFBALL_MUSHROOM_BLOCK);
+
         NEST_SLAB_ITEM  = registerBlockItem("nest_slab", TCOTS_Blocks.NEST_SLAB);
 
         NEST_SKULL_ITEM = registerItem("nest_skull", new NestSkullItem(TCOTS_Blocks.NEST_SKULL, TCOTS_Blocks.NEST_WALL_SKULL, new FabricItemSettings(), Direction.DOWN));

@@ -44,6 +44,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.NEKKER_EYE);
                             entries.add(TCOTS_Items.NEKKER_HEART);
                             entries.add(TCOTS_Items.WATER_HAG_MUD_BALL);
+                            entries.add(TCOTS_Items.WATER_ESSENCE);
                             entries.add(TCOTS_Items.FOGLET_TEETH);
 
                             //Mutagens
@@ -63,6 +64,9 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.BUNCH_OF_LEAVES);
                             entries.add(TCOTS_Items.CROWS_EYE);
                             entries.add(TCOTS_Items.VERBENA);
+                            entries.add(TCOTS_Items.HAN_FIBER);
+                            entries.add(TCOTS_Items.PUFFBALL);
+                            entries.add(TCOTS_Items.PUFFBALL_MUSHROOM_BLOCK_ITEM);
 
                             //Potions
                             entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
