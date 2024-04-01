@@ -1,0 +1,33 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.12,
+  "category":"bombs_oils",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alchemy_paste"
+    },
+   {
+      "item": "tcots-witcher:rotfiend_blood"
+    },
+   {
+      "item": "tcots-witcher:poppy_petals"
+    },
+   {
+      "item": "tcots-witcher:arenaria"
+    },
+   {
+      "item": "tcots-witcher:hydragenum"
+    }
+  ],
+
+  "ingredient_counters": [5,4,1,1,1],
+
+  "base": {
+    "item": "tcots-witcher:oil_necrophage_enhanced"
+  },
+
+  "result": {
+    "item": "tcots-witcher:oil_necrophage_superior"
+  }
+}

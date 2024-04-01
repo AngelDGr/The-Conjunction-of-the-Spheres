@@ -3,10 +3,11 @@ package TCOTS.blocks;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
 import TCOTS.blocks.entity.MonsterNestBlockEntity;
+import TCOTS.blocks.entity.NestSkullBlockEntity;
 import TCOTS.blocks.plants.*;
 import TCOTS.blocks.skull.NestSkullBlock;
-import TCOTS.blocks.entity.NestSkullBlockEntity;
 import TCOTS.blocks.skull.NestWallSkullBlock;
+import TCOTS.world.TCOTS_ConfiguredFeatures;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.*;
@@ -17,7 +18,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
 public class TCOTS_Blocks {
 
@@ -27,7 +27,7 @@ public class TCOTS_Blocks {
     public static final Block VERBENA_FLOWER = new VerbenaFlower(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY).offset(AbstractBlock.OffsetType.XZ));
     public static final Block BRYONIA_VINE = new BryoniaVine(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block HAN_FIBER_PLANT = new HanFiberPlant(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY).offset(AbstractBlock.OffsetType.XZ));
-    public static final Block PUFFBALL_MUSHROOM = new PuffballMushroom(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM, AbstractBlock.Settings.create().mapColor(MapColor.WHITE).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS).luminance(state -> 1).postProcess(Blocks::always).pistonBehavior(PistonBehavior.DESTROY));
+    public static final Block PUFFBALL_MUSHROOM = new PuffballMushroom(TCOTS_ConfiguredFeatures.HUGE_PUFFBALL_MUSHROOM, AbstractBlock.Settings.create().mapColor(MapColor.WHITE).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS).luminance(state -> 1).postProcess(Blocks::always).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block PUFFBALL_MUSHROOM_BLOCK = new MushroomBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE_GRAY).instrument(Instrument.BASS).strength(0.2f).sounds(BlockSoundGroup.WOOD).burnable());
 
 
@@ -47,6 +47,8 @@ public class TCOTS_Blocks {
     public static BlockEntityType<NestSkullBlockEntity> SKULL_NEST_ENTITY;
     public static BlockEntityType<MonsterNestBlockEntity> MONSTER_NEST_ENTITY;
     public static BlockEntityType<AlchemyTableBlockEntity> ALCHEMY_TABLE_ENTITY;
+
+
 
     public static void registerBlocks(){
 
@@ -102,5 +104,6 @@ public class TCOTS_Blocks {
                 Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(TCOTS_Main.MOD_ID, "alchemy_table"),
                 FabricBlockEntityTypeBuilder.create(AlchemyTableBlockEntity::new, ALCHEMY_TABLE).build());
+
     }
 }

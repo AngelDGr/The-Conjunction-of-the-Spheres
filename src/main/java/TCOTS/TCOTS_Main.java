@@ -1,21 +1,19 @@
 package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.misc.FoglingEntity;
 import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
-import TCOTS.potions.TCOTS_Effects;
 import TCOTS.particles.TCOTS_Particles;
+import TCOTS.potions.TCOTS_Effects;
 import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.world.TCOTS_Features;
 import net.fabricmc.api.ModInitializer;
-
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import TCOTS.entity.TCOTS_Entities;
 import software.bernie.geckolib.GeckoLib;
 
 public class TCOTS_Main implements ModInitializer {
@@ -26,7 +24,6 @@ public class TCOTS_Main implements ModInitializer {
 
 	public static String MOD_ID = "tcots-witcher";
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -45,6 +42,7 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_Sounds.registerSounds();
 		TCOTS_Entities.addSpawns();
 		TCOTS_Particles.registerParticles();
+		TCOTS_Features.registerFeatures();
 
 		//Drowner
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.DROWNER, DrownerEntity.setAttributes());

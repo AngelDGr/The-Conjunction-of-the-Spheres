@@ -38,7 +38,7 @@ loom {
 			name "Data Generation"
 			vmArg "-Dfabric-api.datagen"
 			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-			vmArg "-Dfabric-api.datagen.modid=witcher-medallions"
+			vmArg "-Dfabric-api.datagen.modid=tcots-witcher"
  
 			runDir "build/datagen"
 		}
@@ -47,7 +47,6 @@ loom {
 	accessWidenerPath = file("src/main/resources/tcots-witcher.accesswidener")
 
 }
-
 
 // Add the generated resources to the main source set
 sourceSets {

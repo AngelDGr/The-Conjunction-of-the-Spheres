@@ -15,9 +15,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
-import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.Nullable;
 
+import com.google.common.collect.Lists;
 import java.util.List;
 
 public class WitcherAlcohol_Base extends WitcherPotions_Base{
@@ -28,11 +28,11 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base{
         return refillQuantity;
     }
 
-    private final List<StatusEffectInstance> effects = Lists.newArrayList();
+    private final java.util.List<StatusEffectInstance> effects = Lists.newArrayList();
 
     public WitcherAlcohol_Base(Settings settings, List<StatusEffectInstance> effects, int refillQuantity) {
         super(settings, new StatusEffectInstance(StatusEffects.BLINDNESS), 0, false);
-        this.refillQuantity=refillQuantity;
+        this.refillQuantity = refillQuantity;
         this.effects.addAll(effects);
     }
 

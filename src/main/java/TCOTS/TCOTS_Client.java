@@ -8,8 +8,15 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
 import TCOTS.particles.*;
+import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
 import TCOTS.screen.AlchemyTableScreen;
+import io.wispforest.lavender.client.LavenderBookScreen;
+import io.wispforest.lavender.md.compiler.BookCompiler;
+import io.wispforest.lavender.md.features.RecipeFeature;
+import io.wispforest.owo.ui.component.Components;
+import io.wispforest.owo.ui.container.Containers;
+import io.wispforest.owo.ui.core.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
@@ -18,6 +25,10 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 public class TCOTS_Client implements ClientModInitializer {
     @Override
@@ -72,6 +83,128 @@ public class TCOTS_Client implements ClientModInitializer {
 
 
         HandledScreens.register(AlchemyTableRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, AlchemyTableScreen::new);
+
+        //Register Recipe Previews
+        LavenderBookScreen.registerRecipePreviewBuilder(new Identifier(TCOTS_Main.MOD_ID, "alchemy_book"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
+
+        LavenderBookScreen.registerRecipePreviewBuilder(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
     }
+
+    private static final RecipeFeature.RecipePreviewBuilder<AlchemyTableRecipe> alchemyTable_RecipePreviewBuilder = new RecipeFeature.RecipePreviewBuilder<>() {
+        @Override
+        public @NotNull Component buildRecipePreview(BookCompiler.ComponentSource componentSource, RecipeEntry<AlchemyTableRecipe> recipeEntry) {
+            Identifier TEXTURE_ID = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/alchemy_book_gui.png");
+            //Get the recipe
+            var recipe = recipeEntry.value();
+
+            //Makes how it's going to flow the content in root
+            //Size horizontal       and      vertical
+            var root = Containers.horizontalFlow(Sizing.content(), Sizing.fixed(41));
+            root.verticalAlignment(VerticalAlignment.CENTER).horizontalAlignment(HorizontalAlignment.CENTER);
+
+            //Makes how it's going to flow the content in resultContainer
+            //Horizontal
+            var resultContainer = Containers.horizontalFlow(Sizing.fixed(111), Sizing.fixed(41));
+            resultContainer.horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER);
+
+            root.child(resultContainer);
+
+            //Add child for result item
+            resultContainer.child(
+                    //Makes a container of Item Stack
+                    Containers.stack(Sizing.fixed(22), Sizing.fixed(22))
+                            //Add as child the result
+                            .child(Components.item(recipe.getResult(null)).showOverlay(true).setTooltipFromStack(true))
+                            //Add as child the texture
+                            .child(Components.texture(TEXTURE_ID,
+                                    435, 144,
+                                    22, 22,
+                                    512, 256).blend(true))
+                            //Put in the result specific place
+                            .positioning(Positioning.absolute(36, 0))
+                            //Align it
+                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
+
+            //Adds the texture
+            resultContainer.child(
+                    Containers.stack(Sizing.content(), Sizing.fixed(18))
+                            .child(Components.texture(TEXTURE_ID,
+                                    399, 167,
+                                    111, 18,
+                                    512, 256).blend(true))
+                            .positioning(Positioning.absolute(0, 23))
+                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
+
+
+            //Loop to assign each ingredient to a container
+            for (int i = 0; i < recipe.getIngredients().size(); i++) {
+                //Get the ingredient stack
+                ItemStack stack = recipe.getIngredients().get(i).getMatchingStacks()[0];
+                //Get the quantity
+                int count = recipe.getIngredientsCounts().get(i);
+                //Creates the stack with the correct quantity
+                ItemStack ingredientStack = new ItemStack(stack.getItem(), count);
+                switch (i) {
+                    case 0:
+                        resultContainer.child(
+                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                        .positioning(Positioning.absolute(38, 23))
+                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                        );
+                        break;
+
+                    case 1:
+                        resultContainer.child(
+                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                        .positioning(Positioning.absolute(19, 23))
+                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                        );
+                        break;
+
+                    case 2:
+                        resultContainer.child(
+                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                        .positioning(Positioning.absolute(57, 23))
+                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                        );
+                        break;
+
+                    case 3:
+                        resultContainer.child(
+                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                        .positioning(Positioning.absolute(0, 23))
+                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                        );
+                        break;
+
+                    case 4:
+                        resultContainer.child(
+                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                        .positioning(Positioning.absolute(76, 23))
+                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                        );
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //Base container
+            resultContainer.child(
+                    Containers.stack(Sizing.content(), Sizing.fixed(16))
+                            .child(Components.item(recipe.getBaseItem()).showOverlay(true).setTooltipFromStack(true))
+                            .positioning(Positioning.absolute(95, 24))
+                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+            );
+
+            return root;
+        }
+    };
+
 }
 

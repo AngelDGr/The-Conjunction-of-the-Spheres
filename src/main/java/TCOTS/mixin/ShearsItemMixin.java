@@ -21,7 +21,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ShearsItem.class)
 public class ShearsItemMixin {
-
     @Inject(method = "useOnBlock", at = @At("TAIL"), cancellable = true)
     private void injectShearsAlchemyIngredients(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
         World world = context.getWorld();
@@ -44,6 +43,15 @@ public class ShearsItemMixin {
 
         dropPetals(context, world, blockPos, block, playerEntity, itemStack, cir,
                 Blocks.POPPY, TCOTS_Items.POPPY_PETALS, 2,4);
+
+        dropPetals(context, world, blockPos, block, playerEntity, itemStack, cir,
+                Blocks.PEONY, TCOTS_Items.PEONY_PETALS, 8,14);
+
+        dropPetals(context, world, blockPos, block, playerEntity, itemStack, cir,
+                Blocks.AZURE_BLUET, TCOTS_Items.AZURE_BLUET_PETALS, 5,10);
+
+        dropPetals(context, world, blockPos, block, playerEntity, itemStack, cir,
+                Blocks.OXEYE_DAISY, TCOTS_Items.OXEYE_DAISY_PETALS, 4,8);
     }
 
     @Unique
@@ -51,6 +59,10 @@ public class ShearsItemMixin {
         if(block==flower){
             int j = min + world.random.nextInt(max-min+1);
             SweetBerryBushBlock.dropStack(world, blockPos, new ItemStack(petal, j));
+            //Check if it's a tall plant
+            if(world.getBlockState(blockPos.down()).getBlock() instanceof TallPlantBlock){
+                world.removeBlock(blockPos.down(), false);
+            }
             world.removeBlock(blockPos, false);
 
             world.playSound(playerEntity, blockPos, SoundEvents.BLOCK_GROWING_PLANT_CROP, SoundCategory.BLOCKS, 1.0f, 1.0f);
@@ -59,5 +71,7 @@ public class ShearsItemMixin {
 
             cir.setReturnValue(ActionResult.success(world.isClient));
         }
+
+
     }
 }

@@ -27,3 +27,4 @@ accessible field net/minecraft/entity/ai/goal/MeleeAttackGoal speed D
 accessible class net/minecraft/entity/ai/goal/FollowMobGoal
 
 accessible method net/minecraft/block/MultifaceGrowthBlock withAllDirections (Lnet/minecraft/state/StateManager;)Lnet/minecraft/block/BlockState;
+accessible method net/minecraft/data/client/Models item (Ljava/lang/String;[Lnet/minecraft/data/client/TextureKey;)Lnet/minecraft/data/client/Model;

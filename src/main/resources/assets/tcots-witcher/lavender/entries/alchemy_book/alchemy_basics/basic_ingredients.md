@@ -253,7 +253,7 @@
                     <children>
                         <item>
                             <stack>
-                                minecraft:oak_leaves
+                                minecraft:spore_blossom
                             </stack>
                             <set-tooltip-from-stack>true</set-tooltip-from-stack>
                         </item>
@@ -315,8 +315,7 @@
                                         tcots-witcher:celandine
                                     </stack>
 <tooltip-text>Celandine:
-Found in Plains/Forests, 
-this flower grows like a crop.</tooltip-text>
+Grows in Plains/Forests.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -331,9 +330,7 @@ this flower grows like a crop.</tooltip-text>
                                         tcots-witcher:crows_eye
                                     </stack>
 <tooltip-text>Crow's Eye: 
-Found in Plains/Taigas, 
-this plant grows like a sweet berry 
-bush and a fern.</tooltip-text>
+Grows in Plains/Taigas.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -348,8 +345,7 @@ bush and a fern.</tooltip-text>
                                         tcots-witcher:arenaria
                                     </stack>
 <tooltip-text>Arenaria:
-Found in Plains/Forests/Flower Forests,
-this plant grows like a sweet berry bush.</tooltip-text>                                    
+Grows in Plains/Forests/Flower Forests.</tooltip-text>                                    
                                 </item>
                             </children>
                             <padding>
@@ -391,8 +387,7 @@ Bought from alchemist villagers.</tooltip-text>
                                         tcots-witcher:bryonia
                                     </stack>
 <tooltip-text>Bryonia:
-Found in caves and buildings,
-grows in the walls and ceiling.</tooltip-text>
+Grows in caves and buildings.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -423,8 +418,7 @@ similar to a poisonous potato.</tooltip-text>
                                         tcots-witcher:verbena
                                     </stack>
 <tooltip-text>Verbena:
-Found in Plains/Forests/Flower Forests,
-grows like a flower.</tooltip-text>
+Grows in Plains/Forests/Flower Forests.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -439,8 +433,7 @@ grows like a flower.</tooltip-text>
                                         tcots-witcher:han_fiber
                                     </stack>
 <tooltip-text>Han Fiber:
-Found in Plains/Forests/Flower Forests,
-grows like a flower.</tooltip-text>
+Found in Plains/Forests/Flower Forests.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -460,63 +453,21 @@ grows like a flower.</tooltip-text>
                 <!--Third Row-->
                 <flow-layout direction="horizontal">
                     <children>
+                        
                         <stack-layout>
                             <children>
                                 <item>
                                     <stack>
-                                        minecraft:lily_pad
+                                        tcots-witcher:puffball
                                     </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+<tooltip-text>Puffball:
+Grows in caves and dark places.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
                                 <all>5</all>
                             </padding>
                         </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        minecraft:red_mushroom
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        minecraft:sunflower
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        minecraft:glow_lichen
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-
 
                     </children>
                     <sizing>
@@ -597,7 +548,7 @@ All of them can be harvested using shears in the respective plant
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:bunch_of_leaves
+                                        tcots-witcher:peony_petals
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>                               
                                 </item>
@@ -623,7 +574,7 @@ All of them can be harvested using shears in the respective plant
                             <children>
                                 <item>
                                     <stack>
-                                        minecraft:dandelion
+                                        tcots-witcher:azure_bluet_petals
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -637,7 +588,7 @@ All of them can be harvested using shears in the respective plant
                             <children>
                                 <item>
                                     <stack>
-                                        minecraft:kelp
+                                        tcots-witcher:oxeye_daisy_petals
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -646,26 +597,12 @@ All of them can be harvested using shears in the respective plant
                                 <all>5</all>
                             </padding>
                         </stack-layout>
-
+                        
                         <stack-layout>
                             <children>
                                 <item>
                                     <stack>
-                                        minecraft:brown_mushroom
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        minecraft:moss_block
+                                        tcots-witcher:bunch_of_leaves
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -727,7 +664,7 @@ Bought from villagers.</tooltip-text>
                                         tcots-witcher:dwarven_spirit
                                     </stack>
 <tooltip-text>Dwarven Spirit:
-Crafted with some ingredients, see recipes.</tooltip-text>
+Crafted, see recipes.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -742,7 +679,7 @@ Crafted with some ingredients, see recipes.</tooltip-text>
                                         tcots-witcher:alcohest
                                     </stack>
 <tooltip-text>Alcohest:
-Crafted with some ingredients, see recipes.</tooltip-text>
+Crafted, see recipes.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -830,9 +767,167 @@ Bought from villagers.</tooltip-text>
 
 **{dark_green}Advanced Ingredients{}**
 
-*Monster Drops*
+*Substances*
+```xml owo-ui
+        <flow-layout direction="vertical">
+            <children>
+                <!--First Row-->
+                <flow-layout direction="horizontal">
+                    <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:aether
+                                    </stack>
+<tooltip-text>Aether:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:vitriol
+                                    </stack>
+<tooltip-text>Vitriol:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
 
-Read a Monster Bestiary for more information
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:vermilion
+                                    </stack>
+<tooltip-text>Vermilion:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:hydragenum
+                                    </stack>
+<tooltip-text>Hydragenum:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+                    </children>
+                    <sizing>
+                        <horizontal method="content">1</horizontal>
+                        <vertical method="content">1</vertical>
+                    </sizing>
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+                </flow-layout>
+
+                <!--Second Row-->
+                <flow-layout direction="horizontal">
+                    <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:rubedo
+                                    </stack>
+<tooltip-text>Rubedo:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:quebrith
+                                    </stack>
+<tooltip-text>Quebrith:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:monster_fat
+                                    </stack>
+<tooltip-text>Monster Fat:
+Obtained from Ravagers, Hoglins,
+Zoglins, Polar Bears and Piglins
+Brutes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:alchemy_paste
+                                    </stack>
+<tooltip-text>Alchemy Paste:
+Bought from villagers.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+
+                        
+                    </children>
+                    <sizing>
+                        <horizontal method="content">1</horizontal>
+                        <vertical method="content">1</vertical>
+                    </sizing>
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+                </flow-layout>
+
+            </children>
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>center</vertical-alignment>
+        </flow-layout>
+```
+
+---
+
 
 
 

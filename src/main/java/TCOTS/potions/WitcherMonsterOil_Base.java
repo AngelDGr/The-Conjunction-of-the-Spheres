@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MonsterOil_Base extends Item {
+public class WitcherMonsterOil_Base extends Item {
     //Levels:
         //Normal:   10% ---> 2.0 damage = 1.00 hearts                Smite I  : 2.5  damage
         //Enhanced: 25% ---> 4.0 damage = 2.00 hearts                Smite II : 5.0  damage
@@ -36,7 +36,7 @@ public class MonsterOil_Base extends Item {
 
     int level;
 
-    public MonsterOil_Base(Settings settings, EntityGroup group, int uses, int level) {
+    public WitcherMonsterOil_Base(Settings settings, EntityGroup group, int uses, int level) {
         super(settings);
         this.group = group;
         if(group == TCOTS_Entities.NECROPHAGES){

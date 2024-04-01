@@ -15,12 +15,17 @@
 	"icon": "assets/tcots-witcher/icon.png",
 	"environment": "*",
 	"entrypoints": {
+
 		"main": [
 			"TCOTS.TCOTS_Main"
 		],
 
 		"client": [
 			"TCOTS.TCOTS_Client"
+		],
+
+		"fabric-datagen": [
+			"TCOTS.TCOTS_DataGenerator"
 		]
 	},
 	"mixins": [

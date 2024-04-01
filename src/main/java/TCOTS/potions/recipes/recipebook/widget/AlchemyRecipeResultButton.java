@@ -128,18 +128,26 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
                 j = 173+23+23;
             }
 
+            Formatting textColor;
 
             if(this.recipe.getResult(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getResult(null).getItem() instanceof WitcherAlcohol_Base)){
                 List<Text> list= new ArrayList<>();
-                int tooltipY;
-                if((((WitcherPotions_Base) this.recipe.getResult(null).getItem()).isDecoction())){
-                    tooltipY=12;
-                }else {
-                    tooltipY=22;
+
+                if(((WitcherPotions_Base) this.recipe.getResult(null).getItem()).getStatusEffect().getAmplifier() > 0){
+                    textColor = Formatting.YELLOW;
+                } else {
+                    textColor = Formatting.WHITE;
                 }
 
+                int tooltipY;
                 //Name
-                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()));
+                if((((WitcherPotions_Base) this.recipe.getResult(null).getItem()).isDecoction())){
+                    tooltipY=12;
+                    list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()).withColor(0x41d331));
+                }else {
+                    tooltipY=22;
+                    list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()).formatted(textColor));
+                }
 
                 //Toxicity
                 int tox = ((WitcherPotions_Base) this.recipe.getResult(null).getItem()).getToxicity();
@@ -154,18 +162,24 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-tooltipY);
 
-            } else if (this.recipe.getResult(null).getItem() instanceof MonsterOil_Base) {
+            } else if (this.recipe.getResult(null).getItem() instanceof WitcherMonsterOil_Base) {
+
+                if(((WitcherMonsterOil_Base) this.recipe.getResult(null).getItem()).getLevel() > 1){
+                    textColor = Formatting.YELLOW;
+                } else {
+                    textColor = Formatting.WHITE;
+                }
 
                 List<Text> list= new ArrayList<>();
                 //Name
-                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()));
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()).formatted(textColor));
 
                 //Damage
-                int damage = ((MonsterOil_Base) this.recipe.getResult(null).getItem()).getLevel() * 2;
+                int damage = ((WitcherMonsterOil_Base) this.recipe.getResult(null).getItem()).getLevel() * 2;
                 list.add(Text.translatable("tcots-witcher.tooltip.gui.oil_damage", damage).formatted(Formatting.RED));
 
                 //Uses
-                int uses = ((MonsterOil_Base) this.recipe.getResult(null).getItem()).getUses();
+                int uses = ((WitcherMonsterOil_Base) this.recipe.getResult(null).getItem()).getUses();
                 list.add(Text.translatable("tcots-witcher.tooltip.gui.oil_uses", uses).formatted(Formatting.DARK_BLUE));
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-22);
             } else{

@@ -166,10 +166,6 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
         return blockState.isAir() || blockState.isOf(TCOTS_Blocks.CROWS_EYE_FERN);
     }
 
-//    private static boolean canPlaceAt(WorldView world, BlockPos pos) {
-//        return CropBlock.hasEnoughLightAt(world, pos);
-//    }
-
     private boolean canGrow(WorldView world, BlockPos pos, BlockState state, int age) {
         return !this.isFullyGrown(state)
                 && canPlaceAt(state, world, pos)

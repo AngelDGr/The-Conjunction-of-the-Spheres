@@ -26,8 +26,10 @@ public class ItemStackMixin {
         ItemStack thisObject = (ItemStack)(Object)this;
         if(thisObject.hasNbt()){
             NbtCompound nbt = thisObject.getNbt();
+            assert nbt != null;
             if(nbt.contains("Monster Oil")){
                 NbtCompound monsterOil = thisObject.getSubNbt("Monster Oil");
+                assert monsterOil != null;
                 if(monsterOil.contains("Id")){
                     switch (monsterOil.getInt("Id")){
                         case 0:

@@ -48,11 +48,35 @@ decoctions, monster oils, bombs and ingredients.***
 **{#395026}Decoctions{}**
 <recipe;tcots-witcher:water_hag_decoction>
 <recipe;tcots-witcher:grave_hag_decoction>
+<recipe;tcots-witcher:foglet_decoction>
+
 
 ;;;;;
 
 **{#395026}Bombs & Oils{}**
-<recipe;tcots-witcher:necrophage_oil>
+<recipe;tcots-witcher:oil_necrophage>
+<recipe;tcots-witcher:oil_necrophage_enhanced>
+<recipe;tcots-witcher:oil_necrophage_superior>
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:oil_ogroid>
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:oil_hanged>
+<recipe;tcots-witcher:oil_hanged_enhanced>
+<recipe;tcots-witcher:oil_hanged_superior>
+
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:oil_beast>
+<recipe;tcots-witcher:oil_beast_enhanced>
+<recipe;tcots-witcher:oil_beast_superior>
 
 
 ;;;;;
@@ -65,7 +89,20 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Ingredients{}**
-<recipe;tcots-witcher:vitriol>
 <recipe;tcots-witcher:vermilion>
+<recipe;tcots-witcher:vitriol>
+<recipe;tcots-witcher:hydragenum>
+
+;;;;;
+
+**{#395026}Ingredients{}**
+<recipe;tcots-witcher:quebrith>
+<recipe;tcots-witcher:aether>
+<recipe;tcots-witcher:rubedo>
+
+
+;;;;;
+
+
 
 

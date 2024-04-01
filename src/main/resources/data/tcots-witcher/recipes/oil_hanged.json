@@ -1,0 +1,21 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.3,
+  "category":"bombs_oils",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:arenaria"
+    }
+  ],
+
+  "ingredient_counters": [4],
+
+  "base": {
+    "item": "minecraft:honeycomb"
+  },
+
+  "result": {
+    "item": "tcots-witcher:oil_hanged"
+  }
+}
