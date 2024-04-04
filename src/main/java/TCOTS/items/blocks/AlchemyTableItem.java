@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class AlchemyTableItem  extends BlockItem implements GeoItem {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     private final Supplier<Object> renderProvider= GeoItem.makeRenderer(this);
     public AlchemyTableItem(Block block, Settings settings) {

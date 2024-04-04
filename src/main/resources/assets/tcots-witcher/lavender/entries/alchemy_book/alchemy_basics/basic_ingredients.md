@@ -315,7 +315,8 @@
                                         tcots-witcher:celandine
                                     </stack>
 <tooltip-text>Celandine:
-Grows in Plains/Forests.</tooltip-text>
+Grows in Plains, Forests,
+and Meadows.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -330,7 +331,8 @@ Grows in Plains/Forests.</tooltip-text>
                                         tcots-witcher:crows_eye
                                     </stack>
 <tooltip-text>Crow's Eye: 
-Grows in Plains/Taigas.</tooltip-text>
+Grows in Taigas, Snowy Taigas
+and Groves.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -345,7 +347,8 @@ Grows in Plains/Taigas.</tooltip-text>
                                         tcots-witcher:arenaria
                                     </stack>
 <tooltip-text>Arenaria:
-Grows in Plains/Forests/Flower Forests.</tooltip-text>                                    
+Grows in Taigas, Snowy Taigas
+and Flower Forests.</tooltip-text>                                    
                                 </item>
                             </children>
                             <padding>
@@ -387,7 +390,8 @@ Bought from alchemist villagers.</tooltip-text>
                                         tcots-witcher:bryonia
                                     </stack>
 <tooltip-text>Bryonia:
-Grows in caves and buildings.</tooltip-text>
+Grows in caves, sometimes
+grows at surface level.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -418,7 +422,8 @@ similar to a poisonous potato.</tooltip-text>
                                         tcots-witcher:verbena
                                     </stack>
 <tooltip-text>Verbena:
-Grows in Plains/Forests/Flower Forests.</tooltip-text>
+Grows in Plains, Flower Forests, 
+Forests and Meadows.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -433,7 +438,8 @@ Grows in Plains/Forests/Flower Forests.</tooltip-text>
                                         tcots-witcher:han_fiber
                                     </stack>
 <tooltip-text>Han Fiber:
-Found in Plains/Forests/Flower Forests.</tooltip-text>
+Grows in Swamps, Jungles 
+and Savannas.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -461,7 +467,7 @@ Found in Plains/Forests/Flower Forests.</tooltip-text>
                                         tcots-witcher:puffball
                                     </stack>
 <tooltip-text>Puffball:
-Grows in caves and dark places.</tooltip-text>
+Grows in Swamps and caves.</tooltip-text>
                                 </item>
                             </children>
                             <padding>

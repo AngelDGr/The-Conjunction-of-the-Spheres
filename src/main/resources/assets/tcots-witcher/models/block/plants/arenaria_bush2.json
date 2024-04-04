@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "tcots-witcher:block/tinted_cross_overlay",
   "textures": {
-    "cross": "tcots-witcher:block/plants/arenaria_bush2"
+    "cross": "tcots-witcher:block/plants/arenaria_bush1",
+    "overlay": "tcots-witcher:block/plants/arenaria_bush2_overlay"
   }
 }

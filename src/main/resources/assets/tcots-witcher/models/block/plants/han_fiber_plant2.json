@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "tcots-witcher:block/tinted_cross_overlay",
   "textures": {
-    "cross": "tcots-witcher:block/plants/han_fiber_plant2"
+    "cross": "tcots-witcher:block/plants/han_fiber/age2_cross",
+    "overlay": "tcots-witcher:block/plants/han_fiber/age2_overlay"
   }
 }

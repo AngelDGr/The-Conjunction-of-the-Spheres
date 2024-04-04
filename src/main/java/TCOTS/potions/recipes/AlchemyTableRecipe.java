@@ -1,20 +1,18 @@
 package TCOTS.potions.recipes;
 
 import com.google.common.collect.Lists;
-import com.mojang.datafixers.kinds.Applicative;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
@@ -23,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<AlchemyTableRecipe>{
     private final ItemStack output;
     private final ItemStack base;
@@ -231,8 +230,6 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
     }
 
     public static class Serializer implements RecipeSerializer<AlchemyTableRecipe>{
-//        private static final Codec<Item> ITEM_CODEC = Codecs.validate(Registries.ITEM.getCodec(), item -> item == Items.AIR ? DataResult.error(() -> "Item must not be minecraft:air") : DataResult.success(item));
-//        public static final Codec<ItemStack> RECIPE_RESULT_CODEC = RecordCodecBuilder.create(instance -> instance.group(((MapCodec)ITEM_CODEC.fieldOf("item")).forGetter(ItemStack::getItem), Codecs.createStrictOptionalFieldCodec(Codecs.POSITIVE_INT, "count", 1).forGetter(ItemStack::getCount)).apply((Applicative<ItemStack, ?>)instance, ItemStack::new));
 
         //Json Reader
         public static final Codec<AlchemyTableRecipe> CODEC = RecordCodecBuilder.create(
@@ -248,7 +245,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
                         //Ingredients List reader
                         Ingredient.ALLOW_EMPTY_CODEC.listOf().fieldOf("ingredients")
                                 .flatXmap(ingredients -> {
-                                    Ingredient[] ingredients2 = (Ingredient[])ingredients.stream().filter(ingredient -> !ingredient.isEmpty()).toArray(Ingredient[]::new);
+                                    Ingredient[] ingredients2 = ingredients.stream().filter(ingredient -> !ingredient.isEmpty()).toArray(Ingredient[]::new);
                                     if (ingredients2.length == 0) {
                                         return DataResult.error(() -> "No ingredients for witcher potion recipe");
                                     }

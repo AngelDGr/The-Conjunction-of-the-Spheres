@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "tcots-witcher:block/tinted_cross_overlay",
   "textures": {
-    "cross": "tcots-witcher:block/plants/verbena_flower2"
+    "cross": "tcots-witcher:block/plants/verbena_flower2",
+    "overlay": "tcots-witcher:block/plants/verbena_flower2_overlay"
   }
 }

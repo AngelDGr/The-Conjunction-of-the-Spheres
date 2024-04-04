@@ -52,11 +52,21 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.WATER_HAG_MUTAGEN);
                             entries.add(TCOTS_Items.FOGLET_MUTAGEN);
 
+                            //Potions
                             //Ingredients
+                            entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
+                            entries.add(TCOTS_Items.HERBAL_TABLE_ITEM);
+                            entries.add(TCOTS_Items.ORGANIC_PASTE);
+
                             entries.add(TCOTS_Items.ALLSPICE);
                             entries.add(TCOTS_Items.ARENARIA);
                             entries.add(TCOTS_Items.CELANDINE);
                             entries.add(TCOTS_Items.BRYONIA);
+                            entries.add(TCOTS_Items.CROWS_EYE);
+                            entries.add(TCOTS_Items.VERBENA);
+                            entries.add(TCOTS_Items.HAN_FIBER);
+                            entries.add(TCOTS_Items.PUFFBALL);
+
                             entries.add(TCOTS_Items.ERGOT_SEEDS);
                             entries.add(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS);
                             entries.add(TCOTS_Items.ALLIUM_PETALS);
@@ -65,14 +75,10 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.AZURE_BLUET_PETALS);
                             entries.add(TCOTS_Items.OXEYE_DAISY_PETALS);
                             entries.add(TCOTS_Items.BUNCH_OF_LEAVES);
-                            entries.add(TCOTS_Items.CROWS_EYE);
-                            entries.add(TCOTS_Items.VERBENA);
-                            entries.add(TCOTS_Items.HAN_FIBER);
-                            entries.add(TCOTS_Items.PUFFBALL);
+
                             entries.add(TCOTS_Items.PUFFBALL_MUSHROOM_BLOCK_ITEM);
 
-                            //Potions
-                            entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
+
 
                             entries.add(TCOTS_Items.ICY_SPIRIT.getDefaultStack());
                             entries.add(TCOTS_Items.CHERRY_CORDIAL.getDefaultStack());

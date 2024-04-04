@@ -22,12 +22,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
 
-//this.renderHealthBar(context, playerEntity, m, o, r, v, f, i, j, p, bl);
-//      "La/b/c/renderHealthBar(LDrawContext,LPlayerEntity,IIIIFIIIZ)V"), index=5
-//
-    //      "Lnet/minecraft/client/gui/hud/InGameHud;renderHealthBar(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/entity/player/PlayerEntity;IIIIFIIIZ)V"), index=5
-
-
     @Shadow @Final private Random random;
     @Shadow protected abstract void renderOverlay(DrawContext context, Identifier texture, float opacity);
     @Shadow @Final private MinecraftClient client;
@@ -100,8 +94,7 @@ public abstract class InGameHudMixin {
             }
         }
     }
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getFrozenTicks()I",
-            shift = At.Shift.BY, by = 1))
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getFrozenTicks()I"))
     private void renderMudBall(DrawContext context, float tickDelta, CallbackInfo ci){
         assert this.client.player != null;
 

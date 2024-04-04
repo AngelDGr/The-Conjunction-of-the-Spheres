@@ -103,6 +103,13 @@
     "block.tcots-witcher.alchemy_table.tooltip_book": "Put an Alchemy Almanac on it",
     "gui.recipe-book.tooltip.alchemy_table": "Recipe Book",
 
+    "block.tcots-witcher.herbal_table": "Herbal Table",
+    "block.tcots-witcher.herbal_table.tooltip": "Put organic matter in it",
+    "item.tcots-witcher.organic_paste": "Organic Paste",
+
+
+
+
     "tcots-witcher.sounds.ingredient_pops": "Ingredients pop",
     "item.tcots-witcher.allspice": "Allspice",
 
@@ -123,6 +130,8 @@
 
     "item.tcots-witcher.bryonia": "Bryonia",
     "block.tcots-witcher.bryonia_vine": "Bryonia Vine",
+    "block.tcots-witcher.potted_bryonia_flower": "Potted Bryonia Flower",
+
 
     "item.tcots-witcher.verbena": "Verbena",
     "block.tcots-witcher.verbena_flower": "Verbena Flower",

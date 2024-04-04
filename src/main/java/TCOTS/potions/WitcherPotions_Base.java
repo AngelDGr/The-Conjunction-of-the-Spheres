@@ -125,10 +125,12 @@ public class WitcherPotions_Base extends PotionItem {
         return list;
     }
 
+    @SuppressWarnings("unused")
     public void buildTooltip(ItemStack stack, List<Text> list, float durationMultiplier, float tickRate) {
         buildTooltip(getPotionEffects(), list, durationMultiplier, tickRate);
     }
 
+    @SuppressWarnings({"rawtypes", "unused"})
     public void buildTooltip(List<StatusEffectInstance> statusEffects, List<Text> list, float durationMultiplier, float tickRate) {
         ArrayList<Pair<EntityAttribute, EntityAttributeModifier>> list2 = Lists.newArrayList();
             for (StatusEffectInstance statusEffectInstance : statusEffects) {

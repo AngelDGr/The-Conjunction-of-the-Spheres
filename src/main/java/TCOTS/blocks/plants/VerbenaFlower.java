@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
+@SuppressWarnings("deprecation")
 public class VerbenaFlower extends PlantBlock implements Fertilizable {
 
     public static final IntProperty AGE = Properties.AGE_3;

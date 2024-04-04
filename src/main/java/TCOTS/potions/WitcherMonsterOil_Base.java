@@ -138,7 +138,7 @@ public class WitcherMonsterOil_Base extends Item {
 
 
             user.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1 );
-            NbtCompound nbtOil= new NbtCompound();
+            NbtCompound nbtOil = new NbtCompound();
 
 
             nbtOil.putInt("Id", group_value);

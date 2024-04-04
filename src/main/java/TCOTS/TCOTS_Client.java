@@ -2,6 +2,7 @@ package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.blocks.geo.renderer.AlchemyTableRenderer;
+import TCOTS.blocks.geo.renderer.HerbalTableRenderer;
 import TCOTS.blocks.geo.renderer.MonsterNestRenderer;
 import TCOTS.blocks.geo.renderer.NestSkullBlockRenderer;
 import TCOTS.entity.TCOTS_Entities;
@@ -20,7 +21,11 @@ import io.wispforest.owo.ui.core.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.color.world.FoliageColors;
+import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -33,6 +38,22 @@ import org.jetbrains.annotations.NotNull;
 public class TCOTS_Client implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        //Grass Colors
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
+            if (world == null || pos == null) {
+                return GrassColors.getDefaultColor();
+            }
+            return BiomeColors.getGrassColor(world, pos);}, TCOTS_Blocks.HAN_FIBER_PLANT, TCOTS_Blocks.ARENARIA_BUSH,
+                TCOTS_Blocks.CELANDINE_PLANT, TCOTS_Blocks.CROWS_EYE_FERN, TCOTS_Blocks.VERBENA_FLOWER, TCOTS_Blocks.POTTED_BRYONIA_FLOWER);
+
+        //Leaves Colors
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
+            if (world == null || pos == null) {
+                return FoliageColors.getDefaultColor();
+            }
+            return BiomeColors.getGrassColor(world, pos);}, TCOTS_Blocks.BRYONIA_VINE);
+
+
         //Monsters
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER, DrownerRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER_PUDDLE, DrownerPuddleRenderer::new);
@@ -66,12 +87,14 @@ public class TCOTS_Client implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.POTTED_CELANDINE_FLOWER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.POTTED_HAN_FIBER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.POTTED_PUFFBALL_MUSHROOM, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.POTTED_BRYONIA_FLOWER, RenderLayer.getCutout());
 
 
         //BlockEntity
         BlockEntityRendererFactories.register(TCOTS_Blocks.SKULL_NEST_ENTITY, NestSkullBlockRenderer::new);
         BlockEntityRendererFactories.register(TCOTS_Blocks.MONSTER_NEST_ENTITY, MonsterNestRenderer::new);
         BlockEntityRendererFactories.register(TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, AlchemyTableRenderer::new);
+        BlockEntityRendererFactories.register(TCOTS_Blocks.HERBAL_TABLE_ENTITY, HerbalTableRenderer::new);
 
 
         //Particles

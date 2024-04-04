@@ -1,0 +1,11 @@
+{
+    "replace": false,
+  "values": [
+    "tcots-witcher:arenaria_bush",
+    "tcots-witcher:celandine_plant",
+    "tcots-witcher:bryonia_vine",
+    "tcots-witcher:verbena_flower",
+    "tcots-witcher:han_fiber_plant",
+"tcots-witcher:crows_eye_fern"
+  ]
+}

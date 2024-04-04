@@ -37,6 +37,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityProvider {
     public static final MapCodec<AlchemyTableBlock> CODEC = AlchemyTableBlock.createCodec(AlchemyTableBlock::new);
 
@@ -111,7 +112,7 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                 ItemScatterer.spawn(world, pos, (AlchemyTableBlockEntity)blockEntity);
                 world.updateComparators(pos,this);
             }
-            if (state.get(HAS_ALCHEMY_BOOK).booleanValue()) {
+            if (state.get(HAS_ALCHEMY_BOOK)) {
                 this.dropBook(state, world, pos);
             }
 

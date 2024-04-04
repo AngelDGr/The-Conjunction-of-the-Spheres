@@ -4,6 +4,7 @@ import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.blocks.AlchemyTableItem;
+import TCOTS.items.blocks.HerbalTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
 import TCOTS.potions.*;
@@ -19,7 +20,10 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
-import net.minecraft.loot.condition.*;
+import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.condition.KilledByPlayerLootCondition;
+import net.minecraft.loot.condition.RandomChanceLootCondition;
+import net.minecraft.loot.condition.RandomChanceWithLootingLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.ExplosionDecayLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
@@ -70,7 +74,7 @@ public class TCOTS_Items {
             //xTODO: Puffball
             //xTODO: Pringrape - Flowering Azalea
             //xTODO: Ranogrin - Fern
-            //xTODO: Ribleaf - Leaves?
+            //xTODO: Ribleaf - Bunch of Leaves
             //TODO: Sewant mushrooms
             //xTODO: Verbena
             //xTODO: White myrtle petals - Lily of the Valley Petals
@@ -607,7 +611,7 @@ public class TCOTS_Items {
 
         CROWS_EYE = registerItem("crows_eye",
                 new AliasedBlockItem(TCOTS_Blocks.CROWS_EYE_FERN,
-                        new FabricItemSettings()));
+                        new FabricItemSettings().food(new FoodComponent.Builder().hunger(4).saturationModifier(1.2f).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0), 0.8f).build())));
 
         BRYONIA = registerItem("bryonia",
                 new AliasedBlockItem(TCOTS_Blocks.BRYONIA_VINE,
@@ -713,6 +717,10 @@ public class TCOTS_Items {
     public static Item NEST_SKULL_ITEM;
     public static Item MONSTER_NEST_ITEM;
     public static Item ALCHEMY_TABLE_ITEM;
+
+    public static Item HERBAL_TABLE_ITEM;
+
+    public static Item ORGANIC_PASTE;
     public static Item WITCHER_BESTIARY;
     public static Item ALCHEMY_BOOK;
 
@@ -727,6 +735,11 @@ public class TCOTS_Items {
         MONSTER_NEST_ITEM = registerItem("monster_nest", new MonsterNestItem(TCOTS_Blocks.MONSTER_NEST, new FabricItemSettings()));
 
         ALCHEMY_TABLE_ITEM = registerItem("alchemy_table", new AlchemyTableItem(TCOTS_Blocks.ALCHEMY_TABLE, new FabricItemSettings()));
+
+        HERBAL_TABLE_ITEM = registerItem("herbal_table", new HerbalTableItem(TCOTS_Blocks.HERBAL_TABLE, new FabricItemSettings()));
+
+        ORGANIC_PASTE = registerItem("organic_paste", new OrganicPasteItem(new FabricItemSettings().food(new FoodComponent.Builder().hunger(4).saturationModifier(0.3f).alwaysEdible().build())));
+
 
         WITCHER_BESTIARY = WitcherBestiaryItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), new FabricItemSettings().maxCount(1));
 

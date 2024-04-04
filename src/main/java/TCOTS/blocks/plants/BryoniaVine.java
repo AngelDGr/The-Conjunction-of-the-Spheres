@@ -22,9 +22,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
+@SuppressWarnings("deprecation")
 public class BryoniaVine extends MultifaceGrowthBlock implements Fertilizable {
     public static final MapCodec<BryoniaVine> CODEC = BryoniaVine.createCodec(BryoniaVine::new);
-
+    private final LichenGrower grower = new LichenGrower(this);
     public static final IntProperty AGE = Properties.AGE_3;
 
     @Override
@@ -45,7 +46,7 @@ public class BryoniaVine extends MultifaceGrowthBlock implements Fertilizable {
 
     @Override
     public LichenGrower getGrower() {
-        return null;
+        return grower;
     }
 
     public BryoniaVine(Settings settings) {
