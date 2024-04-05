@@ -30,7 +30,7 @@ public class TCOTS_ProcessorList {
 
     public static final RegistryKey<StructureProcessorList> RANDOM_HERBALIST_HERBS_SAVANNA = registerKey("random_herbalist_herbs_savanna");
 
-    public static final RegistryKey<StructureProcessorList> RANDOM_HERBALIST_HERBS_DESSERT = registerKey("random_herbalist_herbs_dessert");
+    public static final RegistryKey<StructureProcessorList> RANDOM_HERBALIST_HERBS_DESERT = registerKey("random_herbalist_herbs_desert");
 
     public static RegistryKey<StructureProcessorList> registerKey(String name) {
         return RegistryKey.of(RegistryKeys.PROCESSOR_LIST, new Identifier(TCOTS_Main.MOD_ID, name));
@@ -118,40 +118,41 @@ public class TCOTS_ProcessorList {
                                         addPotReplaceable(Blocks.POTTED_SPRUCE_SAPLING, 0.2f),
                                         addPotReplaceable(TCOTS_Blocks.POTTED_PUFFBALL_MUSHROOM, 0.2f),
                                         addPotReplaceable(Blocks.POTTED_AZURE_BLUET, 0.2f),
-                                        addPotReplaceable(Blocks.POTTED_OXEYE_DAISY, 0.2f),
+                                        addPotReplaceable(Blocks.POTTED_CORNFLOWER, 0.2f),
                                         addPotReplaceable(Blocks.POTTED_ALLIUM, 0.2f),
 
                                         //FlowerBlock
                                         //Replace Plants
                                         addFlowerReplaceable(Blocks.DANDELION, 0.3f),
-                                        addFlowerReplaceable(Blocks.AZURE_BLUET, 0.3f),
+                                        addFlowerReplaceable(Blocks.SWEET_BERRY_BUSH.getDefaultState().with(VerbenaFlower.AGE, 2), 0.3f),
                                         addFlowerReplaceable(Blocks.FERN, 0.3f),
-                                        addFlowerReplaceable(TCOTS_Blocks.VERBENA_FLOWER.getDefaultState().with(VerbenaFlower.AGE, 3), 0.2f),
+                                        addFlowerReplaceable(Blocks.AZURE_BLUET, 0.2f),
+                                        addFlowerReplaceable(TCOTS_Blocks.ARENARIA_BUSH.getDefaultState().with(ArenariaBush.AGE, 2), 0.3f),
 
                                         addBlockStateReplaceable(Blocks.FERN.getDefaultState(),
                                                 TCOTS_Blocks.CROWS_EYE_FERN.getDefaultState().with(TallPlantBlock.HALF, DoubleBlockHalf.LOWER).with(CrowsEyeFern.AGE, 2),
                                                 0.4f),
 
+                                        addFlowerReplaceable(TCOTS_Blocks.VERBENA_FLOWER.getDefaultState().with(VerbenaFlower.AGE, 3), 0.2f),
 
-                                        addFlowerReplaceable(TCOTS_Blocks.ARENARIA_BUSH.getDefaultState().with(ArenariaBush.AGE, 2), 0.3f),
-                                        addPotReplaceable(Blocks.POTTED_ALLIUM, 0.2f),
+                                        addFlowerReplaceable(Blocks.ALLIUM, 0.2f),
 
                                         //Replace Vines
                                         addBlockStateReplaceable(Blocks.VINE.getDefaultState().with(VineBlock.NORTH, true),
                                                 TCOTS_Blocks.BRYONIA_VINE.getDefaultState().with(VineBlock.NORTH, true).with(BryoniaVine.AGE, 3),
-                                                0.3f),
+                                                0.2f),
 
                                         addBlockStateReplaceable(Blocks.VINE.getDefaultState().with(VineBlock.SOUTH, true),
                                                 TCOTS_Blocks.BRYONIA_VINE.getDefaultState().with(VineBlock.SOUTH, true).with(BryoniaVine.AGE, 3),
-                                                0.3f),
+                                                0.2f),
 
                                         addBlockStateReplaceable(Blocks.VINE.getDefaultState().with(VineBlock.WEST, true),
                                                 TCOTS_Blocks.BRYONIA_VINE.getDefaultState().with(VineBlock.WEST, true).with(BryoniaVine.AGE, 3),
-                                                0.3f),
+                                                0.2f),
 
                                         addBlockStateReplaceable(Blocks.VINE.getDefaultState().with(VineBlock.EAST, true),
                                                 TCOTS_Blocks.BRYONIA_VINE.getDefaultState().with(VineBlock.EAST, true).with(BryoniaVine.AGE, 3),
-                                                0.3f),
+                                                0.2f),
 
                                         addBlockStateReplaceable(Blocks.VINE.getDefaultState().with(VineBlock.NORTH, true),
                                                 Blocks.GLOW_LICHEN.getDefaultState().with(VineBlock.NORTH, true),
@@ -170,7 +171,9 @@ public class TCOTS_ProcessorList {
                                                 0.1f),
 
                                         //Moss
-                                        addBlockReplaceable(Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE,0.2f)
+                                        addBlockReplaceable(Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE,0.2f),
+                                        addBlockReplaceable(Blocks.DIRT, Blocks.DIRT_PATH,1f)
+
                                 )
                         )
                 )
@@ -195,10 +198,12 @@ public class TCOTS_ProcessorList {
                                         //FlowerBlock
                                         //Replace Plants
                                         addFlowerReplaceable(TCOTS_Blocks.ARENARIA_BUSH.getDefaultState().with(ArenariaBush.AGE, 2), 0.3f),
-                                        //TODO: ADD CROW'S EYE
+                                        addBlockStateReplaceable(Blocks.FERN.getDefaultState(),
+                                                TCOTS_Blocks.CROWS_EYE_FERN.getDefaultState().with(TallPlantBlock.HALF, DoubleBlockHalf.LOWER).with(CrowsEyeFern.AGE, 2),
+                                                0.3f),
+                                        addFlowerReplaceable(Blocks.SWEET_BERRY_BUSH.getDefaultState().with(VerbenaFlower.AGE, 2), 0.3f),
                                         addFlowerReplaceable(Blocks.BROWN_MUSHROOM, 0.3f),
                                         addFlowerReplaceable(TCOTS_Blocks.PUFFBALL_MUSHROOM, 0.3f),
-                                        addFlowerReplaceable(Blocks.OXEYE_DAISY, 0.3f),
                                         addFlowerReplaceable(Blocks.AZURE_BLUET, 0.3f),
                                         addFlowerReplaceable(TCOTS_Blocks.VERBENA_FLOWER.getDefaultState().with(VerbenaFlower.AGE, 3), 0.2f),
                                         addFlowerReplaceable(Blocks.DANDELION, 0.2f),
@@ -243,7 +248,7 @@ public class TCOTS_ProcessorList {
                 )
         );
 
-        register(processorListRegisterable, RANDOM_HERBALIST_HERBS_DESSERT,
+        register(processorListRegisterable, RANDOM_HERBALIST_HERBS_DESERT,
                 ImmutableList.of(
                         //Processor
                         new RuleStructureProcessor(

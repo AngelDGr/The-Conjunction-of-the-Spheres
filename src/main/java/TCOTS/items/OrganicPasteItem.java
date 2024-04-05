@@ -30,6 +30,11 @@ public class OrganicPasteItem extends Item {
         SuspiciousStewIngredient.StewEffect.LIST_CODEC.encodeStart(NbtOps.INSTANCE, stewEffects).result().ifPresent(nbtElement -> nbtCompound.put(EFFECTS_KEY, nbtElement));
     }
 
+    public static NbtCompound writeEffectsToPasteNBT(NbtCompound nbtCompound, List<SuspiciousStewIngredient.StewEffect> stewEffects) {
+        SuspiciousStewIngredient.StewEffect.LIST_CODEC.encodeStart(NbtOps.INSTANCE, stewEffects).result().ifPresent(nbtElement -> nbtCompound.put(EFFECTS_KEY, nbtElement));
+        return nbtCompound;
+    }
+
     private static void forEachEffect(ItemStack stew, Consumer<SuspiciousStewIngredient.StewEffect> effectConsumer) {
         NbtCompound nbtCompound = stew.getNbt();
         if (nbtCompound != null && nbtCompound.contains(EFFECTS_KEY, NbtElement.LIST_TYPE)) {

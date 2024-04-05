@@ -91,7 +91,7 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:potted_oxeye_daisy"
+            "Name": "minecraft:potted_cornflower"
           }
         },
         {
@@ -130,7 +130,10 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:azure_bluet"
+            "Name": "minecraft:sweet_berry_bush",
+            "Properties": {
+              "age": "2"
+            }
           }
         },
         {
@@ -156,9 +159,22 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "tcots-witcher:verbena_flower",
+            "Name": "minecraft:azure_bluet"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:arenaria_bush",
             "Properties": {
-              "age": "3"
+              "age": "2"
             }
           }
         },
@@ -185,21 +201,21 @@
           "input_predicate": {
             "block": "minecraft:poppy",
             "predicate_type": "minecraft:random_block_match",
-            "probability": 0.3
+            "probability": 0.2
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "tcots-witcher:arenaria_bush",
+            "Name": "tcots-witcher:verbena_flower",
             "Properties": {
-              "age": "2"
+              "age": "3"
             }
           }
         },
         {
           "input_predicate": {
-            "block": "minecraft:flower_pot",
+            "block": "minecraft:poppy",
             "predicate_type": "minecraft:random_block_match",
             "probability": 0.2
           },
@@ -207,7 +223,7 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:potted_allium"
+            "Name": "minecraft:allium"
           }
         },
         {
@@ -223,7 +239,7 @@
               }
             },
             "predicate_type": "minecraft:random_blockstate_match",
-            "probability": 0.3
+            "probability": 0.2
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
@@ -254,7 +270,7 @@
               }
             },
             "predicate_type": "minecraft:random_blockstate_match",
-            "probability": 0.3
+            "probability": 0.2
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
@@ -285,7 +301,7 @@
               }
             },
             "predicate_type": "minecraft:random_blockstate_match",
-            "probability": 0.3
+            "probability": 0.2
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
@@ -316,7 +332,7 @@
               }
             },
             "predicate_type": "minecraft:random_blockstate_match",
-            "probability": 0.3
+            "probability": 0.2
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
@@ -469,6 +485,19 @@
           },
           "output_state": {
             "Name": "minecraft:mossy_cobblestone"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:dirt",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 1.0
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:dirt_path"
           }
         }
       ]
