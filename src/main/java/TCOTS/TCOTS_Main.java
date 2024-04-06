@@ -13,7 +13,9 @@ import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.world.TCOTS_Features;
 import TCOTS.world.TCOTS_PlacedFeature;
+import TCOTS.world.village.TCOTS_PointOfInterest;
 import TCOTS.world.village.TCOTS_VillageAdditions;
+import TCOTS.world.village.VillagerCustomTrades;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import software.bernie.geckolib.GeckoLib;
@@ -48,6 +50,8 @@ public class TCOTS_Main implements ModInitializer {
 
 		TCOTS_PlacedFeature.generateVegetation();
 		TCOTS_VillageAdditions.registerNewVillageStructures();
+		TCOTS_PointOfInterest.registerVillagers();
+		VillagerCustomTrades.registerTrades();
 
 		//Drowner
 		FabricDefaultAttributeRegistry.register(TCOTS_Entities.DROWNER, DrownerEntity.setAttributes());

@@ -363,7 +363,7 @@ and Flower Forests.</tooltip-text>
                                         tcots-witcher:allspice
                                     </stack>
 <tooltip-text>Allspice:
-Bought from alchemist villagers.</tooltip-text>
+Bought from herbalists villagers.</tooltip-text>
                                 </item>
                             </children>
                             <padding>

@@ -326,7 +326,7 @@ public class TCOTS_ProcessorList {
                                         addPotReplaceable(Blocks.POTTED_ACACIA_SAPLING, 0.2f),
                                         addPotReplaceable(Blocks.POTTED_BROWN_MUSHROOM, 0.2f),
                                         addPotReplaceable(Blocks.POTTED_RED_MUSHROOM, 0.2f),
-                                        addPotReplaceable(TCOTS_Blocks.POTTED_PUFFBALL_MUSHROOM, 0.2f),
+                                        addPotReplaceable(Blocks.POTTED_AZURE_BLUET, 0.2f),
                                         addPotReplaceable(Blocks.POTTED_LILY_OF_THE_VALLEY, 0.2f),
                                         addPotReplaceable(TCOTS_Blocks.POTTED_BRYONIA_FLOWER, 0.2f),
 
@@ -338,26 +338,26 @@ public class TCOTS_ProcessorList {
                                         addFlowerReplaceable(Blocks.SHORT_GRASS, 0.3f),
                                         addFlowerReplaceable(Blocks.DANDELION, 0.3f),
                                         addFlowerReplaceable(Blocks.ACACIA_SAPLING, 0.3f),
-                                        addFlowerReplaceable(TCOTS_Blocks.PUFFBALL_MUSHROOM, 0.3f),
+                                        addFlowerReplaceable(Blocks.MOSS_CARPET, 0.2f),
                                         addFlowerReplaceable(Blocks.AZURE_BLUET, 0.3f),
                                         addFlowerReplaceable(Blocks.LILY_OF_THE_VALLEY, 0.2f),
 
                                         //Replace Vines
                                         addBlockStateReplaceable(Blocks.VINE.getDefaultState().with(VineBlock.NORTH, true),
                                                 TCOTS_Blocks.BRYONIA_VINE.getDefaultState().with(VineBlock.NORTH, true).with(BryoniaVine.AGE, 3),
-                                                0.3f),
+                                                0.2f),
 
                                         addBlockStateReplaceable(Blocks.VINE.getDefaultState().with(VineBlock.SOUTH, true),
                                                 TCOTS_Blocks.BRYONIA_VINE.getDefaultState().with(VineBlock.SOUTH, true).with(BryoniaVine.AGE, 3),
-                                                0.3f),
+                                                0.2f),
 
                                         addBlockStateReplaceable(Blocks.VINE.getDefaultState().with(VineBlock.WEST, true),
                                                 TCOTS_Blocks.BRYONIA_VINE.getDefaultState().with(VineBlock.WEST, true).with(BryoniaVine.AGE, 3),
-                                                0.3f),
+                                                0.2f),
 
                                         addBlockStateReplaceable(Blocks.VINE.getDefaultState().with(VineBlock.EAST, true),
                                                 TCOTS_Blocks.BRYONIA_VINE.getDefaultState().with(VineBlock.EAST, true).with(BryoniaVine.AGE, 3),
-                                                0.3f),
+                                                0.2f),
 
                                         addBlockStateReplaceable(Blocks.VINE.getDefaultState().with(VineBlock.NORTH, true),
                                                 Blocks.GLOW_LICHEN.getDefaultState().with(VineBlock.NORTH, true),

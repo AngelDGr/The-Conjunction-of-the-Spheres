@@ -12,6 +12,8 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SuspiciousStewIngredient;
+import net.minecraft.data.DataOutput;
+import net.minecraft.data.server.tag.TagProvider;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
@@ -26,7 +28,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.PointOfInterestTypeTags;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.poi.PointOfInterestType;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
@@ -39,7 +43,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack main = fabricDataGenerator.createPack();
 
         main.addProvider(ModWorldGenerator::new);
-        main.addProvider(LootTablesGenerator::new);
+        main.addProvider(LootTablesHerbalistGenerator::new);
+        main.addProvider(POIProvider::new);
     }
 
     @Override
@@ -67,7 +72,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
-    private static class LootTablesGenerator extends SimpleFabricLootTableProvider {
+    private static class LootTablesHerbalistGenerator extends SimpleFabricLootTableProvider {
 
         public static final Identifier PLAINS_HERBALIST_CHEST = new Identifier(TCOTS_Main.MOD_ID, "chests/village/plains_herbalist");
         public static final Identifier TAIGA_HERBALIST_CHEST = new Identifier(TCOTS_Main.MOD_ID, "chests/village/taiga_herbalist");
@@ -75,7 +80,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         public static final Identifier DESERT_HERBALIST_CHEST = new Identifier(TCOTS_Main.MOD_ID, "chests/village/desert_herbalist");
         public static final Identifier SAVANNA_HERBALIST_CHEST = new Identifier(TCOTS_Main.MOD_ID, "chests/village/savanna_herbalist");
 
-        public LootTablesGenerator(FabricDataOutput output) {
+        public LootTablesHerbalistGenerator(FabricDataOutput output) {
             super(output, LootContextTypes.CHEST);
         }
 
@@ -108,7 +113,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                             .with(ItemEntry.builder(Items.FLOWERING_AZALEA).weight(1))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(2))
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
                                     .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
                             .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
@@ -169,7 +174,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ARENARIA).weight(2))
                                     .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(2))
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
                                     .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
                             .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
@@ -225,7 +230,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.SWEET_BERRIES).weight(2))
                                     .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(2))
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
                                     .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
                             .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
@@ -269,7 +274,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.VERBENA).weight(1))
                                     .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
-                            .with(ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(2))
+                            .with(ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
 
                             .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
                                     .apply(SetNbtLootFunction.builder(
@@ -280,6 +285,69 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(1))
 
                     ));
+
+            exporter.accept(SAVANNA_HERBALIST_CHEST,
+                    LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.EMERALD).weight(2))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.DANDELION).weight(3))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.HAN_FIBER).weight(3))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.ACACIA_SAPLING).weight(4))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                            .with(ItemEntry.builder(Items.BROWN_MUSHROOM).weight(1))
+
+                            .with(ItemEntry.builder(Items.RED_MUSHROOM).weight(1))
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS).weight(1))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                            .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(1))
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.SHORT_GRASS).weight(2))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.MOSS_CARPET).weight(1))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.AZURE_BLUET_PETALS).weight(2))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
+                                    .apply(SetNbtLootFunction.builder(
+                                            OrganicPasteItem.writeEffectsToPasteNBT(new NbtCompound(), Collections.singletonList((
+                                                    new SuspiciousStewIngredient.StewEffect(StatusEffects.GLOWING, 1600))))
+                                    )))
+
+                            .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(1))
+
+                    ));
+        }
+    }
+
+    private static class POIProvider extends TagProvider<PointOfInterestType>{
+
+        public POIProvider(DataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookupFuture) {
+            super(output, RegistryKeys.POINT_OF_INTEREST_TYPE, registryLookupFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup lookup) {
+            this.getOrCreateTagBuilder(PointOfInterestTypeTags.ACQUIRABLE_JOB_SITE)
+                    .addOptional(new Identifier(TCOTS_Main.MOD_ID, "herbal_poi"))
+//                    .add(TCOTS_PointOfInterest.HERBAL_POI_KEY)
+            ;
+
         }
     }
 

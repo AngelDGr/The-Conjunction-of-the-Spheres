@@ -45,7 +45,7 @@ public class TCOTS_Blocks {
     public static final Block NEST_WALL_SKULL = new NestWallSkullBlock(FabricBlockSettings.create().strength(0.4f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY).dropsLike(NEST_SKULL));
     public static final Block MONSTER_NEST  = new MonsterNestBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).mapColor(MapColor.DIRT_BROWN));
     public static final Block ALCHEMY_TABLE  = new AlchemyTableBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOD).mapColor(MapColor.DARK_GREEN));
-    public static final Block HERBAL_TABLE  = new HerbalTableBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOD).mapColor(MapColor.CYAN));
+    public static final Block HERBAL_TABLE  = new HerbalTableBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOD).mapColor(MapColor.CYAN).burnable());
 
     public static BlockEntityType<NestSkullBlockEntity> SKULL_NEST_ENTITY;
     public static BlockEntityType<MonsterNestBlockEntity> MONSTER_NEST_ENTITY;

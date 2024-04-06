@@ -113,8 +113,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "tcots-witcher:organic_paste",
-          "weight": 2
+          "name": "tcots-witcher:organic_paste"
         },
         {
           "type": "minecraft:item",

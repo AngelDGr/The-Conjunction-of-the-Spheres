@@ -12,6 +12,7 @@
     "ServerPlayNetworkHandlerMixin",
     "ShearsItemMixin",
     "SpawnEggItemMixin",
+    "VillagerHostilesSensorMixin",
     "WorldRendererMixin"
   ],
   "injectors": {

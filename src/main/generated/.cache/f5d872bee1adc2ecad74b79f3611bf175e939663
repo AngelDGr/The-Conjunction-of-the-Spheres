@@ -1,5 +1,6 @@
-// 1.20.4	2024-04-05T03:47:19.7168819	The Conjunction of the Spheres/minecraft:chest Loot Table
-86c4af6a330ae707d4caf5fb3210ef3d406a7679 data\tcots-witcher\loot_tables\chests\village\taiga_herbalist.json
-fe0682b6a07f492707c19f616ccf5dbc09770b48 data\tcots-witcher\loot_tables\chests\village\desert_herbalist.json
-b0a96a806f234a5c9d7236c5df3f4f1e3ad9895f data\tcots-witcher\loot_tables\chests\village\plains_herbalist.json
-fa778936a0342a6c7edc695f353014699363c4a2 data\tcots-witcher\loot_tables\chests\village\snowy_herbalist.json
+// 1.20.4	2024-04-05T21:49:37.1193365	The Conjunction of the Spheres/minecraft:chest Loot Table
+1d6923e3524c5ab23fa2d64ee21b4c75402b8046 data\tcots-witcher\loot_tables\chests\village\taiga_herbalist.json
+2027f169caa7535110ad813874dfdf90f96fc1c9 data\tcots-witcher\loot_tables\chests\village\savanna_herbalist.json
+3b972ddec8d1ecebff9afa4877f38c44ca2594b4 data\tcots-witcher\loot_tables\chests\village\desert_herbalist.json
+12f818ff18f1478968ff5451cdb3d7971bc65ea4 data\tcots-witcher\loot_tables\chests\village\plains_herbalist.json
+bdbbd8e306a068e7a0381370386f920d7c6c5de7 data\tcots-witcher\loot_tables\chests\village\snowy_herbalist.json
