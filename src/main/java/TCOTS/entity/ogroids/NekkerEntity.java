@@ -40,6 +40,8 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
+import java.util.List;
+
 
 public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob, LungeMob {
 
@@ -104,8 +106,8 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
     public boolean cooldownBetweenLunges = false;
 
-    public boolean getCooldownBetweenLunges() {
-        return cooldownBetweenLunges;
+    public boolean getNotCooldownBetweenLunges() {
+        return !cooldownBetweenLunges;
     }
 
     public void setCooldownBetweenLunges(boolean cooldownBetweenLunges) {
@@ -307,52 +309,31 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     }
 
     int AnimationParticlesTicks=36;
+
+    public int getAnimationParticlesTicks() {
+        return AnimationParticlesTicks;
+    }
+
+    public void setAnimationParticlesTicks(int animationParticlesTicks) {
+        AnimationParticlesTicks = animationParticlesTicks;
+    }
     @Override
     public void tick() {
-        //Start the counter for the Lunge attack
-        if (NekkerEntity.this.LungeTicks > 0) {
-            NekkerEntity.this.setIsLugging(false);
-            --NekkerEntity.this.LungeTicks;
-        } else {
-            NekkerEntity.this.cooldownBetweenLunges = false;
-        }
+        //Counter for Lunge attack
+        this.tickLunge();
+        //Counter for particles
+        this.tickExcavator();
 
-        //Particles when return to ground
-        if(this.AnimationParticlesTicks > 0 && this.getInGroundDataTracker()){
-            this.spawnGroundParticles();
-            --this.AnimationParticlesTicks;
-        } else if (AnimationParticlesTicks==0) {
-            this.setInvisibleData(true);
-            AnimationParticlesTicks=-1;
-        }
-
-        //Particles when emerges from ground
-        if(this.getIsEmerging()){
-            this.spawnGroundParticles();
-        }
         super.tick();
     }
 
     @Override
     public void mobTick(){
-        if (NekkerEntity.this.ReturnToGround_Ticks > 0
-//                && NekkerEntity.this.ReturnToGround_Ticks < 200
-                && !this.getIsEmerging()
-                && !this.isAttacking()
-        ) {
-            --NekkerEntity.this.ReturnToGround_Ticks;
-        }else{
-            BlockPos entityPos = new BlockPos((int)this.getX(), (int)this.getY(), (int)this.getZ());
-
-            //Makes the Nekker return to the dirt/sand/stone
-            if(NekkerEntity.this.ReturnToGround_Ticks==0 && (
-                    this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DIRT) ||
-                            this.getWorld().getBlockState(entityPos.down()).isOf(Blocks.SAND)
-            )
-            ){
-                this.setInGroundDataTracker(true);
-            }
-        }
+        mobTickExcavator(
+                List.of(BlockTags.DIRT),
+                List.of(Blocks.SAND),
+                this
+        );
 
         this.setInvisible(this.getInvisibleData());
         super.mobTick();

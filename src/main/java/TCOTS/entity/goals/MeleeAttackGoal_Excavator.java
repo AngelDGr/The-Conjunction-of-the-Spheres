@@ -33,6 +33,18 @@ public class MeleeAttackGoal_Excavator extends MeleeAttackGoal {
     }
 
     @Override
+    public void start() {
+        if(ticksBeforeToGround > 0){
+            int randomExtra = mob.getRandom().nextBetween(1,51);
+            excavatorMob.setReturnToGround_Ticks(this.ticksBeforeToGround + randomExtra);
+        } else if (ticksBeforeToGround == 0) {
+            excavatorMob.setReturnToGround_Ticks(5000);
+        }
+
+        super.start();
+    }
+
+    @Override
     protected void attack(LivingEntity target) {
         if(target!=null && ticksBeforeToGround > 0){
             int randomExtra = mob.getRandom().nextBetween(1,51);

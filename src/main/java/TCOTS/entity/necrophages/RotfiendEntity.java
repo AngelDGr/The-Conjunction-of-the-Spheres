@@ -43,13 +43,14 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.EnumSet;
+import java.util.List;
 
 public class RotfiendEntity extends Necrophage_Base implements GeoEntity, ExcavatorMob, LungeMob {
 
     //xTODO: Add Emerging animation (And digging?)
     //xTODO: Add drops
     //xTODO: Add spawning
-    //TODO: Fix the invisible bug
+    //xTODO: Fix the invisible bug
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -119,8 +120,8 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
 
     public boolean cooldownBetweenLunges = false;
     @Override
-    public boolean getCooldownBetweenLunges() {
-        return cooldownBetweenLunges;
+    public boolean getNotCooldownBetweenLunges() {
+        return !cooldownBetweenLunges;
     }
 
     @Override
@@ -366,62 +367,42 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     }
 
     int AnimationParticlesTicks=36;
+
+    public int getAnimationParticlesTicks() {
+        return AnimationParticlesTicks;
+    }
+
+    public void setAnimationParticlesTicks(int animationParticlesTicks) {
+        AnimationParticlesTicks = animationParticlesTicks;
+    }
     @Override
     public void tick() {
-        //Start the counter for the Lunge attack
-        if (RotfiendEntity.this.LungeTicks > 0) {
-            RotfiendEntity.this.setIsLugging(false);
-            --RotfiendEntity.this.LungeTicks;
-        } else {
-            RotfiendEntity.this.cooldownBetweenLunges = false;
-        }
-
         //Triggers the blood explosion
         if (this.getIsTriggerExplosion()) {
             this.explode();
         }
 
-        //Particles when return to ground
-        if(this.AnimationParticlesTicks > 0 && this.getInGroundDataTracker()){
-            this.spawnGroundParticles();
-            --this.AnimationParticlesTicks;
-        } else if (AnimationParticlesTicks==0) {
-            this.setInvisibleData(true);
-            AnimationParticlesTicks=-1;
-        }
+        //Counter for Lunge attack
+        this.tickLunge();
 
-        //Particles when emerges from ground
-        if(this.getIsEmerging()){
-            this.spawnGroundParticles();
-        }
+        //Counter for particles
+        this.tickExcavator();
 
         super.tick();
     }
 
     @Override
     public void mobTick(){
-            if (RotfiendEntity.this.ReturnToGround_Ticks > 0
-                    && RotfiendEntity.this.ReturnToGround_Ticks < 200
-                    && !this.getIsEmerging()
-                    && !this.isAttacking()
-            ) {
-                --RotfiendEntity.this.ReturnToGround_Ticks;
-            }else{
-                BlockPos entityPos = new BlockPos((int)this.getX(), (int)this.getY(), (int)this.getZ());
+        if(this.getReturnToGround_Ticks() < 200) {
+            mobTickExcavator(
+                    List.of(BlockTags.DIRT, BlockTags.STONE_ORE_REPLACEABLES, BlockTags.DEEPSLATE_ORE_REPLACEABLES),
+                    List.of(Blocks.SAND),
+                    this
+            );
+        }
 
-                //Makes the Rotfiend return to the dirt/sand/stone
-                if(RotfiendEntity.this.ReturnToGround_Ticks==0 && (
-                        this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DIRT) ||
-                        this.getWorld().getBlockState(entityPos.down()).isOf(Blocks.SAND) ||
-                        this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.STONE_ORE_REPLACEABLES) ||
-                        this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
-                )
-                ){
-                    this.setInGroundDataTracker(true);
-                }
-            }
-            this.setInvisible(this.getInvisibleData());
-            super.mobTick();
+        this.setInvisible(this.getInvisibleData());
+        super.mobTick();
     }
 
     @Override

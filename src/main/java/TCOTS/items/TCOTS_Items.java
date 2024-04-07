@@ -42,7 +42,7 @@ import java.util.List;
 public class TCOTS_Items {
 
     //xTODO: Add new way to craft the potions
-        //TODO: Add new alchemy ingredients (mushrooms, flowers)
+        // TODO: Add new alchemy ingredients (mushrooms, flowers)
             //Plants
             //xTODO: Allspice
             //xTODO: Arenaria

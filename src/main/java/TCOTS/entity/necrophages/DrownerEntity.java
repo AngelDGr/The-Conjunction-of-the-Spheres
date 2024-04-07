@@ -52,6 +52,9 @@ import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInst
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
+import java.util.List;
+
+@SuppressWarnings({"deprecation", "unused"})
 public class DrownerEntity extends Necrophage_Base implements GeoEntity, ExcavatorMob, LungeMob {
 //xTODO: Make it faster when walking in water
 //xTODO: Make it that it don't sink in water
@@ -321,8 +324,8 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     }
     public boolean cooldownBetweenLunges=false;
     @Override
-    public boolean getCooldownBetweenLunges() {
-        return cooldownBetweenLunges;
+    public boolean getNotCooldownBetweenLunges() {
+        return !cooldownBetweenLunges;
     }
 
     @Override
@@ -738,37 +741,24 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
 
     //Timers
     int AnimationParticlesTicks=36;
+
+    public int getAnimationParticlesTicks() {
+        return AnimationParticlesTicks;
+    }
+
+    public void setAnimationParticlesTicks(int animationParticlesTicks) {
+        AnimationParticlesTicks = animationParticlesTicks;
+    }
+
     @Override
     public void tick(){
-        if(this.puddle==null){
-            this.puddle=DetectOwnPuddle(this);
-        }
+        //Detect own puddle
+        tickPuddle(this);
 
-        //Start the counter for the Lunge attack
-        if (DrownerEntity.this.LungeTicks > 0) {
-            DrownerEntity.this.setIsLugging(false);
-            --DrownerEntity.this.LungeTicks;
-        }else {
-            DrownerEntity.this.cooldownBetweenLunges = false;
-        }
-
-        //Particles when return to ground
-        if(this.AnimationParticlesTicks > 0 && this.getInGroundDataTracker()){
-            this.spawnGroundParticles();
-            --this.AnimationParticlesTicks;
-        }  else if (AnimationParticlesTicks==0) {
-            this.setInvisibleData(true);
-            AnimationParticlesTicks=-1;
-        }
-
-        if(!this.getInGroundDataTracker() && !this.getIsEmerging()){
-            AnimationParticlesTicks=36;
-        }
-
-        //Particles when emerges from ground
-        if(this.getIsEmerging()){
-            this.spawnGroundParticles();
-        }
+        //Counter for Lunge attack
+        this.tickLunge();
+        //Counter for particles
+        this.tickExcavator();
 
         super.tick();
     }
@@ -778,23 +768,11 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     public void mobTick(){
         //Only timer for return to ground if it's not swimming
         if(!DrownerEntity.this.getSwimmingDataTracker()) {
-            if (DrownerEntity.this.ReturnToGround_Ticks > 0
-            && !this.getIsEmerging()
-            && !this.isAttacking()
-            ) {
-                --DrownerEntity.this.ReturnToGround_Ticks;
-            }else{
-                BlockPos entityPos = new BlockPos((int)this.getX(), (int)this.getY(), (int)this.getZ());
-
-                //Makes the Drowner return to the dirt
-                if(DrownerEntity.this.ReturnToGround_Ticks==0 && (
-                this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DIRT) ||
-                this.getWorld().getBlockState(entityPos.down()).isOf(Blocks.SAND)
-                )
-                ){
-                    this.setInGroundDataTracker(true);
-                }
-            }
+            mobTickExcavator(
+                    List.of(BlockTags.DIRT),
+                    List.of(Blocks.SAND),
+                    this
+            );
         }
         else{
             if(this.getInGroundDataTracker()){

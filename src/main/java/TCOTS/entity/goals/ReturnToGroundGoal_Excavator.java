@@ -54,7 +54,6 @@ public class ReturnToGroundGoal_Excavator extends Goal {
         excavatorMob.setPuddle(puddle);
         if (!world.isClient) {
             world.spawnEntity(puddle);
-
             excavatorMob.setSpawnedPuddleDataTracker(true);
         }
 

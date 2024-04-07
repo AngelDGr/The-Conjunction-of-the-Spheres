@@ -4,7 +4,7 @@ import net.minecraft.sound.SoundEvent;
 
 public interface LungeMob {
 
-    boolean getCooldownBetweenLunges();
+    boolean getNotCooldownBetweenLunges();
 
     void setCooldownBetweenLunges(boolean cooldownBetweenLunges);
 
@@ -16,4 +16,13 @@ public interface LungeMob {
     int getLungeTicks();
 
     void setLungeTicks(int lungeTicks);
+
+    default void tickLunge(){
+        if (getLungeTicks() > 0) {
+            this.setIsLugging(false);
+            setLungeTicks(getLungeTicks()-1);
+        } else {
+            setCooldownBetweenLunges(false);
+        }
+    }
 }

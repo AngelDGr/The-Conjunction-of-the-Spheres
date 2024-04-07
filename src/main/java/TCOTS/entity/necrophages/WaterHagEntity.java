@@ -43,6 +43,8 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
+import java.util.List;
+
 
 public class WaterHagEntity extends Necrophage_Base implements GeoEntity, RangedAttackMob, ExcavatorMob {
 
@@ -52,7 +54,7 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     //xTODO: Add drops (Water Hag mutagen)
         //xTODO: Add Water Hag Decoction (Damage increased at full health)
         //TODO: Add Water Hag tooth, used in Enhanced Relict oil
-        //TODO: Add Ducal water, item for Northern Wind
+        //TODO: Add Ducal water (Water Essence), item for Northern Wind
     //xTODO: Add spawn
 
 
@@ -388,11 +390,18 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     }
 
     int AnimationParticlesTicks=36;
+
+    public int getAnimationParticlesTicks() {
+        return AnimationParticlesTicks;
+    }
+
+    public void setAnimationParticlesTicks(int animationParticlesTicks) {
+        AnimationParticlesTicks = animationParticlesTicks;
+    }
     @Override
     public void tick() {
-        if(this.puddle==null){
-            this.puddle=DetectOwnPuddle(this);
-        }
+        //Detect own puddle
+        tickPuddle(this);
 
         if(ticksBetweenMudBalls>0){
             --ticksBetweenMudBalls;
@@ -401,47 +410,20 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
             mudballCooldown =false;
         }
 
-        //Particles when return to ground
-        if(this.AnimationParticlesTicks > 0 && this.getInGroundDataTracker()){
-            this.spawnGroundParticles();
-            --this.AnimationParticlesTicks;
-        } else if (AnimationParticlesTicks==0) {
-            this.setInvisibleData(true);
-            AnimationParticlesTicks=-1;
-        }
-
-        if(!this.getInGroundDataTracker() && !this.getIsEmerging()){
-            AnimationParticlesTicks=36;
-        }
-
-        //Particles when emerges from ground
-        if(this.getIsEmerging()){
-            this.spawnGroundParticles();
-        }
+        //Counter for particles
+        this.tickExcavator();
 
         super.tick();
     }
 
     @Override
     protected void mobTick() {
-        if (
-                WaterHagEntity.this.ReturnToGround_Ticks > 0
-                && !this.getIsEmerging()
-                && !this.isAttacking()
-                && !mudballCooldown
-        ) {
-            --WaterHagEntity.this.ReturnToGround_Ticks;
-        }else{
-            BlockPos entityPos = new BlockPos((int)this.getX(), (int)this.getY(), (int)this.getZ());
-
-            //Makes the Rotfiend return to the dirt/sand/stone
-            if(WaterHagEntity.this.ReturnToGround_Ticks==0 && (
-                    this.getWorld().getBlockState(entityPos.down()).isIn(BlockTags.DIRT) ||
-                    this.getWorld().getBlockState(entityPos.down()).isOf(Blocks.SAND)
-            )
-            ){
-                this.setInGroundDataTracker(true);
-            }
+        if(!mudballCooldown){
+            this.mobTickExcavator(
+                    List.of(BlockTags.DIRT),
+                    List.of(Blocks.SAND),
+                    this
+            );
         }
 
         if(AnimationTicks > 0){

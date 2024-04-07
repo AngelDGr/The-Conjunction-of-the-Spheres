@@ -50,7 +50,7 @@ public class LungeAttackGoal extends Goal {
             //5 square distance like 1.5 blocks approx
             //I want 7.5 blocks approx
             //So 7.5/1.5=5
-            return !lungeMob.getCooldownBetweenLunges() && this.mob.isAttacking()
+            return lungeMob.getNotCooldownBetweenLunges() && this.mob.isAttacking()
                     && this.mob.squaredDistanceTo(target) > minDistance && this.mob.squaredDistanceTo(target) < maxDistance
                     && (this.mob.getTarget().getY() - this.mob.getY()) <= 1
                     && isExcavator();
@@ -75,7 +75,7 @@ public class LungeAttackGoal extends Goal {
             //5 square distance like 1.5 blocks approx
             //I want 7.5 blocks approx
             //So 7.5/1.5=5
-            return !lungeMob.getCooldownBetweenLunges() && this.mob.isAttacking()
+            return lungeMob.getNotCooldownBetweenLunges() && this.mob.isAttacking()
                     && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
                     && (this.mob.getTarget().getY() - this.mob.getY()) <= 1;
         } else {
@@ -120,7 +120,7 @@ public class LungeAttackGoal extends Goal {
 
     private void LungeAttack(LivingEntity target) {
         //Check if it can do a lunge
-        if (!lungeMob.getCooldownBetweenLunges()) {
+        if (lungeMob.getNotCooldownBetweenLunges()) {
             //Makes the lunge
             //Extra random ticks in cooldown
             randomExtra = mob.getRandom().nextInt(51);
