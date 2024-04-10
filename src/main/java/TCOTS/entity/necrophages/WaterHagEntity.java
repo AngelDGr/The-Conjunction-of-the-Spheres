@@ -2,6 +2,7 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
+import TCOTS.entity.misc.CommonControllers;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.entity.misc.WaterHag_MudBallEntity;
 import TCOTS.sounds.TCOTS_Sounds;
@@ -57,27 +58,11 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         //TODO: Add Ducal water (Water Essence), item for Northern Wind
     //xTODO: Add spawn
 
-
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
-    public static final RawAnimation ATTACK1 = RawAnimation.begin().thenPlay("attack.swing1");
-    public static final RawAnimation ATTACK2 = RawAnimation.begin().thenPlay("attack.swing2");
     public static final RawAnimation ATTACK_MUD = RawAnimation.begin().thenPlay("attack.mud_launch");
-
-    public static final RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
-    public static final RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
-
-    @Override
-    public RawAnimation getDiggingAnimation() {
-        return DIGGING_IN;
-    }
-
-    @Override
-    public RawAnimation getEmergingAnimation() {
-        return DIGGING_OUT;
-    }
 
     protected static final TrackedData<Boolean> MUD_ATTACK = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -321,23 +306,7 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
 
         //Attack Controller
         controllers.add(
-                new AnimationController<>(this, "AttackController", 1, state -> {
-                    state.getController().forceAnimationReset();
-                    // Random instance
-                    // Generates two random numbers
-                    if (this.handSwinging) {
-                        int r = WaterHagEntity.this.random.nextInt(2);
-                        switch (r) {
-                            case 0:
-                                return state.setAndContinue(ATTACK1);
-
-                            case 1:
-                                return state.setAndContinue(ATTACK2);
-                        }
-                    }
-
-                    return PlayState.CONTINUE;
-                })
+                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationTwoAttacksPredicate(state,this.handSwinging,random))
         );
 
         //Mud ball Controller

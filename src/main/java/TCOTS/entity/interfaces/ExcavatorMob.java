@@ -19,6 +19,9 @@ import java.util.List;
 
 public interface ExcavatorMob {
 
+    RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
+    RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
+
     default Box groundBox(MobEntity mob){
         return new Box(mob.getX() - 0.39, mob.getY() + 0.1, mob.getZ() - 0.39,
                 mob.getX() + 0.39, mob.getY(), mob.getZ() + 0.39);
@@ -53,9 +56,13 @@ public interface ExcavatorMob {
         }
     }
 
-    RawAnimation getEmergingAnimation();
+    default RawAnimation getEmergingAnimation(){
+        return DIGGING_OUT;
+    }
 
-    RawAnimation getDiggingAnimation();
+    default RawAnimation getDiggingAnimation(){
+        return DIGGING_IN;
+    }
 
     default  <T extends GeoAnimatable> PlayState animationDiggingPredicate(AnimationState<T> state) {
         if(this.getInGroundDataTracker() && !this.getIsEmerging()){
@@ -74,8 +81,6 @@ public interface ExcavatorMob {
     default void setPuddle(DrownerPuddleEntity puddle) {
 
     }
-
-
 
     SoundEvent getEmergingSound();
 

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
+@SuppressWarnings("unused")
 public class TCOTS_ItemsGroups {
 
 
@@ -35,6 +36,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.GRAVE_HAG_SPAWN_EGG);
                             entries.add(TCOTS_Items.WATER_HAG_SPAWN_EGG);
                             entries.add(TCOTS_Items.FOGLET_SPAWN_EGG);
+                            entries.add(TCOTS_Items.GHOUL_SPAWN_EGG);
 
 
                             //Drops

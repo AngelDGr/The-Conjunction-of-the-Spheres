@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.*;
 @Mixin(VillagerHostilesSensor.class)
 public class VillagerHostilesSensorMixin {
     @Unique
-    private static final float distanceDanger=12.0f;
+    private static final float distanceDanger = 12.0f;
 
     @Shadow @Final @Mutable
     private static ImmutableMap<Object, Object> SQUARED_DISTANCES_FOR_DANGER;
@@ -17,14 +17,17 @@ public class VillagerHostilesSensorMixin {
                 SQUARED_DISTANCES_FOR_DANGER = ImmutableMap.builder()
                 .putAll(SQUARED_DISTANCES_FOR_DANGER.entrySet())
 
-                .put(TCOTS_Entities.DROWNER, distanceDanger)
-                .put(TCOTS_Entities.ROTFIEND, distanceDanger)
-                .put(TCOTS_Entities.FOGLET, distanceDanger)
-                .put(TCOTS_Entities.WATER_HAG, distanceDanger)
-                .put(TCOTS_Entities.GRAVE_HAG, distanceDanger)
 
-                .put(TCOTS_Entities.NEKKER, distanceDanger)
-                .build();
+                        .put(TCOTS_Entities.DROWNER, distanceDanger)
+                        .put(TCOTS_Entities.ROTFIEND, distanceDanger)
+                        .put(TCOTS_Entities.FOGLET, distanceDanger)
+                        .put(TCOTS_Entities.WATER_HAG, distanceDanger)
+                        .put(TCOTS_Entities.GRAVE_HAG, distanceDanger)
+                        .put(TCOTS_Entities.GHOUL, distanceDanger)
+
+
+                        .put(TCOTS_Entities.NEKKER, distanceDanger)
+                        .build();
     }
 
 }

@@ -16,7 +16,6 @@ public class FogletRenderer extends GeoEntityRenderer<FogletEntity> {
     public FogletRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new FogletModel());
     }
-
     @Override
     public Identifier getTextureLocation(FogletEntity animatable) {
         return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/foglet/foglet.png");
@@ -28,7 +27,6 @@ public class FogletRenderer extends GeoEntityRenderer<FogletEntity> {
     }
     @Override
     public void actuallyRender(MatrixStack poseStack, FogletEntity animatable, BakedGeoModel model, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-
         super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, animatable.getAlphaValue());
     }
 

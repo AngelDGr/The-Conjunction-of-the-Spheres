@@ -2,9 +2,6 @@ package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
-import TCOTS.entity.misc.FoglingEntity;
-import TCOTS.entity.necrophages.*;
-import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
 import TCOTS.particles.TCOTS_Particles;
@@ -17,7 +14,6 @@ import TCOTS.world.village.TCOTS_PointOfInterest;
 import TCOTS.world.village.TCOTS_VillageAdditions;
 import TCOTS.world.village.VillagerCustomTrades;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import software.bernie.geckolib.GeckoLib;
 
 public class TCOTS_Main implements ModInitializer {
@@ -45,6 +41,7 @@ public class TCOTS_Main implements ModInitializer {
 		AlchemyTableRecipesRegister.registerPotionRecipes();
 		TCOTS_Sounds.registerSounds();
 		TCOTS_Entities.addSpawns();
+		TCOTS_Entities.addAttributes();
 		TCOTS_Particles.registerParticles();
 		TCOTS_Features.registerFeatures();
 
@@ -52,26 +49,6 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_VillageAdditions.registerNewVillageStructures();
 		TCOTS_PointOfInterest.registerVillagers();
 		VillagerCustomTrades.registerTrades();
-
-		//Drowner
-		FabricDefaultAttributeRegistry.register(TCOTS_Entities.DROWNER, DrownerEntity.setAttributes());
-
-		//Rotfiend
-		FabricDefaultAttributeRegistry.register(TCOTS_Entities.ROTFIEND, RotfiendEntity.setAttributes());
-
-		//Grave Hag
-		FabricDefaultAttributeRegistry.register(TCOTS_Entities.GRAVE_HAG, GraveHagEntity.setAttributes());
-
-		//Water Hag
-		FabricDefaultAttributeRegistry.register(TCOTS_Entities.WATER_HAG, WaterHagEntity.setAttributes());
-
-		//Foglet
-		FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLET, FogletEntity.setAttributes());
-		FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLING, FoglingEntity.setAttributes());
-
-		//Nekker
-		FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
-
 	}
 
 }

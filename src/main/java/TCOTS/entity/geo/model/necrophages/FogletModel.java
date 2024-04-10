@@ -36,8 +36,6 @@ public class FogletModel extends GeoModel<FogletEntity> {
     public void setCustomAnimations(FogletEntity entity, long instanceId, AnimationState<FogletEntity> animationState) {
 
         CoreGeoBone head = getAnimationProcessor().getBone("head");
-
-
         if (head != null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
             if(animationState.isMoving()){

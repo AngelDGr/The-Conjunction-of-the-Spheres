@@ -143,6 +143,8 @@ public class TCOTS_Items {
     public static Item NEKKER_HEART;
     public static Item NEKKER_EYE;
 
+    public static Item GHOUL_SPAWN_EGG;
+
 
     //Register Drops from monsters
     public static void registerDrops() {
@@ -211,6 +213,10 @@ public class TCOTS_Items {
         NEKKER_HEART = registerItem("nekker_heart",
                 new Item(
                         new FabricItemSettings().maxCount(16)));
+
+        GHOUL_SPAWN_EGG = registerItem("ghoul_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.GHOUL, 0xd69d76, 0x0e0a07,
+                        new FabricItemSettings()));
     }
 
 

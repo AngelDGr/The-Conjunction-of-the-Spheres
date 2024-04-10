@@ -3,12 +3,18 @@ package TCOTS.entity.ogroids;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
+import TCOTS.entity.misc.CommonControllers;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.RevengeGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -38,7 +44,6 @@ import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInst
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
 
@@ -51,22 +56,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation RUNNING = RawAnimation.begin().thenLoop("move.running");
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
-    public static final RawAnimation ATTACK1 = RawAnimation.begin().thenPlay("attack.swing1");
-    public static final RawAnimation ATTACK2 = RawAnimation.begin().thenPlay("attack.swing2");
-    public static final RawAnimation ATTACK3 = RawAnimation.begin().thenPlay("attack.swing3");
-    public static final RawAnimation LUNGE = RawAnimation.begin().thenPlay("attack.lunge");
-    public static final RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
-    public static final RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
 
-    @Override
-    public RawAnimation getDiggingAnimation() {
-        return DIGGING_IN;
-    }
-
-    @Override
-    public RawAnimation getEmergingAnimation() {
-        return DIGGING_OUT;
-    }
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -179,38 +169,12 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
         //Attack Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "AttackController", 1, state -> {
-                    state.getController().forceAnimationReset();
-                    // Random instance
-                    // Generates three random numbers
-                    if (this.handSwinging) {
-                        int r = NekkerEntity.this.random.nextInt(3);
-                        switch (r) {
-                            case 0:
-                                return state.setAndContinue(ATTACK1);
-
-                            case 1:
-                                return state.setAndContinue(ATTACK2);
-
-                            case 2:
-                                return state.setAndContinue(ATTACK3);
-                        }
-                    }
-                    return PlayState.CONTINUE;
-                })
+                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationThreeAttacksPredicate(state, this.handSwinging,random))
         );
 
         //Lunge Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "LungeController", 1, state -> {
-                    if (this.getIsLugging()) {
-                        state.setAnimation(LUNGE);
-                        return PlayState.CONTINUE;
-                    }
-
-                    state.getController().forceAnimationReset();
-                    return PlayState.CONTINUE;
-                })
+                new AnimationController<>(this, "LungeController", 1, this::animationLungePredicate)
         );
 
         //Digging Controller

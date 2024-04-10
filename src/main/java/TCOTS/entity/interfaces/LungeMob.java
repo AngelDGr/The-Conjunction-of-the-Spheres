@@ -1,8 +1,14 @@
 package TCOTS.entity.interfaces;
 
 import net.minecraft.sound.SoundEvent;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 public interface LungeMob {
+    RawAnimation LUNGE = RawAnimation.begin().thenPlay("attack.lunge");
 
     boolean getNotCooldownBetweenLunges();
 
@@ -11,7 +17,7 @@ public interface LungeMob {
     boolean getIsLugging();
     void setIsLugging(boolean wasLugging);
 
-    SoundEvent getLungeSound();
+    @Nullable SoundEvent getLungeSound();
 
     int getLungeTicks();
 
@@ -24,5 +30,17 @@ public interface LungeMob {
         } else {
             setCooldownBetweenLunges(false);
         }
+    }
+
+    default RawAnimation getLungeAnimation() {return LUNGE;}
+
+    default  <T extends GeoAnimatable> PlayState animationLungePredicate(AnimationState<T> state) {
+        if (this.getIsLugging()) {
+            state.setAnimation(getLungeAnimation());
+            return PlayState.CONTINUE;
+        }
+
+        state.getController().forceAnimationReset();
+        return PlayState.CONTINUE;
     }
 }

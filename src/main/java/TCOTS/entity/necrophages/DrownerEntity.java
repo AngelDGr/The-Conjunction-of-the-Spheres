@@ -78,18 +78,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     public static final RawAnimation LUNGE = RawAnimation.begin().thenPlay("attack.lunge");
     public static final RawAnimation WATER_ATTACK1 = RawAnimation.begin().thenPlay("attack.waterswing1");
     public static final RawAnimation WATER_ATTACK2 = RawAnimation.begin().thenPlay("attack.waterswing2");
-    public static final RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
-    public static final RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
-
-    @Override
-    public RawAnimation getDiggingAnimation() {
-        return DIGGING_IN;
-    }
-
-    @Override
-    public RawAnimation getEmergingAnimation() {
-        return DIGGING_OUT;
-    }
     protected static final TrackedData<Boolean> SWIM = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(DrownerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -669,15 +657,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
 
         //Lunge Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "LungeController", 1, state -> {
-                    if (this.getIsLugging()){
-                        state.setAnimation(LUNGE);
-                        return PlayState.CONTINUE;
-                    }
-
-                    state.getController().forceAnimationReset();
-                    return PlayState.CONTINUE;
-                })
+                new AnimationController<>(this, "LungeController", 1, this::animationLungePredicate)
         );
 
         //Digging Controller

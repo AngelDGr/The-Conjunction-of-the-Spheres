@@ -1,5 +1,6 @@
 package TCOTS.entity.necrophages;
 
+import TCOTS.entity.misc.CommonControllers;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
@@ -47,14 +48,10 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         //xTODO: Add mutagen and decoction
     //xTODO: Add spawn
 
-
-
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
-    public static final RawAnimation ATTACK1 = RawAnimation.begin().thenPlay("attack.swing1");
-    public static final RawAnimation ATTACK2 = RawAnimation.begin().thenPlay("attack.swing2");
     public static final RawAnimation ATTACK_TONGUE = RawAnimation.begin().thenPlay("attack.tongue2");
     public static final RawAnimation ATTACK_RUN = RawAnimation.begin().thenPlay("attack.run");
 
@@ -382,23 +379,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
 
         //Attack Controller
         controllers.add(
-                new AnimationController<>(this, "AttackController", 1, state -> {
-                    state.getController().forceAnimationReset();
-                    // Random instance
-                    // Generates two random numbers
-                    if (this.handSwinging && !this.getTongueAttack()) {
-                        int r = GraveHagEntity.this.random.nextInt(2);
-                        switch (r) {
-                            case 0:
-                                return state.setAndContinue(ATTACK1);
-
-                            case 1:
-                                return state.setAndContinue(ATTACK2);
-                        }
-                    }
-
-                    return PlayState.CONTINUE;
-                })
+                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationTwoAttacksPredicate(state,this.handSwinging,random))
         );
 
         //TongueAttack Controller

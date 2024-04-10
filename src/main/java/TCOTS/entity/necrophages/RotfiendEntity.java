@@ -3,6 +3,7 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
+import TCOTS.entity.misc.CommonControllers;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
@@ -57,24 +58,9 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation RUNNING = RawAnimation.begin().thenLoop("move.running");
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
-    public static final RawAnimation ATTACK1 = RawAnimation.begin().thenPlay("attack.swing1");
-    public static final RawAnimation ATTACK2 = RawAnimation.begin().thenPlay("attack.swing2");
-    public static final RawAnimation ATTACK3 = RawAnimation.begin().thenPlay("attack.swing3");
-    public static final RawAnimation LUNGE = RawAnimation.begin().thenPlay("attack.lunge");
 
     public static final RawAnimation EXPLOSION = RawAnimation.begin().thenPlayAndHold("special.explosion");
-    public static final RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
-    public static final RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
 
-    @Override
-    public RawAnimation getDiggingAnimation() {
-        return DIGGING_IN;
-    }
-
-    @Override
-    public RawAnimation getEmergingAnimation() {
-        return DIGGING_OUT;
-    }
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EXPLODING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> TRIGGER_EXPLOSION = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -91,7 +77,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     @Override
     protected void initGoals() {
         //Attack
-
         //Emerge from ground
         this.goalSelector.add(0, new Rotfiend_Explosion(this, 0.25f));
         this.goalSelector.add(0, new EmergeFromGroundGoal_Excavator(this, 500));
@@ -169,7 +154,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         @Override
         public void tick() {
             if (AnimationTicks > 0) {
-//                System.out.println("AnimationTicks: " + AnimationTicks);
                 --AnimationTicks;
             } else {
                 stop();
@@ -230,38 +214,12 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
 
         //Attack Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "AttackController", 1, state -> {
-                    state.getController().forceAnimationReset();
-                    // Random instance
-                    // Generates three random numbers
-                    if (this.handSwinging) {
-                        int r = RotfiendEntity.this.random.nextInt(3);
-                        switch (r) {
-                            case 0:
-                                return state.setAndContinue(ATTACK1);
-
-                            case 1:
-                                return state.setAndContinue(ATTACK2);
-
-                            case 2:
-                                return state.setAndContinue(ATTACK3);
-                        }
-                    }
-                    return PlayState.CONTINUE;
-                })
+                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationThreeAttacksPredicate(state, this.handSwinging,random))
         );
 
         //Lunge Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "LungeController", 1, state -> {
-                    if (this.getIsLugging()) {
-                        state.setAnimation(LUNGE);
-                        return PlayState.CONTINUE;
-                    }
-
-                    state.getController().forceAnimationReset();
-                    return PlayState.CONTINUE;
-                })
+                new AnimationController<>(this, "LungeController", 1, this::animationLungePredicate)
         );
 
         //Explosion Controller

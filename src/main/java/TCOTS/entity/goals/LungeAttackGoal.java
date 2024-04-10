@@ -30,7 +30,7 @@ public class LungeAttackGoal extends Goal {
         }
         else {this.excavatorMob=null;}
 
-        if (!(mob instanceof ExcavatorMob)) {
+        if (!(mob instanceof LungeMob)) {
             throw new IllegalArgumentException("LungeAttackGoal requires Mob implements LungeMob");
         }
 
@@ -132,8 +132,9 @@ public class LungeAttackGoal extends Goal {
             mob.setVelocity(mob.getVelocity().add(vec3D_lunge.x, 0.35, vec3D_lunge.z));
             this.mob.getLookControl().lookAt(target, 30.0F, 30.0F);
 
-            mob.playSound(lungeMob.getLungeSound(), 1.0F, 1.0F);
-
+            if(lungeMob.getLungeSound() != null) {
+                mob.playSound(lungeMob.getLungeSound(), 1.0F, 1.0F);
+            }
             //Put the cooldown
             lungeMob.setLungeTicks(cooldownBetweenLungesAttacks + randomExtra);
             lungeMob.setCooldownBetweenLunges(true);

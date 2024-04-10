@@ -2,6 +2,7 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.misc.FoglingEntity;
+import TCOTS.entity.misc.CommonControllers;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.FluidBlock;
@@ -71,8 +72,6 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
-    public static final RawAnimation ATTACK1 = RawAnimation.begin().thenPlay("attack.swing1");
-    public static final RawAnimation ATTACK2 = RawAnimation.begin().thenPlay("attack.swing2");
     public static final RawAnimation TRIGGER_FOG = RawAnimation.begin().thenPlay("special.fog");
 
     public FogletEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
@@ -409,23 +408,7 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
 
         //Attack Controller
         controllers.add(
-                new AnimationController<>(this, "AttackController", 1, state -> {
-                    state.getController().forceAnimationReset();
-                    // Random instance
-                    // Generates two random numbers
-                    if (this.handSwinging) {
-                        int r = this.random.nextInt(2);
-                        switch (r) {
-                            case 0:
-                                return state.setAndContinue(ATTACK1);
-
-                            case 1:
-                                return state.setAndContinue(ATTACK2);
-                        }
-                    }
-
-                    return PlayState.CONTINUE;
-                })
+                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationTwoAttacksPredicate(state,this.handSwinging,random))
         );
 
         //Fog Controller

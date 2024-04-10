@@ -8,6 +8,7 @@ import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.*;
 import net.minecraft.registry.Registries;
@@ -64,13 +65,11 @@ public class TCOTS_Entities {
                     .dimensions(EntityDimensions.changing(0.78f, 0.1f)).build());
 
 
-
     public static final EntityType<RotfiendEntity> ROTFIEND = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "rotfiend"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, RotfiendEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
-
 
 
     public static final EntityType<GraveHagEntity> GRAVE_HAG = Registry.register(
@@ -84,14 +83,12 @@ public class TCOTS_Entities {
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, WaterHagEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
-
     public static final EntityType<WaterHag_MudBallEntity> WATER_HAG_MUD_BALL = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "water_hag_mud_ball"),
             FabricEntityTypeBuilder.<WaterHag_MudBallEntity>create(SpawnGroup.MISC, WaterHag_MudBallEntity::new
                     )
                     // Hitbox
                     .dimensions(EntityDimensions.changing(0.25f, 0.25f)).build());
-
 
     public static final EntityType<FogletEntity> FOGLET = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "foglet"),
@@ -105,12 +102,22 @@ public class TCOTS_Entities {
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
 
+    public static final EntityType<GhoulEntity> GHOUL = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "ghoul"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, GhoulEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(1.4f, 0.9f)).build());
+
+
     //Ogroids
     public static final EntityType<NekkerEntity> NEKKER = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "nekker"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, NekkerEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.65f, 0.9f)).build());
+
+
+
 
     public static void addSpawns() {
         //Drowners
@@ -209,5 +216,31 @@ public class TCOTS_Entities {
                                                                 BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys. OLD_GROWTH_BIRCH_FOREST, BiomeKeys.DARK_FOREST), SpawnGroup.MONSTER,
                     NEKKER, 5, 4,6);
 
+    }
+
+    public static void addAttributes(){
+        //Drowner
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.DROWNER, DrownerEntity.setAttributes());
+
+        //Rotfiend
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.ROTFIEND, RotfiendEntity.setAttributes());
+
+        //Grave Hag
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.GRAVE_HAG, GraveHagEntity.setAttributes());
+
+        //Water Hag
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.WATER_HAG, WaterHagEntity.setAttributes());
+
+        //Foglet
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLET, FogletEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLING, FoglingEntity.setAttributes());
+
+        //Ghoul
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.GHOUL, GhoulEntity.setAttributes());
+
+
+
+        //Nekker
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
     }
 }
