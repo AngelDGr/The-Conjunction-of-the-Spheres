@@ -13,7 +13,7 @@ public class TCOTS_Sounds {
     public static SoundEvent DROWNER_HURT = registerSoundEvent("drowner_hurt");
     public static SoundEvent DROWNER_IDLE = registerSoundEvent("drowner_idle");
     public static SoundEvent DROWNER_DEATH = registerSoundEvent("drowner_death");
-    public static SoundEvent DROWNER_FOOTSTEP = registerSoundEvent("drowner_footstep");
+    public static SoundEvent WATERY_FOOTSTEP = registerSoundEvent("drowner_footstep");
     public static SoundEvent DROWNER_LUNGE = registerSoundEvent("drowner_lunge");
     public static SoundEvent DROWNER_EMERGING = registerSoundEvent("drowner_emerging");
     public static SoundEvent DROWNER_DIGGING = registerSoundEvent("drowner_digging");
@@ -57,6 +57,17 @@ public class TCOTS_Sounds {
 
     public static SoundEvent FOGLET_FOGLING_DISAPPEAR = registerSoundEvent("fogling_disappear");
 
+    //Ghoul
+    public static SoundEvent GHOUL_ATTACK = registerSoundEvent("ghoul_attack");
+    public static SoundEvent GHOUL_HURT = registerSoundEvent("ghoul_hurt");
+    public static SoundEvent GHOUL_IDLE = registerSoundEvent("ghoul_idle");
+    public static SoundEvent GHOUL_DEATH = registerSoundEvent("ghoul_death");
+    public static SoundEvent GHOUL_LUNGES = registerSoundEvent("ghoul_lunge");
+    public static SoundEvent GHOUL_SCREAMS = registerSoundEvent("ghoul_scream");
+    public static SoundEvent GHOUL_REGEN = registerSoundEvent("ghoul_regen");
+
+
+
     //Nekker
     public static SoundEvent NEKKER_ATTACK = registerSoundEvent("nekker_attack");
     public static SoundEvent NEKKER_HURT = registerSoundEvent("nekker_hurt");
@@ -65,6 +76,8 @@ public class TCOTS_Sounds {
     public static SoundEvent NEKKER_LUNGE = registerSoundEvent("nekker_lunge");
     public static SoundEvent NEKKER_EMERGING = registerSoundEvent("nekker_emerging");
     public static SoundEvent NEKKER_DIGGING = registerSoundEvent("nekker_digging");
+
+
 
 
     //Misc

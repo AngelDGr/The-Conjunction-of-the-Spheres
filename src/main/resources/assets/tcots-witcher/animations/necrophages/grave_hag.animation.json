@@ -861,6 +861,59 @@
 					}
 				}
 			}
+		},
+		"special.bestiary_pose": {
+			"loop": true,
+			"bones": {
+				"UpperBody_head": {
+					"rotation": {
+						"vector": [0, -17.5, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, -27.5, 0]
+					}
+				},
+				"LowerJaw": {
+					"rotation": {
+						"vector": [35, 0, 0]
+					}
+				},
+				"Tongue": {
+					"rotation": {
+						"vector": [-7.5, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 1, 1.3]
+					}
+				},
+				"back_mouth": {
+					"scale": {
+						"vector": [1, 1.7, 1]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [31.60659, 7.99365, -12.73415]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [26.94093, -5.73576, 11.12501]
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": [0, 22.5, 0]
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"vector": [0, -30, 0]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

@@ -1413,6 +1413,46 @@
 					}
 				}
 			}
+		},
+		"special.bestiary_pose": {
+			"loop": true,
+			"bones": {
+				"UpperBody_head": {
+					"rotation": {
+						"vector": [0, 15, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [4.75346, -32.18826, -8.87221]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [-15, -15, -7.5]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [-18.22178, -23.4875, 25.76863]
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": [0, 15, 0]
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"vector": [2.59775, -27.38656, -5.63304]
+					}
+				},
+				"ClothFront": {
+					"rotation": {
+						"vector": [-15, 0, 0]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

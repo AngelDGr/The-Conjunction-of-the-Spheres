@@ -27,6 +27,7 @@ public class TCOTS_Entities {
     //xTODO: Water Hag
     //xTODO: Foglet
     //TODO: Ghoul
+    //TODO: Alghoul
     //TODO: Wights
     //TODO: Scurvers
     //TODO: Devourer?

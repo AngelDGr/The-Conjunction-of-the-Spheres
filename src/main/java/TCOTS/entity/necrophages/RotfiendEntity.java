@@ -9,7 +9,6 @@ import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.Goal;
@@ -465,9 +464,8 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
 
     //Attack Sound
     @Override
-    public boolean tryAttack(Entity target) {
-        this.playSound(TCOTS_Sounds.ROTFIEND_ATTACK, 1.0F, 1.0F);
-        return super.tryAttack(target);
+    protected SoundEvent getAttackSound() {
+        return TCOTS_Sounds.ROTFIEND_ATTACK;
     }
 
     @Override

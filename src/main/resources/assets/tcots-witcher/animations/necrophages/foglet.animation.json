@@ -528,6 +528,36 @@
 					}
 				}
 			}
+		},
+		"special.bestiary_pose": {
+			"loop": true,
+			"bones": {
+				"head": {
+					"rotation": {
+						"vector": [0, -27.5, 0]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [12.60469, -28.28858, -47.04836]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [-37.5, 0, 0]
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": [0, 0, 5]
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"vector": [0, 0, -5]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

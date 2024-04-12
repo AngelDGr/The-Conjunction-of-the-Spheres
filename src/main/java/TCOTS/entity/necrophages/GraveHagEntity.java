@@ -467,9 +467,8 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
 
     //Attack Sound
     @Override
-    public boolean tryAttack(Entity target) {
-        this.playSound(TCOTS_Sounds.GRAVE_HAG_ATTACK, 1.0F, 1.0F);
-        return super.tryAttack(target);
+    protected SoundEvent getAttackSound() {
+        return TCOTS_Sounds.GRAVE_HAG_ATTACK;
     }
 
     @Override

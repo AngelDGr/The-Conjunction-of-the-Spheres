@@ -354,6 +354,63 @@
   },
 
 
+  "ghoul_attack": {
+    "subtitle": "tcots-witcher.sounds.ghoul_attack",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_attack1",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_attack2",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_attack3"
+    ]
+  },
+  "ghoul_hurt": {
+    "subtitle": "tcots-witcher.sounds.ghoul_hurt",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_hurt1",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_hurt2",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_hurt3",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_hurt4"
+    ]
+  },
+  "ghoul_idle": {
+    "subtitle": "tcots-witcher.sounds.ghoul_idle",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_idle1",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_idle2",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_idle3"
+    ]
+  },
+  "ghoul_death": {
+    "subtitle": "tcots-witcher.sounds.ghoul_death",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_death1",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_death2",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_death3"
+    ]
+  },
+  "ghoul_lunge": {
+    "subtitle": "tcots-witcher.sounds.ghoul_lunge",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_lunge1",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_lunge2",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_lunge3"
+    ]
+  },
+  "ghoul_scream": {
+    "subtitle": "tcots-witcher.sounds.ghoul_scream",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_scream1",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_scream2",
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_scream3"
+    ]
+  },
+  "ghoul_regen": {
+    "subtitle": "tcots-witcher.sounds.ghoul_regen",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_regen1"
+    ]
+  },
+
+
   "nekker_attack": {
     "subtitle": "tcots-witcher.sounds.nekker_attack",
     "sounds": [

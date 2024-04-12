@@ -81,7 +81,13 @@
 
     "item.tcots-witcher.ghoul_spawn_egg": "Ghoul Spawn Egg",
     "entity.tcots-witcher.ghoul": "Ghoul",
-
+    "tcots-witcher.sounds.ghoul_attack": "Ghoul attacks",
+    "tcots-witcher.sounds.ghoul_hurt": "Ghoul hurts",
+    "tcots-witcher.sounds.ghoul_idle": "Ghoul groans",
+    "tcots-witcher.sounds.ghoul_death": "Ghoul dies",
+    "tcots-witcher.sounds.ghoul_lunge": "Ghoul lunges",
+    "tcots-witcher.sounds.ghoul_screams": "Ghoul screams",
+    "tcots-witcher.sounds.ghoul_regen": "Ghoul regenerates",
 
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
     "entity.tcots-witcher.nekker": "Nekker",

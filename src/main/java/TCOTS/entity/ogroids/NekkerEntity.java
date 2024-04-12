@@ -8,7 +8,6 @@ import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -63,6 +62,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
     public NekkerEntity(EntityType<? extends NekkerEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -71,10 +71,10 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     protected void initGoals() {
 
         //Emerge from ground
-        this.goalSelector.add(0, new EmergeFromGroundGoal_Excavator(this,500));
+        this.goalSelector.add(0, new EmergeFromGroundGoal_Excavator(this, 500));
         this.goalSelector.add(1, new SwimGoal(this));
 
-        this.goalSelector.add(2, new LungeAttackGoal(this, 150, 1.8,5,40));
+        this.goalSelector.add(2, new LungeAttackGoal(this, 150, 1.8, 5, 40));
 
         //Returns to ground
         this.goalSelector.add(3, new ReturnToGroundGoal_Excavator(this));
@@ -116,7 +116,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         LungeTicks = lungeTicks;
     }
 
-    public int ReturnToGround_Ticks=20;
+    public int ReturnToGround_Ticks = 20;
 
     public int getReturnToGround_Ticks() {
         return ReturnToGround_Ticks;
@@ -134,7 +134,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.26f)
 
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.2f)
-                .add(EntityAttributes.GENERIC_ARMOR,2f);
+                .add(EntityAttributes.GENERIC_ARMOR, 2f);
 
     }
 
@@ -169,7 +169,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
         //Attack Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationThreeAttacksPredicate(state, this.handSwinging,random))
+                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationThreeAttacksPredicate(state, this.handSwinging, random))
         );
 
         //Lunge Controller
@@ -179,7 +179,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
         //Digging Controller
         controllerRegistrar.add(
-                new AnimationController<>(this,"DiggingController",1, this::animationDiggingPredicate)
+                new AnimationController<>(this, "DiggingController", 1, this::animationDiggingPredicate)
         );
 
         //Emerging Controller
@@ -210,8 +210,9 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
-        nbt.putBoolean("Invisible",this.dataTracker.get(INVISIBLE));
+        nbt.putBoolean("Invisible", this.dataTracker.get(INVISIBLE));
     }
+
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
@@ -224,8 +225,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     protected Box calculateBoundingBox() {
         if (dataTracker.get(InGROUND)) {
             return groundBox(this);
-        }
-        else{
+        } else {
             // Normal hit-box otherwise
             return super.calculateBoundingBox();
         }
@@ -234,20 +234,23 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     public final boolean getIsLugging() {
         return this.dataTracker.get(LUGGING);
     }
+
     public final void setIsLugging(boolean wasLugging) {
         this.dataTracker.set(LUGGING, wasLugging);
     }
 
-    public final boolean getIsEmerging(){
+    public final boolean getIsEmerging() {
         return this.dataTracker.get(EMERGING);
     }
-    public final void setIsEmerging(boolean wasEmerging){
+
+    public final void setIsEmerging(boolean wasEmerging) {
         this.dataTracker.set(EMERGING, wasEmerging);
     }
 
     public boolean getInGroundDataTracker() {
         return this.dataTracker.get(InGROUND);
     }
+
     public void setInGroundDataTracker(boolean wasInGround) {
         this.dataTracker.set(InGROUND, wasInGround);
     }
@@ -255,6 +258,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     public final boolean getInvisibleData() {
         return this.dataTracker.get(INVISIBLE);
     }
+
     public final void setInvisibleData(boolean isInvisible) {
         this.dataTracker.set(INVISIBLE, isInvisible);
     }
@@ -272,7 +276,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         }
     }
 
-    int AnimationParticlesTicks=36;
+    int AnimationParticlesTicks = 36;
 
     public int getAnimationParticlesTicks() {
         return AnimationParticlesTicks;
@@ -281,6 +285,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     public void setAnimationParticlesTicks(int animationParticlesTicks) {
         AnimationParticlesTicks = animationParticlesTicks;
     }
+
     @Override
     public void tick() {
         //Counter for Lunge attack
@@ -292,7 +297,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     }
 
     @Override
-    public void mobTick(){
+    public void mobTick() {
         mobTickExcavator(
                 List.of(BlockTags.DIRT),
                 List.of(Blocks.SAND),
@@ -350,9 +355,8 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
     //Attack Sound
     @Override
-    public boolean tryAttack(Entity target) {
-        this.playSound(TCOTS_Sounds.NEKKER_ATTACK, 1.0F, 1.0F);
-        return super.tryAttack(target);
+    protected SoundEvent getAttackSound() {
+        return TCOTS_Sounds.NEKKER_ATTACK;
     }
 
     public void playSpawnEffects() {

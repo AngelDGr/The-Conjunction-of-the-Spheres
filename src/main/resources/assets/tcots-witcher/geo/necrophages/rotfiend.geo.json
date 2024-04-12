@@ -39,6 +39,14 @@
 					]
 				},
 				{
+					"name": "backMouth",
+					"parent": "head",
+					"pivot": [0, 23.45342, -3.47359],
+					"cubes": [
+						{"origin": [-2, 22.25, -4], "size": [4, 2, 0], "uv": [25, 0]}
+					]
+				},
+				{
 					"name": "BottomMouth",
 					"parent": "head",
 					"pivot": [0, 21.25, 0.5],

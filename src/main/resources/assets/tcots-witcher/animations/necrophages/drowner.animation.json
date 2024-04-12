@@ -1440,6 +1440,51 @@
 					}
 				}
 			}
+		},
+		"special.bestiary_pose": {
+			"loop": true,
+			"bones": {
+				"UpperBody_head": {
+					"rotation": {
+						"vector": [22.5, 0, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [-12.5, 10, 0]
+					}
+				},
+				"BottomMouth": {
+					"rotation": {
+						"vector": [42.5, 0, 0]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [0, 0, -20]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [0, 0, 17.5]
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": [0, 0, 7.5]
+					}
+				},
+				"Thingy": {
+					"rotation": {
+						"vector": [-5, 0, 0]
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"vector": [0, 0, -15]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

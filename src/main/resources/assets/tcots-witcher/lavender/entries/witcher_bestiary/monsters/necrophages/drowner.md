@@ -21,7 +21,7 @@ with slime and sludge oozing out of every pore and the acrid stench of rot wafti
 
 It is often thought drowners arise from the bodies of those who drown in shallow water.
 
-![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_running.png,fit)
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_main.png,fit)
 
 ;;;;;
 

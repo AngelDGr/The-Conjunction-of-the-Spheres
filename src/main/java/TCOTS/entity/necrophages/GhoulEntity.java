@@ -3,20 +3,21 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.goals.LungeAttackGoal;
 import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.entity.misc.CommonControllers;
+import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.MerchantEntity;
+import net.minecraft.entity.mob.*;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -26,6 +27,10 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 
 public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob {
 
+    //TODO: Add new combat/regeneration
+    //TODO: Add monster nests
+    //TODO: Add Ghoul's Blood
+    
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
@@ -51,7 +56,7 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         //Emerge from ground
         this.goalSelector.add(1, new SwimGoal(this));
 
-        this.goalSelector.add(2, new LungeAttackGoal(this, 100, 0.7,10,30));
+        this.goalSelector.add(2, new LungeAttackGoal(this, 100, 1.2,10,30));
 
         this.goalSelector.add(3, new MeleeAttackGoal(this,1.2D, false));
 
@@ -63,6 +68,15 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZoglinEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieHorseEntity.class, true));
+
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, HoglinEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, CowEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, PigEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, SheepEntity.class, true));
+        this.targetSelector.add(6, new ActiveTargetGoal<>(this, GoatEntity.class, true));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -148,9 +162,32 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         this.dataTracker.set(LUGGING, wasLugging);
     }
 
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return TCOTS_Sounds.GHOUL_HURT;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return TCOTS_Sounds.GHOUL_DEATH;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return TCOTS_Sounds.GHOUL_IDLE;
+    }
+
     @Override
     public SoundEvent getLungeSound() {
-        return null;
+        return TCOTS_Sounds.GHOUL_LUNGES;
+    }
+
+    @Override
+    protected SoundEvent getAttackSound() {
+        return TCOTS_Sounds.GHOUL_ATTACK;
     }
 
     public int LungeTicks;

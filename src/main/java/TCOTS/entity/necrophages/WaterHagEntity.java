@@ -473,7 +473,7 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
 
     //Footsteps sounds
     protected SoundEvent getStepSound() {
-        return TCOTS_Sounds.DROWNER_FOOTSTEP;
+        return TCOTS_Sounds.WATERY_FOOTSTEP;
     }
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
@@ -482,9 +482,8 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
 
     //Attack Sound
     @Override
-    public boolean tryAttack(Entity target) {
-        this.playSound(TCOTS_Sounds.WATER_HAG_ATTACK, 1.0F, 1.0F);
-        return super.tryAttack(target);
+    protected SoundEvent getAttackSound() {
+        return TCOTS_Sounds.WATER_HAG_ATTACK;
     }
 
     @Override

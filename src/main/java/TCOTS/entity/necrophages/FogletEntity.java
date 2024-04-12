@@ -1,13 +1,12 @@
 package TCOTS.entity.necrophages;
 
 import TCOTS.entity.TCOTS_Entities;
-import TCOTS.entity.misc.FoglingEntity;
 import TCOTS.entity.misc.CommonControllers;
+import TCOTS.entity.misc.FoglingEntity;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -587,9 +586,8 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
 
     //Attack Sound
     @Override
-    public boolean tryAttack(Entity target) {
-        this.playSound(TCOTS_Sounds.FOGLET_ATTACK, 1.0F, 1.0F);
-        return super.tryAttack(target);
+    protected SoundEvent getAttackSound() {
+        return TCOTS_Sounds.FOGLET_ATTACK;
     }
 
     @Override
