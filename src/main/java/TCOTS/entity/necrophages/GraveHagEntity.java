@@ -66,7 +66,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
 
-        this.goalSelector.add(2, new GraveHag_MeleeAttack(this, 1.2D, false,
+        this.goalSelector.add(2, new GraveHag_MeleeAttackGoal(this, 1.2D, false,
                 200, 6f, 300, 1.8f));
 
         this.goalSelector.add(3, new WanderAroundGoal(this, 0.75, 20));
@@ -85,7 +85,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
     int tongueAttackCooldownTicks;
     int runningAttackCooldownTicks;
 
-    private static class GraveHag_MeleeAttack extends Goal{
+    private static class GraveHag_MeleeAttackGoal extends Goal{
         private final int timeBetweenTongueAttacks;
         private final float damageWithTongue;
         private final int timeBetweenRunningAttacks;
@@ -103,7 +103,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         float speedMultiplierBase =1;
         private final float speedMultiplier;
         boolean tongueTriggered=false;
-        public GraveHag_MeleeAttack(GraveHagEntity graveHag, double speed, boolean pauseWhenMobIdle, int timeBetweenTongueAttacks, float damageWithTongue, int timeBetweenRunningAttacks, float speedMultiplierWhenRun) {
+        public GraveHag_MeleeAttackGoal(GraveHagEntity graveHag, double speed, boolean pauseWhenMobIdle, int timeBetweenTongueAttacks, float damageWithTongue, int timeBetweenRunningAttacks, float speedMultiplierWhenRun) {
             this.graveHag = graveHag;
             this.speed = speed;
             this.pauseWhenMobIdle = pauseWhenMobIdle;
@@ -187,9 +187,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
                 return;
             }
             this.graveHag.getLookControl().lookAt(livingEntity, 30.0f, 30.0f);
-            double d =
-//                    this.graveHag.getSquaredDistanceToAttackPosOf(livingEntity);
-            this.graveHag.squaredDistanceTo(livingEntity);
+            double d = this.graveHag.squaredDistanceTo(livingEntity);
             this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);
             if ((this.pauseWhenMobIdle || this.graveHag.getVisibilityCache().canSee(livingEntity)) && this.updateCountdownTicks <= 0 && (this.targetX == 0.0 && this.targetY == 0.0 && this.targetZ == 0.0 || livingEntity.squaredDistanceTo(this.targetX, this.targetY, this.targetZ) >= 1.0 || this.graveHag.getRandom().nextFloat() < 0.05f)) {
                 this.targetX = livingEntity.getX();
@@ -233,7 +231,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         private void tongue_attack(double d) {
             if(!graveHag.cooldownTongueAttack && AnimationTicks== 5 && d < 5){
                 graveHag.getNavigation().stop();
-                graveHag.setTongueAttack(true);
+                graveHag.triggerAnim("TongueAttack","tongue");
 
 
                 if (graveHag.isAlive()) {
@@ -383,16 +381,8 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         );
 
         //TongueAttack Controller
-        controllers.add(new AnimationController<>(this, "TongueAttack", 1, state -> {
-
-            if (this.getTongueAttack()) {
-
-                return state.setAndContinue(ATTACK_TONGUE);
-            }
-
-            state.getController().forceAnimationReset();
-            return PlayState.CONTINUE;
-        }));
+        controllers.add(new AnimationController<>(this, "TongueAttack", 1, state -> PlayState.STOP)
+                .triggerableAnim("tongue", ATTACK_TONGUE));
     }
 
     private void spawnGroundParticles() {
@@ -427,7 +417,6 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         }
 
         if (GraveHagEntity.this.tongueAttackCooldownTicks > 0) {
-            if(this.getTongueAttack()){this.setTongueAttack(false);}
             --GraveHagEntity.this.tongueAttackCooldownTicks;
         } else {
             GraveHagEntity.this.cooldownTongueAttack = false;

@@ -31,7 +31,7 @@ public class PotionEntityMixin extends ThrownItemEntity implements FlyingItemEnt
     }
 
     @Inject(method = "onCollision", at = @At("HEAD"), cancellable = true)
-    private void onColissionWitcherPotion(HitResult hitResult, CallbackInfo ci){
+    private void onCollisionWitcherPotion(HitResult hitResult, CallbackInfo ci){
 
         PotionEntity thisObject = (PotionEntity)(Object)this;
 
@@ -49,9 +49,7 @@ public class PotionEntityMixin extends ThrownItemEntity implements FlyingItemEnt
                 this.discard();
                 ci.cancel();
             }
-
         }
-
     }
 
     @Unique
@@ -63,7 +61,7 @@ public class PotionEntityMixin extends ThrownItemEntity implements FlyingItemEnt
 
         if (!list.isEmpty()) {
             Entity entity2 = thisObject.getEffectCause();
-            Iterator var6 = list.iterator();
+            Iterator<LivingEntity> var6 = list.iterator();
 
             while(true) {
                 LivingEntity livingEntity;
@@ -74,7 +72,7 @@ public class PotionEntityMixin extends ThrownItemEntity implements FlyingItemEnt
                             return;
                         }
 
-                        livingEntity = (LivingEntity)var6.next();
+                        livingEntity = var6.next();
                     } while(!livingEntity.isAffectedBySplashPotions());
 
                     d = this.squaredDistanceTo(livingEntity);
@@ -87,17 +85,12 @@ public class PotionEntityMixin extends ThrownItemEntity implements FlyingItemEnt
                     e = 1.0 - Math.sqrt(d) / 4.0;
                 }
 
-                Iterator var12 = statusEffects.iterator();
-
-                while(var12.hasNext()) {
-                    StatusEffectInstance statusEffectInstance = (StatusEffectInstance)var12.next();
+                for (StatusEffectInstance statusEffectInstance : statusEffects) {
                     StatusEffect statusEffect = statusEffectInstance.getEffectType();
                     if (statusEffect.isInstant()) {
                         statusEffect.applyInstantEffect(this, this.getOwner(), livingEntity, statusEffectInstance.getAmplifier(), e);
                     } else {
-                        int i = statusEffectInstance.mapDuration((ix) -> {
-                            return (int)(e * (double)ix + 0.5);
-                        });
+                        int i = statusEffectInstance.mapDuration((ix) -> (int) (e * (double) ix + 0.5));
                         StatusEffectInstance statusEffectInstance2 = new StatusEffectInstance(statusEffect, i, statusEffectInstance.getAmplifier(), statusEffectInstance.isAmbient(), statusEffectInstance.shouldShowParticles());
                         if (!statusEffectInstance2.isDurationBelow(20)) {
                             livingEntity.addStatusEffect(statusEffectInstance2, entity2);

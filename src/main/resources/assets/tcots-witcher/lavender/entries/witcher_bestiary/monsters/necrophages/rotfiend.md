@@ -6,7 +6,7 @@
   "associated_items": [
     "tcots-witcher:rotfiend_blood"
   ],
-  "ordinal": 1
+  "ordinal": 3
 }
 ```
 
@@ -16,7 +16,7 @@ They usually feed in large groups and thus present a danger to lone travelers â€
 
 ;;;;;
 
-Be careful fellow traveler, these creature can represent a serious threat to any inexperienced warrior.   
+Be careful fellow traveler, these creatures can represent a serious threat to any inexperienced warrior.   
 
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_main.png,fit)
 
@@ -33,7 +33,7 @@ Be careful fellow traveler, these creature can represent a serious threat to any
 
 {red}**Behavior**{}
 
-The rotfiend rest underground and only emerge when find a target, so be careful, as it can take you by surprise.
+The rotfiend rests underground and only emerges when find a target, so be careful, as it can take you by surprise.
 They are fast and dangerous, and it will try to lunge at you, so be faster than it.
 
 
@@ -45,7 +45,7 @@ when they damaged enough its body thrashes around in uncontrollable tremors, lea
 The resulting explosion will hurt a lot, but it might also kill nearby rotfiends, creating something of a chain reaction.
 
 
-The only way to prevent this explosion it's {#0A880E}killing it when the creature it's on flames.{}
+The only way to prevent this explosion is {#0A880E}killing it when the creature it's in flames.{}
 
 
 {blue}**Loot**{}

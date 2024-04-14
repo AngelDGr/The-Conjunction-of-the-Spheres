@@ -7,7 +7,7 @@
     "tcots-witcher:foglet_mutagen",
     "tcots-witcher:foglet_teeth"
   ],
-  "ordinal": 2
+  "ordinal": 4
 }
 ```
 

@@ -31,17 +31,18 @@ public class TCOTS_ItemsGroups {
 
                             //Spawn Eggs
                             entries.add(TCOTS_Items.DROWNER_SPAWN_EGG);
+                            entries.add(TCOTS_Items.GHOUL_SPAWN_EGG);
                             entries.add(TCOTS_Items.ROTFIEND_SPAWN_EGG);
                             entries.add(TCOTS_Items.NEKKER_SPAWN_EGG);
                             entries.add(TCOTS_Items.GRAVE_HAG_SPAWN_EGG);
                             entries.add(TCOTS_Items.WATER_HAG_SPAWN_EGG);
                             entries.add(TCOTS_Items.FOGLET_SPAWN_EGG);
-                            entries.add(TCOTS_Items.GHOUL_SPAWN_EGG);
 
 
                             //Drops
                             entries.add(TCOTS_Items.DROWNER_TONGUE);
                             entries.add(TCOTS_Items.DROWNER_BRAIN);
+                            entries.add(TCOTS_Items.GHOUL_BLOOD);
                             entries.add(TCOTS_Items.ROTFIEND_BLOOD);
                             entries.add(TCOTS_Items.NEKKER_EYE);
                             entries.add(TCOTS_Items.NEKKER_HEART);

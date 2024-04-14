@@ -7,6 +7,7 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoEntity;
 
 import java.util.EnumSet;
 
@@ -126,7 +127,9 @@ public class LungeAttackGoal extends Goal {
             randomExtra = mob.getRandom().nextInt(51);
             //0.35 Y default
             vec3D_lunge = getVec3d(target).normalize();
-            lungeMob.setIsLugging(true);
+            if(lungeMob instanceof GeoEntity){
+                ((GeoEntity) lungeMob).triggerAnim("LungeController","lunge");
+            }
 
 
             mob.setVelocity(mob.getVelocity().add(vec3D_lunge.x, 0.35, vec3D_lunge.z));

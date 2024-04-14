@@ -8,7 +8,7 @@
       "weight": 2,
       "element": {
 
-        "location": "tcots-witcher:nekker_nest_1",
+        "location": "tcots-witcher:nests/nekker/nekker_nest_1",
 
         "processors": "minecraft:empty",
 
@@ -21,7 +21,7 @@
       "weight": 2,
       "element": {
 
-        "location": "tcots-witcher:nekker_nest_2",
+        "location": "tcots-witcher:nests/nekker/nekker_nest_2",
 
         "processors": "minecraft:empty",
 
@@ -34,7 +34,7 @@
       "weight": 2,
       "element": {
 
-        "location": "tcots-witcher:nekker_nest_3",
+        "location": "tcots-witcher:nests/nekker/nekker_nest_3",
 
         "processors": "minecraft:empty",
 
@@ -48,7 +48,7 @@
       "element": {
 
 
-        "location": "tcots-witcher:nekker_nest_4",
+        "location": "tcots-witcher:nests/nekker/nekker_nest_4",
 
         "processors": "minecraft:empty",
 

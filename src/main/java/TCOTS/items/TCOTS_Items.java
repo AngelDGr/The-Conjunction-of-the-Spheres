@@ -144,6 +144,7 @@ public class TCOTS_Items {
     public static Item NEKKER_EYE;
 
     public static Item GHOUL_SPAWN_EGG;
+    public static Item GHOUL_BLOOD;
 
 
     //Register Drops from monsters
@@ -199,8 +200,12 @@ public class TCOTS_Items {
                 new Item(
                         new FabricItemSettings().maxCount(8)));
 
-
-
+        GHOUL_SPAWN_EGG = registerItem("ghoul_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.GHOUL, 0xd69d76, 0x0e0a07,
+                        new FabricItemSettings()));
+        GHOUL_BLOOD = registerItem("ghoul_blood",
+                new Item(
+                        new FabricItemSettings().maxCount(8)));
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
@@ -214,9 +219,7 @@ public class TCOTS_Items {
                 new Item(
                         new FabricItemSettings().maxCount(16)));
 
-        GHOUL_SPAWN_EGG = registerItem("ghoul_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.GHOUL, 0xd69d76, 0x0e0a07,
-                        new FabricItemSettings()));
+
     }
 
 

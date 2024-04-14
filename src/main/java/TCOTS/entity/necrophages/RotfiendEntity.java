@@ -217,9 +217,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         );
 
         //Lunge Controller
-        controllerRegistrar.add(
-                new AnimationController<>(this, "LungeController", 1, this::animationLungePredicate)
-        );
+        lungeAnimationController(this, controllerRegistrar);
 
         //Explosion Controller
         controllerRegistrar.add(
@@ -257,14 +255,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
     }
 
-
-    public final boolean getIsLugging() {
-        return this.dataTracker.get(LUGGING);
-    }
-
-    public final void setIsLugging(boolean wasLugging) {
-        this.dataTracker.set(LUGGING, wasLugging);
-    }
 
     public final boolean getIsExploding() {
         return this.dataTracker.get(EXPLODING);

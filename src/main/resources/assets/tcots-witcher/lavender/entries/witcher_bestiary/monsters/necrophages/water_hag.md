@@ -7,7 +7,7 @@
     "tcots-witcher:water_hag_mutagen",
     "tcots-witcher:water_hag_mud_ball"
   ],
-  "ordinal": 3
+  "ordinal": 5
 }
 ```
 
@@ -26,7 +26,7 @@ They are also able to form this mud into balls, which they toss to temporarily b
 ;;;;;
 
 {dark_green}**Habitat**{}
-- Swamps and Mangrove Swamps, near the water
+- Swamps and Mangrove Swamps near the water
 - Rivers and lakes
 
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_launching.png,fit)

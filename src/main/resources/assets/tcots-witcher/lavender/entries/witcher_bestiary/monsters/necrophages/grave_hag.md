@@ -6,12 +6,14 @@
   "associated_items": [
     "tcots-witcher:grave_hag_mutagen"
   ],
-  "ordinal": 4
+  "ordinal": 6
 }
 ```
 
-Few monsters' names fit as well as the grave hags'. As one might guess, these creatures resemble aged, 
-deformed women and loiter near graveyards and battlefields. Grave hags feed on human corpses and in particular 
+Few monsters' names fit as well as the grave hags.
+As one might guess, these creatures resemble aged, 
+deformed women and loiter near graveyards and battlefields.
+Grave hags feed on human corpses and in particular 
 on the rotten marrow which they slurp from human bones using their long, prehensile tongues. 
 
 ;;;;;
@@ -37,13 +39,13 @@ Even when it's similar in appearance to a [water hag](^tcots-witcher:monsters/ne
 a grave hag is way more aggressive and dangerous, these two don't share hunting grounds.
 
 
-Instead of launching tiny mudballs, if you try to escape it's going to run on it four limbs
-and try to catch you a tremendous speed.
+Instead of launching tiny mudballs, if you try to escape, it's going to run on it four limbs
+and try to catch you at a tremendous speed.
 
 ;;;;;
 
-It can also use it tongue as weapon, making a sweep with it, causing a lot of knockback
-and damaging a lot any shield that you could use.
+It can also use its tongue as a weapon, making a sweep with it, causing a lot of knockback
+and damaging a lot of any shield that you could use.
 
 
 {dark_blue}**Mutagen**{}

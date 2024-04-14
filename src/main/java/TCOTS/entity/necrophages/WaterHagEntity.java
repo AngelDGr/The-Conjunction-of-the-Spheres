@@ -64,7 +64,6 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
     public static final RawAnimation ATTACK_MUD = RawAnimation.begin().thenPlay("attack.mud_launch");
 
-    protected static final TrackedData<Boolean> MUD_ATTACK = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> SPAWNED_PUDDLE = DataTracker.registerData(WaterHagEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -115,8 +114,7 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         double g = target.getZ() - this.getZ();
         double h = Math.sqrt(e * e + g * g) * (double)0.2f;
         mud_ballEntity.setVelocity(e, f + h, g, 1.6f, 12.0f);
-        this.setMudAttack(true);
-        AnimationTicks=5;
+        this.triggerAnim("MudController", "mud_attack");
         this.playSound(TCOTS_Sounds.WATER_HAG_MUD_BALL_LAUNCH, 1.0f, 0.4f / (this.getRandom().nextFloat() * 0.4f + 0.8f));
         this.getWorld().spawnEntity(mud_ballEntity);
 
@@ -223,7 +221,6 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(MUD_ATTACK, Boolean.FALSE);
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
         this.dataTracker.startTracking(SPAWNED_PUDDLE, Boolean.FALSE);
@@ -247,13 +244,6 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         if (!dataTracker.get(InGROUND) || dataTracker.get(InGROUND)) {
             this.setBoundingBox(this.calculateBoundingBox());
         }
-    }
-
-    public final boolean getMudAttack() {
-        return this.dataTracker.get(MUD_ATTACK);
-    }
-    public final void setMudAttack(boolean wasAttacking) {
-        this.dataTracker.set(MUD_ATTACK, wasAttacking);
     }
 
     public final boolean getIsEmerging(){
@@ -286,14 +276,12 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         //Walk/Idle Controller
         controllers.add(new AnimationController<>(this, "Idle/Walk/Run", 5, state -> {
-
             //If it's attacking and moving
-            if(this.isAttacking() && state.isMoving() && AnimationTicks == 0){
-
+            if(this.isAttacking() && state.isMoving() ){
                 state.setControllerSpeed(0.8f);
                 return state.setAndContinue(WALKING);
             }else
-                if(state.isMoving() && AnimationTicks == 0){
+                if(state.isMoving()){
                     state.setControllerSpeed(0.5f);
                     return state.setAndContinue(WALKING);
                 }
@@ -311,16 +299,8 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
 
         //Mud ball Controller
         controllers.add(
-                new AnimationController<>(this, "MudController", 1, state -> {
-                    if (this.getMudAttack()){
-                        state.setAnimation(ATTACK_MUD);
-                        return PlayState.CONTINUE;
-                    }
-
-                    state.getController().forceAnimationReset();
-                    return PlayState.CONTINUE;
-
-                })
+                new AnimationController<>(this, "MudController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("mud_attack", ATTACK_MUD)
         );
 
         //DiggingIn Controller
@@ -333,8 +313,6 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
                 new AnimationController<>(this, "EmergingController", 1, this::animationEmergingPredicate)
         );
     }
-
-    int AnimationTicks=0;
 
     public void spawnGroundParticles() {
         Random random = this.getRandom();
@@ -395,15 +373,6 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
             );
         }
 
-        if(AnimationTicks > 0){
-            --AnimationTicks;
-        }
-        else {
-            if(this.getMudAttack()){
-                this.setMudAttack(false);
-            }
-        }
-
         this.setInvisible(this.getInvisibleData());
         super.mobTick();
     }
@@ -411,7 +380,6 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("MudAttack", this.dataTracker.get(MUD_ATTACK));
         nbt.putInt("MudAttackTicks", ticksBetweenMudBalls);
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
@@ -420,7 +388,6 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
-        this.setMudAttack(nbt.getBoolean("MudAttack"));
         this.ticksBetweenMudBalls = nbt.getInt("MudAttackTicks");
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");

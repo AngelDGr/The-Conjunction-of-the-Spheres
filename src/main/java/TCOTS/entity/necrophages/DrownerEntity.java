@@ -510,12 +510,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     public void setSwimmingDataTracker(boolean wasSwimming) {
         this.dataTracker.set(SWIM, wasSwimming);
     }
-    public final boolean getIsLugging(){
-        return this.dataTracker.get(LUGGING);
-    }
-    public final void setIsLugging(boolean wasLugging){
-        this.dataTracker.set(LUGGING, wasLugging);
-    }
 
     public final boolean getIsEmerging(){
         return this.dataTracker.get(EMERGING);
@@ -656,9 +650,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
         );
 
         //Lunge Controller
-        controllerRegistrar.add(
-                new AnimationController<>(this, "LungeController", 1, this::animationLungePredicate)
-        );
+        lungeAnimationController(this, controllerRegistrar);
 
         //Digging Controller
         controllerRegistrar.add(

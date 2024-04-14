@@ -173,9 +173,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         );
 
         //Lunge Controller
-        controllerRegistrar.add(
-                new AnimationController<>(this, "LungeController", 1, this::animationLungePredicate)
-        );
+        lungeAnimationController(this, controllerRegistrar);
 
         //Digging Controller
         controllerRegistrar.add(
@@ -229,14 +227,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
             // Normal hit-box otherwise
             return super.calculateBoundingBox();
         }
-    }
-
-    public final boolean getIsLugging() {
-        return this.dataTracker.get(LUGGING);
-    }
-
-    public final void setIsLugging(boolean wasLugging) {
-        this.dataTracker.set(LUGGING, wasLugging);
     }
 
     public final boolean getIsEmerging() {
