@@ -37,12 +37,18 @@ public class TCOTS_PlacedFeature {
     public static final RegistryKey<PlacedFeature> PUFFBALL_NORMAL = registerKey("puffball_normal");
     public static final RegistryKey<PlacedFeature> PUFFBALL_SWAMP = registerKey("puffball_swamp");
 
+    public static final RegistryKey<PlacedFeature> SEWANT_MUSHROOMS_NORMAL = registerKey("sewant_mushrooms_normal");
+    public static final RegistryKey<PlacedFeature> SEWANT_MUSHROOMS_TAIGA = registerKey("sewant_mushrooms_taiga");
+    public static final RegistryKey<PlacedFeature> SEWANT_MUSHROOMS_OLD_GROWTH = registerKey("sewant_mushrooms_growth");
+    public static final RegistryKey<PlacedFeature> SEWANT_MUSHROOMS_DARK_FOREST = registerKey("sewant_mushrooms_dark_forest");
+
     public static final RegistryKey<PlacedFeature> BRYONIA_UNDERGROUND = registerKey("bryonia_underground");
     public static final RegistryKey<PlacedFeature> BRYONIA_SURFACE = registerKey("bryonia_surface");
 
     public static void boostrap(Registerable<PlacedFeature> context) {
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
         RegistryEntry.Reference<ConfiguredFeature<?, ?>> puffballEntry = registryEntryLookup.getOrThrow(TCOTS_ConfiguredFeatures.PUFFBALL_MUSHROOM);
+        RegistryEntry.Reference<ConfiguredFeature<?, ?>> sewantMushroomsEntry = registryEntryLookup.getOrThrow(TCOTS_ConfiguredFeatures.SEWANT_MUSHROOMS);
 
 
         PlacedFeatures.register(context, CELANDINE_PLANT_PLACED, registryEntryLookup.getOrThrow(TCOTS_ConfiguredFeatures.CELANDINE_PLANT),
@@ -70,6 +76,13 @@ public class TCOTS_PlacedFeature {
         PlacedFeatures.register(context, PUFFBALL_TAIGA, puffballEntry, mushroomModifiers(120, null));
         PlacedFeatures.register(context, PUFFBALL_OLD_GROWTH, puffballEntry, mushroomModifiers(56, null));
         PlacedFeatures.register(context, PUFFBALL_SWAMP, puffballEntry, mushroomModifiers(16, null));
+
+        PlacedFeatures.register(context, SEWANT_MUSHROOMS_NORMAL, sewantMushroomsEntry, mushroomModifiers(300, null));
+        PlacedFeatures.register(context, SEWANT_MUSHROOMS_TAIGA, sewantMushroomsEntry, mushroomModifiers(100, null));
+        PlacedFeatures.register(context, SEWANT_MUSHROOMS_OLD_GROWTH, sewantMushroomsEntry, mushroomModifiers(42, null));
+        PlacedFeatures.register(context, SEWANT_MUSHROOMS_DARK_FOREST, sewantMushroomsEntry, mushroomModifiers(64, null));
+
+        //SewantMushrooms
 
         //Bryonia
         PlacedFeatures.register(context, BRYONIA_UNDERGROUND, registryEntryLookup.getOrThrow(TCOTS_ConfiguredFeatures.BRYONIA_VINE_UNDERGROUND),
@@ -145,6 +158,23 @@ public class TCOTS_PlacedFeature {
 
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA),
                 GenerationStep.Feature.VEGETAL_DECORATION, PUFFBALL_OLD_GROWTH);
+
+        //Sewant Mushrooms
+        BiomeModifications.addFeature(
+                BiomeSelectors.excludeByKey(
+                        BiomeKeys.TAIGA, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.THE_VOID,
+                        BiomeKeys.MEADOW, BiomeKeys.FROZEN_PEAKS, BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.SNOWY_SLOPES, BiomeKeys.GROVE,
+                        BiomeKeys.LUSH_CAVES),
+                GenerationStep.Feature.VEGETAL_DECORATION, SEWANT_MUSHROOMS_NORMAL);
+
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.TAIGA),
+                GenerationStep.Feature.VEGETAL_DECORATION, SEWANT_MUSHROOMS_TAIGA);
+
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA),
+                GenerationStep.Feature.VEGETAL_DECORATION, SEWANT_MUSHROOMS_OLD_GROWTH);
+
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
+                GenerationStep.Feature.VEGETAL_DECORATION, SEWANT_MUSHROOMS_DARK_FOREST);
 
         //Bryonia
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.VEGETAL_DECORATION, BRYONIA_UNDERGROUND);

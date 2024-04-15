@@ -1,10 +1,7 @@
 package TCOTS.potions;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.potions.effects.CatEffect;
-import TCOTS.potions.effects.KillerWhaleEffect;
-import TCOTS.potions.effects.SwallowEffect;
-import TCOTS.potions.effects.WhiteRaffardsEffect;
+import TCOTS.potions.effects.*;
 import TCOTS.potions.effects.decoctions.FogletDecoctionEffect;
 import TCOTS.potions.effects.decoctions.GraveHagDecoctionEffect;
 import TCOTS.potions.effects.decoctions.WaterHagDecoctionEffect;
@@ -21,6 +18,8 @@ public class TCOTS_Effects {
     public static StatusEffect SWALLOW_EFFECT;
     public static StatusEffect WHITE_RAFFARDS_EFFECT;
     public static StatusEffect CAT_EFFECT;
+    public static StatusEffect BLACK_BLOOD_EFFECT;
+    public static StatusEffect BLEEDING_BLACK_BLOOD_EFFECT;
 
     public static StatusEffect GRAVE_HAG_DECOCTION_EFFECT;
     public static StatusEffect WATER_HAG_DECOCTION_EFFECT;
@@ -44,6 +43,9 @@ public class TCOTS_Effects {
         WHITE_RAFFARDS_EFFECT = registerStatusEffect("white_raffards", WhiteRaffardsEffect.class, StatusEffectCategory.BENEFICIAL, 0xb4b093);
 
         CAT_EFFECT = registerStatusEffect("cat_effect", CatEffect.class, StatusEffectCategory.BENEFICIAL, 0x595959);
+
+        BLACK_BLOOD_EFFECT = registerStatusEffect("black_blood", BlackBloodEffect.class, StatusEffectCategory.BENEFICIAL, 0x272727);
+        BLEEDING_BLACK_BLOOD_EFFECT = registerStatusEffect("bleeding_black_blood", BleedingBlackBloodEffect.class, StatusEffectCategory.HARMFUL, 0x272727);
 
         GRAVE_HAG_DECOCTION_EFFECT = registerStatusEffect("grave_hag_decoction", GraveHagDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
 

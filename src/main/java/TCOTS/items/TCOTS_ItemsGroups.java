@@ -69,6 +69,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.VERBENA);
                             entries.add(TCOTS_Items.HAN_FIBER);
                             entries.add(TCOTS_Items.PUFFBALL);
+                            entries.add(TCOTS_Items.SEWANT_MUSHROOMS);
 
                             entries.add(TCOTS_Items.ERGOT_SEEDS);
                             entries.add(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS);
@@ -80,6 +81,8 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.BUNCH_OF_LEAVES);
 
                             entries.add(TCOTS_Items.PUFFBALL_MUSHROOM_BLOCK_ITEM);
+                            entries.add(TCOTS_Items.SEWANT_MUSHROOM_BLOCK_ITEM);
+                            entries.add(TCOTS_Items.SEWANT_MUSHROOM_STEM_ITEM);
 
 
 
@@ -110,6 +113,10 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.CAT_POTION.getDefaultStack());
                             entries.add(TCOTS_Items.CAT_POTION_ENHANCED.getDefaultStack());
                             entries.add(TCOTS_Items.CAT_POTION_SUPERIOR.getDefaultStack());
+
+                            entries.add(TCOTS_Items.BLACK_BLOOD_POTION.getDefaultStack());
+                            entries.add(TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED.getDefaultStack());
+                            entries.add(TCOTS_Items.BLACK_BLOOD_POTION_SUPERIOR.getDefaultStack());
 
                             entries.add(TCOTS_Items.KILLER_WHALE_POTION.getDefaultStack());
 

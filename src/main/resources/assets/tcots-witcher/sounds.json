@@ -32,6 +32,16 @@
     ]
   },
 
+  "black_blood_hit": {
+    "subtitle": "tcots-witcher.sounds.black_blood_hit",
+    "sounds": [
+      "tcots-witcher:gui/black_blood_hit1",
+      "tcots-witcher:gui/black_blood_hit2",
+      "tcots-witcher:gui/black_blood_hit3"
+    ]
+  },
+
+
   "drowner_attack": {
     "subtitle": "tcots-witcher.sounds.drowner_attack",
     "sounds": [

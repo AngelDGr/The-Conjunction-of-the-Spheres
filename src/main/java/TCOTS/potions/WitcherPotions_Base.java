@@ -101,12 +101,9 @@ public class WitcherPotions_Base extends PotionItem {
         stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
         if (playerEntity == null || !playerEntity.getAbilities().creativeMode) {
-//            if (stack.isEmpty()) {
-//                return stack_Empty;
-//            }
 
             if (playerEntity != null) {
-                //If the player inventory it's full
+                //If the player inventories its full
                 if(playerEntity.getInventory().getEmptySlot() == -1){
                     playerEntity.getWorld().spawnEntity(new ItemEntity(playerEntity.getWorld(), playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), stack_Empty));
                 } else{
@@ -139,7 +136,7 @@ public class WitcherPotions_Base extends PotionItem {
                 Map<EntityAttribute, AttributeModifierCreator> map = statusEffect.getAttributeModifiers();
                 if (!map.isEmpty()) {
                     for (Map.Entry<EntityAttribute, AttributeModifierCreator> entry : map.entrySet()) {
-                        list2.add(new Pair<EntityAttribute, EntityAttributeModifier>(entry.getKey(), entry.getValue().createAttributeModifier(statusEffectInstance.getAmplifier())));
+                        list2.add(new Pair<>(entry.getKey(), entry.getValue().createAttributeModifier(statusEffectInstance.getAmplifier())));
                     }
                 }
                 if (statusEffectInstance.getAmplifier() > 0) {
@@ -152,7 +149,6 @@ public class WitcherPotions_Base extends PotionItem {
             }
 //        }
         if (!list2.isEmpty()) {
-//            list.add(ScreenTexts.EMPTY);
 
             for (Pair pair : list2) {
                 list.add(Text.translatable("tooltip." + effectInstance.getEffectType().getTranslationKey() +".applied").formatted(Formatting.DARK_PURPLE));
@@ -165,19 +161,29 @@ public class WitcherPotions_Base extends PotionItem {
                     continue;
                 }
                 if (!(d < 0.0)) continue;
-                list.add(Text.translatable("attribute.modifier.take." + entityAttributeModifier.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(e *= -1.0), Text.translatable(((EntityAttribute)pair.getFirst()).getTranslationKey())).formatted(Formatting.RED));
+                list.add(Text.translatable("attribute.modifier.take." + entityAttributeModifier.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(e * -1.0), Text.translatable(((EntityAttribute)pair.getFirst()).getTranslationKey())).formatted(Formatting.RED));
             }
         }
 
     }
 
 
+    private final List<StatusEffect> listExtraTooltip=List.of(
+            TCOTS_Effects.BLACK_BLOOD_EFFECT,
+            TCOTS_Effects.WHITE_RAFFARDS_EFFECT
+    );
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 
         buildTooltip(stack, tooltip, 1.0F,  world == null ? 20.0f : world.getTickManager().getTickRate());
-        tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first").formatted(Formatting.GRAY));
-        tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second").formatted(Formatting.GRAY));
+        if(listExtraTooltip.contains(effectInstance.getEffectType())){
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first."+this.getStatusEffect().getAmplifier()).formatted(Formatting.GRAY));
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second."+this.getStatusEffect().getAmplifier()).formatted(Formatting.GRAY));
+        } else{
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first").formatted(Formatting.GRAY));
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second").formatted(Formatting.GRAY));
+        }
+
         tooltip.add(Text.translatable("tcots-witcher.tooltip.toxicity", getToxicity()).formatted(Formatting.DARK_GREEN));
     }
 

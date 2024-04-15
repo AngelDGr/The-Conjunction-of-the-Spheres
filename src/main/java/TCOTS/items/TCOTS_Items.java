@@ -239,6 +239,9 @@ public class TCOTS_Items {
     public static Item CAT_POTION;
     public static Item CAT_POTION_ENHANCED;
     public static Item CAT_POTION_SUPERIOR;
+    public static Item BLACK_BLOOD_POTION;
+    public static Item BLACK_BLOOD_POTION_ENHANCED;
+    public static Item BLACK_BLOOD_POTION_SUPERIOR;
     public static Item KILLER_WHALE_POTION;
 
 
@@ -420,6 +423,33 @@ public class TCOTS_Items {
                 false
         );
 
+        BLACK_BLOOD_POTION = registerItemPotion("black_blood_potion",
+                new FabricItemSettings().maxCount(3),
+                TCOTS_Effects.BLACK_BLOOD_EFFECT,
+                25,
+                30,
+                0,
+                false
+        );
+
+        BLACK_BLOOD_POTION_ENHANCED = registerItemPotion("black_blood_potion_enhanced",
+                new FabricItemSettings().maxCount(4),
+                TCOTS_Effects.BLACK_BLOOD_EFFECT,
+                25,
+                45,
+                1,
+                false
+        );
+
+        BLACK_BLOOD_POTION_SUPERIOR = registerItemPotion("black_blood_potion_superior",
+                new FabricItemSettings().maxCount(5),
+                TCOTS_Effects.BLACK_BLOOD_EFFECT,
+                25,
+                60,
+                2,
+                false
+        );
+
 
         KILLER_WHALE_POTION = registerItemPotion("killer_whale_potion",
                 new FabricItemSettings().maxCount(3),
@@ -489,7 +519,7 @@ public class TCOTS_Items {
     }
 
 
-    //TODO: Add buy mechanic to alcohol
+    //xTODO: Add buy mechanic to alcohol
     //Alcohol
     public static WitcherAlcohol_Base ICY_SPIRIT;
     public static WitcherAlcohol_Base DWARVEN_SPIRIT;
@@ -510,7 +540,7 @@ public class TCOTS_Items {
     public static Item ALCHEMY_PASTE;
     public static Item MONSTER_FAT;
 
-    //TODO: Make the herbs spawn in the world
+    //xTODO: Make the herbs spawn in the world
     //TODO: Add recipes to Ogroid oils (Cave troll liver)
     //Herbs
     public static Item ALLSPICE;
@@ -522,6 +552,9 @@ public class TCOTS_Items {
     public static Item HAN_FIBER;
     public static Item PUFFBALL;
     public static Item PUFFBALL_MUSHROOM_BLOCK_ITEM;
+    public static Item SEWANT_MUSHROOMS;
+    public static Item SEWANT_MUSHROOM_BLOCK_ITEM;
+    public static Item SEWANT_MUSHROOM_STEM_ITEM;
     public static Item ERGOT_SEEDS;
     public static Item LILY_OF_THE_VALLEY_PETALS;
     public static Item ALLIUM_PETALS;
@@ -638,6 +671,10 @@ public class TCOTS_Items {
                 new AliasedBlockItem(TCOTS_Blocks.PUFFBALL_MUSHROOM,
                         new FabricItemSettings()));
 
+        SEWANT_MUSHROOMS = registerItem("sewant_mushrooms",
+                new AliasedBlockItem(TCOTS_Blocks.SEWANT_MUSHROOMS_PLANT,
+                        new FabricItemSettings()));
+
 
         ERGOT_SEEDS = registerItem("ergot_seeds",
                 new Item(new FabricItemSettings()));
@@ -736,6 +773,10 @@ public class TCOTS_Items {
     public static void registerItemsMisc(){
 
         PUFFBALL_MUSHROOM_BLOCK_ITEM  = registerBlockItem("puffball_mushroom_block", TCOTS_Blocks.PUFFBALL_MUSHROOM_BLOCK);
+
+        SEWANT_MUSHROOM_BLOCK_ITEM  = registerBlockItem("sewant_mushroom_block", TCOTS_Blocks.SEWANT_MUSHROOM_BLOCK);
+
+        SEWANT_MUSHROOM_STEM_ITEM  = registerBlockItem("sewant_mushroom_stem", TCOTS_Blocks.SEWANT_MUSHROOM_STEM);
 
         NEST_SLAB_ITEM  = registerBlockItem("nest_slab", TCOTS_Blocks.NEST_SLAB);
 

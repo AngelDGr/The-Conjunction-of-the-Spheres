@@ -78,6 +78,19 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
+            "Name": "tcots-witcher:potted_sewant_mushrooms"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:flower_pot",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
             "Name": "minecraft:potted_azure_bluet"
           }
         },
@@ -210,6 +223,40 @@
             "Name": "tcots-witcher:verbena_flower",
             "Properties": {
               "age": "3"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:sewant_mushrooms_plant",
+            "Properties": {
+              "facing": "north",
+              "mushroom_amount": "2"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:sewant_mushrooms_plant",
+            "Properties": {
+              "facing": "south",
+              "mushroom_amount": "2"
             }
           }
         },

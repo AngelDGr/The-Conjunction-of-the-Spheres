@@ -11,11 +11,13 @@ import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 
 public class TCOTS_ConfiguredFeatures {
     public static final RegistryKey<ConfiguredFeature<?, ?>> HUGE_PUFFBALL_MUSHROOM = registerKey("huge_puffball_mushroom");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> HUGE_SEWANT_MUSHROOMS = registerKey("huge_sewant_mushrooms");
 
     //Flowers
     public static RegistryKey<ConfiguredFeature<?, ?>> CELANDINE_PLANT = registerKey("celandine_patch");
@@ -30,6 +32,7 @@ public class TCOTS_ConfiguredFeatures {
 
     //Others
     public static RegistryKey<ConfiguredFeature<?, ?>> PUFFBALL_MUSHROOM = registerKey("puffball_patch");
+    public static RegistryKey<ConfiguredFeature<?, ?>> SEWANT_MUSHROOMS = registerKey("sewant_mushrooms_patch");
     public static RegistryKey<ConfiguredFeature<?, ?>> BRYONIA_VINE_UNDERGROUND = registerKey("bryonia_patch_underground");
     public static RegistryKey<ConfiguredFeature<?, ?>> BRYONIA_VINE_SURFACE = registerKey("bryonia_patch_surface");
 
@@ -43,8 +46,14 @@ public class TCOTS_ConfiguredFeatures {
                 3
                 ));
 
+        TCOTS_ConfiguredFeatures.register(context, HUGE_SEWANT_MUSHROOMS, TCOTS_Features.HUGE_SEWANT_MUSHROOMS, new HugeMushroomFeatureConfig(
+                BlockStateProvider.of(TCOTS_Blocks.SEWANT_MUSHROOM_BLOCK.getDefaultState().with(MushroomBlock.DOWN, false)),
+                BlockStateProvider.of((TCOTS_Blocks.SEWANT_MUSHROOM_STEM.getDefaultState().with(MushroomBlock.UP, false)).with(MushroomBlock.DOWN, false)),
+                2
+        ));
 
-        //Size of flower patch
+
+        //Size of a flower patch
         TCOTS_ConfiguredFeatures.register(context, CELANDINE_PLANT, Feature.FLOWER,
                 new RandomPatchFeatureConfig(12,7,3, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK,
                         new SimpleBlockFeatureConfig(BlockStateProvider.of(TCOTS_Blocks.CELANDINE_PLANT.getDefaultState().with(CelandinePlant.AGE, 3))))));
@@ -68,6 +77,12 @@ public class TCOTS_ConfiguredFeatures {
         TCOTS_ConfiguredFeatures.register(context, PUFFBALL_MUSHROOM, Feature.RANDOM_PATCH,
                 new RandomPatchFeatureConfig(96,7,3, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK,
                         new SimpleBlockFeatureConfig(BlockStateProvider.of(TCOTS_Blocks.PUFFBALL_MUSHROOM.getDefaultState())))));
+
+        TCOTS_ConfiguredFeatures.register(context, SEWANT_MUSHROOMS, Feature.RANDOM_PATCH,
+                new RandomPatchFeatureConfig(96,7,3, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK,
+                        new SimpleBlockFeatureConfig(BlockStateProvider.of(TCOTS_Blocks.SEWANT_MUSHROOMS_PLANT.getDefaultState()
+                                .with(SewantMushroomsPlant.MUSHROOM_AMOUNT, 3)
+                                .with(SewantMushroomsPlant.FACING, Direction.NORTH))))));
 
 
         TCOTS_ConfiguredFeatures.register(context, BRYONIA_VINE_UNDERGROUND,

@@ -89,6 +89,8 @@ public class TCOTS_Sounds {
 
     public static SoundEvent INGREDIENT_POPS = registerSoundEvent("ingredient_pops");
 
+    public static SoundEvent BLACK_BLOOD_HIT = registerSoundEvent("black_blood_hit");
+
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(TCOTS_Main.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));

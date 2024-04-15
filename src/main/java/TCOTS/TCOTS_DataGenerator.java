@@ -113,6 +113,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                             .with(ItemEntry.builder(Items.FLOWERING_AZALEA).weight(1))
 
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.SEWANT_MUSHROOMS).weight(1))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
                             .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
                                     .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
@@ -158,6 +161,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                             .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.PUFFBALL).weight(1))
                                     .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.SEWANT_MUSHROOMS).weight(1))
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 5.0f))))
 
                             .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.SWEET_BERRIES).weight(4))
                                     .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))

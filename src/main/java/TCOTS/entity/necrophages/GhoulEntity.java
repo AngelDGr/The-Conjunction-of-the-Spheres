@@ -4,7 +4,9 @@ import TCOTS.entity.goals.LungeAttackGoal;
 import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.entity.misc.CommonControllers;
 import TCOTS.sounds.TCOTS_Sounds;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -15,8 +17,14 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ItemStackParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -26,6 +34,9 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob {
 
@@ -69,6 +80,8 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         this.goalSelector.add(2, new LungeAttackGoal(this, 100, 1.2,10,30));
 
         this.goalSelector.add(3, new Ghoul_MeleeAttackGoal(this, 1.2D, false));
+
+        this.goalSelector.add(4, new GhoulEatFlesh(this,1D));
 
         this.goalSelector.add(5, new WanderAroundGoal(this, 0.75f,80));
 
@@ -177,6 +190,85 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         }
     }
 
+    private static class GhoulEatFlesh extends Goal {
+
+        private final GhoulEntity ghoul;
+
+        private final double speed;
+
+        public GhoulEatFlesh(GhoulEntity ghoul, double speed){
+            this.ghoul=ghoul;
+            this.speed=speed;
+        }
+
+        public static final Predicate<ItemEntity> CAN_EAT = item -> !item.cannotPickup() && item.isAlive() &&
+                ((item.getStack().getItem() == Items.ROTTEN_FLESH)
+                        || (item.getStack().getItem() == Items.BEEF)
+                        || (item.getStack().getItem() == Items.PORKCHOP)
+                        || (item.getStack().getItem() == Items.MUTTON))
+                ;
+        @Override
+        public boolean canStart() {
+            List<ItemEntity> list = searchFleshList();
+
+            return !list.isEmpty();
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            List<ItemEntity> list = searchFleshList();
+
+            return !list.isEmpty();
+        }
+
+        @Override
+        public void start() {
+            List<ItemEntity> list = searchFleshList();
+
+            if (!list.isEmpty()) {
+                this.ghoul.getNavigation().startMovingTo(list.get(0), speed);
+            }
+        }
+
+        int timerToEat;
+
+        @Override
+        public void tick() {
+            List<ItemEntity> list = searchFleshList();
+
+            if(timerToEat==0) {
+                if (!list.isEmpty()) {
+                    this.ghoul.getNavigation().startMovingTo(list.get(0), speed);
+                    this.ghoul.getLookControl().lookAt(list.get(0), 30.0f, 30.0f);
+                }
+
+                //Search the flesh
+                if (ghoul.distanceTo(list.get(0)) < 2) {
+                    list.get(0).discard();
+                    ItemStack stack = list.get(0).getStack();
+                    int i = stack.getCount();
+
+                    this.ghoul.playSound(SoundEvents.ENTITY_GENERIC_EAT, 1.0f, 1.0f);
+                    this.ghoul.getWorld().sendEntityStatus(ghoul, EntityStatuses.CREATE_EATING_PARTICLES);
+                    this.ghoul.heal(i);
+                    timerToEat = 10;
+                }
+            }
+
+            if(timerToEat>0) {
+                --timerToEat;
+            }
+        }
+
+        private List<ItemEntity> searchFleshList(){
+            return
+                    this.ghoul.getWorld().getEntitiesByClass(ItemEntity.class,
+                    this.ghoul.getBoundingBox().expand(8.0, 2.0, 8.0), CAN_EAT);
+        }
+    }
+
+
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         //Walk/Idle Controller
@@ -230,6 +322,25 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
 
     public void setHasCooldownForRegen(boolean hasCooldownForRegen) {
         this.hasCooldownForRegen = hasCooldownForRegen;
+    }
+
+    @Override
+    public void handleStatus(byte status) {
+        if (status == EntityStatuses.CREATE_EATING_PARTICLES) {
+            for (int i = 0; i < 8; ++i) {
+                Vec3d vec3d = new Vec3d(((double) this.random.nextFloat() - 0.5) * 0.1, Math.random() * 0.1 + 0.1, 0.0).rotateX(-this.getPitch() * ((float) Math.PI / 180)).rotateY(-this.getYaw() * ((float) Math.PI / 180));
+                this.getWorld().addParticle(
+                        new ItemStackParticleEffect(ParticleTypes.ITEM, Items.ROTTEN_FLESH.getDefaultStack()),
+                        this.getX() + this.getRotationVector().x,
+                        this.getY(),
+                        this.getZ() + this.getRotationVector().z,
+                        vec3d.x,
+                        vec3d.y + 0.05,
+                        vec3d.z);
+            }
+        } else {
+            super.handleStatus(status);
+        }
     }
 
     @Override

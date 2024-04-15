@@ -3,17 +3,14 @@ package TCOTS.potions.effects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.client.gui.hud.PlayerListHud;
-import net.minecraft.entity.effect.StatusEffectUtil;
 
 
 public class SwallowEffect extends StatusEffect {
 
-//             Swallow = Swallow I   = 1.0hp x s =  20s for complete heal
-//    Enhanced Swallow = Swallow II  = 2.0hp x s =  10s for complete heal
-//    Superior Swallow = Swallow III = 3.0hp x s = 6.6s for complete heal
+//             Swallow = Swallow I   = 1.0hp x s =  20s for complete healing
+//    Enhanced Swallow = Swallow II  = 2.0hp x s =  10s for complete healing
+//    Superior Swallow = Swallow III = 3.0hp x s = 6.6s for complete healing
 
     public SwallowEffect(StatusEffectCategory category, int color) {
         super(category, color);

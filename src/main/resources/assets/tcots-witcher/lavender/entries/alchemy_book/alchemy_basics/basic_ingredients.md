@@ -467,7 +467,24 @@ and Savannas.</tooltip-text>
                                         tcots-witcher:puffball
                                     </stack>
 <tooltip-text>Puffball:
-Grows in Swamps and caves.</tooltip-text>
+Grows in Taiga, Swamps 
+and caves.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:sewant_mushrooms
+                                    </stack>
+<tooltip-text>Sewant Mushrooms:
+Grows in Taigas, Dark Forests 
+and caves.</tooltip-text>
                                 </item>
                             </children>
                             <padding>

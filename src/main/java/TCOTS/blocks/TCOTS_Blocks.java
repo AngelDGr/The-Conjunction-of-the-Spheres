@@ -30,6 +30,9 @@ public class TCOTS_Blocks {
     public static final Block HAN_FIBER_PLANT = new HanFiberPlant(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY).offset(AbstractBlock.OffsetType.XZ));
     public static final Block PUFFBALL_MUSHROOM = new PuffballMushroom(TCOTS_ConfiguredFeatures.HUGE_PUFFBALL_MUSHROOM, AbstractBlock.Settings.create().mapColor(MapColor.WHITE).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS).luminance(state -> 1).postProcess(Blocks::always).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block PUFFBALL_MUSHROOM_BLOCK = new MushroomBlock(AbstractBlock.Settings.create().mapColor(MapColor.WHITE_GRAY).instrument(Instrument.BASS).strength(0.2f).sounds(BlockSoundGroup.WOOD).burnable());
+    public static final Block SEWANT_MUSHROOMS_PLANT = new SewantMushroomsPlant(TCOTS_ConfiguredFeatures.HUGE_SEWANT_MUSHROOMS, AbstractBlock.Settings.create().mapColor(MapColor.WHITE).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GRASS).luminance(state -> 1).postProcess(Blocks::always).pistonBehavior(PistonBehavior.DESTROY));
+    public static final Block SEWANT_MUSHROOM_BLOCK = new MushroomBlock(AbstractBlock.Settings.create().mapColor(MapColor.SPRUCE_BROWN).instrument(Instrument.BASS).strength(0.2f).sounds(BlockSoundGroup.WOOD).burnable());
+    public static final Block SEWANT_MUSHROOM_STEM = new MushroomBlock(AbstractBlock.Settings.create().mapColor(MapColor.SPRUCE_BROWN).instrument(Instrument.BASS).strength(0.2f).sounds(BlockSoundGroup.WOOD).burnable());
 
 
     //Potted
@@ -37,6 +40,7 @@ public class TCOTS_Blocks {
     public static final Block POTTED_CELANDINE_FLOWER = Blocks.createFlowerPotBlock(CELANDINE_PLANT);
     public static final Block POTTED_HAN_FIBER = Blocks.createFlowerPotBlock(HAN_FIBER_PLANT);
     public static final Block POTTED_PUFFBALL_MUSHROOM = Blocks.createFlowerPotBlock(PUFFBALL_MUSHROOM);
+    public static final Block POTTED_SEWANT_MUSHROOMS = Blocks.createFlowerPotBlock(SEWANT_MUSHROOMS_PLANT);
     public static final Block POTTED_BRYONIA_FLOWER = Blocks.createFlowerPotBlock(BRYONIA_VINE);
 
 
@@ -86,6 +90,12 @@ public class TCOTS_Blocks {
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "puffball_mushroom_block"), PUFFBALL_MUSHROOM_BLOCK);
 
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "sewant_mushrooms_plant"), SEWANT_MUSHROOMS_PLANT);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "sewant_mushroom_block"), SEWANT_MUSHROOM_BLOCK);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "sewant_mushroom_stem"), SEWANT_MUSHROOM_STEM);
+
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "potted_verbena_flower"), POTTED_VERBENA_FLOWER);
 
@@ -95,8 +105,9 @@ public class TCOTS_Blocks {
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "potted_bryonia_flower"), POTTED_BRYONIA_FLOWER);
 
-
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "potted_puffball_mushroom"), POTTED_PUFFBALL_MUSHROOM);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "potted_sewant_mushrooms"), POTTED_SEWANT_MUSHROOMS);
 
 
         //Block Entity

@@ -4,7 +4,7 @@
   "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/ghoul",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
-    
+    "tcots-witcher:ghoul_blood"
   ],
   "ordinal": 2
 }
@@ -36,11 +36,12 @@ They are driven by one thing and one thing only: an insatiable craving for human
 
 Ghouls are fast creatures, they love the rotting flesh of corpses, 
 so they usually hunt zombies, but they will not hesitate to hunt humans or even
-meaty livestock like cows or pigs.
-When they attack, they sometimes launch themselves to their target, be careful and try to avoid those lunges.
+meaty livestock like cows or pigs, as they can recover from eating flesh.
 
-If a ghoul is low on health, and you stop hitting it for some seconds, the ghoul is going to 
-start becoming enraged. 
+As other monsters, they sometimes launch themselves to their target.
+
+If a ghoul is low on health, and you stop hitting it for some seconds, the ghoul is going to
+start becoming enraged.
 
 ;;;;;
 

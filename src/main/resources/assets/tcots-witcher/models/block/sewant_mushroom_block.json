@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_single_face",
+  "textures": {
+    "texture": "tcots-witcher:block/sewant_mushroom_block"
+  }
+}

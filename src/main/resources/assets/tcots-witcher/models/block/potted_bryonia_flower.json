@@ -5,8 +5,8 @@
 		"particle": "block/flower_pot",
 		"flowerpot": "block/flower_pot",
 		"dirt": "block/dirt",
-		"flower": "tcots-witcher:block/plants/bryonia_flower",
-		"vine": "tcots-witcher:block/plants/bryonia_vine3"
+		"vine": "tcots-witcher:block/plants/bryonia_vine3",
+		"flower": "tcots-witcher:block/plants/bryonia_flower"
 	},
 	"elements": [
 		{

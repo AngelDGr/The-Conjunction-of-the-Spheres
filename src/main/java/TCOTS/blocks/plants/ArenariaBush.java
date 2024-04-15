@@ -23,9 +23,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
+@SuppressWarnings("deprecation")
 public class ArenariaBush extends PlantBlock implements Fertilizable {
     public static final MapCodec<ArenariaBush> CODEC = ArenariaBush.createCodec(ArenariaBush::new);
-    public static final int MAX_AGE = 2;
     public static final IntProperty AGE = Properties.AGE_2;
 
     private static final VoxelShape SMALL_SHAPE = Block.createCuboidShape(3.0, 0.0, 3.0, 13.0, 8.0, 13.0);

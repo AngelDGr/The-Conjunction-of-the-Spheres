@@ -153,6 +153,12 @@
     "block.tcots-witcher.potted_puffball_mushroom": "Potted Puffball Mushroom",
     "block.tcots-witcher.puffball_mushroom_block": "Puffball Mushroom Block",
 
+    "item.tcots-witcher.sewant_mushrooms": "Sewant Mushrooms",
+    "block.tcots-witcher.sewant_mushrooms_plant": "Sewant Mushrooms",
+    "block.tcots-witcher.potted_sewant_mushrooms": "Potted Sewant Mushrooms",
+    "block.tcots-witcher.sewant_mushroom_block": "Sewant Mushroom Block",
+    "block.tcots-witcher.sewant_mushroom_stem": "Sewant Mushroom Stem",
+
 
 
     "item.tcots-witcher.ergot_seeds": "Ergot Seeds",
@@ -263,8 +269,12 @@
     "item.tcots-witcher.white_raffards_decoction": "White Raffard's Decoction",
     "item.tcots-witcher.white_raffards_decoction_enhanced": "Enhanced White Raffard's Decoction",
     "item.tcots-witcher.white_raffards_decoction_superior": "Superior White Raffard's Decoction",
-    "tooltip.effect.tcots-witcher.white_raffards.first":  "Immediately restores a large",
-    "tooltip.effect.tcots-witcher.white_raffards.second": "percentage of health",
+    "tooltip.effect.tcots-witcher.white_raffards.first.0":  "Immediately restores a large",
+    "tooltip.effect.tcots-witcher.white_raffards.first.1":  "Immediately restores a large",
+    "tooltip.effect.tcots-witcher.white_raffards.first.2":  "Immediately restores a large",
+    "tooltip.effect.tcots-witcher.white_raffards.second.0": "percentage of health (35%)",
+    "tooltip.effect.tcots-witcher.white_raffards.second.1": "percentage of health (60%)",
+    "tooltip.effect.tcots-witcher.white_raffards.second.2": "percentage of health (100%)",
     "item.tcots-witcher.white_raffards_splash": "Splash White Raffard's",
 
     "item.tcots-witcher.cat_potion": "Cat",
@@ -273,10 +283,23 @@
     "tooltip.effect.tcots-witcher.cat_effect.first":  "Grants sight in total darkness,",
     "tooltip.effect.tcots-witcher.cat_effect.second": "you can see your enemies",
 
+    "item.tcots-witcher.black_blood_potion": "Black Blood",
+    "item.tcots-witcher.black_blood_potion_enhanced": "Enhanced Black Blood",
+    "item.tcots-witcher.black_blood_potion_superior": "Superior Black Blood",
+    "tooltip.effect.tcots-witcher.black_blood.first.0":  "Returns 15% melee damage dealt",
+    "tooltip.effect.tcots-witcher.black_blood.second.0": "by undead and necrophages",
+    "tooltip.effect.tcots-witcher.black_blood.first.1":  "Returns 20% melee damage and knocks",
+    "tooltip.effect.tcots-witcher.black_blood.second.1": "back undead and necrophages",
+    "tooltip.effect.tcots-witcher.black_blood.first.2":  "Returns 30% melee damage, knocks back",
+    "tooltip.effect.tcots-witcher.black_blood.second.2": "and causes a bleeding effect",
+    "tcots-witcher.sounds.black_blood_hit": "Black blood spills",
+
     "effect.tcots-witcher.swallow": "Swallow",
     "effect.tcots-witcher.killer_whale": "Killer Whale",
     "effect.tcots-witcher.white_raffards": "White Raffard's",
     "effect.tcots-witcher.cat_effect": "Cat",
+    "effect.tcots-witcher.black_blood": "Black Blood",
+    "effect.tcots-witcher.bleeding_black_blood": "Bleeding Black Blood",
 
 
     "effect.tcots-witcher.grave_hag_decoction": "Grave Hag Vitality",

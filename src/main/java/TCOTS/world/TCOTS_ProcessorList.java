@@ -17,6 +17,7 @@ import net.minecraft.structure.rule.AlwaysTrueRuleTest;
 import net.minecraft.structure.rule.RandomBlockMatchRuleTest;
 import net.minecraft.structure.rule.RandomBlockStateMatchRuleTest;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class TCOTS_ProcessorList {
                                         addPotReplaceable(TCOTS_Blocks.POTTED_VERBENA_FLOWER, 0.3f),
                                         addPotReplaceable(Blocks.POTTED_OXEYE_DAISY, 0.3f),
                                         addPotReplaceable(Blocks.POTTED_LILY_OF_THE_VALLEY, 0.2f),
+                                        addPotReplaceable(TCOTS_Blocks.POTTED_SEWANT_MUSHROOMS, 0.1f),
 
                                         //FlowerBlock
                                         //Replace Plants
@@ -117,6 +119,7 @@ public class TCOTS_ProcessorList {
                                         addPotReplaceable(Blocks.POTTED_RED_MUSHROOM, 0.2f),
                                         addPotReplaceable(Blocks.POTTED_SPRUCE_SAPLING, 0.2f),
                                         addPotReplaceable(TCOTS_Blocks.POTTED_PUFFBALL_MUSHROOM, 0.2f),
+                                        addPotReplaceable(TCOTS_Blocks.POTTED_SEWANT_MUSHROOMS, 0.2f),
                                         addPotReplaceable(Blocks.POTTED_AZURE_BLUET, 0.2f),
                                         addPotReplaceable(Blocks.POTTED_CORNFLOWER, 0.2f),
                                         addPotReplaceable(Blocks.POTTED_ALLIUM, 0.2f),
@@ -134,6 +137,13 @@ public class TCOTS_ProcessorList {
                                                 0.4f),
 
                                         addFlowerReplaceable(TCOTS_Blocks.VERBENA_FLOWER.getDefaultState().with(VerbenaFlower.AGE, 3), 0.2f),
+
+                                        addFlowerReplaceable(TCOTS_Blocks.SEWANT_MUSHROOMS_PLANT.getDefaultState().with(SewantMushroomsPlant.MUSHROOM_AMOUNT, 2)
+                                                .with(SewantMushroomsPlant.FACING, Direction.NORTH), 0.2f),
+
+                                        addFlowerReplaceable(TCOTS_Blocks.SEWANT_MUSHROOMS_PLANT.getDefaultState().with(SewantMushroomsPlant.MUSHROOM_AMOUNT, 2)
+                                                .with(SewantMushroomsPlant.FACING, Direction.SOUTH), 0.2f),
+
 
                                         addFlowerReplaceable(Blocks.ALLIUM, 0.2f),
 
@@ -401,7 +411,7 @@ public class TCOTS_ProcessorList {
     }
 
     private static StructureProcessorRule addFlowerReplaceable(BlockState state, float probability){
-        return addBlockReplaceable(Blocks.POPPY, state, probability);
+        return addBlockReplaceable(state, probability);
     }
 
     private static StructureProcessorRule addBlockReplaceable(Block replace, Block block, float probability){
@@ -413,9 +423,9 @@ public class TCOTS_ProcessorList {
     }
 
 
-    private static StructureProcessorRule addBlockReplaceable(Block replace, BlockState state, float probability){
+    private static StructureProcessorRule addBlockReplaceable(BlockState state, float probability){
         return new StructureProcessorRule(
-                new RandomBlockMatchRuleTest(replace, probability),
+                new RandomBlockMatchRuleTest(Blocks.POPPY, probability),
                 AlwaysTrueRuleTest.INSTANCE,
                 state
         );
