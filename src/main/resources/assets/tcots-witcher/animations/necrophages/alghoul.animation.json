@@ -1429,16 +1429,6 @@
 					}
 				}
 			}
-		},
-		"test.spikes": {
-			"loop": true,
-			"bones": {
-				"spikes_tiny": {
-					"scale": {
-						"vector": [1, 4.9, 1]
-					}
-				}
-			}
 		}
 	},
 	"geckolib_format_version": 2

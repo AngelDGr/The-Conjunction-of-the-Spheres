@@ -70,6 +70,8 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.GHOUL, GhoulRenderer::new);
 
+        EntityRendererRegistry.register(TCOTS_Entities.ALGHOUL, AlghoulRenderer::new);
+
 
         EntityRendererRegistry.register(TCOTS_Entities.WATER_HAG_MUD_BALL, FlyingItemEntityRenderer::new);
 

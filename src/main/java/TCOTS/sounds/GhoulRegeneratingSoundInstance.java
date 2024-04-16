@@ -37,7 +37,7 @@ public class GhoulRegeneratingSoundInstance extends MovingSoundInstance {
         this.y = (float)this.ghoul.getY();
         this.z = (float)this.ghoul.getZ();
 
-        if(timer > (GhoulEntity.GHOUL_REGENERATION_TIME-5)){
+        if(timer > (this.ghoul.GHOUL_REGENERATION_TIME-5)){
             volume = volume - 0.1f;
         }
     }

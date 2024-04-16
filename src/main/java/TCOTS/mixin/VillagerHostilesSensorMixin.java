@@ -24,6 +24,7 @@ public class VillagerHostilesSensorMixin {
                         .put(TCOTS_Entities.WATER_HAG, distanceDanger)
                         .put(TCOTS_Entities.GRAVE_HAG, distanceDanger)
                         .put(TCOTS_Entities.GHOUL, distanceDanger)
+                        .put(TCOTS_Entities.ALGHOUL, distanceDanger)
 
 
                         .put(TCOTS_Entities.NEKKER, distanceDanger)

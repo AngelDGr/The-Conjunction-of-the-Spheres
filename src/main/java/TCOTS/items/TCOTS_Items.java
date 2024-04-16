@@ -75,7 +75,7 @@ public class TCOTS_Items {
             //xTODO: Pringrape - Flowering Azalea
             //xTODO: Ranogrin - Fern
             //xTODO: Ribleaf - Bunch of Leaves
-            //TODO: Sewant mushrooms
+            //xTODO: Sewant mushrooms
             //xTODO: Verbena
             //xTODO: White myrtle petals - Lily of the Valley Petals
             //TODO: Wolfsbane
@@ -146,6 +146,7 @@ public class TCOTS_Items {
     public static Item GHOUL_SPAWN_EGG;
     public static Item GHOUL_BLOOD;
 
+    public static Item ALGHOUL_SPAWN_EGG;
 
     //Register Drops from monsters
     public static void registerDrops() {
@@ -206,6 +207,10 @@ public class TCOTS_Items {
         GHOUL_BLOOD = registerItem("ghoul_blood",
                 new Item(
                         new FabricItemSettings().maxCount(8)));
+
+        ALGHOUL_SPAWN_EGG = registerItem("alghoul_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.ALGHOUL, 0x513e3d, 0x000000,
+                        new FabricItemSettings()));
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
@@ -537,6 +542,7 @@ public class TCOTS_Items {
     public static Item HYDRAGENUM;
     public static Item QUEBRITH;
     public static Item RUBEDO;
+    public static Item REBIS;
     public static Item ALCHEMY_PASTE;
     public static Item MONSTER_FAT;
 
@@ -631,6 +637,9 @@ public class TCOTS_Items {
                 new Item(new FabricItemSettings()));
 
         RUBEDO = registerItem("rubedo",
+                new Item(new FabricItemSettings()));
+
+        REBIS = registerItem("rebis",
                 new Item(new FabricItemSettings()));
 
         ALCHEMY_PASTE = registerItem("alchemy_paste",

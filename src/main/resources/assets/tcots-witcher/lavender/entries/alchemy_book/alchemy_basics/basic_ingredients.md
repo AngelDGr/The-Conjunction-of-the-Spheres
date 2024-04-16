@@ -363,7 +363,8 @@ and Flower Forests.</tooltip-text>
                                         tcots-witcher:allspice
                                     </stack>
 <tooltip-text>Allspice:
-Bought from herbalists villagers.</tooltip-text>
+Bought from herbalist
+villagers.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -672,7 +673,8 @@ All of them can be harvested using shears in the respective plant
                                         tcots-witcher:icy_spirit
                                     </stack>
 <tooltip-text>Icy Spirit:
-Bought from villagers.</tooltip-text>
+Bought from herbalist 
+villagers.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -717,7 +719,8 @@ Crafted, see recipes.</tooltip-text>
                                         tcots-witcher:village_herbal
                                     </stack>
 <tooltip-text>Village Herbal:
-Bought from villagers.</tooltip-text>
+Bought from farmer
+villagers.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -744,7 +747,8 @@ Bought from villagers.</tooltip-text>
                                         tcots-witcher:mandrake_cordial
                                     </stack>
 <tooltip-text>Mandrake Cordial:
-Bought from villagers.</tooltip-text>
+Bought from herbalist
+villagers.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -759,7 +763,8 @@ Bought from villagers.</tooltip-text>
                                         tcots-witcher:cherry_cordial
                                     </stack>
 <tooltip-text>Cherry Cordial:
-Bought from villagers.</tooltip-text>
+Bought from herbalist
+villagers.</tooltip-text>
                                 </item>
                             </children>
                             <padding>

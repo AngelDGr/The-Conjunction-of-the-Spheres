@@ -45,7 +45,7 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
     //TODO: Add monster nests & spawn
     public static final byte GHOUL_REGENERATING = 99;
 
-    public static final int GHOUL_REGENERATION_TIME=200;
+    public final int GHOUL_REGENERATION_TIME=200;
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");

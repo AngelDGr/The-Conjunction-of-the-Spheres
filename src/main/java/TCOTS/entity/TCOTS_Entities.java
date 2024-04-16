@@ -26,7 +26,7 @@ public class TCOTS_Entities {
     //xTODO: Grave Hag
     //xTODO: Water Hag
     //xTODO: Foglet
-    //TODO: Ghoul
+    //xTODO: Ghoul
     //TODO: Alghoul
     //TODO: Wights
     //TODO: Scurvers
@@ -109,6 +109,12 @@ public class TCOTS_Entities {
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, GhoulEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.4f, 0.9f)).build());
+
+    public static final EntityType<AlghoulEntity> ALGHOUL = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "alghoul"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, AlghoulEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(1.8f, 1.2f)).build());
 
 
     //Ogroids
@@ -239,6 +245,9 @@ public class TCOTS_Entities {
 
         //Ghoul
         FabricDefaultAttributeRegistry.register(TCOTS_Entities.GHOUL, GhoulEntity.setAttributes());
+
+        //Alghoul
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.ALGHOUL, AlghoulEntity.setAttributes());
 
 
 

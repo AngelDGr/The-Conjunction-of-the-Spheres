@@ -45,11 +45,17 @@ decoctions, monster oils, bombs and ingredients.***
 
 ;;;;;
 
+**{#395026}Potions{}**
+<recipe;tcots-witcher:black_blood_potion>
+<recipe;tcots-witcher:black_blood_potion_enhanced>
+<recipe;tcots-witcher:black_blood_potion_superior>
+
+;;;;;
+
 **{#395026}Decoctions{}**
 <recipe;tcots-witcher:water_hag_decoction>
 <recipe;tcots-witcher:grave_hag_decoction>
 <recipe;tcots-witcher:foglet_decoction>
-
 
 ;;;;;
 
@@ -100,8 +106,10 @@ decoctions, monster oils, bombs and ingredients.***
 <recipe;tcots-witcher:aether>
 <recipe;tcots-witcher:rubedo>
 
-
 ;;;;;
+
+**{#395026}Ingredients{}**
+<recipe;tcots-witcher:rebis>
 
 
 

@@ -91,6 +91,8 @@
 
     "item.tcots-witcher.ghoul_blood": "Ghoul's Blood",
 
+    "item.tcots-witcher.alghoul_spawn_egg": "Alghoul Spawn Egg",
+    "entity.tcots-witcher.alghoul": "Alghoul",
 
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
     "entity.tcots-witcher.nekker": "Nekker",
@@ -180,6 +182,7 @@
     "item.tcots-witcher.hydragenum": "Hydragenum",
     "item.tcots-witcher.quebrith": "Quebrith",
     "item.tcots-witcher.rubedo": "Rubedo",
+    "item.tcots-witcher.rebis": "Rebis",
     "item.tcots-witcher.alchemy_paste": "Alchemy Paste",
     "item.tcots-witcher.monster_fat": "Monster Fat",
 

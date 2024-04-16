@@ -33,7 +33,6 @@ public class GhoulModel extends GeoModel<GhoulEntity> {
         if (head != null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
             head.setRotX((entityData.headPitch()+90f) * MathHelper.RADIANS_PER_DEGREE);
-//            head.setRotY();
             head.setRotZ((entityData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE));
         }
     }

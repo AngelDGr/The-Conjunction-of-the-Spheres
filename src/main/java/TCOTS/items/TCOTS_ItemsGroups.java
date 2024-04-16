@@ -32,6 +32,7 @@ public class TCOTS_ItemsGroups {
                             //Spawn Eggs
                             entries.add(TCOTS_Items.DROWNER_SPAWN_EGG);
                             entries.add(TCOTS_Items.GHOUL_SPAWN_EGG);
+                            entries.add(TCOTS_Items.ALGHOUL_SPAWN_EGG);
                             entries.add(TCOTS_Items.ROTFIEND_SPAWN_EGG);
                             entries.add(TCOTS_Items.NEKKER_SPAWN_EGG);
                             entries.add(TCOTS_Items.GRAVE_HAG_SPAWN_EGG);
@@ -99,6 +100,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.HYDRAGENUM);
                             entries.add(TCOTS_Items.QUEBRITH);
                             entries.add(TCOTS_Items.RUBEDO);
+                            entries.add(TCOTS_Items.REBIS);
                             entries.add(TCOTS_Items.ALCHEMY_PASTE);
                             entries.add(TCOTS_Items.MONSTER_FAT);
 
@@ -110,6 +112,8 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED.getDefaultStack());
                             entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SUPERIOR.getDefaultStack());
 
+                            entries.add(TCOTS_Items.KILLER_WHALE_POTION.getDefaultStack());
+
                             entries.add(TCOTS_Items.CAT_POTION.getDefaultStack());
                             entries.add(TCOTS_Items.CAT_POTION_ENHANCED.getDefaultStack());
                             entries.add(TCOTS_Items.CAT_POTION_SUPERIOR.getDefaultStack());
@@ -117,8 +121,6 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.BLACK_BLOOD_POTION.getDefaultStack());
                             entries.add(TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED.getDefaultStack());
                             entries.add(TCOTS_Items.BLACK_BLOOD_POTION_SUPERIOR.getDefaultStack());
-
-                            entries.add(TCOTS_Items.KILLER_WHALE_POTION.getDefaultStack());
 
                             entries.add(TCOTS_Items.SWALLOW_SPLASH.getDefaultStack());
                             entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH.getDefaultStack());

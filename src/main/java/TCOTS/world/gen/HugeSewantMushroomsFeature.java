@@ -4,12 +4,16 @@ import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MushroomBlock;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.feature.HugeMushroomFeature;
 import net.minecraft.world.gen.feature.HugeMushroomFeatureConfig;
 
+import java.util.List;
+
 public class HugeSewantMushroomsFeature extends HugeMushroomFeature {
+    //xTODO: Fix shape
     public HugeSewantMushroomsFeature(Codec<HugeMushroomFeatureConfig> codec) {
         super(codec);
     }
@@ -46,15 +50,102 @@ public class HugeSewantMushroomsFeature extends HugeMushroomFeature {
         }
     }
 
+
+
     @Override
     protected void generateStem(WorldAccess world, Random random, BlockPos pos, HugeMushroomFeatureConfig config, int height, BlockPos.Mutable mutablePos) {
-        super.generateStem(world, random, pos, config, height, mutablePos);
+        int lastGeneratedBranchHeight=0;
+        Direction lastBranchDirection=Direction.UP;
+        config.stemProvider.get(random, pos).with(MushroomBlock.UP, true).with(MushroomBlock.DOWN, true);
+
+        for (int i = 0; i < height; ++i) {
+            mutablePos.set(pos).move(Direction.UP, i);
+
+            if (world.getBlockState(mutablePos).isOpaqueFullCube(world, mutablePos)) continue;
+            this.setBlockState(world, mutablePos, config.stemProvider.get(random, pos));
+
+            //Generates Branch & little cap
+            if(i > 0 && i < height-6 && random.nextInt(2)==0){
+
+                //Select Length
+                int randomBranchLength = random.nextBetween(3,4);
+                //Select Direction
+                Direction direction = switch (random.nextInt(4)) {
+                    case 0 -> Direction.EAST;
+                    case 1 -> Direction.WEST;
+                    case 2 -> Direction.NORTH;
+                    default -> Direction.SOUTH;
+                };
+
+                //Generates Branch
+                for(int j = 1; j < randomBranchLength;j++ ) {
+                    //To not generate two branches in the same side near each other
+                    if ((direction==lastBranchDirection && i < (lastGeneratedBranchHeight+4))) break;
+                    mutablePos.set(pos).move(Direction.UP, i).move(direction, j);
+                    if (world.getBlockState(mutablePos).isOpaqueFullCube(world, mutablePos)) continue;
+                    this.setBlockState(world, mutablePos, config.stemProvider.get(random, pos).with(MushroomBlock.UP, true).with(MushroomBlock.DOWN, true));
+                    //Generates tiny cap
+                    if(j==randomBranchLength-1) {
+                        generateBranchCap(world, random, mutablePos, mutablePos, config);
+                    }
+                }
+
+                lastBranchDirection=direction;
+                lastGeneratedBranchHeight=i;
+            }
+        }
+    }
+
+    private final List<Direction> directionList = List.of(Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH);
+
+    private void generateBranchCap(WorldAccess world, Random random, BlockPos start, BlockPos.Mutable mutablePos, HugeMushroomFeatureConfig config){
+
+        BlockPos extraBranch = start;
+        if(random.nextInt()%2==0) {
+            //Generates branch extra stem
+            BlockState blockStateStem = config.stemProvider.get(random, start).with(MushroomBlock.UP, true).with(MushroomBlock.DOWN, true);
+            extraBranch = mutablePos.set(start).move(Direction.UP, 1);
+            if (world.getBlockState(extraBranch).isOpaqueFullCube(world, extraBranch)) return;
+            this.setBlockState(world, extraBranch, blockStateStem);
+        }
+
+
+        BlockPos center = mutablePos.set(extraBranch).move(Direction.UP,1);
+        BlockPos.Mutable mutable=new BlockPos.Mutable();
+        //Center block
+        BlockState blockState = config.capProvider.get(random, start);
+        if (world.getBlockState(mutablePos).isOpaqueFullCube(world, mutablePos)) return;
+        this.setBlockState(world, mutablePos, blockState);
+
+        //Side blocks
+        for(Direction direction: directionList) {
+            mutable.set(center).move(direction,1);
+            if (world.getBlockState(mutable).isOpaqueFullCube(world, mutable)) continue;
+            this.setBlockState(world,mutable,blockState);
+        }
+
+        //Corner blocks
+        mutable.set(center).move(Direction.SOUTH,1).move(Direction.EAST,1);
+        if (world.getBlockState(mutable).isOpaqueFullCube(world, mutable)) return;
+        this.setBlockState(world,mutable,blockState);
+
+        mutable.set(center).move(Direction.SOUTH,1).move(Direction.WEST,1);
+        if (world.getBlockState(mutable).isOpaqueFullCube(world, mutable)) return;
+        this.setBlockState(world,mutable,blockState);
+
+        mutable.set(center).move(Direction.NORTH,1).move(Direction.EAST,1);
+        if (world.getBlockState(mutable).isOpaqueFullCube(world, mutable)) return;
+        this.setBlockState(world,mutable,blockState);
+
+        mutable.set(center).move(Direction.NORTH,1).move(Direction.WEST,1);
+        if (world.getBlockState(mutable).isOpaqueFullCube(world, mutable)) return;
+        this.setBlockState(world,mutable,blockState);
     }
 
     @Override
     protected int getHeight(Random random) {
-        int i = random.nextInt(4) + 6;
-        if (random.nextInt(12) == 0) {
+        int i = random.nextInt(3) + 8;
+        if (random.nextInt(3) == 0) {
             i *= 2;
         }
         return i;

@@ -99,11 +99,6 @@ public class HugePuffballMushroomFeature extends HugeMushroomFeature {
     }
 
     @Override
-    protected void generateStem(WorldAccess world, Random random, BlockPos pos, HugeMushroomFeatureConfig config, int height, BlockPos.Mutable mutablePos) {
-        super.generateStem(world, random, pos, config, height, mutablePos);
-    }
-
-    @Override
     protected boolean canGenerate(WorldAccess world, BlockPos pos, int height, BlockPos.Mutable mutablePos, HugeMushroomFeatureConfig config) {
         return super.canGenerate(world, pos, height, mutablePos, config);
     }
