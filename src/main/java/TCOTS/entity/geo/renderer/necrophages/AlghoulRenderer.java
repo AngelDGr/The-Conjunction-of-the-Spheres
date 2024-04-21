@@ -37,5 +37,20 @@ public class AlghoulRenderer extends GeoEntityRenderer<AlghoulEntity> {
                 return partialAge * 0.00001f;
             }
         });
+
+        addRenderLayer(new GeoRenderLayer<>(this) {
+            private static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/alghoul/alghoul_spikes_layer.png");
+
+            @Override
+            public void render(MatrixStack poseStack, AlghoulEntity animatable, BakedGeoModel bakedModel, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
+                if (animatable.getIsSpiked()) {
+                    RenderLayer armorRenderType = RenderLayer.getArmorCutoutNoCull(TEXTURE);
+
+                    getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, armorRenderType,
+                            bufferSource.getBuffer(armorRenderType), partialTick, packedLight, OverlayTexture.DEFAULT_UV,
+                            1, 1, 1, 1f);
+                }
+            }
+        });
     }
 }

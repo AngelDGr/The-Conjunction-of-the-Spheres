@@ -420,6 +420,69 @@
     ]
   },
 
+  "alghoul_attack": {
+    "subtitle": "tcots-witcher.sounds.alghoul_attack",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_attack1",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_attack2",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_attack3"
+    ]
+  },
+  "alghoul_hurt": {
+    "subtitle": "tcots-witcher.sounds.alghoul_hurt",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_hurt1",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_hurt2",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_hurt3",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_hurt4"
+    ]
+  },
+  "alghoul_idle": {
+    "subtitle": "tcots-witcher.sounds.alghoul_idle",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_idle1",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_idle2",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_idle3"
+    ]
+  },
+  "alghoul_death": {
+    "subtitle": "tcots-witcher.sounds.alghoul_death",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_death1",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_death2",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_death3"
+    ]
+  },
+  "alghoul_lunge": {
+    "subtitle": "tcots-witcher.sounds.alghoul_lunge",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_lunge1",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_lunge2",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_lunge3"
+    ]
+  },
+  "alghoul_scream": {
+    "subtitle": "tcots-witcher.sounds.alghoul_scream",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_scream1",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_scream2",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_scream3"
+    ]
+  },
+  "alghoul_regen": {
+    "subtitle": "tcots-witcher.sounds.alghoul_regen",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/ghoul/ghoul_regen1"
+    ]
+  },
+  "alghoul_spikes": {
+    "subtitle": "tcots-witcher.sounds.alghoul_spikes",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_spikes1",
+      "tcots-witcher:entity/necrophages/alghoul/alghoul_spikes2"
+    ]
+  },
+
 
   "nekker_attack": {
     "subtitle": "tcots-witcher.sounds.nekker_attack",

@@ -19,6 +19,9 @@ import net.minecraft.world.biome.BiomeKeys;
 
 public class TCOTS_Entities {
 
+    //TODO: Add natural spawn for Ghouls & Alghouls
+    //TODO: Make ghoul nest spawn in the world
+
 //    0.2.0- Necrophages & Ogroids
 // Necrophages
     //xTODO: Drowner
@@ -27,7 +30,7 @@ public class TCOTS_Entities {
     //xTODO: Water Hag
     //xTODO: Foglet
     //xTODO: Ghoul
-    //TODO: Alghoul
+    //xTODO: Alghoul
     //TODO: Wights
     //TODO: Scurvers
     //TODO: Devourer?
@@ -201,7 +204,7 @@ public class TCOTS_Entities {
 
         //Grave Hags
         SpawnRestriction.register(GRAVE_HAG, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Necrophage_Base::canSpawnInDarkNotDeepDeepslate);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Necrophage_Base::canSpawnInDarkNotBelowDeepslate);
 
         //In night
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -210,6 +213,11 @@ public class TCOTS_Entities {
                         BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
                         BiomeKeys.PLAINS, BiomeKeys.SAVANNA, BiomeKeys.TAIGA), SpawnGroup.MONSTER,
                 GRAVE_HAG, 80, 1, 2);
+
+
+        //Ghouls & Alghouls
+        SpawnRestriction.register(GHOUL, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Necrophage_Base::canSpawnInDarkNotDeepslate);
 
 
         //Nekkers
@@ -248,7 +256,6 @@ public class TCOTS_Entities {
 
         //Alghoul
         FabricDefaultAttributeRegistry.register(TCOTS_Entities.ALGHOUL, AlghoulEntity.setAttributes());
-
 
 
         //Nekker

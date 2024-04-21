@@ -34,6 +34,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntity, Spawner {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public MonsterNestBlockEntity(BlockPos pos, BlockState state) {
@@ -109,7 +110,7 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
                 double d2 = f = j >= 3 ? nbtList.getDouble(2) : (double)pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
                 if (!world.isSpaceEmpty(optional.get().createSimpleBoundingBox(d, e, f))) continue;
                 BlockPos blockPos = BlockPos.ofFloored(d, e, f);
-                if (!mobSpawnerEntry.getCustomSpawnRules().isPresent() ? !SpawnRestriction.canSpawn(optional.get(), world, SpawnReason.SPAWNER, blockPos, world.getRandom()) : !optional.get().getSpawnGroup().isPeaceful() && world.getDifficulty() == Difficulty.PEACEFUL || !(customSpawnRules = mobSpawnerEntry.getCustomSpawnRules().get()).blockLightLimit().contains(world.getLightLevel(LightType.BLOCK, blockPos)) || !customSpawnRules.skyLightLimit().contains(world.getLightLevel(LightType.SKY, blockPos))) continue;
+                if (mobSpawnerEntry.getCustomSpawnRules().isEmpty() ? !SpawnRestriction.canSpawn(optional.get(), world, SpawnReason.SPAWNER, blockPos, world.getRandom()) : !optional.get().getSpawnGroup().isPeaceful() && world.getDifficulty() == Difficulty.PEACEFUL || !(customSpawnRules = mobSpawnerEntry.getCustomSpawnRules().get()).blockLightLimit().contains(world.getLightLevel(LightType.BLOCK, blockPos)) || !customSpawnRules.skyLightLimit().contains(world.getLightLevel(LightType.SKY, blockPos))) continue;
                 Entity entity2 = EntityType.loadEntityWithPassengers(nbtCompound, world, entity -> {
                     entity.refreshPositionAndAngles(d, e, f, entity.getYaw(), entity.getPitch());
                     return entity;
@@ -124,8 +125,7 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
                     return;
                 }
                 entity2.refreshPositionAndAngles(entity2.getX(), entity2.getY(), entity2.getZ(), random.nextFloat() * 360.0f, 0.0f);
-                if (entity2 instanceof MobEntity) {
-                    MobEntity mobEntity = (MobEntity)entity2;
+                if (entity2 instanceof MobEntity mobEntity) {
                     if (mobSpawnerEntry.getCustomSpawnRules().isEmpty() && !mobEntity.canSpawn(world, SpawnReason.SPAWNER) || !mobEntity.canSpawn(world)) continue;
                     if (mobSpawnerEntry.getNbt().getSize() == 1 && mobSpawnerEntry.getNbt().contains("id", NbtElement.STRING_TYPE)) {
                         ((MobEntity)entity2).initialize(world, world.getLocalDifficulty(entity2.getBlockPos()), SpawnReason.SPAWNER, null, null);

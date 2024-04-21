@@ -60,6 +60,7 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
         return super.tryAttack(target);
     }
 
+
     protected SoundEvent getAttackSound(){
         return null;
     }
@@ -74,7 +75,7 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
                 pos.getY() >= 50;
     }
 
-    public static boolean canSpawnInDarkNotDeepDeepslate(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawnInDarkNotBelowDeepslate(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random) &&
                 pos.getY() >= -20;
     }

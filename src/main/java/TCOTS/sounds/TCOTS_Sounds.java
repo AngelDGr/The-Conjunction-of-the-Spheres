@@ -66,7 +66,15 @@ public class TCOTS_Sounds {
     public static SoundEvent GHOUL_SCREAMS = registerSoundEvent("ghoul_scream");
     public static SoundEvent GHOUL_REGEN = registerSoundEvent("ghoul_regen");
 
-
+    //Alghoul
+    public static SoundEvent ALGHOUL_ATTACK = registerSoundEvent("alghoul_attack");
+    public static SoundEvent ALGHOUL_HURT = registerSoundEvent("alghoul_hurt");
+    public static SoundEvent ALGHOUL_IDLE = registerSoundEvent("alghoul_idle");
+    public static SoundEvent ALGHOUL_DEATH = registerSoundEvent("alghoul_death");
+    public static SoundEvent ALGHOUL_LUNGES = registerSoundEvent("alghoul_lunge");
+    public static SoundEvent ALGHOUL_SCREAMS = registerSoundEvent("alghoul_scream");
+    public static SoundEvent ALGHOUL_REGEN = registerSoundEvent("alghoul_regen");
+    public static SoundEvent ALGHOUL_SPIKES = registerSoundEvent("alghoul_spikes");
 
     //Nekker
     public static SoundEvent NEKKER_ATTACK = registerSoundEvent("nekker_attack");

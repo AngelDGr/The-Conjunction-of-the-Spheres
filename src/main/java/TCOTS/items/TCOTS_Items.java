@@ -87,7 +87,7 @@ public class TCOTS_Items {
             //xTODO: White Raffard's Decoction: Add when added Nekkers
             //xTODO: Killer Whale: Add when added Drowners
             //xTODO: Cat: Can be added, crafted with Water essence
-            //TODO: Black Blood: Add when added Ghouls
+            //xTODO: Black Blood: Add when added Ghouls
             //TODO: Maribor Forest: Add when added Alghouls
             //TODO: White Honey: Add when added toxicity mechanic
 
@@ -147,70 +147,61 @@ public class TCOTS_Items {
     public static Item GHOUL_BLOOD;
 
     public static Item ALGHOUL_SPAWN_EGG;
+    public static Item ALGHOUL_BONE_MARROW;
 
     //Register Drops from monsters
     public static void registerDrops() {
         DROWNER_SPAWN_EGG = registerItem("drowner_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.DROWNER, 0x8db1c0, 0x9fa3ae,
-                        new FabricItemSettings()));
+                new SpawnEggItem(TCOTS_Entities.DROWNER, 0x8db1c0, 0x9fa3ae, new FabricItemSettings()));
         DROWNER_TONGUE = registerItem("drowner_tongue",
-                new Item(
-                        new FabricItemSettings()));
+                new Item(new FabricItemSettings()));
         DROWNER_BRAIN = registerItem("drowner_brain",
-                new Item(
-                        new FabricItemSettings().maxCount(16)));
+                new Item(new FabricItemSettings().maxCount(16)));
 
 
         ROTFIEND_SPAWN_EGG = registerItem("rotfiend_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.ROTFIEND, 0xb3867b, 0xe6e1bc,
-                        new FabricItemSettings()));
+                new SpawnEggItem(TCOTS_Entities.ROTFIEND, 0xb3867b, 0xe6e1bc, new FabricItemSettings()));
         ROTFIEND_BLOOD = registerItem("rotfiend_blood",
-                new Item(
-                        new FabricItemSettings().maxCount(64)));
+                new Item(new FabricItemSettings()));
 
 
         GRAVE_HAG_SPAWN_EGG = registerItem("grave_hag_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.GRAVE_HAG, 0xb6b692, 0x8e8480,
-                        new FabricItemSettings()));
+                new SpawnEggItem(TCOTS_Entities.GRAVE_HAG, 0xb6b692, 0x8e8480, new FabricItemSettings()));
         GRAVE_HAG_MUTAGEN = registerItem("grave_hag_mutagen",
-                new Item(
-                        new FabricItemSettings().maxCount(8)));
+                new Item(new FabricItemSettings().maxCount(8)));
 
 
         WATER_HAG_SPAWN_EGG = registerItem("water_hag_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.WATER_HAG, 0x8d93c0, 0x780b17,
-                        new FabricItemSettings()));
+                new SpawnEggItem(TCOTS_Entities.WATER_HAG, 0x8d93c0, 0x780b17, new FabricItemSettings()));
         WATER_HAG_MUD_BALL = registerItem("water_hag_mud_ball",
-                new WaterHag_MudBallItem(
-                        new FabricItemSettings().maxCount(16)));
+                new WaterHag_MudBallItem(new FabricItemSettings().maxCount(16)));
         WATER_HAG_MUTAGEN = registerItem("water_hag_mutagen",
-                new Item(
-                        new FabricItemSettings().maxCount(8)));
+                new Item(new FabricItemSettings().maxCount(8)));
         WATER_ESSENCE = registerItem("water_essence",
-                new Item(
-                        new FabricItemSettings()));
+                new Item(new FabricItemSettings()));
 
 
         FOGLET_SPAWN_EGG = registerItem("foglet_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.FOGLET, 0x4a3f3f, 0x211c1c,
-                        new FabricItemSettings()));
+                new SpawnEggItem(TCOTS_Entities.FOGLET, 0x4a3f3f, 0x211c1c, new FabricItemSettings()));
         FOGLET_TEETH = registerItem("foglet_teeth",
-                new Item(
-                        new FabricItemSettings()));
+                new Item(new FabricItemSettings()));
         FOGLET_MUTAGEN = registerItem("foglet_mutagen",
-                new Item(
-                        new FabricItemSettings().maxCount(8)));
+                new Item(new FabricItemSettings().maxCount(8)));
+
 
         GHOUL_SPAWN_EGG = registerItem("ghoul_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.GHOUL, 0xd69d76, 0x0e0a07,
-                        new FabricItemSettings()));
+                new SpawnEggItem(TCOTS_Entities.GHOUL, 0xd69d76, 0x0e0a07, new FabricItemSettings()));
         GHOUL_BLOOD = registerItem("ghoul_blood",
-                new Item(
-                        new FabricItemSettings().maxCount(8)));
+                new Item(new FabricItemSettings()));
+
 
         ALGHOUL_SPAWN_EGG = registerItem("alghoul_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.ALGHOUL, 0x513e3d, 0x000000,
                         new FabricItemSettings()));
+        ALGHOUL_BONE_MARROW = registerItem("alghoul_bone_marrow",
+                new Item(new FabricItemSettings()));
+
+
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
@@ -233,6 +224,7 @@ public class TCOTS_Items {
     public static Item GRAVE_HAG_DECOCTION;
     public static Item WATER_HAG_DECOCTION;
     public static Item FOGLET_DECOCTION;
+    public static Item ALGHOUL_DECOCTION;
 
     //Potions
     public static Item SWALLOW_POTION;
@@ -513,6 +505,15 @@ public class TCOTS_Items {
                 true
         );
 
+        ALGHOUL_DECOCTION = registerItemPotion("alghoul_decoction",
+                new FabricItemSettings().maxCount(1),
+                TCOTS_Effects.ALGHOUL_DECOCTION_EFFECT,
+                50,
+                1200,
+                0,
+                true
+        );
+
         FOGLET_DECOCTION = registerItemPotion("foglet_decoction",
                 new FabricItemSettings().maxCount(1),
                 TCOTS_Effects.FOGLET_DECOCTION_EFFECT,
@@ -521,6 +522,7 @@ public class TCOTS_Items {
                 0,
                 true
         );
+
     }
 
 

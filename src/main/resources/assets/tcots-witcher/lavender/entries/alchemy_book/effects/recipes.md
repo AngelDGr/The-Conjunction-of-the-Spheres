@@ -59,6 +59,11 @@ decoctions, monster oils, bombs and ingredients.***
 
 ;;;;;
 
+**{#395026}Decoctions{}**
+<recipe;tcots-witcher:alghoul_decoction>
+
+;;;;;
+
 **{#395026}Bombs & Oils{}**
 <recipe;tcots-witcher:oil_necrophage>
 <recipe;tcots-witcher:oil_necrophage_enhanced>

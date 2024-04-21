@@ -46,6 +46,11 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
     public static final byte GHOUL_REGENERATING = 99;
 
     public final int GHOUL_REGENERATION_TIME=200;
+
+    public int getGHOUL_REGENERATION_TIME() {
+        return GHOUL_REGENERATION_TIME;
+    }
+
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
@@ -55,6 +60,7 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
 
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> REGENERATING = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> INVOKING_REGENERATING = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Integer> TIME_FOR_REGEN = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
 
@@ -67,6 +73,7 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         super.initDataTracker();
         this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
         this.dataTracker.startTracking(REGENERATING, Boolean.FALSE);
+        this.dataTracker.startTracking(INVOKING_REGENERATING, Boolean.FALSE);
         this.dataTracker.startTracking(TIME_FOR_REGEN, 0);
     }
 
@@ -75,7 +82,7 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         this.goalSelector.add(0, new SwimGoal(this));
 
         this.goalSelector.add(1, new GhoulRegeneration(this, 60, 400, GHOUL_REGENERATION_TIME,
-                0.5f));
+                0.5f,35));
 
         this.goalSelector.add(2, new LungeAttackGoal(this, 100, 1.2,10,30));
 
@@ -109,20 +116,21 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.29f);
     }
 
-    private static class GhoulRegeneration extends Goal {
+    protected static class GhoulRegeneration extends Goal {
         private final int ticksAttackedBeforeRegen;
         private final int CooldownBetweenRegens;
         private final int TimeForRegen;
         private final GhoulEntity mob;
+        private final int stopTicks;
+        protected final float healthPercentage;
 
-        private final float healthPercentage;
-
-        public GhoulRegeneration(GhoulEntity mob, int ticksAttackedBeforeRegen, int CooldownBetweenRegens, int TimeForRegen, float HealthPercentageToStart) {
+        public GhoulRegeneration(GhoulEntity mob, int ticksAttackedBeforeRegen, int CooldownBetweenRegens, int TimeForRegen, float HealthPercentageToStart, int stopTicks) {
             this.ticksAttackedBeforeRegen = ticksAttackedBeforeRegen;
             this.mob=mob;
             this.CooldownBetweenRegens=CooldownBetweenRegens;
             this.TimeForRegen=TimeForRegen;
             this.healthPercentage=HealthPercentageToStart;
+            this.stopTicks=stopTicks;
         }
 
         @Override
@@ -131,9 +139,17 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         }
 
         @Override
+        public boolean shouldContinue() {
+            return !mob.getIsRegenerating();
+        }
+
+        private int StoppedTicks;
+        @Override
         public void start() {
+            StoppedTicks=stopTicks;
+            mob.setIsInvokingRegen(true);
             mob.getNavigation().stop();
-            mob.playSound(TCOTS_Sounds.GHOUL_SCREAMS,1,1);
+            mob.playSound(mob.getScreamSound(),1,1);
             mob.triggerAnim("RegenController", "start_regen");
         }
 
@@ -148,10 +164,9 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
             mob.setHasCooldownForRegen(true);
             mob.setCooldownForRegen(CooldownBetweenRegens);
 
-            StoppedTicks = 35;
+            StoppedTicks=stopTicks;
+            mob.setIsInvokingRegen(false);
         }
-
-        int StoppedTicks=35;
         @Override
         public void tick() {
             if (StoppedTicks > 0) {
@@ -167,13 +182,13 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
             return true;
         }
 
-        private boolean canStartRegen(){
+        protected boolean canStartRegen(){
             return ((mob.getLastAttackedTime() + ticksAttackedBeforeRegen) < mob.age) && !(mob.getIsRegenerating())
                     && (mob.getHealth() < (mob.getMaxHealth() * healthPercentage)) && mob.isOnGround() && !(mob.hasCooldownForRegen());
         }
     }
 
-    private static class Ghoul_MeleeAttackGoal extends MeleeAttackGoal {
+    protected static class Ghoul_MeleeAttackGoal extends MeleeAttackGoal {
 
         public Ghoul_MeleeAttackGoal(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle) {
             super(mob, speed, pauseWhenMobIdle);
@@ -181,16 +196,16 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
 
         @Override
         public boolean shouldContinue() {
-            return super.shouldContinue();
+            return super.shouldContinue() && !((GhoulEntity)mob).getIsInvokingRegen();
         }
 
         @Override
         public boolean canStart() {
-            return super.canStart();
+            return super.canStart() && !((GhoulEntity)mob).getIsInvokingRegen();
         }
     }
 
-    private static class GhoulEatFlesh extends Goal {
+    protected static class GhoulEatFlesh extends Goal {
 
         private final GhoulEntity ghoul;
 
@@ -267,7 +282,13 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         }
     }
 
-
+    @Override
+    public boolean isPushable() {
+        if(this.getIsInvokingRegen()){
+            return false;
+        }
+        return super.isPushable();
+    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
@@ -370,11 +391,6 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         }
     }
 
-    @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
-        return super.isInvulnerableTo(damageSource);
-    }
-
     public boolean cooldownBetweenLunges=false;
     @Override
     public boolean getNotCooldownBetweenLunges() {
@@ -394,6 +410,14 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         this.dataTracker.set(REGENERATING, isRegenerating);
     }
 
+    public boolean getIsInvokingRegen() {
+        return this.dataTracker.get(INVOKING_REGENERATING);
+    }
+
+    public void setIsInvokingRegen(boolean isRegenerating) {
+        this.dataTracker.set(INVOKING_REGENERATING, isRegenerating);
+    }
+
     private int cooldownForRegen;
 
     public void setCooldownForRegen(int cooldownForRegen) {
@@ -404,17 +428,17 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         return cooldownForRegen;
     }
 
-    public void setTimeForRegen(int timeForRegen) {
+    protected void setTimeForRegen(int timeForRegen) {
         this.dataTracker.set(TIME_FOR_REGEN, timeForRegen);
     }
 
-    public int getTimeForRegen() {
+    protected int getTimeForRegen() {
         return this.dataTracker.get(TIME_FOR_REGEN);
     }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
-        nbt.putBoolean("Regeneration",this.dataTracker.get(REGENERATING));
+        nbt.putBoolean("Regeneration",getIsRegenerating());
         nbt.putInt("CooldownRegen", getCooldownForRegen());
         nbt.putBoolean("CooldownRegenActive", hasCooldownForRegen);
         nbt.putInt("RegenerationTime", getTimeForRegen());
@@ -456,6 +480,14 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
     @Override
     protected SoundEvent getAttackSound() {
         return TCOTS_Sounds.GHOUL_ATTACK;
+    }
+
+    protected SoundEvent getScreamSound() {
+        return TCOTS_Sounds.GHOUL_SCREAMS;
+    }
+
+    public SoundEvent getRegeneratingSound(){
+        return TCOTS_Sounds.GHOUL_REGEN;
     }
 
     public int LungeTicks;

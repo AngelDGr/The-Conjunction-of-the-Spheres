@@ -27,6 +27,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 
+@SuppressWarnings("unused")
 @Environment(value= EnvType.CLIENT)
 public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         Drawable,
@@ -72,8 +73,6 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
     }
 
     public void init(int height, int width, TextRenderer parenttextRenderer, MinecraftClient client, AlchemyTableScreenHandler craftingScreenHandler) {
-//        int i = (parentWidth - 147) / 2 - this.leftOffset;
-//        int j = (parentHeight - 166) / 2;
         this.narrow = width < 379;
         this.parentWidth=width;
         this.parentHeight=height;

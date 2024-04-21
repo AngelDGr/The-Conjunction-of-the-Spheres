@@ -44,6 +44,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.DROWNER_TONGUE);
                             entries.add(TCOTS_Items.DROWNER_BRAIN);
                             entries.add(TCOTS_Items.GHOUL_BLOOD);
+                            entries.add(TCOTS_Items.ALGHOUL_BONE_MARROW);
                             entries.add(TCOTS_Items.ROTFIEND_BLOOD);
                             entries.add(TCOTS_Items.NEKKER_EYE);
                             entries.add(TCOTS_Items.NEKKER_HEART);
@@ -148,6 +149,7 @@ public class TCOTS_ItemsGroups {
                             //Decoctions
                             entries.add(TCOTS_Items.GRAVE_HAG_DECOCTION);
                             entries.add(TCOTS_Items.WATER_HAG_DECOCTION);
+                            entries.add(TCOTS_Items.ALGHOUL_DECOCTION);
                             entries.add(TCOTS_Items.FOGLET_DECOCTION);
 
 

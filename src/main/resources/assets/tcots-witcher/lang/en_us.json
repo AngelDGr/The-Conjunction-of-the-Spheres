@@ -93,6 +93,17 @@
 
     "item.tcots-witcher.alghoul_spawn_egg": "Alghoul Spawn Egg",
     "entity.tcots-witcher.alghoul": "Alghoul",
+    "tcots-witcher.sounds.alghoul_attack": "Alghoul attacks",
+    "tcots-witcher.sounds.alghoul_hurt": "Alghoul hurts",
+    "tcots-witcher.sounds.alghoul_idle": "Alghoul groans",
+    "tcots-witcher.sounds.alghoul_death": "Alghoul dies",
+    "tcots-witcher.sounds.alghoul_lunge": "Alghoul lunges",
+    "tcots-witcher.sounds.alghoul_scream": "Alghoul screams",
+    "tcots-witcher.sounds.alghoul_regen": "Alghoul regenerates",
+    "tcots-witcher.sounds.alghoul_spikes": "Alghoul spikes",
+
+    "item.tcots-witcher.alghoul_bone_marrow": "Alghoul Bone Marrow",
+
 
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
     "entity.tcots-witcher.nekker": "Nekker",
@@ -236,6 +247,11 @@
     "tooltip.effect.tcots-witcher.water_hag_decoction.first":  "Increases attack when health",
     "tooltip.effect.tcots-witcher.water_hag_decoction.second": "it is full",
 
+    "item.tcots-witcher.alghoul_decoction": "Alghoul Decoction",
+    "tooltip.effect.tcots-witcher.alghoul_decoction.first":  "Regenerates hunger during combat",
+    "tooltip.effect.tcots-witcher.alghoul_decoction.second": "until the first successful enemy attack.",
+
+
     "item.tcots-witcher.foglet_decoction": "Foglet Decoction",
     "tooltip.effect.tcots-witcher.foglet_decoction.first":  "Reduces damage taken by half",
     "tooltip.effect.tcots-witcher.foglet_decoction.second": "only if it is raining",
@@ -309,6 +325,7 @@
     "effect.tcots-witcher.gui.grave_hag_decoction": "Grave Hag Vitality (%s kills)",
 
     "effect.tcots-witcher.water_hag_decoction": "Water Hag Ferocity",
+    "effect.tcots-witcher.alghoul_decoction": "Alghoul Hungry",
     "effect.tcots-witcher.foglet_decoction": "Foglet Foggy Resistance"
 
 }

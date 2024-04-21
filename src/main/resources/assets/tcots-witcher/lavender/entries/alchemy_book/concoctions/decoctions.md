@@ -6,7 +6,8 @@
   "associated_items": [
     "tcots-witcher:grave_hag_decoction",
     "tcots-witcher:water_hag_decoction",
-    "tcots-witcher:foglet_decoction"
+    "tcots-witcher:foglet_decoction",
+    "tcots-witcher:alghoul_decoction"
   ]
 }
 ```

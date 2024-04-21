@@ -2,6 +2,7 @@ package TCOTS.potions;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.potions.effects.*;
+import TCOTS.potions.effects.decoctions.AlghoulDecoctionEffect;
 import TCOTS.potions.effects.decoctions.FogletDecoctionEffect;
 import TCOTS.potions.effects.decoctions.GraveHagDecoctionEffect;
 import TCOTS.potions.effects.decoctions.WaterHagDecoctionEffect;
@@ -24,6 +25,7 @@ public class TCOTS_Effects {
     public static StatusEffect GRAVE_HAG_DECOCTION_EFFECT;
     public static StatusEffect WATER_HAG_DECOCTION_EFFECT;
     public static StatusEffect FOGLET_DECOCTION_EFFECT;
+    public static StatusEffect ALGHOUL_DECOCTION_EFFECT;
 
     static final int decoctionColor=0x0b7000;
 
@@ -56,7 +58,12 @@ public class TCOTS_Effects {
                                 "7B3F8E12-9A6D-4C5F-B2A9-1E7C9D4A6B8F", 5.0,
                                 EntityAttributeModifier.Operation.ADDITION));
 
+        ALGHOUL_DECOCTION_EFFECT = registerStatusEffect("alghoul_decoction", AlghoulDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+
+
         FOGLET_DECOCTION_EFFECT = registerStatusEffect("foglet_decoction", FogletDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+
+
     }
 
     public static StatusEffect registerStatusEffect(String name, Class<? extends StatusEffect> effectClass, StatusEffectCategory category, int color) {

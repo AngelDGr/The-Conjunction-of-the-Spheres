@@ -41,10 +41,10 @@ public class AlghoulModel extends GeoModel<AlghoulEntity> {
         }
 
         if(large_spikes_head != null){
-            large_spikes_head.setHidden(true);
+            large_spikes_head.setHidden(!entity.getIsSpiked());
         }
         if(large_spikes_body!=null){
-            large_spikes_body.setHidden(true);
+            large_spikes_body.setHidden(!entity.getIsSpiked());
         }
     }
 }

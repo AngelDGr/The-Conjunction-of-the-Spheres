@@ -171,6 +171,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         THIS.theConjunctionOfTheSpheres$setKillCountdown(nbt.getInt("KillCountdown"));
     }
 
+    //Foglet Decoction
+
     @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
     private float injectFoggyResistance(float amount){
         if(this.hasStatusEffect(TCOTS_Effects.FOGLET_DECOCTION_EFFECT)
@@ -183,6 +185,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         return amount;
     }
 
+
+    //Black Blood
     @Inject(method = "damage", at = @At("TAIL"))
     private void injectBlackBloodDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
         if(this.hasStatusEffect(TCOTS_Effects.BLACK_BLOOD_EFFECT)){

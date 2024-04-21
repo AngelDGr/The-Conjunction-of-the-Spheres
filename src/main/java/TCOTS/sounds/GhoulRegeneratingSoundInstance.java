@@ -10,11 +10,10 @@ import net.minecraft.sound.SoundCategory;
 @Environment(value= EnvType.CLIENT)
 public class GhoulRegeneratingSoundInstance extends MovingSoundInstance {
     private final GhoulEntity ghoul;
-
     private int timer;
 
     public GhoulRegeneratingSoundInstance(GhoulEntity ghoul) {
-        super(TCOTS_Sounds.GHOUL_REGEN, SoundCategory.HOSTILE, SoundInstance.createRandom());
+        super(ghoul.getRegeneratingSound(), SoundCategory.HOSTILE, SoundInstance.createRandom());
         this.ghoul = ghoul;
         this.attenuationType = AttenuationType.LINEAR;
         this.repeat = true;
@@ -37,7 +36,7 @@ public class GhoulRegeneratingSoundInstance extends MovingSoundInstance {
         this.y = (float)this.ghoul.getY();
         this.z = (float)this.ghoul.getZ();
 
-        if(timer > (this.ghoul.GHOUL_REGENERATION_TIME-5)){
+        if(timer > (this.ghoul.getGHOUL_REGENERATION_TIME()-5)){
             volume = volume - 0.1f;
         }
     }
