@@ -27,7 +27,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused","unchecked"})
 @Environment(value= EnvType.CLIENT)
 public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         Drawable,

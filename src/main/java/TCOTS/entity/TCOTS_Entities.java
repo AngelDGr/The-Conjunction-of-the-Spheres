@@ -17,6 +17,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
 
+@SuppressWarnings("all")
 public class TCOTS_Entities {
 
     //TODO: Add natural spawn for Ghouls & Alghouls
