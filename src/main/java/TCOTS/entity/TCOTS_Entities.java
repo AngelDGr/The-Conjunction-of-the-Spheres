@@ -20,9 +20,6 @@ import net.minecraft.world.biome.BiomeKeys;
 @SuppressWarnings("all")
 public class TCOTS_Entities {
 
-    //TODO: Add natural spawn for Ghouls & Alghouls
-    //TODO: Make ghoul nest spawn in the world
-
 //    0.2.0- Necrophages & Ogroids
 // Necrophages
     //xTODO: Drowner
@@ -152,7 +149,6 @@ public class TCOTS_Entities {
                                                                     BiomeKeys.RIVER), SpawnGroup.MONSTER,
                     DROWNER, 10, 2, 3);
 
-
         //Rotfiends
             SpawnRestriction.register(ROTFIEND, SpawnRestriction.Location.ON_GROUND,
                     Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Necrophage_Base::canSpawnInDark);
@@ -218,7 +214,14 @@ public class TCOTS_Entities {
 
         //Ghouls & Alghouls
         SpawnRestriction.register(GHOUL, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Necrophage_Base::canSpawnInDarkNotDeepslate);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GhoulEntity::canSpawnGhoul);
+
+            //In night
+            BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                        BiomeKeys.SAVANNA, BiomeKeys.PLAINS,
+                        BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
+                        BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys. OLD_GROWTH_BIRCH_FOREST, BiomeKeys.DARK_FOREST), SpawnGroup.MONSTER,
+                    GHOUL, 10, 3,5);
 
 
         //Nekkers
@@ -227,10 +230,10 @@ public class TCOTS_Entities {
 
             //In night
             BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                                                BiomeKeys.SAVANNA, BiomeKeys.PLAINS,
-                                                                BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE,
-                                                                BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
-                                                                BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys. OLD_GROWTH_BIRCH_FOREST, BiomeKeys.DARK_FOREST), SpawnGroup.MONSTER,
+                        BiomeKeys.SAVANNA, BiomeKeys.PLAINS,
+                        BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE,
+                        BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
+                        BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys. OLD_GROWTH_BIRCH_FOREST, BiomeKeys.DARK_FOREST), SpawnGroup.MONSTER,
                     NEKKER, 5, 4,6);
 
     }

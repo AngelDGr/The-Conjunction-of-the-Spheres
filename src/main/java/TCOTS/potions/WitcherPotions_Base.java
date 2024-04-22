@@ -176,6 +176,7 @@ public class WitcherPotions_Base extends PotionItem {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 
         buildTooltip(stack, tooltip, 1.0F,  world == null ? 20.0f : world.getTickManager().getTickRate());
+        tooltip.add(Text.translatable("tcots-witcher.tooltip.toxicity", getToxicity()).formatted(Formatting.DARK_GREEN));
         if(listExtraTooltip.contains(effectInstance.getEffectType())){
             tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first."+this.getStatusEffect().getAmplifier()).formatted(Formatting.GRAY));
             tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second."+this.getStatusEffect().getAmplifier()).formatted(Formatting.GRAY));
@@ -184,7 +185,6 @@ public class WitcherPotions_Base extends PotionItem {
             tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second").formatted(Formatting.GRAY));
         }
 
-        tooltip.add(Text.translatable("tcots-witcher.tooltip.toxicity", getToxicity()).formatted(Formatting.DARK_GREEN));
     }
 
     public int getToxicity(){

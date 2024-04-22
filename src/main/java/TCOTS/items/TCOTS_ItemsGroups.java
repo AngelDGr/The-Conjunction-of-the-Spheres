@@ -123,6 +123,10 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED.getDefaultStack());
                             entries.add(TCOTS_Items.BLACK_BLOOD_POTION_SUPERIOR.getDefaultStack());
 
+                            entries.add(TCOTS_Items.MARIBOR_FOREST_POTION.getDefaultStack());
+                            entries.add(TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED.getDefaultStack());
+                            entries.add(TCOTS_Items.MARIBOR_FOREST_POTION_SUPERIOR.getDefaultStack());
+
                             entries.add(TCOTS_Items.SWALLOW_SPLASH.getDefaultStack());
                             entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH.getDefaultStack());
                             entries.add(TCOTS_Items.KILLER_WHALE_SPLASH.getDefaultStack());

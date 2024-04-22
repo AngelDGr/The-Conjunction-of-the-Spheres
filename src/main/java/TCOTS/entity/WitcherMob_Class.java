@@ -66,18 +66,30 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
     }
 
     public static boolean canSpawnInDarkNotDeepslate(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        if(spawnReason == SpawnReason.SPAWNER){
+           return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
+        } else {
         return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random) &&
                 pos.getY() >= 0;
+        }
     }
 
     public static boolean canSpawnInDark_NotCaves(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random) &&
-                pos.getY() >= 50;
+        if(spawnReason==SpawnReason.SPAWNER){
+            return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
+        } else {
+            return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random) &&
+                    pos.getY() >= 50;
+        }
     }
 
     public static boolean canSpawnInDarkNotBelowDeepslate(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random) &&
-                pos.getY() >= -20;
+        if(spawnReason==SpawnReason.SPAWNER){
+            return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
+        } else {
+            return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random) &&
+                    pos.getY() >= -20;
+        }
     }
 
     @Override

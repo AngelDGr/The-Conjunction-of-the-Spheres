@@ -370,7 +370,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
     public static boolean canSpawnNekker(EntityType<? extends Ogroid_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         if (world.getDifficulty() != Difficulty.PEACEFUL) {
-
             if (spawnReason.equals(SpawnReason.SPAWNER)) {
                 return true;
             }

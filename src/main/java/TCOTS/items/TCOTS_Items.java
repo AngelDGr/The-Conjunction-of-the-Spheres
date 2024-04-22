@@ -88,7 +88,7 @@ public class TCOTS_Items {
             //xTODO: Killer Whale: Add when added Drowners
             //xTODO: Cat: Can be added, crafted with Water essence
             //xTODO: Black Blood: Add when added Ghouls
-            //TODO: Maribor Forest: Add when added Alghouls
+            //xTODO: Maribor Forest: Add when added Alghouls
             //TODO: White Honey: Add when added toxicity mechanic
 
             //TODO: Petri's Philter: Add when added specters
@@ -239,6 +239,9 @@ public class TCOTS_Items {
     public static Item BLACK_BLOOD_POTION;
     public static Item BLACK_BLOOD_POTION_ENHANCED;
     public static Item BLACK_BLOOD_POTION_SUPERIOR;
+    public static Item MARIBOR_FOREST_POTION;
+    public static Item MARIBOR_FOREST_POTION_ENHANCED;
+    public static Item MARIBOR_FOREST_POTION_SUPERIOR;
     public static Item KILLER_WHALE_POTION;
 
 
@@ -447,6 +450,33 @@ public class TCOTS_Items {
                 false
         );
 
+        MARIBOR_FOREST_POTION = registerItemPotion("maribor_forest_potion",
+                new FabricItemSettings().maxCount(3),
+                TCOTS_Effects.MARIBOR_FOREST_EFFECT,
+                20,
+                30,
+                0,
+                false
+        );
+
+        MARIBOR_FOREST_POTION_ENHANCED = registerItemPotion("maribor_forest_potion_enhanced",
+                new FabricItemSettings().maxCount(4),
+                TCOTS_Effects.MARIBOR_FOREST_EFFECT,
+                20,
+                60,
+                1,
+                false
+        );
+
+        MARIBOR_FOREST_POTION_SUPERIOR = registerItemPotion("maribor_forest_potion_superior",
+                new FabricItemSettings().maxCount(5),
+                TCOTS_Effects.MARIBOR_FOREST_EFFECT,
+                20,
+                90,
+                2,
+                false
+        );
+
 
         KILLER_WHALE_POTION = registerItemPotion("killer_whale_potion",
                 new FabricItemSettings().maxCount(3),
@@ -527,6 +557,7 @@ public class TCOTS_Items {
 
 
     //xTODO: Add buy mechanic to alcohol
+
     //Alcohol
     public static WitcherAlcohol_Base ICY_SPIRIT;
     public static WitcherAlcohol_Base DWARVEN_SPIRIT;

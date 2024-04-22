@@ -1,12 +1,11 @@
 package TCOTS.entity.necrophages;
 
+import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.goals.LungeAttackGoal;
 import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.entity.misc.CommonControllers;
 import TCOTS.sounds.TCOTS_Sounds;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -24,7 +23,12 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -42,7 +46,7 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
 
     //xTODO: Add new combat/regeneration
     //xTODO: Add Ghoul's Blood
-    //TODO: Add monster nests & spawn
+    //xTODO: Add monster nests & spawn
     public static final byte GHOUL_REGENERATING = 99;
 
     public final int GHOUL_REGENERATION_TIME=200;
@@ -288,6 +292,32 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
             return false;
         }
         return super.isPushable();
+    }
+
+    public static boolean canSpawnGhoul(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        if(spawnReason == SpawnReason.SPAWNER){
+            return world.getDifficulty() != Difficulty.PEACEFUL;
+        } else {
+            return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random) &&
+                    pos.getY() >= 0;
+        }
+    }
+
+    @Nullable
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        Random random = world.getRandom();
+        if(!(spawnReason == SpawnReason.SPAWN_EGG) && !(spawnReason == SpawnReason.STRUCTURE)) {
+            //Can spawn an Alghoul with it instead
+            if (random.nextInt() % 5 == 0) {
+                AlghoulEntity alghoul = TCOTS_Entities.ALGHOUL.create(this.getWorld());
+                if (alghoul != null) {
+                    alghoul.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0f);
+                    this.getWorld().spawnEntity(alghoul);
+                }
+            }
+        }
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
     @Override

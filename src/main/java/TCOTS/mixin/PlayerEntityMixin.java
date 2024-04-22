@@ -4,6 +4,7 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.potions.EmptyWitcherPotionItem;
+import TCOTS.potions.TCOTS_Effects;
 import TCOTS.potions.WitcherAlcohol_Base;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.Entity;
@@ -21,6 +22,7 @@ import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -36,6 +38,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -91,7 +94,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         Objects.requireNonNull(player.getMainHandStack().getSubNbt("Monster Oil")).putInt("Uses", Uses-1);
 
 
-//        player.playSound(SoundEvents.BLOCK_HONEY_BLOCK_HIT, 1, 1);
         if(Objects.requireNonNull(player.getMainHandStack().getSubNbt("Monster Oil")).getInt("Uses") == 0){
 
             Objects.requireNonNull(player.getMainHandStack().getNbt()).remove("Monster Oil");
@@ -273,7 +275,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
         boolean refilled=false;
 
-        //Iterates list with all the alcohols
+        //Iterates the list with all the alcohols
         for(WitcherAlcohol_Base alcoholBase: list_alcohol){
             //Get if the player has some alcohol
             if(((inventory.getSlotWithStack(alcoholBase.getDefaultStack()) != -1))
@@ -327,6 +329,33 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                         playSound(TCOTS_Sounds.POTION_REFILLED, 3.0f, 1.0f);
                     }
                 }
+            }
+        }
+    }
+
+
+    //Maribor Forest
+    @Inject(method = "eatFood", at = @At("TAIL"))
+    private void injectMariborForestImprove(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir){
+        PlayerEntity THIS = (PlayerEntity)(Object)this;
+        if(this.hasStatusEffect(TCOTS_Effects.MARIBOR_FOREST_EFFECT)){
+            int amplifier = Objects.requireNonNull(this.getStatusEffect(TCOTS_Effects.MARIBOR_FOREST_EFFECT)).getAmplifier();
+            if(stack.getItem().isFood()){
+                FoodComponent foodComponent = stack.getItem().getFoodComponent();
+                assert foodComponent != null;
+
+                int foodQuantity= (int) (foodComponent.getHunger()*(0.25f+(0.25f*amplifier)));
+                float saturationQuantity= foodComponent.getSaturationModifier()*(0.25f+(0.25f*amplifier));
+
+                if(foodQuantity < 1){
+                    foodQuantity=1;
+                }
+
+                if(saturationQuantity < 0.1){
+                    saturationQuantity=0.1f;
+                }
+
+                THIS.getHungerManager().add(foodQuantity, saturationQuantity);
             }
         }
     }

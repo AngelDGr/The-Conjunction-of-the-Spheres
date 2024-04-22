@@ -24,20 +24,12 @@ public class WaterHag_MudBallEntity extends ThrownItemEntity {
 
     private float damage=1;
     public WaterHag_MudBallEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
-        super((EntityType<? extends ThrownItemEntity>) entityType, world);
-    }
-
-    public WaterHag_MudBallEntity(World world, LivingEntity owner) {
-        super((EntityType<? extends ThrownItemEntity>) TCOTS_Entities.WATER_HAG_MUD_BALL, owner, world);
+        super(entityType, world);
     }
 
     public WaterHag_MudBallEntity(World world, LivingEntity owner, float damage) {
-        super((EntityType<? extends ThrownItemEntity>) TCOTS_Entities.WATER_HAG_MUD_BALL, owner, world);
+        super(TCOTS_Entities.WATER_HAG_MUD_BALL, owner, world);
         this.damage=damage;
-    }
-
-    public WaterHag_MudBallEntity(World world, double x, double y, double z) {
-        super((EntityType<? extends ThrownItemEntity>) TCOTS_Entities.WATER_HAG_MUD_BALL, x, y, z, world);
     }
 
     @Override

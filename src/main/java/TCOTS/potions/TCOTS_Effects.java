@@ -21,6 +21,7 @@ public class TCOTS_Effects {
     public static StatusEffect CAT_EFFECT;
     public static StatusEffect BLACK_BLOOD_EFFECT;
     public static StatusEffect BLEEDING_BLACK_BLOOD_EFFECT;
+    public static StatusEffect MARIBOR_FOREST_EFFECT;
 
     public static StatusEffect GRAVE_HAG_DECOCTION_EFFECT;
     public static StatusEffect WATER_HAG_DECOCTION_EFFECT;
@@ -48,6 +49,9 @@ public class TCOTS_Effects {
 
         BLACK_BLOOD_EFFECT = registerStatusEffect("black_blood", BlackBloodEffect.class, StatusEffectCategory.BENEFICIAL, 0x272727);
         BLEEDING_BLACK_BLOOD_EFFECT = registerStatusEffect("bleeding_black_blood", BleedingBlackBloodEffect.class, StatusEffectCategory.HARMFUL, 0x272727);
+
+        MARIBOR_FOREST_EFFECT = registerStatusEffect("maribor_forest", MariborForestEffect.class, StatusEffectCategory.BENEFICIAL, 0xb9b9b9);
+
 
         GRAVE_HAG_DECOCTION_EFFECT = registerStatusEffect("grave_hag_decoction", GraveHagDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
 

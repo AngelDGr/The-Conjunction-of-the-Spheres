@@ -313,12 +313,19 @@
     "tooltip.effect.tcots-witcher.black_blood.second.2": "and causes a bleeding effect",
     "tcots-witcher.sounds.black_blood_hit": "Black blood spills",
 
+    "item.tcots-witcher.maribor_forest_potion": "Maribor Forest",
+    "item.tcots-witcher.maribor_forest_potion_enhanced": "Enhanced Maribor Forest",
+    "item.tcots-witcher.maribor_forest_potion_superior": "Superior Maribor Forest",
+    "tooltip.effect.tcots-witcher.maribor_forest.first":  "Regenerates hunger for the time",
+    "tooltip.effect.tcots-witcher.maribor_forest.second": "it last, improve consumed food",
+
     "effect.tcots-witcher.swallow": "Swallow",
     "effect.tcots-witcher.killer_whale": "Killer Whale",
     "effect.tcots-witcher.white_raffards": "White Raffard's",
     "effect.tcots-witcher.cat_effect": "Cat",
     "effect.tcots-witcher.black_blood": "Black Blood",
     "effect.tcots-witcher.bleeding_black_blood": "Bleeding Black Blood",
+    "effect.tcots-witcher.maribor_forest": "Maribor Forest",
 
 
     "effect.tcots-witcher.grave_hag_decoction": "Grave Hag Vitality",
