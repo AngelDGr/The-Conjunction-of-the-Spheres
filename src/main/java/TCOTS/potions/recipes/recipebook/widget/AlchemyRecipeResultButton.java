@@ -130,7 +130,7 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
             Formatting textColor;
 
-            if(this.recipe.getResult(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getResult(null).getItem() instanceof WitcherAlcohol_Base)){
+            if(this.recipe.getResult(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getResult(null).getItem() instanceof WitcherAlcohol_Base) && !(this.recipe.getResult(null).getItem() instanceof WitcherWhiteHoney)){
                 List<Text> list= new ArrayList<>();
 
                 if(((WitcherPotions_Base) this.recipe.getResult(null).getItem()).getStatusEffect().getAmplifier() > 0){
@@ -182,12 +182,23 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
                 int uses = ((WitcherMonsterOil_Base) this.recipe.getResult(null).getItem()).getUses();
                 list.add(Text.translatable("tcots-witcher.tooltip.gui.oil_uses", uses).formatted(Formatting.DARK_BLUE));
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-22);
-            } else{
+            } else if (this.recipe.getResult(null).getItem() instanceof WitcherWhiteHoney) {
+
+                List<Text> list= new ArrayList<>();
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()));
+                //Stack
+                int maxCount = this.recipe.getResult(null).getMaxCount();
+                if(!(((WitcherPotions_Base) this.recipe.getResult(null).getItem()).isDecoction())){
+                    list.add(Text.translatable("tcots-witcher.tooltip.max_stack", maxCount).formatted(Formatting.DARK_BLUE));
+                }
+                context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-12);
+
+            } else {
                 context.drawTooltip(textRenderer, Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()), this.getX()-20, this.getY());
             }
         }
         else{
-            //If not craftable just put the button in red
+            //If not craftable, just put the button in red
             if(!craftable){
                 j = 173+23+23;
             }

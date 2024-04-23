@@ -243,6 +243,9 @@ public class TCOTS_Items {
     public static Item MARIBOR_FOREST_POTION_ENHANCED;
     public static Item MARIBOR_FOREST_POTION_SUPERIOR;
     public static Item KILLER_WHALE_POTION;
+    public static Item WHITE_HONEY_POTION;
+    public static Item WHITE_HONEY_POTION_ENHANCED;
+    public static Item WHITE_HONEY_POTION_SUPERIOR;
 
 
     public static Item EMPTY_WITCHER_POTION_2;
@@ -487,7 +490,17 @@ public class TCOTS_Items {
                 false
         );
 
+        WHITE_HONEY_POTION=registerItem("white_honey_potion",
+                new WitcherWhiteHoney(new FabricItemSettings().maxCount(1))
+        );
 
+        WHITE_HONEY_POTION_ENHANCED=registerItem("white_honey_potion_enhanced",
+                new WitcherWhiteHoney(new FabricItemSettings().maxCount(2))
+        );
+
+        WHITE_HONEY_POTION_SUPERIOR=registerItem("white_honey_potion_superior",
+                new WitcherWhiteHoney(new FabricItemSettings().maxCount(5))
+        );
 
         //Splash Potions
         SWALLOW_SPLASH = registerSplashPotion("swallow_splash",

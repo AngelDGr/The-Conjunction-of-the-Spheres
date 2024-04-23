@@ -218,7 +218,8 @@
 
     "tooltip.tcots-witcher.refill": "Can be used to refill %s slots",
 
-
+    "tcots-witcher.gui.toxicity_warning": "You can't drink this! Too much toxicity",
+    "tcots-witcher.gui.toxicity_danger": "BEWARE! TOO MUCH TOXICITY!",
     "tcots-witcher.tooltip.toxicity": "Toxicity: %s",
     "tcots-witcher.tooltip.gui.formula": "%s Formula",
     "tcots-witcher.tooltip.max_stack": "Max stack: %s",
@@ -318,6 +319,13 @@
     "item.tcots-witcher.maribor_forest_potion_superior": "Superior Maribor Forest",
     "tooltip.effect.tcots-witcher.maribor_forest.first":  "Regenerates hunger for the time",
     "tooltip.effect.tcots-witcher.maribor_forest.second": "it last, improve consumed food",
+
+    "item.tcots-witcher.white_honey_potion": "White Honey",
+    "item.tcots-witcher.white_honey_potion_enhanced": "Enhanced White Honey",
+    "item.tcots-witcher.white_honey_potion_superior": "Superior White Honey",
+    "tooltip.effect.tcots-witcher.white_honey.first":  "Clears Toxicity and cancels all",
+    "tooltip.effect.tcots-witcher.white_honey.second": "active potion effects",
+
 
     "effect.tcots-witcher.swallow": "Swallow",
     "effect.tcots-witcher.killer_whale": "Killer Whale",

@@ -47,7 +47,7 @@ public abstract class GameRendererMixin {
             }
             this.postProcessor = null;
 
-            this.loadPostProcessor(CatEffect.CatShader_00);
+            this.loadPostProcessor(CatEffect.CatShader);
             this.catActive=true;
 
         } else if(catActive){

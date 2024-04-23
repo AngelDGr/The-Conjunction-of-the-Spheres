@@ -1,11 +1,10 @@
 package TCOTS.potions.effects;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class MariborForestEffect extends StatusEffect {
+public class MariborForestEffect extends WitcherEffect {
 
     //Maribor Forest I      ----->      0.2 Saturation x 3 seconds
     //Maribor Forest II     ----->      0.5 Saturation x 3 seconds

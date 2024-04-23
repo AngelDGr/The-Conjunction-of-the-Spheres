@@ -1,10 +1,9 @@
 package TCOTS.potions.effects;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
-public class WhiteRaffardsEffect extends StatusEffect {
+public class WhiteRaffardsEffect extends WitcherEffect {
 
 //             White Raffard's Decoction = White Raffard's I   = 0.35 x 20 =  7 health =  3.5  hearts
 //    Enhanced White Raffard's Decoction = White Raffard's II  = 0.6  x 20 = 12 health =  6    hearts

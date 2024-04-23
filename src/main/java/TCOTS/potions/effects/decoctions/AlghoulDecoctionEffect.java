@@ -1,11 +1,10 @@
 package TCOTS.potions.effects.decoctions;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class AlghoulDecoctionEffect extends StatusEffect {
+public class AlghoulDecoctionEffect extends DecoctionEffectBase {
     public AlghoulDecoctionEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }
@@ -14,6 +13,8 @@ public class AlghoulDecoctionEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        super.applyUpdateEffect(entity, amplifier);
+
         if(!entity.getWorld().isClient) {
             if (entity instanceof PlayerEntity playerEntity){
                 if (entity.age < (entity.getLastAttackTime() + 300)
@@ -31,12 +32,11 @@ public class AlghoulDecoctionEffect extends StatusEffect {
                 --cooldownAttacks;
             }
         }
-
-        super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
         return true;
     }
+
 }

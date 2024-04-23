@@ -2,11 +2,11 @@ package TCOTS.potions.effects.decoctions;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
-import net.minecraft.entity.effect.StatusEffect;
+
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.text.Text;
 
-public class GraveHagDecoctionEffect extends StatusEffect {
+public class GraveHagDecoctionEffect extends DecoctionEffectBase {
 
 //             0.005hp/tick     extra for each kill
 
@@ -21,6 +21,8 @@ public class GraveHagDecoctionEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        super.applyUpdateEffect(entity, amplifier);
+
         //When killed a mob
         if((killCounterIn != entity.theConjunctionOfTheSpheres$getKillCount()) && killCounterIn < 20){
             killCounterIn = entity.theConjunctionOfTheSpheres$getKillCount();
@@ -30,17 +32,12 @@ public class GraveHagDecoctionEffect extends StatusEffect {
             killCounterIn=0;
         }
 
-//        System.out.println("KillCounterO: " + entity.theConjunctionOfTheSpheres$getKillCount());
-//        System.out.println("KillCounter: "  + killCounterIn);
-
         if(killCounterIn > 0){
             if(entity.getHealth() < entity.getMaxHealth()){
-                //0.005 for tick so with 20kills it's 2 health (1 heart)/second
+                //0.005 for tick, so with 20kills it's 2 health (1 heart)/second
                 entity.heal(0.005f*killCounterIn);
             }
         }
-
-        super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override
@@ -51,7 +48,6 @@ public class GraveHagDecoctionEffect extends StatusEffect {
     @Override
     public void onRemoved(AttributeContainer attributes) {
         killCounterIn=0;
-
         super.onRemoved(attributes);
     }
 

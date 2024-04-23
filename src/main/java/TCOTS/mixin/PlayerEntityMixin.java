@@ -55,12 +55,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Shadow
     private PlayerInventory inventory;
 
+    //Mud Things
     @Unique
     private static final TrackedData<Integer> MUD_TICKS = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
-
     @Inject(method = "initDataTracker", at = @At("TAIL"))
-    private void injectKillCountDataTracker(CallbackInfo ci){
+    private void injectMudTicks(CallbackInfo ci){
         this.dataTracker.startTracking(MUD_TICKS, 0);
     }
 
@@ -81,9 +81,28 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return  (float) theConjunctionOfTheSpheres$getMudInFace()/100;
     }
 
-    @Unique
-    private int potionTimer;
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void injectInTickMud(CallbackInfo ci){
 
+        if(this.theConjunctionOfTheSpheres$getMudInFace() > 0 && this.isTouchingWaterOrRain()){
+            theConjunctionOfTheSpheres$setMudInFace(theConjunctionOfTheSpheres$getMudInFace() - 10);
+        }
+        else if(this.theConjunctionOfTheSpheres$getMudInFace() > 0){
+            theConjunctionOfTheSpheres$setMudInFace(theConjunctionOfTheSpheres$getMudInFace() - 1);
+        }
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+    private void injectReadNBTMud(NbtCompound nbt, CallbackInfo ci){
+        theConjunctionOfTheSpheres$setMudInFace(nbt.getInt("MudTicks"));
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void injectWriteNBTMud(NbtCompound nbt, CallbackInfo ci){
+        nbt.putInt("MudTicks", theConjunctionOfTheSpheres$getMudInFace());
+    }
+
+    //Oils
     @Unique
     private float oilDamageAdded = 0;
 
@@ -226,36 +245,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         oilDamageAdded = 0;
     }
 
-    @Inject(method = "tick", at = @At("HEAD"))
-    private void injectInTick(CallbackInfo ci){
-        if (this.isSleeping()) {
-            if(this.potionTimer < 100) {
-                ++this.potionTimer;
-            }
-        } else {
+    //Refilling Alcohol
 
-            if(potionTimer != 0){
-                potionTimer=0;
-            }
-        }
-
-        if(this.theConjunctionOfTheSpheres$getMudInFace() > 0 && this.isTouchingWaterOrRain()){
-            theConjunctionOfTheSpheres$setMudInFace(theConjunctionOfTheSpheres$getMudInFace() - 10);
-        }
-        else if(this.theConjunctionOfTheSpheres$getMudInFace() > 0){
-            theConjunctionOfTheSpheres$setMudInFace(theConjunctionOfTheSpheres$getMudInFace() - 1);
-        }
-    }
-
-    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-    private void injectReadNBT(NbtCompound nbt, CallbackInfo ci){
-        theConjunctionOfTheSpheres$setMudInFace(nbt.getInt("MudTicks"));
-    }
-
-    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-    private void injectWriteNBT(NbtCompound nbt, CallbackInfo ci){
-        nbt.putInt("MudTicks", theConjunctionOfTheSpheres$getMudInFace());
-    }
+    @Unique
+    private int potionTimer;
 
     @Unique
     List<WitcherAlcohol_Base> list_alcohol = Arrays.asList(
@@ -333,6 +326,19 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         }
     }
 
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void injectInTickSleepingPotion(CallbackInfo ci){
+        if (this.isSleeping()) {
+            if(this.potionTimer < 100) {
+                ++this.potionTimer;
+            }
+        } else {
+
+            if(potionTimer != 0){
+                potionTimer=0;
+            }
+        }
+    }
 
     //Maribor Forest
     @Inject(method = "eatFood", at = @At("TAIL"))
@@ -356,6 +362,107 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 }
 
                 THIS.getHungerManager().add(foodQuantity, saturationQuantity);
+            }
+        }
+    }
+
+
+    //Toxicity Logic
+    @Unique
+    private static final TrackedData<Integer> TOXICITY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> DECOCTION_TOXICITY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> MAX_TOXICITY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
+
+    @Inject(method = "initDataTracker", at = @At("TAIL"))
+    private void injectToxicity(CallbackInfo ci){
+        this.dataTracker.startTracking(TOXICITY, 0);
+        this.dataTracker.startTracking(DECOCTION_TOXICITY, 0);
+        this.dataTracker.startTracking(MAX_TOXICITY,100);
+    }
+
+    @Override
+    public int theConjunctionOfTheSpheres$getToxicity(){
+        return this.dataTracker.get(TOXICITY);
+    }
+
+    @Override
+    public void theConjunctionOfTheSpheres$setToxicity(int toxicity){
+        this.dataTracker.set(TOXICITY,toxicity);
+    }
+
+    @Override
+    public int theConjunctionOfTheSpheres$getMaxToxicity(){
+        return this.dataTracker.get(MAX_TOXICITY);
+    }
+
+    @Override
+    public void theConjunctionOfTheSpheres$setMaxToxicity(int MaxToxicity) {
+        this.dataTracker.set(MAX_TOXICITY,MaxToxicity);
+    }
+
+    @Override
+    public int theConjunctionOfTheSpheres$getDecoctionToxicity() {
+        return this.dataTracker.get(DECOCTION_TOXICITY);
+    }
+
+    @Override
+    public void theConjunctionOfTheSpheres$setDecoctionToxicity(int DecoctionToxicity) {
+        this.dataTracker.set(DECOCTION_TOXICITY,DecoctionToxicity);
+    }
+
+    @Override
+    public void theConjunctionOfTheSpheres$addMaxToxicity(int MaxToxicity){
+        this.dataTracker.set(MAX_TOXICITY,theConjunctionOfTheSpheres$getMaxToxicity()+MaxToxicity);
+    }
+
+    @Override
+    public void theConjunctionOfTheSpheres$addToxicity(int toxicity,boolean decoction) {
+        if(decoction){
+            theConjunctionOfTheSpheres$setDecoctionToxicity(theConjunctionOfTheSpheres$getDecoctionToxicity()+toxicity);
+        }
+        else {
+            theConjunctionOfTheSpheres$setToxicity(theConjunctionOfTheSpheres$getToxicity()+toxicity);
+        }
+    }
+
+    @Override
+    public void theConjunctionOfTheSpheres$decreaseToxicity(int toxicity, boolean decoction) {
+        if(decoction){
+            theConjunctionOfTheSpheres$setDecoctionToxicity(theConjunctionOfTheSpheres$getDecoctionToxicity()-toxicity);
+        }
+        else {
+            theConjunctionOfTheSpheres$setToxicity(theConjunctionOfTheSpheres$getToxicity()-toxicity);
+        }
+    }
+
+    @Override
+    public int theConjunctionOfTheSpheres$getAllToxicity() {
+        return this.dataTracker.get(DECOCTION_TOXICITY)+this.dataTracker.get(TOXICITY);
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+    private void injectReadNBTToxicity(NbtCompound nbt, CallbackInfo ci){
+        theConjunctionOfTheSpheres$setToxicity(nbt.getInt("Toxicity"));
+        theConjunctionOfTheSpheres$setDecoctionToxicity(nbt.getInt("DecoctionToxicity"));
+
+        theConjunctionOfTheSpheres$setMaxToxicity(nbt.getInt("MaxToxicity"));
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void injectWriteNBTToxicity(NbtCompound nbt, CallbackInfo ci){
+        nbt.putInt("Toxicity",theConjunctionOfTheSpheres$getToxicity());
+        nbt.putInt("DecoctionToxicity",theConjunctionOfTheSpheres$getDecoctionToxicity());
+
+        nbt.putInt("MaxToxicity",theConjunctionOfTheSpheres$getMaxToxicity());
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void injectInTickDecreaseToxicity(CallbackInfo ci){
+        if (this.theConjunctionOfTheSpheres$getToxicity()>0) {
+            if(this.age%40==0){
+                this.theConjunctionOfTheSpheres$decreaseToxicity(1,false);
             }
         }
     }

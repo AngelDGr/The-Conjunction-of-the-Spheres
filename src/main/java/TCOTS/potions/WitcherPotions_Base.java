@@ -20,8 +20,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Rarity;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
@@ -67,9 +66,17 @@ public class WitcherPotions_Base extends PotionItem {
     }
 
     @Override
+    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+        super.usageTick(world, user, stack, remainingUseTicks);
+    }
+
+    @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         PlayerEntity playerEntity = user instanceof PlayerEntity ? (PlayerEntity)user : null;
         if (playerEntity instanceof ServerPlayerEntity) {
+            //Add toxicity
+            playerEntity.theConjunctionOfTheSpheres$addToxicity(getToxicity(),decoction);
+
             Criteria.CONSUME_ITEM.trigger((ServerPlayerEntity)playerEntity, stack);
         }
 
@@ -114,6 +121,37 @@ public class WitcherPotions_Base extends PotionItem {
 
         user.emitGameEvent(GameEvent.DRINK);
         return stack;
+    }
+
+    @Override
+    public UseAction getUseAction(ItemStack stack) {
+        if(stack.getItem() instanceof WitcherPotions_Base potion){
+            if(!potion.canBeDrunk){
+                return UseAction.NONE;
+            }
+        }
+
+        return UseAction.DRINK;
+    }
+
+    private boolean canBeDrunk;
+
+    public void setCanBeDrunk(boolean canBeDrunk) {
+        this.canBeDrunk = canBeDrunk;
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        if(user instanceof ServerPlayerEntity player){
+            if(player.theConjunctionOfTheSpheres$getMaxToxicity()<(player.theConjunctionOfTheSpheres$getAllToxicity()+getToxicity())){
+                setCanBeDrunk(false);
+                player.sendMessage(Text.translatable("tcots-witcher.gui.toxicity_warning").formatted(Formatting.DARK_GREEN), true);
+                return TypedActionResult.fail(player.getStackInHand(hand));
+            }
+        }
+
+        setCanBeDrunk(true);
+        return super.use(world, user, hand);
     }
 
     public List<StatusEffectInstance> getPotionEffects() {

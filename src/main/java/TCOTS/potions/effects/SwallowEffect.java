@@ -1,12 +1,11 @@
 package TCOTS.potions.effects;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
 
-public class SwallowEffect extends StatusEffect {
+public class SwallowEffect extends WitcherEffect {
 
 //             Swallow = Swallow I   = 1.0hp x s =  20s for complete healing
 //    Enhanced Swallow = Swallow II  = 2.0hp x s =  10s for complete healing

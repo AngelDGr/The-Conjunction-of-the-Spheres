@@ -2,13 +2,12 @@ package TCOTS.potions.effects;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.*;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
 import java.util.Map;
 
 
-public class KillerWhaleEffect extends StatusEffect {
+public class KillerWhaleEffect extends WitcherEffect {
     //xTODO: Add attack power to the player
     //xTODO???: Add improved vision underwater (like with water breathing)
 

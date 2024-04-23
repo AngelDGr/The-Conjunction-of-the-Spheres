@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "tcots-witcher:item/alchemy/potions/white_honey_potion_superior"
+  }
+
+}

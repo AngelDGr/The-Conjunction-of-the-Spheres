@@ -59,6 +59,13 @@ decoctions, monster oils, bombs and ingredients.***
 
 ;;;;;
 
+**{#395026}Potions{}**
+<recipe;tcots-witcher:white_honey_potion>
+<recipe;tcots-witcher:white_honey_potion_enhanced>
+<recipe;tcots-witcher:white_honey_potion_superior>
+
+;;;;;
+
 **{#395026}Decoctions{}**
 <recipe;tcots-witcher:water_hag_decoction>
 <recipe;tcots-witcher:grave_hag_decoction>

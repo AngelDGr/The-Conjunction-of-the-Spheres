@@ -2,11 +2,10 @@ package TCOTS.potions.effects.decoctions;
 
 import TCOTS.particles.TCOTS_Particles;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.util.math.MathHelper;
 
-public class FogletDecoctionEffect extends StatusEffect {
+public class FogletDecoctionEffect extends DecoctionEffectBase {
     public FogletDecoctionEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }
@@ -27,10 +26,10 @@ public class FogletDecoctionEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        super.applyUpdateEffect(entity, amplifier);
+
         if(entity.getWorld().isThundering() || entity.getWorld().isRaining()){
             spawnFogParticlesItself(entity);
         }
-
-        super.applyUpdateEffect(entity, amplifier);
     }
 }

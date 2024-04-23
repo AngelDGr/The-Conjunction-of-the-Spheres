@@ -7,41 +7,26 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-import com.google.common.collect.Lists;
 import java.util.List;
 
-public class WitcherAlcohol_Base extends WitcherPotions_Base{
-
-    private final int refillQuantity;
-
-    public int getRefillQuantity() {
-        return refillQuantity;
+public class WitcherWhiteHoney extends WitcherPotions_Base{
+    public WitcherWhiteHoney(Settings settings) {
+        super(settings, new StatusEffectInstance(StatusEffects.POISON), 0, false);
     }
 
-    private final java.util.List<StatusEffectInstance> effects = Lists.newArrayList();
-
-    public WitcherAlcohol_Base(Settings settings, List<StatusEffectInstance> effects, int refillQuantity) {
-        super(settings, new StatusEffectInstance(StatusEffects.BLINDNESS), 0, false);
-        this.refillQuantity = refillQuantity;
-        this.effects.addAll(effects);
-    }
-
-    @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("tooltip."+Registries.ITEM.getId(this)).formatted(Formatting.GRAY));
-        tooltip.add(Text.translatable("tooltip.tcots-witcher.refill", this.refillQuantity).formatted(Formatting.GRAY));
-    }
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         PlayerEntity playerEntity = user instanceof PlayerEntity ? (PlayerEntity)user : null;
@@ -50,13 +35,10 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base{
         }
 
         if (!world.isClient) {
-            for(StatusEffectInstance effect : this.effects){
-                if(effect.getEffectType().isInstant()){
-                    effect.getEffectType().applyInstantEffect(playerEntity, playerEntity, user, effect.getAmplifier(), 1.0);
-                }
-                else{
-                    user.addStatusEffect(new StatusEffectInstance(effect));
-                }
+            user.clearStatusEffects();
+            if(user instanceof PlayerEntity player){
+                player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getToxicity(),false);
+                player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getDecoctionToxicity(),true);
             }
         }
 
@@ -78,7 +60,18 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base{
     }
 
     @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        return ItemUsage.consumeHeldItem(world, user, hand);
+    }
+
+    @Override
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.DRINK;
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.translatable("tooltip.effect.tcots-witcher.white_honey.first").formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable("tooltip.effect.tcots-witcher.white_honey.second").formatted(Formatting.GRAY));
     }
 }

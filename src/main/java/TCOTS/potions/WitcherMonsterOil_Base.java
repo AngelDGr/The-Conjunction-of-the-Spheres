@@ -27,18 +27,14 @@ public class WitcherMonsterOil_Base extends Item {
         //                                                           Smite V  : 12.5 damage
 
 
-    EntityGroup group;
-    String id_group;
-    int group_value;
-    int uses;
-
-    String damageString;
-
-    int level;
+    private final String id_group;
+    private final int group_value;
+    private final int uses;
+    private final String damageString;
+    private final int level;
 
     public WitcherMonsterOil_Base(Settings settings, EntityGroup group, int uses, int level) {
         super(settings);
-        this.group = group;
         if(group == TCOTS_Entities.NECROPHAGES){
             id_group = "Necrophages";
             this.group_value = 0;
