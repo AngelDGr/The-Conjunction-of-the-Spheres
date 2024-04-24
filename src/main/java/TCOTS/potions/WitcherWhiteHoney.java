@@ -1,14 +1,16 @@
 package TCOTS.potions;
 
+import TCOTS.items.TCOTS_Items;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
-import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
@@ -48,11 +50,30 @@ public class WitcherWhiteHoney extends WitcherPotions_Base{
                 stack.decrement(1);
             }
         }
+        ItemStack stack_Empty;
+
+        if(!decoction){
+            stack_Empty = switch (this.getMaxCount()) {
+                default -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_2);
+                case 3 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_3);
+                case 4 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_4);
+                case 5 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_5);
+            };
+        }
+        else {stack_Empty = new ItemStack(TCOTS_Items.EMPTY_MONSTER_DECOCTION);}
+
+        stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
         if (playerEntity == null || !playerEntity.getAbilities().creativeMode) {
-            if (stack.isEmpty()) {return new ItemStack(Items.GLASS_BOTTLE);}
 
-            if (playerEntity != null) {playerEntity.getInventory().insertStack(new ItemStack(Items.GLASS_BOTTLE));}
+            if (playerEntity != null) {
+                //If the player inventories its full
+                if(playerEntity.getInventory().getEmptySlot() == -1){
+                    playerEntity.getWorld().spawnEntity(new ItemEntity(playerEntity.getWorld(), playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), stack_Empty));
+                } else{
+                    playerEntity.getInventory().insertStack(stack_Empty);
+                }
+            }
         }
 
         user.emitGameEvent(GameEvent.DRINK);

@@ -1,5 +1,6 @@
 package TCOTS.interfaces;
 
+@SuppressWarnings("unused")
 public interface PlayerEntityMixinInterface {
 
     default int theConjunctionOfTheSpheres$getMudInFace(){
@@ -34,4 +35,11 @@ public interface PlayerEntityMixinInterface {
 
     default void theConjunctionOfTheSpheres$decreaseToxicity(int toxicity, boolean decoction){}
 
+    default float theConjunctionOfTheSpheres$getHudTransparency(){return 0;}
+
+    default boolean theConjunctionOfTheSpheres$getHudActive(){return false;}
+
+    default void theConjunctionOfTheSpheres$setHudTransparency(float transparency){}
+
+    default void theConjunctionOfTheSpheres$setHudActive(boolean active){}
 }

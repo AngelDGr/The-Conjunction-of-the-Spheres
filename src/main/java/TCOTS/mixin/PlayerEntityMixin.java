@@ -374,12 +374,18 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private static final TrackedData<Integer> DECOCTION_TOXICITY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
     @Unique
     private static final TrackedData<Integer> MAX_TOXICITY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Boolean> HUD_ACTIVE = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique
+    private static final TrackedData<Float> HUD_TRANSPARENCY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.FLOAT);
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
-    private void injectToxicity(CallbackInfo ci){
+    private void injectToxicityDataTracker(CallbackInfo ci){
         this.dataTracker.startTracking(TOXICITY, 0);
         this.dataTracker.startTracking(DECOCTION_TOXICITY, 0);
         this.dataTracker.startTracking(MAX_TOXICITY,100);
+        this.dataTracker.startTracking(HUD_ACTIVE, false);
+        this.dataTracker.startTracking(HUD_TRANSPARENCY, 0.0f);
     }
 
     @Override
@@ -442,12 +448,33 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return this.dataTracker.get(DECOCTION_TOXICITY)+this.dataTracker.get(TOXICITY);
     }
 
+    @Override
+    public boolean theConjunctionOfTheSpheres$getHudActive() {
+        return this.dataTracker.get(HUD_ACTIVE);
+    }
+
+    @Override
+    public float theConjunctionOfTheSpheres$getHudTransparency() {
+        return this.dataTracker.get(HUD_TRANSPARENCY);
+    }
+    @Override
+    public void theConjunctionOfTheSpheres$setHudTransparency(float transparency){
+        this.dataTracker.set(HUD_TRANSPARENCY,transparency);
+    }
+    @Override
+    public void theConjunctionOfTheSpheres$setHudActive(boolean active){
+        this.dataTracker.set(HUD_ACTIVE,active);
+    }
+
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void injectReadNBTToxicity(NbtCompound nbt, CallbackInfo ci){
         theConjunctionOfTheSpheres$setToxicity(nbt.getInt("Toxicity"));
         theConjunctionOfTheSpheres$setDecoctionToxicity(nbt.getInt("DecoctionToxicity"));
 
         theConjunctionOfTheSpheres$setMaxToxicity(nbt.getInt("MaxToxicity"));
+
+        theConjunctionOfTheSpheres$setHudTransparency(nbt.getFloat("ToxAlpha"));
+        theConjunctionOfTheSpheres$setHudActive(nbt.getBoolean("HudActive"));
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
@@ -456,13 +483,33 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         nbt.putInt("DecoctionToxicity",theConjunctionOfTheSpheres$getDecoctionToxicity());
 
         nbt.putInt("MaxToxicity",theConjunctionOfTheSpheres$getMaxToxicity());
+
+
+        nbt.putFloat("ToxAlpha",theConjunctionOfTheSpheres$getHudTransparency());
+        nbt.putBoolean("HudActive",theConjunctionOfTheSpheres$getHudActive());
     }
 
+    @Unique
+    private int timerHud;
     @Inject(method = "tick", at = @At("HEAD"))
     private void injectInTickDecreaseToxicity(CallbackInfo ci){
         if (this.theConjunctionOfTheSpheres$getToxicity()>0) {
             if(this.age%40==0){
                 this.theConjunctionOfTheSpheres$decreaseToxicity(1,false);
+            }
+        }
+
+        if(this.theConjunctionOfTheSpheres$getAllToxicity()>0){
+            theConjunctionOfTheSpheres$setHudActive(true);
+            theConjunctionOfTheSpheres$setHudTransparency(1.0f);
+            timerHud=0;
+        }
+        else if(this.theConjunctionOfTheSpheres$getAllToxicity()==0){
+            if(timerHud<20){
+                theConjunctionOfTheSpheres$setHudTransparency(theConjunctionOfTheSpheres$getHudTransparency()-0.05f);
+                ++timerHud;
+            } else {
+                theConjunctionOfTheSpheres$setHudActive(false);
             }
         }
     }

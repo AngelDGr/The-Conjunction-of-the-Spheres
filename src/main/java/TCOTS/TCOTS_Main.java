@@ -1,6 +1,7 @@
 package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.config.TCOTS_Config;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
@@ -23,12 +24,13 @@ public class TCOTS_Main implements ModInitializer {
 
 
 	public static String MOD_ID = "tcots-witcher";
-
+	public static final TCOTS_Config CONFIG = TCOTS_Config.createAndLoad();
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+
 		GeckoLib.initialize();
 		TCOTS_Blocks.registerBlocks();
 		TCOTS_Effects.registerEffects();

@@ -341,6 +341,18 @@
 
     "effect.tcots-witcher.water_hag_decoction": "Water Hag Ferocity",
     "effect.tcots-witcher.alghoul_decoction": "Alghoul Hungry",
-    "effect.tcots-witcher.foglet_decoction": "Foglet Foggy Resistance"
+    "effect.tcots-witcher.foglet_decoction": "Foglet Foggy Resistance",
+
+    "text.config.tcots_config.title": "TCOTS Config",
+    "text.config.tcots_config.category.hud": "HUD Options",
+    "text.config.tcots_config.option.hud.Hud_Y": "Y Offset",
+    "text.config.tcots_config.option.hud.Hud_X": "X Offset",
+    "text.config.tcots_config.option.hud.anchor": "Anchor",
+    "text.config.tcots_config.enum.aNCHORS.center_down": "CENTER DOWN",
+    "text.config.tcots_config.enum.aNCHORS.center_up": "CENTER UP",
+    "text.config.tcots_config.enum.aNCHORS.left_up": "LEFT UP",
+    "text.config.tcots_config.enum.aNCHORS.left_down": "LEFT DOWN",
+    "text.config.tcots_config.enum.aNCHORS.right_up": "RIGHT UP",
+    "text.config.tcots_config.enum.aNCHORS.right_down": "RIGHT DOWN"
 
 }
