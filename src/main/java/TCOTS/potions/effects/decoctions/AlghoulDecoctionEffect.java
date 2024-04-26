@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class AlghoulDecoctionEffect extends DecoctionEffectBase {
     public AlghoulDecoctionEffect(StatusEffectCategory category, int color) {
-        super(category, color);
+        super(category, color,50);
     }
 
     private int cooldownAttacks=0;

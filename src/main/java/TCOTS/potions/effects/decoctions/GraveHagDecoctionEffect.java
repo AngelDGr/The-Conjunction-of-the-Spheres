@@ -14,7 +14,7 @@ public class GraveHagDecoctionEffect extends DecoctionEffectBase {
 
 
     public GraveHagDecoctionEffect(StatusEffectCategory category, int color) {
-        super(category, color);
+        super(category, color,50);
     }
 
     private int killCounterIn=0;

@@ -343,6 +343,8 @@
     "effect.tcots-witcher.alghoul_decoction": "Alghoul Hungry",
     "effect.tcots-witcher.foglet_decoction": "Foglet Foggy Resistance",
 
+    "death.attack.potionToxicity": "%1$s had too much toxicity in the blood",
+
     "text.config.tcots_config.title": "TCOTS Config",
     "text.config.tcots_config.category.hud": "HUD Options",
     "text.config.tcots_config.option.hud.Hud_Y": "Y Offset",

@@ -12,7 +12,6 @@ import TCOTS.particles.*;
 import TCOTS.potions.recipes.AlchemyTableRecipe;
 import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
 import TCOTS.screen.AlchemyTableScreen;
-import TCOTS.screen.ToxicityHudOverlay;
 import io.wispforest.lavender.client.LavenderBookScreen;
 import io.wispforest.lavender.md.compiler.BookCompiler;
 import io.wispforest.lavender.md.features.RecipeFeature;
@@ -24,7 +23,6 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.color.world.GrassColors;
@@ -55,9 +53,6 @@ public class TCOTS_Client implements ClientModInitializer {
             }
             return BiomeColors.getGrassColor(world, pos);}, TCOTS_Blocks.BRYONIA_VINE);
 
-        //Toxicity
-        HudRenderCallback.EVENT.register(new ToxicityHudOverlay());
-
         //Monsters
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER, DrownerRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER_PUDDLE, DrownerPuddleRenderer::new);
@@ -67,17 +62,15 @@ public class TCOTS_Client implements ClientModInitializer {
         EntityRendererRegistry.register(TCOTS_Entities.GRAVE_HAG, GraveHagRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.WATER_HAG, WaterHagRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities.WATER_HAG_MUD_BALL, FlyingItemEntityRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.FOGLET, FogletRenderer::new);
-
         EntityRendererRegistry.register(TCOTS_Entities.FOGLING, FoglingRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.GHOUL, GhoulRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.ALGHOUL, AlghoulRenderer::new);
 
-
-        EntityRendererRegistry.register(TCOTS_Entities.WATER_HAG_MUD_BALL, FlyingItemEntityRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
 
@@ -153,7 +146,7 @@ public class TCOTS_Client implements ClientModInitializer {
                                     435, 144,
                                     22, 22,
                                     512, 256).blend(true))
-                            //Put in the result specific place
+                            //Put in the result-specific place
                             .positioning(Positioning.absolute(36, 0))
                             //Align it
                             .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));

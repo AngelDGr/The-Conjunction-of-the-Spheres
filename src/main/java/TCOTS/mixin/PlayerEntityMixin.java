@@ -7,6 +7,7 @@ import TCOTS.potions.EmptyWitcherPotionItem;
 import TCOTS.potions.TCOTS_Effects;
 import TCOTS.potions.WitcherAlcohol_Base;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
@@ -448,33 +449,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return this.dataTracker.get(DECOCTION_TOXICITY)+this.dataTracker.get(TOXICITY);
     }
 
-    @Override
-    public boolean theConjunctionOfTheSpheres$getHudActive() {
-        return this.dataTracker.get(HUD_ACTIVE);
-    }
-
-    @Override
-    public float theConjunctionOfTheSpheres$getHudTransparency() {
-        return this.dataTracker.get(HUD_TRANSPARENCY);
-    }
-    @Override
-    public void theConjunctionOfTheSpheres$setHudTransparency(float transparency){
-        this.dataTracker.set(HUD_TRANSPARENCY,transparency);
-    }
-    @Override
-    public void theConjunctionOfTheSpheres$setHudActive(boolean active){
-        this.dataTracker.set(HUD_ACTIVE,active);
-    }
-
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void injectReadNBTToxicity(NbtCompound nbt, CallbackInfo ci){
         theConjunctionOfTheSpheres$setToxicity(nbt.getInt("Toxicity"));
         theConjunctionOfTheSpheres$setDecoctionToxicity(nbt.getInt("DecoctionToxicity"));
 
         theConjunctionOfTheSpheres$setMaxToxicity(nbt.getInt("MaxToxicity"));
-
-        theConjunctionOfTheSpheres$setHudTransparency(nbt.getFloat("ToxAlpha"));
-        theConjunctionOfTheSpheres$setHudActive(nbt.getBoolean("HudActive"));
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
@@ -484,13 +464,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
         nbt.putInt("MaxToxicity",theConjunctionOfTheSpheres$getMaxToxicity());
 
-
-        nbt.putFloat("ToxAlpha",theConjunctionOfTheSpheres$getHudTransparency());
-        nbt.putBoolean("HudActive",theConjunctionOfTheSpheres$getHudActive());
     }
 
-    @Unique
-    private int timerHud;
+
     @Inject(method = "tick", at = @At("HEAD"))
     private void injectInTickDecreaseToxicity(CallbackInfo ci){
         if (this.theConjunctionOfTheSpheres$getToxicity()>0) {
@@ -499,19 +475,21 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             }
         }
 
-        if(this.theConjunctionOfTheSpheres$getAllToxicity()>0){
-            theConjunctionOfTheSpheres$setHudActive(true);
-            theConjunctionOfTheSpheres$setHudTransparency(1.0f);
-            timerHud=0;
-        }
-        else if(this.theConjunctionOfTheSpheres$getAllToxicity()==0){
-            if(timerHud<20){
-                theConjunctionOfTheSpheres$setHudTransparency(theConjunctionOfTheSpheres$getHudTransparency()-0.05f);
-                ++timerHud;
-            } else {
-                theConjunctionOfTheSpheres$setHudActive(false);
+
+        float overdoseThreshold=(this.theConjunctionOfTheSpheres$getMaxToxicity()*0.75f);
+        float dangerOverdoseThreshold=(this.theConjunctionOfTheSpheres$getMaxToxicity()*0.9f);
+        if(this.theConjunctionOfTheSpheres$getAllToxicity() > overdoseThreshold){
+            int damageableTicks = (int) (50 * ((float) theConjunctionOfTheSpheres$getMaxToxicity() / (float) theConjunctionOfTheSpheres$getAllToxicity()));
+            if(theConjunctionOfTheSpheres$getAllToxicity() > dangerOverdoseThreshold) {
+                damageableTicks = (int) (20 * ((float) theConjunctionOfTheSpheres$getMaxToxicity() / (float) theConjunctionOfTheSpheres$getAllToxicity()));
             }
+            if(this.age%(damageableTicks)==0){
+            this.damage(TCOTS_DamageTypes.toxicityDamage(getWorld()),1);
+            }
+
         }
     }
+
+
 
 }

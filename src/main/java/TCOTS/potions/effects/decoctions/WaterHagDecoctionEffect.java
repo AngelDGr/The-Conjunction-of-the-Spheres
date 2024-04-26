@@ -11,7 +11,7 @@ import java.util.Map;
 public class WaterHagDecoctionEffect extends DecoctionEffectBase {
 
     public WaterHagDecoctionEffect(StatusEffectCategory category, int color) {
-        super(category, color);
+        super(category, color,50);
     }
 
 

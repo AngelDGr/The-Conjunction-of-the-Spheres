@@ -7,7 +7,7 @@ import net.minecraft.util.math.MathHelper;
 
 public class FogletDecoctionEffect extends DecoctionEffectBase {
     public FogletDecoctionEffect(StatusEffectCategory category, int color) {
-        super(category, color);
+        super(category, color,50);
     }
 
     @Override

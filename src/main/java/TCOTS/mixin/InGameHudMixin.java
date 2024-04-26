@@ -2,6 +2,7 @@ package TCOTS.mixin;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.potions.TCOTS_Effects;
+import TCOTS.screen.ToxicityHudOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -33,6 +34,7 @@ public abstract class InGameHudMixin {
     private int ticks;
     @Shadow
     private int renderHealthValue;
+    //Moving hearts for swallow
     @ModifyArg(method = "renderStatusBars", at = @At(value = "INVOKE", target =
             "Lnet/minecraft/client/gui/hud/InGameHud;renderHealthBar(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/entity/player/PlayerEntity;IIIIFIIIZ)V"), index=5)
     private int InjectMovingHearths(int x){
@@ -55,7 +57,7 @@ public abstract class InGameHudMixin {
     }
 
 
-    //Overlays
+    //MudballOverlay
     @Unique
     private static final Identifier MUD_BALL_OVERLAY_1 = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/mudball_overlay1.png");
     @Unique
@@ -108,6 +110,13 @@ public abstract class InGameHudMixin {
                 changeOverlay=true;
             }
         }
+    }
+
+    //ToxicityHudRender
+    @Inject(method = "render", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;getCurrentGameMode()Lnet/minecraft/world/GameMode;", ordinal = 1))
+    public void renderToxicityHud(DrawContext drawContext, float tickDelta, CallbackInfo callbackInfo) {
+        ToxicityHudOverlay.onHudRender(drawContext,tickDelta);
     }
 
 }

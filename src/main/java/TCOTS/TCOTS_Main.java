@@ -15,6 +15,7 @@ import TCOTS.world.village.TCOTS_PointOfInterest;
 import TCOTS.world.village.TCOTS_VillageAdditions;
 import TCOTS.world.village.VillagerCustomTrades;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.block.DispenserBlock;
 import software.bernie.geckolib.GeckoLib;
 
 public class TCOTS_Main implements ModInitializer {
@@ -51,6 +52,13 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_VillageAdditions.registerNewVillageStructures();
 		TCOTS_PointOfInterest.registerVillagers();
 		VillagerCustomTrades.registerTrades();
+
+		//Dispenser with splash potions
+		DispenserBlock.registerBehavior(TCOTS_Items.KILLER_WHALE_SPLASH, TCOTS_Items.getSplashBehavior());
+		DispenserBlock.registerBehavior(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH, TCOTS_Items.getSplashBehavior());
+		DispenserBlock.registerBehavior(TCOTS_Items.SWALLOW_SPLASH, TCOTS_Items.getSplashBehavior());
 	}
+
+
 
 }

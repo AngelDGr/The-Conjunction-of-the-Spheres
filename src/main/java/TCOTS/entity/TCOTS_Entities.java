@@ -125,9 +125,6 @@ public class TCOTS_Entities {
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.65f, 0.9f)).build());
 
-
-
-
     public static void addSpawns() {
         //Drowners
         SpawnRestriction.register(DROWNER, SpawnRestriction.Location.NO_RESTRICTIONS,

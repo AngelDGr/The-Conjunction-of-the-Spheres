@@ -3,17 +3,20 @@ package TCOTS;
 import TCOTS.items.OrganicPasteItem;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.world.TCOTS_ConfiguredFeatures;
+import TCOTS.world.TCOTS_DamageTypes;
 import TCOTS.world.TCOTS_PlacedFeature;
 import TCOTS.world.TCOTS_ProcessorList;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SuspiciousStewIngredient;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.server.tag.TagProvider;
+import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
@@ -28,6 +31,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.PointOfInterestTypeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.poi.PointOfInterestType;
@@ -45,6 +49,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         main.addProvider(ModWorldGenerator::new);
         main.addProvider(LootTablesHerbalistGenerator::new);
         main.addProvider(POIProvider::new);
+        main.addProvider(TagsGenerator::new);
     }
 
     @Override
@@ -52,6 +57,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, TCOTS_ConfiguredFeatures::boostrap);
         registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, TCOTS_PlacedFeature::boostrap);
         registryBuilder.addRegistry(RegistryKeys.PROCESSOR_LIST, TCOTS_ProcessorList::boostrap);
+        registryBuilder.addRegistry(RegistryKeys.DAMAGE_TYPE, TCOTS_DamageTypes::boostrap);
     }
 
     public static class ModWorldGenerator extends FabricDynamicRegistryProvider {
@@ -350,11 +356,31 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             this.getOrCreateTagBuilder(PointOfInterestTypeTags.ACQUIRABLE_JOB_SITE)
-                    .addOptional(new Identifier(TCOTS_Main.MOD_ID, "herbal_poi"))
-//                    .add(TCOTS_PointOfInterest.HERBAL_POI_KEY)
-            ;
+                    .addOptional(new Identifier(TCOTS_Main.MOD_ID, "herbal_poi"));
 
         }
+    }
+
+    private static class TagsGenerator extends TagProvider<DamageType> {
+
+
+        /**
+         * Constructs a new {@link FabricTagProvider} with the default computed path.
+         *
+         * <p>Common implementations of this class are provided.
+         *
+         * @param output           the {@link FabricDataOutput} instance
+         * @param registriesFuture the backing registry for the tag type
+         */
+        public TagsGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, RegistryKeys.DAMAGE_TYPE, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup lookup) {
+            this.getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR).add(TCOTS_DamageTypes.POTION_TOXICITY);
+        }
+
     }
 
 }

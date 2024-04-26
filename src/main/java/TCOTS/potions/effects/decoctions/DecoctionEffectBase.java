@@ -9,8 +9,10 @@ import net.minecraft.entity.player.PlayerEntity;
 public class DecoctionEffectBase extends StatusEffect {
 
     private LivingEntity entity;
-    public DecoctionEffectBase(StatusEffectCategory category, int color) {
+    private final int decoctionToxicity;
+    public DecoctionEffectBase(StatusEffectCategory category, int color, int decoctionToxicity) {
         super(category, color);
+        this.decoctionToxicity=decoctionToxicity;
     }
 
     @Override
@@ -30,7 +32,7 @@ public class DecoctionEffectBase extends StatusEffect {
     public void onRemoved(AttributeContainer attributeContainer) {
         if(!entity.getWorld().isClient){
             if(entity!=null && entity instanceof PlayerEntity player){
-                player.theConjunctionOfTheSpheres$decreaseToxicity(50,true);
+                player.theConjunctionOfTheSpheres$decreaseToxicity(this.decoctionToxicity,true);
             }
         }
         super.onRemoved(attributeContainer);

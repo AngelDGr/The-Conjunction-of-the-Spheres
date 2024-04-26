@@ -1,6 +1,7 @@
 package TCOTS.mixin;
 
 import TCOTS.potions.WitcherPotionsSplash_Base;
+import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -105,7 +106,7 @@ public class PotionEntityMixin extends ThrownItemEntity implements FlyingItemEnt
                         //To add toxicity to players
                         if (player.theConjunctionOfTheSpheres$getMaxToxicity() < player.theConjunctionOfTheSpheres$getAllToxicity()+toxicity) {
                             player.sendMessage(Text.translatable("tcots-witcher.gui.toxicity_danger").formatted(Formatting.DARK_GREEN), true);
-                            player.damage(player.getDamageSources().magic(),1+(toxicity*0.1f));
+                            player.damage(TCOTS_DamageTypes.toxicityDamage(getWorld()),1+(toxicity*0.1f));
                         } else {
                             if (statusEffect.isInstant()) {
                                 statusEffect.applyInstantEffect(this, this.getOwner(), livingEntity, statusEffectInstance.getAmplifier(), e);

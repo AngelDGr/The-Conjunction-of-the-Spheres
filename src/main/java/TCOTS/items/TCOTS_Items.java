@@ -13,11 +13,15 @@ import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CropBlock;
+import net.minecraft.block.dispenser.DispenserBehavior;
+import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
@@ -34,15 +38,20 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Position;
+import net.minecraft.world.World;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class TCOTS_Items {
 
+    //TODO: Add Toxicity info to the Alchemy Almanac
     //xTODO: Add new way to craft the potions
-        // TODO: Add new alchemy ingredients (mushrooms, flowers)
+        // xTODO: Add new alchemy ingredients (mushrooms, flowers)
             //Plants
             //xTODO: Allspice
             //xTODO: Arenaria
@@ -89,7 +98,7 @@ public class TCOTS_Items {
             //xTODO: Cat: Can be added, crafted with Water essence
             //xTODO: Black Blood: Add when added Ghouls
             //xTODO: Maribor Forest: Add when added Alghouls
-            //TODO: White Honey: Add when added toxicity mechanic
+            //xTODO: White Honey: Add when added toxicity mechanic
 
             //TODO: Petri's Philter: Add when added specters
             //TODO: Full Moon: Add when added Nightwraiths
@@ -880,5 +889,30 @@ public class TCOTS_Items {
         } catch (Exception e) {
             throw new IllegalArgumentException("Error registering Splash potion");
         }
+    }
+
+    public static DispenserBehavior getSplashBehavior(){
+        return new DispenserBehavior(){
+            @Override
+            public ItemStack dispense(BlockPointer blockPointer, ItemStack itemStack) {
+                return new ProjectileDispenserBehavior(){
+
+                    @Override
+                    protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+                        return Util.make(new PotionEntity(world, position.getX(), position.getY(), position.getZ()), entity -> entity.setItem(stack));
+                    }
+
+                    @Override
+                    protected float getVariation() {
+                        return super.getVariation() * 0.5f;
+                    }
+
+                    @Override
+                    protected float getForce() {
+                        return super.getForce() * 1.25f;
+                    }
+                }.dispense(blockPointer, itemStack);
+            }
+        };
     }
 }
