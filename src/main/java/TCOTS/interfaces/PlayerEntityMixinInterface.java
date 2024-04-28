@@ -35,4 +35,6 @@ public interface PlayerEntityMixinInterface {
 
     default void theConjunctionOfTheSpheres$decreaseToxicity(int toxicity, boolean decoction){}
 
+    default boolean theConjunctionOfTheSpheres$toxicityOverThreshold(){return false;}
+
 }

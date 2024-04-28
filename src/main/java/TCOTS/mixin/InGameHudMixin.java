@@ -7,6 +7,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -18,6 +19,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
@@ -34,6 +36,9 @@ public abstract class InGameHudMixin {
     private int ticks;
     @Shadow
     private int renderHealthValue;
+    @Shadow
+    public abstract void drawHeart(DrawContext context, InGameHud.HeartType type, int x, int y, boolean hardcore, boolean blinking, boolean half);
+
     //Moving hearts for swallow
     @ModifyArg(method = "renderStatusBars", at = @At(value = "INVOKE", target =
             "Lnet/minecraft/client/gui/hud/InGameHud;renderHealthBar(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/entity/player/PlayerEntity;IIIIFIIIZ)V"), index=5)
@@ -119,4 +124,19 @@ public abstract class InGameHudMixin {
         ToxicityHudOverlay.onHudRender(drawContext,tickDelta);
     }
 
+    @Redirect(method = "renderHealthBar", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/client/gui/hud/InGameHud;drawHeart(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/gui/hud/InGameHud$HeartType;IIZZZ)V",
+            ordinal = 3))
+    private void injectToxicHearts(InGameHud instance, DrawContext context, InGameHud.HeartType type, int x, int y, boolean hardcore, boolean blinking, boolean half){
+        PlayerEntity player = this.getCameraPlayer();
+        if(player!=null) {
+
+            if (player.theConjunctionOfTheSpheres$toxicityOverThreshold() && !player.hasStatusEffect(StatusEffects.WITHER)) {
+                context.drawGuiTexture(ToxicityHudOverlay.HeartType.TOXIC.getTexture(hardcore,half,blinking), x, y, 9, 9);
+            }
+            else {
+                drawHeart(context, type, x, y, hardcore, blinking, half);
+            }
+        }
+    }
 }

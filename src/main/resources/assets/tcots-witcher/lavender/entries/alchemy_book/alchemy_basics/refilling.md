@@ -20,7 +20,7 @@ made with a Brewing Stand, those magic leftovers let you collect the
 empty bottles and easily refill them.
 
 
-So, you are probably asking, how I can refill my concoctions?
+So, you are probably asking; how I can refill my concoctions?
 
 ;;;;;
 
@@ -32,20 +32,20 @@ You have two ways to refill them:
 
 ;;;;;
 
-In the two cases you need to have [alcohol](^tcots-witcher:alchemy_basics/basic_ingredients).
+In the two cases, you need to have [alcohol](^tcots-witcher:alchemy_basics/basic_ingredients).
 
 
 To use the Alchemy Table to refill your concoctions, just take some alcohol with your hand
-and use it in the table.
+and use it on the table.
 
 
 To refill them by sleeping, you also need to have some kind of alcohol with you,
-by staying in the bed for a while the concoctions are going to refill automatically.
+by staying in bed for a while the concoctions are going to refill automatically.
 When you refill in this way, the __alcohest has priority for refilling over others__.
 
 ;;;;;
 
-As note, each type of alcohol it's different, and each one refill a different quantity of
+As note, each type of alcohol is different, and each one refill a different quantity of
 concoctions:
 
 - {#eecc59}Icy Spirit{}: {black}1 slot.{}

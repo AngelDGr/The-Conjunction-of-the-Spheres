@@ -28,3 +28,6 @@ accessible class net/minecraft/entity/ai/goal/FollowMobGoal
 
 accessible method net/minecraft/block/MultifaceGrowthBlock withAllDirections (Lnet/minecraft/state/StateManager;)Lnet/minecraft/block/BlockState;
 accessible method net/minecraft/data/client/Models item (Ljava/lang/String;[Lnet/minecraft/data/client/TextureKey;)Lnet/minecraft/data/client/Model;
+
+accessible class net/minecraft/client/gui/hud/InGameHud$HeartType
+accessible method net/minecraft/client/gui/hud/InGameHud drawHeart (Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/gui/hud/InGameHud$HeartType;IIZZZ)V

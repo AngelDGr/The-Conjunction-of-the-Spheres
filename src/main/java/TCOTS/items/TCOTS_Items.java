@@ -49,7 +49,7 @@ import java.util.List;
 
 public class TCOTS_Items {
 
-    //TODO: Add Toxicity info to the Alchemy Almanac
+    //TODO: Add Bombs!
     //xTODO: Add new way to craft the potions
         // xTODO: Add new alchemy ingredients (mushrooms, flowers)
             //Plants

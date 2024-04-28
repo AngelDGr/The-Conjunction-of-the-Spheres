@@ -82,6 +82,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return  (float) theConjunctionOfTheSpheres$getMudInFace()/100;
     }
 
+
+
     @Inject(method = "tick", at = @At("HEAD"))
     private void injectInTickMud(CallbackInfo ci){
 
@@ -449,6 +451,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return this.dataTracker.get(DECOCTION_TOXICITY)+this.dataTracker.get(TOXICITY);
     }
 
+    @Override
+    public boolean theConjunctionOfTheSpheres$toxicityOverThreshold() {
+        float overdoseThreshold=(this.theConjunctionOfTheSpheres$getMaxToxicity()*0.75f);
+        return this.theConjunctionOfTheSpheres$getAllToxicity() > overdoseThreshold;
+    }
+
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void injectReadNBTToxicity(NbtCompound nbt, CallbackInfo ci){
         theConjunctionOfTheSpheres$setToxicity(nbt.getInt("Toxicity"));
@@ -476,10 +484,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         }
 
 
-        float overdoseThreshold=(this.theConjunctionOfTheSpheres$getMaxToxicity()*0.75f);
         float dangerOverdoseThreshold=(this.theConjunctionOfTheSpheres$getMaxToxicity()*0.9f);
-        if(this.theConjunctionOfTheSpheres$getAllToxicity() > overdoseThreshold){
+        if(this.theConjunctionOfTheSpheres$toxicityOverThreshold()){
             int damageableTicks = (int) (50 * ((float) theConjunctionOfTheSpheres$getMaxToxicity() / (float) theConjunctionOfTheSpheres$getAllToxicity()));
+
             if(theConjunctionOfTheSpheres$getAllToxicity() > dangerOverdoseThreshold) {
                 damageableTicks = (int) (20 * ((float) theConjunctionOfTheSpheres$getMaxToxicity() / (float) theConjunctionOfTheSpheres$getAllToxicity()));
             }
@@ -489,7 +497,5 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
         }
     }
-
-
 
 }
