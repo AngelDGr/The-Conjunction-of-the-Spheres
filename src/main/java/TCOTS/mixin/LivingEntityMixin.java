@@ -2,7 +2,7 @@ package TCOTS.mixin;
 
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.interfaces.LivingEntityMixinInterface;
-import TCOTS.potions.TCOTS_Effects;
+import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;

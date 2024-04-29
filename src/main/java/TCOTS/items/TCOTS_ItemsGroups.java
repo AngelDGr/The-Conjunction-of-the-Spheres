@@ -102,8 +102,11 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.QUEBRITH);
                             entries.add(TCOTS_Items.RUBEDO);
                             entries.add(TCOTS_Items.REBIS);
+                            entries.add(TCOTS_Items.NIGREDO);
                             entries.add(TCOTS_Items.ALCHEMY_PASTE);
                             entries.add(TCOTS_Items.MONSTER_FAT);
+                            entries.add(TCOTS_Items.STAMMELFORDS_DUST);
+
 
                             entries.add(TCOTS_Items.SWALLOW_POTION.getDefaultStack());
                             entries.add(TCOTS_Items.SWALLOW_POTION_ENHANCED.getDefaultStack());
@@ -160,6 +163,10 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.ALGHOUL_DECOCTION);
                             entries.add(TCOTS_Items.FOGLET_DECOCTION);
 
+                            //Bombs
+                            entries.add(TCOTS_Items.GRAPESHOT);
+                            entries.add(TCOTS_Items.ENHANCED_GRAPESHOT);
+                            entries.add(TCOTS_Items.SUPERIOR_GRAPESHOT);
 
                             //Misc/Blocks
                             entries.add(TCOTS_Items.NEST_SLAB_ITEM);

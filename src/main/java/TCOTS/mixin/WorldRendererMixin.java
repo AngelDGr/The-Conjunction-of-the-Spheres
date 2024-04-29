@@ -1,6 +1,6 @@
 package TCOTS.mixin;
 
-import TCOTS.potions.TCOTS_Effects;
+import TCOTS.items.potions.TCOTS_Effects;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.WorldRenderer;

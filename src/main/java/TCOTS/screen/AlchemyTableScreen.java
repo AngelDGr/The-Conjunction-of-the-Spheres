@@ -2,8 +2,8 @@ package TCOTS.screen;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.AlchemyTableBlock;
-import TCOTS.potions.recipes.recipebook.widget.AlchemyRecipeBookButtonTextured;
-import TCOTS.potions.recipes.recipebook.widget.AlchemyRecipeBookWidget;
+import TCOTS.items.potions.recipes.recipebook.widget.AlchemyRecipeBookButtonTextured;
+import TCOTS.items.potions.recipes.recipebook.widget.AlchemyRecipeBookWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
@@ -35,8 +35,6 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
 
     private final AlchemyRecipeBookWidget recipeBook = new AlchemyRecipeBookWidget();
 
-    private boolean narrow;
-
     private AlchemyRecipeBookButtonTextured buttonWidget;
 
 
@@ -46,7 +44,7 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
 
     @Override
     protected void init() {
-        this.narrow = this.width < 379;
+//        boolean narrow = this.width < 379;
         super.init();
         assert this.client != null;
         this.buttonWidget =

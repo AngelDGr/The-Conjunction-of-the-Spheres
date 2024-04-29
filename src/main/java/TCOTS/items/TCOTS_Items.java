@@ -7,7 +7,7 @@ import TCOTS.items.blocks.AlchemyTableItem;
 import TCOTS.items.blocks.HerbalTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
-import TCOTS.potions.*;
+import TCOTS.items.potions.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
@@ -49,7 +49,12 @@ import java.util.List;
 
 public class TCOTS_Items {
 
-    //TODO: Add Bombs!
+    //TODO: Add Bombs
+        //TODO: Add how to obtain Stammelford's Dust
+        //TODO: Add Alchemist's Powder
+            //TODO: Add Superior Grapeshot Recipe
+    //TODO: Fix Basic ingredients Entry
+    //TODO: Add Bombs Entry
     //xTODO: Add new way to craft the potions
         // xTODO: Add new alchemy ingredients (mushrooms, flowers)
             //Plants
@@ -286,7 +291,13 @@ public class TCOTS_Items {
 
     public static Item EMPTY_OIL;
 
-
+    //Bombs
+    public static Item EMPTY_BOMB_POWDER_2;
+    public static Item EMPTY_BOMB_POWDER_3;
+    public static Item EMPTY_BOMB_POWDER_4;
+    public static Item GRAPESHOT;
+    public static Item ENHANCED_GRAPESHOT;
+    public static Item SUPERIOR_GRAPESHOT;
 
     //Register Witcher Potion Items
     public static void registerPotions() {
@@ -337,6 +348,28 @@ public class TCOTS_Items {
         );
 
 
+        //Bombs
+        EMPTY_BOMB_POWDER_2 = registerItem("bomb_powder_2",
+                new EmptyBombPowderItem(new FabricItemSettings().maxCount(2)));
+
+        EMPTY_BOMB_POWDER_3 = registerItem("bomb_powder_3",
+                new EmptyBombPowderItem(new FabricItemSettings().maxCount(3)));
+
+        EMPTY_BOMB_POWDER_4 = registerItem("bomb_powder_4",
+                new EmptyBombPowderItem(new FabricItemSettings().maxCount(4)));
+
+
+        GRAPESHOT=registerItem("grapeshot",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"grapeshot",0));
+
+        ENHANCED_GRAPESHOT=registerItem("grapeshot_enhanced",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"grapeshot",1));
+
+        SUPERIOR_GRAPESHOT=registerItem("grapeshot_superior",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"grapeshot",2));
+
+        //Potions
+
         EMPTY_WITCHER_POTION_2 = registerItem("empty_witcher_potion2",
                 new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(2))
         );
@@ -353,7 +386,7 @@ public class TCOTS_Items {
                 new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(5))
         );
 
-        //Potions
+
         SWALLOW_POTION = registerItemPotion("swallow_potion",
                 new FabricItemSettings().maxCount(3),
                 TCOTS_Effects.SWALLOW_EFFECT,
@@ -598,6 +631,8 @@ public class TCOTS_Items {
     public static Item QUEBRITH;
     public static Item RUBEDO;
     public static Item REBIS;
+    public static Item NIGREDO;
+    public static Item STAMMELFORDS_DUST;
     public static Item ALCHEMY_PASTE;
     public static Item MONSTER_FAT;
 
@@ -697,10 +732,16 @@ public class TCOTS_Items {
         REBIS = registerItem("rebis",
                 new Item(new FabricItemSettings()));
 
+        NIGREDO = registerItem("nigredo",
+                new Item(new FabricItemSettings()));
+
         ALCHEMY_PASTE = registerItem("alchemy_paste",
                 new Item(new FabricItemSettings()));
 
         MONSTER_FAT = registerItem("monster_fat",
+                new Item(new FabricItemSettings()));
+
+        STAMMELFORDS_DUST = registerItem("stammelfords_dust",
                 new Item(new FabricItemSettings()));
 
         //Plants
@@ -915,4 +956,6 @@ public class TCOTS_Items {
             }
         };
     }
+
+
 }

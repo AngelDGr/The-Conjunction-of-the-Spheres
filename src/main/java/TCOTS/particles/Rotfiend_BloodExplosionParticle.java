@@ -5,7 +5,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
-import net.minecraft.particle.ParticleEffect;
 
 @Environment(value= EnvType.CLIENT)
 public class Rotfiend_BloodExplosionParticle extends SpriteBillboardParticle {
@@ -57,10 +56,5 @@ public class Rotfiend_BloodExplosionParticle extends SpriteBillboardParticle {
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             return new Rotfiend_BloodExplosionParticle(clientWorld, d, e, f, g, this.spriteProvider);
         }
-
-//        @Override
-//        public Particle createParticle(ParticleEffect particleEffect, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
-//            return this.createParticle((DefaultParticleType)particleEffect, clientWorld, d, e, f, g, h, i);
-//        }
     }
 }

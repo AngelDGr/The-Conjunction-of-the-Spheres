@@ -1,8 +1,8 @@
 package TCOTS.screen;
 
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
-import TCOTS.potions.recipes.AlchemyTableRecipe;
-import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
+import TCOTS.items.potions.recipes.AlchemyTableRecipe;
+import TCOTS.items.potions.recipes.AlchemyTableRecipesRegister;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,6 +20,7 @@ import net.minecraft.util.collection.DefaultedList;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class AlchemyTableScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final PropertyDelegate propertyDelegate;

@@ -4,6 +4,7 @@ import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.entity.misc.FoglingEntity;
 import TCOTS.entity.misc.WaterHag_MudBallEntity;
+import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -124,6 +125,14 @@ public class TCOTS_Entities {
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, NekkerEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.65f, 0.9f)).build());
+
+    //Misc
+    public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "witcher_bomb"),
+            FabricEntityTypeBuilder.<WitcherBombEntity>create(SpawnGroup.MISC, WitcherBombEntity::new
+                    )
+                    // Hitbox
+                    .dimensions(EntityDimensions.changing(0.25f, 0.25f)).build());
 
     public static void addSpawns() {
         //Drowners

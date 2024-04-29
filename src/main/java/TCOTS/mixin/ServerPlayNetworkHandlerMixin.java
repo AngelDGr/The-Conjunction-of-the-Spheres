@@ -1,6 +1,6 @@
 package TCOTS.mixin;
 
-import TCOTS.potions.recipes.AlchemyTableRecipe;
+import TCOTS.items.potions.recipes.AlchemyTableRecipe;
 import TCOTS.screen.AlchemyTableScreenHandler;
 import net.minecraft.network.NetworkThreadUtils;
 import net.minecraft.network.packet.c2s.play.*;

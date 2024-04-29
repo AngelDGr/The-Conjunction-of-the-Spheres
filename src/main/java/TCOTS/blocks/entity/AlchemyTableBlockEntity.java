@@ -1,7 +1,7 @@
 package TCOTS.blocks.entity;
 
 import TCOTS.blocks.TCOTS_Blocks;
-import TCOTS.potions.recipes.AlchemyTableRecipe;
+import TCOTS.items.potions.recipes.AlchemyTableRecipe;
 import TCOTS.screen.AlchemyTableScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;

@@ -1,7 +1,7 @@
 package TCOTS.mixin;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.potions.TCOTS_Effects;
+import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.screen.ToxicityHudOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

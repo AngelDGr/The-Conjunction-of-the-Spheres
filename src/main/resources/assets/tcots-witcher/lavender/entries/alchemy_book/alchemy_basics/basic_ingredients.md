@@ -909,6 +909,48 @@ Crafted, see recipes.</tooltip-text>
                             <children>
                                 <item>
                                     <stack>
+                                        tcots-witcher:rebis
+                                    </stack>
+<tooltip-text>Rebis:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:nigredo
+                                    </stack>
+<tooltip-text>Nigredo:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
+                    </children>
+                    <sizing>
+                        <horizontal method="content">1</horizontal>
+                        <vertical method="content">1</vertical>
+                    </sizing>
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+                </flow-layout>
+
+                <!--Third Row-->
+                <flow-layout direction="horizontal">
+                    <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
                                         tcots-witcher:monster_fat
                                     </stack>
 <tooltip-text>Monster Fat:
@@ -921,7 +963,7 @@ Brutes.</tooltip-text>
                                 <all>5</all>
                             </padding>
                         </stack-layout>
-                        
+
                         <stack-layout>
                             <children>
                                 <item>
@@ -937,8 +979,6 @@ Bought from villagers.</tooltip-text>
                             </padding>
                         </stack-layout>
 
-
-                        
                     </children>
                     <sizing>
                         <horizontal method="content">1</horizontal>

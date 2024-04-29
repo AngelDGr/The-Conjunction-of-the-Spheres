@@ -79,6 +79,13 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:grapeshot>
+<recipe;tcots-witcher:grapeshot_enhanced>
+<recipe;tcots-witcher:grapeshot_superior>
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
 <recipe;tcots-witcher:oil_necrophage>
 <recipe;tcots-witcher:oil_necrophage_enhanced>
 <recipe;tcots-witcher:oil_necrophage_superior>
@@ -129,6 +136,7 @@ decoctions, monster oils, bombs and ingredients.***
 
 **{#395026}Ingredients{}**
 <recipe;tcots-witcher:rebis>
+<recipe;tcots-witcher:nigredo>
 
 
 

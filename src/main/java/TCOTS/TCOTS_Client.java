@@ -9,8 +9,8 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
 import TCOTS.particles.*;
-import TCOTS.potions.recipes.AlchemyTableRecipe;
-import TCOTS.potions.recipes.AlchemyTableRecipesRegister;
+import TCOTS.items.potions.recipes.AlchemyTableRecipe;
+import TCOTS.items.potions.recipes.AlchemyTableRecipesRegister;
 import TCOTS.screen.AlchemyTableScreen;
 import io.wispforest.lavender.client.LavenderBookScreen;
 import io.wispforest.lavender.md.compiler.BookCompiler;
@@ -74,6 +74,8 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
 
+        //Bomb
+        EntityRendererRegistry.register(TCOTS_Entities.WITCHER_BOMB, FlyingItemEntityRenderer::new);
 
         //Blocks
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.ARENARIA_BUSH, RenderLayer.getCutout());
@@ -106,6 +108,7 @@ public class TCOTS_Client implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.GRAVE_HAG_GREEN_SALIVA, GraveHag_GreenSaliva.Factory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.FOGLET_FOG, Foglet_FogParticle.FogFactory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.FOGLET_FOG_AROUND, Foglet_FogParticleAround.FogFactory::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.GRAPESHOT_EXPLOSION_EMITTER, new Grapeshot_ExplosionEmitterParticle.Factory());
 
 
         HandledScreens.register(AlchemyTableRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, AlchemyTableScreen::new);

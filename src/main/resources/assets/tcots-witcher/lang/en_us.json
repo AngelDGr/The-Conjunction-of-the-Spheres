@@ -194,8 +194,11 @@
     "item.tcots-witcher.quebrith": "Quebrith",
     "item.tcots-witcher.rubedo": "Rubedo",
     "item.tcots-witcher.rebis": "Rebis",
+    "item.tcots-witcher.nigredo": "Nigredo",
     "item.tcots-witcher.alchemy_paste": "Alchemy Paste",
     "item.tcots-witcher.monster_fat": "Monster Fat",
+
+    "item.tcots-witcher.stammelfords_dust": "Stammelford's Dust",
 
 
 
@@ -344,6 +347,23 @@
     "effect.tcots-witcher.foglet_decoction": "Foglet Foggy Resistance",
 
     "death.attack.potionToxicity": "%1$s had too much toxicity in the blood",
+
+    "item.tcots-witcher.bomb_powder": "Bomb Powder",
+    "item.tcots-witcher.bomb_powder_tooltip": "(%s)",
+    "tooltip.tcots-witcher.bomb_powder_1": "Remade in the Alchemy Table or",
+    "tooltip.tcots-witcher.bomb_powder_2": "by sleeping, uses strong alcohol",
+
+
+    "item.tcots-witcher.grapeshot": "Grapeshot",
+    "item.tcots-witcher.grapeshot_enhanced": "Enhanced Grapeshot",
+    "item.tcots-witcher.grapeshot_superior": "Superior Grapeshot",
+    "tooltip.grapeshot.first": "Creates a tiny explosion",
+    "tooltip.grapeshot.second": "that ignites the target.",
+    "tooltip.bomb.monster_nest.first": "Can destroy Monster Nests",
+    "tooltip.bomb.monster_nest.second": "and Spawners.",
+
+
+
 
     "text.config.tcots_config.title": "TCOTS Config",
     "text.config.tcots_config.category.hud": "HUD Options",

@@ -1,6 +1,6 @@
 package TCOTS.mixin;
 
-import TCOTS.potions.WitcherPotionsSplash_Base;
+import TCOTS.items.potions.WitcherPotionsSplash_Base;
 import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.entity.*;
 import net.minecraft.entity.effect.StatusEffect;
