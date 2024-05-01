@@ -106,6 +106,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.ALCHEMY_PASTE);
                             entries.add(TCOTS_Items.MONSTER_FAT);
                             entries.add(TCOTS_Items.STAMMELFORDS_DUST);
+                            entries.add(TCOTS_Items.ALCHEMISTS_POWDER);
 
 
                             entries.add(TCOTS_Items.SWALLOW_POTION.getDefaultStack());
@@ -167,6 +168,12 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.GRAPESHOT);
                             entries.add(TCOTS_Items.ENHANCED_GRAPESHOT);
                             entries.add(TCOTS_Items.SUPERIOR_GRAPESHOT);
+                            entries.add(TCOTS_Items.DANCING_STAR);
+                            entries.add(TCOTS_Items.DANCING_STAR_ENHANCED);
+                            entries.add(TCOTS_Items.DANCING_STAR_SUPERIOR);
+                            entries.add(TCOTS_Items.DEVILS_PUFFBALL);
+                            entries.add(TCOTS_Items.DEVILS_PUFFBALL_ENHANCED);
+                            entries.add(TCOTS_Items.DEVILS_PUFFBALL_SUPERIOR);
 
                             //Misc/Blocks
                             entries.add(TCOTS_Items.NEST_SLAB_ITEM);

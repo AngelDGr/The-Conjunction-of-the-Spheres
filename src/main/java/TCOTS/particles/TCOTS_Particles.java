@@ -13,6 +13,7 @@ public class TCOTS_Particles {
     public static final DefaultParticleType ROTFIEND_BLOOD_EMITTER = FabricParticleTypes.simple();
     public static final DefaultParticleType GRAVE_HAG_GREEN_SALIVA = FabricParticleTypes.simple();
     public static final DefaultParticleType GRAPESHOT_EXPLOSION_EMITTER = FabricParticleTypes.simple();
+    public static final DefaultParticleType DANCING_STAR_EXPLOSION_EMITTER = FabricParticleTypes.simple();
 
 
     public static final DefaultParticleType FOGLET_FOG = FabricParticleTypes.simple();
@@ -37,6 +38,9 @@ public class TCOTS_Particles {
 
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "grapeshot_explosion_emitter"),
                 GRAPESHOT_EXPLOSION_EMITTER);
+
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "dancing_explosion_emitter"),
+                DANCING_STAR_EXPLOSION_EMITTER);
     }
 
 }

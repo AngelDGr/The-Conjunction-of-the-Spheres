@@ -36,6 +36,10 @@ public class WitcherBombs_Base extends Item {
         };
     }
 
+    public int getLevel() {
+        return level;
+    }
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
         ItemStack itemStack = playerEntity.getStackInHand(hand);
@@ -43,7 +47,7 @@ public class WitcherBombs_Base extends Item {
         if (!world.isClient) {
             WitcherBombEntity bombEntity = new WitcherBombEntity(world, playerEntity, bombId, level);
             bombEntity.setItem(itemStack);
-            bombEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), -20.0f, 0.5f, 1.0f);
+            bombEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), -20.0f, 0.8f, 1.0f);
             world.spawnEntity(bombEntity);
         }
         playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
@@ -80,7 +84,7 @@ public class WitcherBombs_Base extends Item {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 
-        if(Objects.equals(bombId, "grapeshot") || Objects.equals(bombId, "dancingStar") || Objects.equals(bombId, "samum")  ){
+        if(Objects.equals(bombId, "grapeshot") || Objects.equals(bombId, "dancing_star") || Objects.equals(bombId, "samum")  ){
             tooltip.add(Text.translatable("tooltip.bomb.monster_nest.first").formatted(Formatting.GRAY,Formatting.ITALIC));
             tooltip.add(Text.translatable("tooltip.bomb.monster_nest.second").formatted(Formatting.GRAY,Formatting.ITALIC));
         }

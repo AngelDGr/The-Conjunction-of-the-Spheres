@@ -182,10 +182,28 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
                 int uses = ((WitcherMonsterOil_Base) this.recipe.getResult(null).getItem()).getUses();
                 list.add(Text.translatable("tcots-witcher.tooltip.gui.oil_uses", uses).formatted(Formatting.DARK_BLUE));
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-22);
-            } else if ((this.recipe.getResult(null).getItem() instanceof WitcherWhiteHoney) || (this.recipe.getResult(null).getItem() instanceof WitcherBombs_Base) ) {
+            } else if (this.recipe.getResult(null).getItem() instanceof WitcherWhiteHoney) {
 
                 List<Text> list= new ArrayList<>();
                 list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()));
+                //Stack
+                int maxCount = this.recipe.getResult(null).getMaxCount();
+
+                list.add(Text.translatable("tcots-witcher.tooltip.max_stack", maxCount).formatted(Formatting.DARK_BLUE));
+
+                context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-12);
+
+            } else if (this.recipe.getResult(null).getItem() instanceof WitcherBombs_Base) {
+                if(((WitcherBombs_Base) this.recipe.getResult(null).getItem()).getLevel() > 0){
+                    textColor = Formatting.YELLOW;
+                } else {
+                    textColor = Formatting.WHITE;
+                }
+
+                List<Text> list= new ArrayList<>();
+                //Name
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()).formatted(textColor));
+
                 //Stack
                 int maxCount = this.recipe.getResult(null).getMaxCount();
 

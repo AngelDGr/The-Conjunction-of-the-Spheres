@@ -214,6 +214,15 @@ public class VillagerCustomTrades {
 
                     factories.add((entity, random) -> new TradeOffer(
                             //Wants
+                            new ItemStack(Items.EMERALD, 8),
+                            //Gives
+                            new ItemStack(TCOTS_Items.ALCHEMISTS_POWDER, 2),
+                            16,
+                            15,
+                            0.05f));
+
+                    factories.add((entity, random) -> new TradeOffer(
+                            //Wants
                             new ItemStack(Items.EMERALD, 12),
                             //Gives
                             new ItemStack(TCOTS_Items.HAN_FIBER, 2),

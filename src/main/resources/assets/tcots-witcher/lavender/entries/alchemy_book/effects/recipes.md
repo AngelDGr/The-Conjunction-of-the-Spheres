@@ -86,6 +86,13 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:dancing_star>
+<recipe;tcots-witcher:dancing_star_enhanced>
+<recipe;tcots-witcher:dancing_star_superior>
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
 <recipe;tcots-witcher:oil_necrophage>
 <recipe;tcots-witcher:oil_necrophage_enhanced>
 <recipe;tcots-witcher:oil_necrophage_superior>
@@ -101,7 +108,6 @@ decoctions, monster oils, bombs and ingredients.***
 <recipe;tcots-witcher:oil_hanged>
 <recipe;tcots-witcher:oil_hanged_enhanced>
 <recipe;tcots-witcher:oil_hanged_superior>
-
 
 ;;;;;
 
@@ -121,20 +127,21 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Ingredients{}**
+<recipe;tcots-witcher:stammelfords_dust>
 <recipe;tcots-witcher:vermilion>
 <recipe;tcots-witcher:vitriol>
-<recipe;tcots-witcher:hydragenum>
 
 ;;;;;
 
 **{#395026}Ingredients{}**
+<recipe;tcots-witcher:hydragenum>
 <recipe;tcots-witcher:quebrith>
 <recipe;tcots-witcher:aether>
-<recipe;tcots-witcher:rubedo>
 
 ;;;;;
 
 **{#395026}Ingredients{}**
+<recipe;tcots-witcher:rubedo>
 <recipe;tcots-witcher:rebis>
 <recipe;tcots-witcher:nigredo>
 

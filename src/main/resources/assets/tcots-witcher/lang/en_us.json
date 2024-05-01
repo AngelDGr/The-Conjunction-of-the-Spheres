@@ -199,6 +199,8 @@
     "item.tcots-witcher.monster_fat": "Monster Fat",
 
     "item.tcots-witcher.stammelfords_dust": "Stammelford's Dust",
+    "item.tcots-witcher.alchemists_powder": "Alchemists' Powder",
+
 
 
 
@@ -362,7 +364,17 @@
     "tooltip.bomb.monster_nest.first": "Can destroy Monster Nests",
     "tooltip.bomb.monster_nest.second": "and Spawners.",
 
+    "item.tcots-witcher.dancing_star": "Dancing Star",
+    "item.tcots-witcher.dancing_star_enhanced": "Enhanced Dancing Star",
+    "item.tcots-witcher.dancing_star_superior": "Superior Dancing Star",
+    "tooltip.dancing_star.first":  "Produces a fiery explosion,",
+    "tooltip.dancing_star.second": "igniting opponents.",
 
+    "item.tcots-witcher.devils_puffball": "Devil's Puffball",
+    "item.tcots-witcher.devils_puffball_enhanced": "Enhanced Devil's Puffball",
+    "item.tcots-witcher.devils_puffball_superior": "Superior Devil's Puffball",
+    "tooltip.devils_puffball.first":  "Releases a cloud of poison",
+    "tooltip.devils_puffball.second": "when detonated.",
 
 
     "text.config.tcots_config.title": "TCOTS Config",

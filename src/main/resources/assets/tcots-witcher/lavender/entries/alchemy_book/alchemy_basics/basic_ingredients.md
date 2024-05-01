@@ -296,7 +296,6 @@
 
 ;;;;;
 
-
 ---
 
 **{dark_green}Basic Ingredients{}**
@@ -511,7 +510,6 @@ and caves.</tooltip-text>
 ---
 
 ;;;;;
-
 
 ---
 
@@ -795,7 +793,134 @@ villagers.</tooltip-text>
 
 **{dark_green}Advanced Ingredients{}**
 
-*Substances*
+*Pre-conjunction substances*
+```xml owo-ui
+        <flow-layout direction="vertical">
+    <children>
+        <!--First Row-->
+        <flow-layout direction="horizontal">
+            <children>
+                <stack-layout>
+                    <children>
+                        <item>
+                            <stack>
+                                minecraft:gunpowder
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                        </item>
+                    </children>
+                    <padding>
+                        <all>5</all>
+                    </padding>
+                </stack-layout>
+
+                <stack-layout>
+                    <children>
+                        <item>
+                            <stack>
+                                minecraft:blaze_powder
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                        </item>
+                    </children>
+                    <padding>
+                        <all>5</all>
+                    </padding>
+                </stack-layout>
+
+                <stack-layout>
+                    <children>
+                        <item>
+                            <stack>
+                                minecraft:glowstone_dust
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                        </item>
+                    </children>
+                    <padding>
+                        <all>5</all>
+                    </padding>
+                </stack-layout>
+
+                <stack-layout>
+                    <children>
+                        <item>
+                            <stack>
+                                minecraft:bone_meal
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                        </item>
+                    </children>
+                    <padding>
+                        <all>5</all>
+                    </padding>
+                </stack-layout>
+
+            </children>
+            <sizing>
+                <horizontal method="content">1</horizontal>
+                <vertical method="content">1</vertical>
+            </sizing>
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>center</vertical-alignment>
+        </flow-layout>
+
+        <!--Second Row-->
+        <flow-layout direction="horizontal">
+            <children>
+                <stack-layout>
+                    <children>
+                        <item>
+                            <stack>
+                                minecraft:prismarine_crystals
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                        </item>
+                    </children>
+                    <padding>
+                        <all>5</all>
+                    </padding>
+                </stack-layout>
+
+                <stack-layout>
+                    <children>
+                        <item>
+                            <stack>
+                                minecraft:ghast_tear
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                        </item>
+                    </children>
+                    <padding>
+                        <all>5</all>
+                    </padding>
+                </stack-layout>
+
+            </children>
+            <sizing>
+                <horizontal method="content">1</horizontal>
+                <vertical method="content">1</vertical>
+            </sizing>
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>center</vertical-alignment>
+        </flow-layout>
+
+    </children>
+    <horizontal-alignment>center</horizontal-alignment>
+    <vertical-alignment>center</vertical-alignment>
+</flow-layout>
+
+```
+
+---
+
+;;;;;
+
+---
+
+**{dark_green}Advanced Ingredients{}**
+
+*Post-conjunction substances*
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -971,7 +1096,39 @@ Brutes.</tooltip-text>
                                         tcots-witcher:alchemy_paste
                                     </stack>
 <tooltip-text>Alchemy Paste:
-Bought from villagers.</tooltip-text>
+Bought from herbalist
+villagers.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:stammelfords_dust
+                                    </stack>
+<tooltip-text>Stammelford's Dust:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:alchemists_powder
+                                    </stack>
+<tooltip-text>Alchemists' Powder:
+Bought from herbalist
+villagers.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -996,9 +1153,9 @@ Bought from villagers.</tooltip-text>
 
 ---
 
-
-
-
-
-
-
+```xml owo-ui
+        <flow-layout direction="vertical">
+    <children>
+    </children>
+</flow-layout>
+```

@@ -50,10 +50,6 @@ import java.util.List;
 public class TCOTS_Items {
 
     //TODO: Add Bombs
-        //TODO: Add how to obtain Stammelford's Dust
-        //TODO: Add Alchemist's Powder
-            //TODO: Add Superior Grapeshot Recipe
-    //TODO: Fix Basic ingredients Entry
     //TODO: Add Bombs Entry
     //xTODO: Add new way to craft the potions
         // xTODO: Add new alchemy ingredients (mushrooms, flowers)
@@ -295,9 +291,18 @@ public class TCOTS_Items {
     public static Item EMPTY_BOMB_POWDER_2;
     public static Item EMPTY_BOMB_POWDER_3;
     public static Item EMPTY_BOMB_POWDER_4;
+
     public static Item GRAPESHOT;
     public static Item ENHANCED_GRAPESHOT;
     public static Item SUPERIOR_GRAPESHOT;
+
+    public static Item DANCING_STAR;
+    public static Item DANCING_STAR_ENHANCED;
+    public static Item DANCING_STAR_SUPERIOR;
+
+    public static Item DEVILS_PUFFBALL;
+    public static Item DEVILS_PUFFBALL_ENHANCED;
+    public static Item DEVILS_PUFFBALL_SUPERIOR;
 
     //Register Witcher Potion Items
     public static void registerPotions() {
@@ -367,6 +372,26 @@ public class TCOTS_Items {
 
         SUPERIOR_GRAPESHOT=registerItem("grapeshot_superior",
                 new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"grapeshot",2));
+
+
+        DANCING_STAR=registerItem("dancing_star",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"dancing_star",0));
+
+        DANCING_STAR_ENHANCED=registerItem("dancing_star_enhanced",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"dancing_star",1));
+
+        DANCING_STAR_SUPERIOR=registerItem("dancing_star_superior",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"dancing_star",2));
+
+
+        DEVILS_PUFFBALL=registerItem("devils_puffball",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"devils_puffball",0));
+
+        DEVILS_PUFFBALL_ENHANCED=registerItem("devils_puffball_enhanced",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"devils_puffball",1));
+
+        DEVILS_PUFFBALL_SUPERIOR=registerItem("devils_puffball_superior",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"devils_puffball",2));
 
         //Potions
 
@@ -633,6 +658,7 @@ public class TCOTS_Items {
     public static Item REBIS;
     public static Item NIGREDO;
     public static Item STAMMELFORDS_DUST;
+    public static Item ALCHEMISTS_POWDER;
     public static Item ALCHEMY_PASTE;
     public static Item MONSTER_FAT;
 
@@ -742,6 +768,9 @@ public class TCOTS_Items {
                 new Item(new FabricItemSettings()));
 
         STAMMELFORDS_DUST = registerItem("stammelfords_dust",
+                new Item(new FabricItemSettings()));
+
+        ALCHEMISTS_POWDER = registerItem("alchemists_powder",
                 new Item(new FabricItemSettings()));
 
         //Plants

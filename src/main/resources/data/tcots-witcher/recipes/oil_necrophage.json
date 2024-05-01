@@ -1,6 +1,6 @@
 {
   "type": "tcots-witcher:alchemy_table",
-  "order": 1.01,
+  "order": 1.00,
   "category":"bombs_oils",
 
   "ingredients": [
