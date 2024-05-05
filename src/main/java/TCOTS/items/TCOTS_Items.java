@@ -304,6 +304,14 @@ public class TCOTS_Items {
     public static Item DEVILS_PUFFBALL_ENHANCED;
     public static Item DEVILS_PUFFBALL_SUPERIOR;
 
+    public static Item SAMUM;
+    public static Item SAMUM_ENHANCED;
+    public static Item SAMUM_SUPERIOR;
+
+    public static Item NORTHERN_WIND;
+    public static Item NORTHERN_WIND_ENHANCED;
+    public static Item NORTHERN_WIND_SUPERIOR;
+
     //Register Witcher Potion Items
     public static void registerPotions() {
 
@@ -392,6 +400,25 @@ public class TCOTS_Items {
 
         DEVILS_PUFFBALL_SUPERIOR=registerItem("devils_puffball_superior",
                 new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"devils_puffball",2));
+
+
+        SAMUM=registerItem("samum",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"samum",0));
+
+        SAMUM_ENHANCED=registerItem("samum_enhanced",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"samum",1));
+
+        SAMUM_SUPERIOR=registerItem("samum_superior",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"samum",2));
+
+        NORTHERN_WIND=registerItem("northern_wind",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"northern_wind",0));
+
+        NORTHERN_WIND_ENHANCED=registerItem("northern_wind_enhanced",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"northern_wind",1));
+
+        NORTHERN_WIND_SUPERIOR=registerItem("northern_wind_superior",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"northern_wind",2));
 
         //Potions
 

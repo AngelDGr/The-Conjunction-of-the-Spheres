@@ -2,6 +2,8 @@ package TCOTS.items.potions;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.items.potions.effects.*;
+import TCOTS.items.potions.effects.bombs.NorthernWindEffect;
+import TCOTS.items.potions.effects.bombs.SamumEffect;
 import TCOTS.items.potions.effects.decoctions.AlghoulDecoctionEffect;
 import TCOTS.items.potions.effects.decoctions.FogletDecoctionEffect;
 import TCOTS.items.potions.effects.decoctions.GraveHagDecoctionEffect;
@@ -29,6 +31,9 @@ public class TCOTS_Effects {
     public static StatusEffect ALGHOUL_DECOCTION_EFFECT;
 
     static final int decoctionColor=0x0b7000;
+
+    public static StatusEffect SAMUM_EFFECT;
+    public static StatusEffect NORTHERN_WIND_EFFECT;
 
     public static void registerEffects() {
 
@@ -68,6 +73,20 @@ public class TCOTS_Effects {
         FOGLET_DECOCTION_EFFECT = registerStatusEffect("foglet_decoction", FogletDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
 
 
+        //Bomb Effects
+        SAMUM_EFFECT = registerEffect("samum",
+                new SamumEffect(StatusEffectCategory.HARMFUL, 0x6c777b)
+                        .addAttributeModifier(
+                                EntityAttributes.GENERIC_MOVEMENT_SPEED,
+                                "7107DE5E-7CE8-4030-940E-514C1F160890", -1.0f,
+                                EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+
+        NORTHERN_WIND_EFFECT = registerEffect("northern_wind",
+                new NorthernWindEffect(StatusEffectCategory.HARMFUL, 0x007b77)
+                        .addAttributeModifier(
+                                EntityAttributes.GENERIC_MOVEMENT_SPEED,
+                                "7107DE5E-7CE8-4030-940E-514C1F160890", -1.0f,
+                                EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
     }
 
     public static StatusEffect registerStatusEffect(String name, Class<? extends StatusEffect> effectClass, StatusEffectCategory category, int color) {

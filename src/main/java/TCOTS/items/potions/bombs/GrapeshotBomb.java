@@ -10,7 +10,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
@@ -51,7 +56,7 @@ public class GrapeshotBomb {
         }
     }
 
-    private static void destroyNests(WitcherBombEntity bomb, Explosion explosion){
+    public static void destroyNests(WitcherBombEntity bomb, Explosion explosion){
         ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList<>();
         int l;
         int k;
@@ -84,6 +89,8 @@ public class GrapeshotBomb {
 
         List<Pair<ItemStack, BlockPos>> list = new ArrayList<>();
         for (BlockPos blockPos2 : affectedBlocks) {
+            //To not destroy blocks behind other blocks
+            if (getExposure(blockPos2.toCenterPos(), bomb) == 0) continue;
 
             //Destroy nest blocks
             if(bomb.destroyableBlocks(bomb.getWorld().getBlockState(blockPos2))) {
@@ -107,4 +114,34 @@ public class GrapeshotBomb {
         }
         stacks.add(Pair.of(stack, pos));
     }
+
+    private static float getExposure(Vec3d source, Entity entity) {
+        Box box = entity.getBoundingBox();
+        double d = 1.0 / ((box.maxX - box.minX) * 2.0 + 1.0);
+        double e = 1.0 / ((box.maxY - box.minY) * 2.0 + 1.0);
+        double f = 1.0 / ((box.maxZ - box.minZ) * 2.0 + 1.0);
+        double g = (1.0 - Math.floor(1.0 / d) * d) / 2.0;
+        double h = (1.0 - Math.floor(1.0 / f) * f) / 2.0;
+        if (d < 0.0 || e < 0.0 || f < 0.0) {
+            return 0.0f;
+        }
+        int i = 0;
+        int j = 0;
+        for (double k = 0.0; k <= 1.0; k += d) {
+            for (double l = 0.0; l <= 1.0; l += e) {
+                for (double m = 0.0; m <= 1.0; m += f) {
+                    double n = MathHelper.lerp(k, box.minX, box.maxX);
+                    double o = MathHelper.lerp(l, box.minY, box.maxY);
+                    double p = MathHelper.lerp(m, box.minZ, box.maxZ);
+                    Vec3d vec3d = new Vec3d(n + g, o, p + h);
+                    if (entity.getWorld().raycast(new RaycastContext(vec3d, source, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity)).getType() == HitResult.Type.MISS) {
+                        ++i;
+                    }
+                    ++j;
+                }
+            }
+        }
+        return (float)i / (float)j;
+    }
+
 }

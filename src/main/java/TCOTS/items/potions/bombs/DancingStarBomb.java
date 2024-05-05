@@ -74,6 +74,8 @@ public class DancingStarBomb {
                 bomb.getWorld().getEntitiesByClass(LivingEntity.class, bomb.getBoundingBox().expand(2+(bomb.getLevel()),2,3+(bomb.getLevel())), livingEntity -> true);
 
         for (LivingEntity livingEntity : entities){
+            //To not apply effect across walls
+            if(getExposure(livingEntity.getPos(), bomb) == 0) continue;
             //Level 0 -> 10s
             //Level 1 -> 15s
             //Level 2 -> 20s
@@ -125,6 +127,8 @@ public class DancingStarBomb {
 
         List<Pair<ItemStack, BlockPos>> list = new ArrayList<>();
         for (BlockPos blockPos2 : affectedBlocks) {
+            //To not destroy blocks behind other blocks
+            if (getExposure(blockPos2.toCenterPos(), bomb) == 0) continue;
 
             //Destroy nest blocks
             if(bomb.destroyableBlocks(bomb.getWorld().getBlockState(blockPos2))) {
@@ -137,8 +141,7 @@ public class DancingStarBomb {
 
             //Check if it can put fire
             if (bomb.getWorld().random.nextInt(3) != 0 || !bomb.getWorld().getBlockState(blockPos2).isAir()
-                    || !bomb.getWorld().getBlockState(blockPos2.down()).isOpaqueFullCube(bomb.getWorld(), blockPos2.down())
-                    || getExposure(blockPos2.toCenterPos(), bomb) == 0)
+                    || !bomb.getWorld().getBlockState(blockPos2.down()).isOpaqueFullCube(bomb.getWorld(), blockPos2.down()))
                 continue;
 
             //Put fire
@@ -195,7 +198,7 @@ public class DancingStarBomb {
         return (float)i / (float)j;
     }
 
-    public static void handleStatusDancingStar(WitcherBombEntity bomb, byte status){
+    public static void handleStatus(WitcherBombEntity bomb, byte status){
         if(status == DANCING_STAR_EXPLODES_L1 || status == DANCING_STAR_EXPLODES_L2 || status == DANCING_STAR_EXPLODES_L3){
             switch (status){
                 case DANCING_STAR_EXPLODES_L2:

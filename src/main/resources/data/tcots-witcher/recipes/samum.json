@@ -1,0 +1,21 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.4,
+  "category":"bombs_oils",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:celandine"
+    }
+  ],
+
+  "ingredient_counters": [2],
+
+  "base": {
+    "item": "minecraft:gunpowder"
+  },
+
+  "result": {
+    "item": "tcots-witcher:samum"
+  }
+}

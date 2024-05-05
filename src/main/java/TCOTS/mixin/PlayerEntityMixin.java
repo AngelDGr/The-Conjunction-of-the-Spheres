@@ -15,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.RavagerEntity;
 import net.minecraft.entity.mob.WitchEntity;
@@ -31,10 +32,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -45,6 +43,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+//@Debug(export = true) // Enables exporting for the targets of this mixin
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityMixinInterface {
 
@@ -498,4 +497,28 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         }
     }
 
+
+    //SamumEffect
+    @Unique
+    private Entity target;
+
+    @Inject(method = "attack", at = @At("HEAD"))
+    private void getTarget(Entity target, CallbackInfo ci){
+        this.target=target;
+    }
+
+
+    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 2)
+    private boolean injectCriticalWithSamum(boolean value){
+        if(target instanceof LivingEntity entity){
+            if(entity.hasStatusEffect(TCOTS_Effects.SAMUM_EFFECT)){
+                StatusEffectInstance instance = entity.getStatusEffect(TCOTS_Effects.SAMUM_EFFECT);
+                assert instance != null;
+                int amplifier = instance.getAmplifier();
+
+                return value || amplifier > 1;
+            }
+        }
+        return value;
+    }
 }

@@ -174,6 +174,12 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.DEVILS_PUFFBALL);
                             entries.add(TCOTS_Items.DEVILS_PUFFBALL_ENHANCED);
                             entries.add(TCOTS_Items.DEVILS_PUFFBALL_SUPERIOR);
+                            entries.add(TCOTS_Items.SAMUM);
+                            entries.add(TCOTS_Items.SAMUM_ENHANCED);
+                            entries.add(TCOTS_Items.SAMUM_SUPERIOR);
+                            entries.add(TCOTS_Items.NORTHERN_WIND);
+                            entries.add(TCOTS_Items.NORTHERN_WIND_ENHANCED);
+                            entries.add(TCOTS_Items.NORTHERN_WIND_SUPERIOR);
 
                             //Misc/Blocks
                             entries.add(TCOTS_Items.NEST_SLAB_ITEM);

@@ -1,4 +1,4 @@
-package TCOTS.particles;
+package TCOTS.particles.bombEmitters;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,7 +10,6 @@ import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleTypes;
 
 public class DancingStar_ExplosionEmitterParticle extends NoRenderParticle {
-    //TODO: Refine the particles area to look cool
     private int age;
     private final int maxAge;
 

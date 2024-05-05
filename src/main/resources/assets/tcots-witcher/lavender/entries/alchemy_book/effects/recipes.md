@@ -93,6 +93,20 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:devils_puffball>
+<recipe;tcots-witcher:devils_puffball_enhanced>
+<recipe;tcots-witcher:devils_puffball_superior>
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:samum>
+<recipe;tcots-witcher:samum_enhanced>
+<recipe;tcots-witcher:samum_superior>
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
 <recipe;tcots-witcher:oil_necrophage>
 <recipe;tcots-witcher:oil_necrophage_enhanced>
 <recipe;tcots-witcher:oil_necrophage_superior>

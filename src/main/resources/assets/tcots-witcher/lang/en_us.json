@@ -376,6 +376,22 @@
     "tooltip.devils_puffball.first":  "Releases a cloud of poison",
     "tooltip.devils_puffball.second": "when detonated.",
 
+    "item.tcots-witcher.samum": "Samum",
+    "item.tcots-witcher.samum_enhanced": "Enhanced Samum",
+    "item.tcots-witcher.samum_superior": "Superior Samum",
+    "tooltip.samum.first":  "Stuns opponents within its",
+    "tooltip.samum.second": "explosion radius.",
+    "tooltip.samum.extra":  "Landed hit it's critical.",
+    "effect.tcots-witcher.samum": "Samum Stun",
+
+    "item.tcots-witcher.northern_wind": "Northern Wind",
+    "item.tcots-witcher.northern_wind_enhanced": "Enhanced Northern Wind",
+    "item.tcots-witcher.northern_wind_superior": "Superior Northern Wind",
+    "tooltip.northern_wind.first":  "Freezes foes. Hits on frozen",
+    "tooltip.northern_wind.second": "foes deal additional damage.",
+    "tooltip.northern_wind.extra":  "Chance of instant kill.",
+    "effect.tcots-witcher.northern_wind": "Northern Wind Freezing",
+
 
     "text.config.tcots_config.title": "TCOTS Config",
     "text.config.tcots_config.category.hud": "HUD Options",

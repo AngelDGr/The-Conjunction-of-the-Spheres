@@ -82,6 +82,11 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
     }
 
     @Override
+    public int getMaxLookPitchChange() {
+        return 15;
+    }
+
+    @Override
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
 

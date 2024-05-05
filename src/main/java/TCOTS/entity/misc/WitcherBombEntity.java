@@ -3,13 +3,11 @@ package TCOTS.entity.misc;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.TCOTS_Items;
-import TCOTS.items.potions.bombs.DancingStarBomb;
-import TCOTS.items.potions.bombs.GrapeshotBomb;
+import TCOTS.items.potions.bombs.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -28,8 +26,8 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
 
     //xTODO: Add Grapeshot
     //xTODO: Add Dancing Star
-    //TODO: Add Devil’s Puffball
-    //TODO: Add Samum
+    //xTODO: Add Devil’s Puffball
+    //xTODO: Add Samum
     //TODO: Add Northern Wind
     //TODO: Add Dragon's Dream
     //TODO: Add Dimeritium Bomb
@@ -61,14 +59,29 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
     @Override
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
-        if (!this.getWorld().isClient) {
+        if (this.getWorld().isClient) {
+            return;
+        }
+        if (bombId!=null) {
             switch (bombId){
                 case "grapeshot":
-                    GrapeshotBomb.grapeShotBehavior(this,null);
+                    GrapeshotBomb.grapeShotBehavior(this, hitResult.getType() == HitResult.Type.ENTITY ? ((EntityHitResult)hitResult).getEntity() : null);
                     break;
 
                 case "dancing_star":
                     DancingStarBomb.dancingStarBehavior(this);
+                    break;
+
+                case "devils_puffball":
+                    DevilsPuffballBomb.devilsPuffballBehavior(this);
+                    break;
+
+                case "samum":
+                    SamumBomb.samumBehavior(this);
+                    break;
+
+                case "northern_wind":
+                    NorthernWindBomb.northern_windBehavior(this);
                     break;
 
                 default:
@@ -80,29 +93,12 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
     }
 
     @Override
-    protected void onEntityHit(EntityHitResult entityHitResult) {
-        super.onEntityHit(entityHitResult);
-        Entity entity = entityHitResult.getEntity();
-        if(!this.getWorld().isClient){
-            switch (bombId){
-                case "grapeshot":
-                    GrapeshotBomb.grapeShotBehavior(this, entity);
-                    break;
-
-                case "dancing_star":
-                    DancingStarBomb.dancingStarBehavior(this);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
-
-    @Override
     public void handleStatus(byte status) {
         super.handleStatus(status);
-        DancingStarBomb.handleStatusDancingStar(this,status);
+        DancingStarBomb.handleStatus(this,status);
+        DevilsPuffballBomb.handleStatus(this,status);
+        SamumBomb.handleStatus(this,status);
+        NorthernWindBomb.handleStatus(this,status);
     }
 
     @Override

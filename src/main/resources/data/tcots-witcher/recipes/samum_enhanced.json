@@ -1,0 +1,33 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.41,
+  "category":"bombs_oils",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:stammelfords_dust"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "tcots-witcher:foglet_teeth"
+    },
+    {
+      "item": "tcots-witcher:celandine"
+    },
+    {
+      "item": "minecraft:dandelion"
+    }
+  ],
+
+  "ingredient_counters": [1,2,2,1,1],
+
+  "base": {
+    "item": "tcots-witcher:samum"
+  },
+
+  "result": {
+    "item": "tcots-witcher:samum_enhanced"
+  }
+}

@@ -10,10 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,7 +53,6 @@ public class WitcherBombs_Base extends Item {
         }
 
         //Gives player the powder
-
         //Select the powder
         ItemStack stack_Empty = switch (this.getMaxCount()) {
             default -> new ItemStack(TCOTS_Items.EMPTY_BOMB_POWDER_2);
@@ -66,24 +62,27 @@ public class WitcherBombs_Base extends Item {
 
         stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
-        if (!playerEntity.getAbilities().creativeMode) {
-
-            //If the player inventories its full
-            if(playerEntity.getInventory().getEmptySlot() == -1){
-                playerEntity.getWorld().spawnEntity(new ItemEntity(playerEntity.getWorld(), playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), stack_Empty));
-            } else{
-                playerEntity.getInventory().insertStack(stack_Empty);
+        if(itemStack.getCount()==0){
+            //If you spend all the bombs in the slot, and can't insert the stack in any other place other than your hand
+            if(playerEntity.getInventory().getEmptySlot()==playerEntity.getInventory().selectedSlot
+                    && playerEntity.getInventory().getOccupiedSlotWithRoomForStack(stack_Empty)==-1) {
+                return TypedActionResult.success(stack_Empty, world.isClient());
             }
         }
 
+        if (!playerEntity.getAbilities().creativeMode) {
+            //If the player inventories its full
+            if (playerEntity.getInventory().getEmptySlot() == -1) {
+                playerEntity.getWorld().spawnEntity(new ItemEntity(playerEntity.getWorld(), playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), stack_Empty));
+            } else {
+                playerEntity.getInventory().insertStack(stack_Empty);
+            }
+        }
         return TypedActionResult.success(itemStack, world.isClient());
     }
 
-
-
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-
         if(Objects.equals(bombId, "grapeshot") || Objects.equals(bombId, "dancing_star") || Objects.equals(bombId, "samum")  ){
             tooltip.add(Text.translatable("tooltip.bomb.monster_nest.first").formatted(Formatting.GRAY,Formatting.ITALIC));
             tooltip.add(Text.translatable("tooltip.bomb.monster_nest.second").formatted(Formatting.GRAY,Formatting.ITALIC));
@@ -91,5 +90,9 @@ public class WitcherBombs_Base extends Item {
 
         tooltip.add(Text.translatable("tooltip."+bombId+".first").formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("tooltip."+bombId+".second").formatted(Formatting.GRAY));
+
+        if((Objects.equals(bombId, "samum") && getLevel()>1) || (Objects.equals(bombId, "northern_wind") && getLevel()>1)){
+            tooltip.add(Text.translatable("tooltip."+bombId+".extra").formatted(Formatting.GRAY));
+        }
     }
 }

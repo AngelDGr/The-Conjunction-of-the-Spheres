@@ -99,7 +99,6 @@ public class WitcherPotions_Base extends PotionItem {
         stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
         if (playerEntity == null || !playerEntity.getAbilities().creativeMode) {
-
             if (playerEntity != null) {
                 //If the player inventories its full
                 if(playerEntity.getInventory().getEmptySlot() == -1){

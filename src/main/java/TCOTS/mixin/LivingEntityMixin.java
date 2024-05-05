@@ -16,6 +16,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -49,6 +50,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @Shadow public abstract void kill();
 
     @Shadow public abstract boolean damage(DamageSource source, float amount);
+
+    @Shadow public abstract boolean removeStatusEffect(StatusEffect type);
+
+    @Shadow public abstract float getMaxHealth();
+
+    @Shadow public abstract float getHealth();
 
     //Killer Whale
     @Inject(method = "getNextAirUnderwater", at = @At("TAIL"), cancellable = true)
@@ -234,4 +241,45 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             }
         }
     }
+
+    //SamumEffect
+    @Inject(method = "damage", at = @At("TAIL"))
+    private void injectRemoveSamumOnHit(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+        if(this.hasStatusEffect(TCOTS_Effects.SAMUM_EFFECT)){
+            this.removeStatusEffect(TCOTS_Effects.SAMUM_EFFECT);
+        }
+    }
+
+    //NorthernWind
+    @Inject(method = "damage", at = @At("TAIL"))
+    private void injectRemoveNorthernWindOnHit(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+        if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
+            this.playSound(SoundEvents.BLOCK_GLASS_BREAK,1,1);
+            this.removeStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT);
+        }
+    }
+
+    @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private float injectExtraDamageNorthernWind(float amount){
+        if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
+            int amplifier= Objects.requireNonNull(this.getStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)).getAmplifier();
+            //Instant kill chance or extra damage
+            if(this.getMaxHealth() <= 100 && amplifier>1 && this.random.nextBetween(0,10)==0){
+                return this.getHealth();
+            } else if (amplifier>1 && this.random.nextBetween(0,10)==0){
+                return amount + 20;
+            }
+            return amount + (1+amplifier);
+        }
+        return amount;
+    }
+
+    @ModifyVariable(method = "takeKnockback", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private double injectExtraKnockbackNorthernWind(double strength){
+        if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
+            return strength * 1.8;
+        }
+        return strength;
+    }
+
 }
