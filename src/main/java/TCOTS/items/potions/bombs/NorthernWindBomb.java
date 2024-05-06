@@ -1,14 +1,12 @@
 package TCOTS.items.potions.bombs;
 
+import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.particles.TCOTS_Particles;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FrostedIceBlock;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -18,11 +16,9 @@ import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.RaycastContext;
 
 import java.util.HashSet;
@@ -100,22 +96,40 @@ public class NorthernWindBomb {
         }
         affectedBlocks.addAll(set);
 
-        for (BlockPos blockPos2 : affectedBlocks) {
+        for (BlockPos possibleBlockPos : affectedBlocks) {
             //To not destroy blocks behind other blocks
-            if (getExposure(blockPos2.toCenterPos(), bomb) == 0) continue;
+            if (getExposure(possibleBlockPos.toCenterPos(), bomb) == 0 || bomb.isSubmergedInWater()) continue;
 
-            BlockState blockState = Blocks.FROSTED_ICE.getDefaultState();
+            BlockState blockStateWaterIce = Blocks.FROSTED_ICE.getDefaultState();
+
+
+            //TODO: Fix when can have more than one direction
+            //To put ice in blocks
+            for (BooleanProperty booleanProperty : ConnectingBlock.FACING_PROPERTIES.values()) {
+                BlockState blockStateIce = TCOTS_Blocks.FROSTED_SNOW.getDefaultState().with(booleanProperty,true);
+
+                //To not put ice in water or in the nether
+                if(bomb.getWorld().getBlockState(possibleBlockPos) == FrostedIceBlock.getMeltedState() || bomb.getWorld().getDimension().ultrawarm()) continue;
+
+                if(
+                        blockStateIce.canPlaceAt(bomb.getWorld(),possibleBlockPos)
+                        && (bomb.getWorld().getBlockState(possibleBlockPos).isAir() || bomb.getWorld().getBlockState(possibleBlockPos).isReplaceable())) {
+
+                    bomb.getWorld().setBlockState(possibleBlockPos, blockStateIce);
+                }
+            }
+
+
 
             //Check if it can put ice
-            if (bomb.getWorld().getBlockState(blockPos2) != FrostedIceBlock.getMeltedState()
-                    || !blockState.canPlaceAt(bomb.getWorld(), blockPos2)
-                    || !bomb.getWorld().canPlace(blockState, blockPos2, ShapeContext.absent())
-                    || bomb.isSubmergedInWater()) continue;
+            if (        bomb.getWorld().getBlockState(possibleBlockPos) != FrostedIceBlock.getMeltedState()
+                    || !blockStateWaterIce.canPlaceAt(bomb.getWorld(), possibleBlockPos)
+                    || !bomb.getWorld().canPlace(blockStateWaterIce, possibleBlockPos, ShapeContext.absent())) continue;
 
 
-            //Put ice
-            bomb.getWorld().setBlockState(blockPos2, blockState);
-            bomb.getWorld().scheduleBlockTick(blockPos2, Blocks.FROSTED_ICE, MathHelper.nextInt(bomb.getWorld().getRandom(), 60, 120));
+            //Put ice in water
+            bomb.getWorld().setBlockState(possibleBlockPos, blockStateWaterIce);
+            bomb.getWorld().scheduleBlockTick(possibleBlockPos, Blocks.FROSTED_ICE, MathHelper.nextInt(bomb.getWorld().getRandom(), 60, 120));
         }
     }
 

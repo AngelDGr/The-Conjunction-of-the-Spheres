@@ -263,10 +263,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     private float injectExtraDamageNorthernWind(float amount){
         if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
             int amplifier= Objects.requireNonNull(this.getStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)).getAmplifier();
+            int randomN=this.random.nextBetween(0,10);
             //Instant kill chance or extra damage
-            if(this.getMaxHealth() <= 100 && amplifier>1 && this.random.nextBetween(0,10)==0){
+            if(this.getMaxHealth() <= 100 && amplifier>1 && randomN==0){
                 return this.getHealth();
-            } else if (amplifier>1 && this.random.nextBetween(0,10)==0){
+            } else if (amplifier>1 && randomN==0){
                 return amount + 20;
             }
             return amount + (1+amplifier);
@@ -280,6 +281,13 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             return strength * 1.8;
         }
         return strength;
+    }
+
+    @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
+    private void injectNorthernWindNoPushable(CallbackInfoReturnable<Boolean> cir){
+        if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
+            cir.setReturnValue(false);
+        }
     }
 
 }

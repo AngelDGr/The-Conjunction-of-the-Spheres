@@ -28,18 +28,42 @@ public class MobEntityMixin {
 
     //NorthernWind
     @Unique
-    private boolean northernWindApplied;
+    private boolean northernWindApplied=false;
+
+    @Unique
+    double x=-1;
+    @Unique
+    double z=-1;
+
     @Inject(method = "tick", at = @At("TAIL"))
     private void injectNorthernWindFreeze(CallbackInfo ci){
         MobEntity THIS = (MobEntity)(Object)this;
         if(THIS.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
+
+            if(x==-1) {
+                x = THIS.getX();
+                z = THIS.getZ();
+            }
+
+            THIS.teleport(x, THIS.getY(), z);
+            THIS.setVelocity(0, 0, 0);
+
             if(!(THIS instanceof EnderDragonEntity)){
-                THIS.addVelocity(0,-1,0);
+                THIS.addVelocity(0,-0.5,0);
             }
             northernWindApplied=true;
         } else if (northernWindApplied) {
-//            THIS.setAiDisabled(false);
+            x=-1;
+            z=-1;
             northernWindApplied=false;
+        }
+    }
+
+    @Inject(method = "tickNewAi", at = @At("HEAD"), cancellable = true)
+    private void injectNorthernWindMove(CallbackInfo ci){
+        MobEntity THIS = (MobEntity)(Object)this;
+        if(THIS.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
+            ci.cancel();
         }
     }
 }

@@ -96,6 +96,9 @@ public class TCOTS_Client implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.POTTED_BRYONIA_FLOWER, RenderLayer.getCutout());
 
 
+        BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.FROSTED_SNOW, RenderLayer.getTranslucent());
+
+
         //BlockEntity
         BlockEntityRendererFactories.register(TCOTS_Blocks.SKULL_NEST_ENTITY, NestSkullBlockRenderer::new);
         BlockEntityRendererFactories.register(TCOTS_Blocks.MONSTER_NEST_ENTITY, MonsterNestRenderer::new);

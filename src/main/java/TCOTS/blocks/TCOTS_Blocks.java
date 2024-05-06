@@ -20,6 +20,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 
+@SuppressWarnings("deprecation")
 public class TCOTS_Blocks {
 
     public static final Block ARENARIA_BUSH = new ArenariaBush(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH).pistonBehavior(PistonBehavior.DESTROY));
@@ -43,7 +44,9 @@ public class TCOTS_Blocks {
     public static final Block POTTED_SEWANT_MUSHROOMS = Blocks.createFlowerPotBlock(SEWANT_MUSHROOMS_PLANT);
     public static final Block POTTED_BRYONIA_FLOWER = Blocks.createFlowerPotBlock(BRYONIA_VINE);
 
-
+    public static final Block FROSTED_SNOW  = new FrostedSnowBlock(AbstractBlock.Settings.create().mapColor(MapColor.PALE_PURPLE).replaceable()
+            .notSolid().ticksRandomly().strength(0.1f).requiresTool().sounds(BlockSoundGroup.GLASS).nonOpaque().noCollision().slipperiness(0.98f)
+            .pistonBehavior(PistonBehavior.DESTROY));
     public static final Block NEST_SLAB  = new SlabBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).pistonBehavior(PistonBehavior.DESTROY).mapColor(MapColor.DIRT_BROWN));
     public static final Block NEST_SKULL  = new NestSkullBlock(FabricBlockSettings.create().strength(0.4f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block NEST_WALL_SKULL = new NestWallSkullBlock(FabricBlockSettings.create().strength(0.4f).sounds(BlockSoundGroup.BONE).instrument(Instrument.SKELETON).pistonBehavior(PistonBehavior.DESTROY).dropsLike(NEST_SKULL));
@@ -61,6 +64,8 @@ public class TCOTS_Blocks {
     public static void registerBlocks(){
 
         //Blocks
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "frosted_snow"), FROSTED_SNOW);
+
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "nest_slab"), NEST_SLAB);
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "nest_skull"), NEST_SKULL);
