@@ -18,7 +18,10 @@ import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
 import java.util.HashSet;
@@ -44,7 +47,7 @@ public class NorthernWindBomb {
             //To not apply effect across walls
             if(getExposure(entity.getPos(), bomb) == 0) continue;
 
-            //Applies slowness to players, damage to freeze hurt extra and effect to anything else
+            //Applies slowness to players, damage to freeze_hurt_extra and effect to anything else
             if(entity instanceof PlayerEntity) {
                 entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 240+(bomb.getLevel()*20), 4+bomb.getLevel()), entityCause);
             } else if (entity.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)) {
@@ -102,26 +105,27 @@ public class NorthernWindBomb {
 
             BlockState blockStateWaterIce = Blocks.FROSTED_ICE.getDefaultState();
 
-
-            //TODO: Fix when can have more than one direction
             //To put ice in blocks
             for (BooleanProperty booleanProperty : ConnectingBlock.FACING_PROPERTIES.values()) {
                 BlockState blockStateIce = TCOTS_Blocks.FROSTED_SNOW.getDefaultState().with(booleanProperty,true);
 
                 //To not put ice in water or in the nether
                 if(bomb.getWorld().getBlockState(possibleBlockPos) == FrostedIceBlock.getMeltedState() || bomb.getWorld().getDimension().ultrawarm()) continue;
-
                 if(
                         blockStateIce.canPlaceAt(bomb.getWorld(),possibleBlockPos)
                         && (bomb.getWorld().getBlockState(possibleBlockPos).isAir() || bomb.getWorld().getBlockState(possibleBlockPos).isReplaceable())) {
 
+                    //Put the ice
                     bomb.getWorld().setBlockState(possibleBlockPos, blockStateIce);
+
+                    //Grows the ice
+                    ((MultifaceGrowthBlock)TCOTS_Blocks.FROSTED_SNOW).getGrower().grow(blockStateIce, bomb.getWorld(), possibleBlockPos, false);
                 }
             }
 
 
 
-            //Check if it can put ice
+            //Check if it can put ice in water
             if (        bomb.getWorld().getBlockState(possibleBlockPos) != FrostedIceBlock.getMeltedState()
                     || !blockStateWaterIce.canPlaceAt(bomb.getWorld(), possibleBlockPos)
                     || !bomb.getWorld().canPlace(blockStateWaterIce, possibleBlockPos, ShapeContext.absent())) continue;
