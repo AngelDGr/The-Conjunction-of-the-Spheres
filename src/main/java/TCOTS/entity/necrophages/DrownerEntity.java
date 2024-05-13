@@ -569,7 +569,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);
         if (dataTracker.get(SWIM) || !dataTracker.get(InGROUND) || dataTracker.get(InGROUND)) {
-//            System.out.println("InsideOnTrackedDataSet: "+DrownerEntity.this.getInGroundDataTracker());
             this.setBoundingBox(this.calculateBoundingBox());
         }
 

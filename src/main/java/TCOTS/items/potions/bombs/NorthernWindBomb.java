@@ -1,5 +1,6 @@
 package TCOTS.items.potions.bombs;
 
+import TCOTS.blocks.FrostedSnowBlock;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.potions.TCOTS_Effects;
@@ -7,6 +8,11 @@ import TCOTS.particles.TCOTS_Particles;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.*;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayers;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -22,6 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.RaycastContext;
 
 import java.util.HashSet;
@@ -30,7 +37,7 @@ import java.util.List;
 public class NorthernWindBomb {
     private static final byte NORTHERN_WIND_EXPLODES = 38;
 
-    public static void northern_windBehavior(WitcherBombEntity bomb){
+    public static void explosionLogic(WitcherBombEntity bomb){
 
         bomb.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1,1);
 
@@ -39,6 +46,7 @@ public class NorthernWindBomb {
         List<LivingEntity> list = bomb.getWorld().getEntitiesByClass(LivingEntity.class, bomb.getBoundingBox().expand(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
                 livingEntity ->
                         !(livingEntity instanceof WardenEntity) && !(livingEntity instanceof ArmorStandEntity)
+                        && livingEntity.isAlive()
                         && livingEntity != bomb.getOwner()
                         && !(livingEntity.getType().isIn(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES)));
 
@@ -55,6 +63,10 @@ public class NorthernWindBomb {
                 entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.NORTHERN_WIND_EFFECT, 80+(bomb.getLevel()*20), bomb.getLevel()), entityCause);
             } else {
                 entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.NORTHERN_WIND_EFFECT, 160+(bomb.getLevel()*20), bomb.getLevel()), entityCause);
+            }
+
+            if(entity.isOnFire()){
+                entity.extinguish();
             }
         }
 
@@ -111,15 +123,15 @@ public class NorthernWindBomb {
 
                 //To not put ice in water or in the nether
                 if(bomb.getWorld().getBlockState(possibleBlockPos) == FrostedIceBlock.getMeltedState() || bomb.getWorld().getDimension().ultrawarm()) continue;
-                if(
-                        blockStateIce.canPlaceAt(bomb.getWorld(),possibleBlockPos)
+
+                if(blockStateIce.canPlaceAt(bomb.getWorld(),possibleBlockPos)
                         && (bomb.getWorld().getBlockState(possibleBlockPos).isAir() || bomb.getWorld().getBlockState(possibleBlockPos).isReplaceable())) {
 
                     //Put the ice
                     bomb.getWorld().setBlockState(possibleBlockPos, blockStateIce);
 
                     //Grows the ice
-                    ((MultifaceGrowthBlock)TCOTS_Blocks.FROSTED_SNOW).getGrower().grow(blockStateIce, bomb.getWorld(), possibleBlockPos, false);
+                    ((FrostedSnowBlock)TCOTS_Blocks.FROSTED_SNOW).getGrower().grow(blockStateIce, bomb.getWorld(), possibleBlockPos, false);
                 }
             }
 
@@ -166,4 +178,34 @@ public class NorthernWindBomb {
         return (float)i / (float)j;
     }
 
+    public static void renderIce(LivingEntity livingEntity, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider,  BlockRenderManager blockRenderManager){
+
+        matrixStack.push();
+        float blockSize = 1.75f;
+        Box boundingBox = livingEntity.getBoundingBox();
+        BlockPos blockPos = BlockPos.ofFloored(livingEntity.getX(), boundingBox.minY, livingEntity.getZ());
+        matrixStack.scale(
+                blockSize * (float)boundingBox.getLengthX(),
+                blockSize * (float)boundingBox.getLengthY(),
+                blockSize * (float)boundingBox.getLengthZ()
+        );
+        matrixStack.translate(-0.5, -0.3, -0.5);
+
+        blockRenderManager
+                .getModelRenderer()
+                .render(
+                        livingEntity.getWorld(),
+                        blockRenderManager.getModel(Blocks.ICE.getDefaultState()),
+                        Blocks.ICE.getDefaultState(),
+                        blockPos,
+                        matrixStack,
+                        vertexConsumerProvider.getBuffer(RenderLayers.getMovingBlockLayer(Blocks.ICE.getDefaultState())),
+                        false,
+                        Random.create(),
+                        Blocks.ICE.getDefaultState().getRenderingSeed(blockPos),
+                        OverlayTexture.DEFAULT_UV
+                );
+
+        matrixStack.pop();
+    }
 }

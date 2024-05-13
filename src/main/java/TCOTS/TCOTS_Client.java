@@ -115,10 +115,11 @@ public class TCOTS_Client implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.GRAPESHOT_EXPLOSION_EMITTER, new Grapeshot_ExplosionEmitterParticle.Factory());
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DANCING_STAR_EXPLOSION_EMITTER, new DancingStar_ExplosionEmitterParticle.Factory());
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DEVILS_PUFFBALL_EXPLOSION_EMITTER, new DevilsPuffball_ExplosionEmitterParticle.Factory());
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DEVILS_PUFFBALL_EXPLOSION_PARTICLE, CloudParticleColor.GreenCloudFactory::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.GREEN_CLOUD, CloudParticleColor.GreenCloudFactory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.SAMUM_EXPLOSION_EMITTER, new Samum_ExplosionEmitterParticle.Factory());
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.NORTHERN_WIND_EXPLOSION_EMITTER, new NorthernWind_ExplosionEmitterParticle.Factory());
-
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DRAGONS_DREAM_EXPLOSION_EMITTER, new DragonsDream_ExplosionEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.YELLOW_CLOUD, CloudParticleColor.YellowCloudFactory::new);
 
         HandledScreens.register(AlchemyTableRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, AlchemyTableScreen::new);
 
@@ -126,6 +127,7 @@ public class TCOTS_Client implements ClientModInitializer {
         LavenderBookScreen.registerRecipePreviewBuilder(new Identifier(TCOTS_Main.MOD_ID, "alchemy_book"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
 
         LavenderBookScreen.registerRecipePreviewBuilder(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
+
     }
 
     private static final RecipeFeature.RecipePreviewBuilder<AlchemyTableRecipe> alchemyTable_RecipePreviewBuilder = new RecipeFeature.RecipePreviewBuilder<>() {

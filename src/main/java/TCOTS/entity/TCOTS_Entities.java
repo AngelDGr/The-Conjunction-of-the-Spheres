@@ -1,10 +1,7 @@
 package TCOTS.entity;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.entity.misc.DrownerPuddleEntity;
-import TCOTS.entity.misc.FoglingEntity;
-import TCOTS.entity.misc.WaterHag_MudBallEntity;
-import TCOTS.entity.misc.WitcherBombEntity;
+import TCOTS.entity.misc.*;
 import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -14,6 +11,8 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
@@ -43,6 +42,9 @@ public class TCOTS_Entities {
     //TODO: Ice troll
     //TODO: Ice Giant (Boss)
 
+    public static final TagKey<EntityType<?>> IGNITING_ENTITIES = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"igniting_entities"));
+
+
     public static final EntityGroup NECROPHAGES = new EntityGroup();
     public static final EntityGroup OGROIDS = new EntityGroup();
     public static final EntityGroup SPECTERS = new EntityGroup();
@@ -64,7 +66,7 @@ public class TCOTS_Entities {
     public static final EntityType<DrownerPuddleEntity> DROWNER_PUDDLE = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "drowner_puddle"),
             FabricEntityTypeBuilder.<DrownerPuddleEntity>create(SpawnGroup.MISC, DrownerPuddleEntity::new
-                    )
+                    ).fireImmune()
                     // Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 0.1f)).build());
 
@@ -129,10 +131,16 @@ public class TCOTS_Entities {
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "witcher_bomb"),
-            FabricEntityTypeBuilder.<WitcherBombEntity>create(SpawnGroup.MISC, WitcherBombEntity::new
-                    )
+            FabricEntityTypeBuilder.<WitcherBombEntity>create(SpawnGroup.MISC, WitcherBombEntity::new)
                     // Hitbox
                     .dimensions(EntityDimensions.changing(0.25f, 0.25f)).build());
+
+    public static final EntityType<AreaEffectCloudEntity> AREA_EFFECT_CLOUD = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "dragons_dream_cloud"),
+            FabricEntityTypeBuilder.<AreaEffectCloudEntity>create(SpawnGroup.MISC, DragonsDreamCloud::new).fireImmune()
+                    .dimensions(EntityDimensions.changing(6.0f, 1.5f)).build()
+            );
+
 
     public static void addSpawns() {
         //Drowners

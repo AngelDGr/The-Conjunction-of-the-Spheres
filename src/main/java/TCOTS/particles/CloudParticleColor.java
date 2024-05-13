@@ -52,15 +52,28 @@ public class CloudParticleColor extends SpriteBillboardParticle {
     @Environment(value= EnvType.CLIENT)
     public static class GreenCloudFactory implements ParticleFactory<DefaultParticleType> {
         private final SpriteProvider spriteProvider;
-
         public GreenCloudFactory(SpriteProvider spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
-
         @Override
         public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             CloudParticleColor particle = new CloudParticleColor(clientWorld, d, e, f, g, h, i, this.spriteProvider);
             particle.setColor(0.0f, 0.6f, 0.0f);
+            particle.setAlpha(0.6f);
+            return particle;
+        }
+    }
+
+    @Environment(value= EnvType.CLIENT)
+    public static class YellowCloudFactory implements ParticleFactory<DefaultParticleType> {
+        private final SpriteProvider spriteProvider;
+        public YellowCloudFactory(SpriteProvider spriteProvider) {
+            this.spriteProvider = spriteProvider;
+        }
+        @Override
+        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+            CloudParticleColor particle = new CloudParticleColor(clientWorld, d, e, f, g, h, i, this.spriteProvider);
+            particle.setColor(0.9f, 0.9f, 0.0f);
             particle.setAlpha(0.6f);
             return particle;
         }

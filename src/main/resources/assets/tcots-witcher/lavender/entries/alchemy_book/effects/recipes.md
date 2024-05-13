@@ -107,6 +107,21 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:northern_wind>
+<recipe;tcots-witcher:northern_wind_enhanced>
+<recipe;tcots-witcher:northern_wind_superior>
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:dragons_dream>
+<recipe;tcots-witcher:dragons_dream_enhanced>
+<recipe;tcots-witcher:dragons_dream_superior>
+
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
 <recipe;tcots-witcher:oil_necrophage>
 <recipe;tcots-witcher:oil_necrophage_enhanced>
 <recipe;tcots-witcher:oil_necrophage_superior>

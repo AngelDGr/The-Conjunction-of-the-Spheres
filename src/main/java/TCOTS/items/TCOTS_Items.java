@@ -312,6 +312,10 @@ public class TCOTS_Items {
     public static Item NORTHERN_WIND_ENHANCED;
     public static Item NORTHERN_WIND_SUPERIOR;
 
+    public static Item DRAGONS_DREAM;
+    public static Item DRAGONS_DREAM_ENHANCED;
+    public static Item DRAGONS_DREAM_SUPERIOR;
+
     //Register Witcher Potion Items
     public static void registerPotions() {
 
@@ -419,6 +423,15 @@ public class TCOTS_Items {
 
         NORTHERN_WIND_SUPERIOR=registerItem("northern_wind_superior",
                 new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"northern_wind",2));
+
+        DRAGONS_DREAM=registerItem("dragons_dream",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"dragons_dream",0));
+
+        DRAGONS_DREAM_ENHANCED=registerItem("dragons_dream_enhanced",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"dragons_dream",1));
+
+        DRAGONS_DREAM_SUPERIOR=registerItem("dragons_dream_superior",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"dragons_dream",2));
 
         //Potions
 

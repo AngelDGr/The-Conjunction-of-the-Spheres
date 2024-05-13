@@ -33,7 +33,7 @@ public class DancingStarBomb {
     private static final byte DANCING_STAR_EXPLODES_L1 = 18;
     private static final byte DANCING_STAR_EXPLODES_L2 = 19;
     private static final byte DANCING_STAR_EXPLODES_L3 = 20;
-    public static void dancingStarBehavior(WitcherBombEntity bomb){
+    public static void explosionLogic(WitcherBombEntity bomb){
         Explosion explosion =
                 bomb.getWorld().createExplosion(
                 bomb,

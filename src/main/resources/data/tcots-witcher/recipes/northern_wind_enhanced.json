@@ -1,0 +1,33 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.51,
+  "category":"bombs_oils",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:stammelfords_dust"
+    },
+    {
+      "item": "tcots-witcher:water_essence"
+    },
+    {
+      "item": "minecraft:prismarine_crystals"
+    },
+    {
+      "item": "tcots-witcher:verbena"
+    },
+    {
+      "item": "tcots-witcher:allspice"
+    }
+  ],
+
+  "ingredient_counters": [1,2,1,1,2],
+
+  "base": {
+    "item": "tcots-witcher:northern_wind"
+  },
+
+  "result": {
+    "item": "tcots-witcher:northern_wind_enhanced"
+  }
+}

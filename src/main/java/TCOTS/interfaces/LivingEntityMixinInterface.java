@@ -22,4 +22,9 @@ public interface LivingEntityMixinInterface {
 
     }
 
+    //NorthernWind
+    default boolean theConjunctionOfTheSpheres$isFrozen(){
+        return false;
+    }
+
 }

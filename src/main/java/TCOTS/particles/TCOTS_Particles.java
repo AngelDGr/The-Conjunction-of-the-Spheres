@@ -15,9 +15,12 @@ public class TCOTS_Particles {
     public static final DefaultParticleType GRAPESHOT_EXPLOSION_EMITTER = FabricParticleTypes.simple();
     public static final DefaultParticleType DANCING_STAR_EXPLOSION_EMITTER = FabricParticleTypes.simple();
     public static final DefaultParticleType DEVILS_PUFFBALL_EXPLOSION_EMITTER = FabricParticleTypes.simple();
-    public static final DefaultParticleType DEVILS_PUFFBALL_EXPLOSION_PARTICLE = FabricParticleTypes.simple();
+    public static final DefaultParticleType GREEN_CLOUD = FabricParticleTypes.simple();
     public static final DefaultParticleType SAMUM_EXPLOSION_EMITTER = FabricParticleTypes.simple();
     public static final DefaultParticleType NORTHERN_WIND_EXPLOSION_EMITTER = FabricParticleTypes.simple();
+    public static final DefaultParticleType YELLOW_CLOUD = FabricParticleTypes.simple();
+    public static final DefaultParticleType DRAGONS_DREAM_EXPLOSION_EMITTER = FabricParticleTypes.simple();
+
 
     public static final DefaultParticleType FOGLET_FOG = FabricParticleTypes.simple();
     public static final DefaultParticleType FOGLET_FOG_AROUND = FabricParticleTypes.simple();
@@ -47,14 +50,19 @@ public class TCOTS_Particles {
 
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "devils_explosion_emitter"),
                 DEVILS_PUFFBALL_EXPLOSION_EMITTER);
-        Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "devils_explosion"),
-                DEVILS_PUFFBALL_EXPLOSION_PARTICLE);
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "green_cloud"),
+                GREEN_CLOUD);
 
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "samum_explosion_emitter"),
                 SAMUM_EXPLOSION_EMITTER);
 
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "northern_explosion_emitter"),
                 NORTHERN_WIND_EXPLOSION_EMITTER);
+
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "dragons_dream_emitter"),
+                DRAGONS_DREAM_EXPLOSION_EMITTER);
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "yellow_cloud"),
+                YELLOW_CLOUD);
     }
 
 }

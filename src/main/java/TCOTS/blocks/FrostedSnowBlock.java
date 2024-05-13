@@ -20,7 +20,7 @@ public class FrostedSnowBlock extends MultifaceGrowthBlock {
     public static final MapCodec<FrostedSnowBlock> CODEC = FrostedSnowBlock.createCodec(FrostedSnowBlock::new);
 
     public static final IntProperty AGE = Properties.AGE_3;
-    private final LichenGrower grower = new LichenGrower(this);
+    private final FrostedSnowGrower grower = new FrostedSnowGrower(this);
 
     public FrostedSnowBlock(Settings settings) {
         super(settings);
@@ -56,7 +56,9 @@ public class FrostedSnowBlock extends MultifaceGrowthBlock {
 
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if ((random.nextInt(3) == 0 || this.canMelt(world, pos, 4)) && world.getLightLevel(pos) > 11 - state.get(AGE) - state.getOpacity(world, pos) && this.increaseAge(state, world, pos)) {
+        if ((random.nextInt(3) == 0 || this.canMelt(world, pos, 4))
+//                && world.getLightLevel(pos) > - state.get(AGE) - state.getOpacity(world, pos)
+                && this.increaseAge(state, world, pos)) {
             BlockPos.Mutable mutable = new BlockPos.Mutable();
             for (Direction direction : Direction.values()) {
                 mutable.set(pos, direction);

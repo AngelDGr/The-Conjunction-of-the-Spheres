@@ -25,11 +25,6 @@ public class DrownerPuddleRenderer extends GeoEntityRenderer<DrownerPuddleEntity
     }
 
     @Override
-    public void render(DrownerPuddleEntity entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
-
-    @Override
     public void actuallyRender(MatrixStack poseStack, DrownerPuddleEntity animatable, BakedGeoModel model, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 
         int waterColor = BiomeColors.getWaterColor(animatable.getWorld(), new BlockPos((int) animatable.getX(), (int) animatable.getY(), (int) animatable.getZ()));

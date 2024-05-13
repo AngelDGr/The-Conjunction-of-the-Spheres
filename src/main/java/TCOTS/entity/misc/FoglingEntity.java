@@ -2,6 +2,7 @@ package TCOTS.entity.misc;
 
 
 import TCOTS.entity.necrophages.FogletEntity;
+import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -126,6 +127,14 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, Ownable {
         super.readCustomDataFromNbt(nbt);
     }
 
+    @Override
+    public void tick() {
+        if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT))
+        {
+            damage(this.getDamageSources().freeze(), 1);
+        }
+        super.tick();
+    }
 
     @Override
     public boolean isFireImmune() {

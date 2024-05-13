@@ -74,7 +74,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         }
     }
 
-
     //Kill Counter
     @Unique
     private static final TrackedData<Integer> KILL_COUNT = DataTracker.registerData(LivingEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
@@ -131,9 +130,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
                 THIS.theConjunctionOfTheSpheres$setKillCountdown(count - 1);
 
             } else if (THIS.theConjunctionOfTheSpheres$getKillCountdown() == 0) {
-
                 THIS.theConjunctionOfTheSpheres$setKillCount(0);
-
             }
         } else{
             THIS.theConjunctionOfTheSpheres$setKillCountdown(0);
@@ -251,6 +248,19 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     //NorthernWind
+    @Unique
+    private static final TrackedData<Boolean> IS_FROZEN = DataTracker.registerData(LivingEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    @Override
+    public boolean theConjunctionOfTheSpheres$isFrozen() {
+        return this.dataTracker.get(IS_FROZEN);
+    }
+
+    @Unique
+    public void setIsFrozen(boolean frozen) {
+        this.dataTracker.set(IS_FROZEN, frozen);
+    }
+
     @Inject(method = "damage", at = @At("TAIL"))
     private void injectRemoveNorthernWindOnHit(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
         if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
@@ -287,6 +297,19 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     private void injectNorthernWindNoPushable(CallbackInfoReturnable<Boolean> cir){
         if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
             cir.setReturnValue(false);
+        }
+    }
+
+    @Inject(method = "initDataTracker", at = @At("TAIL"))
+    private void injectNorthernWindDataTracker(CallbackInfo ci){
+        this.dataTracker.startTracking(IS_FROZEN, false);
+    }
+
+    @Inject(method = "tickStatusEffects", at = @At("HEAD"))
+    private void injectIsFrozen(CallbackInfo ci){
+        LivingEntity THIS = (LivingEntity)(Object)this;
+        if(!THIS.getWorld().isClient) {
+            setIsFrozen(THIS.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT));
         }
     }
 

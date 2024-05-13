@@ -10,10 +10,9 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.sound.SoundEvents;
 
 public class DevilsPuffballBomb {
-
     private static final byte DEVILS_PUFFBALL_EXPLODES = 33;
 
-    public static void devilsPuffballBehavior(WitcherBombEntity bomb) {
+    public static void explosionLogic(WitcherBombEntity bomb) {
         bomb.getWorld().playSound(null, bomb.getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, bomb.getSoundCategory());
         bomb.getWorld().sendEntityStatus(bomb, DEVILS_PUFFBALL_EXPLODES);
         applyLingeringPotion(bomb);

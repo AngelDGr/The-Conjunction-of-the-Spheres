@@ -180,6 +180,9 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.NORTHERN_WIND);
                             entries.add(TCOTS_Items.NORTHERN_WIND_ENHANCED);
                             entries.add(TCOTS_Items.NORTHERN_WIND_SUPERIOR);
+                            entries.add(TCOTS_Items.DRAGONS_DREAM);
+                            entries.add(TCOTS_Items.DRAGONS_DREAM_ENHANCED);
+                            entries.add(TCOTS_Items.DRAGONS_DREAM_SUPERIOR);
 
                             //Misc/Blocks
                             entries.add(TCOTS_Items.NEST_SLAB_ITEM);

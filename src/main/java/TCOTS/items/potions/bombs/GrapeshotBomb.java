@@ -26,7 +26,7 @@ import java.util.List;
 
 public class GrapeshotBomb {
 
-    public static void grapeShotBehavior(WitcherBombEntity bomb, @Nullable Entity entity){
+    public static void explosionLogic(WitcherBombEntity bomb, @Nullable Entity entity){
         Explosion explosion =
         bomb.getWorld().createExplosion(
                 bomb,
@@ -85,6 +85,7 @@ public class GrapeshotBomb {
                 }
             }
         }
+
         affectedBlocks.addAll(set);
 
         List<Pair<ItemStack, BlockPos>> list = new ArrayList<>();

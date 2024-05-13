@@ -6,8 +6,9 @@
     "InGameHudMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
-    "LookAroundGoalMixin",
-    "LookAtEntityGoalMixin",
+    "northern_wind.LivingEntityRendererMixin",
+    "samum.LookAroundGoalMixin",
+    "samum.LookAtEntityGoalMixin",
     "MilkBucketItemMixin",
     "MobEntityMixin",
     "PlayerEntityMixin",
@@ -17,16 +18,19 @@
     "ShearsItemMixin",
     "SpawnEggItemMixin",
     "VillagerHostilesSensorMixin",
-    "WorldRendererMixin"
+    "WorldRendererMixin",
+    "northern_wind.geckolib.GeoReplacedEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
     "BackgroundRendererMixin",
+    "northern_wind.BlazeEntityMixin",
     "ClientPlayNetworkHandlerMixin",
     "ClientRecipeBookClientMixin",
     "GameRendererMixin",
-    "LightmapTextureManagerMixin"
+    "LightmapTextureManagerMixin",
+    "northern_wind.geckolib.GeoEntityRendererMixin"
   ]
 }

@@ -55,7 +55,7 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     //xTODO: Add drops (Water Hag mutagen)
         //xTODO: Add Water Hag Decoction (Damage increased at full health)
         //TODO: Add Water Hag tooth, used in Enhanced Relict oil
-        //TODO: Add Ducal water (Water Essence), item for Northern Wind
+        //xTODO: Add Ducal water (Water Essence), item for Northern Wind
     //xTODO: Add spawn
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);

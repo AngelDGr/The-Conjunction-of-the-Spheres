@@ -28,8 +28,8 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
     //xTODO: Add Dancing Star
     //xTODO: Add Devil’s Puffball
     //xTODO: Add Samum
-    //TODO: Add Northern Wind
-    //TODO: Add Dragon's Dream
+    //xTODO: Add Northern Wind
+    //xTODO: Add Dragon's Dream
     //TODO: Add Dimeritium Bomb
     //TODO: Add Moon Dust
 
@@ -62,26 +62,31 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
         if (this.getWorld().isClient) {
             return;
         }
+
         if (bombId!=null) {
             switch (bombId){
                 case "grapeshot":
-                    GrapeshotBomb.grapeShotBehavior(this, hitResult.getType() == HitResult.Type.ENTITY ? ((EntityHitResult)hitResult).getEntity() : null);
+                    GrapeshotBomb.explosionLogic(this, hitResult.getType() == HitResult.Type.ENTITY ? ((EntityHitResult)hitResult).getEntity() : null);
                     break;
 
                 case "dancing_star":
-                    DancingStarBomb.dancingStarBehavior(this);
+                    DancingStarBomb.explosionLogic(this);
                     break;
 
                 case "devils_puffball":
-                    DevilsPuffballBomb.devilsPuffballBehavior(this);
+                    DevilsPuffballBomb.explosionLogic(this);
                     break;
 
                 case "samum":
-                    SamumBomb.samumBehavior(this);
+                    SamumBomb.explosionLogic(this);
                     break;
 
                 case "northern_wind":
-                    NorthernWindBomb.northern_windBehavior(this);
+                    NorthernWindBomb.explosionLogic(this);
+                    break;
+
+                case "dragons_dream":
+                    DragonsDreamBomb.explosionLogic(this);
                     break;
 
                 default:
@@ -99,6 +104,7 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
         DevilsPuffballBomb.handleStatus(this,status);
         SamumBomb.handleStatus(this,status);
         NorthernWindBomb.handleStatus(this,status);
+        DragonsDreamBomb.handleStatus(this,status);
     }
 
     @Override

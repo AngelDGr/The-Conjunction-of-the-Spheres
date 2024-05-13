@@ -26,7 +26,7 @@ import java.util.List;
 public class SamumBomb {
     private static final byte SAMUM_EXPLODES = 34;
 
-    public static void samumBehavior(WitcherBombEntity bomb){
+    public static void explosionLogic(WitcherBombEntity bomb){
         Explosion explosion =
                 bomb.getWorld().createExplosion(
                         bomb,

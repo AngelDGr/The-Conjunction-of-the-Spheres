@@ -17,11 +17,14 @@ import net.minecraft.block.enums.Instrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 
 @SuppressWarnings("deprecation")
 public class TCOTS_Blocks {
+    public static final TagKey<Block> IGNITING_BLOCKS = TagKey.of(RegistryKeys.BLOCK, new Identifier(TCOTS_Main.MOD_ID,"igniting_blocks"));
 
     public static final Block ARENARIA_BUSH = new ArenariaBush(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block CELANDINE_PLANT = new CelandinePlant(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY));

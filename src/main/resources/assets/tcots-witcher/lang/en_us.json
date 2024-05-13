@@ -393,6 +393,12 @@
     "block.tcots-witcher.frosted_snow": "Frosted Snow",
     "effect.tcots-witcher.northern_wind": "Northern Wind Freezing",
 
+    "item.tcots-witcher.dragons_dream": "Dragon's Dream",
+    "item.tcots-witcher.dragons_dream_enhanced": "Enhanced Dragon's Dream",
+    "item.tcots-witcher.dragons_dream_superior": "Superior Dragon's Dream",
+    "tooltip.dragons_dream.first":  "Releases a cloud of gas that",
+    "tooltip.dragons_dream.second": "explodes when ignited.",
+    "entity.tcots-witcher.dragons_dream_cloud": "Dragon's Dream Cloud",
 
     "text.config.tcots_config.title": "TCOTS Config",
     "text.config.tcots_config.category.hud": "HUD Options",

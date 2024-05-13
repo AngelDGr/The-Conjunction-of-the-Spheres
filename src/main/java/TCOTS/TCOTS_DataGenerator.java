@@ -1,5 +1,7 @@
 package TCOTS;
 
+import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.OrganicPasteItem;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.world.TCOTS_ConfiguredFeatures;
@@ -16,6 +18,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.SuspiciousStewIngredient;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.server.tag.TagProvider;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Items;
@@ -49,7 +52,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         main.addProvider(ModWorldGenerator::new);
         main.addProvider(LootTablesHerbalistGenerator::new);
         main.addProvider(POIProvider::new);
-        main.addProvider(TagsGenerator::new);
+        main.addProvider(DamageTypeTagsGenerator::new);
+        main.addProvider(BlockTagsGenerator::new);
+        main.addProvider(EntityTagGenerator::new);
     }
 
     @Override
@@ -361,7 +366,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
-    private static class TagsGenerator extends TagProvider<DamageType> {
+    private static class DamageTypeTagsGenerator extends TagProvider<DamageType> {
 
 
         /**
@@ -372,7 +377,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
          * @param output           the {@link FabricDataOutput} instance
          * @param registriesFuture the backing registry for the tag type
          */
-        public TagsGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        public DamageTypeTagsGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
             super(output, RegistryKeys.DAMAGE_TYPE, registriesFuture);
         }
 
@@ -381,6 +386,35 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             this.getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR).add(TCOTS_DamageTypes.POTION_TOXICITY);
         }
 
+    }
+
+    private static class BlockTagsGenerator extends FabricTagProvider.BlockTagProvider {
+        public BlockTagsGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup lookup) {
+            this.getOrCreateTagBuilder(TCOTS_Blocks.IGNITING_BLOCKS)
+                    .add(Blocks.FIRE)
+                    .add(Blocks.SOUL_FIRE)
+                    .add(Blocks.MAGMA_BLOCK);
+        }
+    }
+
+    private static class EntityTagGenerator extends FabricTagProvider.EntityTypeTagProvider {
+        public EntityTagGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+            super(output, completableFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup arg) {
+            this.getOrCreateTagBuilder(TCOTS_Entities.IGNITING_ENTITIES)
+                    .add(EntityType.BLAZE)
+                    .add(EntityType.FIREBALL)
+                    .add(EntityType.SMALL_FIREBALL)
+                    .add(EntityType.FIREWORK_ROCKET);
+        }
     }
 
 }

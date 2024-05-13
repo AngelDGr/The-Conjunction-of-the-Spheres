@@ -11,13 +11,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientRecipeBook.class)
 public class ClientRecipeBookClientMixin {
-
     @Inject(method = "getGroupForRecipe", at = @At("HEAD"), cancellable = true)
     private static void fixWarning(RecipeEntry<?> recipe, CallbackInfoReturnable<RecipeBookGroup> cir){
-
         if (recipe.value() instanceof AlchemyTableRecipe) {
             cir.setReturnValue(RecipeBookGroup.UNKNOWN);
         }
-
     }
 }

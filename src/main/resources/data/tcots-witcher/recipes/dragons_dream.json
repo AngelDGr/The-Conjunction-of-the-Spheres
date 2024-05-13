@@ -1,0 +1,21 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.6,
+  "category":"bombs_oils",
+
+  "ingredients": [
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+
+  "ingredient_counters": [4],
+
+  "base": {
+    "item": "minecraft:gunpowder"
+  },
+
+  "result": {
+    "item": "tcots-witcher:dragons_dream"
+  }
+}
