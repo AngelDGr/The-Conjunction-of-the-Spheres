@@ -89,6 +89,10 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
                     DragonsDreamBomb.explosionLogic(this);
                     break;
 
+                case "dimeritium_bomb":
+                    DimeritiumBomb.explosionLogic(this);
+                    break;
+
                 default:
                     break;
             }
@@ -105,6 +109,7 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
         SamumBomb.handleStatus(this,status);
         NorthernWindBomb.handleStatus(this,status);
         DragonsDreamBomb.handleStatus(this,status);
+        DimeritiumBomb.handleStatus(this,status);
     }
 
     @Override

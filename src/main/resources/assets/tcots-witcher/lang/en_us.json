@@ -400,6 +400,14 @@
     "tooltip.dragons_dream.second": "explodes when ignited.",
     "entity.tcots-witcher.dragons_dream_cloud": "Dragon's Dream Cloud",
 
+    "item.tcots-witcher.dimeritium_bomb": "Dimeritium Bomb",
+    "item.tcots-witcher.dimeritium_bomb_enhanced": "Enhanced Dimeritium Bomb",
+    "item.tcots-witcher.dimeritium_bomb_superior": "Superior Dimeritium Bomb",
+    "tooltip.dimeritium_bomb.first":  "Releases a cloud of dimeritium",
+    "tooltip.dimeritium_bomb.second": "slivers that block magic.",
+    "effect.tcots-witcher.dimeritium_bomb": "Dimeritium Magic Blocking",
+
+
     "text.config.tcots_config.title": "TCOTS Config",
     "text.config.tcots_config.category.hud": "HUD Options",
     "text.config.tcots_config.option.hud.Hud_Y": "Y Offset",

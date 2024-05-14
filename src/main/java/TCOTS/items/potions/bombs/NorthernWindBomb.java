@@ -57,12 +57,12 @@ public class NorthernWindBomb {
 
             //Applies slowness to players, damage to freeze_hurt_extra and effect to anything else
             if(entity instanceof PlayerEntity) {
-                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 240+(bomb.getLevel()*20), 4+bomb.getLevel()), entityCause);
+                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 240+(bomb.getLevel()*20), 4+bomb.getLevel(),false,false), entityCause);
             } else if (entity.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)) {
                 entity.damage(bomb.getDamageSources().freeze(), 0.5f);
-                entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.NORTHERN_WIND_EFFECT, 80+(bomb.getLevel()*20), bomb.getLevel()), entityCause);
+                entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.NORTHERN_WIND_EFFECT, 80+(bomb.getLevel()*20), bomb.getLevel(),false,false), entityCause);
             } else {
-                entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.NORTHERN_WIND_EFFECT, 160+(bomb.getLevel()*20), bomb.getLevel()), entityCause);
+                entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.NORTHERN_WIND_EFFECT, 160+(bomb.getLevel()*20), bomb.getLevel(),false,false), entityCause);
             }
 
             if(entity.isOnFire()){

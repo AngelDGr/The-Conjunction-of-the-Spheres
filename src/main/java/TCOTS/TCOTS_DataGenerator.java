@@ -399,6 +399,10 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .add(Blocks.FIRE)
                     .add(Blocks.SOUL_FIRE)
                     .add(Blocks.MAGMA_BLOCK);
+
+            this.getOrCreateTagBuilder(TCOTS_Blocks.DESTROYABLE_MAGIC_BLOCKS)
+                    .add(Blocks.NETHER_PORTAL)
+                    .add(Blocks.SOUL_FIRE);
         }
     }
 

@@ -316,6 +316,10 @@ public class TCOTS_Items {
     public static Item DRAGONS_DREAM_ENHANCED;
     public static Item DRAGONS_DREAM_SUPERIOR;
 
+    public static Item DIMERITIUM_BOMB;
+    public static Item DIMERITIUM_BOMB_ENHANCED;
+    public static Item DIMERITIUM_BOMB_SUPERIOR;
+
     //Register Witcher Potion Items
     public static void registerPotions() {
 
@@ -432,6 +436,15 @@ public class TCOTS_Items {
 
         DRAGONS_DREAM_SUPERIOR=registerItem("dragons_dream_superior",
                 new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"dragons_dream",2));
+
+        DIMERITIUM_BOMB=registerItem("dimeritium_bomb",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"dimeritium_bomb",0));
+
+        DIMERITIUM_BOMB_ENHANCED=registerItem("dimeritium_bomb_enhanced",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"dimeritium_bomb",1));
+
+        DIMERITIUM_BOMB_SUPERIOR=registerItem("dimeritium_bomb_superior",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"dimeritium_bomb",2));
 
         //Potions
 

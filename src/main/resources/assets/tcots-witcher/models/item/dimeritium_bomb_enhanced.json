@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "tcots-witcher:item/alchemy/bombs/dimeritium_bomb_enhanced"
+  }
+
+}

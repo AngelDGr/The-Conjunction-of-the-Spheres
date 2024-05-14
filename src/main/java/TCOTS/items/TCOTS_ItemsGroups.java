@@ -183,6 +183,9 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.DRAGONS_DREAM);
                             entries.add(TCOTS_Items.DRAGONS_DREAM_ENHANCED);
                             entries.add(TCOTS_Items.DRAGONS_DREAM_SUPERIOR);
+                            entries.add(TCOTS_Items.DIMERITIUM_BOMB);
+                            entries.add(TCOTS_Items.DIMERITIUM_BOMB_ENHANCED);
+                            entries.add(TCOTS_Items.DIMERITIUM_BOMB_SUPERIOR);
 
                             //Misc/Blocks
                             entries.add(TCOTS_Items.NEST_SLAB_ITEM);

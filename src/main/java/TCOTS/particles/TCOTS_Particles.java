@@ -20,7 +20,7 @@ public class TCOTS_Particles {
     public static final DefaultParticleType NORTHERN_WIND_EXPLOSION_EMITTER = FabricParticleTypes.simple();
     public static final DefaultParticleType YELLOW_CLOUD = FabricParticleTypes.simple();
     public static final DefaultParticleType DRAGONS_DREAM_EXPLOSION_EMITTER = FabricParticleTypes.simple();
-
+    public static final DefaultParticleType DIMERITIUM_FLASH = FabricParticleTypes.simple();
 
     public static final DefaultParticleType FOGLET_FOG = FabricParticleTypes.simple();
     public static final DefaultParticleType FOGLET_FOG_AROUND = FabricParticleTypes.simple();
@@ -63,6 +63,9 @@ public class TCOTS_Particles {
                 DRAGONS_DREAM_EXPLOSION_EMITTER);
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "yellow_cloud"),
                 YELLOW_CLOUD);
+
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "dimeritium_flash"),
+                DIMERITIUM_FLASH);
     }
 
 }

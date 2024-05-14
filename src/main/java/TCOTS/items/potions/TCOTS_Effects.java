@@ -2,6 +2,7 @@ package TCOTS.items.potions;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.items.potions.effects.*;
+import TCOTS.items.potions.effects.bombs.DimeritiumBombEffect;
 import TCOTS.items.potions.effects.bombs.NorthernWindEffect;
 import TCOTS.items.potions.effects.bombs.SamumEffect;
 import TCOTS.items.potions.effects.decoctions.AlghoulDecoctionEffect;
@@ -34,6 +35,7 @@ public class TCOTS_Effects {
 
     public static StatusEffect SAMUM_EFFECT;
     public static StatusEffect NORTHERN_WIND_EFFECT;
+    public static StatusEffect DIMERITIUM_BOMB_EFFECT;
 
     public static void registerEffects() {
 
@@ -87,6 +89,9 @@ public class TCOTS_Effects {
                                 EntityAttributes.GENERIC_MOVEMENT_SPEED,
                                 "7107DE5E-7CE8-4030-940E-514C1F160890", -1.0f,
                                 EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+
+        DIMERITIUM_BOMB_EFFECT = registerStatusEffect("dimeritium_bomb", DimeritiumBombEffect.class, StatusEffectCategory.BENEFICIAL, 0x25882f);
+
     }
 
     public static StatusEffect registerStatusEffect(String name, Class<? extends StatusEffect> effectClass, StatusEffectCategory category, int color) {
