@@ -320,6 +320,10 @@ public class TCOTS_Items {
     public static Item DIMERITIUM_BOMB_ENHANCED;
     public static Item DIMERITIUM_BOMB_SUPERIOR;
 
+    public static Item MOON_DUST;
+    public static Item MOON_DUST_ENHANCED;
+    public static Item MOON_DUST_SUPERIOR;
+
     //Register Witcher Potion Items
     public static void registerPotions() {
 
@@ -445,6 +449,15 @@ public class TCOTS_Items {
 
         DIMERITIUM_BOMB_SUPERIOR=registerItem("dimeritium_bomb_superior",
                 new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"dimeritium_bomb",2));
+
+        MOON_DUST=registerItem("moon_dust",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"moon_dust",0));
+
+        MOON_DUST_ENHANCED=registerItem("moon_dust_enhanced",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"moon_dust",1));
+
+        MOON_DUST_SUPERIOR=registerItem("moon_dust_superior",
+                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"moon_dust",2));
 
         //Potions
 

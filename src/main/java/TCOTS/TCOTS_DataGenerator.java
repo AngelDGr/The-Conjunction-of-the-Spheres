@@ -418,6 +418,15 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .add(EntityType.FIREBALL)
                     .add(EntityType.SMALL_FIREBALL)
                     .add(EntityType.FIREWORK_ROCKET);
+
+            this.getOrCreateTagBuilder(TCOTS_Entities.DIMERITIUM_REMOVAL)
+                    .add(EntityType.EVOKER_FANGS)
+                    .add(EntityType.AREA_EFFECT_CLOUD)
+                    .add(EntityType.SHULKER_BULLET);
+
+            this.getOrCreateTagBuilder(TCOTS_Entities.DIMERITIUM_DAMAGE)
+                    .add(EntityType.END_CRYSTAL)
+                    .add(TCOTS_Entities.FOGLING);
         }
     }
 

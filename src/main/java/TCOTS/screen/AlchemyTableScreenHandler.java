@@ -205,9 +205,9 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
             //To put the base in place
             if(this.inventory.getStack(5) == ItemStack.EMPTY) {
 
-                ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(1);
+                ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(recipe.getBaseItem().getCount());
 
-                player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(1);
+                player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(recipe.getBaseItem().getCount());
 
                 this.inventory.setStack(5, base);
             }
@@ -218,9 +218,9 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
                     player.getInventory().insertStack(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot), stackInsideSlot);
                     this.inventory.setStack(5, ItemStack.EMPTY);
 
-                    ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(1);
+                    ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(recipe.getBaseItem().getCount());
 
-                    player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(1);
+                    player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(recipe.getBaseItem().getCount());
 
                     this.inventory.setStack(5, base);
                 }
@@ -229,9 +229,9 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
 
                     this.inventory.setStack(5, ItemStack.EMPTY);
 
-                    ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(1);
+                    ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).copyWithCount(recipe.getBaseItem().getCount());
 
-                    player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(1);
+                    player.getInventory().getStack(player.getInventory().getSlotWithStack(recipe.getBaseItem())).decrement(recipe.getBaseItem().getCount());
 
                     this.inventory.setStack(5, base);
                 }

@@ -1,6 +1,7 @@
 package TCOTS.mixin;
 
-import TCOTS.items.potions.TCOTS_Effects;
+import TCOTS.items.potions.bombs.NorthernWindBomb;
+import TCOTS.items.potions.bombs.SamumBomb;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -15,22 +16,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MobEntity.class)
 public class MobEntityMixin {
+    @Unique
+    MobEntity THIS = (MobEntity) (Object) this;
     @Shadow
     private @Nullable LivingEntity target;
 
     //Samum
     @Inject(method = "setTarget", at = @At("HEAD"), cancellable = true)
     private void injectNoSamumEffectSet(LivingEntity target, CallbackInfo ci) {
-        MobEntity THIS = (MobEntity) (Object) this;
-        if (THIS.hasStatusEffect(TCOTS_Effects.SAMUM_EFFECT)) {
+        if (SamumBomb.checkSamumEffect(THIS)) {
             this.target = null;
             ci.cancel();
         }
     }
 
     //NorthernWind
-    @Unique
-    MobEntity THIS = (MobEntity) (Object) this;
     @Unique
     private boolean northernWindApplied = false;
 
@@ -42,7 +42,7 @@ public class MobEntityMixin {
     @Inject(method = "tick", at = @At("TAIL"))
     private void injectNorthernWindFreeze(CallbackInfo ci) {
 
-        if (THIS.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)) {
+        if (NorthernWindBomb.checkEffect(THIS)) {
 
             if (x == -1) {
                 x = THIS.getX();
@@ -65,13 +65,13 @@ public class MobEntityMixin {
 
     @Inject(method = "tickNewAi", at = @At("HEAD"), cancellable = true)
     private void injectNorthernWindMove(CallbackInfo ci) {
-        if (THIS.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)) {
+        if (NorthernWindBomb.checkEffect(THIS)) {
             ci.cancel();
         }
     }
 
     @ModifyVariable(method = "isAffectedByDaylight", at = @At("STORE"), name = "bl")
     private boolean injectNoFireWhenFreeze(boolean value){
-        return value || THIS.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT);
+        return value || NorthernWindBomb.checkEffect(THIS);
     }
 }

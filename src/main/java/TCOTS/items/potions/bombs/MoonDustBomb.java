@@ -7,69 +7,39 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.GuardianEntity;
 import net.minecraft.entity.mob.WardenEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
-import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
 
 import java.util.List;
 
-public class SamumBomb {
-    private static final byte SAMUM_EXPLODES = 34;
+public class MoonDustBomb {
+    private static final byte MOON_DUST_EXPLODES = 41;
 
     public static void explosionLogic(WitcherBombEntity bomb){
-        Explosion explosion =
-                bomb.getWorld().createExplosion(
-                        bomb,
-                        null,
-                        null,
-                        bomb.getX(),
-                        bomb.getY(),
-                        bomb.getZ(),
-                        //Level 0 -> 1.25
-                        //Level 1 -> 1.50
-                        //Level 2 -> 1.75
-                        0.25f,
-                        false,
-                        World.ExplosionSourceType.BLOCK,
-                        ParticleTypes.POOF,
-                        ParticleTypes.POOF,
-                        SoundEvents.ENTITY_GENERIC_EXPLODE
-                );
 
-        bomb.getWorld().sendEntityStatus(bomb, SAMUM_EXPLODES);
+        bomb.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1,1);
+
+        bomb.getWorld().sendEntityStatus(bomb, MOON_DUST_EXPLODES);
 
         List<LivingEntity> list = bomb.getWorld().getEntitiesByClass(LivingEntity.class, bomb.getBoundingBox().expand(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
-                livingEntity -> !(livingEntity instanceof WardenEntity) && !(livingEntity instanceof ArmorStandEntity) && !(livingEntity instanceof GuardianEntity)
-                        && livingEntity != bomb.getOwner())  ;
+                entity ->
+                        !(entity instanceof WardenEntity) && !(entity instanceof ArmorStandEntity)
+                                && entity.isAlive()
+                                && entity != bomb.getOwner());
+
 
         Entity entityCause = bomb.getEffectCause();
-        for (LivingEntity entity : list) {
+        for(LivingEntity entity: list){
             //To not apply effect across walls
             if(getExposure(entity.getPos(), bomb) == 0) continue;
 
-            if (entity instanceof PlayerEntity) {
-                entity.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 240 + (bomb.getLevel() * 60), bomb.getLevel()), entityCause);
-            } else {
-                entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.SAMUM_EFFECT, 80 + (bomb.getLevel() * 40), bomb.getLevel()), entityCause);
-            }
-        }
-
-        GrapeshotBomb.destroyNests(bomb, explosion);
-    }
-
-    public static void handleStatus(WitcherBombEntity bomb, byte status) {
-        if(status==SAMUM_EXPLODES){
-            bomb.getWorld().addParticle(TCOTS_Particles.SAMUM_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
+            //Applies moon dust effect to entity
+            entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.MOON_DUST_EFFECT, bomb.getLevel() < 1 ? 400 : 800, bomb.getLevel()), entityCause);
         }
     }
 
@@ -102,8 +72,14 @@ public class SamumBomb {
         return (float)i / (float)j;
     }
 
-    public static boolean checkSamumEffect(LivingEntity entity){
-        return entity.hasStatusEffect(TCOTS_Effects.SAMUM_EFFECT);
+    public static void handleStatus(WitcherBombEntity bomb, byte status) {
+        if(status== MOON_DUST_EXPLODES){
+            bomb.getWorld().addParticle(TCOTS_Particles.MOON_DUST_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
+        }
+    }
+
+    public static boolean checkEffect(LivingEntity entity){
+        return entity.hasStatusEffect(TCOTS_Effects.MOON_DUST_EFFECT);
     }
 
 }

@@ -3,6 +3,8 @@ package TCOTS.mixin;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.interfaces.LivingEntityMixinInterface;
 import TCOTS.items.potions.TCOTS_Effects;
+import TCOTS.items.potions.bombs.NorthernWindBomb;
+import TCOTS.items.potions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -39,7 +41,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
-
+    @Unique
+    LivingEntity THIS = (LivingEntity)(Object)this;
     @Shadow @Nullable
     public abstract StatusEffectInstance getStatusEffect(StatusEffect effect);
 
@@ -60,10 +63,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     //Killer Whale
     @Inject(method = "getNextAirUnderwater", at = @At("TAIL"), cancellable = true)
     private void checkForKillerWhaleEffect(int air, CallbackInfoReturnable<Integer> cir){
-        LivingEntity thisObject = (LivingEntity)(Object)this;
-
         //If the player has RespirationIII, the Respiration effect overrides the Killer Whale respiration effect
-        if(this.hasStatusEffect(TCOTS_Effects.KILLER_WHALE_EFFECT) && EnchantmentHelper.getRespiration(thisObject) < 3){
+        if(this.hasStatusEffect(TCOTS_Effects.KILLER_WHALE_EFFECT) && EnchantmentHelper.getRespiration(THIS) < 3){
 
             int amplifier = Objects.requireNonNull(this.getStatusEffect(TCOTS_Effects.KILLER_WHALE_EFFECT)).getAmplifier();
             //With +2 works exactly as respiration I at amplifier I
@@ -116,13 +117,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     @Inject(method = "onAttacking", at = @At("HEAD"))
     private void injectCountdownAttack(CallbackInfo ci){
-        LivingEntity THIS = (LivingEntity)(Object)this;
         THIS.theConjunctionOfTheSpheres$setKillCountdown(300);
     }
 
     @Inject(method = "tickStatusEffects", at = @At("HEAD"))
     private void injectCountdown(CallbackInfo ci){
-        LivingEntity THIS = (LivingEntity)(Object)this;
         if(THIS.hasStatusEffect(TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT)) {
             int count = THIS.theConjunctionOfTheSpheres$getKillCountdown();
             if (THIS.theConjunctionOfTheSpheres$getKillCountdown() > 0) {
@@ -140,8 +139,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     @Inject(method = "onDeath", at = @At("HEAD"))
     private void injectKillCounter(DamageSource damageSource, CallbackInfo ci){
-        LivingEntity THIS = (LivingEntity)(Object)this;
-
         LivingEntity livingEntity = THIS.getPrimeAdversary();
         if (livingEntity != null) {
             if(livingEntity.hasStatusEffect(TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT)){
@@ -159,19 +156,13 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void injectKillCountWriteNBT(NbtCompound nbt, CallbackInfo ci){
-        LivingEntity THIS = (LivingEntity)(Object)this;
-
         nbt.putInt("KillCount", THIS.theConjunctionOfTheSpheres$getKillCount());
-
         nbt.putInt("KillCountdown", THIS.theConjunctionOfTheSpheres$getKillCountdown());
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void injectKillCountReadNBT(NbtCompound nbt, CallbackInfo ci){
-        LivingEntity THIS = (LivingEntity)(Object)this;
-
         THIS.theConjunctionOfTheSpheres$setKillCount(nbt.getInt("KillCount"));
-
         THIS.theConjunctionOfTheSpheres$setKillCountdown(nbt.getInt("KillCountdown"));
     }
 
@@ -242,7 +233,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     //SamumEffect
     @Inject(method = "damage", at = @At("TAIL"))
     private void injectRemoveSamumOnHit(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
-        if(this.hasStatusEffect(TCOTS_Effects.SAMUM_EFFECT)){
+        if(SamumBomb.checkSamumEffect(THIS)){
             this.removeStatusEffect(TCOTS_Effects.SAMUM_EFFECT);
         }
     }
@@ -263,7 +254,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     @Inject(method = "damage", at = @At("TAIL"))
     private void injectRemoveNorthernWindOnHit(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
-        if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
+        if(NorthernWindBomb.checkEffect(THIS)){
             this.playSound(SoundEvents.BLOCK_GLASS_BREAK,1,1);
             this.removeStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT);
         }
@@ -271,7 +262,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
     private float injectExtraDamageNorthernWind(float amount){
-        if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
+        if(NorthernWindBomb.checkEffect(THIS)){
             int amplifier= Objects.requireNonNull(this.getStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)).getAmplifier();
             int randomN=this.random.nextBetween(0,10);
             //Instant kill chance or extra damage
@@ -287,7 +278,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     @ModifyVariable(method = "takeKnockback", at = @At("HEAD"), ordinal = 0, argsOnly = true)
     private double injectExtraKnockbackNorthernWind(double strength){
-        if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
+        if(NorthernWindBomb.checkEffect(THIS)){
             return strength * 1.8;
         }
         return strength;
@@ -295,7 +286,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
     private void injectNorthernWindNoPushable(CallbackInfoReturnable<Boolean> cir){
-        if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT)){
+        if(NorthernWindBomb.checkEffect(THIS)){
             cir.setReturnValue(false);
         }
     }
@@ -307,9 +298,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     @Inject(method = "tickStatusEffects", at = @At("HEAD"))
     private void injectIsFrozen(CallbackInfo ci){
-        LivingEntity THIS = (LivingEntity)(Object)this;
         if(!THIS.getWorld().isClient) {
-            setIsFrozen(THIS.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT));
+            setIsFrozen(NorthernWindBomb.checkEffect(THIS));
         }
     }
 

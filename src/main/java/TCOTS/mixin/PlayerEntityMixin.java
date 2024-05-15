@@ -6,6 +6,7 @@ import TCOTS.items.TCOTS_Items;
 import TCOTS.items.potions.EmptyWitcherPotionItem;
 import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.items.potions.WitcherAlcohol_Base;
+import TCOTS.items.potions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.entity.Entity;
@@ -511,14 +512,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 2)
     private boolean injectCriticalWithSamum(boolean value){
         if(target instanceof LivingEntity entity){
-            if(entity.hasStatusEffect(TCOTS_Effects.SAMUM_EFFECT)){
+            if(SamumBomb.checkSamumEffect(entity)){
                 StatusEffectInstance instance = entity.getStatusEffect(TCOTS_Effects.SAMUM_EFFECT);
                 assert instance != null;
                 int amplifier = instance.getAmplifier();
-
                 return value || amplifier > 1;
             }
         }
+
         return value;
     }
 }

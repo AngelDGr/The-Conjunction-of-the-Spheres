@@ -186,6 +186,9 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.DIMERITIUM_BOMB);
                             entries.add(TCOTS_Items.DIMERITIUM_BOMB_ENHANCED);
                             entries.add(TCOTS_Items.DIMERITIUM_BOMB_SUPERIOR);
+                            entries.add(TCOTS_Items.MOON_DUST);
+                            entries.add(TCOTS_Items.MOON_DUST_ENHANCED);
+                            entries.add(TCOTS_Items.MOON_DUST_SUPERIOR);
 
                             //Misc/Blocks
                             entries.add(TCOTS_Items.NEST_SLAB_ITEM);

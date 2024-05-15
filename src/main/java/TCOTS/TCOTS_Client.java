@@ -121,6 +121,7 @@ public class TCOTS_Client implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DRAGONS_DREAM_EXPLOSION_EMITTER, new DragonsDream_ExplosionEmitterParticle.Factory());
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.YELLOW_CLOUD, CloudParticleColor.YellowCloudFactory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DIMERITIUM_FLASH, DimeritiumFlash.FlashFactory::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.MOON_DUST_EXPLOSION_EMITTER, new MoonDust_ExplosionEmitterParticle.Factory());
 
 
         HandledScreens.register(AlchemyTableRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, AlchemyTableScreen::new);

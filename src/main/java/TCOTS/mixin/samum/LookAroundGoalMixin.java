@@ -1,7 +1,7 @@
 package TCOTS.mixin.samum;
 
 
-import TCOTS.items.potions.TCOTS_Effects;
+import TCOTS.items.potions.bombs.SamumBomb;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.mob.MobEntity;
 import org.spongepowered.asm.mixin.Final;
@@ -17,14 +17,14 @@ public class LookAroundGoalMixin {
 
     @Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
     private void injectNoSamumEffect(CallbackInfoReturnable<Boolean> cir){
-        if(mob.hasStatusEffect(TCOTS_Effects.SAMUM_EFFECT)){
+        if(SamumBomb.checkSamumEffect(mob)){
             cir.setReturnValue(false);
         }
     }
 
     @Inject(method = "shouldContinue", at = @At("HEAD"), cancellable = true)
     private void injectNoSamumEffectContinue(CallbackInfoReturnable<Boolean> cir){
-        if(mob.hasStatusEffect(TCOTS_Effects.SAMUM_EFFECT)){
+        if(SamumBomb.checkSamumEffect(mob)){
             cir.setReturnValue(false);
         }
     }

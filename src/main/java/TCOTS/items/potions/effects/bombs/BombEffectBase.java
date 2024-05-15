@@ -7,4 +7,9 @@ public class BombEffectBase extends StatusEffect {
     public BombEffectBase(StatusEffectCategory category, int color) {
         super(category, color);
     }
+
+    @Override
+    public boolean canApplyUpdateEffect(int duration, int amplifier) {
+        return true;
+    }
 }

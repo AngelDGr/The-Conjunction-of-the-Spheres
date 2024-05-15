@@ -3,6 +3,7 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.misc.CommonControllers;
 import TCOTS.entity.misc.FoglingEntity;
+import TCOTS.items.potions.bombs.DimeritiumBomb;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.FluidBlock;
@@ -85,11 +86,8 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(0, new Foglet_Swim(this));
-
         this.goalSelector.add(1, new Foglet_AttackWithFog<>(this, 1.0, false,100));
-
         this.goalSelector.add(2, new WanderAroundGoal(this, 0.75, 20));
-
         this.goalSelector.add(3, new LookAroundGoal(this));
 
         //Objectives
@@ -212,7 +210,6 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
                 return;
             }
 
-
             if(!(actor instanceof FoglingEntity)) {
                 for (int i = 0; i < ((FogletEntity) actor).foglingsList.size(); i++) {
                     if (!(((FogletEntity) actor).foglingsList.get(i).isAlive())) {
@@ -231,9 +228,11 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
                 }
             }
 
-            generatesFog(livingEntity);
+            if(!DimeritiumBomb.checkEffect(actor)){
+                generatesFog(livingEntity);
+            }
 
-            if((this.actor.isInvisible() || attack) && tickBeforeFog <= -1 ) {
+            if(((this.actor.isInvisible() || attack) && tickBeforeFog <= -1) || DimeritiumBomb.checkEffect(actor)) {
                 meleeAttack(livingEntity);
             }
 
@@ -449,7 +448,7 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
                     );
 
             if(fogletLeader.isEmpty()){
-             canGenerateFog=true;
+             canGenerateFog= true;
             }
         }
     }
@@ -460,14 +459,25 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
             spawnFogParticlesItself();
         }
 
+        if(this.getIsFog() && DimeritiumBomb.checkEffect(this)){
+            this.setIsFog(false);
+        }
+
+        NoParticles:
         if(!(this instanceof FoglingEntity)){
             this.getOtherFoglet();
             this.getFogletLeader();
             this.getFoglings();
-            if(this.isAttacking() && canGenerateFog) {
+
+            if(!this.getWorld().isClient && DimeritiumBomb.checkEffect(this)){
+                break NoParticles;
+            }
+
+            if(this.getWorld().isClient && this.isAttacking() && canGenerateFog) {
                 spawnFogParticlesAround();
             }
         }
+
 
         if(this.getIsFog() && getAlphaValue()>0){
             setAlphaValue(getAlphaValue() - ((float) 0.05));
@@ -496,8 +506,7 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
             foglingsList =
                     this.getWorld().getEntitiesByClass(FoglingEntity.class, this.getBoundingBox().expand(20, 20, 20),
                             fogling ->
-                                    fogling.getOwner() != null && fogling.getOwner().getUuid() == this.getUuid()
-                    );
+                                    fogling.getOwner() != null && fogling.getOwner().getUuid() == this.getUuid());
         }
     }
 

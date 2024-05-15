@@ -43,7 +43,8 @@ public class TCOTS_Entities {
     //TODO: Ice Giant (Boss)
 
     public static final TagKey<EntityType<?>> IGNITING_ENTITIES = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"igniting_entities"));
-
+    public static final TagKey<EntityType<?>> DIMERITIUM_REMOVAL = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"dimeritium_removal"));
+    public static final TagKey<EntityType<?>> DIMERITIUM_DAMAGE = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"dimeritium_damage"));
 
     public static final EntityGroup NECROPHAGES = new EntityGroup();
     public static final EntityGroup OGROIDS = new EntityGroup();

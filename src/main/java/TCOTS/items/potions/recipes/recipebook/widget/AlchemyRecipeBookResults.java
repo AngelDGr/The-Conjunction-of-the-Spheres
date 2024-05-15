@@ -142,12 +142,14 @@ public class AlchemyRecipeBookResults {
                     button.setCraftable(false);
                 }
 
-                button.setBaseNotPresent(recipeFinder.inputs.get(Item.getRawId(button.getRecipe().getBaseItem().getItem())) >= 1);
+                button.setBaseNotPresent(recipeFinder.inputs.get(Item.getRawId(button.getRecipe().getBaseItem().getItem())) >= button.getRecipe().getBaseItem().getCount());
+                button.textColorBase = recipeFinder.inputs.get(Item.getRawId(button.getRecipe().getBaseItem().getItem())) >= button.getRecipe().getBaseItem().getCount()? 0xffffff: 0xb43d2c;
 
                 for (int i = 0; i < button.getRecipe().getIngredients().size(); i++) {
                     int ItemId = Item.getRawId(button.getRecipe().getIngredients().get(i).getMatchingStacks()[0].getItem());
                     button.setTextColor(i, recipeFinder.inputs.get(ItemId) >= button.getRecipe().getIngredientsCounts().get(i));
                 }
+
             }
         }
     }

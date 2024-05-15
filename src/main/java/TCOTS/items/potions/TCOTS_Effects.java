@@ -3,6 +3,7 @@ package TCOTS.items.potions;
 import TCOTS.TCOTS_Main;
 import TCOTS.items.potions.effects.*;
 import TCOTS.items.potions.effects.bombs.DimeritiumBombEffect;
+import TCOTS.items.potions.effects.bombs.MoonDustEffect;
 import TCOTS.items.potions.effects.bombs.NorthernWindEffect;
 import TCOTS.items.potions.effects.bombs.SamumEffect;
 import TCOTS.items.potions.effects.decoctions.AlghoulDecoctionEffect;
@@ -36,11 +37,11 @@ public class TCOTS_Effects {
     public static StatusEffect SAMUM_EFFECT;
     public static StatusEffect NORTHERN_WIND_EFFECT;
     public static StatusEffect DIMERITIUM_BOMB_EFFECT;
+    public static StatusEffect MOON_DUST_EFFECT;
 
     public static void registerEffects() {
 
         //Effects
-
         KILLER_WHALE_EFFECT = registerEffect("killer_whale",
                 new KillerWhaleEffect(StatusEffectCategory.BENEFICIAL, 0xe9b044)
                 .addAttributeModifier(
@@ -92,6 +93,9 @@ public class TCOTS_Effects {
 
         DIMERITIUM_BOMB_EFFECT = registerStatusEffect("dimeritium_bomb", DimeritiumBombEffect.class, StatusEffectCategory.BENEFICIAL, 0x25882f);
 
+        MOON_DUST_EFFECT = registerStatusEffect("moon_dust", MoonDustEffect.class, StatusEffectCategory.BENEFICIAL, 0x87b8b8);
+
+
     }
 
     public static StatusEffect registerStatusEffect(String name, Class<? extends StatusEffect> effectClass, StatusEffectCategory category, int color) {
@@ -99,7 +103,7 @@ public class TCOTS_Effects {
             return Registry.register(Registries.STATUS_EFFECT, new Identifier(TCOTS_Main.MOD_ID, name),
                     effectClass.getConstructor(StatusEffectCategory.class, int.class).newInstance(category, color));
         } catch (Exception e) {
-            throw new IllegalArgumentException("Effect didn't create");
+            throw new IllegalArgumentException("The effect was not created");
         }
     }
 

@@ -208,4 +208,8 @@ public class NorthernWindBomb {
 
         matrixStack.pop();
     }
+
+    public static boolean checkEffect(LivingEntity entity){
+        return entity.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT);
+    }
 }

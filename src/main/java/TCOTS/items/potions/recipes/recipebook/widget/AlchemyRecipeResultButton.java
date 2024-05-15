@@ -70,28 +70,23 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
     int textColor3=0xb43d2c;
     int textColor4=0xb43d2c;
     int textColor5=0xb43d2c;
-
+    int textColorBase=0xb43d2c;
     public void setTextColor(int index, boolean colorWhite){
         switch (index){
             case 0:
-                if(colorWhite){textColor1 = 0xffffff;}
-                else{textColor1 = 0xb43d2c;}
+                textColor1 = colorWhite ? 0xffffff: 0xb43d2c;
                 break;
             case 1:
-                if(colorWhite){textColor2 = 0xffffff;}
-                else{textColor2 = 0xb43d2c;}
+                textColor2 = colorWhite ? 0xffffff: 0xb43d2c;
                 break;
             case 2:
-                if(colorWhite){textColor3 = 0xffffff;}
-                else{textColor3 = 0xb43d2c;}
+                textColor3 = colorWhite ? 0xffffff: 0xb43d2c;
                 break;
             case 3:
-                if(colorWhite){textColor4 = 0xffffff;}
-                else{textColor4 = 0xb43d2c;}
+                textColor4 = colorWhite ? 0xffffff: 0xb43d2c;
                 break;
             case 4:
-                if(colorWhite){textColor5 = 0xffffff;}
-                else{textColor5 = 0xb43d2c;}
+                textColor5 = colorWhite ? 0xffffff: 0xb43d2c;
                 break;
             default:
                 break;
@@ -236,84 +231,91 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
                 134, 22);
 
         //Recipes Render
-                    //DrawOutput
-                    context.drawItemWithoutEntity(recipe.getResult(null),
-                            this.getX() + 3,
-                            this.getY() + 3);
+        //DrawOutput
+        context.drawItemWithoutEntity(recipe.getResult(null),
+                this.getX() + 3,
+                this.getY() + 3);
 
-                    int resultCount = recipe.getResult(null).getCount();
+        int resultCount = recipe.getResult(null).getCount();
 
-                    //Draw result number
-                    if(resultCount>1){
+        //Draw result count
+        if(resultCount>1){
+            context.getMatrices().push();
+            context.getMatrices().translate(0,0,200);
+            context.drawText(textRenderer, String.valueOf(resultCount), this.getX() + 3, this.getY() + 11, 0xffffff, true);
+            context.getMatrices().pop();}
+
+        //Draw ingredients
+        for (int l = 0; l < recipe.getIngredients().size(); l++) {
+            ItemStack stack = recipe.getIngredients().get(l).getMatchingStacks()[0];
+            int number = recipe.getIngredientsCounts().get(l);
+            switch (l) {
+                case 0:
+                    //Draw ingredient Item
+                    context.drawItemWithoutEntity(stack, this.getX() + 62, this.getY() + 3);
+
+                    //Draw ingredient number
+                    if(number>1){
                         context.getMatrices().push();
                         context.getMatrices().translate(0,0,200);
-                        context.drawText(textRenderer, String.valueOf(resultCount), this.getX() + 3, this.getY() + 11, 0xffffff, true);
+                        context.drawText(textRenderer, String.valueOf(number), this.getX() + 62, this.getY() + 11, textColor1, true);
                         context.getMatrices().pop();}
+                    break;
+                    case 1:
+                        context.drawItemWithoutEntity(stack, this.getX() + 43, this.getY() + 3);
 
-                    //Draw ingredients
-                    for (int l = 0; l < recipe.getIngredients().size(); l++) {
-                        ItemStack stack = recipe.getIngredients().get(l).getMatchingStacks()[0];
-                        int number = recipe.getIngredientsCounts().get(l);
-                        switch (l) {
-                            case 0:
-                                //Draw ingredient Item
-                                context.drawItemWithoutEntity(stack, this.getX() + 62, this.getY() + 3);
-
-                                //Draw ingredient number
-                                if(number>1){
-                                    context.getMatrices().push();
-                                    context.getMatrices().translate(0,0,200);
-                                    context.drawText(textRenderer, String.valueOf(number), this.getX() + 62, this.getY() + 11, textColor1, true);
-                                    context.getMatrices().pop();}
-                                break;
-                            case 1:
-                                context.drawItemWithoutEntity(stack, this.getX() + 43, this.getY() + 3);
+                        //Draw ingredient number
+                        if(number>1){
+                            context.getMatrices().push();
+                            context.getMatrices().translate(0,0,200);
+                            context.drawText(textRenderer, String.valueOf(number), this.getX() + 43, this.getY() + 11, textColor2, true);
+                            context.getMatrices().pop();}
+                        break;
+                        case 2:
+                            context.drawItemWithoutEntity(stack, this.getX() + 81, this.getY() + 3);
 
                                 //Draw ingredient number
-                                if(number>1){
-                                    context.getMatrices().push();
-                                    context.getMatrices().translate(0,0,200);
-                                    context.drawText(textRenderer, String.valueOf(number), this.getX() + 43, this.getY() + 11, textColor2, true);
-                                    context.getMatrices().pop();}
-                                break;
-                            case 2:
-                                context.drawItemWithoutEntity(stack, this.getX() + 81, this.getY() + 3);
+                            if(number>1){
+                                context.getMatrices().push();
+                                context.getMatrices().translate(0,0,200);
+                                context.drawText(textRenderer, String.valueOf(number), this.getX() + 81, this.getY() + 11, textColor3, true);
+                                context.getMatrices().pop();}
+                            break;
+                        case 3:
+                            context.drawItemWithoutEntity(stack, this.getX() + 24, this.getY() + 3);
 
-                                //Draw ingredient number
-                                if(number>1){
-                                    context.getMatrices().push();
-                                    context.getMatrices().translate(0,0,200);
-                                    context.drawText(textRenderer, String.valueOf(number), this.getX() + 81, this.getY() + 11, textColor3, true);
-                                    context.getMatrices().pop();}
-                                break;
-                            case 3:
-                                context.drawItemWithoutEntity(stack, this.getX() + 24, this.getY() + 3);
+                            //Draw ingredient number
+                            if(number>1){
+                                context.getMatrices().push();
+                                context.getMatrices().translate(0,0,200);
+                                context.drawText(textRenderer, String.valueOf(number), this.getX() + 24, this.getY() + 11, textColor4, true);
+                                context.getMatrices().pop();}
+                            break;
+                        case 4:
+                            context.drawItemWithoutEntity(stack, this.getX() + 100, this.getY() + 3);
 
-                                //Draw ingredient number
-                                if(number>1){
-                                    context.getMatrices().push();
-                                    context.getMatrices().translate(0,0,200);
-                                    context.drawText(textRenderer, String.valueOf(number), this.getX() + 24, this.getY() + 11, textColor4, true);
-                                    context.getMatrices().pop();}
-                                break;
-                            case 4:
-                                context.drawItemWithoutEntity(stack, this.getX() + 100, this.getY() + 3);
+                            //Draw ingredient number
+                            if(number>1){
+                                context.getMatrices().push();
+                                context.getMatrices().translate(0,0,200);
+                                context.drawText(textRenderer, String.valueOf(number), this.getX() + 100, this.getY() + 11, textColor5, true);
+                                context.getMatrices().pop();}
+                            break;
 
-                                //Draw ingredient number
-                                if(number>1){
-                                    context.getMatrices().push();
-                                    context.getMatrices().translate(0,0,200);
-                                    context.drawText(textRenderer, String.valueOf(number), this.getX() + 100, this.getY() + 11, textColor5, true);
-                                    context.getMatrices().pop();}
-                                break;
-
-                            default:
-                                break;
+                        default:
+                            break;
                         }
                     }
 
-                    //Draw base
-                    context.drawItemWithoutEntity(recipe.getBaseItem(), this.getX() + 117, this.getY() + 3);
+        //Draw base
+        int baseCount = recipe.getBaseItem().getCount();
+        context.drawItemWithoutEntity(recipe.getBaseItem(), this.getX() + 117, this.getY() + 3);
+        //Draw base count
+        if(baseCount>1){
+            context.getMatrices().push();
+            context.getMatrices().translate(0,0,200);
+            context.drawText(textRenderer, String.valueOf(baseCount), this.getX() + 119, this.getY() + 11, textColorBase, true);
+            context.getMatrices().pop();}
     }
 
     @Override
@@ -327,16 +329,9 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        return super.mouseClicked(mouseX, mouseY, button);
-    }
-
-    @Override
     protected boolean isValidClickButton(int button) {
         return craftable;
     }
-
-
 
     @Override
     public int getWidth() {

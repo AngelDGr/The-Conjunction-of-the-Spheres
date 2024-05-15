@@ -118,6 +118,12 @@ decoctions, monster oils, bombs and ingredients.***
 <recipe;tcots-witcher:dragons_dream_enhanced>
 <recipe;tcots-witcher:dragons_dream_superior>
 
+;;;;;
+
+**{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:dimeritium_bomb>
+<recipe;tcots-witcher:dimeritium_bomb_enhanced>
+<recipe;tcots-witcher:dimeritium_bomb_superior>
 
 ;;;;;
 

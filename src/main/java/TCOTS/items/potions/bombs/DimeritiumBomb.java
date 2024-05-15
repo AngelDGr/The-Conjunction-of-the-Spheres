@@ -1,6 +1,7 @@
 package TCOTS.items.potions.bombs;
 
 import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.particles.TCOTS_Particles;
@@ -12,8 +13,8 @@ import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
-import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.HitResult;
@@ -23,6 +24,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.WorldEvents;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -37,23 +39,34 @@ public class DimeritiumBomb {
         bomb.getWorld().sendEntityStatus(bomb, DIMERITIUM_BOMB_EXPLODES);
 
         List<Entity> list = bomb.getWorld().getEntitiesByClass(Entity.class, bomb.getBoundingBox().expand(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
-                entity -> ((entity instanceof LivingEntity) || (entity instanceof EndCrystalEntity))
+                entity ->
+                        ((entity instanceof LivingEntity) || entity.getType().isIn(TCOTS_Entities.DIMERITIUM_DAMAGE) || entity.getType().isIn(TCOTS_Entities.DIMERITIUM_REMOVAL))
                         && !(entity instanceof WardenEntity) && !(entity instanceof ArmorStandEntity)
-                                && entity.isAlive()
-                                && entity != bomb.getOwner());
+                        && entity.isAlive()
+                        && entity != bomb.getOwner());
+
 
         Entity entityCause = bomb.getEffectCause();
         for(Entity entity: list){
             //To not apply effect across walls
             if(getExposure(entity.getPos(), bomb) == 0) continue;
 
-            //Destroy End Crystals
-            if(entity instanceof EndCrystalEntity)
+            //Destroy End Crystals and Foglings
+            if(entity.getType().isIn(TCOTS_Entities.DIMERITIUM_DAMAGE))
                 entity.damage(bomb.getDamageSources().magic(), 1);
 
+            //Remove magic entities
+            if(entity.getType().isIn(TCOTS_Entities.DIMERITIUM_REMOVAL))
+                entity.discard();
+
             //Applies dimeritium effect to entity
-            if(entity instanceof LivingEntity livingEntity)
-                livingEntity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.DIMERITIUM_BOMB_EFFECT, bomb.getLevel() < 1 ? 300: 600, bomb.getLevel()), entityCause);
+            if(entity instanceof LivingEntity livingEntity) {
+                livingEntity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.DIMERITIUM_BOMB_EFFECT, bomb.getLevel() < 1 ? 300 : 600, bomb.getLevel()), entityCause);
+
+                //Remove invisibility effect
+                if(livingEntity.hasStatusEffect(StatusEffects.INVISIBILITY))
+                    livingEntity.removeStatusEffect(StatusEffects.INVISIBILITY);
+            }
 
         }
 
@@ -142,5 +155,14 @@ public class DimeritiumBomb {
         if(status== DIMERITIUM_BOMB_EXPLODES){
             bomb.getWorld().addParticle(TCOTS_Particles.DIMERITIUM_FLASH, bomb.getX(), bomb.getY()+2, bomb.getZ(), 0.0, 0.0, 0.0);
         }
+    }
+
+    public static void checkDimeritiumEffectMixin(LivingEntity entity, CallbackInfoReturnable<Boolean> cir){
+        if(DimeritiumBomb.checkEffect(entity))
+            cir.setReturnValue(false);
+    }
+
+    public static boolean checkEffect(LivingEntity entity){
+        return entity.hasStatusEffect(TCOTS_Effects.DIMERITIUM_BOMB_EFFECT);
     }
 }

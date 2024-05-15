@@ -17,10 +17,4 @@ public class SamumEffect extends BombEffectBase {
             mob.getLookControl().lookAt(entity.getX(), entity.getY()-5, entity.getZ());
         }
     }
-
-    @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return true;
-    }
-
 }

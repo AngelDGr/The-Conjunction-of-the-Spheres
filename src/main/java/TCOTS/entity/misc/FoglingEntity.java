@@ -2,7 +2,7 @@ package TCOTS.entity.misc;
 
 
 import TCOTS.entity.necrophages.FogletEntity;
-import TCOTS.items.potions.TCOTS_Effects;
+import TCOTS.items.potions.bombs.NorthernWindBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -35,7 +35,6 @@ import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInst
 import java.util.UUID;
 
 public class FoglingEntity extends FogletEntity implements GeoEntity, Ownable {
-
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     @Nullable
     MobEntity owner;
@@ -81,18 +80,26 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, Ownable {
     @Override
     public boolean damage(DamageSource source, float amount) {
         if(amount>0){
-            for (int i = 0; i < 10; i++) {
-                double d = this.getX() + (double) MathHelper.nextBetween(this.getRandom(), -0.8F, 0.8F);
-                double e = (this.getEyeY()-0.5f)+ (double) MathHelper.nextBetween(this.getRandom(), -1F, 1F);
-                double f = this.getZ() + (double) MathHelper.nextBetween(this.getRandom(), -0.8F, 0.8F);
-                this.getWorld().addParticle(ParticleTypes.CLOUD, d,e,f,0,0,0);
+            if(this.getWorld().isClient){
+                vanishParticles();
             }
-            this.playSound(TCOTS_Sounds.FOGLET_FOGLING_DISAPPEAR, 1.0f, 1.0f);
-            this.dead = true;
-            this.discard();
+            if(!this.getWorld().isClient) {
+                this.playSound(TCOTS_Sounds.FOGLET_FOGLING_DISAPPEAR, 1.0f, 1.0f);
+                this.dead = true;
+                this.remove(Entity.RemovalReason.KILLED);
+            }
         }
 
         return super.damage(source, amount);
+    }
+
+    private void vanishParticles(){
+        for (int i = 0; i < 10; i++) {
+            double d = this.getX() + (double) MathHelper.nextBetween(this.getRandom(), -0.8F, 0.8F);
+            double e = (this.getEyeY()-0.5f)+ (double) MathHelper.nextBetween(this.getRandom(), -1F, 1F);
+            double f = this.getZ() + (double) MathHelper.nextBetween(this.getRandom(), -0.8F, 0.8F);
+            this.getWorld().addParticle(ParticleTypes.CLOUD, d,e,f,0,0,0);
+        }
     }
 
     @Override
@@ -129,10 +136,8 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, Ownable {
 
     @Override
     public void tick() {
-        if(this.hasStatusEffect(TCOTS_Effects.NORTHERN_WIND_EFFECT))
-        {
-            damage(this.getDamageSources().freeze(), 1);
-        }
+        if(NorthernWindBomb.checkEffect(this))
+        {damage(this.getDamageSources().freeze(), 1);}
         super.tick();
     }
 

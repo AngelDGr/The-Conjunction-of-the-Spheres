@@ -30,7 +30,7 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
     //xTODO: Add Samum
     //xTODO: Add Northern Wind
     //xTODO: Add Dragon's Dream
-    //TODO: Add Dimeritium Bomb
+    //xTODO: Add Dimeritium Bomb
     //TODO: Add Moon Dust
 
     private String bombId;
@@ -93,6 +93,10 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
                     DimeritiumBomb.explosionLogic(this);
                     break;
 
+                case "moon_dust":
+                    MoonDustBomb.explosionLogic(this);
+                    break;
+
                 default:
                     break;
             }
@@ -110,6 +114,7 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
         NorthernWindBomb.handleStatus(this,status);
         DragonsDreamBomb.handleStatus(this,status);
         DimeritiumBomb.handleStatus(this,status);
+        MoonDustBomb.handleStatus(this, status);
     }
 
     @Override

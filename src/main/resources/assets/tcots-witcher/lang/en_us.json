@@ -407,6 +407,14 @@
     "tooltip.dimeritium_bomb.second": "slivers that block magic.",
     "effect.tcots-witcher.dimeritium_bomb": "Dimeritium Magic Blocking",
 
+    "item.tcots-witcher.moon_dust": "Moon Dust",
+    "item.tcots-witcher.moon_dust_enhanced": "Enhanced Moon Dust",
+    "item.tcots-witcher.moon_dust_superior": "Superior Moon Dust",
+    "tooltip.moon_dust.first":  "Temporarily prevent monsters from",
+    "tooltip.moon_dust.second": "transforming and regenerating.",
+    "tooltip.moon_dust.extra":  "Permanently prevent monsters from",
+    "effect.tcots-witcher.moon_dust": "Moon Dust Splinters",
+
 
     "text.config.tcots_config.title": "TCOTS Config",
     "text.config.tcots_config.category.hud": "HUD Options",
