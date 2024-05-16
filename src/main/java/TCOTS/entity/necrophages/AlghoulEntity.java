@@ -2,6 +2,7 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.goals.LungeAttackGoal;
 import TCOTS.entity.misc.CommonControllers;
+import TCOTS.items.potions.bombs.MoonDustBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -113,9 +114,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
     }
 
     private static class AlghoulSpikedRegeneration extends GhoulRegeneration{
-
         private final int TimeForSpikes;
-
         private final AlghoulEntity mob;
 
         public AlghoulSpikedRegeneration(AlghoulEntity mob, int CooldownBetweenRegens, int TimeForRegen, float HealthPercentageToStart, int stopTicks, int TimeForSpikes) {
@@ -166,7 +165,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
 
         @Override
         protected boolean canStartRegen() {
-            return !(mob.getIsRegenerating()) && (mob.getHealth() < (mob.getMaxHealth() * healthPercentage)) && mob.isOnGround() && !(mob.hasCooldownForRegen());
+            return !(mob.getIsRegenerating()) && (mob.getHealth() < (mob.getMaxHealth() * healthPercentage)) && mob.isOnGround() && !(mob.hasCooldownForRegen()) && !MoonDustBomb.checkEffect(mob);
         }
     }
 
@@ -185,13 +184,13 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
         public boolean canStart() {
             List<GhoulEntity> listGhouls = generateGhoulList();
 
-            return (alghoul.getIsSpiked() || alghoul.isAttacking()) && !listGhouls.isEmpty() && !alghoul.hasCooldownForScream() && alghoul.isOnGround();
+            return (alghoul.getIsSpiked() || alghoul.isAttacking()) && !listGhouls.isEmpty() && !alghoul.hasCooldownForScream() && alghoul.isOnGround() && !MoonDustBomb.checkEffect(alghoul);
         }
 
         @Override
         public boolean shouldContinue() {
             List<GhoulEntity> listGhouls = generateGhoulList();
-            return !listGhouls.isEmpty() && !alghoul.hasCooldownForScream();
+            return !listGhouls.isEmpty() && !alghoul.hasCooldownForScream() && !MoonDustBomb.checkEffect(alghoul);
         }
 
         @Override
@@ -214,7 +213,6 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
 
         @Override
         public void stop() {
-
             alghoul.setCooldownForScream(cooldownForScream);
             alghoul.setHasCooldownForScream(true);
             StoppedTicks=stopTicks;
@@ -234,7 +232,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
 
             for(GhoulEntity ghoul: listGhouls){
                 ghoul.setTimeForRegen(200);
-                ghoul.setIsRegenerating(true);
+                ghoul.setIsRegenerating(!MoonDustBomb.checkEffect(ghoul));
                 if (!ghoul.isSilent()) {
                     this.alghoul.getWorld().sendEntityStatus(ghoul, GHOUL_REGENERATING);
                 }
@@ -352,6 +350,10 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
     int counter;
     @Override
     public void tick() {
+        if(getIsSpiked() && MoonDustBomb.checkEffect(this)){
+            setIsSpiked(false);
+        }
+
         if(counter>0){
             counter=0;
         }

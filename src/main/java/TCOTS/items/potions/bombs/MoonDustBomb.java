@@ -14,10 +14,13 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
 public class MoonDustBomb {
+    //xTODO: Block Drowned, Piglin, Zoglin, Stray transforming, Block Creeper explosion
+
     private static final byte MOON_DUST_EXPLODES = 41;
 
     public static void explosionLogic(WitcherBombEntity bomb){
@@ -79,7 +82,20 @@ public class MoonDustBomb {
     }
 
     public static boolean checkEffect(LivingEntity entity){
+        return MoonDustBomb.checkOnlyEffect(entity) || entity.theConjunctionOfTheSpheres$hasSilverSplinters();
+    }
+
+    public static boolean checkOnlyEffect(LivingEntity entity){
         return entity.hasStatusEffect(TCOTS_Effects.MOON_DUST_EFFECT);
+    }
+
+    public static boolean checkSilverSplinters(LivingEntity entity){
+        return entity.theConjunctionOfTheSpheres$hasSilverSplinters();
+    }
+
+    public static void checkEffectMixin(LivingEntity entity, CallbackInfoReturnable<Boolean> cir){
+        if(MoonDustBomb.checkEffect(entity))
+            cir.setReturnValue(false);
     }
 
 }

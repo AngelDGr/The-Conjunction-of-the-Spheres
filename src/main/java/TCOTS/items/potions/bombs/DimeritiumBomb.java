@@ -7,15 +7,14 @@ import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.particles.TCOTS_Particles;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CampfireBlock;
+import net.minecraft.block.*;
+import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.WardenEntity;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -62,10 +61,6 @@ public class DimeritiumBomb {
             //Applies dimeritium effect to entity
             if(entity instanceof LivingEntity livingEntity) {
                 livingEntity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.DIMERITIUM_BOMB_EFFECT, bomb.getLevel() < 1 ? 300 : 600, bomb.getLevel()), entityCause);
-
-                //Remove invisibility effect
-                if(livingEntity.hasStatusEffect(StatusEffects.INVISIBILITY))
-                    livingEntity.removeStatusEffect(StatusEffects.INVISIBILITY);
             }
 
         }
@@ -106,9 +101,11 @@ public class DimeritiumBomb {
         affectedBlocks.addAll(set);
 
         for (BlockPos blockPos : affectedBlocks) {
+
             BlockState state = bomb.getWorld().getBlockState(blockPos);
+
             //To not destroy blocks behind other blocks
-            if (getExposure(blockPos.toCenterPos(), bomb) == 0) continue;
+            if (getExposure(blockPos.toCenterPos(), bomb) == 0 && !state.isOf(Blocks.END_PORTAL_FRAME)) continue;
 
             //Destroy magic blocks
             if(state.isIn(TCOTS_Blocks.DESTROYABLE_MAGIC_BLOCKS)) {
@@ -119,6 +116,21 @@ public class DimeritiumBomb {
                 CampfireBlock.extinguish(bomb.getOwner(), bomb.getWorld(), blockPos, state);
                 bomb.getWorld().setBlockState(blockPos, state.with(CampfireBlock.LIT, false));
             }
+            else if (state.isOf(Blocks.END_PORTAL_FRAME) && state.contains(EndPortalFrameBlock.EYE) && state.get(EndPortalFrameBlock.EYE)){
+                //To turn off end portals
+                BlockPattern.Result result = EndPortalFrameBlock.getCompletedFramePattern().searchAround(bomb.getWorld(), blockPos);
+                if (result != null) {
+                    BlockPos blockPos2 = result.getFrontTopLeft().add(-3, 0, -3);
+                    for (int i = 0; i < 3; ++i) {
+                        for (int j = 0; j < 3; ++j) {
+                            bomb.getWorld().breakBlock(blockPos2.add(i, 0, j), false, bomb);
+                        }
+                    }
+                }
+                bomb.getWorld().setBlockState(blockPos, state.with(EndPortalFrameBlock.EYE, false));
+                Block.dropStack(bomb.getWorld(), blockPos.up(), Items.ENDER_EYE.getDefaultStack().copyWithCount(1));
+            }
+
         }
     }
 
@@ -157,7 +169,7 @@ public class DimeritiumBomb {
         }
     }
 
-    public static void checkDimeritiumEffectMixin(LivingEntity entity, CallbackInfoReturnable<Boolean> cir){
+    public static void checkEffectMixin(LivingEntity entity, CallbackInfoReturnable<Boolean> cir){
         if(DimeritiumBomb.checkEffect(entity))
             cir.setReturnValue(false);
     }

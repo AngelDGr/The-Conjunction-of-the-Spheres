@@ -4,6 +4,7 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.goals.LungeAttackGoal;
 import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.entity.misc.CommonControllers;
+import TCOTS.items.potions.bombs.MoonDustBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -144,12 +145,12 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
 
         @Override
         public boolean canStart() {
-            return canStartRegen();
+            return canStartRegen() && !MoonDustBomb.checkEffect(mob);
         }
 
         @Override
         public boolean shouldContinue() {
-            return !mob.getIsRegenerating();
+            return !mob.getIsRegenerating() && !MoonDustBomb.checkEffect(mob);
         }
 
         private int StoppedTicks;
@@ -164,7 +165,7 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
 
         @Override
         public void stop() {
-            this.mob.setIsRegenerating(true);
+            this.mob.setIsRegenerating(!MoonDustBomb.checkEffect(mob));
             mob.setTimeForRegen(TimeForRegen);
             if (!this.mob.isSilent()) {
                 this.mob.getWorld().sendEntityStatus(this.mob, GHOUL_REGENERATING);
@@ -401,6 +402,10 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
 
     @Override
     public void tick() {
+        if(getIsRegenerating() && MoonDustBomb.checkEffect(this)){
+            setIsRegenerating(false);
+        }
+
         this.tickLunge();
 
         if(getIsRegenerating() && (this.age%10==0) && this.getHealth() < this.getMaxHealth()){

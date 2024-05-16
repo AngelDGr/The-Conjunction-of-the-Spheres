@@ -1,0 +1,33 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.82,
+  "category":"bombs_oils",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alchemists_powder"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "tcots-witcher:nigredo"
+    }
+  ],
+
+  "ingredient_counters": [1,2,4,6,1],
+
+  "base": {
+    "item": "tcots-witcher:moon_dust_enhanced"
+  },
+
+  "result": {
+    "item": "tcots-witcher:moon_dust_superior"
+  }
+}

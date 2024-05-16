@@ -88,10 +88,10 @@ public class WitcherBombs_Base extends Item {
             tooltip.add(Text.translatable("tooltip.bomb.monster_nest.second").formatted(Formatting.GRAY,Formatting.ITALIC));
         }
 
-        tooltip.add(Text.translatable(((Objects.equals(bombId, "moon_dust")) && getLevel() > 1) ? "tooltip."+bombId+".extra" : "tooltip."+bombId+".first").formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable(((Objects.equals(bombId, "moon_dust")) && getLevel() > 1) ? "tooltip."+bombId+".extra2" : "tooltip."+bombId+".first").formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("tooltip."+bombId+".second").formatted(Formatting.GRAY));
 
-        if((Objects.equals(bombId, "samum") && getLevel()>1) || (Objects.equals(bombId, "northern_wind") && getLevel()>1)){
+        if((Objects.equals(bombId, "samum") && getLevel()>1) || (Objects.equals(bombId, "northern_wind") && getLevel()>1) || (Objects.equals(bombId, "moon_dust") && getLevel()>1)){
             tooltip.add(Text.translatable("tooltip."+bombId+".extra").formatted(Formatting.GRAY));
         }
     }

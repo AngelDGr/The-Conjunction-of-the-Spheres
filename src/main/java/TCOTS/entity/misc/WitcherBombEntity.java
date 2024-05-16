@@ -31,7 +31,7 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
     //xTODO: Add Northern Wind
     //xTODO: Add Dragon's Dream
     //xTODO: Add Dimeritium Bomb
-    //TODO: Add Moon Dust
+    //xTODO: Add Moon Dust
 
     private String bombId;
     private int level;

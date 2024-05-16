@@ -4,7 +4,7 @@
     "item.tcots-witcher.witcher_bestiary": "Monster Bestiary",
     "tooltip.tcots-witcher.witcher_bestiary": "Learn about the dangers of this new world",
 
-    "item.tcots-witcher.alchemy_book": "Alchemist Almanac",
+    "item.tcots-witcher.alchemy_book": "Alchemy Almanac",
     "tooltip.tcots-witcher.alchemy_book": "Information about herbs and alchemy",
 
 
@@ -412,7 +412,8 @@
     "item.tcots-witcher.moon_dust_superior": "Superior Moon Dust",
     "tooltip.moon_dust.first":  "Temporarily prevent monsters from",
     "tooltip.moon_dust.second": "transforming and regenerating.",
-    "tooltip.moon_dust.extra":  "Permanently prevent monsters from",
+    "tooltip.moon_dust.extra2":  "Permanently prevent monsters from",
+    "tooltip.moon_dust.extra":   "Stop Creepers from exploding.",
     "effect.tcots-witcher.moon_dust": "Moon Dust Splinters",
 
 

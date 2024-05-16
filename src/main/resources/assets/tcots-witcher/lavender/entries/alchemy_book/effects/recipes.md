@@ -128,6 +128,13 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:moon_dust>
+<recipe;tcots-witcher:moon_dust_enhanced>
+<recipe;tcots-witcher:moon_dust_superior>
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
 <recipe;tcots-witcher:oil_necrophage>
 <recipe;tcots-witcher:oil_necrophage_enhanced>
 <recipe;tcots-witcher:oil_necrophage_superior>

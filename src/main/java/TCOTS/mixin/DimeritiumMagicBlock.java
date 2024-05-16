@@ -19,7 +19,7 @@ public abstract class DimeritiumMagicBlock {
         EndermanEntity THIS = (EndermanEntity)(Object)this;
         @Inject(method = "teleportRandomly", at = @At("HEAD"), cancellable = true)
         private void magicBlockingTeleport(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(THIS, cir);
+            DimeritiumBomb.checkEffectMixin(THIS, cir);
         }
     }
 
@@ -29,7 +29,7 @@ public abstract class DimeritiumMagicBlock {
 
         @Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
         private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(enderman, cir);
+            DimeritiumBomb.checkEffectMixin(enderman, cir);
         }
     }
 
@@ -40,7 +40,7 @@ public abstract class DimeritiumMagicBlock {
         @Shadow ShulkerEntity field_7348;
         @Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
         private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(field_7348, cir);
+            DimeritiumBomb.checkEffectMixin(field_7348, cir);
         }
     }
 
@@ -51,7 +51,7 @@ public abstract class DimeritiumMagicBlock {
 
         @Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
         private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(blaze, cir);
+            DimeritiumBomb.checkEffectMixin(blaze, cir);
         }
     }
 
@@ -62,7 +62,7 @@ public abstract class DimeritiumMagicBlock {
 
         @Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
         private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(ghast, cir);
+            DimeritiumBomb.checkEffectMixin(ghast, cir);
         }
     }
 
@@ -72,12 +72,12 @@ public abstract class DimeritiumMagicBlock {
         @Shadow @Final private GuardianEntity guardian;
         @Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
         private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(guardian, cir);
+            DimeritiumBomb.checkEffectMixin(guardian, cir);
         }
 
         @Inject(method = "shouldContinue", at = @At("HEAD"), cancellable = true)
         private void magicBlockingContinue(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(guardian, cir);
+            DimeritiumBomb.checkEffectMixin(guardian, cir);
         }
     }
 
@@ -88,12 +88,12 @@ public abstract class DimeritiumMagicBlock {
         @Shadow SpellcastingIllagerEntity field_7386;
         @Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
         private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(field_7386, cir);
+            DimeritiumBomb.checkEffectMixin(field_7386, cir);
         }
 
         @Inject(method = "shouldContinue", at = @At("HEAD"), cancellable = true)
         private void magicBlockingContinue(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(field_7386, cir);
+            DimeritiumBomb.checkEffectMixin(field_7386, cir);
         }
     }
 
@@ -103,16 +103,14 @@ public abstract class DimeritiumMagicBlock {
         @Shadow EvokerEntity field_7268;
         @Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
         private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(field_7268, cir);
+            DimeritiumBomb.checkEffectMixin(field_7268, cir);
         }
 
         @Inject(method = "shouldContinue", at = @At("HEAD"), cancellable = true)
         private void magicBlockingContinue(CallbackInfoReturnable<Boolean> cir){
-            DimeritiumBomb.checkDimeritiumEffectMixin(field_7268, cir);
+            DimeritiumBomb.checkEffectMixin(field_7268, cir);
         }
     }
-
-
 }
 
 

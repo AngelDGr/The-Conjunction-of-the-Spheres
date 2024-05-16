@@ -896,6 +896,20 @@ villagers.</tooltip-text>
                     </padding>
                 </stack-layout>
 
+                <stack-layout>
+                    <children>
+                        <item>
+                            <stack>
+                                minecraft:amethyst_shard
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                        </item>
+                    </children>
+                    <padding>
+                        <all>5</all>
+                    </padding>
+                </stack-layout>
+
             </children>
             <sizing>
                 <horizontal method="content">1</horizontal>

@@ -1,0 +1,33 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.81,
+  "category":"bombs_oils",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:stammelfords_dust"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    }
+  ],
+
+  "ingredient_counters": [1,1,2,4,1],
+
+  "base": {
+    "item": "tcots-witcher:moon_dust"
+  },
+
+  "result": {
+    "item": "tcots-witcher:moon_dust_enhanced"
+  }
+}

@@ -402,6 +402,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
             this.getOrCreateTagBuilder(TCOTS_Blocks.DESTROYABLE_MAGIC_BLOCKS)
                     .add(Blocks.NETHER_PORTAL)
+                    .add(Blocks.END_GATEWAY)
                     .add(Blocks.SOUL_FIRE);
         }
     }

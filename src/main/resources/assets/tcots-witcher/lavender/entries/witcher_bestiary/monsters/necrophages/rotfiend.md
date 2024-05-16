@@ -16,7 +16,7 @@ They usually feed in large groups and thus present a danger to lone travelers â€
 
 ;;;;;
 
-Be careful fellow traveler, these creatures can represent a serious threat to any inexperienced warrior.   
+Be careful fellow traveler, these creatures can represent a serious threat to any inexperienced warrior.
 
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_main.png,fit)
 

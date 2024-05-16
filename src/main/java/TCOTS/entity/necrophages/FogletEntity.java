@@ -3,7 +3,7 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.misc.CommonControllers;
 import TCOTS.entity.misc.FoglingEntity;
-import TCOTS.items.potions.bombs.DimeritiumBomb;
+import TCOTS.items.potions.bombs.MoonDustBomb;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.FluidBlock;
@@ -228,11 +228,11 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
                 }
             }
 
-            if(!DimeritiumBomb.checkEffect(actor)){
+            if(!MoonDustBomb.checkEffect(actor)){
                 generatesFog(livingEntity);
             }
 
-            if(((this.actor.isInvisible() || attack) && tickBeforeFog <= -1) || DimeritiumBomb.checkEffect(actor)) {
+            if(((this.actor.isInvisible() || attack) && tickBeforeFog <= -1) || MoonDustBomb.checkEffect(actor)) {
                 meleeAttack(livingEntity);
             }
 
@@ -459,7 +459,7 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
             spawnFogParticlesItself();
         }
 
-        if(this.getIsFog() && DimeritiumBomb.checkEffect(this)){
+        if(this.getIsFog() && MoonDustBomb.checkEffect(this)){
             this.setIsFog(false);
         }
 
@@ -469,7 +469,7 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
             this.getFogletLeader();
             this.getFoglings();
 
-            if(!this.getWorld().isClient && DimeritiumBomb.checkEffect(this)){
+            if(!this.getWorld().isClient && MoonDustBomb.checkEffect(this)){
                 break NoParticles;
             }
 

@@ -27,4 +27,9 @@ public interface LivingEntityMixinInterface {
         return false;
     }
 
+    //Moon Dust
+    default boolean theConjunctionOfTheSpheres$hasSilverSplinters(){
+        return false;
+    }
+
 }

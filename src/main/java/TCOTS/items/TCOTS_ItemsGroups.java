@@ -171,6 +171,9 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.DANCING_STAR);
                             entries.add(TCOTS_Items.DANCING_STAR_ENHANCED);
                             entries.add(TCOTS_Items.DANCING_STAR_SUPERIOR);
+                            entries.add(TCOTS_Items.DRAGONS_DREAM);
+                            entries.add(TCOTS_Items.DRAGONS_DREAM_ENHANCED);
+                            entries.add(TCOTS_Items.DRAGONS_DREAM_SUPERIOR);
                             entries.add(TCOTS_Items.DEVILS_PUFFBALL);
                             entries.add(TCOTS_Items.DEVILS_PUFFBALL_ENHANCED);
                             entries.add(TCOTS_Items.DEVILS_PUFFBALL_SUPERIOR);
@@ -180,9 +183,6 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.NORTHERN_WIND);
                             entries.add(TCOTS_Items.NORTHERN_WIND_ENHANCED);
                             entries.add(TCOTS_Items.NORTHERN_WIND_SUPERIOR);
-                            entries.add(TCOTS_Items.DRAGONS_DREAM);
-                            entries.add(TCOTS_Items.DRAGONS_DREAM_ENHANCED);
-                            entries.add(TCOTS_Items.DRAGONS_DREAM_SUPERIOR);
                             entries.add(TCOTS_Items.DIMERITIUM_BOMB);
                             entries.add(TCOTS_Items.DIMERITIUM_BOMB_ENHANCED);
                             entries.add(TCOTS_Items.DIMERITIUM_BOMB_SUPERIOR);

@@ -50,7 +50,7 @@ public class SamumBomb {
 
         List<LivingEntity> list = bomb.getWorld().getEntitiesByClass(LivingEntity.class, bomb.getBoundingBox().expand(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
                 livingEntity -> !(livingEntity instanceof WardenEntity) && !(livingEntity instanceof ArmorStandEntity) && !(livingEntity instanceof GuardianEntity)
-                        && livingEntity != bomb.getOwner())  ;
+                        && livingEntity != bomb.getOwner());
 
         Entity entityCause = bomb.getEffectCause();
         for (LivingEntity entity : list) {

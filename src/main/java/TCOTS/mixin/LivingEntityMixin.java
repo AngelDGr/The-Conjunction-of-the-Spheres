@@ -3,6 +3,7 @@ package TCOTS.mixin;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.interfaces.LivingEntityMixinInterface;
 import TCOTS.items.potions.TCOTS_Effects;
+import TCOTS.items.potions.bombs.MoonDustBomb;
 import TCOTS.items.potions.bombs.NorthernWindBomb;
 import TCOTS.items.potions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
@@ -252,6 +253,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         this.dataTracker.set(IS_FROZEN, frozen);
     }
 
+    @Inject(method = "initDataTracker", at = @At("TAIL"))
+    private void injectNorthernWindDataTracker(CallbackInfo ci){
+        this.dataTracker.startTracking(IS_FROZEN, false);
+    }
+
     @Inject(method = "damage", at = @At("TAIL"))
     private void injectRemoveNorthernWindOnHit(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
         if(NorthernWindBomb.checkEffect(THIS)){
@@ -291,15 +297,51 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         }
     }
 
-    @Inject(method = "initDataTracker", at = @At("TAIL"))
-    private void injectNorthernWindDataTracker(CallbackInfo ci){
-        this.dataTracker.startTracking(IS_FROZEN, false);
-    }
-
     @Inject(method = "tickStatusEffects", at = @At("HEAD"))
     private void injectIsFrozen(CallbackInfo ci){
         if(!THIS.getWorld().isClient) {
             setIsFrozen(NorthernWindBomb.checkEffect(THIS));
+        }
+    }
+
+    //Moon Dust
+    @Unique
+    private static final TrackedData<Boolean> SILVER_SPLINTERS = DataTracker.registerData(LivingEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    @Override
+    public boolean theConjunctionOfTheSpheres$hasSilverSplinters() {
+        return this.dataTracker.get(SILVER_SPLINTERS);
+    }
+
+    @Unique
+    public void setSilverSplinters(boolean frozen) {
+        this.dataTracker.set(SILVER_SPLINTERS, frozen);
+    }
+
+    @Inject(method = "initDataTracker", at = @At("TAIL"))
+    private void injectMoonDustDataTracker(CallbackInfo ci){
+        this.dataTracker.startTracking(SILVER_SPLINTERS, false);
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void injectSilverSplintersWriteNBT(NbtCompound nbt, CallbackInfo ci){
+        nbt.putBoolean("SilverSplinters", THIS.theConjunctionOfTheSpheres$hasSilverSplinters());
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+    private void injectSilverSplintersReadNBT(NbtCompound nbt, CallbackInfo ci){
+        this.setSilverSplinters(nbt.getBoolean("SilverSplinters"));
+    }
+
+    @Inject(method = "tickStatusEffects", at = @At("HEAD"))
+    private void injectHasSilverSplinters(CallbackInfo ci){
+        if(!THIS.getWorld().isClient) {
+            if (MoonDustBomb.checkOnlyEffect(THIS)){
+                int amplifier = Objects.requireNonNull(THIS.getStatusEffect(TCOTS_Effects.MOON_DUST_EFFECT)).getAmplifier();
+                if(amplifier>1){
+                    setSilverSplinters(true);
+                }
+            }
         }
     }
 
