@@ -8,6 +8,7 @@ import TCOTS.blocks.geo.renderer.NestSkullBlockRenderer;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
+import TCOTS.items.TCOTS_Items;
 import TCOTS.items.potions.recipes.AlchemyTableRecipe;
 import TCOTS.items.potions.recipes.AlchemyTableRecipesRegister;
 import TCOTS.particles.*;
@@ -28,10 +29,14 @@ import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
+import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +57,27 @@ public class TCOTS_Client implements ClientModInitializer {
             if (world == null || pos == null) {
                 return FoliageColors.getDefaultColor();
             }
-            return BiomeColors.getGrassColor(world, pos);}, TCOTS_Blocks.BRYONIA_VINE);
+            return BiomeColors.getGrassColor(world, pos);},
+                TCOTS_Blocks.BRYONIA_VINE);
+
+
+        //Crossbow Color
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1: ((DyeableItem)stack.getItem()).getColor(stack), TCOTS_Items.KNIGHT_CROSSBOW);
+
+        //Crossbow animation
+        ModelPredicateProviderRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW, new Identifier("pull"), (stack, world, entity, seed) -> {
+            if (entity == null) {
+                return 0.0f;
+            }
+            if (CrossbowItem.isCharged(stack)) {
+                return 0.0f;
+            }
+            return (float)(stack.getMaxUseTime() - entity.getItemUseTimeLeft()) / (float)CrossbowItem.getPullTime(stack);
+        });
+
+        ModelPredicateProviderRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW, new Identifier("pulling"), (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && !CrossbowItem.isCharged(stack) ? 1.0f : 0.0f);
+        ModelPredicateProviderRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW, new Identifier("charged"), (stack, world, entity, seed) -> CrossbowItem.isCharged(stack) ? 1.0f : 0.0f);
+        ModelPredicateProviderRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW, new Identifier("firework"), (stack, world, entity, seed) -> CrossbowItem.isCharged(stack) && CrossbowItem.hasProjectile(stack, Items.FIREWORK_ROCKET) ? 1.0f : 0.0f);
 
         //Monsters
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER, DrownerRenderer::new);

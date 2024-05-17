@@ -8,6 +8,7 @@ import TCOTS.items.blocks.HerbalTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
 import TCOTS.items.potions.*;
+import TCOTS.items.weapons.KnightCrossbow;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
@@ -325,7 +326,7 @@ public class TCOTS_Items {
     public static Item MOON_DUST_SUPERIOR;
 
     //Register Witcher Potion Items
-    public static void registerPotions() {
+    public static void registerAlchemyConcoctions() {
 
         //Oils
         EMPTY_OIL = registerItem("empty_oil",
@@ -701,6 +702,13 @@ public class TCOTS_Items {
 
     }
 
+    public static Item KNIGHT_CROSSBOW;
+
+    public static void registerWeapons_Armors(){
+        KNIGHT_CROSSBOW = registerItem("knight_crossbow",
+                new KnightCrossbow(new FabricItemSettings().maxCount(1).maxDamage(600))
+        );
+    }
 
     //xTODO: Add buy mechanic to alcohol
 
@@ -900,6 +908,8 @@ public class TCOTS_Items {
         BUNCH_OF_LEAVES = registerItem("bunch_of_leaves",
                 new Item(new FabricItemSettings()));
     }
+
+
 
     public static void modifyLootTables(){
         LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) ->{

@@ -416,6 +416,10 @@
     "tooltip.moon_dust.extra":   "Stop Creepers from exploding.",
     "effect.tcots-witcher.moon_dust": "Moon Dust Splinters",
 
+    "item.tcots-witcher.knight_crossbow": "Knight Crossbow",
+    "tooltip.knight_crossbow.dyeable": "Dyeable",
+
+
 
     "text.config.tcots_config.title": "TCOTS Config",
     "text.config.tcots_config.category.hud": "HUD Options",

@@ -1,0 +1,7 @@
+{
+    "parent": "item/crossbow",
+    "textures": {
+        "layer0": "tcots-witcher:item/weapons/knight_crossbow_overlay",
+        "layer1": "tcots-witcher:item/weapons/knight_crossbow_pulling_2"
+    }
+}

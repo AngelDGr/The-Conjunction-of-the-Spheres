@@ -139,6 +139,8 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH.getDefaultStack());
                             entries.add(TCOTS_Items.KILLER_WHALE_SPLASH.getDefaultStack());
 
+                            //Weapons
+                            entries.add(TCOTS_Items.KNIGHT_CROSSBOW);
 
                             //Monster Oils
                             entries.add(TCOTS_Items.NECROPHAGE_OIL);

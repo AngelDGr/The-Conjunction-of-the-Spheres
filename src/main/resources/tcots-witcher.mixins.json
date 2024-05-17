@@ -44,6 +44,8 @@
     "ClientPlayNetworkHandlerMixin",
     "ClientRecipeBookClientMixin",
     "GameRendererMixin",
+    "KnightCrossbowRenderers$HeldItemRendererMixin",
+    "KnightCrossbowRenderers$PlayerEntityRendererMixin",
     "LightmapTextureManagerMixin",
     "northern_wind.BlazeEntityMixin",
     "northern_wind.geckolib.GeoEntityRendererMixin"
