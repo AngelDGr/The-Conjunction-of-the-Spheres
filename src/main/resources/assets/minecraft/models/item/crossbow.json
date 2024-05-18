@@ -1,8 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "tcots-witcher:item/weapons/knight_crossbow_overlay",
-        "layer1": "tcots-witcher:item/weapons/knight_crossbow_standby"
+        "layer0": "item/crossbow_standby"
     },
     "display": {
         "thirdperson_righthand": {
@@ -31,41 +30,41 @@
             "predicate": {
                 "pulling": 1
             },
-            "model": "tcots-witcher:item/knight_crossbow_pulling_0"
+            "model": "item/crossbow_pulling_0"
         },
         {
             "predicate": {
                 "pulling": 1,
                 "pull": 0.58
             },
-            "model": "tcots-witcher:item/knight_crossbow_pulling_1"
+            "model": "item/crossbow_pulling_1"
         },
         {
             "predicate": {
                 "pulling": 1,
                 "pull": 1.0
             },
-            "model": "tcots-witcher:item/knight_crossbow_pulling_2"
+            "model": "item/crossbow_pulling_2"
         },
         {
             "predicate": {
                 "charged": 1
             },
-            "model": "tcots-witcher:item/knight_crossbow_arrow"
+            "model": "item/crossbow_arrow"
         },
         {
             "predicate": {
                 "charged": 1,
                 "firework": 1
             },
-            "model": "tcots-witcher:item/knight_crossbow_firework"
+            "model": "item/crossbow_firework"
         },
-        {
+	{
             "predicate": {
                 "charged": 1,
                 "bolt": 1
             },
-            "model": "tcots-witcher:item/knight_crossbow_bolt"
+            "model": "item/crossbow_bolt"
         }
     ]
 }

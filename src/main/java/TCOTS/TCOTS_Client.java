@@ -8,9 +8,11 @@ import TCOTS.blocks.geo.renderer.NestSkullBlockRenderer;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
+import TCOTS.entity.misc.bolts.renderers.*;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.potions.recipes.AlchemyTableRecipe;
 import TCOTS.items.potions.recipes.AlchemyTableRecipesRegister;
+import TCOTS.items.weapons.WitcherBaseCrossbow;
 import TCOTS.particles.*;
 import TCOTS.particles.bombEmitters.*;
 import TCOTS.screen.AlchemyTableScreen;
@@ -72,12 +74,15 @@ public class TCOTS_Client implements ClientModInitializer {
             if (CrossbowItem.isCharged(stack)) {
                 return 0.0f;
             }
-            return (float)(stack.getMaxUseTime() - entity.getItemUseTimeLeft()) / (float)CrossbowItem.getPullTime(stack);
+            return (float)(stack.getMaxUseTime() - entity.getItemUseTimeLeft()) / (float) CrossbowItem.getPullTime(stack);
         });
 
         ModelPredicateProviderRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW, new Identifier("pulling"), (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && !CrossbowItem.isCharged(stack) ? 1.0f : 0.0f);
         ModelPredicateProviderRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW, new Identifier("charged"), (stack, world, entity, seed) -> CrossbowItem.isCharged(stack) ? 1.0f : 0.0f);
         ModelPredicateProviderRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW, new Identifier("firework"), (stack, world, entity, seed) -> CrossbowItem.isCharged(stack) && CrossbowItem.hasProjectile(stack, Items.FIREWORK_ROCKET) ? 1.0f : 0.0f);
+
+        ModelPredicateProviderRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW, new Identifier("bolt"), (stack, world, entity, seed) -> CrossbowItem.isCharged(stack) && WitcherBaseCrossbow.hasBoltProjectile(stack) ? 1.0f : 0.0f);
+        ModelPredicateProviderRegistry.register(Items.CROSSBOW, new Identifier("bolt"), (stack, world, entity, seed) -> CrossbowItem.isCharged(stack) && WitcherBaseCrossbow.hasBoltProjectile(stack) ? 1.0f : 0.0f);
 
         //Monsters
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER, DrownerRenderer::new);
@@ -102,6 +107,12 @@ public class TCOTS_Client implements ClientModInitializer {
 
         //Bomb
         EntityRendererRegistry.register(TCOTS_Entities.WITCHER_BOMB, FlyingItemEntityRenderer::new);
+        //Crossbow bolts
+        EntityRendererRegistry.register(TCOTS_Entities.BASE_BOLT, BaseBoltEntityRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities.BLUNT_BOLT, BluntBoltEntityRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities.PRECISION_BOLT, PrecisionBoltEntityRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities.EXPLODING_BOLT, ExplodingBoltEntityRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities.BROADHEAD_BOLT, BroadheadBoltEntityRenderer::new);
 
         //Blocks
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.ARENARIA_BUSH, RenderLayer.getCutout());

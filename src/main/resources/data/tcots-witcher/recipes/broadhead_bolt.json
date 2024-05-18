@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  T",
+    "NA ",
+    "FN "
+  ],
+  "key": {
+    "T": {
+      "item": "tcots-witcher:foglet_teeth"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "A": {
+      "item": "tcots-witcher:base_bolt"
+    }
+  },
+  "result": {
+    "item": "tcots-witcher:broadhead_bolt",
+    "count": 2
+  }
+}

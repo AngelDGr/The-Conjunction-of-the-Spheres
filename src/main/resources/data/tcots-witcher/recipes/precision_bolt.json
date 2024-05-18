@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  N",
+    "FA ",
+    "FF "
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:iron_nugget"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "A": {
+      "item": "tcots-witcher:base_bolt"
+    }
+  },
+  "result": {
+    "item": "tcots-witcher:precision_bolt",
+    "count": 2
+  }
+}

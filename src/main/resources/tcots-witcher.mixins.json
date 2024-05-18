@@ -13,6 +13,7 @@
     "DimeritiumMagicBlock$BlockWololoGoal",
     "InGameHudMixin",
     "ItemStackMixin",
+    "KnightCrossbowMixins$CrossbowItemMixin",
     "LivingEntityMixin",
     "MilkBucketItemMixin",
     "MobEntityMixin",
@@ -44,8 +45,8 @@
     "ClientPlayNetworkHandlerMixin",
     "ClientRecipeBookClientMixin",
     "GameRendererMixin",
-    "KnightCrossbowRenderers$HeldItemRendererMixin",
-    "KnightCrossbowRenderers$PlayerEntityRendererMixin",
+    "KnightCrossbowMixins$HeldItemRendererMixin",
+    "KnightCrossbowMixins$PlayerEntityRendererMixin",
     "LightmapTextureManagerMixin",
     "northern_wind.BlazeEntityMixin",
     "northern_wind.geckolib.GeoEntityRendererMixin"

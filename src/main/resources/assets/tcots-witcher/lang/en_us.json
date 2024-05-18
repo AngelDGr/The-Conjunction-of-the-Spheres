@@ -418,7 +418,27 @@
 
     "item.tcots-witcher.knight_crossbow": "Knight Crossbow",
     "tooltip.knight_crossbow.dyeable": "Dyeable",
+    "tooltip.knight_crossbow.description": "Very strong, with slow charging.",
 
+    "item.tcots-witcher.base_bolt": "Crossbow Bolt",
+    "tooltip.tcots-witcher.base_bolt": "Stronger than an arrow",
+    "entity.tcots-witcher.base_bolt": "Crossbow Bolt",
+
+    "item.tcots-witcher.blunt_bolt": "Blunt Bolt",
+    "tooltip.tcots-witcher.blunt_bolt": "Stronger than a regular bolt.",
+    "entity.tcots-witcher.blunt_bolt": "Blunt Bolt",
+
+    "item.tcots-witcher.precision_bolt": "Precision Bolt",
+    "tooltip.tcots-witcher.precision_bolt": "Extra piercing.",
+    "entity.tcots-witcher.precision_bolt": "Precision Bolt",
+
+    "item.tcots-witcher.exploding_bolt": "Exploding Bolt",
+    "tooltip.tcots-witcher.exploding_bolt": "Explodes on impact.",
+    "entity.tcots-witcher.exploding_bolt": "Exploding Bolt",
+
+    "item.tcots-witcher.broadhead_bolt": "Broadhead Bolt",
+    "tooltip.tcots-witcher.broadhead_bolt": "Causes bleeding.",
+    "entity.tcots-witcher.broadhead_bolt": "Broadhead Bolt",
 
 
     "text.config.tcots_config.title": "TCOTS Config",

@@ -2,6 +2,7 @@ package TCOTS.entity;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.*;
+import TCOTS.entity.misc.bolts.*;
 import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -142,6 +143,35 @@ public class TCOTS_Entities {
                     .dimensions(EntityDimensions.changing(6.0f, 1.5f)).build()
             );
 
+    public static final EntityType<BaseBoltProjectile> BASE_BOLT =
+            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "base_bolt"),
+                    FabricEntityTypeBuilder.<BaseBoltProjectile>create(SpawnGroup.MISC, BaseBoltProjectile::new)
+                            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+                            .trackRangeBlocks(4).trackedUpdateRate(20).build());
+
+    public static final EntityType<BluntBoltProjectile> BLUNT_BOLT =
+            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "blunt_bolt"),
+                    FabricEntityTypeBuilder.<BluntBoltProjectile>create(SpawnGroup.MISC, BluntBoltProjectile::new)
+                            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+                            .trackRangeBlocks(4).trackedUpdateRate(20).build());
+
+    public static final EntityType<PrecisionBoltProjectile> PRECISION_BOLT =
+            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "precision_bolt"),
+                    FabricEntityTypeBuilder.<PrecisionBoltProjectile>create(SpawnGroup.MISC, PrecisionBoltProjectile::new)
+                            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+                            .trackRangeBlocks(4).trackedUpdateRate(20).build());
+
+    public static final EntityType<ExplodingBoltProjectile> EXPLODING_BOLT =
+            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "exploding_bolt"),
+                    FabricEntityTypeBuilder.<ExplodingBoltProjectile>create(SpawnGroup.MISC, ExplodingBoltProjectile::new)
+                            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+                            .trackRangeBlocks(4).trackedUpdateRate(20).build());
+
+    public static final EntityType<BroadheadBoltProjectile> BROADHEAD_BOLT =
+            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "broadhead_bolt"),
+                    FabricEntityTypeBuilder.<BroadheadBoltProjectile>create(SpawnGroup.MISC, BroadheadBoltProjectile::new)
+                            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+                            .trackRangeBlocks(4).trackedUpdateRate(20).build());
 
     public static void addSpawns() {
         //Drowners

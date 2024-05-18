@@ -8,6 +8,7 @@ import TCOTS.items.blocks.HerbalTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
 import TCOTS.items.potions.*;
+import TCOTS.items.weapons.BoltItem;
 import TCOTS.items.weapons.KnightCrossbow;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
@@ -50,8 +51,8 @@ import java.util.List;
 
 public class TCOTS_Items {
 
-    //TODO: Add Bombs
-    //TODO: Add Bombs Entry
+    //xTODO: Add Bombs
+    //xTODO: Add Bombs Entry
     //xTODO: Add new way to craft the potions
         // xTODO: Add new alchemy ingredients (mushrooms, flowers)
             //Plants
@@ -126,6 +127,7 @@ public class TCOTS_Items {
         //xTODO: Nekker eye usable for Hanged Man Oil
         //xTODO: Nekker Hearth usable for the White Raffard's Decoction
             //xTODO: Add the White Raffard's Decoction, works similar to the instant health, but works with percentage
+
 
     //TODO: Fix the achievement to mobs works with Monster Hunter
     public static Item DROWNER_SPAWN_EGG;
@@ -703,11 +705,25 @@ public class TCOTS_Items {
     }
 
     public static Item KNIGHT_CROSSBOW;
+    public static Item BASE_BOLT;
+    public static Item BLUNT_BOLT;
+    public static Item PRECISION_BOLT;
+    public static Item EXPLODING_BOLT;
+    public static Item BROADHEAD_BOLT;
 
     public static void registerWeapons_Armors(){
         KNIGHT_CROSSBOW = registerItem("knight_crossbow",
-                new KnightCrossbow(new FabricItemSettings().maxCount(1).maxDamage(600))
-        );
+                new KnightCrossbow(new FabricItemSettings().maxCount(1).maxDamage(600)));
+
+        BASE_BOLT = registerItem("base_bolt", new BoltItem(new FabricItemSettings(), "base_bolt"));
+
+        BLUNT_BOLT = registerItem("blunt_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "blunt_bolt"));
+
+        PRECISION_BOLT = registerItem("precision_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "precision_bolt"));
+
+        EXPLODING_BOLT = registerItem("exploding_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "exploding_bolt"));
+
+        BROADHEAD_BOLT = registerItem("broadhead_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "broadhead_bolt"));
     }
 
     //xTODO: Add buy mechanic to alcohol

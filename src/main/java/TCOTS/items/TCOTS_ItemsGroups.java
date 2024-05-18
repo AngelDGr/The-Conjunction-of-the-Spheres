@@ -141,6 +141,11 @@ public class TCOTS_ItemsGroups {
 
                             //Weapons
                             entries.add(TCOTS_Items.KNIGHT_CROSSBOW);
+                            entries.add(TCOTS_Items.BASE_BOLT);
+                            entries.add(TCOTS_Items.BLUNT_BOLT);
+                            entries.add(TCOTS_Items.PRECISION_BOLT);
+                            entries.add(TCOTS_Items.EXPLODING_BOLT);
+                            entries.add(TCOTS_Items.BROADHEAD_BOLT);
 
                             //Monster Oils
                             entries.add(TCOTS_Items.NECROPHAGE_OIL);

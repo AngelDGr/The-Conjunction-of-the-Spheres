@@ -55,6 +55,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         main.addProvider(DamageTypeTagsGenerator::new);
         main.addProvider(BlockTagsGenerator::new);
         main.addProvider(EntityTagGenerator::new);
+        main.addProvider(ItemTagGenerator::new);
     }
 
     @Override
@@ -430,6 +431,19 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .add(TCOTS_Entities.FOGLING);
         }
     }
+
+    private static class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
+
+        public ItemTagGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+            super(output, completableFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup arg) {
+
+        }
+    }
+
 
 }
 
