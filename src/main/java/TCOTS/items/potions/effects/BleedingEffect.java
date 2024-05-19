@@ -1,11 +1,12 @@
 package TCOTS.items.potions.effects;
 
+import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
-public class BleedingBlackBloodEffect extends StatusEffect {
-    public BleedingBlackBloodEffect(StatusEffectCategory category, int color) {
+public class BleedingEffect extends StatusEffect {
+    public BleedingEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }
 
@@ -16,8 +17,8 @@ public class BleedingBlackBloodEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if(entity.age%20==0){
-        entity.damage(entity.getDamageSources().magic(), amplifier+1);
+        if(entity.age%40==0){
+            entity.damage(TCOTS_DamageTypes.bleedDamage(entity.getWorld()), amplifier+1);
         }
     }
 }

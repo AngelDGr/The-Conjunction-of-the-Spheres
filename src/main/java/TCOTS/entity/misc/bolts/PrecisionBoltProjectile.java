@@ -17,4 +17,5 @@ public class PrecisionBoltProjectile extends WitcherBolt{
         super(TCOTS_Entities.PRECISION_BOLT, owner, world, stack);
         setDamage(2.5);
     }
+
 }

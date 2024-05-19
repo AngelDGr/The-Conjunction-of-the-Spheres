@@ -12,8 +12,11 @@ import net.minecraft.world.World;
 public class TCOTS_DamageTypes {
     public static final RegistryKey<DamageType> POTION_TOXICITY = registerKey("toxicity");
 
+    public static final RegistryKey<DamageType> BLEEDING = registerKey("bleeding");
+
     public static void boostrap(Registerable<DamageType> damageTypeRegisterable) {
         damageTypeRegisterable.register(POTION_TOXICITY, new DamageType("potionToxicity", 0.1f));
+        damageTypeRegisterable.register(BLEEDING, new DamageType("bleeding", 0.5f));
     }
     public static RegistryKey<DamageType> registerKey(String name) {
         return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(TCOTS_Main.MOD_ID, name));
@@ -25,6 +28,10 @@ public class TCOTS_DamageTypes {
 
     public static DamageSource toxicityDamage(World world) {
         return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(POTION_TOXICITY));
+    }
+
+    public static DamageSource bleedDamage(World world) {
+        return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(BLEEDING));
     }
 
 }

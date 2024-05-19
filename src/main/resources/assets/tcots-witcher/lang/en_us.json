@@ -439,6 +439,8 @@
     "item.tcots-witcher.broadhead_bolt": "Broadhead Bolt",
     "tooltip.tcots-witcher.broadhead_bolt": "Causes bleeding.",
     "entity.tcots-witcher.broadhead_bolt": "Broadhead Bolt",
+    "effect.tcots-witcher.bleeding": "Bleeding",
+    "death.attack.bleeding": "%1$s bled to death",
 
 
     "text.config.tcots_config.title": "TCOTS Config",

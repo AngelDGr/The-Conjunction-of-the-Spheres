@@ -9,12 +9,16 @@ import TCOTS.items.potions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
+import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.mob.AbstractSkeletonEntity;
+import net.minecraft.entity.mob.GhastEntity;
+import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -345,4 +349,15 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         }
     }
 
+    //Immunity to bleeding
+    @Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
+    private void injectImmunityToBleeding(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir){
+        if(((THIS instanceof AbstractSkeletonEntity)
+                || (THIS instanceof GhastEntity)
+                || (THIS instanceof GolemEntity)
+                || (THIS instanceof WitherEntity)
+        )
+                && effect.getEffectType()==TCOTS_Effects.BLEEDING)
+            cir.setReturnValue(false);
+    }
 }

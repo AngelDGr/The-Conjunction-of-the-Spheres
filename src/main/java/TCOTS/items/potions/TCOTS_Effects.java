@@ -39,6 +39,8 @@ public class TCOTS_Effects {
     public static StatusEffect DIMERITIUM_BOMB_EFFECT;
     public static StatusEffect MOON_DUST_EFFECT;
 
+    public static StatusEffect BLEEDING;
+
     public static void registerEffects() {
 
         //Effects
@@ -91,10 +93,11 @@ public class TCOTS_Effects {
                                 "7107DE5E-7CE8-4030-940E-514C1F160890", -1.0f,
                                 EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
 
-        DIMERITIUM_BOMB_EFFECT = registerStatusEffect("dimeritium_bomb", DimeritiumBombEffect.class, StatusEffectCategory.BENEFICIAL, 0x25882f);
+        DIMERITIUM_BOMB_EFFECT = registerStatusEffect("dimeritium_bomb", DimeritiumBombEffect.class, StatusEffectCategory.HARMFUL, 0x25882f);
 
-        MOON_DUST_EFFECT = registerStatusEffect("moon_dust", MoonDustEffect.class, StatusEffectCategory.BENEFICIAL, 0x87b8b8);
+        MOON_DUST_EFFECT = registerStatusEffect("moon_dust", MoonDustEffect.class, StatusEffectCategory.HARMFUL, 0x87b8b8);
 
+        BLEEDING = registerStatusEffect("bleeding", BleedingEffect.class, StatusEffectCategory.HARMFUL, 0xab0000);
 
     }
 

@@ -10,9 +10,9 @@ import net.minecraft.world.World;
 public abstract class WitcherBolt extends PersistentProjectileEntity {
     //xTODO: Crossbow Bolts - More damage than a arrow
     //xTODO: Blunt Crossbow Bolts - Even more damage
-    //TODO: Precision Bolt - Extra piercing
-    //TODO: Exploding Bolt - Explodes
-    //TODO: Broadhead Bolt - Causes bleeding
+    //xTODO: Precision Bolt - Extra piercing
+    //xTODO: Exploding Bolt - Explodes
+    //xTODO: Broadhead Bolt - Causes bleeding
 
 
     protected WitcherBolt(EntityType<? extends WitcherBolt> type, World world, ItemStack stack) {

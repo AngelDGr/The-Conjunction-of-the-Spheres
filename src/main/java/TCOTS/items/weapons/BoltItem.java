@@ -26,6 +26,10 @@ public class BoltItem extends ArrowItem {
         tooltip.add(Text.translatable("tooltip.tcots-witcher."+id).formatted(Formatting.GRAY));
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
         return switch (id) {
