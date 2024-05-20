@@ -30,8 +30,8 @@ public class TCOTS_Entities {
     //xTODO: Foglet
     //xTODO: Ghoul
     //xTODO: Alghoul
-    //TODO: Wights
-    //TODO: Scurvers
+    //TODO: Wights - Next update
+    //xTODO: Scurvers
     //TODO: Devourer?
     //TODO: Graveir?
 
@@ -122,6 +122,16 @@ public class TCOTS_Entities {
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.8f, 1.2f)).build());
 
+    public static final EntityType<ScurverEntity> SCURVER = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "scurver"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, ScurverEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
+    public static final EntityType<ScurverSpineEntity> SCURVER_SPINE =
+            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "scurver_spike"),
+                    FabricEntityTypeBuilder.<ScurverSpineEntity>create(SpawnGroup.MISC, ScurverSpineEntity::new)
+                            .dimensions(EntityDimensions.fixed(0.25f, 0.25f))
+                            .trackRangeBlocks(4).trackedUpdateRate(20).build());
 
     //Ogroids
     public static final EntityType<NekkerEntity> NEKKER = Registry.register(
@@ -203,7 +213,7 @@ public class TCOTS_Entities {
                                                                     BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST, BiomeKeys.DARK_FOREST,
                                                                     BiomeKeys.DRIPSTONE_CAVES,
                                                                     BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
-                                                                    BiomeKeys.PLAINS, BiomeKeys.SAVANNA, BiomeKeys.TAIGA), SpawnGroup.MONSTER,
+                                                                    BiomeKeys.PLAINS,BiomeKeys.TAIGA), SpawnGroup.MONSTER,
                     ROTFIEND, 80, 4, 6);
 
 
@@ -269,6 +279,21 @@ public class TCOTS_Entities {
                     GHOUL, 10, 3,5);
 
 
+        //Scurvers
+        SpawnRestriction.register(SCURVER, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Necrophage_Base::canSpawnInDark);
+
+        //In night
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                        BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST, BiomeKeys.DARK_FOREST,
+                        BiomeKeys.OLD_GROWTH_BIRCH_FOREST,
+                        BiomeKeys.PLAINS, BiomeKeys.SAVANNA,
+                        BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE), SpawnGroup.MONSTER,
+                SCURVER, 40, 2, 3);
+
+
+
+
         //Nekkers
         SpawnRestriction.register(NEKKER, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NekkerEntity::canSpawnNekker);
@@ -306,6 +331,8 @@ public class TCOTS_Entities {
         //Alghoul
         FabricDefaultAttributeRegistry.register(TCOTS_Entities.ALGHOUL, AlghoulEntity.setAttributes());
 
+        //Scurver
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.SCURVER, ScurverEntity.setAttributes());
 
         //Nekker
         FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());

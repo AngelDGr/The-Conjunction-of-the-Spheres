@@ -10,6 +10,7 @@ import TCOTS.items.blocks.NestSkullItem;
 import TCOTS.items.potions.*;
 import TCOTS.items.weapons.BoltItem;
 import TCOTS.items.weapons.KnightCrossbow;
+import TCOTS.items.weapons.ScurverSpineItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
@@ -151,16 +152,22 @@ public class TCOTS_Items {
     public static Item FOGLET_TEETH;
     public static Item FOGLET_MUTAGEN;
 
-
-    public static Item NEKKER_SPAWN_EGG;
-    public static Item NEKKER_HEART;
-    public static Item NEKKER_EYE;
-
     public static Item GHOUL_SPAWN_EGG;
     public static Item GHOUL_BLOOD;
 
     public static Item ALGHOUL_SPAWN_EGG;
     public static Item ALGHOUL_BONE_MARROW;
+
+    public static Item SCURVER_SPINE;
+
+    public static Item NEKKER_SPAWN_EGG;
+    public static Item NEKKER_HEART;
+    public static Item NEKKER_EYE;
+
+
+
+
+    public static Item SCURVER_SPAWN_EGG;
 
     //Register Drops from monsters
     public static void registerDrops() {
@@ -213,6 +220,13 @@ public class TCOTS_Items {
                         new FabricItemSettings()));
         ALGHOUL_BONE_MARROW = registerItem("alghoul_bone_marrow",
                 new Item(new FabricItemSettings()));
+
+
+        SCURVER_SPAWN_EGG = registerItem("scurver_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.SCURVER, 0xc0887a, 0x661f1f, new FabricItemSettings()));
+
+        SCURVER_SPINE = registerItem("scurver_spine",
+                new ScurverSpineItem(new FabricItemSettings().maxCount(16)));
 
 
 

@@ -1,6 +1,7 @@
-package TCOTS.entity.misc.bolts.renderers;
+package TCOTS.entity.misc.renderers;
 
-import TCOTS.entity.misc.bolts.WitcherBolt;
+import TCOTS.TCOTS_Main;
+import TCOTS.entity.misc.ScurverSpineEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -8,14 +9,17 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-public abstract class BoltEntityRenderer<T extends WitcherBolt> extends EntityRenderer<T> {
-    public BoltEntityRenderer(EntityRendererFactory.Context context) {
-        super(context);
+public class ScurverSpineRenderer<T extends ScurverSpineEntity> extends EntityRenderer<T> {
+    public static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/entity/misc/scurver_spike.png");
+
+    public ScurverSpineRenderer(EntityRendererFactory.Context ctx) {
+        super(ctx);
     }
 
     @Override
@@ -50,5 +54,10 @@ public abstract class BoltEntityRenderer<T extends WitcherBolt> extends EntityRe
 
     public void vertex(Matrix4f positionMatrix, Matrix3f normalMatrix, VertexConsumer vertexConsumer, int x, int y, int z, float u, float v, int normalX, int normalZ, int normalY, int light) {
         vertexConsumer.vertex(positionMatrix, x, y, z).color(255, 255, 255, 255).texture(u, v).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, normalX, normalY, normalZ).next();
+    }
+
+    @Override
+    public Identifier getTexture(ScurverSpineEntity arrowEntity) {
+        return TEXTURE;
     }
 }

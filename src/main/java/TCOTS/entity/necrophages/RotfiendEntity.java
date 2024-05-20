@@ -100,7 +100,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
 
-    private final SoundEvent explosionSound = TCOTS_Sounds.ROTFIEND_EXPLODING;
 
     public boolean cooldownBetweenLunges = false;
     @Override
@@ -143,7 +142,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
 
         @Override
         public void start() {
-            this.rotfiend.playSound(this.rotfiend.explosionSound, 1.0F, 1.0F);
+            this.rotfiend.playSound(this.rotfiend.getExplosionSound(), 1.0F, 1.0F);
             this.rotfiend.setIsExploding(true);
             rotfiend.getNavigation().stop();
             rotfiend.getLookControl().lookAt(0, 0, 0);
@@ -363,7 +362,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         }
     }
 
-    private void explode() {
+    protected void explode() {
         if (!this.getWorld().isClient) {
             this.dead = true;
             this.getWorld().createExplosion(this, null, null,
@@ -378,7 +377,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     protected void updatePostDeath() {
         if(!this.isOnFire()) {
             if (ticksSinceDeath == 60) {
-                this.playSound(this.explosionSound, 1.0F, 1.0F);
+                this.playSound(this.getExplosionSound(), 1.0F, 1.0F);
                 this.setIsExploding(true);
                 this.getNavigation().stop();
                 this.getLookControl().lookAt(0, 0, 0);
@@ -450,6 +449,10 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     @Override
     public SoundEvent getLungeSound() {
         return TCOTS_Sounds.ROTFIEND_LUNGE;
+    }
+
+    public SoundEvent getExplosionSound(){
+        return TCOTS_Sounds.ROTFIEND_EXPLODING;
     }
 
     //Attack Sound

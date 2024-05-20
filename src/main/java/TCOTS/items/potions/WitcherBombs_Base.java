@@ -43,6 +43,7 @@ public class WitcherBombs_Base extends Item {
         //Launch the bomb
         if (!world.isClient) {
             WitcherBombEntity bombEntity = new WitcherBombEntity(world, playerEntity, bombId, level);
+            playerEntity.getItemCooldownManager().set(this, 40);
             bombEntity.setItem(itemStack);
             bombEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), -20.0f, 0.8f, 1.0f);
             world.spawnEntity(bombEntity);

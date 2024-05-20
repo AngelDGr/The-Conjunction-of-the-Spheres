@@ -38,6 +38,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.GRAVE_HAG_SPAWN_EGG);
                             entries.add(TCOTS_Items.WATER_HAG_SPAWN_EGG);
                             entries.add(TCOTS_Items.FOGLET_SPAWN_EGG);
+                            entries.add(TCOTS_Items.SCURVER_SPAWN_EGG);
 
 
                             //Drops
@@ -51,6 +52,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.WATER_HAG_MUD_BALL);
                             entries.add(TCOTS_Items.WATER_ESSENCE);
                             entries.add(TCOTS_Items.FOGLET_TEETH);
+                            entries.add(TCOTS_Items.SCURVER_SPINE);
 
                             //Mutagens
                             entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);

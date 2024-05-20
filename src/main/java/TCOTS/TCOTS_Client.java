@@ -8,7 +8,7 @@ import TCOTS.blocks.geo.renderer.NestSkullBlockRenderer;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
-import TCOTS.entity.misc.bolts.renderers.*;
+import TCOTS.entity.misc.renderers.*;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.potions.recipes.AlchemyTableRecipe;
 import TCOTS.items.potions.recipes.AlchemyTableRecipesRegister;
@@ -102,6 +102,8 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.ALGHOUL, AlghoulRenderer::new);
 
+        EntityRendererRegistry.register(TCOTS_Entities.SCURVER, ScurverRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities.SCURVER_SPINE, ScurverSpineRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
 

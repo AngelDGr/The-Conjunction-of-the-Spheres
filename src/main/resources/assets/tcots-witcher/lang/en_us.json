@@ -104,6 +104,22 @@
 
     "item.tcots-witcher.alghoul_bone_marrow": "Alghoul Bone Marrow",
 
+    "item.tcots-witcher.scurver_spawn_egg": "Scurver Spawn Egg",
+    "entity.tcots-witcher.scurver": "Scurver",
+    "entity.tcots-witcher.scurver_spike": "Scurver Spike",
+    "tcots-witcher.sounds.scurver_attack": "Scurver attacks",
+    "tcots-witcher.sounds.scurver_hurt": "Scurver hurts",
+    "tcots-witcher.sounds.scurver_idle": "Scurver groans",
+    "tcots-witcher.sounds.scurver_death": "Scurver dies",
+    "tcots-witcher.sounds.scurver_lunge": "Scurver lunges",
+    "tcots-witcher.sounds.scurver_exploding": "Scurver exploding",
+    "tcots-witcher.sounds.scurver_emerging": "Scurver emerges from ground",
+    "tcots-witcher.sounds.scurver_digging": "Scurver return to ground",
+
+    "item.tcots-witcher.scurver_spine": "Scurver Spine",
+
+
+
 
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
     "entity.tcots-witcher.nekker": "Nekker",

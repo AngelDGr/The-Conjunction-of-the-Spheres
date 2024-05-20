@@ -1,5 +1,7 @@
 package TCOTS.mixin;
 
+import TCOTS.entity.misc.ScurverSpineEntity;
+import TCOTS.entity.misc.bolts.WitcherBolt;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.weapons.BoltItem;
 import TCOTS.items.weapons.KnightCrossbow;
@@ -95,5 +97,22 @@ public class CrossbowMixins {
                 cir.setReturnValue(arrowEntity);
             }
         }
+    }
+
+//    @Debug(export = true)
+    @Mixin(PersistentProjectileEntity.class)
+    public static class PersistentProjectileEntityMixin {
+
+        @Unique
+        PersistentProjectileEntity THIS = (PersistentProjectileEntity)(Object)this;
+
+        @Redirect(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setStuckArrowCount(I)V"))
+        private void redirectNoStuckArrows(LivingEntity entity, int stuckArrowCount){
+            if(THIS instanceof WitcherBolt || THIS instanceof ScurverSpineEntity)
+                entity.setStuckArrowCount(entity.getStuckArrowCount());
+            else
+                entity.setStuckArrowCount(entity.getStuckArrowCount()+1);
+        }
+
     }
 }

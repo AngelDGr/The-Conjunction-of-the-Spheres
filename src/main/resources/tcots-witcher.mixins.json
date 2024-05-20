@@ -3,6 +3,8 @@
   "package": "TCOTS.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CrossbowMixins$CrossbowItemMixin",
+    "CrossbowMixins$PersistentProjectileEntityMixin",
     "DimeritiumMagicBlock$BlockBlazeFireball",
     "DimeritiumMagicBlock$BlockCastSpellGoal",
     "DimeritiumMagicBlock$BlockEndermanTeleportation",
@@ -13,7 +15,6 @@
     "DimeritiumMagicBlock$BlockWololoGoal",
     "InGameHudMixin",
     "ItemStackMixin",
-    "CrossbowMixins$CrossbowItemMixin",
     "LivingEntityMixin",
     "MilkBucketItemMixin",
     "MobEntityMixin",
@@ -44,9 +45,9 @@
     "BackgroundRendererMixin",
     "ClientPlayNetworkHandlerMixin",
     "ClientRecipeBookClientMixin",
-    "GameRendererMixin",
     "CrossbowMixins$HeldItemRendererMixin",
     "CrossbowMixins$PlayerEntityRendererMixin",
+    "GameRendererMixin",
     "LightmapTextureManagerMixin",
     "northern_wind.BlazeEntityMixin",
     "northern_wind.geckolib.GeoEntityRendererMixin"

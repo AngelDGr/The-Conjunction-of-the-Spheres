@@ -1,7 +1,7 @@
 package TCOTS.entity.geo.model.necrophages;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.entity.necrophages.RotfiendEntity;
+import TCOTS.entity.necrophages.ScurverEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import software.bernie.geckolib.constant.DataTickets;
@@ -10,24 +10,25 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
-public class RotfiendModel extends GeoModel<RotfiendEntity> {
+public class ScurverModel extends GeoModel<ScurverEntity> {
+
     @Override
-    public Identifier getModelResource(RotfiendEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/necrophages/rotfiend.geo.json");
+    public Identifier getModelResource(ScurverEntity animatable) {
+        return new Identifier(TCOTS_Main.MOD_ID, "geo/necrophages/scurver.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(RotfiendEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/rotfiend/rotfiend.png");
+    public Identifier getTextureResource(ScurverEntity animatable) {
+        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/scurver/scurver.png");
     }
 
     @Override
-    public Identifier getAnimationResource(RotfiendEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/necrophages/rotfiend.animation.json");
+    public Identifier getAnimationResource(ScurverEntity animatable) {
+        return new Identifier(TCOTS_Main.MOD_ID, "animations/necrophages/scurver.animation.json");
     }
 
     @Override
-    public void setCustomAnimations(RotfiendEntity entity, long instanceId, AnimationState<RotfiendEntity> animationState) {
+    public void setCustomAnimations(ScurverEntity animatable, long instanceId, AnimationState<ScurverEntity> animationState) {
         CoreGeoBone head = getAnimationProcessor().getBone("head");
 
         if (head != null) {

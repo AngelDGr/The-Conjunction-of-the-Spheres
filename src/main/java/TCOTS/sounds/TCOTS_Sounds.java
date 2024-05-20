@@ -76,6 +76,17 @@ public class TCOTS_Sounds {
     public static SoundEvent ALGHOUL_REGEN = registerSoundEvent("alghoul_regen");
     public static SoundEvent ALGHOUL_SPIKES = registerSoundEvent("alghoul_spikes");
 
+    //Scurver
+    public static SoundEvent SCURVER_ATTACK = registerSoundEvent("scurver_attack");
+    public static SoundEvent SCURVER_HURT = registerSoundEvent("scurver_hurt");
+    public static SoundEvent SCURVER_IDLE = registerSoundEvent("scurver_idle");
+    public static SoundEvent SCURVER_DEATH = registerSoundEvent("scurver_death");
+    public static SoundEvent SCURVER_LUNGE = registerSoundEvent("scurver_lunge");
+    public static SoundEvent SCURVER_EXPLODING = registerSoundEvent("scurver_exploding");
+    public static SoundEvent SCURVER_EMERGING = registerSoundEvent("scurver_emerging");
+    public static SoundEvent SCURVER_DIGGING = registerSoundEvent("scurver_digging");
+
+
     //Nekker
     public static SoundEvent NEKKER_ATTACK = registerSoundEvent("nekker_attack");
     public static SoundEvent NEKKER_HURT = registerSoundEvent("nekker_hurt");

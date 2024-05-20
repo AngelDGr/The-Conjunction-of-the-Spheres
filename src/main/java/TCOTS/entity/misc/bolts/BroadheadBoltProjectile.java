@@ -24,6 +24,6 @@ public class BroadheadBoltProjectile extends WitcherBolt {
     @Override
     protected void onHit(LivingEntity target) {
         Entity entity = this.getEffectCause();
-        target.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.BLEEDING, 300, 0, false, false),entity);
+        target.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.BLEEDING, 300, 0, false, false, true),entity);
     }
 }

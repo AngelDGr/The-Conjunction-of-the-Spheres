@@ -484,6 +484,74 @@
   },
 
 
+  "scurver_attack": {
+    "subtitle": "tcots-witcher.sounds.scurver_attack",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_attack1",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_attack2",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_attack3"
+    ]
+  },
+  "scurver_hurt": {
+    "subtitle": "tcots-witcher.sounds.scurver_hurt",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_hurt1",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_hurt2",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_hurt3"
+    ]
+  },
+  "scurver_idle": {
+    "subtitle": "tcots-witcher.sounds.scurver_idle",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_idle1",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_idle2",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_idle3",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_idle4"
+    ]
+  },
+  "scurver_death": {
+    "subtitle": "tcots-witcher.sounds.scurver_death",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_death1",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_death2"
+    ]
+  },
+
+  "scurver_lunge": {
+    "subtitle": "tcots-witcher.sounds.scurver_lunge",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_lunge1",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_lunge2",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_lunge3"
+    ]
+  },
+
+  "scurver_exploding": {
+    "subtitle": "tcots-witcher.sounds.scurver_exploding",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_exploding1",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_exploding2",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_exploding3"
+    ]
+  },
+
+  "scurver_emerging": {
+    "subtitle": "tcots-witcher.sounds.scurver_emerging",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_emerging1",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_emerging2"
+    ]
+  },
+
+  "scurver_digging": {
+    "subtitle": "tcots-witcher.sounds.scurver_digging",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_digging1",
+      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_digging2"
+    ]
+  },
+
+
   "nekker_attack": {
     "subtitle": "tcots-witcher.sounds.nekker_attack",
     "sounds": [

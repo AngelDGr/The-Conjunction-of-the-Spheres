@@ -1,4 +1,4 @@
-package TCOTS.entity.misc.bolts.renderers;
+package TCOTS.entity.misc.renderers;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.bolts.ExplodingBoltProjectile;
