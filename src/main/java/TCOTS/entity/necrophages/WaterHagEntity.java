@@ -36,6 +36,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -314,24 +315,23 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         );
     }
 
-    public void spawnGroundParticles() {
-        Random random = this.getRandom();
-        BlockState blockState = this.getSteppingBlockState();
+    @Override
+    public void spawnGroundParticles(@NotNull LivingEntity entity) {
+        Random random = entity.getRandom();
+        BlockState blockState = entity.getSteppingBlockState();
         if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
             for(int i = 0; i < 11; ++i) {
-                double d = this.getX() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
-                double e = this.getY();
-                double f = this.getZ() + (double)MathHelper.nextBetween(random, -0.7F, 0.7F);
+                double d = entity.getX() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
+                double e = entity.getY();
+                double f = entity.getZ() + (double)MathHelper.nextBetween(random, -0.7F, 0.7F);
 
                 if(i==5
                 ){
-                    this.getWorld().addParticle(ParticleTypes.SPLASH, d, e, f, 0.0, 0.0, 0.0);
+                    entity.getWorld().addParticle(ParticleTypes.SPLASH, d, e, f, 0.0, 0.0, 0.0);
                 }
                 else{
-                    this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
-
+                    entity.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
                 }
-
             }
         }
     }
@@ -358,7 +358,7 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         }
 
         //Counter for particles
-        this.tickExcavator();
+        this.tickExcavator(this);
 
         super.tick();
     }

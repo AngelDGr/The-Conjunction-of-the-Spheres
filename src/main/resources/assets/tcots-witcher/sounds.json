@@ -42,6 +42,21 @@
   },
 
 
+  "monster_emerging": {
+    "subtitle": "tcots-witcher.sounds.monster_emerging",
+    "sounds": [
+      "tcots-witcher:entity/common/monster_emerging1",
+      "tcots-witcher:entity/common/monster_emerging2"
+    ]
+  },
+  "monster_digging": {
+    "subtitle": "tcots-witcher.sounds.monster_digging",
+    "sounds": [
+      "tcots-witcher:entity/common/monster_digging1",
+      "tcots-witcher:entity/common/monster_digging2"
+    ]
+  },
+
   "drowner_attack": {
     "subtitle": "tcots-witcher.sounds.drowner_attack",
     "sounds": [
@@ -71,7 +86,6 @@
       "tcots-witcher:entity/necrophages/drowner/drowner_death2"
     ]
   },
-
   "drowner_footstep": {
     "subtitle": "tcots-witcher.sounds.drowner_footstep",
     "sounds": [
@@ -82,7 +96,6 @@
       "tcots-witcher:entity/necrophages/drowner/drowner_footstep5"
     ]
   },
-
   "drowner_lunge": {
     "subtitle": "tcots-witcher.sounds.drowner_lunge",
     "sounds": [
@@ -90,7 +103,6 @@
       "tcots-witcher:entity/necrophages/drowner/drowner_lunge2"
     ]
   },
-
   "drowner_emerging": {
     "subtitle": "tcots-witcher.sounds.drowner_emerging",
     "sounds": [
@@ -98,7 +110,6 @@
       "tcots-witcher:entity/necrophages/drowner/drowner_emerging2"
     ]
   },
-
   "drowner_digging": {
     "subtitle": "tcots-witcher.sounds.drowner_digging",
     "sounds": [
@@ -106,15 +117,12 @@
       "tcots-witcher:entity/necrophages/drowner/drowner_digging2"
     ]
   },
-
   "drowner_scream": {
     "subtitle": "tcots-witcher.sounds.drowner_scream",
     "sounds": [
       "tcots-witcher:entity/necrophages/drowner/drowner_scream"
     ]
   },
-
-
 
 
   "rotfiend_attack": {
@@ -149,7 +157,6 @@
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_death2"
     ]
   },
-
   "rotfiend_lunge": {
     "subtitle": "tcots-witcher.sounds.rotfiend_lunge",
     "sounds": [
@@ -158,7 +165,6 @@
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_lunge3"
     ]
   },
-
   "rotfiend_exploding": {
     "subtitle": "tcots-witcher.sounds.rotfiend_exploding",
     "sounds": [
@@ -174,23 +180,6 @@
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_blood_explosion1"
     ]
   },
-
-  "rotfiend_emerging": {
-    "subtitle": "tcots-witcher.sounds.rotfiend_emerging",
-    "sounds": [
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_emerging1",
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_emerging2"
-    ]
-  },
-
-  "rotfiend_digging": {
-    "subtitle": "tcots-witcher.sounds.rotfiend_digging",
-    "sounds": [
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_digging1",
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_digging2"
-    ]
-  },
-
 
 
   "grave_hag_attack": {
@@ -420,6 +409,7 @@
     ]
   },
 
+
   "alghoul_attack": {
     "subtitle": "tcots-witcher.sounds.alghoul_attack",
     "sounds": [
@@ -516,7 +506,6 @@
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_death2"
     ]
   },
-
   "scurver_lunge": {
     "subtitle": "tcots-witcher.sounds.scurver_lunge",
     "sounds": [
@@ -525,7 +514,6 @@
       "tcots-witcher:entity/necrophages/rotfiend/rotfiend_lunge3"
     ]
   },
-
   "scurver_exploding": {
     "subtitle": "tcots-witcher.sounds.scurver_exploding",
     "sounds": [
@@ -535,21 +523,42 @@
     ]
   },
 
-  "scurver_emerging": {
-    "subtitle": "tcots-witcher.sounds.scurver_emerging",
+
+  "devourer_attack": {
+    "subtitle": "tcots-witcher.sounds.devourer_attack",
     "sounds": [
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_emerging1",
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_emerging2"
+      "tcots-witcher:entity/necrophages/devourer/devourer_attack1",
+      "tcots-witcher:entity/necrophages/devourer/devourer_attack2",
+      "tcots-witcher:entity/necrophages/devourer/devourer_attack3"
+    ]
+  },
+  "devourer_hurt": {
+    "subtitle": "tcots-witcher.sounds.devourer_hurt",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/devourer/devourer_hurt1",
+      "tcots-witcher:entity/necrophages/devourer/devourer_hurt2",
+      "tcots-witcher:entity/necrophages/devourer/devourer_hurt3"
+    ]
+  },
+  "devourer_idle": {
+    "subtitle": "tcots-witcher.sounds.devourer_idle",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/devourer/devourer_idle1",
+      "tcots-witcher:entity/necrophages/devourer/devourer_idle2",
+      "tcots-witcher:entity/necrophages/devourer/devourer_idle3"
+    ]
+  },
+  "devourer_death": {
+    "subtitle": "tcots-witcher.sounds.devourer_death",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/devourer/devourer_death1",
+      "tcots-witcher:entity/necrophages/devourer/devourer_death2",
+      "tcots-witcher:entity/necrophages/devourer/devourer_death3"
     ]
   },
 
-  "scurver_digging": {
-    "subtitle": "tcots-witcher.sounds.scurver_digging",
-    "sounds": [
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_digging1",
-      "tcots-witcher:entity/necrophages/rotfiend/rotfiend_digging2"
-    ]
-  },
+
+
 
 
   "nekker_attack": {
@@ -590,20 +599,6 @@
       "tcots-witcher:entity/ogroids/nekker/nekker_lunge1",
       "tcots-witcher:entity/ogroids/nekker/nekker_lunge2",
       "tcots-witcher:entity/ogroids/nekker/nekker_lunge3"
-    ]
-  },
-  "nekker_emerging": {
-    "subtitle": "tcots-witcher.sounds.nekker_emerging",
-    "sounds": [
-      "tcots-witcher:entity/ogroids/nekker/nekker_emerging1",
-      "tcots-witcher:entity/ogroids/nekker/nekker_emerging2"
-    ]
-  },
-  "nekker_digging": {
-    "subtitle": "tcots-witcher.sounds.nekker_digging",
-    "sounds": [
-      "tcots-witcher:entity/ogroids/nekker/nekker_digging1",
-      "tcots-witcher:entity/ogroids/nekker/nekker_digging2"
     ]
   }
 }

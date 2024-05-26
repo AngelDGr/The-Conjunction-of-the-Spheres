@@ -7,6 +7,8 @@
     "item.tcots-witcher.alchemy_book": "Alchemy Almanac",
     "tooltip.tcots-witcher.alchemy_book": "Information about herbs and alchemy",
 
+    "tcots-witcher.sounds.monster_emerging": "Monster emerges from ground",
+    "tcots-witcher.sounds.monster_digging": "Monster return to ground",
 
     "item.tcots-witcher.drowner_spawn_egg": "Drowner Spawn Egg",
     "entity.tcots-witcher.drowner": "Drowner",
@@ -16,8 +18,8 @@
     "tcots-witcher.sounds.drowner_idle": "Drowner groans",
     "tcots-witcher.sounds.drowner_death": "Drowner dies",
     "tcots-witcher.sounds.drowner_lunge": "Drowner lunges",
-    "tcots-witcher.sounds.drowner_emerging": "Drowner emerges from ground",
-    "tcots-witcher.sounds.drowner_digging": "Drowner return to ground",
+    "tcots-witcher.sounds.drowner_emerging": "Monster emerges from ground",
+    "tcots-witcher.sounds.drowner_digging": "Monster return to ground",
     "tcots-witcher.sounds.drowner_scream": "Drowner screams",
 
     "item.tcots-witcher.drowner_brain": "Drowner Brain",
@@ -32,8 +34,6 @@
     "tcots-witcher.sounds.rotfiend_lunge": "Rotfiend lunges",
     "tcots-witcher.sounds.rotfiend_exploding": "Rotfiend exploding",
     "tcots-witcher.sounds.rotfiend_blood_explosion": "Blood explosion",
-    "tcots-witcher.sounds.rotfiend_emerging": "Rotfiend emerges from ground",
-    "tcots-witcher.sounds.rotfiend_digging": "Rotfiend return to ground",
 
     "item.tcots-witcher.rotfiend_blood": "Rotfiend Blood",
 
@@ -54,8 +54,8 @@
     "tcots-witcher.sounds.water_hag_hurt": "Water Hag hurts",
     "tcots-witcher.sounds.water_hag_idle": "Water Hag groans",
     "tcots-witcher.sounds.water_hag_death": "Water Hag dies",
-    "tcots-witcher.sounds.water_hag_emerging": "Water Hag emerges from ground",
-    "tcots-witcher.sounds.water_hag_digging": "Water Hag return to ground",
+    "tcots-witcher.sounds.water_hag_emerging": "Monster emerges from ground",
+    "tcots-witcher.sounds.water_hag_digging": "Monster return to ground",
 
     "entity.tcots-witcher.water_hag_mud_ball": "Mudball",
     "item.tcots-witcher.water_hag_mud_ball": "Mudball",
@@ -113,13 +113,16 @@
     "tcots-witcher.sounds.scurver_death": "Scurver dies",
     "tcots-witcher.sounds.scurver_lunge": "Scurver lunges",
     "tcots-witcher.sounds.scurver_exploding": "Scurver exploding",
-    "tcots-witcher.sounds.scurver_emerging": "Scurver emerges from ground",
-    "tcots-witcher.sounds.scurver_digging": "Scurver return to ground",
 
     "item.tcots-witcher.scurver_spine": "Scurver Spine",
 
 
-
+    "item.tcots-witcher.devourer_spawn_egg": "Devourer Spawn Egg",
+    "entity.tcots-witcher.devourer": "Devourer",
+    "tcots-witcher.sounds.devourer_attack": "Devourer attacks",
+    "tcots-witcher.sounds.devourer_hurt": "Devourer hurts",
+    "tcots-witcher.sounds.devourer_idle": "Devourer groans",
+    "tcots-witcher.sounds.devourer_death": "Devourer dies",
 
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
     "entity.tcots-witcher.nekker": "Nekker",
@@ -128,8 +131,6 @@
     "tcots-witcher.sounds.nekker_idle": "Nekker groans",
     "tcots-witcher.sounds.nekker_death": "Nekker dies",
     "tcots-witcher.sounds.nekker_lunge": "Nekker lunges",
-    "tcots-witcher.sounds.nekker_emerging": "Nekker emerges from ground",
-    "tcots-witcher.sounds.nekker_digging": "Nekker return to ground",
 
     "item.tcots-witcher.nekker_eye": "Nekker Eye",
     "item.tcots-witcher.nekker_heart": "Nekker Heart",

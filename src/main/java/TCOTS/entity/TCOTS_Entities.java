@@ -32,8 +32,10 @@ public class TCOTS_Entities {
     //xTODO: Alghoul
     //TODO: Wights - Next update
     //xTODO: Scurvers
+
     //TODO: Devourer?
     //TODO: Graveir?
+    //TODO: Bullvore?
 
 //  Ogroids
     //xTODO: Nekkers
@@ -132,6 +134,13 @@ public class TCOTS_Entities {
                     FabricEntityTypeBuilder.<ScurverSpineEntity>create(SpawnGroup.MISC, ScurverSpineEntity::new)
                             .dimensions(EntityDimensions.fixed(0.25f, 0.25f))
                             .trackRangeBlocks(4).trackedUpdateRate(20).build());
+
+
+    public static final EntityType<DevourerEntity> DEVOURER = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "devourer"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DevourerEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(0.85f, 1.8f)).build());
 
     //Ogroids
     public static final EntityType<NekkerEntity> NEKKER = Registry.register(
@@ -333,6 +342,9 @@ public class TCOTS_Entities {
 
         //Scurver
         FabricDefaultAttributeRegistry.register(TCOTS_Entities.SCURVER, ScurverEntity.setAttributes());
+
+        //Devourer
+        FabricDefaultAttributeRegistry.register(TCOTS_Entities.DEVOURER, DevourerEntity.setAttributes());
 
         //Nekker
         FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());

@@ -89,16 +89,6 @@ public class ScurverEntity extends RotfiendEntity{
     }
 
     @Override
-    public SoundEvent getEmergingSound() {
-        return TCOTS_Sounds.SCURVER_EMERGING;
-    }
-
-    @Override
-    public SoundEvent getDiggingSound() {
-        return TCOTS_Sounds.SCURVER_DIGGING;
-    }
-
-    @Override
     public SoundEvent getLungeSound() {
         return TCOTS_Sounds.SCURVER_LUNGE;
     }

@@ -8,6 +8,9 @@ import net.minecraft.util.Identifier;
 
 public class TCOTS_Sounds {
 
+    public static SoundEvent MONSTER_EMERGING = registerSoundEvent("monster_emerging");
+    public static SoundEvent MONSTER_DIGGING = registerSoundEvent("monster_digging");
+
     //Drowner
     public static SoundEvent DROWNER_ATTACK = registerSoundEvent("drowner_attack");
     public static SoundEvent DROWNER_HURT = registerSoundEvent("drowner_hurt");
@@ -26,8 +29,6 @@ public class TCOTS_Sounds {
     public static SoundEvent ROTFIEND_LUNGE = registerSoundEvent("rotfiend_lunge");
     public static SoundEvent ROTFIEND_EXPLODING = registerSoundEvent("rotfiend_exploding");
     public static SoundEvent ROTFIEND_BLOOD_EXPLOSION = registerSoundEvent("rotfiend_blood_explosion");
-    public static SoundEvent ROTFIEND_EMERGING = registerSoundEvent("rotfiend_emerging");
-    public static SoundEvent ROTFIEND_DIGGING = registerSoundEvent("rotfiend_digging");
 
 
     //Grave Hag
@@ -83,9 +84,12 @@ public class TCOTS_Sounds {
     public static SoundEvent SCURVER_DEATH = registerSoundEvent("scurver_death");
     public static SoundEvent SCURVER_LUNGE = registerSoundEvent("scurver_lunge");
     public static SoundEvent SCURVER_EXPLODING = registerSoundEvent("scurver_exploding");
-    public static SoundEvent SCURVER_EMERGING = registerSoundEvent("scurver_emerging");
-    public static SoundEvent SCURVER_DIGGING = registerSoundEvent("scurver_digging");
 
+    //Devourer
+    public static SoundEvent DEVOURER_ATTACK = registerSoundEvent("devourer_attack");
+    public static SoundEvent DEVOURER_HURT = registerSoundEvent("devourer_hurt");
+    public static SoundEvent DEVOURER_IDLE = registerSoundEvent("devourer_idle");
+    public static SoundEvent DEVOURER_DEATH = registerSoundEvent("devourer_death");
 
     //Nekker
     public static SoundEvent NEKKER_ATTACK = registerSoundEvent("nekker_attack");
@@ -93,8 +97,6 @@ public class TCOTS_Sounds {
     public static SoundEvent NEKKER_IDLE = registerSoundEvent("nekker_idle");
     public static SoundEvent NEKKER_DEATH = registerSoundEvent("nekker_death");
     public static SoundEvent NEKKER_LUNGE = registerSoundEvent("nekker_lunge");
-    public static SoundEvent NEKKER_EMERGING = registerSoundEvent("nekker_emerging");
-    public static SoundEvent NEKKER_DIGGING = registerSoundEvent("nekker_digging");
 
 
 

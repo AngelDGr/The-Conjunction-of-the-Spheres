@@ -158,7 +158,11 @@ public class TCOTS_Items {
     public static Item ALGHOUL_SPAWN_EGG;
     public static Item ALGHOUL_BONE_MARROW;
 
+    public static Item SCURVER_SPAWN_EGG;
     public static Item SCURVER_SPINE;
+
+    public static Item DEVOURER_SPAWN_EGG;
+
 
     public static Item NEKKER_SPAWN_EGG;
     public static Item NEKKER_HEART;
@@ -167,7 +171,7 @@ public class TCOTS_Items {
 
 
 
-    public static Item SCURVER_SPAWN_EGG;
+
 
     //Register Drops from monsters
     public static void registerDrops() {
@@ -228,6 +232,9 @@ public class TCOTS_Items {
         SCURVER_SPINE = registerItem("scurver_spine",
                 new ScurverSpineItem(new FabricItemSettings().maxCount(16)));
 
+
+        DEVOURER_SPAWN_EGG = registerItem("devourer_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.DEVOURER, 0x606c68, 0x1f1f1f, new FabricItemSettings()));
 
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",

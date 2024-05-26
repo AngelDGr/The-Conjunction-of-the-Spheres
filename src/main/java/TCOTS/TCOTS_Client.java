@@ -105,6 +105,8 @@ public class TCOTS_Client implements ClientModInitializer {
         EntityRendererRegistry.register(TCOTS_Entities.SCURVER, ScurverRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.SCURVER_SPINE, ScurverSpineRenderer::new);
 
+        EntityRendererRegistry.register(TCOTS_Entities.DEVOURER, DevourerRenderer::new);
+
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
 
         //Bomb

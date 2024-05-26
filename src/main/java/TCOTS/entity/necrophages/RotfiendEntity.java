@@ -6,7 +6,6 @@ import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.entity.misc.CommonControllers;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -24,13 +23,10 @@ import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
@@ -53,10 +49,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     //xTODO: Fix the invisible bug
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-
-    public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
-    public static final RawAnimation RUNNING = RawAnimation.begin().thenLoop("move.running");
-    public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
 
     public static final RawAnimation EXPLOSION = RawAnimation.begin().thenPlayAndHold("special.explosion");
 
@@ -184,30 +176,9 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         //Walk/Idle Controller
-        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, state -> {
-
-            //If it's aggressive and it is moving
-            if (this.isAttacking() && state.isMoving()) {
-                return state.setAndContinue(RUNNING);
-            }
-            //It's not attacking and/or it's no moving
-            else {
-                //If it's attacking but NO moving
-                if (isAttacking()) {
-                    return state.setAndContinue(RUNNING);
-                } else {
-                    //If it's just moving
-                    if (state.isMoving()) {
-                        return state.setAndContinue(WALKING);
-                    }
-                    //Anything else
-                    else {
-                        return state.setAndContinue(IDLE);
-                    }
-                }
-            }
-
-        }
+        //Walk/Idle Controller
+        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5,
+                state -> CommonControllers.idleWalkRun(state, this, RUNNING, WALKING, IDLE)
         ));
 
         //Attack Controller
@@ -332,7 +303,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         this.tickLunge();
 
         //Counter for particles
-        this.tickExcavator();
+        this.tickExcavator(this);
 
         super.tick();
     }
@@ -393,19 +364,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         }
     }
 
-    public void spawnGroundParticles() {
-        BlockState blockState = this.getSteppingBlockState();
-        if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
-            for (int i = 0; i < 11; ++i) {
-                double d = this.getX() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
-                double e = this.getY();
-                double f = this.getZ() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
-
-                this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
-            }
-        }
-    }
-
 
     @Override
     public boolean canExplosionDestroyBlock(Explosion explosion, BlockView world, BlockPos pos, BlockState state, float explosionPower) {
@@ -434,16 +392,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         } else {
             return TCOTS_Sounds.ROTFIEND_DEATH;
         }
-    }
-
-    @Override
-    public SoundEvent getEmergingSound() {
-        return TCOTS_Sounds.ROTFIEND_EMERGING;
-    }
-
-    @Override
-    public SoundEvent getDiggingSound() {
-        return TCOTS_Sounds.ROTFIEND_DIGGING;
     }
 
     @Override

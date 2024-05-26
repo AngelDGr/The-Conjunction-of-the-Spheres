@@ -1,19 +1,26 @@
 package TCOTS.entity.interfaces;
 
 import TCOTS.entity.misc.DrownerPuddleEntity;
+import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-
 
 import java.util.List;
 
@@ -82,9 +89,13 @@ public interface ExcavatorMob {
 
     }
 
-    SoundEvent getEmergingSound();
+    default SoundEvent getEmergingSound(){
+        return TCOTS_Sounds.MONSTER_EMERGING;
+    }
 
-    SoundEvent getDiggingSound();
+    default SoundEvent getDiggingSound(){
+        return TCOTS_Sounds.MONSTER_DIGGING;
+    }
 
 
     default boolean getSpawnedPuddleDataTracker() {
@@ -98,13 +109,12 @@ public interface ExcavatorMob {
 
      void setAnimationParticlesTicks(int animationParticlesTicks);
 
-    default void tickExcavator() {
-
+    default void tickExcavator(LivingEntity entity) {
         //Particles when return to ground
         if(this.getAnimationParticlesTicks() > 0 && this.getInGroundDataTracker()
                 && !(this.getIsEmerging())
         ){
-            this.spawnGroundParticles();
+            this.spawnGroundParticles(entity);
             setAnimationParticlesTicks(getAnimationParticlesTicks()-1);
         } else if (getAnimationParticlesTicks()==0) {
             this.setInvisibleData(true);
@@ -117,7 +127,7 @@ public interface ExcavatorMob {
 
         //Particles when emerges from ground
         if(this.getIsEmerging()){
-            this.spawnGroundParticles();
+            this.spawnGroundParticles(entity);
         }
     }
 
@@ -134,7 +144,18 @@ public interface ExcavatorMob {
 
     void setIsEmerging(boolean wasEmerging);
 
-    void spawnGroundParticles();
+    default void spawnGroundParticles(@NotNull LivingEntity entity){
+        BlockState blockState = entity.getSteppingBlockState();
+        if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
+            for (int i = 0; i < 11; ++i) {
+                double d = entity.getX() + (double) MathHelper.nextBetween(entity.getRandom(), -0.7F, 0.7F);
+                double e = entity.getY();
+                double f = entity.getZ() + (double) MathHelper.nextBetween(entity.getRandom(), -0.7F, 0.7F);
+
+                entity.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+            }
+        }
+    }
 
      int getReturnToGround_Ticks();
 

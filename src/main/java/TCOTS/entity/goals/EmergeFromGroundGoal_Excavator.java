@@ -60,7 +60,7 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
             excavatorMob.getPuddle().setDespawnPuddle(true);
         }
 
-        this.excavatorMob.spawnGroundParticles();
+        this.excavatorMob.spawnGroundParticles(mob);
         AnimationTicks=36;
         excavatorMob.setIsEmerging(true);
     }

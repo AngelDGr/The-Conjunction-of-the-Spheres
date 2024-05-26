@@ -42,7 +42,6 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
 
 import java.util.List;
 
@@ -51,10 +50,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
     //xTODO: Add spawn
     //xTODO: Add drops
-
-    public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
-    public static final RawAnimation RUNNING = RawAnimation.begin().thenLoop("move.running");
-    public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -141,30 +136,8 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         //Walk/Idle Controller
-        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, state -> {
-
-            //If it's aggressive and it is moving
-            if (this.isAttacking() && state.isMoving()) {
-                return state.setAndContinue(RUNNING);
-            }
-            //It's not attacking and/or it's no moving
-            else {
-                //If it's attacking but NO moving
-                if (isAttacking()) {
-                    return state.setAndContinue(RUNNING);
-                } else {
-                    //If it's just moving
-                    if (state.isMoving()) {
-                        return state.setAndContinue(WALKING);
-                    }
-                    //Anything else
-                    else {
-
-                        return state.setAndContinue(IDLE);
-                    }
-                }
-            }
-        }
+        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5,
+                state -> CommonControllers.idleWalkRun(state, this, RUNNING, WALKING, IDLE)
         ));
 
         //Attack Controller
@@ -253,19 +226,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         this.dataTracker.set(INVISIBLE, isInvisible);
     }
 
-    public void spawnGroundParticles() {
-        BlockState blockState = this.getSteppingBlockState();
-        if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
-            for (int i = 0; i < 11; ++i) {
-                double d = this.getX() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
-                double e = this.getY();
-                double f = this.getZ() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
-
-                this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
-            }
-        }
-    }
-
     int AnimationParticlesTicks = 36;
 
     public int getAnimationParticlesTicks() {
@@ -281,7 +241,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         //Counter for Lunge attack
         this.tickLunge();
         //Counter for particles
-        this.tickExcavator();
+        this.tickExcavator(this);
 
         super.tick();
     }
@@ -316,16 +276,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     @Override
     protected SoundEvent getDeathSound() {
         return TCOTS_Sounds.NEKKER_DEATH;
-    }
-
-    @Override
-    public SoundEvent getEmergingSound() {
-        return TCOTS_Sounds.NEKKER_EMERGING;
-    }
-
-    @Override
-    public SoundEvent getDiggingSound() {
-        return TCOTS_Sounds.NEKKER_DIGGING;
     }
 
     @Override
