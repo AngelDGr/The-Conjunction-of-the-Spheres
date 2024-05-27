@@ -54,6 +54,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.WATER_ESSENCE);
                             entries.add(TCOTS_Items.FOGLET_TEETH);
                             entries.add(TCOTS_Items.SCURVER_SPINE);
+                            entries.add(TCOTS_Items.DEVOURER_TEETH);
 
                             //Mutagens
                             entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);

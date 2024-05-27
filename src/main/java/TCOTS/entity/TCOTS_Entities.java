@@ -33,7 +33,7 @@ public class TCOTS_Entities {
     //TODO: Wights - Next update
     //xTODO: Scurvers
 
-    //TODO: Devourer?
+    //xTODO: Devourer
     //TODO: Graveir?
     //TODO: Bullvore?
 
@@ -301,6 +301,16 @@ public class TCOTS_Entities {
                 SCURVER, 40, 2, 3);
 
 
+        //Devourer
+        SpawnRestriction.register(DEVOURER, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Necrophage_Base::canSpawnInDark);
+
+        //In night
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                        BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST,
+                        BiomeKeys.SWAMP, BiomeKeys.RIVER,
+                        BiomeKeys.PLAINS), SpawnGroup.MONSTER,
+                DEVOURER, 60, 3, 4);
 
 
         //Nekkers

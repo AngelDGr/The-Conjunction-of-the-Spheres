@@ -34,6 +34,11 @@ import java.util.List;
 
 public class DevourerEntity extends Necrophage_Base implements GeoEntity, ExcavatorMob {
 
+    //TODO: Make it special?
+    //xTODO: Add natural spawn
+    //xTODO: Add drop
+
+
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -65,8 +70,7 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         //Returns to ground
         this.goalSelector.add(2, new ReturnToGroundGoal_Excavator(this));
 
-        this.goalSelector.add(3, new MeleeAttackGoal_Excavator(this, 1.2D, false));
-
+        this.goalSelector.add(3, new MeleeAttackGoal_Excavator(this, 1.2D, false, 3600));
 
         this.goalSelector.add(4, new WanderAroundGoal_Excavator(this, 0.75f, 20));
 
@@ -135,16 +139,14 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
 
     @Override
     protected void mobTick() {
-        if(this.getReturnToGround_Ticks() < 200) {
-            mobTickExcavator(
-                    List.of(BlockTags.DIRT, BlockTags.STONE_ORE_REPLACEABLES, BlockTags.DEEPSLATE_ORE_REPLACEABLES),
-                    List.of(Blocks.SAND),
-                    this
-            );
-        }
+        mobTickExcavator(
+                List.of(BlockTags.DIRT, BlockTags.STONE_ORE_REPLACEABLES, BlockTags.DEEPSLATE_ORE_REPLACEABLES),
+                List.of(Blocks.SAND),
+                this
+        );
+
 
         this.setInvisible(this.getInvisibleData());
-
         super.mobTick();
     }
 

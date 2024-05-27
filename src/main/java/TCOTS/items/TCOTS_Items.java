@@ -162,6 +162,7 @@ public class TCOTS_Items {
     public static Item SCURVER_SPINE;
 
     public static Item DEVOURER_SPAWN_EGG;
+    public static Item DEVOURER_TEETH;
 
 
     public static Item NEKKER_SPAWN_EGG;
@@ -235,7 +236,8 @@ public class TCOTS_Items {
 
         DEVOURER_SPAWN_EGG = registerItem("devourer_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.DEVOURER, 0x606c68, 0x1f1f1f, new FabricItemSettings()));
-
+        DEVOURER_TEETH = registerItem("devourer_teeth",
+                new Item(new FabricItemSettings()));
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,

@@ -17,7 +17,7 @@ public class VillagerHostilesSensorMixin {
                 SQUARED_DISTANCES_FOR_DANGER = ImmutableMap.builder()
                 .putAll(SQUARED_DISTANCES_FOR_DANGER.entrySet())
 
-
+                        //Necrophages
                         .put(TCOTS_Entities.DROWNER, distanceDanger)
                         .put(TCOTS_Entities.ROTFIEND, distanceDanger)
                         .put(TCOTS_Entities.FOGLET, distanceDanger)
@@ -26,8 +26,10 @@ public class VillagerHostilesSensorMixin {
                         .put(TCOTS_Entities.GHOUL, distanceDanger)
                         .put(TCOTS_Entities.ALGHOUL, distanceDanger)
                         .put(TCOTS_Entities.SCURVER, distanceDanger)
+                        .put(TCOTS_Entities.DEVOURER, distanceDanger)
 
 
+                        //Ogroids
                         .put(TCOTS_Entities.NEKKER, distanceDanger)
                         .build();
     }

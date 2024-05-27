@@ -432,5 +432,19 @@ public class VillagerCustomTrades {
                             0.05f));
                 }
         );
+
+        //Cleric
+        TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 1,
+                factories -> {
+                    factories.add((entity, random) -> new TradeOffer(
+                            //Wants
+                            new ItemStack(TCOTS_Items.DEVOURER_TEETH, 8),
+                            //Gives
+                            new ItemStack(Items.EMERALD, 32),
+                            3,
+                            15,
+                            0.2f));
+                }
+        );
     }
 }

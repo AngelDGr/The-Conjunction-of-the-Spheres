@@ -124,6 +124,8 @@
     "tcots-witcher.sounds.devourer_idle": "Devourer groans",
     "tcots-witcher.sounds.devourer_death": "Devourer dies",
 
+    "item.tcots-witcher.devourer_teeth": "Devourer Teeth",
+
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
     "entity.tcots-witcher.nekker": "Nekker",
     "tcots-witcher.sounds.nekker_attack": "Nekker attacks",
