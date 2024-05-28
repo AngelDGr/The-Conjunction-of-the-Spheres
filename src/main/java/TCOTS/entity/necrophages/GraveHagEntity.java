@@ -242,9 +242,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
                         if (!(livingEntity instanceof Necrophage_Base)) {
                             livingEntity.damage(graveHag.getDamageSources().mobAttack(graveHag), damageWithTongue);
                             if(livingEntity.isBlocking() && livingEntity instanceof PlayerEntity){
-
                                 ((PlayerEntity) livingEntity).disableShield(true);
-
                             }
                         }
                         this.knockBack(livingEntity);

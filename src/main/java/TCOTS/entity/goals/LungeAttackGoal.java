@@ -62,26 +62,10 @@ public class LungeAttackGoal extends Goal {
 
     private boolean isExcavator(){
         if(excavatorMob != null){
-            return !this.excavatorMob.getIsEmerging()
-                    && !this.excavatorMob.getInGroundDataTracker();
+            return !this.excavatorMob.getIsEmerging() && !this.excavatorMob.getInGroundDataTracker();
         }
 
         return true;
-    }
-
-    @Override
-    public boolean shouldContinue() {
-        LivingEntity target = this.mob.getTarget();
-        if (target != null) {
-            //5 square distance like 1.5 blocks approx
-            //I want 7.5 blocks approx
-            //So 7.5/1.5=5
-            return lungeMob.getNotCooldownBetweenLunges() && this.mob.isAttacking()
-                    && this.mob.squaredDistanceTo(target) > 5 && this.mob.squaredDistanceTo(target) < 25
-                    && (this.mob.getTarget().getY() - this.mob.getY()) <= 1;
-        } else {
-            return false;
-        }
     }
 
     Vec3d vec3D_lunge;

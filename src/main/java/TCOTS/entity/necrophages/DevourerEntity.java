@@ -3,10 +3,13 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.misc.CommonControllers;
+import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -14,15 +17,20 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -34,16 +42,18 @@ import java.util.List;
 
 public class DevourerEntity extends Necrophage_Base implements GeoEntity, ExcavatorMob {
 
-    //TODO: Make it special?
+    //TODO: Fix the jump particles
+    //TODO: Finish bestiary
     //xTODO: Add natural spawn
     //xTODO: Add drop
-
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> FALLING = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
 
     public DevourerEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
@@ -66,20 +76,108 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         this.goalSelector.add(0, new EmergeFromGroundGoal_Excavator(this, 500));
         this.goalSelector.add(1, new SwimGoal(this));
 
-
         //Returns to ground
         this.goalSelector.add(2, new ReturnToGroundGoal_Excavator(this));
 
-        this.goalSelector.add(3, new MeleeAttackGoal_Excavator(this, 1.2D, false, 3600));
+        this.goalSelector.add(3, new DevourerJumpAttack(this,120));
 
-        this.goalSelector.add(4, new WanderAroundGoal_Excavator(this, 0.75f, 20));
+        this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false, 3600));
 
-        this.goalSelector.add(5, new LookAroundGoal_Excavator(this));
+        this.goalSelector.add(5, new WanderAroundGoal_Excavator(this, 0.75f, 20));
+
+        this.goalSelector.add(6, new LookAroundGoal_Excavator(this));
 
         //Objectives
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
+    }
+
+    private static class DevourerJumpAttack extends Goal {
+
+        private final DevourerEntity devourer;
+        private final int jumpCooldown;
+
+        public DevourerJumpAttack(DevourerEntity devourer, int jumpCooldown) {
+            this.devourer=devourer;
+            this.jumpCooldown=jumpCooldown;
+        }
+
+        @Override
+        public boolean canStart() {
+            LivingEntity target = this.devourer.getTarget();
+
+            if (target != null) {
+                //5 square distance like 1.5 blocks approx
+                //I want 7.5 blocks approx
+                //So 7.5/1.5=5
+                return !this.devourer.cooldownBetweenJumps && this.devourer.isAttacking()
+                        && this.devourer.squaredDistanceTo(target) < 5;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public void tick() {
+            LivingEntity target = this.devourer.getTarget();
+
+            if(target!=null){
+                jumpAttack(target);
+            }
+        }
+
+        private void jumpAttack(LivingEntity target){
+            devourer.setJumping(true);
+            devourer.addVelocity(0f,0.5f,0f);
+            devourer.cooldownBetweenJumps=true;
+            devourer.jumpTicks=jumpCooldown;
+        }
+    }
+
+    private boolean activateParticles=false;
+    @Override
+    public void onLanding() {
+        if(isFalling()){
+            pushAndDamageEntities(1.5,2,1.5, 1.2);
+            setIsFalling(false);
+            activateParticles=true;
+        }
+        super.onLanding();
+    }
+
+    private void pushAndDamageEntities(double xExpansion, double yExpansion, double zExpansion, double knockbackStrength){
+        List<LivingEntity> listMobs= this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(xExpansion,yExpansion,zExpansion),
+                livingEntity -> !(livingEntity instanceof DevourerEntity));
+
+        for (LivingEntity entity : listMobs){
+            double d = this.getX() - entity.getX();
+            double e = this.getZ() - entity.getZ();
+            entity.takeKnockback(knockbackStrength,d,e);
+            if(entity.isBlocking() && entity instanceof PlayerEntity){
+                ((PlayerEntity) entity).disableShield(true);
+            }
+
+            if(entity instanceof ServerPlayerEntity && !((ServerPlayerEntity) entity).isCreative()){
+                ((ServerPlayerEntity) entity).networkHandler.send(new EntityVelocityUpdateS2CPacket(entity), null);
+            }
+
+            entity.damage(this.getDamageSources().mobAttack(this), 2);
+        }
+    }
+
+    private int counter=0;
+
+    private void spawnSmokeParticles(int counter){
+        Vec3d vec3d = this.getBoundingBox().getCenter();
+        while (counter < 20) {
+            double d = this.random.nextGaussian() * 0.2;
+            double e = this.random.nextGaussian() * 0.2;
+            double f = this.random.nextGaussian() * 0.2;
+            this.getWorld().addParticle(ParticleTypes.WHITE_SMOKE, vec3d.x, vec3d.y, vec3d.z, d, e, f);
+            ++counter;
+        }
+        activateParticles=false;
     }
 
     @Override
@@ -88,6 +186,7 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
+        this.dataTracker.startTracking(FALLING, Boolean.FALSE);
     }
 
     @Override
@@ -130,10 +229,34 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         super.readCustomDataFromNbt(nbt);
     }
 
+    public boolean cooldownBetweenJumps=false;
+    int jumpTicks;
+
+    private void tickJump(){
+        if(counter>0){
+            counter=0;
+        }
+
+        if (jumpTicks > 0) {
+            --jumpTicks;
+        } else {
+            cooldownBetweenJumps=false;
+        }
+    }
+
+
     @Override
     public void tick() {
         //Counter for particles
         this.tickExcavator(this);
+        //Tick for jumps
+        this.tickJump();
+
+        if(activateParticles){
+            spawnSmokeParticles(counter);
+
+        }
+
         super.tick();
     }
 
@@ -144,6 +267,10 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
                 List.of(Blocks.SAND),
                 this
         );
+
+        if(cooldownBetweenJumps && !this.isOnGround() && !this.isTouchingWater()){
+            setIsFalling(true);
+        }
 
 
         this.setInvisible(this.getInvisibleData());
@@ -208,6 +335,14 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         AnimationParticlesTicks=animationParticlesTicks;
     }
 
+    public void setIsFalling(boolean isFalling) {
+        this.dataTracker.set(FALLING, isFalling);
+    }
+
+    public boolean isFalling() {
+        return this.dataTracker.get(FALLING);
+    }
+
     @Override
     public boolean getInGroundDataTracker() {
         return this.dataTracker.get(InGROUND);
@@ -246,6 +381,11 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
     @Override
     public void setInvisibleData(boolean isInvisible) {
         this.dataTracker.set(INVISIBLE, isInvisible);
+    }
+
+    @Override
+    public boolean canHaveStatusEffect(StatusEffectInstance effect) {
+        return effect.getEffectType() != TCOTS_Effects.SAMUM_EFFECT && super.canHaveStatusEffect(effect);
     }
 
     @Override
