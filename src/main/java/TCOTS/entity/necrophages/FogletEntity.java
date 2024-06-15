@@ -304,9 +304,7 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
 
         private void meleeAttack(LivingEntity livingEntity){
             this.mob.getLookControl().lookAt(livingEntity, 30.0f, 30.0f);
-            double d =
-//                    this.mob.getSquaredDistanceToAttackPosOf(livingEntity);
-            this.mob.squaredDistanceTo(livingEntity);
+            double d = this.mob.squaredDistanceTo(livingEntity);
             this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);
             if ((this.pauseWhenMobIdle || this.mob.getVisibilityCache().canSee(livingEntity)) && this.updateCountdownTicks <= 0 && (this.targetX == 0.0 && this.targetY == 0.0 && this.targetZ == 0.0 || livingEntity.squaredDistanceTo(this.targetX, this.targetY, this.targetZ) >= 1.0 || this.mob.getRandom().nextFloat() < 0.05f)) {
                 this.targetX = livingEntity.getX();
@@ -332,8 +330,17 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
             if (squaredDistance <= d && this.cooldown <= 0) {
                 this.resetCooldown();
                 this.mob.swingHand(Hand.MAIN_HAND);
-                this.mob.tryAttack(target);
 
+                if(this.mob instanceof GeoEntity geo) {
+                    int randomAttack = this.mob.getRandom().nextBetween(0, 1);
+                    if (randomAttack == 0) {
+                        geo.triggerAnim("AttackController", "attack1");
+                    } else {
+                        geo.triggerAnim("AttackController", "attack2");
+                    }
+                }
+
+                this.mob.tryAttack(target);
 
                 ((FogletEntity)actor).setIsFog(false);
                 actor.setInvisible(false);
@@ -403,7 +410,9 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
 
         //Attack Controller
         controllers.add(
-                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationTwoAttacksPredicate(state,this.handSwinging,random))
+                new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
+                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
         );
 
         //Fog Controller
@@ -416,6 +425,11 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
                     return PlayState.CONTINUE;
                 })
         );
+    }
+
+    @Override
+    public int getNumberOfAttackAnimations() {
+        return 2;
     }
 
     List<FogletEntity> fogletList=new ArrayList<>();

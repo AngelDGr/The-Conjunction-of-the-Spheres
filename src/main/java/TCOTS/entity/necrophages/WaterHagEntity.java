@@ -295,7 +295,9 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
 
         //Attack Controller
         controllers.add(
-                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationTwoAttacksPredicate(state,this.handSwinging,random))
+                new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
+                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
         );
 
         //Mud ball Controller
@@ -313,6 +315,11 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         controllers.add(
                 new AnimationController<>(this, "EmergingController", 1, this::animationEmergingPredicate)
         );
+    }
+
+    @Override
+    public int getNumberOfAttackAnimations() {
+        return 2;
     }
 
     @Override

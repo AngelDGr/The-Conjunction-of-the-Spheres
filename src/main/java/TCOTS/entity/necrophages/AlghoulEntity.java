@@ -468,7 +468,9 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
 
         //Attack Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationTwoAttacksPredicate(state,this.handSwinging,random))
+                new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
+                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
         );
 
         //Lunge Controller

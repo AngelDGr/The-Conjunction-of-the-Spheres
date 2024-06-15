@@ -115,6 +115,8 @@ public class LungeAttackGoal extends Goal {
                 ((GeoEntity) lungeMob).triggerAnim("LungeController","lunge");
             }
 
+            lungeMob.setIsLunging(true);
+
 
             mob.setVelocity(mob.getVelocity().add(vec3D_lunge.x, 0.35, vec3D_lunge.z));
             this.mob.getLookControl().lookAt(target, 30.0F, 30.0F);

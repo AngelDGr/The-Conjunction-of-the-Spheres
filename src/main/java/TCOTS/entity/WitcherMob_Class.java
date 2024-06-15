@@ -92,6 +92,10 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
         }
     }
 
+    public int getNumberOfAttackAnimations(){
+        return 3;
+    }
+
     @Override
     public SoundCategory getSoundCategory() {
         return SoundCategory.HOSTILE;

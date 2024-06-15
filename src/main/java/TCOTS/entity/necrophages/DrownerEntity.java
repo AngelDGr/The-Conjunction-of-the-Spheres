@@ -3,6 +3,7 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
+import TCOTS.entity.misc.CommonControllers;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
@@ -74,8 +75,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     public static final RawAnimation RUNNING= RawAnimation.begin().thenLoop("move.running");
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
     public static final RawAnimation SWIMMING= RawAnimation.begin().thenLoop("move.swimming");
-    public static final RawAnimation ATTACK1 = RawAnimation.begin().thenPlay("attack.swing1");
-    public static final RawAnimation ATTACK2 = RawAnimation.begin().thenPlay("attack.swing2");
     public static final RawAnimation LUNGE = RawAnimation.begin().thenPlay("attack.lunge");
     public static final RawAnimation WATER_ATTACK1 = RawAnimation.begin().thenPlay("attack.waterswing1");
     public static final RawAnimation WATER_ATTACK2 = RawAnimation.begin().thenPlay("attack.waterswing2");
@@ -323,7 +322,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     }
 
     //To manage attacks in and outside water
-    private class Drowner_LandWaterAttackGoal extends MeleeAttackGoal {
+    private class Drowner_LandWaterAttackGoal extends MeleeAttackGoal_Animated {
         private final DrownerEntity drowner;
         private final int cooldownBetweenWaterAttacks;
         private final int ticksBeforeToGround;
@@ -381,6 +380,16 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
                 if (this.canAttack(target)) {
                     this.resetCooldown();
                     this.mob.swingHand(Hand.MAIN_HAND);
+
+                    //Triggers attack animation
+                    int randomAttack = this.mob.getRandom().nextBetween(0, 1);
+                    if (randomAttack == 0) {
+                        drowner.triggerAnim("AttackController", "waterAttack1");
+                    } else {
+                        drowner.triggerAnim("AttackController", "waterAttack2");
+                    }
+
+
                     //Makes the target go down on water
                     target.setVelocity(target.getVelocity().add(0.0, -0.3, 0.0));
                     this.mob.tryAttack(target);
@@ -579,7 +588,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f) //Amount of health that hurts you
-//                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 2.0f)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.27f);
     }
 
@@ -624,29 +632,11 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
 
         //Attack Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "AttackController", 1, state -> {
-                    state.getController().forceAnimationReset();
-                    // Random instance
-                    // Generates two random numbers
-                    if (this.handSwinging){
-                        int r = DrownerEntity.this.random.nextInt(2);
-                        if(this.getSwimmingDataTracker()){
-                            if (r == 1) {
-                                return state.setAndContinue(WATER_ATTACK1);
-                            } else {
-                                return state.setAndContinue(WATER_ATTACK2);
-                            }
-                        }
-                        else {
-                            if (r == 1) {
-                                return state.setAndContinue(ATTACK1);
-                            } else {
-                                return state.setAndContinue(ATTACK2);
-                            }
-                        }
-                    }
-                    return PlayState.CONTINUE;
-                })
+                new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
+                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
+                        .triggerableAnim("waterAttack1", WATER_ATTACK1)
+                        .triggerableAnim("waterAttack2", WATER_ATTACK2)
         );
 
         //Lunge Controller
@@ -661,6 +651,11 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
         controllerRegistrar.add(
                 new AnimationController<>(this, "EmergingController", 1, this::animationEmergingPredicate)
         );
+    }
+
+    @Override
+    public int getNumberOfAttackAnimations() {
+        return 2;
     }
 
     //Water creature things

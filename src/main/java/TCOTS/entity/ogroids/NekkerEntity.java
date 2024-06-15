@@ -42,6 +42,7 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> LUNGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -142,7 +143,10 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
         //Attack Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationThreeAttacksPredicate(state, this.handSwinging, random))
+                new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
+                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
+                        .triggerableAnim("attack3", CommonControllers.ATTACK3)
         );
 
         //Lunge Controller
@@ -162,7 +166,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
+        this.dataTracker.startTracking(LUNGING, Boolean.FALSE);
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);

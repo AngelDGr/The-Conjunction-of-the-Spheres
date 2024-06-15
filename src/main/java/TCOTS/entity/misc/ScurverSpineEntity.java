@@ -1,5 +1,6 @@
 package TCOTS.entity.misc;
 
+import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.potions.TCOTS_Effects;
 import net.minecraft.entity.Entity;
@@ -16,6 +17,10 @@ public class ScurverSpineEntity extends PersistentProjectileEntity {
 
     public ScurverSpineEntity(EntityType<? extends ScurverSpineEntity> entityType, World world) {
         super(entityType, world, DEFAULT_STACK);
+    }
+
+    public ScurverSpineEntity(World world, double x, double y, double z, ItemStack stack) {
+        super(TCOTS_Entities.SCURVER_SPINE, x, y, z, world, stack);
     }
 
     protected ScurverSpineEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world, ItemStack stack) {

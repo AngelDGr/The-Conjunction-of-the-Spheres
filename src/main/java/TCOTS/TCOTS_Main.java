@@ -3,11 +3,13 @@ package TCOTS;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.config.TCOTS_Config;
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.misc.ScurverSpineEntity;
+import TCOTS.entity.misc.WaterHag_MudBallEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
-import TCOTS.particles.TCOTS_Particles;
 import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.items.potions.recipes.AlchemyTableRecipesRegister;
+import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.world.TCOTS_Features;
 import TCOTS.world.TCOTS_PlacedFeature;
@@ -16,6 +18,13 @@ import TCOTS.world.village.TCOTS_VillageAdditions;
 import TCOTS.world.village.VillagerCustomTrades;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.Position;
+import net.minecraft.world.World;
 import software.bernie.geckolib.GeckoLib;
 
 public class TCOTS_Main implements ModInitializer {
@@ -58,6 +67,22 @@ public class TCOTS_Main implements ModInitializer {
 		DispenserBlock.registerBehavior(TCOTS_Items.KILLER_WHALE_SPLASH, TCOTS_Items.getSplashBehavior());
 		DispenserBlock.registerBehavior(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH, TCOTS_Items.getSplashBehavior());
 		DispenserBlock.registerBehavior(TCOTS_Items.SWALLOW_SPLASH, TCOTS_Items.getSplashBehavior());
+
+		DispenserBlock.registerBehavior(TCOTS_Items.WATER_HAG_MUD_BALL, new ProjectileDispenserBehavior(){
+			@Override
+			protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+				return Util.make(new WaterHag_MudBallEntity(world, position.getX(), position.getY(), position.getZ()), entity -> entity.setItem(stack));
+			}
+		});
+
+		DispenserBlock.registerBehavior(TCOTS_Items.SCURVER_SPINE, new ProjectileDispenserBehavior(){
+			@Override
+			protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+				ScurverSpineEntity scurverSpine = new ScurverSpineEntity(world, position.getX(), position.getY(), position.getZ(), stack.copyWithCount(1));
+				scurverSpine.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
+				return scurverSpine;
+			}
+		});
 	}
 
 

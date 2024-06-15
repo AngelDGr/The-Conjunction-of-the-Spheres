@@ -13,7 +13,12 @@ public class DevourerRenderer extends GeoEntityRenderer<DevourerEntity> {
     }
 
     @Override
+    public float getMotionAnimThreshold(DevourerEntity animatable) {
+        return 0.001f;
+    }
+    @Override
     public Identifier getTextureLocation(DevourerEntity animatable) {
         return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/devourer.png");
     }
+
 }

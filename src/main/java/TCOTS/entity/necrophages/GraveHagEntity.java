@@ -213,6 +213,16 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
             if (squaredDistance <= d && this.cooldown <= 0) {
                 this.resetCooldown();
                 this.graveHag.swingHand(Hand.MAIN_HAND);
+
+                //Triggers Animation
+                int randomAttack = this.graveHag.getRandom().nextBetween(0, 1);
+                if (randomAttack == 0) {
+                    graveHag.triggerAnim("AttackController", "attack1");
+                } else {
+                    graveHag.triggerAnim("AttackController", "attack2");
+                }
+
+
                 this.graveHag.tryAttack(target);
             }
         }
@@ -375,12 +385,19 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
 
         //Attack Controller
         controllers.add(
-                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationTwoAttacksPredicate(state,this.handSwinging,random))
+                new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
+                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
         );
 
         //TongueAttack Controller
         controllers.add(new AnimationController<>(this, "TongueAttack", 1, state -> PlayState.STOP)
                 .triggerableAnim("tongue", ATTACK_TONGUE));
+    }
+
+    @Override
+    public int getNumberOfAttackAnimations() {
+        return 2;
     }
 
     private void spawnGroundParticles() {

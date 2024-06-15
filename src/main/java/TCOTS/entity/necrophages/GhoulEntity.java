@@ -2,6 +2,7 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.goals.LungeAttackGoal;
+import TCOTS.entity.goals.MeleeAttackGoal_Animated;
 import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.entity.misc.CommonControllers;
 import TCOTS.items.potions.bombs.MoonDustBomb;
@@ -198,7 +199,7 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         }
     }
 
-    protected static class Ghoul_MeleeAttackGoal extends MeleeAttackGoal {
+    protected static class Ghoul_MeleeAttackGoal extends MeleeAttackGoal_Animated {
 
         public Ghoul_MeleeAttackGoal(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle) {
             super(mob, speed, pauseWhenMobIdle);
@@ -359,7 +360,9 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
 
         //Attack Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationTwoAttacksPredicate(state,this.handSwinging,random))
+                new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
+                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
         );
 
         //Lunge Controller
@@ -369,6 +372,11 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         controllerRegistrar.add(new AnimationController<>(this, "RegenController", 1, state -> PlayState.STOP)
                 .triggerableAnim("start_regen", START_REGEN)
         );
+    }
+
+    @Override
+    public int getNumberOfAttackAnimations() {
+        return 2;
     }
 
     boolean hasCooldownForRegen=false;

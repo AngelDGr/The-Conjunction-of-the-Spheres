@@ -37,4 +37,12 @@ public interface LungeMob {
                         .triggerableAnim("lunge", getLungeAnimation())
         );
     }
+
+    default boolean getIsLunging() {
+        return false;
+    }
+
+    default void setIsLunging(boolean wasLunging) {
+    }
+
 }

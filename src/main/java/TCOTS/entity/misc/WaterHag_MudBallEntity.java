@@ -27,6 +27,10 @@ public class WaterHag_MudBallEntity extends ThrownItemEntity {
         super(entityType, world);
     }
 
+    public WaterHag_MudBallEntity(World world, double x, double y, double z) {
+        super(TCOTS_Entities.WATER_HAG_MUD_BALL, x, y, z, world);
+    }
+
     public WaterHag_MudBallEntity(World world, LivingEntity owner, float damage) {
         super(TCOTS_Entities.WATER_HAG_MUD_BALL, owner, world);
         this.damage=damage;

@@ -52,7 +52,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
 
     public static final RawAnimation EXPLOSION = RawAnimation.begin().thenPlayAndHold("special.explosion");
 
-    protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> LUNGING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EXPLODING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> TRIGGER_EXPLOSION = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
@@ -156,6 +156,14 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         }
     }
 
+    @Override
+    public void onLanding() {
+        super.onLanding();
+        if(getIsLunging()){
+            setIsLunging(false);
+        }
+    }
+
     public int ReturnToGround_Ticks=20;
 
     public int getReturnToGround_Ticks() {
@@ -183,7 +191,10 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
 
         //Attack Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationThreeAttacksPredicate(state, this.handSwinging,random))
+                new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
+                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
+                        .triggerableAnim("attack3", CommonControllers.ATTACK3)
         );
 
         //Lunge Controller
@@ -217,7 +228,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
+        this.dataTracker.startTracking(LUNGING, Boolean.FALSE);
         this.dataTracker.startTracking(EXPLODING, Boolean.FALSE);
         this.dataTracker.startTracking(TRIGGER_EXPLOSION, Boolean.FALSE);
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
@@ -229,6 +240,16 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     public final boolean getIsExploding() {
         return this.dataTracker.get(EXPLODING);
     }
+
+    @Override
+    public boolean getIsLunging() {
+        return this.dataTracker.get(LUNGING);
+    }
+
+    public final void setIsLunging(boolean wasLunging) {
+        this.dataTracker.set(LUNGING, wasLunging);
+    }
+
     public final void setIsExploding(boolean wasExploding) {
         this.dataTracker.set(EXPLODING, wasExploding);
     }

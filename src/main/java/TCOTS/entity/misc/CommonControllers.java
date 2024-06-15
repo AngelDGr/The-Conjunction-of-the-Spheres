@@ -1,6 +1,8 @@
 package TCOTS.entity.misc;
 
+import TCOTS.entity.necrophages.DevourerEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.AnimationState;
@@ -70,6 +72,39 @@ public class CommonControllers {
             }
         }
     }
+
+    public static <T extends GeoAnimatable> PlayState idleWalkRun(AnimationState<T> state, MobEntity entity, RawAnimation RUNNING, RawAnimation WALKING, RawAnimation IDLE,
+                                                                  float runningSpeed, float walkingSpeed){
+        //If it's aggressive and it is moving
+        if (entity.isAttacking() && state.isMoving()) {
+            state.setControllerSpeed(runningSpeed);
+            return state.setAndContinue(RUNNING);
+        }
+        //It's not attacking and/or it's no moving
+        else {
+            //If it's attacking but NO moving
+            if (entity.isAttacking()) {
+                return state.setAndContinue(RUNNING);
+            } else {
+                //If it's just moving
+                if (state.isMoving()) {
+                    state.setControllerSpeed(walkingSpeed);
+                    return state.setAndContinue(WALKING);
+                }
+                //Anything else
+                else {
+                    state.setControllerSpeed(walkingSpeed);
+                    return state.setAndContinue(IDLE);
+                }
+            }
+        }
+    }
+
+
+    public static float getLimbSwing(AnimationState<?> animationState, float min, float max, float speed, float increase, boolean negative){
+        return (float) MathHelper.clamp((negative? -1: 1)*((Math.sin(animationState.getLimbSwing()*speed)*(animationState.getLimbSwingAmount()*increase))), min, max);
+    }
+
 
 
 }

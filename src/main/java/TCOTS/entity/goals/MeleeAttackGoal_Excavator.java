@@ -2,10 +2,9 @@ package TCOTS.entity.goals;
 
 import TCOTS.entity.interfaces.ExcavatorMob;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.mob.PathAwareEntity;
 
-public class MeleeAttackGoal_Excavator extends MeleeAttackGoal {
+public class MeleeAttackGoal_Excavator extends MeleeAttackGoal_Animated {
 
     private final ExcavatorMob excavatorMob;
     private final int ticksBeforeToGround;

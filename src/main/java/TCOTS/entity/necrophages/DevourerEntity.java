@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -37,6 +38,8 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
 
@@ -44,8 +47,11 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
 
     //TODO: Fix the jump particles
     //TODO: Finish bestiary
+    //TODO: Add jumping animation
     //xTODO: Add natural spawn
     //xTODO: Add drop
+
+    public static final RawAnimation JUMP = RawAnimation.begin().thenPlay("special.jumping");
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -88,6 +94,7 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         this.goalSelector.add(6, new LookAroundGoal_Excavator(this));
 
         //Objectives
+        this.targetSelector.add(2, new RevengeGoal(this, DevourerEntity.class));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
@@ -128,6 +135,7 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         }
 
         private void jumpAttack(LivingEntity target){
+            devourer.triggerAnim("JumpController","jump");
             devourer.setJumping(true);
             devourer.addVelocity(0f,0.5f,0f);
             devourer.cooldownBetweenJumps=true;
@@ -199,7 +207,10 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
 
         //Attack Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "AttackController", 1, state -> CommonControllers.animationThreeAttacksPredicate(state, this.handSwinging, random))
+                new AnimationController<>(this, "AttackController", 2, state -> PlayState.STOP)
+                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
+                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
+                        .triggerableAnim("attack3", CommonControllers.ATTACK3)
         );
 
         //DiggingIn Controller
@@ -210,6 +221,11 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         //DiggingOut Controller
         controllerRegistrar.add(
                 new AnimationController<>(this, "EmergingController", 1, this::animationEmergingPredicate)
+        );
+
+        controllerRegistrar.add(
+                new AnimationController<>(this, "JumpController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("jump", JUMP)
         );
     }
 
