@@ -3,7 +3,7 @@ package TCOTS.entity.ogroids;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
-import TCOTS.entity.misc.CommonControllers;
+import TCOTS.utils.GeoControllersUtil;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -127,7 +127,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 14.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5f)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.26f)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.28f)
 
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.2f)
                 .add(EntityAttributes.GENERIC_ARMOR, 2f);
@@ -137,20 +137,22 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         //Walk/Idle Controller
-        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5,
-                state -> CommonControllers.idleWalkRun(state, this, RUNNING, WALKING, IDLE)
-        ));
+        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, GeoControllersUtil::idleWalkRunController)
+        );
 
         //Attack Controller
         controllerRegistrar.add(
                 new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
-                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
-                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
-                        .triggerableAnim("attack3", CommonControllers.ATTACK3)
+                        .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
+                        .triggerableAnim("attack2", GeoControllersUtil.ATTACK2)
+                        .triggerableAnim("attack3", GeoControllersUtil.ATTACK3)
         );
 
-        //Lunge Controller
-        lungeAnimationController(this, controllerRegistrar);
+        //Lunge Controller // With 0 tick transition, so it can spin
+        controllerRegistrar.add(
+                new AnimationController<>(this, "LungeController", 0, state -> PlayState.STOP)
+                        .triggerableAnim("lunge", getLungeAnimation())
+        );
 
         //Digging Controller
         controllerRegistrar.add(
@@ -204,6 +206,16 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
             // Normal hit-box otherwise
             return super.calculateBoundingBox();
         }
+    }
+
+    @Override
+    public boolean getIsLunging() {
+        return this.dataTracker.get(LUNGING);
+    }
+
+    @Override
+    public final void setIsLunging(boolean wasLunging) {
+        this.dataTracker.set(LUNGING, wasLunging);
     }
 
     public final boolean getIsEmerging() {
@@ -330,6 +342,14 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
             return HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
         }
         return false;
+    }
+
+    @Override
+    public void onLanding() {
+        super.onLanding();
+        if(getIsLunging()){
+            setIsLunging(false);
+        }
     }
 
     @Override

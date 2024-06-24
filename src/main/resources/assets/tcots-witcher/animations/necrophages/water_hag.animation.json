@@ -50,26 +50,6 @@
 						"vector": ["math.sin(query.anim_time*180)*2", 0, 0]
 					}
 				},
-				"left_arm": {
-					"rotation": {
-						"vector": ["-(math.cos(query.anim_time*360)*25)", 0, 0]
-					}
-				},
-				"right_arm": {
-					"rotation": {
-						"vector": ["(math.cos(query.anim_time*360)*20)", 0, 0]
-					}
-				},
-				"right_leg": {
-					"rotation": {
-						"vector": ["(math.cos(query.anim_time*360)*25)", 0, 0]
-					}
-				},
-				"left_leg": {
-					"rotation": {
-						"vector": ["-(math.cos(query.anim_time*360)*25)", 0, 0]
-					}
-				},
 				"UpperBody_head": {
 					"rotation": {
 						"vector": [0, 17.5, 0]

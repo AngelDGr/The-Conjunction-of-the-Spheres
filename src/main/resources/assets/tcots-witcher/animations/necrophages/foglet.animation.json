@@ -60,34 +60,6 @@
 					"rotation": {
 						"vector": ["(math.cos(query.anim_time*360)*2.5)", 0, 0]
 					}
-				},
-				"left_arm": {
-					"rotation": {
-						"0.0": {
-							"vector": ["-(math.cos(query.anim_time*360)*20)", 0, 0]
-						},
-						"0.25": {
-							"vector": ["-(math.cos(query.anim_time*360)*8)", 0, 0]
-						},
-						"0.75": {
-							"vector": ["-(math.cos(query.anim_time*360)*20)", 0, 0]
-						}
-					}
-				},
-				"right_arm": {
-					"rotation": {
-						"vector": ["math.cos(query.anim_time*360)*20", 0, 0]
-					}
-				},
-				"right_leg": {
-					"rotation": {
-						"vector": ["-(math.cos(query.anim_time*360)*25)", 0, 0]
-					}
-				},
-				"left_leg": {
-					"rotation": {
-						"vector": ["math.cos(query.anim_time*360)*25", 0, 0]
-					}
 				}
 			}
 		},

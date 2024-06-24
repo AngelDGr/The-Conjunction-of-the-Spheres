@@ -22,7 +22,11 @@ repositories {
     }
     maven {
         name = 'GeckoLib'
-        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' 
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+		content {
+			includeGroupByRegex("software\\.bernie.*")
+			includeGroup("com.eliotlash.mclib")
+		}
     }
 	maven {
 		name = 'Lavender'
@@ -82,7 +86,9 @@ dependencies {
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
 	//GeckoLib Dependency
-	modImplementation "software.bernie.geckolib:geckolib-fabric-1.20.4:${project.geckolib_version}"
+	modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${project.geckolib_version}"
+	implementation("com.eliotlash.mclib:mclib:20")
+
 
 	//OwO-Lib Dependency
 	modImplementation "io.wispforest:owo-lib:${project.owo_version}"

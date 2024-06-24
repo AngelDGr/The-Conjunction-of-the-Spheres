@@ -3,7 +3,7 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
-import TCOTS.entity.misc.CommonControllers;
+import TCOTS.utils.GeoControllersUtil;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockState;
@@ -135,6 +135,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         @Override
         public void start() {
             this.rotfiend.playSound(this.rotfiend.getExplosionSound(), 1.0F, 1.0F);
+            this.rotfiend.triggerAnim("ExplosionController", "explosion");
             this.rotfiend.setIsExploding(true);
             rotfiend.getNavigation().stop();
             rotfiend.getLookControl().lookAt(0, 0, 0);
@@ -178,23 +179,21 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3.0f) //Amount of health that hurts you
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.28f);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.27f);
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         //Walk/Idle Controller
-        //Walk/Idle Controller
-        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5,
-                state -> CommonControllers.idleWalkRun(state, this, RUNNING, WALKING, IDLE)
-        ));
+        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, GeoControllersUtil::idleWalkRunController)
+        );
 
         //Attack Controller
         controllerRegistrar.add(
                 new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
-                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
-                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
-                        .triggerableAnim("attack3", CommonControllers.ATTACK3)
+                        .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
+                        .triggerableAnim("attack2", GeoControllersUtil.ATTACK2)
+                        .triggerableAnim("attack3", GeoControllersUtil.ATTACK3)
         );
 
         //Lunge Controller
@@ -202,15 +201,8 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
 
         //Explosion Controller
         controllerRegistrar.add(
-                new AnimationController<>(this, "ExplosionController", 1, state -> {
-                    if (this.getIsExploding()) {
-                        state.setAnimation(EXPLOSION);
-                        return PlayState.CONTINUE;
-                    }
-
-                    state.getController().forceAnimationReset();
-                    return PlayState.CONTINUE;
-                })
+                new AnimationController<>(this, "ExplosionController", 1, state -> PlayState.CONTINUE)
+                        .triggerableAnim("explosion", EXPLOSION)
         );
 
         //DiggingIn Controller
@@ -237,17 +229,19 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     }
 
 
-    public final boolean getIsExploding() {
-        return this.dataTracker.get(EXPLODING);
-    }
 
     @Override
     public boolean getIsLunging() {
         return this.dataTracker.get(LUNGING);
     }
 
+    @Override
     public final void setIsLunging(boolean wasLunging) {
         this.dataTracker.set(LUNGING, wasLunging);
+    }
+
+    public final boolean getIsExploding() {
+        return this.dataTracker.get(EXPLODING);
     }
 
     public final void setIsExploding(boolean wasExploding) {
@@ -370,6 +364,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         if(!this.isOnFire()) {
             if (ticksSinceDeath == 60) {
                 this.playSound(this.getExplosionSound(), 1.0F, 1.0F);
+                this.triggerAnim("ExplosionController","explosion");
                 this.setIsExploding(true);
                 this.getNavigation().stop();
                 this.getLookControl().lookAt(0, 0, 0);
@@ -395,7 +390,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     @Override
     protected SoundEvent getAmbientSound() {
         if (!this.getIsExploding() && !this.getInGroundDataTracker()) {
-            return TCOTS_Sounds.ROTFIEND_IDLE;
+            return getIdleSound();
         } else {
             return null;
         }
@@ -411,8 +406,17 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         if (!this.isOnFire()) {
             return null;
         } else {
-            return TCOTS_Sounds.ROTFIEND_DEATH;
+            return getDeathSound(this);
         }
+    }
+
+    protected SoundEvent getDeathSound(RotfiendEntity rotfiend) {
+        return TCOTS_Sounds.ROTFIEND_DEATH;
+    }
+
+
+    protected SoundEvent getIdleSound() {
+        return TCOTS_Sounds.ROTFIEND_IDLE;
     }
 
     @Override

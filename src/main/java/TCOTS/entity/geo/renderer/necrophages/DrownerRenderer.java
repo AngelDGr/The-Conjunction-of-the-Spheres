@@ -17,4 +17,6 @@ public class DrownerRenderer extends GeoEntityRenderer<DrownerEntity> {
         return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner.png");
     }
 
+
+
 }

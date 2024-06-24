@@ -31,8 +31,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     @Inject(method = "trySleep", at = @At("HEAD"), cancellable = true)
     public void injectWitcherMobsDangerous(BlockPos pos, CallbackInfoReturnable<Either<PlayerEntity.SleepFailureReason, Unit>> cir){
         if (!this.isCreative()) {
-//            double d = 8.0;
-//            double e = 5.0;
             Vec3d vec3d = Vec3d.ofBottomCenter(pos);
             List<WitcherMob_Class> list = this.getWorld().getEntitiesByClass(WitcherMob_Class.class, new Box(vec3d.getX() - 8.0, vec3d.getY() - 5.0, vec3d.getZ() - 8.0, vec3d.getX() + 8.0, vec3d.getY() + 5.0, vec3d.getZ() + 8.0), entity -> entity.isAngryAt(this));
             if (!list.isEmpty()) {

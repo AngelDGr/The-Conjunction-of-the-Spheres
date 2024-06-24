@@ -20,9 +20,4 @@ public class DevourerModel extends BipedGeoModelBase<DevourerEntity> {
     public Identifier getAnimationResource(DevourerEntity animatable) {
         return new Identifier(TCOTS_Main.MOD_ID, "animations/necrophages/devourer.animation.json");
     }
-
-    @Override
-    public void applyMolangQueries(DevourerEntity animatable, double animTime) {
-        super.applyMolangQueries(animatable, animTime);
-    }
 }

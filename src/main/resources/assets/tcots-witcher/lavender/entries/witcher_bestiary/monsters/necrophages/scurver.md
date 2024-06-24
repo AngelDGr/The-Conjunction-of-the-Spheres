@@ -42,7 +42,7 @@ They are basically a stronger version of rotfiends.
 
 
 Their main difference it's the spines that grows across all its body. If one of these spines hits you
-it's going to do a lot of damage, and it's going to make you bleed. so make sure to use a shield when this happens to protect 
+it's going to do a lot of damage, and it's going to make you bleed, so make sure to use a shield when this happens to protect 
 yourself from the resulting explosion (or get far enough away quickly).
 
 ;;;;;

@@ -3,7 +3,7 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
-import TCOTS.entity.misc.CommonControllers;
+import TCOTS.utils.GeoControllersUtil;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
@@ -70,10 +70,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     protected final SwimNavigation waterNavigation;
     protected final MobNavigation landNavigation;
 
-    public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation WATER_IDLE = RawAnimation.begin().thenLoop("idle.water");
-    public static final RawAnimation RUNNING= RawAnimation.begin().thenLoop("move.running");
-    public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
     public static final RawAnimation SWIMMING= RawAnimation.begin().thenLoop("move.swimming");
     public static final RawAnimation LUNGE = RawAnimation.begin().thenPlay("attack.lunge");
     public static final RawAnimation WATER_ATTACK1 = RawAnimation.begin().thenPlay("attack.waterswing1");
@@ -627,14 +624,14 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
                                 }
                             }
                     }
-                }
+        }
         ));
 
         //Attack Controller
         controllerRegistrar.add(
                 new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
-                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
-                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
+                        .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
+                        .triggerableAnim("attack2", GeoControllersUtil.ATTACK2)
                         .triggerableAnim("waterAttack1", WATER_ATTACK1)
                         .triggerableAnim("waterAttack2", WATER_ATTACK2)
         );

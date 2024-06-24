@@ -1,6 +1,7 @@
 package TCOTS.entity.geo.model.necrophages;
 
 import TCOTS.TCOTS_Main;
+import TCOTS.entity.geo.model.BipedGeoModelBase;
 import TCOTS.entity.necrophages.FogletEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
@@ -8,10 +9,9 @@ import net.minecraft.util.math.MathHelper;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
-public class FogletModel extends GeoModel<FogletEntity> {
+public class FogletModel extends BipedGeoModelBase<FogletEntity> {
     @Override
     public Identifier getModelResource(FogletEntity animatable) {
         return new Identifier(TCOTS_Main.MOD_ID, "geo/necrophages/foglet.geo.json");
@@ -33,7 +33,23 @@ public class FogletModel extends GeoModel<FogletEntity> {
     }
 
     @Override
+    protected boolean hasNormalHead() {
+        return false;
+    }
+
+    @Override
+    protected float getArmsAmount() {
+        return 0.8f;
+    }
+
+    @Override
+    protected float getLegsAmount() {
+        return 1.0f;
+    }
+
+    @Override
     public void setCustomAnimations(FogletEntity entity, long instanceId, AnimationState<FogletEntity> animationState) {
+        super.setCustomAnimations(entity,instanceId,animationState);
 
         CoreGeoBone head = getAnimationProcessor().getBone("head");
         if (head != null) {
@@ -47,5 +63,6 @@ public class FogletModel extends GeoModel<FogletEntity> {
                 head.setRotX((entityData.headPitch() * MathHelper.RADIANS_PER_DEGREE));
             }
         }
+
     }
 }

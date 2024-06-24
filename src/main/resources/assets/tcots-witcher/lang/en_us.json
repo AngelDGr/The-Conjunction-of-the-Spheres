@@ -463,7 +463,7 @@
 
 
     "text.config.tcots_config.title": "TCOTS Config",
-    "text.config.tcots_config.category.hud": "HUD Options",
+    "text.config.tcots_config.category.hud": "Toxicity - HUD Options",
     "text.config.tcots_config.option.hud.Hud_Y": "Y Offset",
     "text.config.tcots_config.option.hud.Hud_X": "X Offset",
     "text.config.tcots_config.option.hud.anchor": "Anchor",

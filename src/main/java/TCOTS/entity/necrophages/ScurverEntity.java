@@ -26,7 +26,7 @@ public class ScurverEntity extends RotfiendEntity{
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f) //Amount of health that hurts you
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.28f);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.27f);
     }
 
 
@@ -66,12 +66,8 @@ public class ScurverEntity extends RotfiendEntity{
 
     //Sounds
     @Override
-    protected SoundEvent getAmbientSound() {
-        if (!this.getIsExploding() && !this.getInGroundDataTracker()) {
-            return TCOTS_Sounds.SCURVER_IDLE;
-        } else {
-            return null;
-        }
+    protected SoundEvent getIdleSound() {
+        return TCOTS_Sounds.SCURVER_IDLE;
     }
 
     @Override
@@ -80,12 +76,8 @@ public class ScurverEntity extends RotfiendEntity{
     }
 
     @Override
-    protected SoundEvent getDeathSound() {
-        if (!this.isOnFire()) {
-            return null;
-        } else {
-            return TCOTS_Sounds.SCURVER_DEATH;
-        }
+    protected SoundEvent getDeathSound(RotfiendEntity rotfiend) {
+        return TCOTS_Sounds.SCURVER_DEATH;
     }
 
     @Override

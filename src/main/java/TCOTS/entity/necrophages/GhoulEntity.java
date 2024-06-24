@@ -4,7 +4,7 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.goals.LungeAttackGoal;
 import TCOTS.entity.goals.MeleeAttackGoal_Animated;
 import TCOTS.entity.interfaces.LungeMob;
-import TCOTS.entity.misc.CommonControllers;
+import TCOTS.utils.GeoControllersUtil;
 import TCOTS.items.potions.bombs.MoonDustBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.*;
@@ -58,10 +58,6 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
     }
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-
-    public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
-    public static final RawAnimation RUNNING = RawAnimation.begin().thenLoop("move.running");
-    public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
     public static final RawAnimation START_REGEN = RawAnimation.begin().thenPlay("special.regen");
 
     protected static final TrackedData<Boolean> LUGGING = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -330,39 +326,14 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         //Walk/Idle Controller
-        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk/Run", 5, state -> {
-            //If it's aggressive and it is moving
-            if (this.isAttacking() && state.isMoving()) {
-                state.setControllerSpeed(1.5f);
-                return state.setAndContinue(RUNNING);
-            }
-            //It's not attacking and/or it's no moving
-            else {
-                //If it's attacking but NO moving
-                if (isAttacking()) {
-                    state.setControllerSpeed(1.5f);
-                    return state.setAndContinue(RUNNING);
-                } else {
-                    //If it's just moving
-                    if (state.isMoving()) {
-                        state.setControllerSpeed(1f);
-                        return state.setAndContinue(WALKING);
-                    }
-                    //Anything else
-                    else {
-                        state.setControllerSpeed(1f);
-                        return state.setAndContinue(IDLE);
-                    }
+        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, GeoControllersUtil::idleWalkRunController));
 
-                }
-            }
-        }));
 
         //Attack Controller
         controllerRegistrar.add(
                 new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
-                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
-                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
+                        .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
+                        .triggerableAnim("attack2", GeoControllersUtil.ATTACK2)
         );
 
         //Lunge Controller

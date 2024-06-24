@@ -6,17 +6,11 @@ import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.world.World;
-import software.bernie.geckolib.core.animation.RawAnimation;
 
 public class Ogroid_Base extends WitcherMob_Class {
     protected Ogroid_Base(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
     }
-
-
-    public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
-    public static final RawAnimation RUNNING = RawAnimation.begin().thenLoop("move.running");
-    public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
     @Override
     public EntityGroup getGroup() {
         return TCOTS_Entities.OGROIDS;

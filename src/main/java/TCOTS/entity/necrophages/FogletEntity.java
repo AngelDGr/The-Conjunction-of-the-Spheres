@@ -1,7 +1,7 @@
 package TCOTS.entity.necrophages;
 
 import TCOTS.entity.TCOTS_Entities;
-import TCOTS.entity.misc.CommonControllers;
+import TCOTS.utils.GeoControllersUtil;
 import TCOTS.entity.misc.FoglingEntity;
 import TCOTS.items.potions.bombs.MoonDustBomb;
 import TCOTS.particles.TCOTS_Particles;
@@ -411,8 +411,8 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
         //Attack Controller
         controllers.add(
                 new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
-                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
-                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
+                        .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
+                        .triggerableAnim("attack2", GeoControllersUtil.ATTACK2)
         );
 
         //Fog Controller

@@ -2,7 +2,7 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
-import TCOTS.entity.misc.CommonControllers;
+import TCOTS.utils.GeoControllersUtil;
 import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.Blocks;
@@ -201,16 +201,15 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
         //Walk/Idle Controller
-        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5,
-                state -> CommonControllers.idleWalkRun(state, this, RUNNING, WALKING, IDLE)
-        ));
+        controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, GeoControllersUtil::idleWalkRunController)
+        );
 
         //Attack Controller
         controllerRegistrar.add(
                 new AnimationController<>(this, "AttackController", 2, state -> PlayState.STOP)
-                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
-                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
-                        .triggerableAnim("attack3", CommonControllers.ATTACK3)
+                        .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
+                        .triggerableAnim("attack2", GeoControllersUtil.ATTACK2)
+                        .triggerableAnim("attack3", GeoControllersUtil.ATTACK3)
         );
 
         //DiggingIn Controller

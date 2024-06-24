@@ -2,7 +2,7 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
-import TCOTS.entity.misc.CommonControllers;
+import TCOTS.utils.GeoControllersUtil;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.entity.misc.WaterHag_MudBallEntity;
 import TCOTS.sounds.TCOTS_Sounds;
@@ -296,8 +296,8 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         //Attack Controller
         controllers.add(
                 new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
-                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
-                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
+                        .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
+                        .triggerableAnim("attack2", GeoControllersUtil.ATTACK2)
         );
 
         //Mud ball Controller

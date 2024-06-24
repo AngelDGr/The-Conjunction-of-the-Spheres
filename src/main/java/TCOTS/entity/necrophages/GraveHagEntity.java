@@ -1,6 +1,6 @@
 package TCOTS.entity.necrophages;
 
-import TCOTS.entity.misc.CommonControllers;
+import TCOTS.utils.GeoControllersUtil;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.BlockRenderType;
@@ -45,13 +45,11 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
     //xTODO: Add tongue attack
     //xTODO: Add running attack
     //xTODO: Add drops
-        //xTODO: Add mutagen and decoction
+    //xTODO: Add mutagen and decoction
     //xTODO: Add spawn
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
-    public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
     public static final RawAnimation ATTACK_TONGUE = RawAnimation.begin().thenPlay("attack.tongue2");
     public static final RawAnimation ATTACK_RUN = RawAnimation.begin().thenPlay("attack.run");
 
@@ -276,15 +274,29 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         }
         boolean runTriggered=false;
 
+        private boolean heightBoolean(){
+            return heightBoolean(1.5f);
+        }
+
+        private boolean heightBoolean(float distance){
+            return (graveHag.getTarget()!=null && (graveHag.getTarget().getY() - (graveHag.getY()) <= distance));
+        }
+
         private void running_attack(double d){
-            if((!graveHag.cooldownRunningAttack) && d > 40 && !runTriggered){
+            if((!graveHag.cooldownRunningAttack) && d > 40 && !runTriggered
+                    && heightBoolean()
+            )
+            {
                 graveHag.setIsRunning(true);
                 speedMultiplierBase=speedMultiplier;
                 graveHag.playSound(TCOTS_Sounds.GRAVE_HAG_RUN, 1f, 1);
                 runTriggered=true;
             }
 
-            if(runTriggered && d < 8){
+            if(runTriggered && (d < 8
+                    || !heightBoolean(4)
+            ))
+            {
                 graveHag.cooldownRunningAttack = true;
                 graveHag.runningAttackCooldownTicks = timeBetweenRunningAttacks;
                 speedMultiplierBase = 1;
@@ -303,8 +315,6 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         protected void resetCooldown() {
             this.cooldown = this.getTickCount(20);
         }
-
-
 
         protected double getSquaredMaxAttackDistance(LivingEntity entity) {
             return this.graveHag.getWidth() * 2.0f * (this.graveHag.getWidth() * 2.0f) + entity.getWidth();
@@ -359,35 +369,33 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
     }
 
     @Override
+    public int getMaxLookPitchChange() {
+        return this.getIsRunning()? 1: 40;
+    }
+
+    @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         //Walk/Idle Controller
-        controllers.add(new AnimationController<>(this, "Idle/Walk/Run", 5, state -> {
+        controllers.add(new AnimationController<>(this, "Idle/Walk/Run", 1, state -> {
             //If it's running
-            if(this.isAttacking() && this.getIsRunning()){
-             state.setControllerSpeed(2f);
-             return state.setAndContinue(ATTACK_RUN);
+            if(this.getIsRunning()){
+                return state.setAndContinue(ATTACK_RUN);
             }
             //If it's moving
-            else if (state.isMoving() && this.isAttacking()) {
-                state.setControllerSpeed(0.8f);
-                return state.setAndContinue(WALKING);
-            } else if (state.isMoving()) {
-                state.setControllerSpeed(0.5f);
+            else if (state.isMoving()) {
                 return state.setAndContinue(WALKING);
             }
             //Anything else
             else {
-                state.setControllerSpeed(0.8f);
                 return state.setAndContinue(IDLE);
             }
-
         }));
 
         //Attack Controller
         controllers.add(
                 new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
-                        .triggerableAnim("attack1", CommonControllers.ATTACK1)
-                        .triggerableAnim("attack2", CommonControllers.ATTACK2)
+                        .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
+                        .triggerableAnim("attack2", GeoControllersUtil.ATTACK2)
         );
 
         //TongueAttack Controller
@@ -447,8 +455,6 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
         } else {
             GraveHagEntity.this.cooldownRunningAttack = false;
         }
-
-
 
         super.tick();
     }

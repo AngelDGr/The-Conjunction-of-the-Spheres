@@ -15,6 +15,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import software.bernie.geckolib.core.animation.RawAnimation;
 
 
 @SuppressWarnings({"deprecation", "unused"})
@@ -23,6 +24,10 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
         super(entityType, world);
         this.experiencePoints = 5;
     }
+
+    public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
+    public static final RawAnimation RUNNING = RawAnimation.begin().thenLoop("move.running");
+    public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
 
     @Override
     public void tickMovement() {
@@ -36,7 +41,6 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
         if (f > 0.5F) {
             this.despawnCounter += 2;
         }
-
     }
 
     public boolean isAngryAt(PlayerEntity player) {
@@ -59,7 +63,6 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
         }
         return super.tryAttack(target);
     }
-
 
     protected SoundEvent getAttackSound(){
         return null;
