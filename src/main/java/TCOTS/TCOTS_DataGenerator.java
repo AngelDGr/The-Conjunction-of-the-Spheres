@@ -34,6 +34,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.PointOfInterestTypeTags;
 import net.minecraft.util.Identifier;
@@ -405,6 +406,19 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .add(Blocks.NETHER_PORTAL)
                     .add(Blocks.END_GATEWAY)
                     .add(Blocks.SOUL_FIRE);
+
+            this.getOrCreateTagBuilder(TCOTS_Blocks.NEGATES_DEVOURER_JUMP)
+                    .add(Blocks.HAY_BLOCK)
+                    .add(Blocks.MOSS_BLOCK)
+                    .add(Blocks.COBWEB)
+                    .add(Blocks.SCULK)
+                    .add(Blocks.SLIME_BLOCK)
+                    .add(Blocks.HONEY_BLOCK)
+
+                    .addOptionalTag(BlockTags.BEDS)
+                    .addOptionalTag(BlockTags.WOOL)
+                    .addOptionalTag(BlockTags.LEAVES)
+                    .addOptionalTag(BlockTags.WART_BLOCKS);
         }
     }
 

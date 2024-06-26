@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:hay_block",
+    "minecraft:moss_block",
+    "minecraft:cobweb",
+    "minecraft:sculk",
+    "minecraft:slime_block",
+    "minecraft:honey_block",
+    {
+      "id": "#minecraft:beds",
+      "required": false
+    },
+    {
+      "id": "#minecraft:wool",
+      "required": false
+    },
+    {
+      "id": "#minecraft:leaves",
+      "required": false
+    },
+    {
+      "id": "#minecraft:wart_blocks",
+      "required": false
+    }
+  ]
+}

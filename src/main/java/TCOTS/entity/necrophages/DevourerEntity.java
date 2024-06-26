@@ -1,11 +1,13 @@
 package TCOTS.entity.necrophages;
 
+import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
-import TCOTS.utils.GeoControllersUtil;
 import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -24,14 +26,16 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.vehicle.VehicleEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -45,11 +49,14 @@ import java.util.List;
 
 public class DevourerEntity extends Necrophage_Base implements GeoEntity, ExcavatorMob {
 
-    //TODO: Fix the jump particles
-    //TODO: Finish bestiary
-    //TODO: Add jumping animation
+    //xTODO: Finish bestiary
+    //xTODO: Make the water cancel the jump
+    //xTODO: Fix the jump particles
+    //xTODO: Add jumping animation
     //xTODO: Add natural spawn
     //xTODO: Add drop
+
+    private static final byte FALLING_PARTICLES = 42;
 
     public static final RawAnimation JUMP = RawAnimation.begin().thenPlay("special.jumping");
 
@@ -58,8 +65,9 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    protected static final TrackedData<Boolean> FALLING = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
+
+    protected static final TrackedData<Boolean> FALLING = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     public DevourerEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
@@ -85,17 +93,17 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         //Returns to ground
         this.goalSelector.add(2, new ReturnToGroundGoal_Excavator(this));
 
-        this.goalSelector.add(3, new DevourerJumpAttack(this,120));
+        this.goalSelector.add(3, new DevourerJumpAttack(this,160));
 
-        this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false, 3600));
+        this.goalSelector.add(4, new Devourer_MeleeAttackGoal(this, 1.2D, false, 3600));
 
         this.goalSelector.add(5, new WanderAroundGoal_Excavator(this, 0.75f, 20));
 
         this.goalSelector.add(6, new LookAroundGoal_Excavator(this));
 
         //Objectives
-        this.targetSelector.add(2, new RevengeGoal(this, DevourerEntity.class));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(1, new RevengeGoal(this, DevourerEntity.class));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
@@ -118,7 +126,12 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
                 //5 square distance like 1.5 blocks approx
                 //I want 7.5 blocks approx
                 //So 7.5/1.5=5
-                return !this.devourer.cooldownBetweenJumps && this.devourer.isAttacking()
+                return !this.devourer.cooldownBetweenJumps
+                        && this.devourer.isAttacking()
+                        && !this.devourer.isInFluid()
+                        && !this.devourer.hasVehicle()
+                        && !this.devourer.getWorld().getBlockState(this.devourer.getBlockPos()).isOf(Blocks.HONEY_BLOCK)
+                        && !this.devourer.getWorld().getBlockState(this.devourer.getBlockPos()).isOf(Blocks.COBWEB)
                         && this.devourer.squaredDistanceTo(target) < 5;
             } else {
                 return false;
@@ -130,62 +143,117 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
             LivingEntity target = this.devourer.getTarget();
 
             if(target!=null){
-                jumpAttack(target);
+                jumpAttack();
             }
         }
 
-        private void jumpAttack(LivingEntity target){
-            devourer.triggerAnim("JumpController","jump");
-            devourer.setJumping(true);
-            devourer.addVelocity(0f,0.5f,0f);
+        private void jumpAttack(){
+            devourer.jump();
+            devourer.setIsFalling(true);
             devourer.cooldownBetweenJumps=true;
             devourer.jumpTicks=jumpCooldown;
         }
     }
 
-    private boolean activateParticles=false;
+    @Override
+    protected int computeFallDamage(float fallDistance, float damageMultiplier) {
+        return super.computeFallDamage(fallDistance, damageMultiplier) - 8;
+    }
+
+    @Override
+    protected void jump() {
+        this.playSound(TCOTS_Sounds.DEVOURER_JUMP, 1.0f, 1.0f);
+        this.triggerAnim("JumpController","jump");
+        super.jump();
+    }
+
+    private static class Devourer_MeleeAttackGoal extends MeleeAttackGoal_Excavator{
+        private final DevourerEntity devourer;
+
+        public Devourer_MeleeAttackGoal(DevourerEntity mob, double speed, boolean pauseWhenMobIdle, int ticksBeforeToGround) {
+            super(mob, speed, pauseWhenMobIdle, ticksBeforeToGround);
+            this.devourer=mob;
+        }
+
+        @Override
+        public boolean canStart() {
+            return super.canStart() && !devourer.isFalling();
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            return super.shouldContinue() && !devourer.isFalling();
+        }
+    }
+
     @Override
     public void onLanding() {
         if(isFalling()){
-            pushAndDamageEntities(1.5,2,1.5, 1.2);
+            if(this.getWorld().getBlockState(this.getBlockPos().down()).getFluidState().isOf(Fluids.EMPTY)
+                    && !this.getWorld().getBlockState(this.getBlockPos()).isIn(TCOTS_Blocks.NEGATES_DEVOURER_JUMP)
+                    && !this.getWorld().getBlockState(this.getBlockPos().down()).isIn(TCOTS_Blocks.NEGATES_DEVOURER_JUMP))
+            {
+                pushAndDamageEntities(1.5 + (fallDistance * 0.2f), 2, 1.5 + (fallDistance * 0.2f), 1.2 + (fallDistance * 0.2f));
+                this.playSound(SoundEvents.ENTITY_HOSTILE_BIG_FALL, 1.0f, 1.0f);
+                this.getWorld().sendEntityStatus(this, FALLING_PARTICLES);
+            }
+
             setIsFalling(false);
-            activateParticles=true;
         }
         super.onLanding();
     }
 
+    @SuppressWarnings("all")
     private void pushAndDamageEntities(double xExpansion, double yExpansion, double zExpansion, double knockbackStrength){
-        List<LivingEntity> listMobs= this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(xExpansion,yExpansion,zExpansion),
-                livingEntity -> !(livingEntity instanceof DevourerEntity));
+        List<Entity> listMobs= this.getWorld().getEntitiesByClass(Entity.class, this.getBoundingBox().expand(xExpansion,yExpansion,zExpansion),
+                entity -> !(entity instanceof DevourerEntity));
 
-        for (LivingEntity entity : listMobs){
+        for (Entity entity : listMobs){
             double d = this.getX() - entity.getX();
             double e = this.getZ() - entity.getZ();
-            entity.takeKnockback(knockbackStrength,d,e);
-            if(entity.isBlocking() && entity instanceof PlayerEntity){
-                ((PlayerEntity) entity).disableShield(true);
+            if(entity instanceof LivingEntity livingEntity) {
+                livingEntity.takeKnockback(knockbackStrength, d, e);
+                //Push the player
+                if (entity instanceof ServerPlayerEntity && !((ServerPlayerEntity) entity).isCreative()) {
+                    ((ServerPlayerEntity) entity).networkHandler.send(new EntityVelocityUpdateS2CPacket(entity), null);
+                }
+                //Removes the shield
+                if (livingEntity.isBlocking() && entity instanceof PlayerEntity) {
+                    ((PlayerEntity) entity).disableShield(true);
+                }
+                //Checks if the entity it's blocking, to block the damage
+                else if (!livingEntity.isBlocking()) {
+                    entity.damage(this.getDamageSources().mobAttack(this), 2 + (fallDistance));
+                }
+                //Destroys vehicles
+            } else if(entity instanceof VehicleEntity vehicle) {
+                vehicle.damage(this.getDamageSources().mobAttack(this), 50.0f);
+            } else {
+                //Damage anything else
+                entity.damage(this.getDamageSources().mobAttack(this), 2 + (fallDistance));
             }
-
-            if(entity instanceof ServerPlayerEntity && !((ServerPlayerEntity) entity).isCreative()){
-                ((ServerPlayerEntity) entity).networkHandler.send(new EntityVelocityUpdateS2CPacket(entity), null);
-            }
-
-            entity.damage(this.getDamageSources().mobAttack(this), 2);
         }
     }
 
     private int counter=0;
 
+    @Override
+    public void handleStatus(byte status) {
+        if(status==FALLING_PARTICLES){
+            spawnSmokeParticles(counter);
+        } else{
+            super.handleStatus(status);
+        }
+    }
+
     private void spawnSmokeParticles(int counter){
-        Vec3d vec3d = this.getBoundingBox().getCenter();
-        while (counter < 20) {
+        while (counter < 40) {
             double d = this.random.nextGaussian() * 0.2;
             double e = this.random.nextGaussian() * 0.2;
             double f = this.random.nextGaussian() * 0.2;
-            this.getWorld().addParticle(ParticleTypes.WHITE_SMOKE, vec3d.x, vec3d.y, vec3d.z, d, e, f);
+            this.getWorld().addParticle(ParticleTypes.WHITE_SMOKE, this.getX(), this.getY()-0.5f, this.getZ(), d, e, f);
             ++counter;
         }
-        activateParticles=false;
     }
 
     @Override
@@ -199,7 +267,6 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-
         //Walk/Idle Controller
         controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, GeoControllersUtil::idleWalkRunController)
         );
@@ -244,6 +311,8 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         super.readCustomDataFromNbt(nbt);
     }
 
+
+
     public boolean cooldownBetweenJumps=false;
     int jumpTicks;
 
@@ -259,18 +328,12 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         }
     }
 
-
     @Override
     public void tick() {
         //Counter for particles
         this.tickExcavator(this);
         //Tick for jumps
         this.tickJump();
-
-        if(activateParticles){
-            spawnSmokeParticles(counter);
-
-        }
 
         super.tick();
     }
@@ -282,11 +345,6 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
                 List.of(Blocks.SAND),
                 this
         );
-
-        if(cooldownBetweenJumps && !this.isOnGround() && !this.isTouchingWater()){
-            setIsFalling(true);
-        }
-
 
         this.setInvisible(this.getInvisibleData());
         super.mobTick();
@@ -325,7 +383,7 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource);
+        return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource) || this.isFalling();
     }
 
     @Override

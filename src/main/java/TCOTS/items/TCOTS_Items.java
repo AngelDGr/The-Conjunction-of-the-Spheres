@@ -114,8 +114,12 @@ public class TCOTS_Items {
 
             //Witcher 2 Potions
             //TODO: Rook: Increases damage with swords
+            //TODO: Brock: Makes possible apply different effects to mobs, but any damage it's received double
+            //TODO: Gadwall: Increases a lot the regeneration and health boost but also weakness
+            //TODO: Stammelford's philtre: Something???
 
             //Witcher 1 Potions
+            //TODO: Wolf: Makes critical hits stronger
             //TODO: Willow: Makes you immune to knockback
             //TODO: Wolverine: Makes you stronger when you have less health?
 

@@ -30,13 +30,12 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
                     new Identifier(TCOTS_Main.MOD_ID, "buttons/recipe_book_disabled")
 
             );
-    private static final Identifier TEXTURE =
+    public static final Identifier SCREEN_BACKGROUND =
             new Identifier(TCOTS_Main.MOD_ID, "textures/gui/alchemy_table.png");
 
     private final AlchemyRecipeBookWidget recipeBook = new AlchemyRecipeBookWidget();
 
     private AlchemyRecipeBookButtonTextured buttonWidget;
-
 
     public AlchemyTableScreen(AlchemyTableScreenHandler handler,  PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -44,9 +43,9 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
 
     @Override
     protected void init() {
-//        boolean narrow = this.width < 379;
         super.init();
         assert this.client != null;
+        this.x = this.recipeBook.findLeftEdge(this.width, this.backgroundWidth);
         this.buttonWidget =
                 new AlchemyRecipeBookButtonTextured(
                         this.x + 5, this.height / 2 - 49,
@@ -75,7 +74,7 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
         int i = this.x;
         int j =(this.height - this.backgroundHeight) / 2;
 
-        context.drawTexture(TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
+        context.drawTexture(SCREEN_BACKGROUND, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
         renderProgressArrow(context, x, y);
         recipeBook.render(context, mouseX, mouseY, delta);
     }
@@ -88,7 +87,7 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
 
     private void renderProgressArrow(DrawContext context, int x, int y) {
         if(handler.isCrafting()) {
-            context.drawTexture(TEXTURE,
+            context.drawTexture(SCREEN_BACKGROUND,
 
                     //Top left where it will draw
                     x + 153, y + 16,
@@ -108,19 +107,20 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
         buttonWidget.active = true;
         } else {
             if(recipeBook.isOpen()){
-                recipeBook.toggleOpen();
+//                recipeBook.toggleOpen();
                 this.x = recipeBook.findLeftEdge(this.width, this.backgroundWidth);
                 buttonWidget.setPosition(this.x + 5, this.height / 2 - 49);
             }
             buttonWidget.active = false;
         }
+
+
         renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
         drawMouseoverTooltip(context, mouseX, mouseY);
     }
 
     private boolean conditionForBook(){
-        return
-                Objects.requireNonNull(this.getScreenHandler().getBlockEntity().getWorld()).getBlockState(getScreenHandler().getBlockEntity().getPos()).get(AlchemyTableBlock.HAS_ALCHEMY_BOOK);
+        return Objects.requireNonNull(this.getScreenHandler().getBlockEntity().getWorld()).getBlockState(getScreenHandler().getBlockEntity().getPos()).get(AlchemyTableBlock.HAS_ALCHEMY_BOOK);
     }
 }

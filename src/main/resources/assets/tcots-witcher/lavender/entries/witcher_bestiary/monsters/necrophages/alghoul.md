@@ -23,8 +23,8 @@ When encountering such a pack the alghoul should be eliminated as a first priori
 ;;;;;
 
 {dark_green}**Habitat**{}
-- Forests
-- Plains
+- Forests (at night)
+- Plains (at night)
 - Ghouls nests, found in plains or forests
   ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_spikes.png,fit)
 
@@ -45,7 +45,7 @@ the attacker too.
 ;;;;;
 
 If the Alghoul has its spikes out, or it's in the middle of a combat, it can also enrage normal ghouls that are close to it, 
-so it's better focus on killing it before the other ghouls.
+so {#0A880E}it's better focus on killing it before the other ghouls.{}
 
 
 {blue}**Loot**{}

@@ -123,6 +123,7 @@
     "tcots-witcher.sounds.devourer_hurt": "Devourer hurts",
     "tcots-witcher.sounds.devourer_idle": "Devourer groans",
     "tcots-witcher.sounds.devourer_death": "Devourer dies",
+    "tcots-witcher.sounds.devourer_jump": "Devourer jumps",
 
     "item.tcots-witcher.devourer_teeth": "Devourer Teeth",
 
@@ -473,5 +474,4 @@
     "text.config.tcots_config.enum.aNCHORS.left_down": "LEFT DOWN",
     "text.config.tcots_config.enum.aNCHORS.right_up": "RIGHT UP",
     "text.config.tcots_config.enum.aNCHORS.right_down": "RIGHT DOWN"
-
 }

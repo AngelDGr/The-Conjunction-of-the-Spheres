@@ -46,7 +46,7 @@ blind you.
 ;;;;;
 
 The mud in your eyes it's going to wash off after a little time, and it's going to wash faster if you are in water.
-Just don't be fooled during the time you don't have enough vision.
+{#0A880E}Just don't be fooled during the time you don't have enough vision.{}
 
 
 {blue}**Loot**{}

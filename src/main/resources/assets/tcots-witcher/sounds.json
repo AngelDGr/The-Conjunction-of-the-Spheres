@@ -556,7 +556,13 @@
       "tcots-witcher:entity/necrophages/devourer/devourer_death3"
     ]
   },
-
+  "devourer_jump": {
+    "subtitle": "tcots-witcher.sounds.devourer_jump",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/devourer/devourer_jump1",
+      "tcots-witcher:entity/necrophages/devourer/devourer_jump2"
+    ]
+  },
 
 
 

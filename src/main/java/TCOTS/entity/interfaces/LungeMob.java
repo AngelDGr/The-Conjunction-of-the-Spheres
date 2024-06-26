@@ -38,11 +38,4 @@ public interface LungeMob {
         );
     }
 
-    default boolean getIsLunging() {
-        return false;
-    }
-
-    default void setIsLunging(boolean wasLunging) {
-    }
-
 }

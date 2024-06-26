@@ -27,19 +27,24 @@ and their gingerbread houses.
 {dark_green}**Habitat**{}
 - Forests (at night)
 - Plains (at night)
-- Rivers (at night)
+- Swamps (at night)
 
-![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_exploding.png,fit)
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_jump.png,fit)
 
 ;;;;;
 
 {red}**Behavior**{}
 
-Slow but strong creature, immune to stun.
+This insatiable beast has great strength, with a medium group being able to take down an Iron Golem with ease, 
+though its major flaw is its speed. 
+
+
+Its main weapon is its powerful legs, which allow it to make large and strong jumps, 
+pushing and damaging any nearby creature away with a force depending on the magnitude of the jump.
 
 ;;;;;
 
-If you manage kill the creature when it's in flames, you could retrieve its spines and use them as weapons.
+Take in account that this attack mechanism has a major flaw; {#0A880E}it needs to land in an enough solid ground to being able to make any damage.{}
 
 
 {blue}**Loot**{}
@@ -78,3 +83,10 @@ If you manage kill the creature when it's in flames, you could retrieve its spin
             <vertical-alignment>center</vertical-alignment>
         </flow-layout>
 ```
+
+;;;;;
+
+
+
+
+![Devourer](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_full.png,fit)

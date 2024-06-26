@@ -109,15 +109,13 @@ public class LungeAttackGoal extends Goal {
             //Makes the lunge
             //Extra random ticks in cooldown
             randomExtra = mob.getRandom().nextInt(51);
-            //0.35 Y default
+
             vec3D_lunge = getVec3d(target).normalize();
             if(lungeMob instanceof GeoEntity){
                 ((GeoEntity) lungeMob).triggerAnim("LungeController","lunge");
             }
 
-            lungeMob.setIsLunging(true);
-
-
+            //0.35 Y default
             mob.setVelocity(mob.getVelocity().add(vec3D_lunge.x, 0.35, vec3D_lunge.z));
             this.mob.getLookControl().lookAt(target, 30.0F, 30.0F);
 

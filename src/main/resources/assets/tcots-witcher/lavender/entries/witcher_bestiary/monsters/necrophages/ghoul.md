@@ -25,8 +25,8 @@ They are driven by one thing and one thing only: an insatiable craving for human
 ;;;;;
 
 {dark_green}**Habitat**{}
-- Forests
-- Plains
+- Forests (at night)
+- Plains (at night)
 - Ghouls nests, found in plains or forests
   ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_regen.png,fit)
 
@@ -46,8 +46,8 @@ start becoming enraged.
 ;;;;;
 
 You can tell that they are in this mode because a red aura starts to surround them. Once enraged, they start
-regenerating health at an alarming fast rate. This enraged mode only lasts some seconds, so try to run
-or just hit it rapidly.
+regenerating health at an alarming fast rate. This enraged mode only lasts some seconds, so {#0A880E}try to run
+or just hit it rapidly.{}
 
 
 {blue}**Loot**{}

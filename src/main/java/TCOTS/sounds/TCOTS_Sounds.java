@@ -90,6 +90,7 @@ public class TCOTS_Sounds {
     public static SoundEvent DEVOURER_HURT = registerSoundEvent("devourer_hurt");
     public static SoundEvent DEVOURER_IDLE = registerSoundEvent("devourer_idle");
     public static SoundEvent DEVOURER_DEATH = registerSoundEvent("devourer_death");
+    public static SoundEvent DEVOURER_JUMP = registerSoundEvent("devourer_jump");
 
     //Nekker
     public static SoundEvent NEKKER_ATTACK = registerSoundEvent("nekker_attack");

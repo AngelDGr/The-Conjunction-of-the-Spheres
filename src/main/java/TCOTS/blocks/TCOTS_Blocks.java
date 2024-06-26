@@ -27,6 +27,9 @@ public class TCOTS_Blocks {
     public static final TagKey<Block> IGNITING_BLOCKS = TagKey.of(RegistryKeys.BLOCK, new Identifier(TCOTS_Main.MOD_ID,"igniting_blocks"));
     public static final TagKey<Block> DESTROYABLE_MAGIC_BLOCKS = TagKey.of(RegistryKeys.BLOCK, new Identifier(TCOTS_Main.MOD_ID,"destroyable_magic_blocks"));
 
+    public static final TagKey<Block> NEGATES_DEVOURER_JUMP = TagKey.of(RegistryKeys.BLOCK, new Identifier(TCOTS_Main.MOD_ID,"negates_devourer_jump"));
+
+
     public static final Block ARENARIA_BUSH = new ArenariaBush(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block CELANDINE_PLANT = new CelandinePlant(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY));
     public static final Block CROWS_EYE_FERN = new CrowsEyeFern(FabricBlockSettings.create().nonOpaque().mapColor(MapColor.DARK_GREEN).ticksRandomly().noCollision().sounds(BlockSoundGroup.FLOWERING_AZALEA).pistonBehavior(PistonBehavior.DESTROY).offset(AbstractBlock.OffsetType.XZ));

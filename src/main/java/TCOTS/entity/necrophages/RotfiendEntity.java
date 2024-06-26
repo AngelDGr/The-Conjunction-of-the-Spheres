@@ -52,7 +52,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
 
     public static final RawAnimation EXPLOSION = RawAnimation.begin().thenPlayAndHold("special.explosion");
 
-    protected static final TrackedData<Boolean> LUNGING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EXPLODING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> TRIGGER_EXPLOSION = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
@@ -87,7 +86,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         this.goalSelector.add(6, new LookAroundGoal_Excavator(this));
 
         //Objectives
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
@@ -157,14 +156,6 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
         }
     }
 
-    @Override
-    public void onLanding() {
-        super.onLanding();
-        if(getIsLunging()){
-            setIsLunging(false);
-        }
-    }
-
     public int ReturnToGround_Ticks=20;
 
     public int getReturnToGround_Ticks() {
@@ -220,24 +211,11 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(LUNGING, Boolean.FALSE);
         this.dataTracker.startTracking(EXPLODING, Boolean.FALSE);
         this.dataTracker.startTracking(TRIGGER_EXPLOSION, Boolean.FALSE);
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
-    }
-
-
-
-    @Override
-    public boolean getIsLunging() {
-        return this.dataTracker.get(LUNGING);
-    }
-
-    @Override
-    public final void setIsLunging(boolean wasLunging) {
-        this.dataTracker.set(LUNGING, wasLunging);
     }
 
     public final boolean getIsExploding() {

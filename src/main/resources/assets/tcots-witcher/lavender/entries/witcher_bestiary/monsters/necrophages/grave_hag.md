@@ -45,7 +45,7 @@ and try to catch you at a tremendous speed.
 ;;;;;
 
 It can also use its tongue as a weapon, making a sweep with it, causing a lot of knockback
-and damaging a lot of any shield that you could use.
+and damaging a lot any shield that you could use.
 
 
 {dark_blue}**Mutagen**{}

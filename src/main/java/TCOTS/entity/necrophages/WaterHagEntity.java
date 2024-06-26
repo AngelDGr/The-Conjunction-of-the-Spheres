@@ -95,8 +95,8 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
         this.goalSelector.add(5, new LookAroundGoal_Excavator(this));
 
         //Objectives
-        this.targetSelector.add(1, new RevengeGoal(this, WaterHagEntity.class));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(0, new RevengeGoal(this, WaterHagEntity.class));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }

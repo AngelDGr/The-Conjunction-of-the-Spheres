@@ -102,7 +102,8 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         this.goalSelector.add(6, new LookAroundGoal(this));
 
         //Objectives
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(0, new RevengeGoal(this, GhoulEntity.class));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, ZoglinEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, ZombieHorseEntity.class, true));

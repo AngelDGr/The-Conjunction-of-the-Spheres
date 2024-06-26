@@ -54,7 +54,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    protected static final TrackedData<Boolean> LUNGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -84,8 +83,8 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
         this.goalSelector.add(6, new LookAroundGoal_Excavator(this));
 
         //Objectives
-        this.targetSelector.add(1, new RevengeGoal(this, NekkerEntity.class).setGroupRevenge());
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(0, new RevengeGoal(this, NekkerEntity.class).setGroupRevenge());
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
@@ -168,7 +167,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(LUNGING, Boolean.FALSE);
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
@@ -206,16 +204,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
             // Normal hit-box otherwise
             return super.calculateBoundingBox();
         }
-    }
-
-    @Override
-    public boolean getIsLunging() {
-        return this.dataTracker.get(LUNGING);
-    }
-
-    @Override
-    public final void setIsLunging(boolean wasLunging) {
-        this.dataTracker.set(LUNGING, wasLunging);
     }
 
     public final boolean getIsEmerging() {
@@ -342,14 +330,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
             return HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
         }
         return false;
-    }
-
-    @Override
-    public void onLanding() {
-        super.onLanding();
-        if(getIsLunging()){
-            setIsLunging(false);
-        }
     }
 
     @Override

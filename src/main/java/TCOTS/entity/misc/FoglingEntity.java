@@ -54,8 +54,8 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, Ownable {
         this.goalSelector.add(3, new LookAroundGoal(this));
 
         //Objectives
-        this.targetSelector.add(1, new RevengeGoal(this, FogletEntity.class));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(0, new RevengeGoal(this, FogletEntity.class));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }

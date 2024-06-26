@@ -42,6 +42,9 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
         this.category = category;
     }
 
+    /**
+     * Return all the ingredients of the recipe with the assigned count.
+     */
     public List<ItemStack> returnItemStackWithQuantity(){
         List<ItemStack> list = new ArrayList<>();
         for(int i=0;i<getIngredients().size();i++){

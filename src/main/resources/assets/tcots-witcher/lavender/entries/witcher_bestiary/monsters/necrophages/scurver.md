@@ -47,7 +47,7 @@ yourself from the resulting explosion (or get far enough away quickly).
 
 ;;;;;
 
-If you manage kill the creature when it's in flames, you could retrieve its spines and use them as weapons.
+If you manage {#0A880E}kill the creature when it's in flames, you could retrieve its spines and use them as weapons.{}
 
 
 {blue}**Loot**{}

@@ -23,6 +23,7 @@ public class TCOTS_Entities {
 
 //    0.2.0- Necrophages & Ogroids
 // Necrophages
+    //W3
     //xTODO: Drowner
     //xTODO: Rotfiend
     //xTODO: Grave Hag
@@ -32,18 +33,24 @@ public class TCOTS_Entities {
     //xTODO: Alghoul
     //TODO: Wights - Next update
     //xTODO: Scurvers
-
+    //W2
+    //TODO: Bullvore
+    //W1
     //xTODO: Devourer
-    //TODO: Graveir?
-    //TODO: Bullvore?
+    //TODO: Graveir
+
 
 //  Ogroids
+    //W3
     //xTODO: Nekkers
     //TODO: Nekker Warriors
     //TODO: Cyclopses
     //TODO: Rock troll
     //TODO: Ice troll
     //TODO: Ice Giant (Boss)
+    //W2
+    //TODO: Troll (Forest)
+
 
     public static final TagKey<EntityType<?>> IGNITING_ENTITIES = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"igniting_entities"));
     public static final TagKey<EntityType<?>> DIMERITIUM_REMOVAL = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"dimeritium_removal"));

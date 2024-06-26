@@ -26,6 +26,10 @@
 
 		"fabric-datagen": [
 			"TCOTS.TCOTS_DataGenerator"
+		],
+
+		"jei_mod_plugin": [
+          "TCOTS.jei.TCOTS_JEIPlugin"
 		]
 	},
 	"mixins": [
