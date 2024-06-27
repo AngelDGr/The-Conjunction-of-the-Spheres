@@ -41,11 +41,6 @@ public class GraveHagDecoctionEffect extends DecoctionEffectBase {
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier){
-        return true;
-    }
-
-    @Override
     public void onRemoved(AttributeContainer attributes) {
         killCounterIn=0;
         super.onRemoved(attributes);

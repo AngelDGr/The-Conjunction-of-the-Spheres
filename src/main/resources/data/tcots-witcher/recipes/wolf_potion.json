@@ -1,21 +1,24 @@
 {
   "type": "tcots-witcher:alchemy_table",
-  "order": 99.9,
+  "order": 0.9,
   "category":"potions",
 
   "ingredients": [
     {
-      "item": "minecraft:honey_bottle"
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "tcots-witcher:devourer_teeth"
     }
   ],
 
-  "ingredient_counters": [1],
+  "ingredient_counters": [8,2],
 
   "base": {
     "item": "tcots-witcher:dwarven_spirit"
   },
 
   "result": {
-    "item": "tcots-witcher:white_honey_potion"
+    "item": "tcots-witcher:wolf_potion"
   }
 }

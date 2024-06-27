@@ -56,17 +56,17 @@ public class TCOTS_Entities {
     public static final TagKey<EntityType<?>> DIMERITIUM_REMOVAL = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"dimeritium_removal"));
     public static final TagKey<EntityType<?>> DIMERITIUM_DAMAGE = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"dimeritium_damage"));
 
-    public static final EntityGroup NECROPHAGES = new EntityGroup();
-    public static final EntityGroup OGROIDS = new EntityGroup();
-    public static final EntityGroup SPECTERS = new EntityGroup();
-    public static final EntityGroup VAMPIRES = new EntityGroup();
-    public static final EntityGroup INSECTOIDS = new EntityGroup();
-    public static final EntityGroup BEASTS = new EntityGroup();
-    public static final EntityGroup ELEMENTA = new EntityGroup();
-    public static final EntityGroup CURSED_ONES = new EntityGroup();
-    public static final EntityGroup HYBRIDS = new EntityGroup();
-    public static final EntityGroup DRACONIDS = new EntityGroup();
-    public static final EntityGroup RELICTS = new EntityGroup();
+    public static final WitcherGroup NECROPHAGES = new WitcherGroup("necrophages",0);
+    public static final WitcherGroup OGROIDS = new WitcherGroup("ogroids",1);
+    public static final WitcherGroup SPECTERS = new WitcherGroup("specters",2);
+    public static final WitcherGroup VAMPIRES = new WitcherGroup("vampires",3);
+    public static final WitcherGroup INSECTOIDS = new WitcherGroup("insectoids",4);
+    public static final WitcherGroup BEASTS = new WitcherGroup("beasts",5);
+    public static final WitcherGroup ELEMENTA = new WitcherGroup("elementa",6);
+    public static final WitcherGroup CURSED_ONES = new WitcherGroup("cursed_ones",7);
+    public static final WitcherGroup HYBRIDS = new WitcherGroup("hybrids",8);
+    public static final WitcherGroup DRACONIDS = new WitcherGroup("draconids",9);
+    public static final WitcherGroup RELICTS = new WitcherGroup("relicts",10);
 
     //Necrophages
     public static final EntityType<DrownerEntity> DROWNER = Registry.register(

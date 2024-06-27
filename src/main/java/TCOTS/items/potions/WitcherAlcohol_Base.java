@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
@@ -40,7 +41,9 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base{
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(Text.translatable("tooltip."+Registries.ITEM.getId(this)).formatted(Formatting.GRAY));
-        tooltip.add(Text.translatable("tooltip.tcots-witcher.refill", this.refillQuantity).formatted(Formatting.GRAY));
+        tooltip.add(ScreenTexts.EMPTY);
+        tooltip.add(Text.translatable("tooltip.tcots-witcher.refill").formatted(Formatting.GRAY));
+        tooltip.add(ScreenTexts.space().append(Text.translatable(this.refillQuantity >1? "tooltip.tcots-witcher.refill.slots": "tooltip.tcots-witcher.refill.slot" , this.refillQuantity).formatted(Formatting.BLUE)));
     }
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {

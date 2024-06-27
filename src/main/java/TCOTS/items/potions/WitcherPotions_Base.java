@@ -1,6 +1,7 @@
 package TCOTS.items.potions;
 
 import TCOTS.items.TCOTS_Items;
+import TCOTS.items.potions.effects.WitcherPotionEffect;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancement.criterion.Criteria;
@@ -16,6 +17,7 @@ import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.MutableText;
@@ -32,9 +34,9 @@ import java.util.Map;
 
 
 public class WitcherPotions_Base extends PotionItem {
-    StatusEffectInstance effectInstance;
-    int toxicity;
-    boolean decoction;
+    private final StatusEffectInstance effectInstance;
+    private final int toxicity;
+    public final boolean decoction;
 
     public WitcherPotions_Base(Settings settings, StatusEffectInstance effect, int toxicity, boolean decoction){
         super(settings);
@@ -166,69 +168,82 @@ public class WitcherPotions_Base extends PotionItem {
         return list;
     }
 
-    @SuppressWarnings("unused")
-    public void buildTooltip(ItemStack stack, List<Text> list, float durationMultiplier, float tickRate) {
-        buildTooltip(getPotionEffects(), list, durationMultiplier, tickRate);
-    }
-
-    @SuppressWarnings({"rawtypes", "unused"})
-    public void buildTooltip(List<StatusEffectInstance> statusEffects, List<Text> list, float durationMultiplier, float tickRate) {
-        ArrayList<Pair<EntityAttribute, EntityAttributeModifier>> list2 = Lists.newArrayList();
-            for (StatusEffectInstance statusEffectInstance : statusEffects) {
+    private void buildMainTooltip(List<Text> tooltip, float tickRate) {
+        ArrayList<Pair<EntityAttribute, EntityAttributeModifier>> tooltipAttributes = Lists.newArrayList();
+            for (StatusEffectInstance statusEffectInstance : getPotionEffects()) {
                 MutableText mutableText = Text.translatable(statusEffectInstance.getTranslationKey());
                 StatusEffect statusEffect = statusEffectInstance.getEffectType();
+
                 Map<EntityAttribute, AttributeModifierCreator> map = statusEffect.getAttributeModifiers();
                 if (!map.isEmpty()) {
                     for (Map.Entry<EntityAttribute, AttributeModifierCreator> entry : map.entrySet()) {
-                        list2.add(new Pair<>(entry.getKey(), entry.getValue().createAttributeModifier(statusEffectInstance.getAmplifier())));
+                        tooltipAttributes.add(new Pair<>(entry.getKey(), entry.getValue().createAttributeModifier(statusEffectInstance.getAmplifier())));
                     }
                 }
+
                 if (statusEffectInstance.getAmplifier() > 0) {
                     mutableText = Text.translatable("potion.withAmplifier", mutableText, Text.translatable("potion.potency." + statusEffectInstance.getAmplifier()));
                 }
                 if (!statusEffectInstance.isDurationBelow(20)) {
-                    mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(statusEffectInstance, durationMultiplier, tickRate));
+                    mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(statusEffectInstance, (float) 1.0, tickRate));
                 }
-                list.add(mutableText.formatted(statusEffect.getCategory().getFormatting()));
+                tooltip.add(mutableText.formatted(statusEffect.getCategory().getFormatting()));
             }
-//        }
-        if (!list2.isEmpty()) {
-
-            for (Pair pair : list2) {
-                list.add(Text.translatable("tooltip." + effectInstance.getEffectType().getTranslationKey() +".applied").formatted(Formatting.DARK_PURPLE));
-
-                EntityAttributeModifier entityAttributeModifier = (EntityAttributeModifier)pair.getSecond();
-                double d = entityAttributeModifier.getValue();
-                double e = entityAttributeModifier.getOperation() == EntityAttributeModifier.Operation.MULTIPLY_BASE || entityAttributeModifier.getOperation() == EntityAttributeModifier.Operation.MULTIPLY_TOTAL ? entityAttributeModifier.getValue() * 100.0 : entityAttributeModifier.getValue();
-                if (d > 0.0) {
-                    list.add(Text.translatable("attribute.modifier.plus." + entityAttributeModifier.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(e), Text.translatable(((EntityAttribute)pair.getFirst()).getTranslationKey())).formatted(Formatting.BLUE));
-                    continue;
-                }
-                if (!(d < 0.0)) continue;
-                list.add(Text.translatable("attribute.modifier.take." + entityAttributeModifier.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(e * -1.0), Text.translatable(((EntityAttribute)pair.getFirst()).getTranslationKey())).formatted(Formatting.RED));
-            }
-        }
-
-    }
 
 
-    private final List<StatusEffect> listExtraTooltip=List.of(
-            TCOTS_Effects.BLACK_BLOOD_EFFECT,
-            TCOTS_Effects.WHITE_RAFFARDS_EFFECT
-    );
-    @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-
-        buildTooltip(stack, tooltip, 1.0F,  world == null ? 20.0f : world.getTickManager().getTickRate());
         tooltip.add(Text.translatable("tcots-witcher.tooltip.toxicity", getToxicity()).formatted(Formatting.DARK_GREEN));
-        if(listExtraTooltip.contains(effectInstance.getEffectType())){
-            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first."+this.getStatusEffect().getAmplifier()).formatted(Formatting.GRAY));
-            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second."+this.getStatusEffect().getAmplifier()).formatted(Formatting.GRAY));
+
+        if(effectInstance.getEffectType() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasExtraInfo()){
+            int n = this.getStatusEffect().getAmplifier() == 0? 0: 1;
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first." +n).formatted(Formatting.GRAY));
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second."+n).formatted(Formatting.GRAY));
         } else{
             tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first").formatted(Formatting.GRAY));
             tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second").formatted(Formatting.GRAY));
         }
 
+        if(effectInstance.getEffectType() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasExtraLine(effectInstance.getAmplifier())){
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".extra").formatted(Formatting.GRAY));
+        }
+
+        //Special Tooltip
+        if(effectInstance.getEffectType() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasSpecialAttributes()){
+            tooltip.add(ScreenTexts.EMPTY);
+            if(((WitcherPotionEffect) effectInstance.getEffectType()).hasCustomApplyTooltip()){
+                tooltip.add(Text.translatable("tooltip." + witcherPotionEffect.getTranslationKey() +".applied").formatted(Formatting.DARK_PURPLE));
+            }
+            else {tooltip.add(Text.translatable("potion.whenDrank").formatted(Formatting.DARK_PURPLE));}
+
+            tooltip.add(Text.translatable("special.attribute."+witcherPotionEffect.getTranslationKey(),witcherPotionEffect.getSpecialAttributesValue(effectInstance.getAmplifier())).formatted(Formatting.BLUE));
+        }
+
+
+        //Attributes tooltip
+        if (!tooltipAttributes.isEmpty()) {
+            tooltip.add(ScreenTexts.EMPTY);
+            if(((WitcherPotionEffect) effectInstance.getEffectType()).hasCustomApplyTooltip()){
+                    tooltip.add(Text.translatable("tooltip." + effectInstance.getEffectType().getTranslationKey() +".applied").formatted(Formatting.DARK_PURPLE));
+            }
+            else {tooltip.add(Text.translatable("potion.whenDrank").formatted(Formatting.DARK_PURPLE));}
+
+            for (Pair<?,?> pair : tooltipAttributes) {
+                EntityAttributeModifier entityAttributeModifier = (EntityAttributeModifier)pair.getSecond();
+                double d = entityAttributeModifier.getValue();
+                double e = entityAttributeModifier.getOperation() == EntityAttributeModifier.Operation.MULTIPLY_BASE || entityAttributeModifier.getOperation() == EntityAttributeModifier.Operation.MULTIPLY_TOTAL ? entityAttributeModifier.getValue() * 100.0 : entityAttributeModifier.getValue();
+                if (d > 0.0) {
+                    tooltip.add(Text.translatable("attribute.modifier.plus." + entityAttributeModifier.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(e), Text.translatable(((EntityAttribute)pair.getFirst()).getTranslationKey())).formatted(Formatting.BLUE));
+                    continue;
+                }
+                if (!(d < 0.0)) continue;
+                tooltip.add(Text.translatable("attribute.modifier.take." + entityAttributeModifier.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(e * -1.0), Text.translatable(((EntityAttribute)pair.getFirst()).getTranslationKey())).formatted(Formatting.RED));
+            }
+        }
+
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        buildMainTooltip(tooltip, world == null ? 20.0f : world.getTickManager().getTickRate());
     }
 
     public int getToxicity(){

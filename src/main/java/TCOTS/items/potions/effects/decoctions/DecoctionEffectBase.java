@@ -1,12 +1,12 @@
 package TCOTS.items.potions.effects.decoctions;
 
+import TCOTS.items.potions.effects.WitcherPotionEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class DecoctionEffectBase extends StatusEffect {
+public class DecoctionEffectBase extends WitcherPotionEffect {
 
     private LivingEntity entity;
     private final int decoctionToxicity;

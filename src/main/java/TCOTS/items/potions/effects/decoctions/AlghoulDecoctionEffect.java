@@ -34,9 +34,4 @@ public class AlghoulDecoctionEffect extends DecoctionEffectBase {
         }
     }
 
-    @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return true;
-    }
-
 }

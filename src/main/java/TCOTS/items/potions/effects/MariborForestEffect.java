@@ -4,7 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class MariborForestEffect extends WitcherEffect {
+public class MariborForestEffect extends WitcherPotionEffect {
 
     //Maribor Forest I      ----->      0.2 Saturation x 3 seconds
     //Maribor Forest II     ----->      0.5 Saturation x 3 seconds
@@ -23,8 +23,4 @@ public class MariborForestEffect extends WitcherEffect {
         }
     }
 
-    @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return true;
-    }
 }

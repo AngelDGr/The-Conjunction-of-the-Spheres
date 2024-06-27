@@ -37,8 +37,7 @@ public class WaterHagDecoctionEffect extends DecoctionEffectBase {
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier){
+    public boolean hasCustomApplyTooltip() {
         return true;
     }
-
 }

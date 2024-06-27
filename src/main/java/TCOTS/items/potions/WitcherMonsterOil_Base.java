@@ -1,15 +1,20 @@
 package TCOTS.items.potions;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.WitcherGroup;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityGroup;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
-import net.minecraft.item.*;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
@@ -26,71 +31,35 @@ public class WitcherMonsterOil_Base extends Item {
         //                                                           Smite IV : 10.0 damage
         //                                                           Smite V  : 12.5 damage
 
-
-    private final String id_group;
     private final int group_value;
     private final int uses;
-    private final String damageString;
+    private final int extraDamage;
     private final int level;
+    private final Text againstDescription;
 
     public WitcherMonsterOil_Base(Settings settings, EntityGroup group, int uses, int level) {
         super(settings);
-        if(group == TCOTS_Entities.NECROPHAGES){
-            id_group = "Necrophages";
-            this.group_value = 0;
-        } else if (group == TCOTS_Entities.OGROIDS) {
-            id_group = "Ogroids";
-            this.group_value = 1;
-        } else if(group == TCOTS_Entities.SPECTERS){
-            id_group = "Specters";
-            this.group_value = 2;
-        } else if(group == TCOTS_Entities.VAMPIRES){
-            id_group = "Vampires";
-            this.group_value = 3;
-        } else if(group == TCOTS_Entities.INSECTOIDS){
-            id_group = "Insectoids";
-            this.group_value = 4;
-        } else if(group == TCOTS_Entities.BEASTS){
-            id_group = "Beasts";
-            this.group_value = 5;
-        } else if(group == TCOTS_Entities.ELEMENTA){
-            id_group = "Elementa";
-            this.group_value = 6;
-        }else if(group == TCOTS_Entities.CURSED_ONES){
-            id_group = "Cursed Ones";
-            this.group_value = 7;
-        }else if(group == TCOTS_Entities.HYBRIDS){
-            id_group = "Hybrids";
-            this.group_value = 8;
-        }else if(group == TCOTS_Entities.DRACONIDS){
-            id_group = "Draconids";
-            this.group_value = 9;
-        }else if(group == TCOTS_Entities.RELICTS){
-            id_group = "Relicts";
-            this.group_value = 10;
-        }else if(group == EntityGroup.ILLAGER){
-            id_group = "Illagers & Humans";
-            this.group_value = 11;
-        }
-        else{
-            id_group = "None";
-            this.group_value=100;
-        }
 
 
-        if(level==1){
-            damageString="+2";
-        } else if (level==2) {
-            damageString="+4";
-        } else if (level==3) {
-            damageString="+6";
-        }else {
-            damageString="Missigno";
+        if(group instanceof WitcherGroup witcherGroup){
+            group_value=witcherGroup.getNumericID();
+
+            againstDescription =
+                    Text.translatable("tooltip.tcots-witcher.oils", Text.translatable(witcherGroup.getTranslationKey())).formatted(Formatting.GRAY);
+        } else if (group == EntityGroup.ILLAGER) {
+            group_value=11;
+            againstDescription =
+                    Text.translatable("tooltip.tcots-witcher.oils", Text.translatable("entity.tcots-witcher.group.humanoids")).formatted(Formatting.GRAY);
+        } else {
+            group_value=100;
+            againstDescription =
+                    Text.translatable("tooltip.tcots-witcher.oils", "Missigno").formatted(Formatting.GRAY);
         }
+
+        extraDamage = level*2;
 
         this.uses=uses;
         this.level=level;
-
     }
 
     public int getLevel() {
@@ -103,7 +72,7 @@ public class WitcherMonsterOil_Base extends Item {
 
     @Override
     public Rarity getRarity(ItemStack stack) {
-        return switch (this.level) {
+        return switch (getLevel()) {
             case 2, 3 -> Rarity.UNCOMMON;
             default -> Rarity.COMMON;
         };
@@ -121,7 +90,7 @@ public class WitcherMonsterOil_Base extends Item {
 
                     //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
                     assert monsterOil != null;
-                    if(monsterOil.getInt("Uses")==uses && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==level){
+                    if(monsterOil.getInt("Uses")==getUses() && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==getLevel()){
                         return TypedActionResult.fail(user.getStackInHand(hand));
                     }
                 }
@@ -130,16 +99,13 @@ public class WitcherMonsterOil_Base extends Item {
             ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL);
             stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
-
-
-
             user.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1 );
             NbtCompound nbtOil = new NbtCompound();
 
 
             nbtOil.putInt("Id", group_value);
-            nbtOil.putInt("Uses", uses);
-            nbtOil.putInt("Level", level);
+            nbtOil.putInt("Uses", getUses());
+            nbtOil.putInt("Level", getLevel());
             nbtOil.putString("Item", Registries.ITEM.getId(this).toString());
 
             user.getMainHandStack().getOrCreateNbt().put("Monster Oil", nbtOil);
@@ -180,7 +146,7 @@ public class WitcherMonsterOil_Base extends Item {
 
                     //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
                     assert monsterOil != null;
-                    if(monsterOil.getInt("Uses")==uses && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==level){
+                    if(monsterOil.getInt("Uses")==getUses() && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==getLevel()){
                         return false;
                     }
                 }
@@ -195,8 +161,8 @@ public class WitcherMonsterOil_Base extends Item {
 
 
             nbtOil.putInt("Id", group_value);
-            nbtOil.putInt("Uses", uses);
-            nbtOil.putInt("Level", level);
+            nbtOil.putInt("Uses", getUses());
+            nbtOil.putInt("Level", getLevel());
             nbtOil.putString("Item", Registries.ITEM.getId(this).toString());
 
             otherStack.getOrCreateNbt().put("Monster Oil", nbtOil);
@@ -231,7 +197,7 @@ public class WitcherMonsterOil_Base extends Item {
 
                     //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
                     assert monsterOil != null;
-                    if(monsterOil.getInt("Uses")==uses && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==level){
+                    if(monsterOil.getInt("Uses")==getUses() && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==getLevel()){
                         return false;
                     }
                 }
@@ -247,8 +213,8 @@ public class WitcherMonsterOil_Base extends Item {
 
 
                 nbtOil.putInt("Id", group_value);
-                nbtOil.putInt("Uses", uses);
-                nbtOil.putInt("Level", level);
+                nbtOil.putInt("Uses", getUses());
+                nbtOil.putInt("Level", getLevel());
                 nbtOil.putString("Item", Registries.ITEM.getId(this).toString());
 
                 itemStackInSlot.getOrCreateNbt().put("Monster Oil", nbtOil);
@@ -269,7 +235,13 @@ public class WitcherMonsterOil_Base extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("tooltip.tcots-witcher.oils", damageString, id_group).formatted(Formatting.GRAY));
-        tooltip.add(Text.translatable("tooltip.tcots-witcher.oils.uses", uses).formatted(Formatting.GRAY));
+        //Against Necrophages:
+        tooltip.add(this.againstDescription);
+        //  +2 Attack Damage
+        tooltip.add(ScreenTexts.space().append(Text.translatable("tooltip.tcots-witcher.oils.attack", extraDamage)).formatted(Formatting.BLUE));
+        //Duration:
+        tooltip.add(Text.translatable("tooltip.tcots-witcher.oils.duration").formatted(Formatting.GRAY));
+        //  60 Hits
+        tooltip.add(ScreenTexts.space().append(Text.translatable("tooltip.tcots-witcher.oils.uses", getUses()).formatted(Formatting.BLUE)));
     }
 }

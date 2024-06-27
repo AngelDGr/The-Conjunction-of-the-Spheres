@@ -60,6 +60,20 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Potions{}**
+<recipe;tcots-witcher:wolf_potion>
+<recipe;tcots-witcher:wolf_potion_enhanced>
+<recipe;tcots-witcher:wolf_potion_superior>
+
+;;;;;
+
+**{#395026}Potions{}**
+<recipe;tcots-witcher:rook_potion>
+<recipe;tcots-witcher:rook_potion_enhanced>
+<recipe;tcots-witcher:rook_potion_superior>
+
+;;;;;
+
+**{#395026}Potions{}**
 <recipe;tcots-witcher:white_honey_potion>
 <recipe;tcots-witcher:white_honey_potion_enhanced>
 <recipe;tcots-witcher:white_honey_potion_superior>

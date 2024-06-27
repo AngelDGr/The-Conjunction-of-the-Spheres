@@ -1,0 +1,33 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.92,
+  "category":"potions",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:white_gull"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "tcots-witcher:ghoul_blood"
+    },
+    {
+      "item": "tcots-witcher:devourer_teeth"
+    },
+    {
+      "item": "tcots-witcher:hydragenum"
+    }
+  ],
+
+  "ingredient_counters": [1,8,4,6,1],
+
+  "base": {
+    "item": "tcots-witcher:wolf_potion_enhanced"
+  },
+
+  "result": {
+    "item": "tcots-witcher:wolf_potion_superior"
+  }
+}

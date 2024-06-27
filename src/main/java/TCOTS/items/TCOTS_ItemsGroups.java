@@ -135,9 +135,23 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED.getDefaultStack());
                             entries.add(TCOTS_Items.MARIBOR_FOREST_POTION_SUPERIOR.getDefaultStack());
 
+                            //W1
+                            entries.add(TCOTS_Items.WOLF_POTION.getDefaultStack());
+                            entries.add(TCOTS_Items.WOLF_POTION_ENHANCED.getDefaultStack());
+                            entries.add(TCOTS_Items.WOLF_POTION_SUPERIOR.getDefaultStack());
+
+
+                            //W2
+                            entries.add(TCOTS_Items.ROOK_POTION.getDefaultStack());
+                            entries.add(TCOTS_Items.ROOK_POTION_ENHANCED.getDefaultStack());
+                            entries.add(TCOTS_Items.ROOK_POTION_SUPERIOR.getDefaultStack());
+
+                            //
                             entries.add(TCOTS_Items.WHITE_HONEY_POTION.getDefaultStack());
                             entries.add(TCOTS_Items.WHITE_HONEY_POTION_ENHANCED.getDefaultStack());
                             entries.add(TCOTS_Items.WHITE_HONEY_POTION_SUPERIOR.getDefaultStack());
+
+
 
                             entries.add(TCOTS_Items.SWALLOW_SPLASH.getDefaultStack());
                             entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH.getDefaultStack());

@@ -10,11 +10,6 @@ public class FogletDecoctionEffect extends DecoctionEffectBase {
         super(category, color,50);
     }
 
-    @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier){
-        return true;
-    }
-
     protected void spawnFogParticlesItself(LivingEntity entity){
         if(entity.age%22 == 0){
             double d = entity.getX() + (double) MathHelper.nextBetween(entity.getRandom(), -0.8F, 0.8F);

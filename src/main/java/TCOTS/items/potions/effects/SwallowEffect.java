@@ -5,7 +5,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
 
-public class SwallowEffect extends WitcherEffect {
+public class SwallowEffect extends WitcherPotionEffect {
 
 //             Swallow = Swallow I   = 1.0hp x s =  20s for complete healing
 //    Enhanced Swallow = Swallow II  = 2.0hp x s =  10s for complete healing
@@ -28,8 +28,4 @@ public class SwallowEffect extends WitcherEffect {
         super.applyUpdateEffect(entity, amplifier);
     }
 
-    @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier){
-        return true;
-    }
 }

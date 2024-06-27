@@ -1,0 +1,30 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "order": 0.91,
+  "category":"potions",
+
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alcohest"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "tcots-witcher:ghoul_blood"
+    },
+    {
+      "item": "tcots-witcher:devourer_teeth"
+    }
+  ],
+
+  "ingredient_counters": [1,6,2,4],
+
+  "base": {
+    "item": "tcots-witcher:wolf_potion"
+  },
+
+  "result": {
+    "item": "tcots-witcher:wolf_potion_enhanced"
+  }
+}

@@ -19,6 +19,15 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class TCOTS_Effects {
+
+    //W1
+    public static StatusEffect WOLF_EFFECT;
+
+    //W2
+    public static StatusEffect ROOK_EFFECT;
+
+
+    //W3
     public static StatusEffect KILLER_WHALE_EFFECT;
     public static StatusEffect SWALLOW_EFFECT;
     public static StatusEffect WHITE_RAFFARDS_EFFECT;
@@ -27,13 +36,15 @@ public class TCOTS_Effects {
     public static StatusEffect BLEEDING_BLACK_BLOOD_EFFECT;
     public static StatusEffect MARIBOR_FOREST_EFFECT;
 
-    public static StatusEffect GRAVE_HAG_DECOCTION_EFFECT;
-    public static StatusEffect WATER_HAG_DECOCTION_EFFECT;
-    public static StatusEffect FOGLET_DECOCTION_EFFECT;
-    public static StatusEffect ALGHOUL_DECOCTION_EFFECT;
+        //Decoctions
+        public static StatusEffect GRAVE_HAG_DECOCTION_EFFECT;
+        public static StatusEffect WATER_HAG_DECOCTION_EFFECT;
+        public static StatusEffect FOGLET_DECOCTION_EFFECT;
+        public static StatusEffect ALGHOUL_DECOCTION_EFFECT;
 
     static final int decoctionColor=0x0b7000;
 
+    //Bombs
     public static StatusEffect SAMUM_EFFECT;
     public static StatusEffect NORTHERN_WIND_EFFECT;
     public static StatusEffect DIMERITIUM_BOMB_EFFECT;
@@ -44,6 +55,14 @@ public class TCOTS_Effects {
     public static void registerEffects() {
 
         //Effects
+        //W1
+        WOLF_EFFECT = registerStatusEffect("wolf_effect", WolfEffect.class, StatusEffectCategory.BENEFICIAL, 0xdd531d);
+
+        //W2
+        ROOK_EFFECT = registerStatusEffect("rook_effect", RookEffect.class, StatusEffectCategory.BENEFICIAL, 0x268e26);
+
+
+        // W3
         KILLER_WHALE_EFFECT = registerEffect("killer_whale",
                 new KillerWhaleEffect(StatusEffectCategory.BENEFICIAL, 0xe9b044)
                 .addAttributeModifier(
@@ -63,6 +82,8 @@ public class TCOTS_Effects {
         MARIBOR_FOREST_EFFECT = registerStatusEffect("maribor_forest", MariborForestEffect.class, StatusEffectCategory.BENEFICIAL, 0xb9b9b9);
 
 
+
+        //Decoctions
         GRAVE_HAG_DECOCTION_EFFECT = registerStatusEffect("grave_hag_decoction", GraveHagDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
 
         WATER_HAG_DECOCTION_EFFECT = registerEffect("water_hag_decoction",

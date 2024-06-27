@@ -1,23 +1,29 @@
 package TCOTS.items.potions.effects;
 
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
-public class BlackBloodEffect extends WitcherEffect {
+public class BlackBloodEffect extends WitcherPotionEffect {
     public BlackBloodEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier){
+    public boolean hasSpecialAttributes() {
         return true;
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-
-
-        super.applyUpdateEffect(entity, amplifier);
+    public int getSpecialAttributesValue(int amplifier) {
+        return amplifier == 0? 15: amplifier == 1? 20: 30;
     }
 
+    @Override
+    public boolean hasExtraInfo() {
+        return true;
+    }
+
+    @Override
+    public boolean hasExtraLine(int amplifier) {
+        return amplifier > 1;
+    }
 }

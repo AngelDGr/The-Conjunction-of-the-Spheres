@@ -116,10 +116,11 @@ public class TCOTS_Items {
             //TODO: Rook: Increases damage with swords
             //TODO: Brock: Makes possible apply different effects to mobs, but any damage it's received double
             //TODO: Gadwall: Increases a lot the regeneration and health boost but also weakness
-            //TODO: Stammelford's philtre: Something???
+            //TODO: Stammelford's Philtre: Something???
 
             //Witcher 1 Potions
-            //TODO: Wolf: Makes critical hits stronger
+            //xTODO: Wolf: Makes critical hits stronger
+            //TODO: De Vries' Extract: Gives glowing to near invisible enemies
             //TODO: Willow: Makes you immune to knockback
             //TODO: Wolverine: Makes you stronger when you have less health?
 
@@ -267,6 +268,19 @@ public class TCOTS_Items {
     public static Item ALGHOUL_DECOCTION;
 
     //Potions
+
+    //W1
+    public static Item WOLF_POTION;
+    public static Item WOLF_POTION_ENHANCED;
+    public static Item WOLF_POTION_SUPERIOR;
+
+    //W2
+    //TODO: Add recipes
+    public static Item ROOK_POTION;
+    public static Item ROOK_POTION_ENHANCED;
+    public static Item ROOK_POTION_SUPERIOR;
+
+    //W3
     public static Item SWALLOW_POTION;
     public static Item SWALLOW_POTION_ENHANCED;
     public static Item SWALLOW_POTION_SUPERIOR;
@@ -508,6 +522,63 @@ public class TCOTS_Items {
         );
 
 
+        //W1
+        WOLF_POTION = registerItemPotion("wolf_potion",
+                new FabricItemSettings().maxCount(2),
+                TCOTS_Effects.WOLF_EFFECT,
+                25,
+                30,
+                0,
+                false
+        );
+
+        WOLF_POTION_ENHANCED = registerItemPotion("wolf_potion_enhanced",
+                new FabricItemSettings().maxCount(3),
+                TCOTS_Effects.WOLF_EFFECT,
+                25,
+                45,
+                1,
+                false
+        );
+
+        WOLF_POTION_SUPERIOR = registerItemPotion("wolf_potion_superior",
+                new FabricItemSettings().maxCount(3),
+                TCOTS_Effects.WOLF_EFFECT,
+                25,
+                60,
+                2,
+                false
+        );
+
+        //W2
+        ROOK_POTION = registerItemPotion("rook_potion",
+                new FabricItemSettings().maxCount(2),
+                TCOTS_Effects.ROOK_EFFECT,
+                25,
+                45,
+                0,
+                false
+        );
+
+        ROOK_POTION_ENHANCED = registerItemPotion("rook_potion_enhanced",
+                new FabricItemSettings().maxCount(3),
+                TCOTS_Effects.ROOK_EFFECT,
+                25,
+                60,
+                1,
+                false
+        );
+
+        ROOK_POTION_SUPERIOR = registerItemPotion("rook_potion_superior",
+                new FabricItemSettings().maxCount(3),
+                TCOTS_Effects.ROOK_EFFECT,
+                25,
+                90,
+                2,
+                false
+        );
+
+        //W3
         SWALLOW_POTION = registerItemPotion("swallow_potion",
                 new FabricItemSettings().maxCount(3),
                 TCOTS_Effects.SWALLOW_EFFECT,

@@ -7,9 +7,8 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import java.util.Map;
 
 
-public class KillerWhaleEffect extends WitcherEffect {
+public class KillerWhaleEffect extends WitcherPotionEffect {
     //xTODO: Add attack power to the player
-    //xTODO???: Add improved vision underwater (like with water breathing)
 
     //Each level increase strength by 4
     //Works like Respiration II
@@ -41,8 +40,7 @@ public class KillerWhaleEffect extends WitcherEffect {
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier){
+    public boolean hasCustomApplyTooltip() {
         return true;
     }
-
 }

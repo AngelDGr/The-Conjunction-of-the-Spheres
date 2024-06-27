@@ -10,6 +10,21 @@
     "tcots-witcher.sounds.monster_emerging": "Monster emerges from ground",
     "tcots-witcher.sounds.monster_digging": "Monster return to ground",
 
+
+    "entity.tcots-witcher.group.necrophages": "Necrophages",
+    "entity.tcots-witcher.group.ogroids": "Ogroids",
+    "entity.tcots-witcher.group.specters": "Specters",
+    "entity.tcots-witcher.group.vampires": "Vampires",
+    "entity.tcots-witcher.group.insectoids": "Insectoids",
+    "entity.tcots-witcher.group.beasts": "Beasts",
+    "entity.tcots-witcher.group.elementa": "Elementa",
+    "entity.tcots-witcher.group.cursed_ones": "Cursed Ones",
+    "entity.tcots-witcher.group.hybrids": "Hybrids",
+    "entity.tcots-witcher.group.draconids": "Draconids",
+    "entity.tcots-witcher.group.relicts": "Relicts",
+    "entity.tcots-witcher.group.humanoids": "Illagers & Humans",
+
+
     "item.tcots-witcher.drowner_spawn_egg": "Drowner Spawn Egg",
     "entity.tcots-witcher.drowner": "Drowner",
     "tcots-witcher.sounds.drowner_footstep": "Footsteps",
@@ -229,9 +244,9 @@
     "item.tcots-witcher.dwarven_spirit": "Dwarven Spirit",
     "tooltip.tcots-witcher:dwarven_spirit": "Base to brew most potions",
     "item.tcots-witcher.alcohest": "Alcohest",
-    "tooltip.tcots-witcher:alcohest": "Strong alcohol used in potions",
+    "tooltip.tcots-witcher:alcohest":       "Used to brew enhanced potions",
     "item.tcots-witcher.white_gull": "White Gull",
-    "tooltip.tcots-witcher:white_gull": "Strong alcohol used in superior potions",
+    "tooltip.tcots-witcher:white_gull":     "Used to brew superior potions",
 
     "item.tcots-witcher.village_herbal": "Village Herbal",
     "tooltip.tcots-witcher:village_herbal": "Relaxing beverage",
@@ -241,7 +256,10 @@
     "tooltip.tcots-witcher:mandrake_cordial": "Strong beverage",
 
 
-    "tooltip.tcots-witcher.refill": "Can be used to refill %s slots",
+    "tooltip.tcots-witcher.refill": "Refills:",
+    "tooltip.tcots-witcher.refill.slot": "%s Slot",
+    "tooltip.tcots-witcher.refill.slots": "%s Slots",
+
 
     "tcots-witcher.gui.toxicity_warning": "You can't drink this! Too much toxicity",
     "tcots-witcher.gui.toxicity_danger": "BEWARE! TOO MUCH TOXICITY!",
@@ -253,8 +271,11 @@
 
     "tooltip.tcots-witcher.empty_witcher_bottle_1": "Refilled in the Alchemy Table or",
     "tooltip.tcots-witcher.empty_witcher_bottle_2": "by sleeping, uses strong alcohol",
-    "tooltip.tcots-witcher.oils": "%s attack against %s",
-    "tooltip.tcots-witcher.oils.uses": "It last %s hits",
+    "tooltip.tcots-witcher.oils": "Against %s:",
+    "tooltip.tcots-witcher.oils.attack": "+%s Attack Damage",
+    "tooltip.tcots-witcher.oils.duration": "Duration:",
+    "tooltip.tcots-witcher.oils.uses": "%s Hits",
+
     "tooltip.item.tcots-witcher.oils.uses": "Uses: %s",
 
 
@@ -270,12 +291,12 @@
 
     "item.tcots-witcher.water_hag_decoction": "Water Hag Decoction",
     "tooltip.effect.tcots-witcher.water_hag_decoction.applied": "At full health:",
-    "tooltip.effect.tcots-witcher.water_hag_decoction.first":  "Increases attack when health",
-    "tooltip.effect.tcots-witcher.water_hag_decoction.second": "it is full",
+    "tooltip.effect.tcots-witcher.water_hag_decoction.first":  "Increases attack when the",
+    "tooltip.effect.tcots-witcher.water_hag_decoction.second": "user has full health",
 
     "item.tcots-witcher.alghoul_decoction": "Alghoul Decoction",
-    "tooltip.effect.tcots-witcher.alghoul_decoction.first":  "Regenerates hunger during combat",
-    "tooltip.effect.tcots-witcher.alghoul_decoction.second": "until the first successful enemy attack.",
+    "tooltip.effect.tcots-witcher.alghoul_decoction.first":  "Restores hunger in combat until",
+    "tooltip.effect.tcots-witcher.alghoul_decoction.second": "a successful enemy hit",
 
 
     "item.tcots-witcher.foglet_decoction": "Foglet Decoction",
@@ -298,6 +319,24 @@
     "item.tcots-witcher.oil_hanged_enhanced": "Enhanced Hanged Man's Venom",
     "item.tcots-witcher.oil_hanged_superior": "Superior Hanged Man's Venom",
 
+
+    "item.tcots-witcher.wolf_potion": "Wolf",
+    "item.tcots-witcher.wolf_potion_enhanced": "Enhanced Wolf",
+    "item.tcots-witcher.wolf_potion_superior": "Superior Wolf",
+    "tooltip.effect.tcots-witcher.wolf_effect.first":  "Improves focus, causing major",
+    "tooltip.effect.tcots-witcher.wolf_effect.second": "damage with critical hits",
+    "special.attribute.effect.tcots-witcher.wolf_effect": "+%s%% Critical Damage",
+
+
+    "item.tcots-witcher.rook_potion": "Rook",
+    "item.tcots-witcher.rook_potion_enhanced": "Enhanced Rook",
+    "item.tcots-witcher.rook_potion_superior": "Superior Rook",
+    "tooltip.effect.tcots-witcher.rook_effect.first":  "Increases dexterity, increasing",
+    "tooltip.effect.tcots-witcher.rook_effect.second": "damage dealt with swords",
+    "tooltip.effect.tcots-witcher.rook_effect.applied": "When using swords:",
+    "special.attribute.effect.tcots-witcher.rook_effect": "+%s Attack Damage",
+
+
     "item.tcots-witcher.swallow_potion": "Swallow",
     "item.tcots-witcher.swallow_potion_enhanced": "Enhanced Swallow",
     "item.tcots-witcher.swallow_potion_superior": "Superior Swallow",
@@ -314,12 +353,10 @@
     "item.tcots-witcher.white_raffards_decoction": "White Raffard's Decoction",
     "item.tcots-witcher.white_raffards_decoction_enhanced": "Enhanced White Raffard's Decoction",
     "item.tcots-witcher.white_raffards_decoction_superior": "Superior White Raffard's Decoction",
-    "tooltip.effect.tcots-witcher.white_raffards.first.0":  "Immediately restores a large",
-    "tooltip.effect.tcots-witcher.white_raffards.first.1":  "Immediately restores a large",
-    "tooltip.effect.tcots-witcher.white_raffards.first.2":  "Immediately restores a large",
-    "tooltip.effect.tcots-witcher.white_raffards.second.0": "percentage of health (35%)",
-    "tooltip.effect.tcots-witcher.white_raffards.second.1": "percentage of health (60%)",
-    "tooltip.effect.tcots-witcher.white_raffards.second.2": "percentage of health (100%)",
+    "tooltip.effect.tcots-witcher.white_raffards.first":  "Immediately restores a large",
+    "tooltip.effect.tcots-witcher.white_raffards.second": "percentage of health",
+    "special.attribute.effect.tcots-witcher.white_raffards": "%s%% Health Restored",
+
     "item.tcots-witcher.white_raffards_splash": "Splash White Raffard's",
 
     "item.tcots-witcher.cat_potion": "Cat",
@@ -331,12 +368,16 @@
     "item.tcots-witcher.black_blood_potion": "Black Blood",
     "item.tcots-witcher.black_blood_potion_enhanced": "Enhanced Black Blood",
     "item.tcots-witcher.black_blood_potion_superior": "Superior Black Blood",
-    "tooltip.effect.tcots-witcher.black_blood.first.0":  "Returns 15% melee damage dealt",
-    "tooltip.effect.tcots-witcher.black_blood.second.0": "by undead and necrophages",
-    "tooltip.effect.tcots-witcher.black_blood.first.1":  "Returns 20% melee damage and knocks",
-    "tooltip.effect.tcots-witcher.black_blood.second.1": "back undead and necrophages",
-    "tooltip.effect.tcots-witcher.black_blood.first.2":  "Returns 30% melee damage, knocks back",
-    "tooltip.effect.tcots-witcher.black_blood.second.2": "and causes a bleeding effect",
+
+    "tooltip.effect.tcots-witcher.black_blood.first.0":  "Blood injures undead creatures",
+    "tooltip.effect.tcots-witcher.black_blood.second.0": "when they hit the user",
+    "tooltip.effect.tcots-witcher.black_blood.first.1":  "Blood injures and knocks back",
+    "tooltip.effect.tcots-witcher.black_blood.second.1": "undead when they hit the user",
+    "tooltip.effect.tcots-witcher.black_blood.extra":    "Makes nearby undead bleed",
+
+    "tooltip.effect.tcots-witcher.black_blood.applied": "In Monster Melee Hit:",
+    "special.attribute.effect.tcots-witcher.black_blood": "%s%% Reflected Damage",
+
     "tcots-witcher.sounds.black_blood_hit": "Black blood spills",
 
     "item.tcots-witcher.maribor_forest_potion": "Maribor Forest",
@@ -350,6 +391,11 @@
     "item.tcots-witcher.white_honey_potion_superior": "Superior White Honey",
     "tooltip.effect.tcots-witcher.white_honey.first":  "Clears Toxicity and cancels all",
     "tooltip.effect.tcots-witcher.white_honey.second": "active potion effects",
+
+
+    "effect.tcots-witcher.wolf_effect": "Wolf",
+
+    "effect.tcots-witcher.rook_effect": "Rook",
 
 
     "effect.tcots-witcher.swallow": "Swallow",
@@ -401,7 +447,7 @@
     "item.tcots-witcher.samum_superior": "Superior Samum",
     "tooltip.samum.first":  "Stuns opponents within its",
     "tooltip.samum.second": "explosion radius.",
-    "tooltip.samum.extra":  "Landed hit it's critical.",
+    "tooltip.samum.extra":  "First hit it's critical.",
     "effect.tcots-witcher.samum": "Samum Stun",
 
     "item.tcots-witcher.northern_wind": "Northern Wind",

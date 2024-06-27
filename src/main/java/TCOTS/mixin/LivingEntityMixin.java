@@ -190,9 +190,9 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         if(this.hasStatusEffect(TCOTS_Effects.BLACK_BLOOD_EFFECT)){
             int amplifier = Objects.requireNonNull(this.getStatusEffect(TCOTS_Effects.BLACK_BLOOD_EFFECT)).getAmplifier();
             float damageMultiplier = switch (amplifier) {
-                case 0 -> 0.15f;
-                case 1 -> 0.2f;
-                default -> 0.3f;
+                case 0 ->  0.15f;
+                case 1 ->  0.20f;
+                default -> 0.30f;
             };
 
             if(source.getAttacker() != null && source.getAttacker() instanceof LivingEntity attackerBlack &&
@@ -358,4 +358,5 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
                 && effect.getEffectType()==TCOTS_Effects.BLEEDING)
             cir.setReturnValue(false);
     }
+
 }

@@ -28,15 +28,15 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -44,7 +44,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-//@Debug(export = true) // Enables exporting for the targets of this mixin
+@Debug(export = true) // Enables exporting for the targets of this mixin
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityMixinInterface {
 
@@ -66,6 +66,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Shadow public abstract void playSound(SoundEvent sound, float volume, float pitch);
+
+    @Shadow public abstract Arm getMainArm();
 
     @Override
     public int theConjunctionOfTheSpheres$getMudInFace() {
@@ -129,13 +131,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             case 1:
                 //For every point it's 3 more damage
                 //So 2/3 it's two of damage
-                oilDamageAdded = (float) 2/3;
+                oilDamageAdded = 2f;
                 break;
             case 2:
-                oilDamageAdded = (float) 4/3;
+                oilDamageAdded = 4f;
                 break;
             case 3:
-                oilDamageAdded = (float) 6/3;
+                oilDamageAdded = 6f;
                 break;
             default:
                 break;
@@ -238,7 +240,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         }
     }
 
-    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 0)
+    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
+            , slice = @Slice(
+            from = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/entity/attribute/EntityAttribute;)D", ordinal = 0),
+            to = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
+    )
     private float injectMonsterOilAttack(float value){
         return value + oilDamageAdded;
     }
@@ -249,7 +257,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     //Refilling Alcohol
-
     @Unique
     private int potionTimer;
 
@@ -516,8 +523,45 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 StatusEffectInstance instance = entity.getStatusEffect(TCOTS_Effects.SAMUM_EFFECT);
                 assert instance != null;
                 int amplifier = instance.getAmplifier();
+
                 return value || amplifier > 1;
             }
+        }
+
+
+
+        return value;
+    }
+
+    @ModifyConstant(method = "attack", constant = @Constant(floatValue = 1.5f))
+    private float injectExtraCriticalWolf(float value){
+        if(this.hasStatusEffect(TCOTS_Effects.WOLF_EFFECT)){
+            //Wolf I:   -> 2.0f
+            //Wolf II:  -> 2.5f
+            //Wolf III: -> 3.0f
+
+            int amplifier = Objects.requireNonNull(this.getStatusEffect(TCOTS_Effects.WOLF_EFFECT)).getAmplifier();
+            return value + (0.5f + (amplifier*0.5f));
+        }
+
+        return value;
+    }
+
+    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
+            , slice = @Slice(
+            from = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/entity/attribute/EntityAttribute;)D", ordinal = 0),
+            to = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
+    )
+    private float addExtraSwordDamageRook(float value){
+        if(this.getMainHandStack().getItem() instanceof SwordItem && this.hasStatusEffect(TCOTS_Effects.ROOK_EFFECT)){
+            //Rook I:   -> +2
+            //Rook II:  -> +3
+            //Rook III: -> +4
+
+            int amplifier = Objects.requireNonNull(this.getStatusEffect(TCOTS_Effects.ROOK_EFFECT)).getAmplifier();
+            return value + (2 + (amplifier));
         }
 
         return value;
