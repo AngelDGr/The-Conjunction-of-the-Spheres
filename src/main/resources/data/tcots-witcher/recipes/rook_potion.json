@@ -1,24 +1,24 @@
 {
   "type": "tcots-witcher:alchemy_table",
-  "order": 0.2,
+  "order": 1.0,
   "category":"potions",
 
   "ingredients": [
     {
-      "item": "tcots-witcher:bunch_of_leaves"
+      "item": "tcots-witcher:poppy_petals"
     },
     {
-      "item": "tcots-witcher:nekker_heart"
+      "item": "tcots-witcher:nekker_eye"
     }
   ],
 
-  "ingredient_counters": [2,4],
+  "ingredient_counters": [4,3],
 
   "base": {
     "item": "tcots-witcher:dwarven_spirit"
   },
 
   "result": {
-    "item": "tcots-witcher:white_raffards_decoction"
+    "item": "tcots-witcher:rook_potion"
   }
 }

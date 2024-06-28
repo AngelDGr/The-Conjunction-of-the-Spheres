@@ -21,7 +21,7 @@
     }
   ],
 
-  "ingredient_counters": [1,4,4,2,1],
+  "ingredient_counters": [1,4,4,8,1],
 
   "base": {
     "item": "tcots-witcher:white_honey_potion_enhanced"

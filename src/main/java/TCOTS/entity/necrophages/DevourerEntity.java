@@ -74,6 +74,11 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         experiencePoints=10;
     }
 
+    @Override
+    public int getMaxHeadRotation() {
+        return 43;
+    }
+
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D)

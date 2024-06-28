@@ -71,6 +71,11 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
     }
 
     @Override
+    public int getMaxHeadRotation() {
+        return 50;
+    }
+
+    @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(LUGGING, Boolean.FALSE);

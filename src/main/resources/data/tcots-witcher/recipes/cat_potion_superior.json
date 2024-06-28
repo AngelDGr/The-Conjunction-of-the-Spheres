@@ -14,14 +14,14 @@
       "item": "minecraft:brown_mushroom"
     },
     {
-      "item": "minecraft:sunflower"
+      "item": "tcots-witcher:allspice"
     },
     {
       "item": "tcots-witcher:aether"
     }
   ],
 
-  "ingredient_counters": [1,4,4,1,1],
+  "ingredient_counters": [1,4,4,2,1],
 
   "base": {
     "item": "tcots-witcher:cat_potion_enhanced"

@@ -61,6 +61,11 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
     }
 
     @Override
+    public int getMaxHeadRotation() {
+        return 70;
+    }
+
+    @Override
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
 

@@ -14,14 +14,14 @@
       "item": "tcots-witcher:ghoul_blood"
     },
     {
-      "item": "tcots-witcher:devourer_teeth"
+      "item": "tcots-witcher:han_fiber"
     },
     {
       "item": "tcots-witcher:hydragenum"
     }
   ],
 
-  "ingredient_counters": [1,8,4,6,1],
+  "ingredient_counters": [1,16,4,6,1],
 
   "base": {
     "item": "tcots-witcher:wolf_potion_enhanced"

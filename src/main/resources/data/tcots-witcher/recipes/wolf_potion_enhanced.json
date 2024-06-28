@@ -18,7 +18,7 @@
     }
   ],
 
-  "ingredient_counters": [1,6,2,4],
+  "ingredient_counters": [1,12,2,8],
 
   "base": {
     "item": "tcots-witcher:wolf_potion"

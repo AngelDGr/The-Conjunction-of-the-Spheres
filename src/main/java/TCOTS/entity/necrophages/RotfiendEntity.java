@@ -65,6 +65,11 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     }
 
     @Override
+    public int getMaxHeadRotation() {
+        return 45;
+    }
+
+    @Override
     protected void initGoals() {
         //Attack
         //Emerge from ground

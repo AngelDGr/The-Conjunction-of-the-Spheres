@@ -21,7 +21,7 @@
     }
   ],
 
-  "ingredient_counters": [1,4,4,2,1],
+  "ingredient_counters": [1,4,4,6,1],
 
   "base": {
     "item": "tcots-witcher:maribor_forest_potion_enhanced"

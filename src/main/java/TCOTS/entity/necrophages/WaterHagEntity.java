@@ -77,6 +77,11 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     }
 
     @Override
+    public int getMaxHeadRotation() {
+        return 70;
+    }
+
+    @Override
     protected void initGoals() {
         this.goalSelector.add(0, new WaterHag_Swim(this));
 

@@ -63,6 +63,11 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     }
 
     @Override
+    public int getMaxHeadRotation() {
+        return 40;
+    }
+
+    @Override
     protected void initGoals() {
 
         //Emerge from ground

@@ -113,7 +113,7 @@ public class TCOTS_Items {
             //TODO: Blizzard: Add when added Golems
 
             //Witcher 2 Potions
-            //TODO: Rook: Increases damage with swords
+            //xTODO: Rook: Increases damage with swords
             //TODO: Brock: Makes possible apply different effects to mobs, but any damage it's received double
             //TODO: Gadwall: Increases a lot the regeneration and health boost but also weakness
             //TODO: Stammelford's Philtre: Something???
@@ -275,7 +275,6 @@ public class TCOTS_Items {
     public static Item WOLF_POTION_SUPERIOR;
 
     //W2
-    //TODO: Add recipes
     public static Item ROOK_POTION;
     public static Item ROOK_POTION_ENHANCED;
     public static Item ROOK_POTION_SUPERIOR;

@@ -8,14 +8,14 @@
       "item": "minecraft:glow_berries"
     },
     {
-      "item": "tcots-witcher:alghoul_bone_marrow"
+      "item": "tcots-witcher:drowner_tongue"
     },
     {
-      "item": "tcots-witcher:drowner_tongue"
+      "item": "tcots-witcher:alghoul_bone_marrow"
     }
   ],
 
-  "ingredient_counters": [3,2,4],
+  "ingredient_counters": [3,4,2],
 
   "base": {
     "item": "tcots-witcher:dwarven_spirit"

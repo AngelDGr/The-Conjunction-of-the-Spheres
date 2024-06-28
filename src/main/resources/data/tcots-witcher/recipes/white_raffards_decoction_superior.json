@@ -21,7 +21,7 @@
     }
   ],
 
-  "ingredient_counters": [1,4,4,1,1],
+  "ingredient_counters": [1,4,4,4,1],
 
   "base": {
     "item": "tcots-witcher:white_raffards_decoction_enhanced"

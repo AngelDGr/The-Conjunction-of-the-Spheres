@@ -80,6 +80,11 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
         this.experiencePoints = 8;
     }
 
+    @Override
+    public int getMaxHeadRotation() {
+        return 50;
+    }
+
     protected static final TrackedData<Boolean> ACTIVATES_FOG = DataTracker.registerData(FogletEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Float> ALPHA_VALUE = DataTracker.registerData(FogletEntity.class, TrackedDataHandlerRegistry.FLOAT);
 
@@ -203,6 +208,7 @@ public class FogletEntity extends Necrophage_Base implements GeoEntity {
         private boolean attack=false;
 
         private int ticksBeforeAttack=40;
+        @SuppressWarnings("all")
         @Override
         public void tick() {
             LivingEntity livingEntity = ((MobEntity)this.actor).getTarget();

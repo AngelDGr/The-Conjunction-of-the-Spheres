@@ -5,14 +5,14 @@
 
   "ingredients": [
     {
-      "item": "tcots-witcher:drowner_brain"
+      "item": "tcots-witcher:celandine"
     },
     {
-      "item": "tcots-witcher:celandine"
+      "item": "tcots-witcher:drowner_brain"
     }
   ],
 
-  "ingredient_counters": [1,5],
+  "ingredient_counters": [5,1],
 
   "base": {
     "item": "tcots-witcher:dwarven_spirit"
