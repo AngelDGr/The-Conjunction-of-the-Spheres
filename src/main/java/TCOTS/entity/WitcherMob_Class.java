@@ -1,6 +1,7 @@
 package TCOTS.entity;
 
-import TCOTS.entity.necrophages.Necrophage_Base;
+import TCOTS.entity.necrophages.NecrophageMonster;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -52,8 +53,17 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
         return true;
     }
 
-    public static boolean canSpawnInDark(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
+    protected SoundEvent getStepSound() {
+        return null;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        if(getStepSound()!=null){
+        this.playSound(this.getStepSound(), 0.15F, 1.0F);}
+        else {
+            super.playStepSound(pos,state);
+        }
     }
 
     @Override
@@ -68,16 +78,20 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
         return null;
     }
 
-    public static boolean canSpawnInDarkNotDeepslate(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawnInDark(EntityType<? extends NecrophageMonster> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
+    }
+
+    public static boolean canSpawnInDarkNotSurface(EntityType<? extends NecrophageMonster> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         if(spawnReason == SpawnReason.SPAWNER){
            return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
         } else {
         return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random) &&
-                pos.getY() >= 0;
+                pos.getY() <= 50;
         }
     }
 
-    public static boolean canSpawnInDark_NotCaves(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawnInDark_NotCaves(EntityType<? extends NecrophageMonster> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         if(spawnReason==SpawnReason.SPAWNER){
             return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
         } else {
@@ -86,7 +100,7 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
         }
     }
 
-    public static boolean canSpawnInDarkNotBelowDeepslate(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawnInDarkNotBelowDeepslate(EntityType<? extends NecrophageMonster> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         if(spawnReason==SpawnReason.SPAWNER){
             return world.getDifficulty() != Difficulty.PEACEFUL && HostileEntity.isSpawnDark(world, pos, random) && HostileEntity.canMobSpawn(type, world, spawnReason, pos, random);
         } else {

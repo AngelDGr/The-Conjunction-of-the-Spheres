@@ -40,7 +40,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.EnumSet;
 import java.util.List;
 
-public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
+public class GraveHagEntity extends NecrophageMonster implements GeoEntity {
 
     //xTODO: Add tongue attack
     //xTODO: Add running attack
@@ -252,7 +252,7 @@ public class GraveHagEntity extends Necrophage_Base implements GeoEntity {
                             livingEntity -> livingEntity.isAlive() && !(livingEntity instanceof GraveHagEntity));
 
                     for (LivingEntity livingEntity : listTargets) {
-                        if (!(livingEntity instanceof Necrophage_Base)) {
+                        if (!(livingEntity instanceof NecrophageMonster)) {
                             livingEntity.damage(graveHag.getDamageSources().mobAttack(graveHag), damageWithTongue);
                             if(livingEntity.isBlocking() && livingEntity instanceof PlayerEntity){
                                 ((PlayerEntity) livingEntity).disableShield(true);

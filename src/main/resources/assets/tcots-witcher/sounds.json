@@ -565,6 +565,48 @@
   },
 
 
+  "graveir_attack": {
+    "subtitle": "tcots-witcher.sounds.graveir_attack",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/graveir/graveir_attack1",
+      "tcots-witcher:entity/necrophages/graveir/graveir_attack2",
+      "tcots-witcher:entity/necrophages/graveir/graveir_attack3"
+    ]
+  },
+  "graveir_hurt": {
+    "subtitle": "tcots-witcher.sounds.graveir_hurt",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/graveir/graveir_hurt1",
+      "tcots-witcher:entity/necrophages/graveir/graveir_hurt2",
+      "tcots-witcher:entity/necrophages/graveir/graveir_hurt3"
+    ]
+  },
+  "graveir_idle": {
+    "subtitle": "tcots-witcher.sounds.graveir_idle",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/graveir/graveir_idle1",
+      "tcots-witcher:entity/necrophages/graveir/graveir_idle2",
+      "tcots-witcher:entity/necrophages/graveir/graveir_idle3",
+      "tcots-witcher:entity/necrophages/graveir/graveir_idle4"
+    ]
+  },
+  "graveir_death": {
+    "subtitle": "tcots-witcher.sounds.graveir_death",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/graveir/graveir_death1",
+      "tcots-witcher:entity/necrophages/graveir/graveir_death2",
+      "tcots-witcher:entity/necrophages/graveir/graveir_death3"
+    ]
+  },
+  "graveir_ground_punch": {
+    "subtitle": "tcots-witcher.sounds.graveir_ground_punch",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/graveir/graveir_ground_punch1",
+      "tcots-witcher:entity/necrophages/graveir/graveir_ground_punch2",
+      "tcots-witcher:entity/necrophages/graveir/graveir_ground_punch3"
+    ]
+  },
+
 
 
   "nekker_attack": {

@@ -92,6 +92,13 @@ public class TCOTS_Sounds {
     public static SoundEvent DEVOURER_DEATH = registerSoundEvent("devourer_death");
     public static SoundEvent DEVOURER_JUMP = registerSoundEvent("devourer_jump");
 
+    //Graveir
+    public static SoundEvent GRAVEIR_ATTACK = registerSoundEvent("graveir_attack");
+    public static SoundEvent GRAVEIR_HURT = registerSoundEvent("graveir_hurt");
+    public static SoundEvent GRAVEIR_IDLE = registerSoundEvent("graveir_idle");
+    public static SoundEvent GRAVEIR_DEATH = registerSoundEvent("graveir_death");
+    public static SoundEvent GRAVEIR_GROUND_PUNCH = registerSoundEvent("graveir_ground_punch");
+
     //Nekker
     public static SoundEvent NEKKER_ATTACK = registerSoundEvent("nekker_attack");
     public static SoundEvent NEKKER_HURT = registerSoundEvent("nekker_hurt");

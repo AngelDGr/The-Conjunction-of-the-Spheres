@@ -40,6 +40,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.FOGLET_SPAWN_EGG);
                             entries.add(TCOTS_Items.SCURVER_SPAWN_EGG);
                             entries.add(TCOTS_Items.DEVOURER_SPAWN_EGG);
+                            entries.add(TCOTS_Items.GRAVEIR_SPAWN_EGG);
 
 
                             //Drops

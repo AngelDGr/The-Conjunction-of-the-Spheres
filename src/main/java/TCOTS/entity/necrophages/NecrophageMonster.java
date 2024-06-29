@@ -9,8 +9,8 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.world.World;
 
-public class Necrophage_Base extends WitcherMob_Class {
-    protected Necrophage_Base(EntityType<? extends PathAwareEntity> entityType, World world) {
+public class NecrophageMonster extends WitcherMob_Class {
+    public NecrophageMonster(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
     }
 

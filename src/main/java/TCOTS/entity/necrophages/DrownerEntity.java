@@ -57,7 +57,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.List;
 
 @SuppressWarnings({"deprecation", "unused"})
-public class DrownerEntity extends Necrophage_Base implements GeoEntity, ExcavatorMob, LungeMob {
+public class DrownerEntity extends NecrophageMonster implements GeoEntity, ExcavatorMob, LungeMob {
 //xTODO: Make it faster when walking in water
 //xTODO: Make it that it don't sink in water
 //xTODO: Fix the data tracker
@@ -747,7 +747,7 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
     }
 
     //Natural Spawn
-    public static boolean canSpawnDrowner(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawnDrowner(EntityType<? extends NecrophageMonster> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         //If it's in ocean or river
         if(
                 world.getBiome(pos).isIn(BiomeTags.IS_OCEAN)
@@ -825,10 +825,6 @@ public class DrownerEntity extends Necrophage_Base implements GeoEntity, Excavat
         return TCOTS_Sounds.WATERY_FOOTSTEP;
     }
 
-    @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(this.getStepSound(), 0.15F, 1.0F);
-    }
     //Attack Sound
     @Override
     protected SoundEvent getAttackSound() {

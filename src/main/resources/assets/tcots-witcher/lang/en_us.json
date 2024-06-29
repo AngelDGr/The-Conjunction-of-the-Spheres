@@ -142,6 +142,17 @@
 
     "item.tcots-witcher.devourer_teeth": "Devourer Teeth",
 
+
+    "item.tcots-witcher.graveir_spawn_egg": "Graveir Spawn Egg",
+    "entity.tcots-witcher.graveir": "Graveir",
+    "tcots-witcher.sounds.graveir_attack": "Graveir attacks",
+    "tcots-witcher.sounds.graveir_hurt": "Graveir hurts",
+    "tcots-witcher.sounds.graveir_idle": "Graveir groans",
+    "tcots-witcher.sounds.graveir_death": "Graveir dies",
+    "tcots-witcher.sounds.graveir_ground_punch": "Graveir punch the ground",
+
+
+
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
     "entity.tcots-witcher.nekker": "Nekker",
     "tcots-witcher.sounds.nekker_attack": "Nekker attacks",

@@ -2,10 +2,10 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
-import TCOTS.utils.GeoControllersUtil;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.entity.misc.WaterHag_MudBallEntity;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -13,7 +13,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.RangedAttackMob;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.ProjectileAttackGoal;
+import net.minecraft.entity.ai.goal.RevengeGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -30,7 +33,6 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
@@ -48,7 +50,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.List;
 
 
-public class WaterHagEntity extends Necrophage_Base implements GeoEntity, RangedAttackMob, ExcavatorMob {
+public class WaterHagEntity extends NecrophageMonster implements GeoEntity, RangedAttackMob, ExcavatorMob {
 
     //xTODO: Add proper sounds
     //xTODO: Add mudball attack
@@ -453,10 +455,6 @@ public class WaterHagEntity extends Necrophage_Base implements GeoEntity, Ranged
     //Footsteps sounds
     protected SoundEvent getStepSound() {
         return TCOTS_Sounds.WATERY_FOOTSTEP;
-    }
-    @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 
     //Attack Sound

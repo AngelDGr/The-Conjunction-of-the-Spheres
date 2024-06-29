@@ -39,6 +39,9 @@ public abstract class BipedGeoModelBase<T extends GeoAnimatable> extends GeoMode
         return true;
     }
 
+    protected boolean hasArmZMovement(){
+        return true;
+    }
     @Override
     public void setCustomAnimations(T entity, long instanceId, AnimationState<T> animationState) {
         if(entity instanceof MobEntity mob){
@@ -70,8 +73,10 @@ public abstract class BipedGeoModelBase<T extends GeoAnimatable> extends GeoMode
                     left_arm.setRotX(GeoControllersUtil.getLimbSwing(animationState,  -0.9f, 0.5f, getArmsSpeed(), getArmsAmount(),false));
                     right_arm.setRotX(GeoControllersUtil.getLimbSwing(animationState, -0.5f, 0.9f, getArmsSpeed(), getArmsAmount(),true));
 
-                    right_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState,  -0.0f, 0.2f, getArmsSpeed(), getArmsAmount(), false));
-                    left_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState,   -0.2f, 0.0f, getArmsSpeed(),getArmsAmount(), true));
+                    if(this.hasArmZMovement()) {
+                        right_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState, -0.0f, 0.2f, getArmsSpeed(), getArmsAmount(), false));
+                        left_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState, -0.2f, 0.0f, getArmsSpeed(), getArmsAmount(), true));
+                    }
                 }
             }
         }

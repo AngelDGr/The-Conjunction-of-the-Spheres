@@ -41,7 +41,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.EnumSet;
 import java.util.List;
 
-public class RotfiendEntity extends Necrophage_Base implements GeoEntity, ExcavatorMob, LungeMob {
+public class RotfiendEntity extends NecrophageMonster implements GeoEntity, ExcavatorMob, LungeMob {
 
     //xTODO: Add Emerging animation (And digging?)
     //xTODO: Add drops
@@ -261,7 +261,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);
-        if (!dataTracker.get(InGROUND) || dataTracker.get(InGROUND)) {
+        if (!getInGroundDataTracker() || getInGroundDataTracker()) {
             this.setBoundingBox(this.calculateBoundingBox());
         }
     }
@@ -322,7 +322,7 @@ public class RotfiendEntity extends Necrophage_Base implements GeoEntity, Excava
 
     @Override
     protected Box calculateBoundingBox() {
-        if (dataTracker.get(InGROUND)) {
+        if (getInGroundDataTracker()) {
             return groundBox(this);
         }
         else{

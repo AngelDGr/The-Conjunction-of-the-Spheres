@@ -47,7 +47,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.List;
 
 
-public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob, LungeMob {
+public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorMob, LungeMob {
 
     //xTODO: Add spawn
     //xTODO: Add drops
@@ -135,7 +135,6 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
 
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.2f)
                 .add(EntityAttributes.GENERIC_ARMOR, 2f);
-
     }
 
     @Override
@@ -327,7 +326,7 @@ public class NekkerEntity extends Ogroid_Base implements GeoEntity, ExcavatorMob
     }
 
 
-    public static boolean canSpawnNekker(EntityType<? extends Ogroid_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawnNekker(EntityType<? extends OgroidMonster> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         if (world.getDifficulty() != Difficulty.PEACEFUL) {
             if (spawnReason.equals(SpawnReason.SPAWNER)) {
                 return true;

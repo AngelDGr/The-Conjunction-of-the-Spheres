@@ -107,6 +107,8 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.DEVOURER, DevourerRenderer::new);
 
+        EntityRendererRegistry.register(TCOTS_Entities.GRAVEIR, GraveirRenderer::new);
+
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
 
         //Bomb

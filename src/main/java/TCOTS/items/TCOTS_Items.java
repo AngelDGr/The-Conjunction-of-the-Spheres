@@ -169,6 +169,8 @@ public class TCOTS_Items {
     public static Item DEVOURER_SPAWN_EGG;
     public static Item DEVOURER_TEETH;
 
+    public static Item GRAVEIR_SPAWN_EGG;
+
 
     public static Item NEKKER_SPAWN_EGG;
     public static Item NEKKER_HEART;
@@ -243,6 +245,9 @@ public class TCOTS_Items {
                 new SpawnEggItem(TCOTS_Entities.DEVOURER, 0x606c68, 0x1f1f1f, new FabricItemSettings()));
         DEVOURER_TEETH = registerItem("devourer_teeth",
                 new Item(new FabricItemSettings()));
+
+        GRAVEIR_SPAWN_EGG = registerItem("graveir_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.GRAVEIR, 0xab706d, 0x882925, new FabricItemSettings()));
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
@@ -367,437 +372,446 @@ public class TCOTS_Items {
     public static Item MOON_DUST_ENHANCED;
     public static Item MOON_DUST_SUPERIOR;
 
-    //Register Witcher Potion Items
     public static void registerAlchemyConcoctions() {
 
         //Oils
-        EMPTY_OIL = registerItem("empty_oil",
-                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(1))
-        );
+        {
+            EMPTY_OIL = registerItem("empty_oil",
+                    new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(1))
+            );
 
-        NECROPHAGE_OIL=registerItem("oil_necrophage",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON), TCOTS_Entities.NECROPHAGES, 20,1)
-        );
-        ENHANCED_NECROPHAGE_OIL=registerItem("oil_necrophage_enhanced",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 40,2)
-        );
-        SUPERIOR_NECROPHAGE_OIL=registerItem("oil_necrophage_superior",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 60,3)
-        );
+            NECROPHAGE_OIL = registerItem("oil_necrophage",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON), TCOTS_Entities.NECROPHAGES, 20, 1)
+            );
+            ENHANCED_NECROPHAGE_OIL = registerItem("oil_necrophage_enhanced",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 40, 2)
+            );
+            SUPERIOR_NECROPHAGE_OIL = registerItem("oil_necrophage_superior",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 60, 3)
+            );
 
-        OGROID_OIL=registerItem("oil_ogroid",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 20,1)
-        );
-        ENHANCED_OGROID_OIL=registerItem("oil_ogroid_enhanced",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 40,2)
-        );
-        SUPERIOR_OGROID_OIL=registerItem("oil_ogroid_superior",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 60,3)
-        );
+            OGROID_OIL = registerItem("oil_ogroid",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 20, 1)
+            );
+            ENHANCED_OGROID_OIL = registerItem("oil_ogroid_enhanced",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 40, 2)
+            );
+            SUPERIOR_OGROID_OIL = registerItem("oil_ogroid_superior",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 60, 3)
+            );
 
-        BEAST_OIL=registerItem("oil_beast",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 20,1)
-        );
-        ENHANCED_BEAST_OIL=registerItem("oil_beast_enhanced",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 40,2)
-        );
-        SUPERIOR_BEAST_OIL=registerItem("oil_beast_superior",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 60,3)
-        );
+            BEAST_OIL = registerItem("oil_beast",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 20, 1)
+            );
+            ENHANCED_BEAST_OIL = registerItem("oil_beast_enhanced",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 40, 2)
+            );
+            SUPERIOR_BEAST_OIL = registerItem("oil_beast_superior",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 60, 3)
+            );
 
-        HANGED_OIL=registerItem("oil_hanged",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 20,1)
-        );
-        ENHANCED_HANGED_OIL=registerItem("oil_hanged_enhanced",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 40,2)
-        );
-        SUPERIOR_HANGED_OIL=registerItem("oil_hanged_superior",
-                new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 60,3)
-        );
-
+            HANGED_OIL = registerItem("oil_hanged",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 20, 1)
+            );
+            ENHANCED_HANGED_OIL = registerItem("oil_hanged_enhanced",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 40, 2)
+            );
+            SUPERIOR_HANGED_OIL = registerItem("oil_hanged_superior",
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 60, 3)
+            );
+        }
 
         //Bombs
-        EMPTY_BOMB_POWDER_2 = registerItem("bomb_powder_2",
-                new EmptyBombPowderItem(new FabricItemSettings().maxCount(2)));
+        {
+            EMPTY_BOMB_POWDER_2 = registerItem("bomb_powder_2",
+                    new EmptyBombPowderItem(new FabricItemSettings().maxCount(2)));
 
-        EMPTY_BOMB_POWDER_3 = registerItem("bomb_powder_3",
-                new EmptyBombPowderItem(new FabricItemSettings().maxCount(3)));
+            EMPTY_BOMB_POWDER_3 = registerItem("bomb_powder_3",
+                    new EmptyBombPowderItem(new FabricItemSettings().maxCount(3)));
 
-        EMPTY_BOMB_POWDER_4 = registerItem("bomb_powder_4",
-                new EmptyBombPowderItem(new FabricItemSettings().maxCount(4)));
-
-
-        GRAPESHOT=registerItem("grapeshot",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"grapeshot",0));
-
-        ENHANCED_GRAPESHOT=registerItem("grapeshot_enhanced",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"grapeshot",1));
-
-        SUPERIOR_GRAPESHOT=registerItem("grapeshot_superior",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"grapeshot",2));
+            EMPTY_BOMB_POWDER_4 = registerItem("bomb_powder_4",
+                    new EmptyBombPowderItem(new FabricItemSettings().maxCount(4)));
 
 
-        DANCING_STAR=registerItem("dancing_star",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"dancing_star",0));
+            GRAPESHOT = registerItem("grapeshot",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "grapeshot", 0));
 
-        DANCING_STAR_ENHANCED=registerItem("dancing_star_enhanced",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"dancing_star",1));
+            ENHANCED_GRAPESHOT = registerItem("grapeshot_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "grapeshot", 1));
 
-        DANCING_STAR_SUPERIOR=registerItem("dancing_star_superior",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"dancing_star",2));
-
-
-        DEVILS_PUFFBALL=registerItem("devils_puffball",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"devils_puffball",0));
-
-        DEVILS_PUFFBALL_ENHANCED=registerItem("devils_puffball_enhanced",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"devils_puffball",1));
-
-        DEVILS_PUFFBALL_SUPERIOR=registerItem("devils_puffball_superior",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"devils_puffball",2));
+            SUPERIOR_GRAPESHOT = registerItem("grapeshot_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "grapeshot", 2));
 
 
-        SAMUM=registerItem("samum",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"samum",0));
+            DANCING_STAR = registerItem("dancing_star",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "dancing_star", 0));
 
-        SAMUM_ENHANCED=registerItem("samum_enhanced",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"samum",1));
+            DANCING_STAR_ENHANCED = registerItem("dancing_star_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "dancing_star", 1));
 
-        SAMUM_SUPERIOR=registerItem("samum_superior",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"samum",2));
+            DANCING_STAR_SUPERIOR = registerItem("dancing_star_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "dancing_star", 2));
 
-        NORTHERN_WIND=registerItem("northern_wind",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"northern_wind",0));
 
-        NORTHERN_WIND_ENHANCED=registerItem("northern_wind_enhanced",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"northern_wind",1));
+            DEVILS_PUFFBALL = registerItem("devils_puffball",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "devils_puffball", 0));
 
-        NORTHERN_WIND_SUPERIOR=registerItem("northern_wind_superior",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"northern_wind",2));
+            DEVILS_PUFFBALL_ENHANCED = registerItem("devils_puffball_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "devils_puffball", 1));
 
-        DRAGONS_DREAM=registerItem("dragons_dream",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"dragons_dream",0));
+            DEVILS_PUFFBALL_SUPERIOR = registerItem("devils_puffball_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "devils_puffball", 2));
 
-        DRAGONS_DREAM_ENHANCED=registerItem("dragons_dream_enhanced",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"dragons_dream",1));
 
-        DRAGONS_DREAM_SUPERIOR=registerItem("dragons_dream_superior",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"dragons_dream",2));
+            SAMUM = registerItem("samum",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "samum", 0));
 
-        DIMERITIUM_BOMB=registerItem("dimeritium_bomb",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"dimeritium_bomb",0));
+            SAMUM_ENHANCED = registerItem("samum_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "samum", 1));
 
-        DIMERITIUM_BOMB_ENHANCED=registerItem("dimeritium_bomb_enhanced",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"dimeritium_bomb",1));
+            SAMUM_SUPERIOR = registerItem("samum_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "samum", 2));
 
-        DIMERITIUM_BOMB_SUPERIOR=registerItem("dimeritium_bomb_superior",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"dimeritium_bomb",2));
+            NORTHERN_WIND = registerItem("northern_wind",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "northern_wind", 0));
 
-        MOON_DUST=registerItem("moon_dust",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(2),"moon_dust",0));
+            NORTHERN_WIND_ENHANCED = registerItem("northern_wind_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "northern_wind", 1));
 
-        MOON_DUST_ENHANCED=registerItem("moon_dust_enhanced",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(3),"moon_dust",1));
+            NORTHERN_WIND_SUPERIOR = registerItem("northern_wind_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "northern_wind", 2));
 
-        MOON_DUST_SUPERIOR=registerItem("moon_dust_superior",
-                new WitcherBombs_Base(new FabricItemSettings().maxCount(4),"moon_dust",2));
+            DRAGONS_DREAM = registerItem("dragons_dream",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "dragons_dream", 0));
+
+            DRAGONS_DREAM_ENHANCED = registerItem("dragons_dream_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "dragons_dream", 1));
+
+            DRAGONS_DREAM_SUPERIOR = registerItem("dragons_dream_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "dragons_dream", 2));
+
+            DIMERITIUM_BOMB = registerItem("dimeritium_bomb",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "dimeritium_bomb", 0));
+
+            DIMERITIUM_BOMB_ENHANCED = registerItem("dimeritium_bomb_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "dimeritium_bomb", 1));
+
+            DIMERITIUM_BOMB_SUPERIOR = registerItem("dimeritium_bomb_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "dimeritium_bomb", 2));
+
+            MOON_DUST = registerItem("moon_dust",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "moon_dust", 0));
+
+            MOON_DUST_ENHANCED = registerItem("moon_dust_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "moon_dust", 1));
+
+            MOON_DUST_SUPERIOR = registerItem("moon_dust_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "moon_dust", 2));
+
+        }
 
         //Potions
+        {
+            {
+                EMPTY_WITCHER_POTION_2 = registerItem("empty_witcher_potion2",
+                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(2))
+                );
 
-        EMPTY_WITCHER_POTION_2 = registerItem("empty_witcher_potion2",
-                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(2))
-        );
+                EMPTY_WITCHER_POTION_3 = registerItem("empty_witcher_potion3",
+                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(3))
+                );
 
-        EMPTY_WITCHER_POTION_3 = registerItem("empty_witcher_potion3",
-                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(3))
-        );
+                EMPTY_WITCHER_POTION_4 = registerItem("empty_witcher_potion4",
+                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(4))
+                );
 
-        EMPTY_WITCHER_POTION_4 = registerItem("empty_witcher_potion4",
-                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(4))
-        );
-
-        EMPTY_WITCHER_POTION_5 = registerItem("empty_witcher_potion5",
-                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(5))
-        );
-
-
-        //W1
-        WOLF_POTION = registerItemPotion("wolf_potion",
-                new FabricItemSettings().maxCount(2),
-                TCOTS_Effects.WOLF_EFFECT,
-                25,
-                30,
-                0,
-                false
-        );
-
-        WOLF_POTION_ENHANCED = registerItemPotion("wolf_potion_enhanced",
-                new FabricItemSettings().maxCount(3),
-                TCOTS_Effects.WOLF_EFFECT,
-                25,
-                45,
-                1,
-                false
-        );
-
-        WOLF_POTION_SUPERIOR = registerItemPotion("wolf_potion_superior",
-                new FabricItemSettings().maxCount(3),
-                TCOTS_Effects.WOLF_EFFECT,
-                25,
-                60,
-                2,
-                false
-        );
-
-        //W2
-        ROOK_POTION = registerItemPotion("rook_potion",
-                new FabricItemSettings().maxCount(2),
-                TCOTS_Effects.ROOK_EFFECT,
-                25,
-                45,
-                0,
-                false
-        );
-
-        ROOK_POTION_ENHANCED = registerItemPotion("rook_potion_enhanced",
-                new FabricItemSettings().maxCount(3),
-                TCOTS_Effects.ROOK_EFFECT,
-                25,
-                60,
-                1,
-                false
-        );
-
-        ROOK_POTION_SUPERIOR = registerItemPotion("rook_potion_superior",
-                new FabricItemSettings().maxCount(3),
-                TCOTS_Effects.ROOK_EFFECT,
-                25,
-                90,
-                2,
-                false
-        );
-
-        //W3
-        SWALLOW_POTION = registerItemPotion("swallow_potion",
-                new FabricItemSettings().maxCount(3),
-                TCOTS_Effects.SWALLOW_EFFECT,
-                20,
-                20,
-                0,
-                false
-        );
-
-        SWALLOW_POTION_ENHANCED = registerItemPotion("swallow_potion_enhanced",
-                new FabricItemSettings().maxCount(4),
-                TCOTS_Effects.SWALLOW_EFFECT,
-                20,
-                20,
-                1,
-                false
-        );
-
-        SWALLOW_POTION_SUPERIOR = registerItemPotion("swallow_potion_superior",
-                new FabricItemSettings().maxCount(5),
-                TCOTS_Effects.SWALLOW_EFFECT,
-                20,
-                20,
-                2,
-                false
-        );
-
-        WHITE_RAFFARDS_DECOCTION = registerItemPotion("white_raffards_decoction",
-                new FabricItemSettings().maxCount(2),
-                TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
-                25,
-                1,
-                0,
-                false
-        );
-
-        WHITE_RAFFARDS_DECOCTION_ENHANCED = registerItemPotion("white_raffards_decoction_enhanced",
-                new FabricItemSettings().maxCount(2),
-                TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
-                25,
-                1,
-                1,
-                false
-        );
-
-        WHITE_RAFFARDS_DECOCTION_SUPERIOR = registerItemPotion("white_raffards_decoction_superior",
-                new FabricItemSettings().maxCount(3),
-                TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
-                25,
-                1,
-                2,
-                false
-        );
-
-        CAT_POTION = registerItemPotion("cat_potion",
-                new FabricItemSettings().maxCount(3),
-                TCOTS_Effects.CAT_EFFECT,
-                15,
-                60,
-                0,
-                false
-        );
-
-        CAT_POTION_ENHANCED = registerItemPotion("cat_potion_enhanced",
-                new FabricItemSettings().maxCount(4),
-                TCOTS_Effects.CAT_EFFECT,
-                15,
-                120,
-                1,
-                false
-        );
-
-        CAT_POTION_SUPERIOR = registerItemPotion("cat_potion_superior",
-                new FabricItemSettings().maxCount(5),
-                TCOTS_Effects.CAT_EFFECT,
-                15,
-                180,
-                2,
-                false
-        );
-
-        BLACK_BLOOD_POTION = registerItemPotion("black_blood_potion",
-                new FabricItemSettings().maxCount(3),
-                TCOTS_Effects.BLACK_BLOOD_EFFECT,
-                25,
-                30,
-                0,
-                false
-        );
-
-        BLACK_BLOOD_POTION_ENHANCED = registerItemPotion("black_blood_potion_enhanced",
-                new FabricItemSettings().maxCount(4),
-                TCOTS_Effects.BLACK_BLOOD_EFFECT,
-                25,
-                45,
-                1,
-                false
-        );
-
-        BLACK_BLOOD_POTION_SUPERIOR = registerItemPotion("black_blood_potion_superior",
-                new FabricItemSettings().maxCount(5),
-                TCOTS_Effects.BLACK_BLOOD_EFFECT,
-                25,
-                60,
-                2,
-                false
-        );
-
-        MARIBOR_FOREST_POTION = registerItemPotion("maribor_forest_potion",
-                new FabricItemSettings().maxCount(3),
-                TCOTS_Effects.MARIBOR_FOREST_EFFECT,
-                20,
-                30,
-                0,
-                false
-        );
-
-        MARIBOR_FOREST_POTION_ENHANCED = registerItemPotion("maribor_forest_potion_enhanced",
-                new FabricItemSettings().maxCount(4),
-                TCOTS_Effects.MARIBOR_FOREST_EFFECT,
-                20,
-                60,
-                1,
-                false
-        );
-
-        MARIBOR_FOREST_POTION_SUPERIOR = registerItemPotion("maribor_forest_potion_superior",
-                new FabricItemSettings().maxCount(5),
-                TCOTS_Effects.MARIBOR_FOREST_EFFECT,
-                20,
-                90,
-                2,
-                false
-        );
+                EMPTY_WITCHER_POTION_5 = registerItem("empty_witcher_potion5",
+                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(5))
+                );
 
 
-        KILLER_WHALE_POTION = registerItemPotion("killer_whale_potion",
-                new FabricItemSettings().maxCount(3),
-                TCOTS_Effects.KILLER_WHALE_EFFECT,
-                15,
-                90,
-                0,
-                false
-        );
+                //W1
+                WOLF_POTION = registerItemPotion("wolf_potion",
+                        new FabricItemSettings().maxCount(2),
+                        TCOTS_Effects.WOLF_EFFECT,
+                        25,
+                        30,
+                        0,
+                        false
+                );
 
-        WHITE_HONEY_POTION=registerItem("white_honey_potion",
-                new WitcherWhiteHoney(new FabricItemSettings().maxCount(1))
-        );
+                WOLF_POTION_ENHANCED = registerItemPotion("wolf_potion_enhanced",
+                        new FabricItemSettings().maxCount(3),
+                        TCOTS_Effects.WOLF_EFFECT,
+                        25,
+                        45,
+                        1,
+                        false
+                );
 
-        WHITE_HONEY_POTION_ENHANCED=registerItem("white_honey_potion_enhanced",
-                new WitcherWhiteHoney(new FabricItemSettings().maxCount(2))
-        );
+                WOLF_POTION_SUPERIOR = registerItemPotion("wolf_potion_superior",
+                        new FabricItemSettings().maxCount(3),
+                        TCOTS_Effects.WOLF_EFFECT,
+                        25,
+                        60,
+                        2,
+                        false
+                );
 
-        WHITE_HONEY_POTION_SUPERIOR=registerItem("white_honey_potion_superior",
-                new WitcherWhiteHoney(new FabricItemSettings().maxCount(5))
-        );
+                //W2
+                ROOK_POTION = registerItemPotion("rook_potion",
+                        new FabricItemSettings().maxCount(2),
+                        TCOTS_Effects.ROOK_EFFECT,
+                        25,
+                        45,
+                        0,
+                        false
+                );
 
-        //Splash Potions
-        SWALLOW_SPLASH = registerSplashPotion("swallow_splash",
-                new FabricItemSettings().maxCount(5),
-                TCOTS_Effects.SWALLOW_EFFECT,
-                10,
-                18
-        );
+                ROOK_POTION_ENHANCED = registerItemPotion("rook_potion_enhanced",
+                        new FabricItemSettings().maxCount(3),
+                        TCOTS_Effects.ROOK_EFFECT,
+                        25,
+                        60,
+                        1,
+                        false
+                );
 
-        WHITE_RAFFARDS_DECOCTION_SPLASH = registerSplashPotion("white_raffards_splash",
-                new FabricItemSettings().maxCount(5),
-                TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
-                15,
-                1
-        );
+                ROOK_POTION_SUPERIOR = registerItemPotion("rook_potion_superior",
+                        new FabricItemSettings().maxCount(3),
+                        TCOTS_Effects.ROOK_EFFECT,
+                        25,
+                        90,
+                        2,
+                        false
+                );
 
-        KILLER_WHALE_SPLASH = registerSplashPotion("killer_whale_splash",
-                new FabricItemSettings().maxCount(5),
-                TCOTS_Effects.KILLER_WHALE_EFFECT,
-                10,
-                75
-        );
+                //W3
+                SWALLOW_POTION = registerItemPotion("swallow_potion",
+                        new FabricItemSettings().maxCount(3),
+                        TCOTS_Effects.SWALLOW_EFFECT,
+                        20,
+                        20,
+                        0,
+                        false
+                );
+
+                SWALLOW_POTION_ENHANCED = registerItemPotion("swallow_potion_enhanced",
+                        new FabricItemSettings().maxCount(4),
+                        TCOTS_Effects.SWALLOW_EFFECT,
+                        20,
+                        20,
+                        1,
+                        false
+                );
+
+                SWALLOW_POTION_SUPERIOR = registerItemPotion("swallow_potion_superior",
+                        new FabricItemSettings().maxCount(5),
+                        TCOTS_Effects.SWALLOW_EFFECT,
+                        20,
+                        20,
+                        2,
+                        false
+                );
+
+                WHITE_RAFFARDS_DECOCTION = registerItemPotion("white_raffards_decoction",
+                        new FabricItemSettings().maxCount(2),
+                        TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                        25,
+                        1,
+                        0,
+                        false
+                );
+
+                WHITE_RAFFARDS_DECOCTION_ENHANCED = registerItemPotion("white_raffards_decoction_enhanced",
+                        new FabricItemSettings().maxCount(2),
+                        TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                        25,
+                        1,
+                        1,
+                        false
+                );
+
+                WHITE_RAFFARDS_DECOCTION_SUPERIOR = registerItemPotion("white_raffards_decoction_superior",
+                        new FabricItemSettings().maxCount(3),
+                        TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                        25,
+                        1,
+                        2,
+                        false
+                );
+
+                CAT_POTION = registerItemPotion("cat_potion",
+                        new FabricItemSettings().maxCount(3),
+                        TCOTS_Effects.CAT_EFFECT,
+                        15,
+                        60,
+                        0,
+                        false
+                );
+
+                CAT_POTION_ENHANCED = registerItemPotion("cat_potion_enhanced",
+                        new FabricItemSettings().maxCount(4),
+                        TCOTS_Effects.CAT_EFFECT,
+                        15,
+                        120,
+                        1,
+                        false
+                );
+
+                CAT_POTION_SUPERIOR = registerItemPotion("cat_potion_superior",
+                        new FabricItemSettings().maxCount(5),
+                        TCOTS_Effects.CAT_EFFECT,
+                        15,
+                        180,
+                        2,
+                        false
+                );
+
+                BLACK_BLOOD_POTION = registerItemPotion("black_blood_potion",
+                        new FabricItemSettings().maxCount(3),
+                        TCOTS_Effects.BLACK_BLOOD_EFFECT,
+                        25,
+                        30,
+                        0,
+                        false
+                );
+
+                BLACK_BLOOD_POTION_ENHANCED = registerItemPotion("black_blood_potion_enhanced",
+                        new FabricItemSettings().maxCount(4),
+                        TCOTS_Effects.BLACK_BLOOD_EFFECT,
+                        25,
+                        45,
+                        1,
+                        false
+                );
+
+                BLACK_BLOOD_POTION_SUPERIOR = registerItemPotion("black_blood_potion_superior",
+                        new FabricItemSettings().maxCount(5),
+                        TCOTS_Effects.BLACK_BLOOD_EFFECT,
+                        25,
+                        60,
+                        2,
+                        false
+                );
+
+                MARIBOR_FOREST_POTION = registerItemPotion("maribor_forest_potion",
+                        new FabricItemSettings().maxCount(3),
+                        TCOTS_Effects.MARIBOR_FOREST_EFFECT,
+                        20,
+                        30,
+                        0,
+                        false
+                );
+
+                MARIBOR_FOREST_POTION_ENHANCED = registerItemPotion("maribor_forest_potion_enhanced",
+                        new FabricItemSettings().maxCount(4),
+                        TCOTS_Effects.MARIBOR_FOREST_EFFECT,
+                        20,
+                        60,
+                        1,
+                        false
+                );
+
+                MARIBOR_FOREST_POTION_SUPERIOR = registerItemPotion("maribor_forest_potion_superior",
+                        new FabricItemSettings().maxCount(5),
+                        TCOTS_Effects.MARIBOR_FOREST_EFFECT,
+                        20,
+                        90,
+                        2,
+                        false
+                );
 
 
-        //Decoctions
-        EMPTY_MONSTER_DECOCTION = registerItem("empty_monster_decoction",
-                new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(1))
-        );
+                KILLER_WHALE_POTION = registerItemPotion("killer_whale_potion",
+                        new FabricItemSettings().maxCount(3),
+                        TCOTS_Effects.KILLER_WHALE_EFFECT,
+                        15,
+                        90,
+                        0,
+                        false
+                );
 
-        GRAVE_HAG_DECOCTION = registerItemPotion("grave_hag_decoction",
-                new FabricItemSettings().maxCount(1),
-                TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT,
-                50,
-                1200,
-                0,
-                true
-        );
+                WHITE_HONEY_POTION = registerItem("white_honey_potion",
+                        new WitcherWhiteHoney(new FabricItemSettings().maxCount(1))
+                );
 
-        WATER_HAG_DECOCTION = registerItemPotion("water_hag_decoction",
-                new FabricItemSettings().maxCount(1),
-                TCOTS_Effects.WATER_HAG_DECOCTION_EFFECT,
-                50,
-                1200,
-                0,
-                true
-        );
+                WHITE_HONEY_POTION_ENHANCED = registerItem("white_honey_potion_enhanced",
+                        new WitcherWhiteHoney(new FabricItemSettings().maxCount(2))
+                );
 
-        ALGHOUL_DECOCTION = registerItemPotion("alghoul_decoction",
-                new FabricItemSettings().maxCount(1),
-                TCOTS_Effects.ALGHOUL_DECOCTION_EFFECT,
-                50,
-                1200,
-                0,
-                true
-        );
+                WHITE_HONEY_POTION_SUPERIOR = registerItem("white_honey_potion_superior",
+                        new WitcherWhiteHoney(new FabricItemSettings().maxCount(5))
+                );
+            }
 
-        FOGLET_DECOCTION = registerItemPotion("foglet_decoction",
-                new FabricItemSettings().maxCount(1),
-                TCOTS_Effects.FOGLET_DECOCTION_EFFECT,
-                50,
-                1200,
-                0,
-                true
-        );
+            //Splash Potions
+            {
+                SWALLOW_SPLASH = registerSplashPotion("swallow_splash",
+                        new FabricItemSettings().maxCount(5),
+                        TCOTS_Effects.SWALLOW_EFFECT,
+                        10,
+                        18
+                );
+
+                WHITE_RAFFARDS_DECOCTION_SPLASH = registerSplashPotion("white_raffards_splash",
+                        new FabricItemSettings().maxCount(5),
+                        TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                        15,
+                        1
+                );
+
+                KILLER_WHALE_SPLASH = registerSplashPotion("killer_whale_splash",
+                        new FabricItemSettings().maxCount(5),
+                        TCOTS_Effects.KILLER_WHALE_EFFECT,
+                        10,
+                        75
+                );
+            }
+
+            //Decoctions
+            {
+                EMPTY_MONSTER_DECOCTION = registerItem("empty_monster_decoction",
+                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(1))
+                );
+
+                GRAVE_HAG_DECOCTION = registerItemPotion("grave_hag_decoction",
+                        new FabricItemSettings().maxCount(1),
+                        TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT,
+                        50,
+                        1200,
+                        0,
+                        true
+                );
+
+                WATER_HAG_DECOCTION = registerItemPotion("water_hag_decoction",
+                        new FabricItemSettings().maxCount(1),
+                        TCOTS_Effects.WATER_HAG_DECOCTION_EFFECT,
+                        50,
+                        1200,
+                        0,
+                        true
+                );
+
+                ALGHOUL_DECOCTION = registerItemPotion("alghoul_decoction",
+                        new FabricItemSettings().maxCount(1),
+                        TCOTS_Effects.ALGHOUL_DECOCTION_EFFECT,
+                        50,
+                        1200,
+                        0,
+                        true
+                );
+
+                FOGLET_DECOCTION = registerItemPotion("foglet_decoction",
+                        new FabricItemSettings().maxCount(1),
+                        TCOTS_Effects.FOGLET_DECOCTION_EFFECT,
+                        50,
+                        1200,
+                        0,
+                        true
+                );
+            }
+        }
 
     }
 
@@ -809,6 +823,7 @@ public class TCOTS_Items {
     public static Item BROADHEAD_BOLT;
 
     public static void registerWeapons_Armors(){
+
         KNIGHT_CROSSBOW = registerItem("knight_crossbow",
                 new KnightCrossbow(new FabricItemSettings().maxCount(1).maxDamage(600)));
 
@@ -876,150 +891,156 @@ public class TCOTS_Items {
     public static void registerAlchemyIngredients(){
 
         //Alcohol
-        ICY_SPIRIT = (WitcherAlcohol_Base) registerItem("icy_spirit",
-                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(64),
-                        Arrays.asList(
-                        new StatusEffectInstance(StatusEffects.NAUSEA,200, 0),
-                        new StatusEffectInstance(StatusEffects.SATURATION,10, 1)),
-                        1));
+        {
+            ICY_SPIRIT = (WitcherAlcohol_Base) registerItem("icy_spirit",
+                    new WitcherAlcohol_Base(new FabricItemSettings().maxCount(64),
+                            Arrays.asList(
+                                    new StatusEffectInstance(StatusEffects.NAUSEA, 200, 0),
+                                    new StatusEffectInstance(StatusEffects.SATURATION, 10, 1)),
+                            1));
 
-        DWARVEN_SPIRIT = (WitcherAlcohol_Base) registerItem("dwarven_spirit",
-                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(16),
-                        List.of(new StatusEffectInstance(StatusEffects.NAUSEA, 1, 200)),
-                        2));
+            DWARVEN_SPIRIT = (WitcherAlcohol_Base) registerItem("dwarven_spirit",
+                    new WitcherAlcohol_Base(new FabricItemSettings().maxCount(16),
+                            List.of(new StatusEffectInstance(StatusEffects.NAUSEA, 1, 200)),
+                            2));
 
-        ALCOHEST = (WitcherAlcohol_Base) registerItem("alcohest",
-                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(16),
-                        List.of(new StatusEffectInstance(StatusEffects.NAUSEA, 600, 2)),
-                        4));
+            ALCOHEST = (WitcherAlcohol_Base) registerItem("alcohest",
+                    new WitcherAlcohol_Base(new FabricItemSettings().maxCount(16),
+                            List.of(new StatusEffectInstance(StatusEffects.NAUSEA, 600, 2)),
+                            4));
 
-        WHITE_GULL = (WitcherAlcohol_Base) registerItem("white_gull",
-                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(8),
-                        Arrays.asList(
-                                new StatusEffectInstance(StatusEffects.NAUSEA, 1200, 3),
-                                new StatusEffectInstance(StatusEffects.POISON, 40, 1)),
-                        8));
+            WHITE_GULL = (WitcherAlcohol_Base) registerItem("white_gull",
+                    new WitcherAlcohol_Base(new FabricItemSettings().maxCount(8),
+                            Arrays.asList(
+                                    new StatusEffectInstance(StatusEffects.NAUSEA, 1200, 3),
+                                    new StatusEffectInstance(StatusEffects.POISON, 40, 1)),
+                            8));
 
 
-        VILLAGE_HERBAL = (WitcherAlcohol_Base) registerItem("village_herbal",
-                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(8),
-                        Arrays.asList(
-                                new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1),
-                                new StatusEffectInstance(StatusEffects.REGENERATION,200,0)),
-                        4));
+            VILLAGE_HERBAL = (WitcherAlcohol_Base) registerItem("village_herbal",
+                    new WitcherAlcohol_Base(new FabricItemSettings().maxCount(8),
+                            Arrays.asList(
+                                    new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1),
+                                    new StatusEffectInstance(StatusEffects.REGENERATION, 200, 0)),
+                            4));
 
-        CHERRY_CORDIAL = (WitcherAlcohol_Base) registerItem("cherry_cordial",
-                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(16),
-                        Arrays.asList(
-                                new StatusEffectInstance(StatusEffects.NAUSEA, 200,1),
-                                new StatusEffectInstance(StatusEffects.ABSORPTION, 200,0)),
-                        2));
+            CHERRY_CORDIAL = (WitcherAlcohol_Base) registerItem("cherry_cordial",
+                    new WitcherAlcohol_Base(new FabricItemSettings().maxCount(16),
+                            Arrays.asList(
+                                    new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1),
+                                    new StatusEffectInstance(StatusEffects.ABSORPTION, 200, 0)),
+                            2));
 
-        MANDRAKE_CORDIAL = (WitcherAlcohol_Base) registerItem("mandrake_cordial",
-                new WitcherAlcohol_Base(new FabricItemSettings().maxCount(8),
-                        Arrays.asList(
-                                new StatusEffectInstance(StatusEffects.NAUSEA, 400, 2),
-                                new StatusEffectInstance(StatusEffects.RESISTANCE, 400, 0)),
-                        6));
+            MANDRAKE_CORDIAL = (WitcherAlcohol_Base) registerItem("mandrake_cordial",
+                    new WitcherAlcohol_Base(new FabricItemSettings().maxCount(8),
+                            Arrays.asList(
+                                    new StatusEffectInstance(StatusEffects.NAUSEA, 400, 2),
+                                    new StatusEffectInstance(StatusEffects.RESISTANCE, 400, 0)),
+                            6));
+        }
 
 
         //Substances
-        AETHER = registerItem("aether",
-                new Item(new FabricItemSettings()));
+        {
+            AETHER = registerItem("aether",
+                    new Item(new FabricItemSettings()));
 
-        VITRIOL = registerItem("vitriol",
-                new Item(new FabricItemSettings()));
+            VITRIOL = registerItem("vitriol",
+                    new Item(new FabricItemSettings()));
 
-        VERMILION = registerItem("vermilion",
-                new Item(new FabricItemSettings()));
+            VERMILION = registerItem("vermilion",
+                    new Item(new FabricItemSettings()));
 
-        HYDRAGENUM = registerItem("hydragenum",
-                new Item(new FabricItemSettings()));
+            HYDRAGENUM = registerItem("hydragenum",
+                    new Item(new FabricItemSettings()));
 
-        QUEBRITH = registerItem("quebrith",
-                new Item(new FabricItemSettings()));
+            QUEBRITH = registerItem("quebrith",
+                    new Item(new FabricItemSettings()));
 
-        RUBEDO = registerItem("rubedo",
-                new Item(new FabricItemSettings()));
+            RUBEDO = registerItem("rubedo",
+                    new Item(new FabricItemSettings()));
 
-        REBIS = registerItem("rebis",
-                new Item(new FabricItemSettings()));
+            REBIS = registerItem("rebis",
+                    new Item(new FabricItemSettings()));
 
-        NIGREDO = registerItem("nigredo",
-                new Item(new FabricItemSettings()));
+            NIGREDO = registerItem("nigredo",
+                    new Item(new FabricItemSettings()));
 
-        ALCHEMY_PASTE = registerItem("alchemy_paste",
-                new Item(new FabricItemSettings()));
+            ALCHEMY_PASTE = registerItem("alchemy_paste",
+                    new Item(new FabricItemSettings()));
 
-        MONSTER_FAT = registerItem("monster_fat",
-                new Item(new FabricItemSettings()));
+            MONSTER_FAT = registerItem("monster_fat",
+                    new Item(new FabricItemSettings()));
 
-        STAMMELFORDS_DUST = registerItem("stammelfords_dust",
-                new Item(new FabricItemSettings()));
+            STAMMELFORDS_DUST = registerItem("stammelfords_dust",
+                    new Item(new FabricItemSettings()));
 
-        ALCHEMISTS_POWDER = registerItem("alchemists_powder",
-                new Item(new FabricItemSettings()));
+            ALCHEMISTS_POWDER = registerItem("alchemists_powder",
+                    new Item(new FabricItemSettings()));
+        }
 
         //Plants
-        ALLSPICE = registerItem("allspice",
-                new Item(new FabricItemSettings()));
+        {
+            ALLSPICE = registerItem("allspice",
+                    new Item(new FabricItemSettings()));
 
-        ARENARIA = registerItem("arenaria",
-                new AliasedBlockItem(TCOTS_Blocks.ARENARIA_BUSH,
-                        new FabricItemSettings()));
+            ARENARIA = registerItem("arenaria",
+                    new AliasedBlockItem(TCOTS_Blocks.ARENARIA_BUSH,
+                            new FabricItemSettings()));
 
-        CELANDINE = registerItem("celandine",
-                new AliasedBlockItem(TCOTS_Blocks.CELANDINE_PLANT,
-                        new FabricItemSettings()));
+            CELANDINE = registerItem("celandine",
+                    new AliasedBlockItem(TCOTS_Blocks.CELANDINE_PLANT,
+                            new FabricItemSettings()));
 
-        CROWS_EYE = registerItem("crows_eye",
-                new AliasedBlockItem(TCOTS_Blocks.CROWS_EYE_FERN,
-                        new FabricItemSettings().food(new FoodComponent.Builder().hunger(4).saturationModifier(1.2f).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0), 0.8f).build())));
+            CROWS_EYE = registerItem("crows_eye",
+                    new AliasedBlockItem(TCOTS_Blocks.CROWS_EYE_FERN,
+                            new FabricItemSettings().food(new FoodComponent.Builder().hunger(4).saturationModifier(1.2f).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0), 0.8f).build())));
 
-        BRYONIA = registerItem("bryonia",
-                new AliasedBlockItem(TCOTS_Blocks.BRYONIA_VINE,
-                        new FabricItemSettings()));
+            BRYONIA = registerItem("bryonia",
+                    new AliasedBlockItem(TCOTS_Blocks.BRYONIA_VINE,
+                            new FabricItemSettings()));
 
-        VERBENA = registerItem("verbena",
-                new AliasedBlockItem(TCOTS_Blocks.VERBENA_FLOWER,
-                        new FabricItemSettings()));
+            VERBENA = registerItem("verbena",
+                    new AliasedBlockItem(TCOTS_Blocks.VERBENA_FLOWER,
+                            new FabricItemSettings()));
 
-        HAN_FIBER = registerItem("han_fiber",
-                new AliasedBlockItem(TCOTS_Blocks.HAN_FIBER_PLANT,
-                        new FabricItemSettings()));
+            HAN_FIBER = registerItem("han_fiber",
+                    new AliasedBlockItem(TCOTS_Blocks.HAN_FIBER_PLANT,
+                            new FabricItemSettings()));
 
-        PUFFBALL = registerItem("puffball",
-                new AliasedBlockItem(TCOTS_Blocks.PUFFBALL_MUSHROOM,
-                        new FabricItemSettings()));
+            PUFFBALL = registerItem("puffball",
+                    new AliasedBlockItem(TCOTS_Blocks.PUFFBALL_MUSHROOM,
+                            new FabricItemSettings()));
 
-        SEWANT_MUSHROOMS = registerItem("sewant_mushrooms",
-                new AliasedBlockItem(TCOTS_Blocks.SEWANT_MUSHROOMS_PLANT,
-                        new FabricItemSettings()));
+            SEWANT_MUSHROOMS = registerItem("sewant_mushrooms",
+                    new AliasedBlockItem(TCOTS_Blocks.SEWANT_MUSHROOMS_PLANT,
+                            new FabricItemSettings()));
 
 
-        ERGOT_SEEDS = registerItem("ergot_seeds",
-                new Item(new FabricItemSettings()));
+            ERGOT_SEEDS = registerItem("ergot_seeds",
+                    new Item(new FabricItemSettings()));
 
-        LILY_OF_THE_VALLEY_PETALS = registerItem("lily_of_the_valley_petals",
-                new Item(new FabricItemSettings()));
+            LILY_OF_THE_VALLEY_PETALS = registerItem("lily_of_the_valley_petals",
+                    new Item(new FabricItemSettings()));
 
-        ALLIUM_PETALS = registerItem("allium_petals",
-                new Item(new FabricItemSettings()));
+            ALLIUM_PETALS = registerItem("allium_petals",
+                    new Item(new FabricItemSettings()));
 
-        POPPY_PETALS = registerItem("poppy_petals",
-                new Item(new FabricItemSettings()));
+            POPPY_PETALS = registerItem("poppy_petals",
+                    new Item(new FabricItemSettings()));
 
-        PEONY_PETALS = registerItem("peony_petals",
-                new Item(new FabricItemSettings()));
+            PEONY_PETALS = registerItem("peony_petals",
+                    new Item(new FabricItemSettings()));
 
-        AZURE_BLUET_PETALS = registerItem("azure_bluet_petals",
-                new Item(new FabricItemSettings()));
+            AZURE_BLUET_PETALS = registerItem("azure_bluet_petals",
+                    new Item(new FabricItemSettings()));
 
-        OXEYE_DAISY_PETALS = registerItem("oxeye_daisy_petals",
-                new Item(new FabricItemSettings()));
+            OXEYE_DAISY_PETALS = registerItem("oxeye_daisy_petals",
+                    new Item(new FabricItemSettings()));
 
-        BUNCH_OF_LEAVES = registerItem("bunch_of_leaves",
-                new Item(new FabricItemSettings()));
+            BUNCH_OF_LEAVES = registerItem("bunch_of_leaves",
+                    new Item(new FabricItemSettings()));
+        }
     }
 
 

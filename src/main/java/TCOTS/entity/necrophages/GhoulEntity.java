@@ -44,7 +44,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob {
+public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMob {
 
     //xTODO: Add new combat/regeneration
     //xTODO: Add Ghoul's Blood
@@ -303,7 +303,7 @@ public class GhoulEntity extends Necrophage_Base implements GeoEntity, LungeMob 
         return super.isPushable();
     }
 
-    public static boolean canSpawnGhoul(EntityType<? extends Necrophage_Base> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawnGhoul(EntityType<? extends NecrophageMonster> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         if(spawnReason == SpawnReason.SPAWNER){
             return world.getDifficulty() != Difficulty.PEACEFUL;
         } else {

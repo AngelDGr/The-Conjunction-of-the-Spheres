@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-public class FogletEntity extends Necrophage_Base implements GeoEntity {
+public class FogletEntity extends NecrophageMonster implements GeoEntity {
 
     //xTODO: Add fog attack goal
         //xTODO: Trigger animation and sound

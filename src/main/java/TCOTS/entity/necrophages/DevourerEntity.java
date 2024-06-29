@@ -47,7 +47,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
 
-public class DevourerEntity extends Necrophage_Base implements GeoEntity, ExcavatorMob {
+public class DevourerEntity extends NecrophageMonster implements GeoEntity, ExcavatorMob {
 
     //xTODO: Finish bestiary
     //xTODO: Make the water cancel the jump
@@ -90,7 +90,6 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
 
     @Override
     protected void initGoals() {
-        //Attack
         //Emerge from ground
         this.goalSelector.add(0, new EmergeFromGroundGoal_Excavator(this, 500));
         this.goalSelector.add(1, new SwimGoal(this));
@@ -300,23 +299,11 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         );
     }
 
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
-        nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
-        nbt.putBoolean("Invisible", this.dataTracker.get(INVISIBLE));
-    }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        this.setInGroundDataTracker(nbt.getBoolean("InGround"));
-        this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
-        this.setInvisibleData(nbt.getBoolean("Invisible"));
-        super.readCustomDataFromNbt(nbt);
+    public boolean canHaveStatusEffect(StatusEffectInstance effect) {
+        return effect.getEffectType() != TCOTS_Effects.SAMUM_EFFECT && super.canHaveStatusEffect(effect);
     }
-
-
 
     public boolean cooldownBetweenJumps=false;
     int jumpTicks;
@@ -331,6 +318,32 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         } else {
             cooldownBetweenJumps=false;
         }
+    }
+
+
+    public void setIsFalling(boolean isFalling) {
+        this.dataTracker.set(FALLING, isFalling);
+    }
+
+    public boolean isFalling() {
+        return this.dataTracker.get(FALLING);
+    }
+
+    //Excavator Common
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
+        nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
+        nbt.putBoolean("Invisible", this.dataTracker.get(INVISIBLE));
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        this.setInGroundDataTracker(nbt.getBoolean("InGround"));
+        this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
+        this.setInvisibleData(nbt.getBoolean("Invisible"));
+        super.readCustomDataFromNbt(nbt);
     }
 
     @Override
@@ -357,7 +370,7 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
 
     @Override
     protected Box calculateBoundingBox() {
-        if (dataTracker.get(InGROUND)) {
+        if (getInGroundDataTracker()) {
             return groundBox(this);
         }
         else{
@@ -366,39 +379,14 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         }
     }
 
-    //Sounds
-    @Override
-    protected SoundEvent getAmbientSound() {
-        if (!this.getInGroundDataTracker()) {
-            return TCOTS_Sounds.DEVOURER_IDLE;
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return TCOTS_Sounds.DEVOURER_HURT;
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        return TCOTS_Sounds.DEVOURER_DEATH;
-    }
-
-    @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource) || this.isFalling();
-    }
-
     @Override
     public boolean isPushable() {
         return !this.getIsEmerging() && !this.getInGroundDataTracker();
     }
 
     @Override
-    protected SoundEvent getAttackSound() {
-        return TCOTS_Sounds.DEVOURER_ATTACK;
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource) || this.isFalling();
     }
 
     int AnimationParticlesTicks=36;
@@ -411,14 +399,6 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
     @Override
     public void setAnimationParticlesTicks(int animationParticlesTicks) {
         AnimationParticlesTicks=animationParticlesTicks;
-    }
-
-    public void setIsFalling(boolean isFalling) {
-        this.dataTracker.set(FALLING, isFalling);
-    }
-
-    public boolean isFalling() {
-        return this.dataTracker.get(FALLING);
     }
 
     @Override
@@ -461,9 +441,30 @@ public class DevourerEntity extends Necrophage_Base implements GeoEntity, Excava
         this.dataTracker.set(INVISIBLE, isInvisible);
     }
 
+
+    //Sounds
     @Override
-    public boolean canHaveStatusEffect(StatusEffectInstance effect) {
-        return effect.getEffectType() != TCOTS_Effects.SAMUM_EFFECT && super.canHaveStatusEffect(effect);
+    protected SoundEvent getAmbientSound() {
+        if (!this.getInGroundDataTracker()) {
+            return TCOTS_Sounds.DEVOURER_IDLE;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return TCOTS_Sounds.DEVOURER_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return TCOTS_Sounds.DEVOURER_DEATH;
+    }
+
+    @Override
+    protected SoundEvent getAttackSound() {
+        return TCOTS_Sounds.DEVOURER_ATTACK;
     }
 
     @Override

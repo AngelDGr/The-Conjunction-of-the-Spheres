@@ -7,8 +7,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.world.World;
 
-public class Ogroid_Base extends WitcherMob_Class {
-    protected Ogroid_Base(EntityType<? extends PathAwareEntity> entityType, World world) {
+public class OgroidMonster extends WitcherMob_Class {
+    protected OgroidMonster(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
     }
     @Override
