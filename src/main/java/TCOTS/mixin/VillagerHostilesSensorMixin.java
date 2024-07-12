@@ -13,6 +13,9 @@ public class VillagerHostilesSensorMixin {
     @Unique
     private static final float distanceMediumDanger = 16.0f;
 
+    @Unique
+    private static final float distanceExtremeDanger = 24.0f;
+
 
     @Shadow @Final @Mutable
     private static ImmutableMap<Object, Object> SQUARED_DISTANCES_FOR_DANGER;
@@ -32,6 +35,7 @@ public class VillagerHostilesSensorMixin {
                         .put(TCOTS_Entities.SCURVER, distanceDanger)
                         .put(TCOTS_Entities.DEVOURER, distanceDanger)
                         .put(TCOTS_Entities.GRAVEIR, distanceMediumDanger)
+                        .put(TCOTS_Entities.BULLVORE, distanceExtremeDanger)
 
 
                         //Ogroids

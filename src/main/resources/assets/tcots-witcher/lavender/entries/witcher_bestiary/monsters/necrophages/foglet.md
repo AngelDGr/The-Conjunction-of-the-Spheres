@@ -61,6 +61,20 @@ visible and vulnerable again, take this moment to {#0A880E}kill it rapidly befor
                             <children>
                                 <item>
                                     <stack>
+                                        tcots-witcher:cadaverine
+                                    </stack>
+                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
                                         tcots-witcher:foglet_teeth
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>

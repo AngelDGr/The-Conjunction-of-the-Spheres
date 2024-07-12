@@ -9,6 +9,8 @@
 
     "tcots-witcher.sounds.monster_emerging": "Monster emerges from ground",
     "tcots-witcher.sounds.monster_digging": "Monster return to ground",
+    "tcots-witcher.sounds.ground_punch": "Monster punches the ground",
+
 
 
     "entity.tcots-witcher.group.necrophages": "Necrophages",
@@ -149,8 +151,19 @@
     "tcots-witcher.sounds.graveir_hurt": "Graveir hurts",
     "tcots-witcher.sounds.graveir_idle": "Graveir groans",
     "tcots-witcher.sounds.graveir_death": "Graveir dies",
-    "tcots-witcher.sounds.graveir_ground_punch": "Graveir punch the ground",
+    "tcots-witcher.sounds.graveir_ground_punch": "Graveir charges a punch",
 
+    "item.tcots-witcher.cadaverine": "Cadaverine",
+    "item.tcots-witcher.graveir_bone": "Graveir Bone",
+
+
+    "item.tcots-witcher.bullvore_spawn_egg": "Bullvore Spawn Egg",
+    "entity.tcots-witcher.bullvore": "Bullvore",
+    "tcots-witcher.sounds.bullvore_attack": "Bullvore attacks",
+    "tcots-witcher.sounds.bullvore_hurt": "Bullvore hurts",
+    "tcots-witcher.sounds.bullvore_idle": "Bullvore roars",
+    "tcots-witcher.sounds.bullvore_death": "Bullvore dies",
+    "tcots-witcher.sounds.bullvore_charge": "Bullvore charges",
 
 
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",

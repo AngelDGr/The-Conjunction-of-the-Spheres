@@ -54,6 +54,19 @@ Take in account that this attack mechanism has a major flaw; {#0A880E}it needs t
                 <!--First Row-->
                 <flow-layout direction="horizontal">
                     <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:cadaverine
+                                    </stack>
+                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
                         
                         <stack-layout>
                             <children>

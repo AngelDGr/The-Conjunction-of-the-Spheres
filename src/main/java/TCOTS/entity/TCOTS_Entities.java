@@ -37,7 +37,7 @@ public class TCOTS_Entities {
     //TODO: Bullvore
     //W1
     //xTODO: Devourer
-    //TODO: Graveir
+    //xTODO: Graveir
 
 
 //  Ogroids
@@ -154,6 +154,12 @@ public class TCOTS_Entities {
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, GraveirEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.4f, 2.65f)).build());
+
+    public static final EntityType<BullvoreEntity> BULLVORE = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "bullvore"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BullvoreEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(1.9975f, 3.3f)).build());
 
     //Ogroids
     public static final EntityType<NekkerEntity> NEKKER = Registry.register(
@@ -348,6 +354,12 @@ public class TCOTS_Entities {
                                 ), SpawnGroup.MONSTER,
                         GRAVEIR, 60, 1, 2);
             }
+
+            //Bullvore
+            {
+                SpawnRestriction.register(BULLVORE, SpawnRestriction.Location.ON_GROUND,
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BullvoreEntity::canSpawnInDark);
+            }
         }
 
         //Ogroids
@@ -369,38 +381,47 @@ public class TCOTS_Entities {
     }
 
     public static void addAttributes(){
-        //Drowner
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.DROWNER, DrownerEntity.setAttributes());
+        //Necrophages
+        {
+            //Drowner
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.DROWNER, DrownerEntity.setAttributes());
 
-        //Rotfiend
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.ROTFIEND, RotfiendEntity.setAttributes());
+            //Rotfiend
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.ROTFIEND, RotfiendEntity.setAttributes());
 
-        //Grave Hag
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.GRAVE_HAG, GraveHagEntity.setAttributes());
+            //Grave Hag
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.GRAVE_HAG, GraveHagEntity.setAttributes());
 
-        //Water Hag
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.WATER_HAG, WaterHagEntity.setAttributes());
+            //Water Hag
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.WATER_HAG, WaterHagEntity.setAttributes());
 
-        //Foglet
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLET, FogletEntity.setAttributes());
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLING, FoglingEntity.setAttributes());
+            //Foglet
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLET, FogletEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLING, FoglingEntity.setAttributes());
 
-        //Ghoul
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.GHOUL, GhoulEntity.setAttributes());
+            //Ghoul
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.GHOUL, GhoulEntity.setAttributes());
 
-        //Alghoul
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.ALGHOUL, AlghoulEntity.setAttributes());
+            //Alghoul
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.ALGHOUL, AlghoulEntity.setAttributes());
 
-        //Scurver
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.SCURVER, ScurverEntity.setAttributes());
+            //Scurver
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.SCURVER, ScurverEntity.setAttributes());
 
-        //Devourer
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.DEVOURER, DevourerEntity.setAttributes());
+            //Devourer
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.DEVOURER, DevourerEntity.setAttributes());
 
-        //Graveir
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.GRAVEIR, GraveirEntity.setAttributes());
+            //Graveir
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.GRAVEIR, GraveirEntity.setAttributes());
 
-        //Nekker
-        FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
+            //Bullvore
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.BULLVORE, BullvoreEntity.setAttributes());
+        }
+
+        //Ogroids
+        {
+            //Nekker
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
+        }
     }
 }

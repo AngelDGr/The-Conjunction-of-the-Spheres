@@ -41,6 +41,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.SCURVER_SPAWN_EGG);
                             entries.add(TCOTS_Items.DEVOURER_SPAWN_EGG);
                             entries.add(TCOTS_Items.GRAVEIR_SPAWN_EGG);
+                            entries.add(TCOTS_Items.BULLVORE_SPAWN_EGG);
 
 
                             //Drops
@@ -56,6 +57,8 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.FOGLET_TEETH);
                             entries.add(TCOTS_Items.SCURVER_SPINE);
                             entries.add(TCOTS_Items.DEVOURER_TEETH);
+                            entries.add(TCOTS_Items.GRAVEIR_BONE);
+                            entries.add(TCOTS_Items.CADAVERINE);
 
                             //Mutagens
                             entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);

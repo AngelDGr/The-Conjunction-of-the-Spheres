@@ -10,6 +10,7 @@ public class TCOTS_Sounds {
 
     public static SoundEvent MONSTER_EMERGING = registerSoundEvent("monster_emerging");
     public static SoundEvent MONSTER_DIGGING = registerSoundEvent("monster_digging");
+    public static SoundEvent GROUND_PUNCH = registerSoundEvent("ground_punch");
 
     //Drowner
     public static SoundEvent DROWNER_ATTACK = registerSoundEvent("drowner_attack");
@@ -98,6 +99,13 @@ public class TCOTS_Sounds {
     public static SoundEvent GRAVEIR_IDLE = registerSoundEvent("graveir_idle");
     public static SoundEvent GRAVEIR_DEATH = registerSoundEvent("graveir_death");
     public static SoundEvent GRAVEIR_GROUND_PUNCH = registerSoundEvent("graveir_ground_punch");
+
+    //Bullvore
+    public static SoundEvent BULLVORE_ATTACK = registerSoundEvent("bullvore_attack");
+    public static SoundEvent BULLVORE_HURT = registerSoundEvent("bullvore_hurt");
+    public static SoundEvent BULLVORE_IDLE = registerSoundEvent("bullvore_idle");
+    public static SoundEvent BULLVORE_DEATH = registerSoundEvent("bullvore_death");
+    public static SoundEvent BULLVORE_CHARGE = registerSoundEvent("bullvore_charge");
 
     //Nekker
     public static SoundEvent NEKKER_ATTACK = registerSoundEvent("nekker_attack");

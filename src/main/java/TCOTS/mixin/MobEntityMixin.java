@@ -1,10 +1,16 @@
 package TCOTS.mixin;
 
+import TCOTS.entity.necrophages.BullvoreEntity;
 import TCOTS.items.potions.bombs.NorthernWindBomb;
 import TCOTS.items.potions.bombs.SamumBomb;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameRules;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -73,5 +79,17 @@ public class MobEntityMixin {
     @ModifyVariable(method = "isAffectedByDaylight", at = @At("STORE"), name = "bl")
     private boolean injectNoFireWhenFreeze(boolean value){
         return value || NorthernWindBomb.checkEffect(THIS);
+    }
+
+    @Mixin(targets = "net.minecraft.block.CropBlock")
+    public abstract static class BullvoreDestroyCrops{
+
+        @Inject(method = "onEntityCollision", at = @At("HEAD"))
+        private void injectNoMoonDust(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci){
+            if ((entity instanceof BullvoreEntity && ((BullvoreEntity)entity).isCharging()) && world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+                world.breakBlock(pos, true, entity);
+            }
+        }
+
     }
 }

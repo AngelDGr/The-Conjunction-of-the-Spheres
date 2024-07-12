@@ -56,6 +56,13 @@
       "tcots-witcher:entity/common/monster_digging2"
     ]
   },
+  "ground_punch": {
+    "subtitle": "tcots-witcher.sounds.ground_punch",
+    "sounds": [
+      "tcots-witcher:entity/common/ground_punch1",
+      "tcots-witcher:entity/common/ground_punch2"
+    ]
+  },
 
   "drowner_attack": {
     "subtitle": "tcots-witcher.sounds.drowner_attack",
@@ -607,6 +614,49 @@
     ]
   },
 
+
+  "bullvore_attack": {
+    "subtitle": "tcots-witcher.sounds.bullvore_attack",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_attack1",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_attack2",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_attack3",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_attack4"
+    ]
+  },
+  "bullvore_hurt": {
+    "subtitle": "tcots-witcher.sounds.bullvore_hurt",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_hurt1",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_hurt2",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_hurt3"
+    ]
+  },
+  "bullvore_idle": {
+    "subtitle": "tcots-witcher.sounds.bullvore_idle",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_idle1",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_idle2",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_idle3",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_idle4"
+    ]
+  },
+  "bullvore_death": {
+    "subtitle": "tcots-witcher.sounds.bullvore_death",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_death1",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_death2",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_death3"
+    ]
+  },
+  "bullvore_charge": {
+    "subtitle": "tcots-witcher.sounds.bullvore_charge",
+    "sounds": [
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_charge1",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_charge2",
+      "tcots-witcher:entity/necrophages/bullvore/bullvore_charge3"
+    ]
+  },
 
 
   "nekker_attack": {

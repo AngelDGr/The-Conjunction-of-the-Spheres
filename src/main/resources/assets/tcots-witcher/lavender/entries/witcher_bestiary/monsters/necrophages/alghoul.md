@@ -4,7 +4,7 @@
   "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/alghoul",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
-    
+    "tcots-witcher:alghoul_bone_marrow"
   ],
   "ordinal": 3
 }
@@ -55,6 +55,20 @@ so {#0A880E}it's better focus on killing it before the other ghouls.{}
                 <!--First Row-->
                 <flow-layout direction="horizontal">
                     <children>
+                      <stack-layout>
+                        <children>
+                          <item>
+                            <stack>
+                              tcots-witcher:cadaverine
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                          </item>
+                        </children>
+                        <padding>
+                          <all>5</all>
+                        </padding>
+                      </stack-layout>
+                      
                         <stack-layout>
                             <children>
                                 <item>

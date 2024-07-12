@@ -60,7 +60,7 @@ public class WitcherMob_Class extends PathAwareEntity implements Monster {
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         if(getStepSound()!=null){
-        this.playSound(this.getStepSound(), 0.15F, 1.0F);}
+            this.playSound(this.getStepSound(), 0.15F, 1.0F);}
         else {
             super.playStepSound(pos,state);
         }

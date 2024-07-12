@@ -14,6 +14,7 @@
 Like [drowners](^tcots-witcher:monsters/necrophages/drowner), with whom they often share hunting grounds, water hags
 dwell near shallow streams, rivers and wetlands. 
 
+
 Though bulky, they are excellent swimmers. They can even swim through thick mud with astonishing agility,
 surfacing beside their victims to attack them with their sickle-shaped claws.
 

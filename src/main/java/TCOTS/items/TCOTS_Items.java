@@ -120,8 +120,8 @@ public class TCOTS_Items {
 
             //Witcher 1 Potions
             //xTODO: Wolf: Makes critical hits stronger
-            //TODO: De Vries' Extract: Gives glowing to near invisible enemies
             //TODO: Willow: Makes you immune to knockback
+            //TODO: De Vries' Extract: Gives glowing to near invisible enemies
             //TODO: Wolverine: Makes you stronger when you have less health?
 
 
@@ -170,14 +170,23 @@ public class TCOTS_Items {
     public static Item DEVOURER_TEETH;
 
     public static Item GRAVEIR_SPAWN_EGG;
+    public static Item CADAVERINE;
+    // xTODO: Add Cadaverine drops to:
+    //  xGhoul
+    //  xAlghoul
+    //  xRotfiend
+    //  xFoglet
+    //  xScurver
+    //  xDevourer
+    //TODO: Add more uses to Cadaverine
+    public static Item GRAVEIR_BONE;
+    //TODO: Add more uses to Graveir Bone
 
+    public static Item BULLVORE_SPAWN_EGG;
 
     public static Item NEKKER_SPAWN_EGG;
     public static Item NEKKER_HEART;
     public static Item NEKKER_EYE;
-
-
-
 
 
 
@@ -248,6 +257,13 @@ public class TCOTS_Items {
 
         GRAVEIR_SPAWN_EGG = registerItem("graveir_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.GRAVEIR, 0xab706d, 0x882925, new FabricItemSettings()));
+        CADAVERINE = registerItem("cadaverine",
+                new Item(new FabricItemSettings()));
+        GRAVEIR_BONE = registerItem("graveir_bone",
+                new Item(new FabricItemSettings()));
+
+        BULLVORE_SPAWN_EGG = registerItem("bullvore_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.BULLVORE, 0xdad29a, 0xb1816d, new FabricItemSettings()));
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,

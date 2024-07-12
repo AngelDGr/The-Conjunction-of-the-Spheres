@@ -289,8 +289,7 @@ public class GraveHagEntity extends NecrophageMonster implements GeoEntity {
 
         private void running_attack(double d){
             if((!graveHag.cooldownRunningAttack) && d > 40 && !runTriggered
-                    && heightBoolean()
-            )
+                    && heightBoolean())
             {
                 graveHag.setIsRunning(true);
                 speedMultiplierBase=speedMultiplier;

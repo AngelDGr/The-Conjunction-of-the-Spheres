@@ -5,9 +5,9 @@ import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -26,13 +26,10 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.vehicle.VehicleEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
@@ -56,11 +53,10 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     //xTODO: Add natural spawn
     //xTODO: Add drop
 
-    private static final byte FALLING_PARTICLES = 42;
-
-    public static final RawAnimation JUMP = RawAnimation.begin().thenPlay("special.jumping");
-
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
+    private static final byte FALLING_PARTICLES = 42;
+    public static final RawAnimation JUMP = RawAnimation.begin().thenPlay("special.jumping");
 
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -197,7 +193,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
                     && !this.getWorld().getBlockState(this.getBlockPos()).isIn(TCOTS_Blocks.NEGATES_DEVOURER_JUMP)
                     && !this.getWorld().getBlockState(this.getBlockPos().down()).isIn(TCOTS_Blocks.NEGATES_DEVOURER_JUMP))
             {
-                pushAndDamageEntities(1.5 + (fallDistance * 0.2f), 2, 1.5 + (fallDistance * 0.2f), 1.2 + (fallDistance * 0.2f));
+                EntitiesUtil.pushAndDamageEntities(this, 2 + (fallDistance), 1.5 + (fallDistance * 0.2f), 2, 1.2, DevourerEntity.class);
                 this.playSound(SoundEvents.ENTITY_HOSTILE_BIG_FALL, 1.0f, 1.0f);
                 this.getWorld().sendEntityStatus(this, FALLING_PARTICLES);
             }
@@ -207,37 +203,6 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
         super.onLanding();
     }
 
-    @SuppressWarnings("all")
-    private void pushAndDamageEntities(double xExpansion, double yExpansion, double zExpansion, double knockbackStrength){
-        List<Entity> listMobs= this.getWorld().getEntitiesByClass(Entity.class, this.getBoundingBox().expand(xExpansion,yExpansion,zExpansion),
-                entity -> !(entity instanceof DevourerEntity));
-
-        for (Entity entity : listMobs){
-            double d = this.getX() - entity.getX();
-            double e = this.getZ() - entity.getZ();
-            if(entity instanceof LivingEntity livingEntity) {
-                livingEntity.takeKnockback(knockbackStrength, d, e);
-                //Push the player
-                if (entity instanceof ServerPlayerEntity && !((ServerPlayerEntity) entity).isCreative()) {
-                    ((ServerPlayerEntity) entity).networkHandler.send(new EntityVelocityUpdateS2CPacket(entity), null);
-                }
-                //Removes the shield
-                if (livingEntity.isBlocking() && entity instanceof PlayerEntity) {
-                    ((PlayerEntity) entity).disableShield(true);
-                }
-                //Checks if the entity it's blocking, to block the damage
-                else if (!livingEntity.isBlocking()) {
-                    entity.damage(this.getDamageSources().mobAttack(this), 2 + (fallDistance));
-                }
-                //Destroys vehicles
-            } else if(entity instanceof VehicleEntity vehicle) {
-                vehicle.damage(this.getDamageSources().mobAttack(this), 50.0f);
-            } else {
-                //Damage anything else
-                entity.damage(this.getDamageSources().mobAttack(this), 2 + (fallDistance));
-            }
-        }
-    }
 
     private int counter=0;
 
@@ -306,7 +271,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     public boolean cooldownBetweenJumps=false;
-    int jumpTicks;
+    private int jumpTicks;
 
     private void tickJump(){
         if(counter>0){
@@ -336,6 +301,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
         nbt.putBoolean("Invisible", this.dataTracker.get(INVISIBLE));
+        nbt.putInt("JumpCooldown", this.jumpTicks);
     }
 
     @Override
@@ -343,6 +309,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setInvisibleData(nbt.getBoolean("Invisible"));
+        this.jumpTicks=nbt.getInt("JumpCooldown");
         super.readCustomDataFromNbt(nbt);
     }
 

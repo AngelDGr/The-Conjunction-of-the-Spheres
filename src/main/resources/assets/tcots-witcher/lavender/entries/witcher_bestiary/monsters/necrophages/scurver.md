@@ -61,6 +61,20 @@ If you manage {#0A880E}kill the creature when it's in flames, you could retrieve
                             <children>
                                 <item>
                                     <stack>
+                                        tcots-witcher:cadaverine
+                                    </stack>
+                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
                                         tcots-witcher:rotfiend_blood
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>

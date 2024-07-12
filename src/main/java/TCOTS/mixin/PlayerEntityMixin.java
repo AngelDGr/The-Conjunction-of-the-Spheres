@@ -44,7 +44,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-@Debug(export = true) // Enables exporting for the targets of this mixin
+//@Debug(export = true) // Enables exporting for the targets of this mixin
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityMixinInterface {
 

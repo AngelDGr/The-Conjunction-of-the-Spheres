@@ -55,6 +55,20 @@ The only way to prevent this explosion is {#0A880E}killing it when the creature 
                 <!--First Row-->
                 <flow-layout direction="horizontal">
                     <children>
+                      <stack-layout>
+                        <children>
+                          <item>
+                            <stack>
+                              tcots-witcher:cadaverine
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                          </item>
+                        </children>
+                        <padding>
+                          <all>5</all>
+                        </padding>
+                      </stack-layout>
+                      
                         <stack-layout>
                             <children>
                                 <item>

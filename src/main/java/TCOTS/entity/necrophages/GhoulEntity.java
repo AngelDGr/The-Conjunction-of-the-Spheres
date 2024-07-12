@@ -1,8 +1,7 @@
 package TCOTS.entity.necrophages;
 
 import TCOTS.entity.TCOTS_Entities;
-import TCOTS.entity.goals.LungeAttackGoal;
-import TCOTS.entity.goals.MeleeAttackGoal_Animated;
+import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.utils.GeoControllersUtil;
 import TCOTS.items.potions.bombs.MoonDustBomb;
@@ -23,6 +22,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -42,16 +42,20 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Predicate;
 
-public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMob {
+public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMob, Ownable {
 
     //xTODO: Add new combat/regeneration
     //xTODO: Add Ghoul's Blood
     //xTODO: Add monster nests & spawn
     public static final byte GHOUL_REGENERATING = 99;
-
     public final int GHOUL_REGENERATION_TIME=200;
+    @Nullable
+    private MobEntity owner;
+    @Nullable
+    private UUID ownerUuid;
 
     public int getGHOUL_REGENERATION_TIME() {
         return GHOUL_REGENERATION_TIME;
@@ -102,24 +106,29 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
 
         this.goalSelector.add(4, new GhoulEatFlesh(this,1D));
 
-        this.goalSelector.add(5, new WanderAroundGoal(this, 0.75f,80));
+        this.goalSelector.add(5, new FollowMonsterOwnerGoal(this, 0.75));
 
-        this.goalSelector.add(6, new LookAroundGoal(this));
+        this.goalSelector.add(6, new WanderAroundGoal(this, 0.75f,80));
+
+        this.goalSelector.add(7, new LookAroundGoal(this));
 
         //Objectives
-        this.targetSelector.add(0, new RevengeGoal(this, GhoulEntity.class));
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, ZoglinEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, ZombieHorseEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
+        this.targetSelector.add(0, new AttackOwnerAttackerTarget(this));
+        this.targetSelector.add(1, new AttackOwnerEnemyTarget(this));
 
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, HoglinEntity.class, true));
-        this.targetSelector.add(5, new ActiveTargetGoal<>(this, CowEntity.class, true));
-        this.targetSelector.add(5, new ActiveTargetGoal<>(this, PigEntity.class, true));
-        this.targetSelector.add(5, new ActiveTargetGoal<>(this, SheepEntity.class, true));
-        this.targetSelector.add(6, new ActiveTargetGoal<>(this, GoatEntity.class, true));
+        this.targetSelector.add(2, new RevengeGoal(this, GhoulEntity.class));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZoglinEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, ZombieHorseEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
+
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, HoglinEntity.class, true));
+        this.targetSelector.add(6, new ActiveTargetGoal<>(this, CowEntity.class, true));
+        this.targetSelector.add(6, new ActiveTargetGoal<>(this, PigEntity.class, true));
+        this.targetSelector.add(6, new ActiveTargetGoal<>(this, SheepEntity.class, true));
+        this.targetSelector.add(7, new ActiveTargetGoal<>(this, GoatEntity.class, true));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -326,6 +335,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
                 }
             }
         }
+
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
@@ -349,6 +359,21 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         controllerRegistrar.add(new AnimationController<>(this, "RegenController", 1, state -> PlayState.STOP)
                 .triggerableAnim("start_regen", START_REGEN)
         );
+    }
+
+    @Nullable
+    @Override
+    public Entity getOwner() {
+        Entity entity;
+        if (this.owner == null && this.ownerUuid != null && this.getWorld() instanceof ServerWorld && (entity = ((ServerWorld)this.getWorld()).getEntity(this.ownerUuid)) instanceof LivingEntity) {
+            this.owner = (MobEntity) entity;
+        }
+        return this.owner;
+    }
+
+    public void setOwner(@Nullable MobEntity owner) {
+        this.owner = owner;
+        this.ownerUuid = owner == null ? null : owner.getUuid();
     }
 
     @Override
@@ -400,6 +425,21 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         timersTick();
 
         super.tick();
+    }
+
+    @Override
+    protected void mobTick() {
+        super.mobTick();
+
+        if(!(this instanceof AlghoulEntity) && this.getOwner()==null){
+            List<AlghoulEntity> list =
+            this.getWorld().getEntitiesByClass(AlghoulEntity.class, this.getBoundingBox().expand(10,10,10),
+            alghoul -> true);
+
+            if(!list.isEmpty()){
+                this.setOwner(list.get(0));
+            }
+        }
     }
 
     private void timersTick(){
@@ -467,6 +507,10 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         nbt.putInt("CooldownRegen", getCooldownForRegen());
         nbt.putBoolean("CooldownRegenActive", hasCooldownForRegen);
         nbt.putInt("RegenerationTime", getTimeForRegen());
+
+        if (this.ownerUuid != null) {
+            nbt.putUuid("Owner", this.ownerUuid);
+        }
         super.writeCustomDataToNbt(nbt);
     }
 
@@ -476,6 +520,10 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         this.setCooldownForRegen(nbt.getInt("CooldownRegen"));
         this.setTimeForRegen(nbt.getInt("RegenerationTime"));
         this.setHasCooldownForRegen(nbt.getBoolean("CooldownRegenActive"));
+
+        if (nbt.containsUuid("Owner")) {
+            this.ownerUuid = nbt.getUuid("Owner");
+        }
         super.readCustomDataFromNbt(nbt);
     }
 

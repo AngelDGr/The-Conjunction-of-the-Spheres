@@ -3,12 +3,15 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
-import TCOTS.utils.GeoControllersUtil;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Ownable;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -18,18 +21,21 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -40,14 +46,20 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.UUID;
 
-public class RotfiendEntity extends NecrophageMonster implements GeoEntity, ExcavatorMob, LungeMob {
+public class RotfiendEntity extends NecrophageMonster implements GeoEntity, ExcavatorMob, LungeMob, Ownable {
 
     //xTODO: Add Emerging animation (And digging?)
     //xTODO: Add drops
     //xTODO: Add spawning
     //xTODO: Fix the invisible bug
+    //TODO: Add follow leader goal
 
+    @Nullable
+    private MobEntity owner;
+    @Nullable
+    private UUID ownerUuid;
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public static final RawAnimation EXPLOSION = RawAnimation.begin().thenPlayAndHold("special.explosion");
@@ -58,6 +70,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> BULLVORE_GROUP = DataTracker.registerData(RotfiendEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
 
     public RotfiendEntity(EntityType<? extends RotfiendEntity> entityType, World world) {
@@ -85,15 +98,18 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
 
         this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false));
 
+        this.goalSelector.add(5, new FollowMonsterOwnerGoal(this, 0.75));
 
-        this.goalSelector.add(5, new WanderAroundGoal_Excavator(this, 0.75f, 20));
+        this.goalSelector.add(6, new WanderAroundGoal_Excavator(this, 0.75f, 100));
 
-        this.goalSelector.add(6, new LookAroundGoal_Excavator(this));
+        this.goalSelector.add(7, new LookAroundGoal_Excavator(this));
 
         //Objectives
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
+        this.targetSelector.add(0, new AttackOwnerAttackerTarget(this));
+        this.targetSelector.add(1, new AttackOwnerEnemyTarget(this));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
 
 
@@ -113,9 +129,25 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
         return LungeTicks;
     }
 
+
     @Override
     public void setLungeTicks(int lungeTicks) {
         LungeTicks = lungeTicks;
+    }
+
+    @Nullable
+    @Override
+    public Entity getOwner() {
+        Entity entity;
+        if (this.owner == null && this.ownerUuid != null && this.getWorld() instanceof ServerWorld && (entity = ((ServerWorld)this.getWorld()).getEntity(this.ownerUuid)) instanceof LivingEntity) {
+            this.owner = (MobEntity) entity;
+        }
+        return this.owner;
+    }
+
+    public void setOwner(@Nullable MobEntity owner) {
+        this.owner = owner;
+        this.ownerUuid = owner == null ? null : owner.getUuid();
     }
 
     private class Rotfiend_Explosion extends Goal {
@@ -221,6 +253,8 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
+
+        this.dataTracker.startTracking(BULLVORE_GROUP, Boolean.FALSE);
     }
 
     public final boolean getIsExploding() {
@@ -272,12 +306,20 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
         nbt.putBoolean("Invisible",this.dataTracker.get(INVISIBLE));
+
+        if (this.ownerUuid != null) {
+            nbt.putUuid("Owner", this.ownerUuid);
+        }
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setInvisibleData(nbt.getBoolean("Invisible"));
+
+        if (nbt.containsUuid("Owner")) {
+            this.ownerUuid = nbt.getUuid("Owner");
+        }
         super.readCustomDataFromNbt(nbt);
     }
 
@@ -308,7 +350,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
 
     @Override
     public void mobTick(){
-        if(this.getReturnToGround_Ticks() < 200) {
+        if(this.getReturnToGround_Ticks() < 200 && this.getOwner() == null) {
             mobTickExcavator(
                     List.of(BlockTags.DIRT, BlockTags.STONE_ORE_REPLACEABLES, BlockTags.DEEPSLATE_ORE_REPLACEABLES),
                     List.of(Blocks.SAND),
