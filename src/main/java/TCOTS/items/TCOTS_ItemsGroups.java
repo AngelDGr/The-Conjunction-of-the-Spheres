@@ -59,6 +59,7 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.DEVOURER_TEETH);
                             entries.add(TCOTS_Items.GRAVEIR_BONE);
                             entries.add(TCOTS_Items.CADAVERINE);
+                            entries.add(TCOTS_Items.BULLVORE_HORN_FRAGMENT);
 
                             //Mutagens
                             entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);
@@ -162,6 +163,9 @@ public class TCOTS_ItemsGroups {
                             entries.add(TCOTS_Items.KILLER_WHALE_SPLASH.getDefaultStack());
 
                             //Weapons
+                            entries.add(TCOTS_Items.GVALCHIR);
+
+
                             entries.add(TCOTS_Items.KNIGHT_CROSSBOW);
                             entries.add(TCOTS_Items.BASE_BOLT);
                             entries.add(TCOTS_Items.BLUNT_BOLT);

@@ -1,29 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "IWI",
-    "LHL",
-    " S "
-  ],
+  "category": "equipment",
   "key": {
-    "I": {
-      "item": "minecraft:iron_block"
-    },
-    "W": {
-      "tag": "minecraft:wool"
-    },
     "H": {
       "item": "minecraft:tripwire_hook"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
     },
     "L": {
       "item": "minecraft:leather"
     },
     "S": {
       "item": "minecraft:stick"
+    },
+    "W": {
+      "tag": "minecraft:wool"
     }
   },
+  "pattern": [
+    "IWI",
+    "LHL",
+    " S "
+  ],
   "result": {
-    "item": "tcots-witcher:knight_crossbow",
-    "count": 1
+    "item": "tcots-witcher:knight_crossbow"
   }
 }

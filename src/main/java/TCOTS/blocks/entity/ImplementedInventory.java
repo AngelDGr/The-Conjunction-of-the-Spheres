@@ -16,10 +16,10 @@ import org.jetbrains.annotations.Nullable;
  * <h2>Reading and writing to tags</h2>
  * Use {@link Inventories#writeNbt(NbtCompound, DefaultedList)} and {@link Inventories#readNbt(NbtCompound, DefaultedList)}
  * on {@linkplain #getItems() the item list}.
- *
  * License: <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>
  * @author Juuz
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ImplementedInventory extends SidedInventory {
     /**

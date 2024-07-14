@@ -1,5 +1,6 @@
 package TCOTS.items.potions.recipes;
 
+import TCOTS.blocks.TCOTS_Blocks;
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -225,6 +226,11 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
 
     public AlchemyTableRecipeCategory getCategory() {
         return this.category;
+    }
+
+    @Override
+    public ItemStack createIcon() {
+        return new ItemStack(TCOTS_Blocks.ALCHEMY_TABLE);
     }
 
     @Override

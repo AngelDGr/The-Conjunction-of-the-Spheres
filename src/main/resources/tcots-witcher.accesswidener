@@ -33,3 +33,5 @@ accessible class net/minecraft/client/gui/hud/InGameHud$HeartType
 accessible method net/minecraft/client/gui/hud/InGameHud drawHeart (Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/gui/hud/InGameHud$HeartType;IIZZZ)V
 
 accessible class net/minecraft/client/render/item/HeldItemRenderer$HandRenderType
+
+accessible method net/minecraft/block/ComposterBlock registerCompostableItem (FLnet/minecraft/item/ItemConvertible;)V

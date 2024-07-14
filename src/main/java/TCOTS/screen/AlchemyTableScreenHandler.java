@@ -82,11 +82,6 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
         return blockEntity;
     }
 
-    @Override
-    public void onContentChanged(Inventory inventory) {
-        super.onContentChanged(inventory);
-    }
-
     public int getScaledProgress() {
         int progress = this.propertyDelegate.get(0);
         int maxProgress = this.propertyDelegate.get(1);  // Max Progress
@@ -98,7 +93,6 @@ public class AlchemyTableScreenHandler extends ScreenHandler {
     public int getBrewTime() {
         return this.propertyDelegate.get(0);
     }
-
 
     @Override
     public ItemStack quickMove(PlayerEntity player, int invSlot) {

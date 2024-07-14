@@ -2,6 +2,7 @@ package TCOTS.mixin;
 
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.interfaces.LivingEntityMixinInterface;
+import TCOTS.items.TCOTS_Items;
 import TCOTS.items.potions.TCOTS_Effects;
 import TCOTS.items.potions.bombs.MoonDustBomb;
 import TCOTS.items.potions.bombs.NorthernWindBomb;
@@ -11,6 +12,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -32,9 +34,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.List;
 import java.util.Objects;
@@ -354,9 +358,39 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
                 || (THIS instanceof GhastEntity)
                 || (THIS instanceof GolemEntity)
                 || (THIS instanceof WitherEntity)
+                || (THIS.getGroup() == TCOTS_Entities.SPECTERS)
         )
                 && effect.getEffectType()==TCOTS_Effects.BLEEDING)
             cir.setReturnValue(false);
+    }
+
+    //G'valchir damage
+    @Unique
+    private boolean attackerHasGvalchir =false;
+    @Inject(method ="applyArmorToDamage", at = @At("HEAD"))
+    private void getAttackerGvalchirBoolean(DamageSource source, float amount, CallbackInfoReturnable<Float> cir){
+        if(source.getAttacker() instanceof LivingEntity livingEntity){
+            this.attackerHasGvalchir =
+                    //Has the G'valchir in hand
+                    livingEntity.getMainHandStack().getItem() == TCOTS_Items.GVALCHIR &&
+                    //To avoid ignore armor with attacks with projectiles
+                    !((source.getSource() instanceof ProjectileEntity) || (source.getSource() instanceof PersistentProjectileEntity))
+                    //To avoid ignore armor when there's thorns damage
+                    && !(source.getTypeRegistryEntry() == DamageTypes.MAGIC);
+        } else {
+            attackerHasGvalchir = false;
+        }
+    }
+
+    @ModifyArgs(method = "applyArmorToDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/DamageUtil;getDamageLeft(FFF)F"))
+    private void injectArmorPenetration(Args args){
+        if(attackerHasGvalchir){
+            float armor = args.get(1);
+            float armorToughness = args.get(2);
+
+            args.set(1, armor*0.25f);
+            args.set(2, armorToughness*0.50f);
+        }
     }
 
 }

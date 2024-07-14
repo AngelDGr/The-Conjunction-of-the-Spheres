@@ -40,10 +40,8 @@ public class WitcherMonsterOil_Base extends Item {
     public WitcherMonsterOil_Base(Settings settings, EntityGroup group, int uses, int level) {
         super(settings);
 
-
         if(group instanceof WitcherGroup witcherGroup){
             group_value=witcherGroup.getNumericID();
-
             againstDescription =
                     Text.translatable("tooltip.tcots-witcher.oils", Text.translatable(witcherGroup.getTranslationKey())).formatted(Formatting.GRAY);
         } else if (group == EntityGroup.ILLAGER) {

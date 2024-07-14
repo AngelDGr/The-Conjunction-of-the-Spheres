@@ -46,6 +46,6 @@ public class KnightCrossbow extends WitcherBaseCrossbow implements DyeableItem {
             tooltip.add(Text.translatable("tooltip.knight_crossbow.dyeable").formatted(Formatting.GRAY, Formatting.ITALIC));
         }
 
-        tooltip.add(Text.translatable("tooltip.knight_crossbow.description").formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable("tooltip.tcots-witcher.knight_crossbow").formatted(Formatting.GRAY));
     }
 }

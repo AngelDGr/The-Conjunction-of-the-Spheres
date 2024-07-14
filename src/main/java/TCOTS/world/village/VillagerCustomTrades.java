@@ -442,6 +442,19 @@ public class VillagerCustomTrades {
                     factories -> {
                         factories.add((entity, random) -> new TradeOffer(
                                 //Wants
+                                new ItemStack(TCOTS_Items.BULLVORE_HORN_FRAGMENT, 1),
+                                //Gives
+                                new ItemStack(Items.EMERALD, 16),
+                                3,
+                                20,
+                                0.2f));
+                    }
+            );
+
+            TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 1,
+                    factories -> {
+                        factories.add((entity, random) -> new TradeOffer(
+                                //Wants
                                 new ItemStack(TCOTS_Items.GRAVEIR_BONE, 2),
                                 //Gives
                                 new ItemStack(Items.EMERALD, 16),

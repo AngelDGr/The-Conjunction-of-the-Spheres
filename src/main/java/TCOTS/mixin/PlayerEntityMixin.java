@@ -1,5 +1,6 @@
 package TCOTS.mixin;
 
+import TCOTS.TCOTS_Main;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
@@ -35,7 +36,10 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -158,13 +162,18 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                     if(monsterOil.contains("Id") && monsterOil.contains("Level") && monsterOil.contains("Uses")){
                         switch (monsterOil.getInt("Id")){
                             case 0:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.NECROPHAGES || ((LivingEntity) target).getGroup() == EntityGroup.UNDEAD){
+                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.NECROPHAGES || ((LivingEntity) target).getGroup() == EntityGroup.UNDEAD
+                                        || TCOTS_Main.CONFIG.monsters.Necrophages().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
+                                ){
+
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 1:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.OGROIDS || target instanceof AbstractPiglinEntity){
+                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.OGROIDS || target instanceof AbstractPiglinEntity
+                                        || TCOTS_Main.CONFIG.monsters.Ogroids().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
+                                ){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
@@ -188,7 +197,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                 break;
 
                             case 5:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.BEASTS || target instanceof AnimalEntity || target instanceof RavagerEntity){
+                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.BEASTS || target instanceof AnimalEntity || target instanceof RavagerEntity ||
+                                        TCOTS_Main.CONFIG.monsters.Beasts().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
+                                ){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
@@ -224,7 +235,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                 break;
 
                             case 11:
-                                if(((LivingEntity) target).getGroup() == EntityGroup.ILLAGER || target instanceof MerchantEntity || target instanceof WitchEntity || target instanceof PlayerEntity){
+                                if(((LivingEntity) target).getGroup() == EntityGroup.ILLAGER || target instanceof MerchantEntity || target instanceof WitchEntity || target instanceof PlayerEntity
+                                || TCOTS_Main.CONFIG.monsters.Humanoids().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
+                                ){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
@@ -343,7 +356,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 ++this.potionTimer;
             }
         } else {
-
             if(potionTimer != 0){
                 potionTimer=0;
             }
@@ -515,7 +527,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         this.target=target;
     }
 
-
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 2)
     private boolean injectCriticalWithSamum(boolean value){
         if(target instanceof LivingEntity entity){
@@ -533,6 +544,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return value;
     }
 
+    //Wolf & Rook Effects
     @ModifyConstant(method = "attack", constant = @Constant(floatValue = 1.5f))
     private float injectExtraCriticalWolf(float value){
         if(this.hasStatusEffect(TCOTS_Effects.WOLF_EFFECT)){

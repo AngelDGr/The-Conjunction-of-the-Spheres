@@ -9,12 +9,14 @@ import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
 import TCOTS.items.potions.*;
 import TCOTS.items.weapons.BoltItem;
+import TCOTS.items.weapons.GvalchirSword;
 import TCOTS.items.weapons.KnightCrossbow;
 import TCOTS.items.weapons.ScurverSpineItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
@@ -39,6 +41,8 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.Util;
@@ -134,6 +138,8 @@ public class TCOTS_Items {
         //xTODO: Nekker Hearth usable for the White Raffard's Decoction
             //xTODO: Add the White Raffard's Decoction, works similar to the instant health, but works with percentage
 
+    public static final TagKey<Item> DECAYING_FLESH = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "decaying_flesh"));
+
 
     //TODO: Fix the achievement to mobs works with Monster Hunter
     public static Item DROWNER_SPAWN_EGG;
@@ -183,6 +189,7 @@ public class TCOTS_Items {
     //TODO: Add more uses to Graveir Bone
 
     public static Item BULLVORE_SPAWN_EGG;
+    public static Item BULLVORE_HORN_FRAGMENT;
 
     public static Item NEKKER_SPAWN_EGG;
     public static Item NEKKER_HEART;
@@ -264,6 +271,8 @@ public class TCOTS_Items {
 
         BULLVORE_SPAWN_EGG = registerItem("bullvore_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.BULLVORE, 0xdad29a, 0xb1816d, new FabricItemSettings()));
+        BULLVORE_HORN_FRAGMENT = registerItem("bullvore_horn_fragment",
+                new Item(new FabricItemSettings()));
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
@@ -280,7 +289,7 @@ public class TCOTS_Items {
 
     }
 
-
+    public static Item ALCHEMY_FORMULA;
     //Decoctions
     public static Item EMPTY_MONSTER_DECOCTION;
     public static Item GRAVE_HAG_DECOCTION;
@@ -389,6 +398,10 @@ public class TCOTS_Items {
     public static Item MOON_DUST_SUPERIOR;
 
     public static void registerAlchemyConcoctions() {
+
+        ALCHEMY_FORMULA = registerItem("alchemy_formula",
+                new AlchemyFormulaItem(new FabricItemSettings().maxCount(8))
+        );
 
         //Oils
         {
@@ -837,21 +850,33 @@ public class TCOTS_Items {
     public static Item PRECISION_BOLT;
     public static Item EXPLODING_BOLT;
     public static Item BROADHEAD_BOLT;
+    public static Item GVALCHIR;
 
     public static void registerWeapons_Armors(){
 
-        KNIGHT_CROSSBOW = registerItem("knight_crossbow",
-                new KnightCrossbow(new FabricItemSettings().maxCount(1).maxDamage(600)));
+        //Swords
+        {
+            GVALCHIR = registerItem("gvalchir",
+                    new GvalchirSword(TCOTS_Materials.GVALCHIR, 3, -2.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+        }
 
-        BASE_BOLT = registerItem("base_bolt", new BoltItem(new FabricItemSettings(), "base_bolt"));
+        //Crossbows
+        {
+            KNIGHT_CROSSBOW = registerItem("knight_crossbow",
+                    new KnightCrossbow(new FabricItemSettings().maxCount(1).maxDamage(600)));
 
-        BLUNT_BOLT = registerItem("blunt_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "blunt_bolt"));
+            BASE_BOLT = registerItem("base_bolt", new BoltItem(new FabricItemSettings(), "base_bolt"));
 
-        PRECISION_BOLT = registerItem("precision_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "precision_bolt"));
+            BLUNT_BOLT = registerItem("blunt_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "blunt_bolt"));
 
-        EXPLODING_BOLT = registerItem("exploding_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "exploding_bolt"));
+            PRECISION_BOLT = registerItem("precision_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "precision_bolt"));
 
-        BROADHEAD_BOLT = registerItem("broadhead_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "broadhead_bolt"));
+            EXPLODING_BOLT = registerItem("exploding_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "exploding_bolt"));
+
+            BROADHEAD_BOLT = registerItem("broadhead_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "broadhead_bolt"));
+        }
+
+
     }
 
     //xTODO: Add buy mechanic to alcohol
@@ -1154,6 +1179,42 @@ public class TCOTS_Items {
         WITCHER_BESTIARY = WitcherBestiaryItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), new FabricItemSettings().maxCount(1));
 
         ALCHEMY_BOOK = AlchemyBookItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "alchemy_book"), new FabricItemSettings().maxCount(1));
+    }
+
+    @SuppressWarnings("unused")
+    public static void registerCompostableItems(){
+        float f = 0.3f;
+        float g = 0.5f;
+        float h = 0.65f;
+        float i = 0.85f;
+        float j = 1.0f;
+        ComposterBlock.registerCompostableItem(0.5f, TCOTS_Items.ALLIUM_PETALS);
+        ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.ARENARIA);
+        ComposterBlock.registerCompostableItem(0.3f, TCOTS_Items.ALLSPICE);
+        ComposterBlock.registerCompostableItem(0.5f, TCOTS_Items.AZURE_BLUET_PETALS);
+
+        ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.BRYONIA);
+        ComposterBlock.registerCompostableItem(0.15f, TCOTS_Items.BUNCH_OF_LEAVES);
+
+        ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.CELANDINE);
+        ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.CROWS_EYE);
+        ComposterBlock.registerCompostableItem(0.85f, TCOTS_Items.CADAVERINE);
+
+        ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.HAN_FIBER);
+
+        ComposterBlock.registerCompostableItem(0.5f, TCOTS_Items.LILY_OF_THE_VALLEY_PETALS);
+
+        ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.PUFFBALL);
+        ComposterBlock.registerCompostableItem(0.5f, TCOTS_Items.PEONY_PETALS);
+        ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.POPPY_PETALS);
+        ComposterBlock.registerCompostableItem(0.85f, TCOTS_Items.PUFFBALL_MUSHROOM_BLOCK_ITEM);
+
+
+        ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.SEWANT_MUSHROOMS);
+        ComposterBlock.registerCompostableItem(0.85f, TCOTS_Items.SEWANT_MUSHROOM_STEM_ITEM);
+        ComposterBlock.registerCompostableItem(0.85f, TCOTS_Items.SEWANT_MUSHROOM_BLOCK_ITEM);
+
+        ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.VERBENA);
     }
 
     private static Item registerBlockItem(String name, Block block){

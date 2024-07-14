@@ -6,6 +6,7 @@ import TCOTS.screen.AlchemyTableScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LockableContainerBlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SimpleInventory;
@@ -21,6 +22,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -104,6 +106,8 @@ public class AlchemyTableBlockEntity extends LockableContainerBlockEntity implem
         return cache;
     }
 
+    ServerPlayerEntity serverPlayer;
+
     //Crafting stuff
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
@@ -140,27 +144,36 @@ public class AlchemyTableBlockEntity extends LockableContainerBlockEntity implem
         return new AlchemyTableScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
     }
 
-
-    public static void tick(World world, BlockPos pos, BlockState state, AlchemyTableBlockEntity blockEntity) {
+    public static void tick(@NotNull World world, BlockPos pos, BlockState state, AlchemyTableBlockEntity blockEntity) {
 
         if(world.isClient()) {
             return;
         }
-            if(blockEntity.hasRecipe()) {
-                blockEntity.increaseCraftProgress();
-                markDirty(world, pos, state);
 
-                if(blockEntity.hasCraftingFinished()) {
-                    blockEntity.craftItem();
-                    blockEntity.resetProgress();
-                }
-            } else {
+        if(blockEntity.hasCraftableRecipe()) {
+            blockEntity.increaseCraftProgress();
+            markDirty(world, pos, state);
+
+            if(blockEntity.hasCraftingFinished()) {
+                blockEntity.craftItem();
                 blockEntity.resetProgress();
             }
+        } else {
+            blockEntity.resetProgress();
+        }
 
     }
 
-    private boolean hasRecipe() {
+    @Override
+    public void onOpen(PlayerEntity player) {
+        if(player instanceof ServerPlayerEntity serverPlay){
+            this.serverPlayer = serverPlay;
+        }
+
+        super.onOpen(player);
+    }
+
+    private boolean hasCraftableRecipe() {
         SimpleInventory inventory = new SimpleInventory(this.size());
 
         for (int i = 0; i < this.size(); i++) {
@@ -169,11 +182,16 @@ public class AlchemyTableBlockEntity extends LockableContainerBlockEntity implem
 
         Optional<RecipeEntry<AlchemyTableRecipe>> recipe = Objects.requireNonNull(this.getWorld()).getRecipeManager().getFirstMatch(AlchemyTableRecipe.Type.INSTANCE, inventory, getWorld());
 
-        return recipe.isPresent();
+
+        return recipe.isPresent()
+                //TODO: Add "player has recipe" condition here ->
+                 && serverPlayer != null
+                 && serverPlayer.getRecipeBook().contains(recipe.get())
+                ;
     }
 
     private void craftItem() {
-        if(hasRecipe()) {
+        if(hasCraftableRecipe()) {
         SimpleInventory inventory = new SimpleInventory(this.size());
 
             for (int i = 0; i < this.size(); i++) {

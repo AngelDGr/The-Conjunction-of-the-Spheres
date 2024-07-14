@@ -164,6 +164,7 @@
     "tcots-witcher.sounds.bullvore_idle": "Bullvore roars",
     "tcots-witcher.sounds.bullvore_death": "Bullvore dies",
     "tcots-witcher.sounds.bullvore_charge": "Bullvore charges",
+    "item.tcots-witcher.bullvore_horn_fragment": "Bullvore Horn Fragment",
 
 
     "item.tcots-witcher.nekker_spawn_egg": "Nekker Spawn Egg",
@@ -259,6 +260,11 @@
 
     "item.tcots-witcher.stammelfords_dust": "Stammelford's Dust",
     "item.tcots-witcher.alchemists_powder": "Alchemists' Powder",
+
+    "item.tcots-witcher.alchemy_formula": "Alchemy Recipe",
+    "item.tcots-witcher.alchemy_formula.tooltip": "Formula: %s",
+    "item.tcots-witcher.alchemy_formula.tooltip_n": "None",
+    "item.tcots-witcher.alchemy_formula.already_know": "You already know that recipe!",
 
 
 
@@ -506,9 +512,15 @@
     "tooltip.moon_dust.extra":   "Stop Creepers from exploding.",
     "effect.tcots-witcher.moon_dust": "Moon Dust Splinters",
 
+    "item.tcots-witcher.gvalchir": "G'valchir",
+    "tooltip.tcots-witcher.gvalchir": "A powerful runic sword",
+    "tooltip.tcots-witcher.gvalchir.extra": "Penetrates opponent armor",
+
+
+
     "item.tcots-witcher.knight_crossbow": "Knight Crossbow",
     "tooltip.knight_crossbow.dyeable": "Dyeable",
-    "tooltip.knight_crossbow.description": "Very strong, with slow charging.",
+    "tooltip.tcots-witcher.knight_crossbow": "Very strong, with slow charging",
 
     "item.tcots-witcher.base_bolt": "Crossbow Bolt",
     "tooltip.tcots-witcher.base_bolt": "Stronger than an arrow",
@@ -531,10 +543,12 @@
     "entity.tcots-witcher.broadhead_bolt": "Broadhead Bolt",
     "effect.tcots-witcher.bleeding": "Bleeding",
     "death.attack.bleeding": "%1$s bled to death",
+    "gui.jei.tcots-witcher.requires_recipe": "Requires unlock recipe",
 
 
     "text.config.tcots_config.title": "TCOTS Config",
     "text.config.tcots_config.category.hud": "Toxicity - HUD Options",
+    "text.config.tcots_config.category.hud.tooltip": "Modify the toxicity hud position",
     "text.config.tcots_config.option.hud.Hud_Y": "Y Offset",
     "text.config.tcots_config.option.hud.Hud_X": "X Offset",
     "text.config.tcots_config.option.hud.anchor": "Anchor",
@@ -543,5 +557,12 @@
     "text.config.tcots_config.enum.aNCHORS.left_up": "LEFT UP",
     "text.config.tcots_config.enum.aNCHORS.left_down": "LEFT DOWN",
     "text.config.tcots_config.enum.aNCHORS.right_up": "RIGHT UP",
-    "text.config.tcots_config.enum.aNCHORS.right_down": "RIGHT DOWN"
+    "text.config.tcots_config.enum.aNCHORS.right_down": "RIGHT DOWN",
+
+    "text.config.tcots_config.category.monsters": "Monsters - Add a monster in a monster category",
+    "text.config.tcots_config.category.monsters.tooltip": "Add mobs to work with the respective monster oils",
+    "text.config.tcots_config.option.monsters.Necrophages": "Necrophage Category",
+    "text.config.tcots_config.option.monsters.Ogroids": "Ogroid Category",
+    "text.config.tcots_config.option.monsters.Beasts": "Beast Category",
+    "text.config.tcots_config.option.monsters.Humanoids": "Humanoid Category"
 }

@@ -36,7 +36,7 @@ import java.util.Map;
 public class WitcherPotions_Base extends PotionItem {
     private final StatusEffectInstance effectInstance;
     private final int toxicity;
-    public final boolean decoction;
+    protected final boolean decoction;
 
     public WitcherPotions_Base(Settings settings, StatusEffectInstance effect, int toxicity, boolean decoction){
         super(settings);

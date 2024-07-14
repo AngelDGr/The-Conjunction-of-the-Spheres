@@ -54,6 +54,7 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_Items.registerWeapons_Armors();
 		TCOTS_ItemsGroups.registerGroupItems();
 		TCOTS_Items.modifyLootTables();
+		TCOTS_Items.registerCompostableItems();
 		AlchemyTableRecipesRegister.registerPotionRecipes();
 		TCOTS_Sounds.registerSounds();
 		TCOTS_Entities.addSpawns();

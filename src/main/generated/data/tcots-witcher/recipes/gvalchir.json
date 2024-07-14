@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "H": {
+      "item": "tcots-witcher:bullvore_horn_fragment"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "HIH",
+    "HIH",
+    "NSN"
+  ],
+  "result": {
+    "item": "tcots-witcher:gvalchir"
+  }
+}

@@ -1,23 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "G G",
-    "SWS",
-    "WWW"
-  ],
+  "category": "misc",
   "key": {
-    "G": {
+    "B": {
       "item": "minecraft:glass_bottle"
     },
-    "S": {
+    "C": {
       "item": "minecraft:cobblestone"
     },
     "W": {
       "tag": "minecraft:planks"
     }
   },
+  "pattern": [
+    "B B",
+    "CWC",
+    "WWW"
+  ],
   "result": {
-    "item": "tcots-witcher:alchemy_table",
-    "count": 1
+    "item": "tcots-witcher:alchemy_table"
   }
 }

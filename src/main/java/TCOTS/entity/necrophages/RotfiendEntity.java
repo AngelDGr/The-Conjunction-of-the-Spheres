@@ -54,7 +54,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     //xTODO: Add drops
     //xTODO: Add spawning
     //xTODO: Fix the invisible bug
-    //TODO: Add follow leader goal
+    //xTODO: Add follow leader goal
 
     @Nullable
     private MobEntity owner;

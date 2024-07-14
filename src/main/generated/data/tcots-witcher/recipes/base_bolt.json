@@ -1,22 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " I ",
-    "FSF"
-  ],
+  "category": "equipment",
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
     "F": {
       "item": "minecraft:feather"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
     "S": {
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    " I ",
+    "FSF"
+  ],
   "result": {
-    "item": "tcots-witcher:base_bolt",
-    "count": 2
+    "count": 2,
+    "item": "tcots-witcher:base_bolt"
   }
 }

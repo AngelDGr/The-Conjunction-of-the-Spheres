@@ -34,7 +34,7 @@ public class TCOTS_Entities {
     //TODO: Wights - Next update
     //xTODO: Scurvers
     //W2
-    //TODO: Bullvore
+    //xTODO: Bullvore
     //W1
     //xTODO: Devourer
     //xTODO: Graveir

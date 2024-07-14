@@ -20,6 +20,7 @@ public class EmptyWitcherPotionItem extends Item {
         super(settings);
     }
 
+    @SuppressWarnings("all")
     @Override
     public Text getName(ItemStack stack) {
         NbtCompound nbtCompound = stack.getNbt();

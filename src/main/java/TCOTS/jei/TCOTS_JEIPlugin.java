@@ -7,6 +7,7 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -19,8 +20,11 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.common.util.ErrorUtil;
+import mezz.jei.common.util.Translator;
 import mezz.jei.library.plugins.vanilla.crafting.CategoryRecipeValidator;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -120,8 +124,8 @@ public class TCOTS_JEIPlugin implements IModPlugin {
 
             background = guiHelper.drawableBuilder(new Identifier(TCOTS_Main.MOD_ID, "textures/gui/alchemy_table_jei.png"),
                     0,0,
-                    118, 90)
-                    .setTextureSize(118,90)
+                    118, 100)
+                    .setTextureSize(118,100)
                     .build();
 
             icon = guiHelper.createDrawableItemStack(new ItemStack(TCOTS_Blocks.ALCHEMY_TABLE));
@@ -175,17 +179,26 @@ public class TCOTS_JEIPlugin implements IModPlugin {
                         break;
                 }
 
-                builder.addSlot(RecipeIngredientRole.INPUT, xPosition, 2)
+                builder.addSlot(RecipeIngredientRole.INPUT, xPosition, 12)
                         .addItemStack(potionInputs.get(i));
             }
 
             //Put the base
-            builder.addSlot(RecipeIngredientRole.INPUT, 51, 43)
+            builder.addSlot(RecipeIngredientRole.INPUT, 51, 53)
                     .addItemStack(baseItem);
 
             //Put the result
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 51, 72)
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 51, 82)
                     .addItemStack(result);
+        }
+
+        @Override
+        public void draw(@NotNull RecipeEntry<AlchemyTableRecipe> recipe, @NotNull IRecipeSlotsView recipeSlotsView, DrawContext guiGraphics, double mouseX, double mouseY) {
+            String text = Translator.translateToLocalFormatted("gui.jei.tcots-witcher.requires_recipe");
+
+            MinecraftClient minecraft = MinecraftClient.getInstance();
+            TextRenderer font = minecraft.textRenderer;
+            guiGraphics.drawText(font, text, 0, 0, 0xFF808080, false);
         }
     }
 }

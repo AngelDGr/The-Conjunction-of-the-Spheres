@@ -72,7 +72,7 @@ Additionally, once it starts its charge, it won’t change direction until it re
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:graveir_bone
+                                        tcots-witcher:bullvore_horn_fragment
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "tcots-witcher:base_bolt"
+    },
+    "L": {
+      "item": "minecraft:feather"
+    },
+    "P": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "  P",
+    "L# ",
+    "LL "
+  ],
+  "result": {
+    "count": 2,
+    "item": "tcots-witcher:precision_bolt"
+  }
+}

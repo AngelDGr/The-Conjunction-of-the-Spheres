@@ -4,10 +4,23 @@ import io.wispforest.owo.config.annotation.Config;
 import io.wispforest.owo.config.annotation.Modmenu;
 import io.wispforest.owo.config.annotation.Nest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("unused")
 @Modmenu(modId = "tcots-witcher")
 @Config(name = "tcots_config", wrapperName = "TCOTS_Config")
 public class TCOTS_OwOConfig {
+
+    @Nest
+    public NestedMonsterConfig monsters = new NestedMonsterConfig();
+
+    public static class NestedMonsterConfig{
+        public List<String> Necrophages = new ArrayList<>(List.of());
+        public List<String> Ogroids = new ArrayList<>(List.of());
+        public List<String> Beasts = new ArrayList<>(List.of());
+        public List<String> Humanoids = new ArrayList<>(List.of());
+    }
 
     @Nest
     public NestedHudConfig hud = new NestedHudConfig();

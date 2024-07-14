@@ -11,12 +11,12 @@ import TCOTS.world.TCOTS_ProcessorList;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.*;
+import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SuspiciousStewIngredient;
 import net.minecraft.data.DataOutput;
+import net.minecraft.data.server.recipe.*;
 import net.minecraft.data.server.tag.TagProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageType;
@@ -31,11 +31,13 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.function.SetNbtLootFunction;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.PointOfInterestTypeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.poi.PointOfInterestType;
@@ -43,6 +45,7 @@ import net.minecraft.world.poi.PointOfInterestType;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
@@ -57,6 +60,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         main.addProvider(BlockTagsGenerator::new);
         main.addProvider(EntityTagGenerator::new);
         main.addProvider(ItemTagGenerator::new);
+        main.addProvider(RecipesGenerator::new);
+        main.addProvider(AdvancementsRecipesUnlocker::new);
     }
 
     @Override
@@ -454,6 +459,216 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
+            this.getOrCreateTagBuilder(TCOTS_Items.DECAYING_FLESH)
+                    .add(Items.BEEF)
+                    .add(Items.PORKCHOP)
+                    .add(Items.MUTTON)
+                    .add(Items.CHICKEN)
+                    .add(Items.RABBIT);
+        }
+    }
+    private static class RecipesGenerator extends FabricRecipeProvider{
+
+        public RecipesGenerator(FabricDataOutput output) {
+            super(output);
+        }
+
+        @Override
+        public void generate(RecipeExporter exporter) {
+
+            //Alchemy Table
+            {
+                ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, TCOTS_Items.ALCHEMY_TABLE_ITEM)
+                        .pattern("B B")
+                        .pattern("CWC")
+                        .pattern("WWW")
+                        .input('B', Items.GLASS_BOTTLE)
+                        .input('C', Items.COBBLESTONE)
+                        .input('W', ItemTags.PLANKS)
+
+                        .criterion(FabricRecipeProvider.hasItem(Items.GLASS_BOTTLE), FabricRecipeProvider.conditionsFromItem(Items.GLASS_BOTTLE))
+                        .offerTo(exporter);
+            }
+
+
+            //G'valchir
+            {
+                ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.GVALCHIR)
+                        .pattern("HIH")
+                        .pattern("HIH")
+                        .pattern("NSN")
+                        .input('H', TCOTS_Items.BULLVORE_HORN_FRAGMENT)
+                        .input('I', Items.IRON_INGOT)
+                        .input('N', Items.IRON_NUGGET)
+                        .input('S', Items.STICK)
+
+                        .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT))
+                        .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT), FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
+                        .offerTo(exporter);
+            }
+
+            //Knight Crossbow
+            {
+                ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.KNIGHT_CROSSBOW)
+                        .pattern("IWI")
+                        .pattern("LHL")
+                        .pattern(" S ")
+                        .input('I', Items.IRON_BLOCK)
+                        .input('W', ItemTags.WOOL)
+                        .input('L', Items.LEATHER)
+                        .input('H', Items.TRIPWIRE_HOOK)
+                        .input('S', Items.STICK)
+
+                        .criterion(FabricRecipeProvider.hasItem(Items.IRON_BLOCK), FabricRecipeProvider.conditionsFromItem(Items.IRON_BLOCK))
+                        .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                        .criterion(FabricRecipeProvider.hasItem(Items.TRIPWIRE_HOOK), FabricRecipeProvider.conditionsFromItem(Items.TRIPWIRE_HOOK))
+                        .offerTo(exporter);
+            }
+
+            //Crossbow Bolts
+            {
+                //Normal Bolt
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BASE_BOLT, 2)
+                            .pattern(" I ")
+                            .pattern("FSF")
+                            .input('I', Items.IRON_INGOT)
+                            .input('F', Items.FEATHER)
+                            .input('S', Items.STICK)
+
+                            .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT), FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
+                            .criterion(FabricRecipeProvider.hasItem(Items.FEATHER), FabricRecipeProvider.conditionsFromItem(Items.FEATHER))
+                            .offerTo(exporter);
+                }
+
+                //Blunt Bolt
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BLUNT_BOLT, 2)
+                            .pattern("  P")
+                            .pattern("L# ")
+                            .pattern("TL ")
+                            .input('P', Items.GOLD_BLOCK)
+                            .input('L', Items.IRON_INGOT)
+                            .input('T', Items.IRON_BLOCK)
+                            .input('#', TCOTS_Items.BASE_BOLT)
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                            .offerTo(exporter);
+                }
+
+                //Precision Bolt
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.PRECISION_BOLT, 2)
+                            .pattern("  P")
+                            .pattern("L# ")
+                            .pattern("LL ")
+                            .input('P', Items.IRON_NUGGET)
+                            .input('L', Items.FEATHER)
+                            .input('#', TCOTS_Items.BASE_BOLT)
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                            .offerTo(exporter);
+                }
+
+                //Exploding Bolt
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.EXPLODING_BOLT, 2)
+                            .pattern("  P")
+                            .pattern("L# ")
+                            .pattern("TL ")
+                            .input('P', TCOTS_Items.STAMMELFORDS_DUST)
+                            .input('L', Items.STRING)
+                            .input('T', Items.PAPER)
+                            .input('#', TCOTS_Items.BASE_BOLT)
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                            .offerTo(exporter);
+                }
+
+                //Broadhead Bolt
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BROADHEAD_BOLT, 2)
+                            .pattern("  P")
+                            .pattern("L# ")
+                            .pattern("TL ")
+                            .input('P', TCOTS_Items.FOGLET_TEETH)
+                            .input('L', Items.IRON_NUGGET)
+                            .input('T', Items.FEATHER)
+                            .input('#', TCOTS_Items.BASE_BOLT)
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                            .offerTo(exporter);
+                }
+            }
+
+
+            //Bone Meal from bones
+            {
+                //Devourer teeth
+                {
+                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.BONE_MEAL, 12)
+                            .input(TCOTS_Items.DEVOURER_TEETH)
+                            .group("bonemeal")
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.DEVOURER_TEETH), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.DEVOURER_TEETH))
+                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "bone_meal_from_devourer_teeth"));
+                }
+
+                //Graveir bone
+                {
+                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.BONE_MEAL, 16)
+                            .input(TCOTS_Items.GRAVEIR_BONE)
+                            .group("bonemeal")
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.GRAVEIR_BONE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.GRAVEIR_BONE))
+                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "bone_meal_from_graveir_bone"));
+                }
+            }
+
+            //Cadaverine crafting
+            {
+                //Leather
+                {
+                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.LEATHER, 2)
+                            .input(TCOTS_Items.CADAVERINE)
+                            .input(Items.ROTTEN_FLESH)
+                            .group("leather")
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
+                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_rotten"));
+                }
+
+                //Head
+                {
+                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.SKELETON_SKULL)
+                            .input(TCOTS_Items.CADAVERINE)
+                            .input(Items.ZOMBIE_HEAD)
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
+                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_head"));
+                }
+
+                //Bone
+                {
+                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.BONE, 2)
+                            .input(TCOTS_Items.CADAVERINE)
+                            .input(TCOTS_Items.DECAYING_FLESH)
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
+                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_flesh"));
+                }
+            }
+        }
+    }
+
+    private static class AdvancementsRecipesUnlocker extends FabricAdvancementProvider {
+
+        protected AdvancementsRecipesUnlocker(FabricDataOutput output) {
+            super(output);
+        }
+
+        @Override
+        public void generateAdvancement(Consumer<AdvancementEntry> consumer) {
 
         }
     }

@@ -3,7 +3,10 @@ package TCOTS.entity.necrophages;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -48,7 +51,8 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.EnumSet;
 
 public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
-    //TODO: Add drops -> Something related to the sword?
+    //xTODO: Add drops -> Something related to the G'valchir
+    //xTODO: Add Loot table
     //xTODO: Add spawn (Like a illager patrol)
     //xTODO: Add bestiary entry
 
