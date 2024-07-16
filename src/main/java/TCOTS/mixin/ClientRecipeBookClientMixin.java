@@ -1,6 +1,6 @@
 package TCOTS.mixin;
 
-import TCOTS.items.potions.recipes.AlchemyTableRecipe;
+import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
 import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.client.recipebook.RecipeBookGroup;
 import net.minecraft.recipe.RecipeEntry;

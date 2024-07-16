@@ -2,7 +2,7 @@ package TCOTS.entity.misc;
 
 
 import TCOTS.entity.necrophages.FogletEntity;
-import TCOTS.items.potions.bombs.NorthernWindBomb;
+import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

@@ -3,23 +3,23 @@ package TCOTS.blocks;
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
 import TCOTS.items.AlchemyBookItem;
 import TCOTS.items.TCOTS_Items;
-import TCOTS.items.potions.EmptyWitcherPotionItem;
-import TCOTS.items.potions.WitcherAlcohol_Base;
+import TCOTS.items.concoctions.EmptyWitcherPotionItem;
+import TCOTS.items.concoctions.WitcherAlcohol_Base;
 import TCOTS.sounds.TCOTS_Sounds;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.EnchantingTableBlockEntity;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
-import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -40,18 +40,13 @@ import java.util.List;
 @SuppressWarnings("deprecation")
 public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityProvider {
     public static final MapCodec<AlchemyTableBlock> CODEC = AlchemyTableBlock.createCodec(AlchemyTableBlock::new);
+    protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
+    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static final BooleanProperty HAS_ALCHEMY_BOOK = BooleanProperty.of("has_alchemy_book");
 
     public MapCodec<AlchemyTableBlock> getCodec() {
         return CODEC;
     }
-
-    //Properties
-
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-
-    public static final BooleanProperty HAS_ALCHEMY_BOOK = BooleanProperty.of("has_alchemy_book");
-
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
 
     protected AlchemyTableBlock(Settings settings) {
         super(settings);
@@ -104,12 +99,22 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
 
 
     //Crafting stuff
+
+//    @Override
+//    public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
+//        BlockEntity blockEntity = world.getBlockEntity(pos);
+//        if (blockEntity instanceof AlchemyTableBlockEntity) {
+//
+//            return new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> new AlchemyTableScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos), world.getBlockEntity(pos)), Text.translatable(this.getTranslationKey()));
+//        }
+//        return null;
+//    }
+
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof AlchemyTableBlockEntity) {
-                ItemScatterer.spawn(world, pos, (AlchemyTableBlockEntity)blockEntity);
                 world.updateComparators(pos,this);
             }
             if (state.get(HAS_ALCHEMY_BOOK)) {
@@ -117,6 +122,14 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
             }
 
             super.onStateReplaced(state, world, pos, newState, moved);
+        }
+    }
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        BlockEntity blockEntity;
+        if (itemStack.hasCustomName() && (blockEntity = world.getBlockEntity(pos)) instanceof EnchantingTableBlockEntity) {
+            ((EnchantingTableBlockEntity)blockEntity).setCustomName(itemStack.getName());
         }
     }
 
@@ -134,8 +147,7 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos,
-                              PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 
         if (!world.isClient) {
             //If the player have an alcohol in the hand refill the potion
@@ -223,19 +235,32 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
 
 
             //Screen opener
+//            var factory = new ExtendedScreenHandlerFactory() {
+//
+//                @Override
+//                public @NotNull ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+//                    return new AlchemyTableScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(player.getWorld(), pos), player.getWorld().getBlockEntity(pos));
+//                }
+//
+//                @Override
+//                public Text getDisplayName() {
+//                    return AlchemyTableBlock.this.getName();
+//                }
+//
+//                @Override
+//                public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+//
+//                }
+//            };
+
             NamedScreenHandlerFactory screenHandlerFactory = ((AlchemyTableBlockEntity) world.getBlockEntity(pos));
             if (screenHandlerFactory != null) {
                 player.openHandledScreen(screenHandlerFactory);
+//            player.openHandledScreen(factory);
             }
         }
 
         return ActionResult.SUCCESS;
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient ? null : AlchemyTableBlock.validateTicker(type, TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, AlchemyTableBlockEntity::tick);
     }
 
 }

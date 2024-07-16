@@ -12,7 +12,10 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
+import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.advancement.AdvancementRequirements;
+import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SuspiciousStewIngredient;
 import net.minecraft.data.DataOutput;
@@ -667,8 +670,32 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             super(output);
         }
 
+
         @Override
         public void generateAdvancement(Consumer<AdvancementEntry> consumer) {
+
+            //Start recipes
+            this.generateBasicRecipeAdvancement("swallow_potion", consumer);
+            this.generateBasicRecipeAdvancement("cat_potion", consumer);
+
+            this.generateBasicRecipeAdvancement("samum", consumer);
+            this.generateBasicRecipeAdvancement("grapeshot", consumer);
+
+            this.generateBasicRecipeAdvancement("oil_necrophage", consumer);
+            this.generateBasicRecipeAdvancement("oil_specter", consumer);
+
+            this.generateBasicRecipeAdvancement("dwarven_spirit", consumer);
+            this.generateBasicRecipeAdvancement("alcohest", consumer);
+        }
+
+        private void generateBasicRecipeAdvancement(String id, Consumer<AdvancementEntry> consumer){
+            Advancement.Builder.createUntelemetered()
+                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_TABLE_ITEM), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_TABLE_ITEM))
+                    .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
+                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_BOOK), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_BOOK))
+                    .rewards(AdvancementRewards.Builder.recipe(new Identifier(TCOTS_Main.MOD_ID,id)))
+                    .parent(CraftingRecipeJsonBuilder.ROOT)
+                    .build(consumer, new Identifier(TCOTS_Main.MOD_ID,"recipes/alchemy")+"/"+id);
 
         }
     }

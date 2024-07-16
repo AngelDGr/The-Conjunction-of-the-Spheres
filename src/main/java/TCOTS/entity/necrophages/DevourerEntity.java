@@ -3,7 +3,7 @@ package TCOTS.entity.necrophages;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
-import TCOTS.items.potions.TCOTS_Effects;
+import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;

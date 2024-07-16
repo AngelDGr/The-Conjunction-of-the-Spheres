@@ -3,7 +3,7 @@ package TCOTS.entity.misc;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.TCOTS_Items;
-import TCOTS.items.potions.bombs.*;
+import TCOTS.items.concoctions.bombs.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;

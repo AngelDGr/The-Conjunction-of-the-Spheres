@@ -2,7 +2,7 @@ package TCOTS.entity.misc;
 
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.TCOTS_Items;
-import TCOTS.items.potions.TCOTS_Effects;
+import TCOTS.items.concoctions.TCOTS_Effects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

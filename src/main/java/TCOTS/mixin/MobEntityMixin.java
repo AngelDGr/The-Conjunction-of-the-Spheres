@@ -1,8 +1,8 @@
 package TCOTS.mixin;
 
 import TCOTS.entity.necrophages.BullvoreEntity;
-import TCOTS.items.potions.bombs.NorthernWindBomb;
-import TCOTS.items.potions.bombs.SamumBomb;
+import TCOTS.items.concoctions.bombs.NorthernWindBomb;
+import TCOTS.items.concoctions.bombs.SamumBomb;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

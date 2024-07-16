@@ -1,6 +1,6 @@
 package TCOTS.mixin.samum;
 
-import TCOTS.items.potions.bombs.SamumBomb;
+import TCOTS.items.concoctions.bombs.SamumBomb;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.mob.MobEntity;
 import org.spongepowered.asm.mixin.Final;

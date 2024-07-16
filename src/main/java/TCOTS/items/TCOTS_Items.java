@@ -7,7 +7,7 @@ import TCOTS.items.blocks.AlchemyTableItem;
 import TCOTS.items.blocks.HerbalTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
-import TCOTS.items.potions.*;
+import TCOTS.items.concoctions.*;
 import TCOTS.items.weapons.BoltItem;
 import TCOTS.items.weapons.GvalchirSword;
 import TCOTS.items.weapons.KnightCrossbow;
@@ -403,6 +403,422 @@ public class TCOTS_Items {
                 new AlchemyFormulaItem(new FabricItemSettings().maxCount(8))
         );
 
+        //Potions
+        {
+            {
+                EMPTY_WITCHER_POTION_2 = registerItem("empty_witcher_potion2",
+                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(2))
+                );
+
+                EMPTY_WITCHER_POTION_3 = registerItem("empty_witcher_potion3",
+                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(3))
+                );
+
+                EMPTY_WITCHER_POTION_4 = registerItem("empty_witcher_potion4",
+                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(4))
+                );
+
+                EMPTY_WITCHER_POTION_5 = registerItem("empty_witcher_potion5",
+                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(5))
+                );
+
+                //Swallow
+                {
+                    SWALLOW_POTION = registerItemPotion("swallow_potion",
+                            new FabricItemSettings().maxCount(3),
+                            TCOTS_Effects.SWALLOW_EFFECT,
+                            20,
+                            20,
+                            0,
+                            false
+                    );
+
+                    SWALLOW_POTION_ENHANCED = registerItemPotion("swallow_potion_enhanced",
+                            new FabricItemSettings().maxCount(4),
+                            TCOTS_Effects.SWALLOW_EFFECT,
+                            20,
+                            20,
+                            1,
+                            false
+                    );
+
+                    SWALLOW_POTION_SUPERIOR = registerItemPotion("swallow_potion_superior",
+                            new FabricItemSettings().maxCount(5),
+                            TCOTS_Effects.SWALLOW_EFFECT,
+                            20,
+                            20,
+                            2,
+                            false
+                    );
+
+                    SWALLOW_SPLASH = registerSplashPotion("swallow_splash",
+                            new FabricItemSettings().maxCount(5),
+                            TCOTS_Effects.SWALLOW_EFFECT,
+                            10,
+                            18
+                    );
+                }
+
+                //Cat
+                {
+                    CAT_POTION = registerItemPotion("cat_potion",
+                            new FabricItemSettings().maxCount(3),
+                            TCOTS_Effects.CAT_EFFECT,
+                            15,
+                            60,
+                            0,
+                            false
+                    );
+
+                    CAT_POTION_ENHANCED = registerItemPotion("cat_potion_enhanced",
+                            new FabricItemSettings().maxCount(4),
+                            TCOTS_Effects.CAT_EFFECT,
+                            15,
+                            120,
+                            1,
+                            false
+                    );
+
+                    CAT_POTION_SUPERIOR = registerItemPotion("cat_potion_superior",
+                            new FabricItemSettings().maxCount(5),
+                            TCOTS_Effects.CAT_EFFECT,
+                            15,
+                            180,
+                            2,
+                            false
+                    );
+                }
+
+                //White Raffard's
+                {
+                    WHITE_RAFFARDS_DECOCTION = registerItemPotion("white_raffards_decoction",
+                            new FabricItemSettings().maxCount(2),
+                            TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                            25,
+                            1,
+                            0,
+                            false
+                    );
+
+                    WHITE_RAFFARDS_DECOCTION_ENHANCED = registerItemPotion("white_raffards_decoction_enhanced",
+                            new FabricItemSettings().maxCount(2),
+                            TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                            25,
+                            1,
+                            1,
+                            false
+                    );
+
+                    WHITE_RAFFARDS_DECOCTION_SUPERIOR = registerItemPotion("white_raffards_decoction_superior",
+                            new FabricItemSettings().maxCount(3),
+                            TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                            25,
+                            1,
+                            2,
+                            false
+                    );
+
+
+                    WHITE_RAFFARDS_DECOCTION_SPLASH = registerSplashPotion("white_raffards_splash",
+                            new FabricItemSettings().maxCount(5),
+                            TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
+                            15,
+                            1
+                    );
+                }
+
+                //Killer Whale
+                {
+                    KILLER_WHALE_POTION = registerItemPotion("killer_whale_potion",
+                            new FabricItemSettings().maxCount(3),
+                            TCOTS_Effects.KILLER_WHALE_EFFECT,
+                            15,
+                            90,
+                            0,
+                            false
+                    );
+
+                    KILLER_WHALE_SPLASH = registerSplashPotion("killer_whale_splash",
+                            new FabricItemSettings().maxCount(5),
+                            TCOTS_Effects.KILLER_WHALE_EFFECT,
+                            10,
+                            75
+                    );
+                }
+
+                //Black Blood
+                {
+                    BLACK_BLOOD_POTION = registerItemPotion("black_blood_potion",
+                            new FabricItemSettings().maxCount(3),
+                            TCOTS_Effects.BLACK_BLOOD_EFFECT,
+                            25,
+                            30,
+                            0,
+                            false
+                    );
+
+                    BLACK_BLOOD_POTION_ENHANCED = registerItemPotion("black_blood_potion_enhanced",
+                            new FabricItemSettings().maxCount(4),
+                            TCOTS_Effects.BLACK_BLOOD_EFFECT,
+                            25,
+                            45,
+                            1,
+                            false
+                    );
+
+                    BLACK_BLOOD_POTION_SUPERIOR = registerItemPotion("black_blood_potion_superior",
+                            new FabricItemSettings().maxCount(5),
+                            TCOTS_Effects.BLACK_BLOOD_EFFECT,
+                            25,
+                            60,
+                            2,
+                            false
+                    );
+                }
+
+                //Maribor Forest
+                {
+                    MARIBOR_FOREST_POTION = registerItemPotion("maribor_forest_potion",
+                            new FabricItemSettings().maxCount(3),
+                            TCOTS_Effects.MARIBOR_FOREST_EFFECT,
+                            20,
+                            30,
+                            0,
+                            false
+                    );
+
+                    MARIBOR_FOREST_POTION_ENHANCED = registerItemPotion("maribor_forest_potion_enhanced",
+                            new FabricItemSettings().maxCount(4),
+                            TCOTS_Effects.MARIBOR_FOREST_EFFECT,
+                            20,
+                            60,
+                            1,
+                            false
+                    );
+
+                    MARIBOR_FOREST_POTION_SUPERIOR = registerItemPotion("maribor_forest_potion_superior",
+                            new FabricItemSettings().maxCount(5),
+                            TCOTS_Effects.MARIBOR_FOREST_EFFECT,
+                            20,
+                            90,
+                            2,
+                            false
+                    );
+                }
+
+                //Wolf
+                {
+                    WOLF_POTION = registerItemPotion("wolf_potion",
+                            new FabricItemSettings().maxCount(2),
+                            TCOTS_Effects.WOLF_EFFECT,
+                            25,
+                            30,
+                            0,
+                            false
+                    );
+
+                    WOLF_POTION_ENHANCED = registerItemPotion("wolf_potion_enhanced",
+                            new FabricItemSettings().maxCount(3),
+                            TCOTS_Effects.WOLF_EFFECT,
+                            25,
+                            45,
+                            1,
+                            false
+                    );
+
+                    WOLF_POTION_SUPERIOR = registerItemPotion("wolf_potion_superior",
+                            new FabricItemSettings().maxCount(3),
+                            TCOTS_Effects.WOLF_EFFECT,
+                            25,
+                            60,
+                            2,
+                            false
+                    );
+                }
+
+                //Rook
+                {
+                    ROOK_POTION = registerItemPotion("rook_potion",
+                            new FabricItemSettings().maxCount(2),
+                            TCOTS_Effects.ROOK_EFFECT,
+                            25,
+                            45,
+                            0,
+                            false
+                    );
+
+                    ROOK_POTION_ENHANCED = registerItemPotion("rook_potion_enhanced",
+                            new FabricItemSettings().maxCount(3),
+                            TCOTS_Effects.ROOK_EFFECT,
+                            25,
+                            60,
+                            1,
+                            false
+                    );
+
+                    ROOK_POTION_SUPERIOR = registerItemPotion("rook_potion_superior",
+                            new FabricItemSettings().maxCount(3),
+                            TCOTS_Effects.ROOK_EFFECT,
+                            25,
+                            90,
+                            2,
+                            false
+                    );
+                }
+
+                //White Honey
+                {
+                    WHITE_HONEY_POTION = registerItem("white_honey_potion",
+                            new WitcherWhiteHoney(new FabricItemSettings().maxCount(1))
+                    );
+
+                    WHITE_HONEY_POTION_ENHANCED = registerItem("white_honey_potion_enhanced",
+                            new WitcherWhiteHoney(new FabricItemSettings().maxCount(2))
+                    );
+
+                    WHITE_HONEY_POTION_SUPERIOR = registerItem("white_honey_potion_superior",
+                            new WitcherWhiteHoney(new FabricItemSettings().maxCount(5))
+                    );
+                }
+            }
+
+            //Decoctions
+            {
+                EMPTY_MONSTER_DECOCTION = registerItem("empty_monster_decoction",
+                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(1))
+                );
+
+                GRAVE_HAG_DECOCTION = registerItemPotion("grave_hag_decoction",
+                        new FabricItemSettings().maxCount(1),
+                        TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT,
+                        50,
+                        1200,
+                        0,
+                        true
+                );
+
+                WATER_HAG_DECOCTION = registerItemPotion("water_hag_decoction",
+                        new FabricItemSettings().maxCount(1),
+                        TCOTS_Effects.WATER_HAG_DECOCTION_EFFECT,
+                        50,
+                        1200,
+                        0,
+                        true
+                );
+
+                ALGHOUL_DECOCTION = registerItemPotion("alghoul_decoction",
+                        new FabricItemSettings().maxCount(1),
+                        TCOTS_Effects.ALGHOUL_DECOCTION_EFFECT,
+                        50,
+                        1200,
+                        0,
+                        true
+                );
+
+                FOGLET_DECOCTION = registerItemPotion("foglet_decoction",
+                        new FabricItemSettings().maxCount(1),
+                        TCOTS_Effects.FOGLET_DECOCTION_EFFECT,
+                        50,
+                        1200,
+                        0,
+                        true
+                );
+            }
+        }
+
+        //Bombs
+        {
+            EMPTY_BOMB_POWDER_2 = registerItem("bomb_powder_2",
+                    new EmptyBombPowderItem(new FabricItemSettings().maxCount(2)));
+
+            EMPTY_BOMB_POWDER_3 = registerItem("bomb_powder_3",
+                    new EmptyBombPowderItem(new FabricItemSettings().maxCount(3)));
+
+            EMPTY_BOMB_POWDER_4 = registerItem("bomb_powder_4",
+                    new EmptyBombPowderItem(new FabricItemSettings().maxCount(4)));
+
+
+            GRAPESHOT = registerItem("grapeshot",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "grapeshot", 0));
+
+            ENHANCED_GRAPESHOT = registerItem("grapeshot_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "grapeshot", 1));
+
+            SUPERIOR_GRAPESHOT = registerItem("grapeshot_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "grapeshot", 2));
+
+
+            SAMUM = registerItem("samum",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "samum", 0));
+
+            SAMUM_ENHANCED = registerItem("samum_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "samum", 1));
+
+            SAMUM_SUPERIOR = registerItem("samum_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "samum", 2));
+
+
+            DANCING_STAR = registerItem("dancing_star",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "dancing_star", 0));
+
+            DANCING_STAR_ENHANCED = registerItem("dancing_star_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "dancing_star", 1));
+
+            DANCING_STAR_SUPERIOR = registerItem("dancing_star_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "dancing_star", 2));
+
+
+            DEVILS_PUFFBALL = registerItem("devils_puffball",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "devils_puffball", 0));
+
+            DEVILS_PUFFBALL_ENHANCED = registerItem("devils_puffball_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "devils_puffball", 1));
+
+            DEVILS_PUFFBALL_SUPERIOR = registerItem("devils_puffball_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "devils_puffball", 2));
+
+
+            NORTHERN_WIND = registerItem("northern_wind",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "northern_wind", 0));
+
+            NORTHERN_WIND_ENHANCED = registerItem("northern_wind_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "northern_wind", 1));
+
+            NORTHERN_WIND_SUPERIOR = registerItem("northern_wind_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "northern_wind", 2));
+
+
+            DRAGONS_DREAM = registerItem("dragons_dream",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "dragons_dream", 0));
+
+            DRAGONS_DREAM_ENHANCED = registerItem("dragons_dream_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "dragons_dream", 1));
+
+            DRAGONS_DREAM_SUPERIOR = registerItem("dragons_dream_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "dragons_dream", 2));
+
+
+            DIMERITIUM_BOMB = registerItem("dimeritium_bomb",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "dimeritium_bomb", 0));
+
+            DIMERITIUM_BOMB_ENHANCED = registerItem("dimeritium_bomb_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "dimeritium_bomb", 1));
+
+            DIMERITIUM_BOMB_SUPERIOR = registerItem("dimeritium_bomb_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "dimeritium_bomb", 2));
+
+
+            MOON_DUST = registerItem("moon_dust",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "moon_dust", 0));
+
+            MOON_DUST_ENHANCED = registerItem("moon_dust_enhanced",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "moon_dust", 1));
+
+            MOON_DUST_SUPERIOR = registerItem("moon_dust_superior",
+                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "moon_dust", 2));
+
+        }
+
         //Oils
         {
             EMPTY_OIL = registerItem("empty_oil",
@@ -450,397 +866,8 @@ public class TCOTS_Items {
             );
         }
 
-        //Bombs
-        {
-            EMPTY_BOMB_POWDER_2 = registerItem("bomb_powder_2",
-                    new EmptyBombPowderItem(new FabricItemSettings().maxCount(2)));
 
-            EMPTY_BOMB_POWDER_3 = registerItem("bomb_powder_3",
-                    new EmptyBombPowderItem(new FabricItemSettings().maxCount(3)));
 
-            EMPTY_BOMB_POWDER_4 = registerItem("bomb_powder_4",
-                    new EmptyBombPowderItem(new FabricItemSettings().maxCount(4)));
-
-
-            GRAPESHOT = registerItem("grapeshot",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "grapeshot", 0));
-
-            ENHANCED_GRAPESHOT = registerItem("grapeshot_enhanced",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "grapeshot", 1));
-
-            SUPERIOR_GRAPESHOT = registerItem("grapeshot_superior",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "grapeshot", 2));
-
-
-            DANCING_STAR = registerItem("dancing_star",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "dancing_star", 0));
-
-            DANCING_STAR_ENHANCED = registerItem("dancing_star_enhanced",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "dancing_star", 1));
-
-            DANCING_STAR_SUPERIOR = registerItem("dancing_star_superior",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "dancing_star", 2));
-
-
-            DEVILS_PUFFBALL = registerItem("devils_puffball",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "devils_puffball", 0));
-
-            DEVILS_PUFFBALL_ENHANCED = registerItem("devils_puffball_enhanced",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "devils_puffball", 1));
-
-            DEVILS_PUFFBALL_SUPERIOR = registerItem("devils_puffball_superior",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "devils_puffball", 2));
-
-
-            SAMUM = registerItem("samum",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "samum", 0));
-
-            SAMUM_ENHANCED = registerItem("samum_enhanced",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "samum", 1));
-
-            SAMUM_SUPERIOR = registerItem("samum_superior",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "samum", 2));
-
-            NORTHERN_WIND = registerItem("northern_wind",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "northern_wind", 0));
-
-            NORTHERN_WIND_ENHANCED = registerItem("northern_wind_enhanced",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "northern_wind", 1));
-
-            NORTHERN_WIND_SUPERIOR = registerItem("northern_wind_superior",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "northern_wind", 2));
-
-            DRAGONS_DREAM = registerItem("dragons_dream",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "dragons_dream", 0));
-
-            DRAGONS_DREAM_ENHANCED = registerItem("dragons_dream_enhanced",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "dragons_dream", 1));
-
-            DRAGONS_DREAM_SUPERIOR = registerItem("dragons_dream_superior",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "dragons_dream", 2));
-
-            DIMERITIUM_BOMB = registerItem("dimeritium_bomb",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "dimeritium_bomb", 0));
-
-            DIMERITIUM_BOMB_ENHANCED = registerItem("dimeritium_bomb_enhanced",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "dimeritium_bomb", 1));
-
-            DIMERITIUM_BOMB_SUPERIOR = registerItem("dimeritium_bomb_superior",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "dimeritium_bomb", 2));
-
-            MOON_DUST = registerItem("moon_dust",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "moon_dust", 0));
-
-            MOON_DUST_ENHANCED = registerItem("moon_dust_enhanced",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "moon_dust", 1));
-
-            MOON_DUST_SUPERIOR = registerItem("moon_dust_superior",
-                    new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "moon_dust", 2));
-
-        }
-
-        //Potions
-        {
-            {
-                EMPTY_WITCHER_POTION_2 = registerItem("empty_witcher_potion2",
-                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(2))
-                );
-
-                EMPTY_WITCHER_POTION_3 = registerItem("empty_witcher_potion3",
-                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(3))
-                );
-
-                EMPTY_WITCHER_POTION_4 = registerItem("empty_witcher_potion4",
-                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(4))
-                );
-
-                EMPTY_WITCHER_POTION_5 = registerItem("empty_witcher_potion5",
-                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(5))
-                );
-
-
-                //W1
-                WOLF_POTION = registerItemPotion("wolf_potion",
-                        new FabricItemSettings().maxCount(2),
-                        TCOTS_Effects.WOLF_EFFECT,
-                        25,
-                        30,
-                        0,
-                        false
-                );
-
-                WOLF_POTION_ENHANCED = registerItemPotion("wolf_potion_enhanced",
-                        new FabricItemSettings().maxCount(3),
-                        TCOTS_Effects.WOLF_EFFECT,
-                        25,
-                        45,
-                        1,
-                        false
-                );
-
-                WOLF_POTION_SUPERIOR = registerItemPotion("wolf_potion_superior",
-                        new FabricItemSettings().maxCount(3),
-                        TCOTS_Effects.WOLF_EFFECT,
-                        25,
-                        60,
-                        2,
-                        false
-                );
-
-                //W2
-                ROOK_POTION = registerItemPotion("rook_potion",
-                        new FabricItemSettings().maxCount(2),
-                        TCOTS_Effects.ROOK_EFFECT,
-                        25,
-                        45,
-                        0,
-                        false
-                );
-
-                ROOK_POTION_ENHANCED = registerItemPotion("rook_potion_enhanced",
-                        new FabricItemSettings().maxCount(3),
-                        TCOTS_Effects.ROOK_EFFECT,
-                        25,
-                        60,
-                        1,
-                        false
-                );
-
-                ROOK_POTION_SUPERIOR = registerItemPotion("rook_potion_superior",
-                        new FabricItemSettings().maxCount(3),
-                        TCOTS_Effects.ROOK_EFFECT,
-                        25,
-                        90,
-                        2,
-                        false
-                );
-
-                //W3
-                SWALLOW_POTION = registerItemPotion("swallow_potion",
-                        new FabricItemSettings().maxCount(3),
-                        TCOTS_Effects.SWALLOW_EFFECT,
-                        20,
-                        20,
-                        0,
-                        false
-                );
-
-                SWALLOW_POTION_ENHANCED = registerItemPotion("swallow_potion_enhanced",
-                        new FabricItemSettings().maxCount(4),
-                        TCOTS_Effects.SWALLOW_EFFECT,
-                        20,
-                        20,
-                        1,
-                        false
-                );
-
-                SWALLOW_POTION_SUPERIOR = registerItemPotion("swallow_potion_superior",
-                        new FabricItemSettings().maxCount(5),
-                        TCOTS_Effects.SWALLOW_EFFECT,
-                        20,
-                        20,
-                        2,
-                        false
-                );
-
-                WHITE_RAFFARDS_DECOCTION = registerItemPotion("white_raffards_decoction",
-                        new FabricItemSettings().maxCount(2),
-                        TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
-                        25,
-                        1,
-                        0,
-                        false
-                );
-
-                WHITE_RAFFARDS_DECOCTION_ENHANCED = registerItemPotion("white_raffards_decoction_enhanced",
-                        new FabricItemSettings().maxCount(2),
-                        TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
-                        25,
-                        1,
-                        1,
-                        false
-                );
-
-                WHITE_RAFFARDS_DECOCTION_SUPERIOR = registerItemPotion("white_raffards_decoction_superior",
-                        new FabricItemSettings().maxCount(3),
-                        TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
-                        25,
-                        1,
-                        2,
-                        false
-                );
-
-                CAT_POTION = registerItemPotion("cat_potion",
-                        new FabricItemSettings().maxCount(3),
-                        TCOTS_Effects.CAT_EFFECT,
-                        15,
-                        60,
-                        0,
-                        false
-                );
-
-                CAT_POTION_ENHANCED = registerItemPotion("cat_potion_enhanced",
-                        new FabricItemSettings().maxCount(4),
-                        TCOTS_Effects.CAT_EFFECT,
-                        15,
-                        120,
-                        1,
-                        false
-                );
-
-                CAT_POTION_SUPERIOR = registerItemPotion("cat_potion_superior",
-                        new FabricItemSettings().maxCount(5),
-                        TCOTS_Effects.CAT_EFFECT,
-                        15,
-                        180,
-                        2,
-                        false
-                );
-
-                BLACK_BLOOD_POTION = registerItemPotion("black_blood_potion",
-                        new FabricItemSettings().maxCount(3),
-                        TCOTS_Effects.BLACK_BLOOD_EFFECT,
-                        25,
-                        30,
-                        0,
-                        false
-                );
-
-                BLACK_BLOOD_POTION_ENHANCED = registerItemPotion("black_blood_potion_enhanced",
-                        new FabricItemSettings().maxCount(4),
-                        TCOTS_Effects.BLACK_BLOOD_EFFECT,
-                        25,
-                        45,
-                        1,
-                        false
-                );
-
-                BLACK_BLOOD_POTION_SUPERIOR = registerItemPotion("black_blood_potion_superior",
-                        new FabricItemSettings().maxCount(5),
-                        TCOTS_Effects.BLACK_BLOOD_EFFECT,
-                        25,
-                        60,
-                        2,
-                        false
-                );
-
-                MARIBOR_FOREST_POTION = registerItemPotion("maribor_forest_potion",
-                        new FabricItemSettings().maxCount(3),
-                        TCOTS_Effects.MARIBOR_FOREST_EFFECT,
-                        20,
-                        30,
-                        0,
-                        false
-                );
-
-                MARIBOR_FOREST_POTION_ENHANCED = registerItemPotion("maribor_forest_potion_enhanced",
-                        new FabricItemSettings().maxCount(4),
-                        TCOTS_Effects.MARIBOR_FOREST_EFFECT,
-                        20,
-                        60,
-                        1,
-                        false
-                );
-
-                MARIBOR_FOREST_POTION_SUPERIOR = registerItemPotion("maribor_forest_potion_superior",
-                        new FabricItemSettings().maxCount(5),
-                        TCOTS_Effects.MARIBOR_FOREST_EFFECT,
-                        20,
-                        90,
-                        2,
-                        false
-                );
-
-
-                KILLER_WHALE_POTION = registerItemPotion("killer_whale_potion",
-                        new FabricItemSettings().maxCount(3),
-                        TCOTS_Effects.KILLER_WHALE_EFFECT,
-                        15,
-                        90,
-                        0,
-                        false
-                );
-
-                WHITE_HONEY_POTION = registerItem("white_honey_potion",
-                        new WitcherWhiteHoney(new FabricItemSettings().maxCount(1))
-                );
-
-                WHITE_HONEY_POTION_ENHANCED = registerItem("white_honey_potion_enhanced",
-                        new WitcherWhiteHoney(new FabricItemSettings().maxCount(2))
-                );
-
-                WHITE_HONEY_POTION_SUPERIOR = registerItem("white_honey_potion_superior",
-                        new WitcherWhiteHoney(new FabricItemSettings().maxCount(5))
-                );
-            }
-
-            //Splash Potions
-            {
-                SWALLOW_SPLASH = registerSplashPotion("swallow_splash",
-                        new FabricItemSettings().maxCount(5),
-                        TCOTS_Effects.SWALLOW_EFFECT,
-                        10,
-                        18
-                );
-
-                WHITE_RAFFARDS_DECOCTION_SPLASH = registerSplashPotion("white_raffards_splash",
-                        new FabricItemSettings().maxCount(5),
-                        TCOTS_Effects.WHITE_RAFFARDS_EFFECT,
-                        15,
-                        1
-                );
-
-                KILLER_WHALE_SPLASH = registerSplashPotion("killer_whale_splash",
-                        new FabricItemSettings().maxCount(5),
-                        TCOTS_Effects.KILLER_WHALE_EFFECT,
-                        10,
-                        75
-                );
-            }
-
-            //Decoctions
-            {
-                EMPTY_MONSTER_DECOCTION = registerItem("empty_monster_decoction",
-                        new EmptyWitcherPotionItem(new FabricItemSettings().maxCount(1))
-                );
-
-                GRAVE_HAG_DECOCTION = registerItemPotion("grave_hag_decoction",
-                        new FabricItemSettings().maxCount(1),
-                        TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT,
-                        50,
-                        1200,
-                        0,
-                        true
-                );
-
-                WATER_HAG_DECOCTION = registerItemPotion("water_hag_decoction",
-                        new FabricItemSettings().maxCount(1),
-                        TCOTS_Effects.WATER_HAG_DECOCTION_EFFECT,
-                        50,
-                        1200,
-                        0,
-                        true
-                );
-
-                ALGHOUL_DECOCTION = registerItemPotion("alghoul_decoction",
-                        new FabricItemSettings().maxCount(1),
-                        TCOTS_Effects.ALGHOUL_DECOCTION_EFFECT,
-                        50,
-                        1200,
-                        0,
-                        true
-                );
-
-                FOGLET_DECOCTION = registerItemPotion("foglet_decoction",
-                        new FabricItemSettings().maxCount(1),
-                        TCOTS_Effects.FOGLET_DECOCTION_EFFECT,
-                        50,
-                        1200,
-                        0,
-                        true
-                );
-            }
-        }
 
     }
 

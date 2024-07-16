@@ -1,7 +1,7 @@
 package TCOTS.particles;
 
 
-import TCOTS.items.potions.TCOTS_Effects;
+import TCOTS.items.concoctions.TCOTS_Effects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;

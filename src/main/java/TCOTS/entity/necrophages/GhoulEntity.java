@@ -4,7 +4,7 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.utils.GeoControllersUtil;
-import TCOTS.items.potions.bombs.MoonDustBomb;
+import TCOTS.items.concoctions.bombs.MoonDustBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;

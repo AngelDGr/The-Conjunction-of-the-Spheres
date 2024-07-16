@@ -1,7 +1,7 @@
 package TCOTS.mixin;
 
 import TCOTS.entity.goals.FleeWithSilverSplinters;
-import TCOTS.items.potions.bombs.MoonDustBomb;
+import TCOTS.items.concoctions.bombs.MoonDustBomb;
 import net.minecraft.client.render.entity.feature.SkinOverlayOwner;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.TrackedData;

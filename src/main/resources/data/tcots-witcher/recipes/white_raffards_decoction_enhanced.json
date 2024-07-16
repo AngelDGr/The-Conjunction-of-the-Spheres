@@ -1,6 +1,6 @@
 {
   "type": "tcots-witcher:alchemy_table",
-  "order": 0.21,
+  "order": 0.31,
   "category":"potions",
 
   "ingredients": [

@@ -1,6 +1,6 @@
 package TCOTS.mixin;
 
-import TCOTS.items.potions.TCOTS_Effects;
+import TCOTS.items.concoctions.TCOTS_Effects;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.world.ClientWorld;

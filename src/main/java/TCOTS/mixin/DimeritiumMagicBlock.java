@@ -1,6 +1,6 @@
 package TCOTS.mixin;
 
-import TCOTS.items.potions.bombs.DimeritiumBomb;
+import TCOTS.items.concoctions.bombs.DimeritiumBomb;
 import net.minecraft.entity.mob.*;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

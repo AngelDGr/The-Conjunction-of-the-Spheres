@@ -29,7 +29,6 @@
     "PlayerEntityMixin",
     "PotionEntityMixin",
     "ServerPlayerEntityMixin",
-    "ServerPlayNetworkHandlerMixin",
     "ServerWorldAccessor",
     "ShearsItemMixin",
     "SpawnEggItemMixin",

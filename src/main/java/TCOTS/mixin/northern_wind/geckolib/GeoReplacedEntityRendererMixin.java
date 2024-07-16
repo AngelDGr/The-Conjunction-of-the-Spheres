@@ -1,6 +1,6 @@
 package TCOTS.mixin.northern_wind.geckolib;
 
-import TCOTS.items.potions.bombs.NorthernWindBomb;
+import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.entity.EntityRenderer;

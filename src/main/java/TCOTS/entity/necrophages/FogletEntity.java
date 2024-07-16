@@ -3,7 +3,7 @@ package TCOTS.entity.necrophages;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.utils.GeoControllersUtil;
 import TCOTS.entity.misc.FoglingEntity;
-import TCOTS.items.potions.bombs.MoonDustBomb;
+import TCOTS.items.concoctions.bombs.MoonDustBomb;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.FluidBlock;
