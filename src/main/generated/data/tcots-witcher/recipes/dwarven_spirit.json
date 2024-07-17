@@ -1,0 +1,23 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "minecraft:glass_bottle"
+  },
+  "category": "misc",
+  "ingredient_counters": [
+    2,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:icy_spirit"
+    },
+    {
+      "item": "minecraft:lily_of_the_valley"
+    }
+  ],
+  "order": 0.1,
+  "result": {
+    "item": "tcots-witcher:dwarven_spirit"
+  }
+}

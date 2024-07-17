@@ -1,0 +1,31 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "minecraft:glass_bottle"
+  },
+  "category": "misc",
+  "ingredient_counters": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:arenaria"
+    },
+    {
+      "item": "tcots-witcher:village_herbal"
+    },
+    {
+      "item": "tcots-witcher:cherry_cordial"
+    },
+    {
+      "item": "tcots-witcher:mandrake_cordial"
+    }
+  ],
+  "order": 0.12,
+  "result": {
+    "item": "tcots-witcher:white_gull"
+  }
+}

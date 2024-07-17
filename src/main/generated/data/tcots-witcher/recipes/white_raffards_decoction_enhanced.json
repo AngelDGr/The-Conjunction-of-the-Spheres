@@ -1,0 +1,31 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:white_raffards_decoction"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    4,
+    1,
+    5
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alcohest"
+    },
+    {
+      "item": "tcots-witcher:bunch_of_leaves"
+    },
+    {
+      "item": "tcots-witcher:bryonia"
+    },
+    {
+      "item": "tcots-witcher:nekker_heart"
+    }
+  ],
+  "order": 0.31,
+  "result": {
+    "item": "tcots-witcher:white_raffards_decoction_enhanced"
+  }
+}

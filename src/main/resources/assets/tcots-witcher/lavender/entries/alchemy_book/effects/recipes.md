@@ -24,6 +24,14 @@ decoctions, monster oils, bombs and ingredients.***
 
 ;;;;;
 
+
+**{#395026}Potions{}**
+<recipe;tcots-witcher:cat_potion>
+<recipe;tcots-witcher:cat_potion_enhanced>
+<recipe;tcots-witcher:cat_potion_superior>
+
+;;;;;
+
 **{#395026}Potions{}**
 <recipe;tcots-witcher:white_raffards_decoction>
 <recipe;tcots-witcher:white_raffards_decoction_enhanced>
@@ -35,13 +43,6 @@ decoctions, monster oils, bombs and ingredients.***
 <recipe;tcots-witcher:white_raffards_splash>
 <recipe;tcots-witcher:killer_whale_potion>
 <recipe;tcots-witcher:killer_whale_splash>
-
-;;;;;
-
-**{#395026}Potions{}**
-<recipe;tcots-witcher:cat_potion>
-<recipe;tcots-witcher:cat_potion_enhanced>
-<recipe;tcots-witcher:cat_potion_superior>
 
 ;;;;;
 
@@ -100,6 +101,13 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Bombs & Oils{}**
+<recipe;tcots-witcher:samum>
+<recipe;tcots-witcher:samum_enhanced>
+<recipe;tcots-witcher:samum_superior>
+
+;;;;;
+
+**{#395026}Bombs & Oils{}**
 <recipe;tcots-witcher:dancing_star>
 <recipe;tcots-witcher:dancing_star_enhanced>
 <recipe;tcots-witcher:dancing_star_superior>
@@ -114,9 +122,9 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Bombs & Oils{}**
-<recipe;tcots-witcher:samum>
-<recipe;tcots-witcher:samum_enhanced>
-<recipe;tcots-witcher:samum_superior>
+<recipe;tcots-witcher:dragons_dream>
+<recipe;tcots-witcher:dragons_dream_enhanced>
+<recipe;tcots-witcher:dragons_dream_superior>
 
 ;;;;;
 
@@ -124,13 +132,6 @@ decoctions, monster oils, bombs and ingredients.***
 <recipe;tcots-witcher:northern_wind>
 <recipe;tcots-witcher:northern_wind_enhanced>
 <recipe;tcots-witcher:northern_wind_superior>
-
-;;;;;
-
-**{#395026}Bombs & Oils{}**
-<recipe;tcots-witcher:dragons_dream>
-<recipe;tcots-witcher:dragons_dream_enhanced>
-<recipe;tcots-witcher:dragons_dream_superior>
 
 ;;;;;
 
@@ -184,22 +185,23 @@ decoctions, monster oils, bombs and ingredients.***
 
 **{#395026}Ingredients{}**
 <recipe;tcots-witcher:stammelfords_dust>
-<recipe;tcots-witcher:vermilion>
-<recipe;tcots-witcher:vitriol>
+<recipe;tcots-witcher:aether>
+<recipe;tcots-witcher:hydragenum>
+
 
 ;;;;;
 
 **{#395026}Ingredients{}**
-<recipe;tcots-witcher:hydragenum>
+<recipe;tcots-witcher:nigredo>
 <recipe;tcots-witcher:quebrith>
-<recipe;tcots-witcher:aether>
+<recipe;tcots-witcher:rebis>
 
 ;;;;;
 
 **{#395026}Ingredients{}**
 <recipe;tcots-witcher:rubedo>
-<recipe;tcots-witcher:rebis>
-<recipe;tcots-witcher:nigredo>
+<recipe;tcots-witcher:vermilion>
+<recipe;tcots-witcher:vitriol>
 
 
 

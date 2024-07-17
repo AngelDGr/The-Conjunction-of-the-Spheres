@@ -74,7 +74,7 @@ public class TCOTS_Items {
             //xTODO: Crow's eye
             //xTODO: Ergot seeds - Poisonous potato like
             //xTODO: Fool's parsley leaves - Azure Bluet Petals
-            //xTODO: Ginatia petals - Peony Petals
+            //xTODO: Ginatia petals - Cornflower
             //xTODO: Green mold && Bloodmoss- Moss Block
             //xTODO: Han fiber
             //xTODO: Hellebore petals - Allium
@@ -361,8 +361,8 @@ public class TCOTS_Items {
     public static Item EMPTY_BOMB_POWDER_4;
 
     public static Item GRAPESHOT;
-    public static Item ENHANCED_GRAPESHOT;
-    public static Item SUPERIOR_GRAPESHOT;
+    public static Item GRAPESHOT_ENHANCED;
+    public static Item GRAPESHOT_SUPERIOR;
 
     public static Item DANCING_STAR;
     public static Item DANCING_STAR_ENHANCED;
@@ -736,10 +736,10 @@ public class TCOTS_Items {
             GRAPESHOT = registerItem("grapeshot",
                     new WitcherBombs_Base(new FabricItemSettings().maxCount(2), "grapeshot", 0));
 
-            ENHANCED_GRAPESHOT = registerItem("grapeshot_enhanced",
+            GRAPESHOT_ENHANCED = registerItem("grapeshot_enhanced",
                     new WitcherBombs_Base(new FabricItemSettings().maxCount(3), "grapeshot", 1));
 
-            SUPERIOR_GRAPESHOT = registerItem("grapeshot_superior",
+            GRAPESHOT_SUPERIOR = registerItem("grapeshot_superior",
                     new WitcherBombs_Base(new FabricItemSettings().maxCount(4), "grapeshot", 2));
 
 
@@ -928,7 +928,6 @@ public class TCOTS_Items {
     public static Item MONSTER_FAT;
 
     //xTODO: Make the herbs spawn in the world
-    //TODO: Add recipes to Ogroid oils (Cave troll liver)
     //Herbs
     public static Item ALLSPICE;
     public static Item ARENARIA;

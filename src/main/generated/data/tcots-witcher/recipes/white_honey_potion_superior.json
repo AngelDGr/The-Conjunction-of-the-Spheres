@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:white_honey_potion_enhanced"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    4,
+    4,
+    8,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:white_gull"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    },
+    {
+      "item": "minecraft:lily_of_the_valley"
+    },
+    {
+      "item": "minecraft:allium"
+    },
+    {
+      "item": "tcots-witcher:vitriol"
+    }
+  ],
+  "order": 99.92,
+  "result": {
+    "item": "tcots-witcher:white_honey_potion_superior"
+  }
+}

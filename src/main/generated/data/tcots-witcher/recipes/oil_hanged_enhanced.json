@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:oil_hanged"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    2,
+    1,
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:monster_fat"
+    },
+    {
+      "item": "tcots-witcher:han_fiber"
+    },
+    {
+      "item": "tcots-witcher:nekker_eye"
+    },
+    {
+      "item": "minecraft:azure_bluet"
+    },
+    {
+      "item": "tcots-witcher:arenaria"
+    }
+  ],
+  "order": 1.31,
+  "result": {
+    "item": "tcots-witcher:oil_hanged_enhanced"
+  }
+}

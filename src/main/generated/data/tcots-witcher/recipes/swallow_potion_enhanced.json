@@ -1,0 +1,31 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:swallow_potion"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    5,
+    6,
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alcohest"
+    },
+    {
+      "item": "tcots-witcher:drowner_brain"
+    },
+    {
+      "item": "tcots-witcher:celandine"
+    },
+    {
+      "item": "minecraft:lily_of_the_valley"
+    }
+  ],
+  "order": 0.11,
+  "result": {
+    "item": "tcots-witcher:swallow_potion_enhanced"
+  }
+}

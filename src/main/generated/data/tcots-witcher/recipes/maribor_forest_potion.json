@@ -1,0 +1,27 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:dwarven_spirit"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    3,
+    4,
+    2
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "tcots-witcher:drowner_tongue"
+    },
+    {
+      "item": "tcots-witcher:alghoul_bone_marrow"
+    }
+  ],
+  "order": 0.6,
+  "result": {
+    "item": "tcots-witcher:maribor_forest_potion"
+  }
+}

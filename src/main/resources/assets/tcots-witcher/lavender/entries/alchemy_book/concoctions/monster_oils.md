@@ -1,6 +1,6 @@
 ```json
 {
-  "title": "Monster Oils",
+  "title": "Oils",
   "icon_sprite": "tcots-witcher:alchemy_almanac/category/monster_oils",
   "associated_items": [
     "tcots-witcher:oil_necrophage",

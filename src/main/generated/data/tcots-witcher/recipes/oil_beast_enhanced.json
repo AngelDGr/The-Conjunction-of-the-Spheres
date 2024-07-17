@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:oil_beast"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    5,
+    2,
+    1,
+    1,
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:monster_fat"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "tcots-witcher:celandine"
+    },
+    {
+      "item": "tcots-witcher:puffball"
+    },
+    {
+      "item": "minecraft:beetroot"
+    }
+  ],
+  "order": 1.21,
+  "result": {
+    "item": "tcots-witcher:oil_beast_enhanced"
+  }
+}

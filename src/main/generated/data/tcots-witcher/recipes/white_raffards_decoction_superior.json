@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:white_raffards_decoction_enhanced"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    4,
+    4,
+    4,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:white_gull"
+    },
+    {
+      "item": "tcots-witcher:bunch_of_leaves"
+    },
+    {
+      "item": "tcots-witcher:bryonia"
+    },
+    {
+      "item": "minecraft:flowering_azalea"
+    },
+    {
+      "item": "tcots-witcher:vermilion"
+    }
+  ],
+  "order": 0.32,
+  "result": {
+    "item": "tcots-witcher:white_raffards_decoction_superior"
+  }
+}

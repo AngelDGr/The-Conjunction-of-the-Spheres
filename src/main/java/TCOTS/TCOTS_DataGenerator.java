@@ -4,6 +4,7 @@ import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.OrganicPasteItem;
 import TCOTS.items.TCOTS_Items;
+import TCOTS.items.concoctions.recipes.AlchemyTableRecipeCategory;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeJsonBuilder;
 import TCOTS.world.TCOTS_ConfiguredFeatures;
 import TCOTS.world.TCOTS_DamageTypes;
@@ -28,6 +29,7 @@ import net.minecraft.data.server.tag.TagProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
@@ -672,26 +674,730 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             {
                 //Potions
                 {
-                    AlchemyTableRecipeJsonBuilder.createPotion(
-                            0.9f,
-                            //Ingredients
-                            List.of(new ItemStack(TCOTS_Items.BULLVORE_HORN_FRAGMENT,3)),
-                            //Base
-                            TCOTS_Items.DWARVEN_SPIRIT,
-                            //Result
-                            TCOTS_Items.ALCHEMY_TABLE_ITEM)
+                    //Swallow
+                    {
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                        0.1f, TCOTS_Items.SWALLOW_POTION,
+                                        ingredientsList(
+                                                TCOTS_Items.CELANDINE, 5,
+                                                TCOTS_Items.DROWNER_BRAIN, 1)).offerTo(exporter);
 
-                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "testing"));
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                        0.11f, TCOTS_Items.SWALLOW_POTION_ENHANCED, 1,
+                                        ingredientsList(
+                                                TCOTS_Items.DROWNER_BRAIN, 5,
+                                                TCOTS_Items.CELANDINE, 6,
+                                                Items.LILY_OF_THE_VALLEY, 4),
+                                        TCOTS_Items.SWALLOW_POTION).offerTo(exporter);
 
-                    AlchemyTableRecipeJsonBuilder.createPotion(
-                                    0.8f,
-                                    List.of(new ItemStack(TCOTS_Items.BULLVORE_HORN_FRAGMENT,4)),
-                                    TCOTS_Items.DWARVEN_SPIRIT,
-                                    TCOTS_Items.ALLIUM_PETALS)
-                            .offerTo(exporter);
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                        0.12f, TCOTS_Items.SWALLOW_POTION_SUPERIOR, 2,
+                                        ingredientsList(
+                                                Items.GLOW_BERRIES, 6,
+                                                TCOTS_Items.CELANDINE, 4,
+                                                TCOTS_Items.CROWS_EYE, 4,
+                                                TCOTS_Items.VITRIOL, 2),
+                                        TCOTS_Items.SWALLOW_POTION_ENHANCED).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotionSplash(
+                                        0.13f, TCOTS_Items.SWALLOW_SPLASH,
+                                TCOTS_Items.SWALLOW_POTION).offerTo(exporter);
+
+                    }
+
+                    //Cat
+                    {
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.2f, TCOTS_Items.CAT_POTION,
+                                ingredientsList(
+                                        Items.GLOW_BERRIES, 4,
+                                        TCOTS_Items.WATER_ESSENCE, 2)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.21f, TCOTS_Items.CAT_POTION_ENHANCED, 1,
+                                ingredientsList(
+                                        Items.GLOW_BERRIES, 5,
+                                        Items.BROWN_MUSHROOM, 1,
+                                        TCOTS_Items.WATER_ESSENCE, 3),
+                                TCOTS_Items.CAT_POTION).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.22f, TCOTS_Items.CAT_POTION_SUPERIOR, 2,
+                                ingredientsList(
+                                        Items.GLOW_BERRIES, 4,
+                                        Items.BROWN_MUSHROOM, 4,
+                                        TCOTS_Items.ALLSPICE, 2,
+                                        TCOTS_Items.AETHER, 1),
+                                TCOTS_Items.CAT_POTION_ENHANCED).offerTo(exporter);
+                    }
+
+                    //White Raffard's
+                    {
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.3f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION,
+                                ingredientsList(
+                                        TCOTS_Items.BUNCH_OF_LEAVES, 2,
+                                        TCOTS_Items.NEKKER_HEART, 4)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.31f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED, 1,
+                                ingredientsList(
+                                        TCOTS_Items.BUNCH_OF_LEAVES, 4,
+                                        TCOTS_Items.BRYONIA, 1,
+                                        TCOTS_Items.NEKKER_HEART, 5),
+                                TCOTS_Items.WHITE_RAFFARDS_DECOCTION).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.32f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SUPERIOR, 2,
+                                ingredientsList(
+                                        TCOTS_Items.BUNCH_OF_LEAVES, 4,
+                                        TCOTS_Items.BRYONIA, 4,
+                                        Items.FLOWERING_AZALEA, 4,
+                                        TCOTS_Items.VERMILION, 1),
+                                TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotionSplash(
+                                0.33f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH,
+                                TCOTS_Items.WHITE_RAFFARDS_DECOCTION).offerTo(exporter);
+                    }
+
+                    //Killer Whale
+                    {
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.4f, TCOTS_Items.KILLER_WHALE_POTION,
+                                ingredientsList(
+                                        Items.KELP, 6,
+                                        Items.SWEET_BERRIES, 5,
+                                        TCOTS_Items.DROWNER_TONGUE, 5)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotionSplash(
+                                0.43f, TCOTS_Items.KILLER_WHALE_SPLASH,
+                                TCOTS_Items.KILLER_WHALE_POTION).offerTo(exporter);
+                    }
+
+                    //Black Blood
+                    {
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.5f, TCOTS_Items.BLACK_BLOOD_POTION,
+                                ingredientsList(
+                                        TCOTS_Items.SEWANT_MUSHROOMS, 2,
+                                        TCOTS_Items.GHOUL_BLOOD, 4)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.51f, TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED, 1,
+                                ingredientsList(
+                                        Items.ALLIUM, 2,
+                                        TCOTS_Items.SEWANT_MUSHROOMS, 5,
+                                        TCOTS_Items.GHOUL_BLOOD, 5),
+                                TCOTS_Items.BLACK_BLOOD_POTION).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.52f, TCOTS_Items.BLACK_BLOOD_POTION_SUPERIOR, 2,
+                                ingredientsList(
+                                        Items.ALLIUM, 6,
+                                        TCOTS_Items.SEWANT_MUSHROOMS, 5,
+                                        TCOTS_Items.HAN_FIBER, 2,
+                                        TCOTS_Items.REBIS, 1),
+                                TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED).offerTo(exporter);
+                    }
+
+                    //Maribor Forest
+                    {
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.6f, TCOTS_Items.MARIBOR_FOREST_POTION,
+                                ingredientsList(
+                                        Items.GLOW_BERRIES, 3,
+                                        TCOTS_Items.DROWNER_TONGUE, 4,
+                                        TCOTS_Items.ALGHOUL_BONE_MARROW, 2)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.61f, TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED, 1,
+                                ingredientsList(
+                                        Items.GLOW_BERRIES, 5,
+                                        TCOTS_Items.CROWS_EYE, 2,
+                                        TCOTS_Items.DROWNER_TONGUE, 2),
+                                TCOTS_Items.MARIBOR_FOREST_POTION).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.62f, TCOTS_Items.MARIBOR_FOREST_POTION_SUPERIOR, 2,
+                                ingredientsList(
+                                        Items.GLOW_BERRIES, 4,
+                                        TCOTS_Items.CROWS_EYE, 4,
+                                        Items.ALLIUM, 6,
+                                        TCOTS_Items.VERMILION, 1),
+                                TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED).offerTo(exporter);
+                    }
+
+                    //Wolf
+                    {
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.9f, TCOTS_Items.WOLF_POTION,
+                                ingredientsList(
+                                        Items.BONE_MEAL, 12,
+                                        TCOTS_Items.DEVOURER_TEETH, 2)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.91f, TCOTS_Items.WOLF_POTION_ENHANCED, 1,
+                                ingredientsList(
+                                        Items.BONE_MEAL, 12,
+                                        TCOTS_Items.GHOUL_BLOOD, 2,
+                                        TCOTS_Items.DEVOURER_TEETH, 8),
+                                TCOTS_Items.WOLF_POTION).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                0.92f, TCOTS_Items.WOLF_POTION_SUPERIOR, 2,
+                                ingredientsList(
+                                        Items.BONE_MEAL, 16,
+                                        TCOTS_Items.GHOUL_BLOOD, 4,
+                                        TCOTS_Items.HAN_FIBER, 6,
+                                        TCOTS_Items.HYDRAGENUM, 1),
+                                TCOTS_Items.WOLF_POTION_ENHANCED).offerTo(exporter);
+                    }
+
+                    //Rook
+                    {
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                1.00f, TCOTS_Items.ROOK_POTION,
+                                ingredientsList(
+                                        Items.POPPY, 4,
+                                        TCOTS_Items.NEKKER_EYE, 3)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                1.01f, TCOTS_Items.ROOK_POTION_ENHANCED, 1,
+                                ingredientsList(
+                                        Items.POPPY, 6,
+                                        Items.BROWN_MUSHROOM, 4,
+                                        TCOTS_Items.NEKKER_EYE, 6),
+                                TCOTS_Items.ROOK_POTION).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                1.02f, TCOTS_Items.ROOK_POTION_SUPERIOR, 2,
+                                ingredientsList(
+                                        Items.POPPY, 12,
+                                        Items.BROWN_MUSHROOM, 8,
+                                        TCOTS_Items.ALGHOUL_BONE_MARROW, 4,
+                                        TCOTS_Items.RUBEDO, 1),
+                                TCOTS_Items.ROOK_POTION_ENHANCED).offerTo(exporter);
+                    }
+
+                    //White Honey
+                    {
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                99.9f, TCOTS_Items.WHITE_HONEY_POTION,
+                                ingredientsList(
+                                        Items.HONEY_BOTTLE, 1)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                99.91f, TCOTS_Items.WHITE_HONEY_POTION_ENHANCED, 1,
+                                ingredientsList(
+                                        Items.HONEY_BOTTLE, 2,
+                                        Items.LILY_OF_THE_VALLEY, 2),
+                                TCOTS_Items.WHITE_HONEY_POTION).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createPotion(
+                                99.92f, TCOTS_Items.WHITE_HONEY_POTION_SUPERIOR, 2,
+                                ingredientsList(
+                                        Items.HONEY_BOTTLE, 4,
+                                        Items.LILY_OF_THE_VALLEY, 4,
+                                        Items.ALLIUM, 8,
+                                        TCOTS_Items.VITRIOL, 1),
+                                TCOTS_Items.WHITE_HONEY_POTION_ENHANCED).offerTo(exporter);
+                    }
+
                 }
 
+                //Decoctions
+                {
+                    AlchemyTableRecipeJsonBuilder.createDecoction(
+                            0.1f, TCOTS_Items.WATER_HAG_DECOCTION,
+                            ingredientsList(
+                                    TCOTS_Items.WATER_HAG_MUTAGEN, 1,
+                                    Items.ECHO_SHARD, 1,
+                                    Items.SWEET_BERRIES, 1)).offerTo(exporter);
+
+                    AlchemyTableRecipeJsonBuilder.createDecoction(
+                            0.2f, TCOTS_Items.GRAVE_HAG_DECOCTION,
+                            ingredientsList(
+                                    TCOTS_Items.GRAVE_HAG_MUTAGEN, 1,
+                                    Items.ECHO_SHARD, 1,
+                                    Items.RED_MUSHROOM, 2,
+                                    Items.BROWN_MUSHROOM, 3)).offerTo(exporter);
+
+                    AlchemyTableRecipeJsonBuilder.createDecoction(
+                            0.3f, TCOTS_Items.ALGHOUL_DECOCTION,
+                            ingredientsList(
+                                    TCOTS_Items.ALGHOUL_BONE_MARROW, 2,
+                                    Items.ECHO_SHARD, 4,
+                                    Items.KELP, 2)).offerTo(exporter);
+
+                    AlchemyTableRecipeJsonBuilder.createDecoction(
+                            0.4f, TCOTS_Items.FOGLET_DECOCTION,
+                            ingredientsList(
+                                    TCOTS_Items.FOGLET_MUTAGEN, 1,
+                                    Items.ECHO_SHARD, 1,
+                                    Items.AZURE_BLUET, 2,
+                                    Items.DANDELION, 1)).offerTo(exporter);
+                }
+
+                //Bombs
+                {
+                    //Grapeshot
+                    {
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.1f, TCOTS_Items.GRAPESHOT,
+                                        ingredientsList(Items.BONE_MEAL,12)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.11f, TCOTS_Items.GRAPESHOT_ENHANCED,
+                                ingredientsList(
+                                        Items.BONE_MEAL,4,
+                                        Items.DANDELION,2,
+                                        TCOTS_Items.CROWS_EYE,2,
+                                        Items.RED_MUSHROOM, 1),
+                                TCOTS_Items.GRAPESHOT).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.12f, TCOTS_Items.GRAPESHOT_SUPERIOR,
+                                ingredientsList(
+                                        Items.BONE_MEAL,4,
+                                        Items.BLAZE_POWDER,2,
+                                        Items.RED_MUSHROOM,2,
+                                        TCOTS_Items.NIGREDO, 1),
+                                TCOTS_Items.GRAPESHOT_ENHANCED).offerTo(exporter);
+                    }
+
+                    //Samum
+                    {
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.2f, TCOTS_Items.SAMUM,
+                                ingredientsList(TCOTS_Items.CELANDINE,2)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.21f, TCOTS_Items.SAMUM_ENHANCED,
+                                ingredientsList(
+                                        Items.GLOWSTONE_DUST,2,
+                                        TCOTS_Items.FOGLET_TEETH,2,
+                                        TCOTS_Items.CELANDINE,1,
+                                        Items.DANDELION, 1),
+                                TCOTS_Items.SAMUM).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.22f, TCOTS_Items.SAMUM_SUPERIOR,
+                                ingredientsList(
+                                        Items.GLOWSTONE_DUST,4,
+                                        TCOTS_Items.FOGLET_TEETH,4,
+                                        TCOTS_Items.CELANDINE,1,
+                                        TCOTS_Items.AETHER, 1),
+                                TCOTS_Items.SAMUM_ENHANCED).offerTo(exporter);
+                    }
+
+                    //Dancing Star
+                    {
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.3f, TCOTS_Items.DANCING_STAR,
+                                ingredientsList(Items.BLAZE_POWDER,2)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.31f, TCOTS_Items.DANCING_STAR_ENHANCED,
+                                ingredientsList(
+                                        Items.GLOWSTONE_DUST,2,
+                                        Items.BLAZE_POWDER,1,
+                                        TCOTS_Items.SEWANT_MUSHROOMS,1,
+                                        Items.ALLIUM, 4),
+                                TCOTS_Items.DANCING_STAR).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.32f, TCOTS_Items.DANCING_STAR_SUPERIOR,
+                                ingredientsList(
+                                        Items.GLOWSTONE_DUST,4,
+                                        Items.BLAZE_POWDER,2,
+                                        TCOTS_Items.SEWANT_MUSHROOMS,2,
+                                        TCOTS_Items.NIGREDO, 1),
+                                TCOTS_Items.DANCING_STAR_ENHANCED).offerTo(exporter);
+                    }
+
+                    //Devil's Puffball
+                    {
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.4f, TCOTS_Items.DEVILS_PUFFBALL,
+                                ingredientsList(TCOTS_Items.SEWANT_MUSHROOMS,2)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.41f, TCOTS_Items.DEVILS_PUFFBALL_ENHANCED,
+                                ingredientsList(
+                                        Items.BONE_MEAL,4,
+                                        TCOTS_Items.SEWANT_MUSHROOMS,2,
+                                        Items.SPIDER_EYE,2,
+                                        Items.MOSS_BLOCK, 1),
+                                TCOTS_Items.DEVILS_PUFFBALL).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.42f, TCOTS_Items.DEVILS_PUFFBALL_SUPERIOR,
+                                ingredientsList(
+                                        Items.BONE_MEAL,8,
+                                        TCOTS_Items.SEWANT_MUSHROOMS,3,
+                                        Items.SPIDER_EYE,2,
+                                        TCOTS_Items.REBIS, 1),
+                                TCOTS_Items.DEVILS_PUFFBALL_ENHANCED).offerTo(exporter);
+                    }
+
+                    //Dragon's Dream
+                    {
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.5f, TCOTS_Items.DRAGONS_DREAM,
+                                ingredientsList(Items.GLOWSTONE_DUST,4)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.51f, TCOTS_Items.DRAGONS_DREAM_ENHANCED,
+                                ingredientsList(
+                                        Items.GLOWSTONE_DUST,2,
+                                        Items.AMETHYST_SHARD,1,
+                                        Items.OXEYE_DAISY,2,
+                                        TCOTS_Items.BRYONIA, 2),
+                                TCOTS_Items.DRAGONS_DREAM).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.52f, TCOTS_Items.DRAGONS_DREAM_SUPERIOR,
+                                ingredientsList(
+                                        Items.GLOWSTONE_DUST,4,
+                                        Items.AMETHYST_SHARD,2,
+                                        TCOTS_Items.BRYONIA,2,
+                                        TCOTS_Items.AETHER, 1),
+                                TCOTS_Items.DRAGONS_DREAM_ENHANCED).offerTo(exporter);
+                    }
+
+                    //Northern Wind
+                    {
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.6f, TCOTS_Items.NORTHERN_WIND,
+                                ingredientsList(
+                                        TCOTS_Items.WATER_ESSENCE,1,
+                                        Items.PRISMARINE_CRYSTALS,1,
+                                        TCOTS_Items.ALLSPICE,2)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.61f, TCOTS_Items.NORTHERN_WIND_ENHANCED,
+                                ingredientsList(
+                                        TCOTS_Items.WATER_ESSENCE,2,
+                                        Items.PRISMARINE_CRYSTALS,1,
+                                        TCOTS_Items.VERBENA,1,
+                                        TCOTS_Items.ALLSPICE, 2),
+                                TCOTS_Items.NORTHERN_WIND).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.create(
+                                0.62f, TCOTS_Items.NORTHERN_WIND_SUPERIOR,
+                                AlchemyTableRecipeCategory.BOMBS_OILS,
+                                ingredientsList(
+                                        TCOTS_Items.WATER_ESSENCE,3,
+                                        Items.PRISMARINE_CRYSTALS,2,
+                                        TCOTS_Items.VERBENA,2,
+                                        TCOTS_Items.ALLSPICE, 3,
+                                        TCOTS_Items.QUEBRITH, 1),
+                                TCOTS_Items.NORTHERN_WIND_ENHANCED).offerTo(exporter);
+                    }
+
+                    //Dimeritium Bomb
+                    {
+                        AlchemyTableRecipeJsonBuilder.create(
+                                0.7f,
+                                TCOTS_Items.DIMERITIUM_BOMB,
+                                AlchemyTableRecipeCategory.BOMBS_OILS,
+                                ingredientsList(Items.AMETHYST_SHARD,2),
+                                new ItemStack(Items.GUNPOWDER, 5)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.71f, TCOTS_Items.DIMERITIUM_BOMB_ENHANCED,
+                                ingredientsList(
+                                        Items.AMETHYST_SHARD,2,
+                                        Items.PRISMARINE_CRYSTALS,2,
+                                        Items.DANDELION,1,
+                                        Items.CORNFLOWER, 3),
+                                TCOTS_Items.DIMERITIUM_BOMB).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.72f, TCOTS_Items.DIMERITIUM_BOMB_SUPERIOR,
+                                ingredientsList(
+                                        Items.AMETHYST_SHARD,2,
+                                        Items.PRISMARINE_CRYSTALS,4,
+                                        TCOTS_Items.PUFFBALL,2,
+                                        TCOTS_Items.NIGREDO, 1),
+                                TCOTS_Items.DIMERITIUM_BOMB_ENHANCED).offerTo(exporter);
+                    }
+
+                    //Moon dust Bomb
+                    {
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.8f, TCOTS_Items.MOON_DUST,
+                                ingredientsList(Items.GHAST_TEAR,2)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.81f, TCOTS_Items.MOON_DUST_ENHANCED,
+                                ingredientsList(
+                                        Items.GHAST_TEAR,1,
+                                        Items.BLAZE_POWDER,2,
+                                        Items.BEETROOT,4,
+                                        Items.HONEY_BOTTLE, 1),
+                                TCOTS_Items.MOON_DUST).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createBomb(
+                                0.82f, TCOTS_Items.MOON_DUST_SUPERIOR,
+                                ingredientsList(
+                                        Items.GHAST_TEAR,2,
+                                        Items.BLAZE_POWDER,4,
+                                        Items.BEETROOT,6,
+                                        TCOTS_Items.NIGREDO, 1),
+                                TCOTS_Items.MOON_DUST_ENHANCED).offerTo(exporter);
+                    }
+                }
+
+                //Monster Oils
+                {
+                    //Necrophage Oil
+                    {
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.00f, TCOTS_Items.NECROPHAGE_OIL,
+                                ingredientsList(Items.DANDELION, 4)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.01f, TCOTS_Items.ENHANCED_NECROPHAGE_OIL,
+                                ingredientsList(
+                                        TCOTS_Items.ROTFIEND_BLOOD, 4,
+                                        Items.DANDELION, 4,
+                                        TCOTS_Items.ARENARIA, 4,
+                                        Items.FLOWERING_AZALEA, 4), 4,
+                                        TCOTS_Items.NECROPHAGE_OIL).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.02f, TCOTS_Items.SUPERIOR_NECROPHAGE_OIL,
+                                ingredientsList(
+                                        TCOTS_Items.ROTFIEND_BLOOD, 4,
+                                        Items.CORNFLOWER, 1,
+                                        TCOTS_Items.ARENARIA, 1,
+                                        TCOTS_Items.HYDRAGENUM, 1), 5,
+                                TCOTS_Items.ENHANCED_NECROPHAGE_OIL).offerTo(exporter);
+                    }
+
+                    //Ogroid Oil
+                    {
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.1f, TCOTS_Items.OGROID_OIL,
+                                ingredientsList(Items.CORNFLOWER, 4)).offerTo(exporter);
+
+                        //TODO: Fix recipes when added new drops (Cave troll liver)
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.11f, TCOTS_Items.ENHANCED_OGROID_OIL,
+                                ingredientsList(
+                                        TCOTS_Items.ROTFIEND_BLOOD, 4,
+                                        Items.DANDELION, 4,
+                                        TCOTS_Items.ARENARIA, 4,
+                                        Items.FLOWERING_AZALEA, 4), 4,
+                                TCOTS_Items.OGROID_OIL).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.12f, TCOTS_Items.SUPERIOR_OGROID_OIL,
+                                ingredientsList(
+                                        TCOTS_Items.ROTFIEND_BLOOD, 4,
+                                        Items.CORNFLOWER, 1,
+                                        TCOTS_Items.ARENARIA, 1,
+                                        TCOTS_Items.HYDRAGENUM, 1), 5,
+                                TCOTS_Items.ENHANCED_OGROID_OIL).offerTo(exporter);
+                    }
+
+                    //Beast Oil
+                    {
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.2f, TCOTS_Items.BEAST_OIL,
+                                ingredientsList(Items.BEEF, 4)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.21f, TCOTS_Items.ENHANCED_BEAST_OIL,
+                                ingredientsList(
+                                        Items.LEATHER, 2,
+                                        TCOTS_Items.CELANDINE, 1,
+                                        TCOTS_Items.PUFFBALL, 1,
+                                        Items.BEETROOT, 4), 5,
+                                TCOTS_Items.BEAST_OIL).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.22f, TCOTS_Items.SUPERIOR_BEAST_OIL,
+                                ingredientsList(
+                                        Items.ENDER_PEARL, 2,
+                                        TCOTS_Items.CELANDINE, 1,
+                                        TCOTS_Items.PUFFBALL, 1,
+                                        TCOTS_Items.RUBEDO, 1), 2,
+                                TCOTS_Items.ENHANCED_BEAST_OIL).offerTo(exporter);
+                    }
+
+                    //Hanged Man Oil
+                    {
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.3f, TCOTS_Items.HANGED_OIL,
+                                ingredientsList(TCOTS_Items.ARENARIA, 4)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.31f, TCOTS_Items.ENHANCED_HANGED_OIL,
+                                ingredientsList(
+                                        TCOTS_Items.HAN_FIBER, 1,
+                                        TCOTS_Items.NEKKER_EYE, 1,
+                                        Items.AZURE_BLUET, 1,
+                                        TCOTS_Items.ARENARIA, 1), 2,
+                                TCOTS_Items.HANGED_OIL).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createOil(
+                                1.32f, TCOTS_Items.SUPERIOR_HANGED_OIL,
+                                ingredientsList(
+                                        Items.MOSS_BLOCK, 1,
+                                        TCOTS_Items.ROTFIEND_BLOOD, 2,
+                                        Items.AZURE_BLUET, 1,
+                                        TCOTS_Items.QUEBRITH, 1), 2,
+                                TCOTS_Items.ENHANCED_HANGED_OIL).offerTo(exporter);
+                    }
+                }
+
+                //Ingredients
+                {
+                    AlchemyTableRecipeJsonBuilder.createMisc(
+                            0.1f,
+                            new ItemStack(TCOTS_Items.DWARVEN_SPIRIT),
+                            ingredientsList(
+                                    TCOTS_Items.ICY_SPIRIT, 2,
+                                    Items.LILY_OF_THE_VALLEY,1),
+                            Items.GLASS_BOTTLE).offerTo(exporter);
+
+                    AlchemyTableRecipeJsonBuilder.createMisc(
+                            0.11f,
+                            new ItemStack(TCOTS_Items.ALCOHEST, 2),
+                            ingredientsList(
+                                    Items.SWEET_BERRIES, 2,
+                                    TCOTS_Items.CHERRY_CORDIAL,1,
+                                    TCOTS_Items.MANDRAKE_CORDIAL,1),
+                            Items.GLASS_BOTTLE).offerTo(exporter);
+
+                    AlchemyTableRecipeJsonBuilder.createMisc(
+                            0.12f,
+                            new ItemStack(TCOTS_Items.WHITE_GULL),
+                            ingredientsList(
+                                    TCOTS_Items.ARENARIA, 1,
+                                    TCOTS_Items.VILLAGE_HERBAL,1,
+                                    TCOTS_Items.CHERRY_CORDIAL,1,
+                                    TCOTS_Items.MANDRAKE_CORDIAL,1),
+                            Items.GLASS_BOTTLE).offerTo(exporter);
+
+                    AlchemyTableRecipeJsonBuilder.createMisc(
+                            0.13f,
+                            new ItemStack(TCOTS_Items.STAMMELFORDS_DUST, 2),
+                            ingredientsList(
+                                    Items.BONE_MEAL, 8,
+                                    Items.GUNPOWDER,4,
+                                    Items.GLOWSTONE_DUST,4),
+                            Items.BLAZE_POWDER).offerTo(exporter);
+
+                    //Witcher Substances
+                    {
+                        AlchemyTableRecipeJsonBuilder.createMisc(
+                                0.2f,
+                                TCOTS_Items.AETHER,
+                                ingredientsList(
+                                        TCOTS_Items.VERBENA, 1,
+                                        TCOTS_Items.ERGOT_SEEDS, 1,
+                                        TCOTS_Items.HAN_FIBER, 1,
+                                        TCOTS_Items.PUFFBALL, 1,
+                                        Items.RED_MUSHROOM, 1)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createMisc(
+                                0.21f,
+                                TCOTS_Items.HYDRAGENUM,
+                                ingredientsList(
+                                        TCOTS_Items.VERBENA, 1,
+                                        TCOTS_Items.ERGOT_SEEDS, 1,
+                                        Items.FERN, 1,
+                                        Items.MOSS_BLOCK, 1,
+                                        Items.GLOW_LICHEN, 1)).offerTo(exporter);
+
+
+                        AlchemyTableRecipeJsonBuilder.createMisc(
+                                0.22f,
+                                TCOTS_Items.NIGREDO,
+                                ingredientsList(
+                                        TCOTS_Items.CROWS_EYE, 1,
+                                        TCOTS_Items.HAN_FIBER, 1,
+                                        Items.ALLIUM, 1,
+                                        Items.GLOW_LICHEN, 1,
+                                        Items.SWEET_BERRIES, 1)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createMisc(
+                                0.23f,
+                                TCOTS_Items.QUEBRITH,
+                                ingredientsList(
+                                        TCOTS_Items.VERBENA, 1,
+                                        TCOTS_Items.PUFFBALL, 1,
+                                        Items.RED_MUSHROOM, 1,
+                                        Items.GLOW_LICHEN, 1,
+                                        Items.FLOWERING_AZALEA, 1)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createMisc(
+                                0.24f,
+                                TCOTS_Items.REBIS,
+                                ingredientsList(
+                                        TCOTS_Items.VERBENA, 1,
+                                        TCOTS_Items.ERGOT_SEEDS, 1,
+                                        TCOTS_Items.ALLSPICE, 1,
+                                        Items.OXEYE_DAISY, 1,
+                                        Items.FERN, 1)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createMisc(
+                                0.25f,
+                                TCOTS_Items.RUBEDO,
+                                ingredientsList(
+                                        TCOTS_Items.CROWS_EYE, 1,
+                                        TCOTS_Items.HAN_FIBER, 1,
+                                        Items.OXEYE_DAISY, 1,
+                                        TCOTS_Items.PUFFBALL, 1,
+                                        Items.MOSS_BLOCK, 1)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createMisc(
+                                0.26f,
+                                TCOTS_Items.VERMILION,
+                                ingredientsList(
+                                        TCOTS_Items.VERBENA, 1,
+                                        TCOTS_Items.ERGOT_SEEDS, 1,
+                                        TCOTS_Items.HAN_FIBER, 1,
+                                        Items.POPPY, 1,
+                                        TCOTS_Items.BRYONIA, 1)).offerTo(exporter);
+
+                        AlchemyTableRecipeJsonBuilder.createMisc(
+                                0.27f,
+                                TCOTS_Items.VITRIOL,
+                                ingredientsList(
+                                        Items.MOSS_BLOCK, 1,
+                                        TCOTS_Items.ALLSPICE, 1,
+                                        Items.FERN, 1,
+                                        Items.ALLIUM, 1,
+                                        Items.GLOW_LICHEN, 1)).offerTo(exporter);
+                    }
+                }
             }
+        }
+
+        private List<ItemStack> ingredientsList(Item itemA, int a){
+            return List.of(new ItemStack(itemA, a));
+        }
+
+        private List<ItemStack> ingredientsList(Item itemA, int a, Item itemB, int b){
+            return List.of(new ItemStack(itemA, a), new ItemStack(itemB, b));
+        }
+
+        private List<ItemStack> ingredientsList(Item itemA, int a, Item itemB, int b, Item itemC, int c){
+            return List.of(new ItemStack(itemA, a), new ItemStack(itemB, b), new ItemStack(itemC, c));
+        }
+
+        private List<ItemStack> ingredientsList(Item itemA, int a, Item itemB, int b, Item itemC, int c, Item itemD, int d){
+            return List.of(new ItemStack(itemA, a), new ItemStack(itemB, b), new ItemStack(itemC, c), new ItemStack(itemD, d));
+        }
+
+        @SuppressWarnings("all")
+        private List<ItemStack> ingredientsList(Item itemA, int a, Item itemB, int b, Item itemC, int c, Item itemD, int d, Item itemE, int e){
+            return List.of(new ItemStack(itemA, a), new ItemStack(itemB, b), new ItemStack(itemC, c), new ItemStack(itemD, d), new ItemStack(itemE, e));
         }
     }
 

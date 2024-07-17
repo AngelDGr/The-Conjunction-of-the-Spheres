@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:devils_puffball"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    1,
+    4,
+    2,
+    2,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:stammelfords_dust"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "tcots-witcher:sewant_mushrooms"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    },
+    {
+      "item": "minecraft:moss_block"
+    }
+  ],
+  "order": 0.41,
+  "result": {
+    "item": "tcots-witcher:devils_puffball_enhanced"
+  }
+}

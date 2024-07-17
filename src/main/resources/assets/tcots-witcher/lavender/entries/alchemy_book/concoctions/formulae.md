@@ -14,4 +14,4 @@ Each formula lists the required ingredients and describes the type of base neces
 
 
 These formulae can be found in different chests across the world or trading with villagers, __you need to know the recipe to be
-able to craft the mixture.__
+able to craft the concoction.__

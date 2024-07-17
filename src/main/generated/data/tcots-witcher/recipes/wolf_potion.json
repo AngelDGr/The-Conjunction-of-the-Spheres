@@ -1,0 +1,23 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:dwarven_spirit"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    12,
+    2
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "tcots-witcher:devourer_teeth"
+    }
+  ],
+  "order": 0.9,
+  "result": {
+    "item": "tcots-witcher:wolf_potion"
+  }
+}

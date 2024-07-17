@@ -132,16 +132,18 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.DWARVEN_SPIRIT.getDefaultStack());
                                     entries.add(TCOTS_Items.ALCOHEST.getDefaultStack());
                                     entries.add(TCOTS_Items.WHITE_GULL.getDefaultStack());
+
                                     entries.add(TCOTS_Items.AETHER);
-                                    entries.add(TCOTS_Items.VITRIOL);
-                                    entries.add(TCOTS_Items.VERMILION);
                                     entries.add(TCOTS_Items.HYDRAGENUM);
-                                    entries.add(TCOTS_Items.QUEBRITH);
-                                    entries.add(TCOTS_Items.RUBEDO);
-                                    entries.add(TCOTS_Items.REBIS);
                                     entries.add(TCOTS_Items.NIGREDO);
-                                    entries.add(TCOTS_Items.ALCHEMY_PASTE);
+                                    entries.add(TCOTS_Items.QUEBRITH);
+                                    entries.add(TCOTS_Items.REBIS);
+                                    entries.add(TCOTS_Items.RUBEDO);
+                                    entries.add(TCOTS_Items.VERMILION);
+                                    entries.add(TCOTS_Items.VITRIOL);
+
                                     entries.add(TCOTS_Items.MONSTER_FAT);
+                                    entries.add(TCOTS_Items.ALCHEMY_PASTE);
                                     entries.add(TCOTS_Items.STAMMELFORDS_DUST);
                                     entries.add(TCOTS_Items.ALCHEMISTS_POWDER);
                                 }
@@ -151,16 +153,19 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.SWALLOW_POTION.getDefaultStack());
                                     entries.add(TCOTS_Items.SWALLOW_POTION_ENHANCED.getDefaultStack());
                                     entries.add(TCOTS_Items.SWALLOW_POTION_SUPERIOR.getDefaultStack());
-
-                                    entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION.getDefaultStack());
-                                    entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED.getDefaultStack());
-                                    entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SUPERIOR.getDefaultStack());
-
-                                    entries.add(TCOTS_Items.KILLER_WHALE_POTION.getDefaultStack());
+                                    entries.add(TCOTS_Items.SWALLOW_SPLASH.getDefaultStack());
 
                                     entries.add(TCOTS_Items.CAT_POTION.getDefaultStack());
                                     entries.add(TCOTS_Items.CAT_POTION_ENHANCED.getDefaultStack());
                                     entries.add(TCOTS_Items.CAT_POTION_SUPERIOR.getDefaultStack());
+
+                                    entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION.getDefaultStack());
+                                    entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED.getDefaultStack());
+                                    entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SUPERIOR.getDefaultStack());
+                                    entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH.getDefaultStack());
+
+                                    entries.add(TCOTS_Items.KILLER_WHALE_POTION.getDefaultStack());
+                                    entries.add(TCOTS_Items.KILLER_WHALE_SPLASH.getDefaultStack());
 
                                     entries.add(TCOTS_Items.BLACK_BLOOD_POTION.getDefaultStack());
                                     entries.add(TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED.getDefaultStack());
@@ -181,40 +186,43 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.ROOK_POTION_ENHANCED.getDefaultStack());
                                     entries.add(TCOTS_Items.ROOK_POTION_SUPERIOR.getDefaultStack());
 
-                                    //
+
                                     entries.add(TCOTS_Items.WHITE_HONEY_POTION.getDefaultStack());
                                     entries.add(TCOTS_Items.WHITE_HONEY_POTION_ENHANCED.getDefaultStack());
                                     entries.add(TCOTS_Items.WHITE_HONEY_POTION_SUPERIOR.getDefaultStack());
 
-
-                                    entries.add(TCOTS_Items.SWALLOW_SPLASH.getDefaultStack());
-                                    entries.add(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH.getDefaultStack());
-                                    entries.add(TCOTS_Items.KILLER_WHALE_SPLASH.getDefaultStack());
                                 }
 
                                 //Bombs
                                 {
                                     entries.add(TCOTS_Items.GRAPESHOT);
-                                    entries.add(TCOTS_Items.ENHANCED_GRAPESHOT);
-                                    entries.add(TCOTS_Items.SUPERIOR_GRAPESHOT);
-                                    entries.add(TCOTS_Items.DANCING_STAR);
-                                    entries.add(TCOTS_Items.DANCING_STAR_ENHANCED);
-                                    entries.add(TCOTS_Items.DANCING_STAR_SUPERIOR);
-                                    entries.add(TCOTS_Items.DRAGONS_DREAM);
-                                    entries.add(TCOTS_Items.DRAGONS_DREAM_ENHANCED);
-                                    entries.add(TCOTS_Items.DRAGONS_DREAM_SUPERIOR);
-                                    entries.add(TCOTS_Items.DEVILS_PUFFBALL);
-                                    entries.add(TCOTS_Items.DEVILS_PUFFBALL_ENHANCED);
-                                    entries.add(TCOTS_Items.DEVILS_PUFFBALL_SUPERIOR);
+                                    entries.add(TCOTS_Items.GRAPESHOT_ENHANCED);
+                                    entries.add(TCOTS_Items.GRAPESHOT_SUPERIOR);
+
                                     entries.add(TCOTS_Items.SAMUM);
                                     entries.add(TCOTS_Items.SAMUM_ENHANCED);
                                     entries.add(TCOTS_Items.SAMUM_SUPERIOR);
+
+                                    entries.add(TCOTS_Items.DANCING_STAR);
+                                    entries.add(TCOTS_Items.DANCING_STAR_ENHANCED);
+                                    entries.add(TCOTS_Items.DANCING_STAR_SUPERIOR);
+
+                                    entries.add(TCOTS_Items.DEVILS_PUFFBALL);
+                                    entries.add(TCOTS_Items.DEVILS_PUFFBALL_ENHANCED);
+                                    entries.add(TCOTS_Items.DEVILS_PUFFBALL_SUPERIOR);
+
+                                    entries.add(TCOTS_Items.DRAGONS_DREAM);
+                                    entries.add(TCOTS_Items.DRAGONS_DREAM_ENHANCED);
+                                    entries.add(TCOTS_Items.DRAGONS_DREAM_SUPERIOR);
+
                                     entries.add(TCOTS_Items.NORTHERN_WIND);
                                     entries.add(TCOTS_Items.NORTHERN_WIND_ENHANCED);
                                     entries.add(TCOTS_Items.NORTHERN_WIND_SUPERIOR);
+
                                     entries.add(TCOTS_Items.DIMERITIUM_BOMB);
                                     entries.add(TCOTS_Items.DIMERITIUM_BOMB_ENHANCED);
                                     entries.add(TCOTS_Items.DIMERITIUM_BOMB_SUPERIOR);
+
                                     entries.add(TCOTS_Items.MOON_DUST);
                                     entries.add(TCOTS_Items.MOON_DUST_ENHANCED);
                                     entries.add(TCOTS_Items.MOON_DUST_SUPERIOR);

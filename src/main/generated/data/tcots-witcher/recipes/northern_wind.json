@@ -1,0 +1,27 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "minecraft:gunpowder"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    1,
+    1,
+    2
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:water_essence"
+    },
+    {
+      "item": "minecraft:prismarine_crystals"
+    },
+    {
+      "item": "tcots-witcher:allspice"
+    }
+  ],
+  "order": 0.6,
+  "result": {
+    "item": "tcots-witcher:northern_wind"
+  }
+}

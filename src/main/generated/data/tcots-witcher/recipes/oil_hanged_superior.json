@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:oil_hanged_enhanced"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    2,
+    1,
+    2,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alchemy_paste"
+    },
+    {
+      "item": "minecraft:moss_block"
+    },
+    {
+      "item": "tcots-witcher:rotfiend_blood"
+    },
+    {
+      "item": "minecraft:azure_bluet"
+    },
+    {
+      "item": "tcots-witcher:quebrith"
+    }
+  ],
+  "order": 1.32,
+  "result": {
+    "item": "tcots-witcher:oil_hanged_superior"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:dwarven_spirit"
+  },
+  "category": "decoctions",
+  "ingredient_counters": [
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:water_hag_mutagen"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "minecraft:sweet_berries"
+    }
+  ],
+  "order": 0.1,
+  "result": {
+    "item": "tcots-witcher:water_hag_decoction"
+  }
+}
