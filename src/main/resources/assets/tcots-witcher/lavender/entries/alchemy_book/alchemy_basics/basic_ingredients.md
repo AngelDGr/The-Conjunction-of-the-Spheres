@@ -57,20 +57,6 @@
                     </padding>
                 </stack-layout>
 
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:moss_carpet
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
             </children>
             <sizing>
                 <horizontal method="content">1</horizontal>
@@ -125,20 +111,6 @@
                     </padding>
                 </stack-layout>
 
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:moss_block
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
             </children>
             <sizing>
                 <horizontal method="content">1</horizontal>
@@ -151,39 +123,12 @@
         <!--Third Row-->
         <flow-layout direction="horizontal">
             <children>
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:lily_pad
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
 
                 <stack-layout>
                     <children>
                         <item>
                             <stack>
                                 minecraft:red_mushroom
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:sunflower
                             </stack>
                             <set-tooltip-from-stack>true</set-tooltip-from-stack>
                         </item>
@@ -239,35 +184,21 @@
                     <children>
                         <item>
                             <stack>
+                                minecraft:beetroot
+                            </stack>
+                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
+                        </item>
+                    </children>
+                    <padding>
+                        <all>5</all>
+                    </padding>
+                </stack-layout>
+                
+                <stack-layout>
+                    <children>
+                        <item>
+                            <stack>
                                 minecraft:fern
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:spore_blossom
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:wheat_seeds
                             </stack>
                             <set-tooltip-from-stack>true</set-tooltip-from-stack>
                         </item>

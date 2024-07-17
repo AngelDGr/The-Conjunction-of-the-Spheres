@@ -27,6 +27,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.color.world.GrassColors;
@@ -179,8 +180,9 @@ public class TCOTS_Client implements ClientModInitializer {
 
     private static final RecipeFeature.RecipePreviewBuilder<AlchemyTableRecipe> alchemyTable_RecipePreviewBuilder = new RecipeFeature.RecipePreviewBuilder<>() {
         @Override
-        public @NotNull Component buildRecipePreview(BookCompiler.ComponentSource componentSource, RecipeEntry<AlchemyTableRecipe> recipeEntry) {
+        public @NotNull Component buildRecipePreview(BookCompiler.ComponentSource componentSource, @NotNull RecipeEntry<AlchemyTableRecipe> recipeEntry) {
             Identifier TEXTURE_ID = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/alchemy_book_gui.png");
+
             //Get the recipe
             var recipe = recipeEntry.value();
 
@@ -196,100 +198,129 @@ public class TCOTS_Client implements ClientModInitializer {
 
             root.child(resultContainer);
 
-            //Add child for result item
-            resultContainer.child(
-                    //Makes a container of Item Stack
-                    Containers.stack(Sizing.fixed(22), Sizing.fixed(22))
-                            //Add as child the result
-                            .child(Components.item(recipe.getResult(null)).showOverlay(true).setTooltipFromStack(true))
-                            //Add as child the texture
-                            .child(Components.texture(TEXTURE_ID,
-                                    435, 144,
-                                    22, 22,
-                                    512, 256).blend(true))
-                            //Put in the result-specific place
-                            .positioning(Positioning.absolute(36, 0))
-                            //Align it
-                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
+            if(this.hasRecipe(recipeEntry)){
+                //Add child for result item
+                resultContainer.child(
+                        //Makes a container of Item Stack
+                        Containers.stack(Sizing.fixed(22), Sizing.fixed(22))
+                                //Add as child the result
+                                .child(Components.item(recipe.getResult(null)).showOverlay(true).setTooltipFromStack(true))
+                                //Add as child the texture
+                                .child(Components.texture(TEXTURE_ID,
+                                        435, 144,
+                                        22, 22,
+                                        512, 256).blend(true))
+                                //Put in the result-specific place
+                                .positioning(Positioning.absolute(36, 0))
+                                //Align it
+                                .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
 
-            //Adds the texture
-            resultContainer.child(
-                    Containers.stack(Sizing.content(), Sizing.fixed(18))
-                            .child(Components.texture(TEXTURE_ID,
-                                    399, 167,
-                                    111, 18,
-                                    512, 256).blend(true))
-                            .positioning(Positioning.absolute(0, 23))
-                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
+                //Adds the texture
+                resultContainer.child(
+                        Containers.stack(Sizing.content(), Sizing.fixed(18))
+                                .child(Components.texture(TEXTURE_ID,
+                                        399, 167,
+                                        111, 18,
+                                        512, 256).blend(true))
+                                .positioning(Positioning.absolute(0, 23))
+                                .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
 
+                //Loop to assign each ingredient to a container
+                for (int i = 0; i < recipe.getIngredients().size(); i++) {
+                    //Get the ingredient stack
+                    ItemStack stack = recipe.getIngredients().get(i).getMatchingStacks()[0];
+                    //Get the quantity
+                    int count = recipe.getIngredientsCounts().get(i);
+                    //Creates the stack with the correct quantity
+                    ItemStack ingredientStack = new ItemStack(stack.getItem(), count);
+                    switch (i) {
+                        case 0:
+                            resultContainer.child(
+                                    Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                            .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                            .positioning(Positioning.absolute(38, 23))
+                                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                            );
+                            break;
 
-            //Loop to assign each ingredient to a container
-            for (int i = 0; i < recipe.getIngredients().size(); i++) {
-                //Get the ingredient stack
-                ItemStack stack = recipe.getIngredients().get(i).getMatchingStacks()[0];
-                //Get the quantity
-                int count = recipe.getIngredientsCounts().get(i);
-                //Creates the stack with the correct quantity
-                ItemStack ingredientStack = new ItemStack(stack.getItem(), count);
-                switch (i) {
-                    case 0:
-                        resultContainer.child(
-                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
-                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
-                                        .positioning(Positioning.absolute(38, 23))
-                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
-                        );
-                        break;
+                        case 1:
+                            resultContainer.child(
+                                    Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                            .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                            .positioning(Positioning.absolute(19, 23))
+                                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                            );
+                            break;
 
-                    case 1:
-                        resultContainer.child(
-                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
-                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
-                                        .positioning(Positioning.absolute(19, 23))
-                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
-                        );
-                        break;
+                        case 2:
+                            resultContainer.child(
+                                    Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                            .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                            .positioning(Positioning.absolute(57, 23))
+                                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                            );
+                            break;
 
-                    case 2:
-                        resultContainer.child(
-                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
-                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
-                                        .positioning(Positioning.absolute(57, 23))
-                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
-                        );
-                        break;
+                        case 3:
+                            resultContainer.child(
+                                    Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                            .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                            .positioning(Positioning.absolute(0, 23))
+                                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                            );
+                            break;
 
-                    case 3:
-                        resultContainer.child(
-                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
-                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
-                                        .positioning(Positioning.absolute(0, 23))
-                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
-                        );
-                        break;
-
-                    case 4:
-                        resultContainer.child(
-                                Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
-                                        .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
-                                        .positioning(Positioning.absolute(76, 23))
-                                        .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
-                        );
-                        break;
-                    default:
-                        break;
+                        case 4:
+                            resultContainer.child(
+                                    Containers.stack(Sizing.fixed(18), Sizing.fixed(18))
+                                            .child(Components.item(ingredientStack).showOverlay(true).setTooltipFromStack(true))
+                                            .positioning(Positioning.absolute(76, 23))
+                                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                            );
+                            break;
+                        default:
+                            break;
+                    }
                 }
+
+                //Base container
+                resultContainer.child(
+                        Containers.stack(Sizing.content(), Sizing.fixed(16))
+                                .child(Components.item(recipe.getBaseItem()).showOverlay(true).setTooltipFromStack(true))
+                                .positioning(Positioning.absolute(95, 24))
+                                .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
+                );
+            } else {
+                //Add child for result item
+                resultContainer.child(
+                        //Makes a container of Item Stack
+                        Containers.stack(Sizing.fixed(22), Sizing.fixed(22))
+                                //Add as child the texture
+                                .child(Components.texture(TEXTURE_ID,
+                                        435, 199,
+                                        22, 22,
+                                        512, 256).blend(true))
+                                //Put in the result-specific place
+                                .positioning(Positioning.absolute(36, 0))
+                                //Align it
+                                .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
+
+                //Adds the texture
+                resultContainer.child(
+                        Containers.stack(Sizing.content(), Sizing.fixed(18))
+                                .child(Components.texture(TEXTURE_ID,
+                                        399, 222,
+                                        111, 18,
+                                        512, 256).blend(true))
+                                .positioning(Positioning.absolute(0, 23))
+                                .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
             }
 
-            //Base container
-            resultContainer.child(
-                    Containers.stack(Sizing.content(), Sizing.fixed(16))
-                            .child(Components.item(recipe.getBaseItem()).showOverlay(true).setTooltipFromStack(true))
-                            .positioning(Positioning.absolute(95, 24))
-                            .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
-            );
-
             return root;
+        }
+
+        private boolean hasRecipe(@NotNull RecipeEntry<AlchemyTableRecipe> recipeEntry){
+            return MinecraftClient.getInstance().player != null && MinecraftClient.getInstance().player.getRecipeBook().contains(recipeEntry);
         }
     };
 

@@ -1,0 +1,19 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:dwarven_spirit"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:bullvore_horn_fragment"
+    }
+  ],
+  "order": 0.8,
+  "result": {
+    "item": "tcots-witcher:allium_petals"
+  }
+}

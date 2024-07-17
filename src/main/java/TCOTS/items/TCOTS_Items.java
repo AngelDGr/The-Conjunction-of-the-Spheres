@@ -61,13 +61,11 @@ public class TCOTS_Items {
     //xTODO: Add new way to craft the potions
         // xTODO: Add new alchemy ingredients (mushrooms, flowers)
             //Plants
-            //xTODO: Allspice
+            //xTODO: Allspice = Moleyarrow = Mandrake root
             //xTODO: Arenaria
             //xTODO: Balisse fruit - Sweet Berries
             //xTODO: Beggartick blossoms - Poppy Petals
             //xTODO: Berbercane fruit - Glow Berries
-            //xTODO: Bison grass - Wheat Seeds
-            //?xTODO: Bloodmoss - Moss Carpet
             //xTODO: Blowball - Dandelion
             //xTODO: Bryonia
             //xTODO: Buckthorn - Kelp
@@ -77,17 +75,14 @@ public class TCOTS_Items {
             //xTODO: Ergot seeds - Poisonous potato like
             //xTODO: Fool's parsley leaves - Azure Bluet Petals
             //xTODO: Ginatia petals - Peony Petals
-            //xTODO: Green mold - Moss Block
+            //xTODO: Green mold && Bloodmoss- Moss Block
             //xTODO: Han fiber
-            //xTODO: Hellebore petals - Allium Petals
+            //xTODO: Hellebore petals - Allium
             //xTODO: Honeysuckle - Honey Bottle
-            //xTODO: Hop umbels - Beetroot
-            //xTODO: Hornwort - Lily pad
+            //xTODO: Hop umbels && Bison Grass - Beetroot
             //xTODO: Longrube - Red mushroom
-            //xTODO: Mandrake root - Spore Blossom
             //xTODO: Mistletoe - Oxeye Daisy Petals
-            //xTODO: Moleyarrow - Sunflower
-            //xTODO: Nostrix - Glow Lichen
+            //xTODO: Nostrix && Hornwort- Glow Lichen
             //xTODO: Puffball
             //xTODO: Pringrape - Flowering Azalea
             //xTODO: Ranogrin - Fern

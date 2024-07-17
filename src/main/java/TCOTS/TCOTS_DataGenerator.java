@@ -4,6 +4,7 @@ import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.OrganicPasteItem;
 import TCOTS.items.TCOTS_Items;
+import TCOTS.items.concoctions.recipes.AlchemyTableRecipeJsonBuilder;
 import TCOTS.world.TCOTS_ConfiguredFeatures;
 import TCOTS.world.TCOTS_DamageTypes;
 import TCOTS.world.TCOTS_PlacedFeature;
@@ -19,11 +20,15 @@ import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SuspiciousStewIngredient;
 import net.minecraft.data.DataOutput;
-import net.minecraft.data.server.recipe.*;
+import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.data.server.tag.TagProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
@@ -46,6 +51,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.poi.PointOfInterestType;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -660,6 +666,31 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
                             .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_flesh"));
                 }
+            }
+
+            //Alchemy Recipes
+            {
+                //Potions
+                {
+                    AlchemyTableRecipeJsonBuilder.createPotion(
+                            0.9f,
+                            //Ingredients
+                            List.of(new ItemStack(TCOTS_Items.BULLVORE_HORN_FRAGMENT,3)),
+                            //Base
+                            TCOTS_Items.DWARVEN_SPIRIT,
+                            //Result
+                            TCOTS_Items.ALCHEMY_TABLE_ITEM)
+
+                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "testing"));
+
+                    AlchemyTableRecipeJsonBuilder.createPotion(
+                                    0.8f,
+                                    List.of(new ItemStack(TCOTS_Items.BULLVORE_HORN_FRAGMENT,4)),
+                                    TCOTS_Items.DWARVEN_SPIRIT,
+                                    TCOTS_Items.ALLIUM_PETALS)
+                            .offerTo(exporter);
+                }
+
             }
         }
     }

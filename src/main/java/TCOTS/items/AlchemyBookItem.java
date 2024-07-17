@@ -16,7 +16,6 @@ import java.util.List;
 
 public class AlchemyBookItem extends LavenderBookItem {
 
-    //TODO: Remake the Alchemy Almanac, adding the formulae information
     protected AlchemyBookItem(@NotNull Identifier bookId, Settings settings) {
         super(settings, bookId);
     }

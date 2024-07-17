@@ -227,12 +227,17 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         }
 
         @Override
-        public void draw(@NotNull RecipeEntry<AlchemyTableRecipe> recipe, @NotNull IRecipeSlotsView recipeSlotsView, DrawContext guiGraphics, double mouseX, double mouseY) {
+        public void draw(@NotNull RecipeEntry<AlchemyTableRecipe> recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull DrawContext guiGraphics, double mouseX, double mouseY) {
+            MinecraftClient minecraft = MinecraftClient.getInstance();
+
+            if(minecraft.player != null && minecraft.player.getRecipeBook().contains(recipe)){
+                return;
+            }
+
             String text = Translator.translateToLocalFormatted("gui.jei.tcots-witcher.requires_recipe");
 
-            MinecraftClient minecraft = MinecraftClient.getInstance();
             TextRenderer font = minecraft.textRenderer;
-            guiGraphics.drawText(font, text, 0, 0, 0xFF808080, false);
+            guiGraphics.drawText(font, text, 0, 0, 0xFF5555, true);
         }
     }
 }

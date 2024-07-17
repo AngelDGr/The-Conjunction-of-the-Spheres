@@ -6,7 +6,7 @@
 
   "ingredients": [
     {
-      "item": "minecraft:moss_carpet"
+      "item": "minecraft:moss_block"
     },
     {
       "item":"tcots-witcher:allspice"
@@ -15,10 +15,10 @@
       "item":"minecraft:fern"
     },
     {
-      "item":"tcots-witcher:allium_petals"
+      "item":"minecraft:allium"
     },
     {
-      "item":"minecraft:lily_pad"
+      "item":"minecraft:glow_lichen"
     }
   ],
 

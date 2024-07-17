@@ -2,7 +2,7 @@
 {
   "title": "Recipes",
   "icon_sprite": "tcots-witcher:alchemy_almanac/category/recipes",
-  "ordinal": 9
+  "ordinal": 10
 }
 ```
 
@@ -20,7 +20,7 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Potions{}**
-<recipe;tcots-witcher:splash_swallow_potion>
+<recipe;tcots-witcher:swallow_splash>
 
 ;;;;;
 
@@ -32,9 +32,9 @@ decoctions, monster oils, bombs and ingredients.***
 ;;;;;
 
 **{#395026}Potions{}**
-<recipe;tcots-witcher:splash_white_raffards_decoction>
+<recipe;tcots-witcher:white_raffards_splash>
 <recipe;tcots-witcher:killer_whale_potion>
-<recipe;tcots-witcher:splash_killer_whale>
+<recipe;tcots-witcher:killer_whale_splash>
 
 ;;;;;
 
