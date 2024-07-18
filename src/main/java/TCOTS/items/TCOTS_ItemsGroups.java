@@ -2,6 +2,7 @@ package TCOTS.items;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.items.concoctions.*;
+import TCOTS.utils.AlchemyFormulaUtil;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -112,13 +113,6 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.SEWANT_MUSHROOMS);
 
                                     entries.add(TCOTS_Items.ERGOT_SEEDS);
-                                    entries.add(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS);
-                                    entries.add(TCOTS_Items.ALLIUM_PETALS);
-                                    entries.add(TCOTS_Items.POPPY_PETALS);
-                                    entries.add(TCOTS_Items.PEONY_PETALS);
-                                    entries.add(TCOTS_Items.AZURE_BLUET_PETALS);
-                                    entries.add(TCOTS_Items.OXEYE_DAISY_PETALS);
-                                    entries.add(TCOTS_Items.BUNCH_OF_LEAVES);
 
                                     entries.add(TCOTS_Items.PUFFBALL_MUSHROOM_BLOCK_ITEM);
                                     entries.add(TCOTS_Items.SEWANT_MUSHROOM_BLOCK_ITEM);
@@ -133,6 +127,11 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.ALCOHEST.getDefaultStack());
                                     entries.add(TCOTS_Items.WHITE_GULL.getDefaultStack());
 
+                                    entries.add(TCOTS_Items.MONSTER_FAT);
+                                    entries.add(TCOTS_Items.ALCHEMY_PASTE);
+                                    entries.add(TCOTS_Items.STAMMELFORDS_DUST);
+                                    entries.add(TCOTS_Items.ALCHEMISTS_POWDER);
+
                                     entries.add(TCOTS_Items.AETHER);
                                     entries.add(TCOTS_Items.HYDRAGENUM);
                                     entries.add(TCOTS_Items.NIGREDO);
@@ -142,10 +141,6 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.VERMILION);
                                     entries.add(TCOTS_Items.VITRIOL);
 
-                                    entries.add(TCOTS_Items.MONSTER_FAT);
-                                    entries.add(TCOTS_Items.ALCHEMY_PASTE);
-                                    entries.add(TCOTS_Items.STAMMELFORDS_DUST);
-                                    entries.add(TCOTS_Items.ALCHEMISTS_POWDER);
                                 }
 
                                 //Potions
@@ -277,6 +272,8 @@ public class TCOTS_ItemsGroups {
         List<Item> listBombs = new ArrayList<>();
         List<Item> listOils = new ArrayList<>();
 
+        List<Item> listMisc = new ArrayList<>();
+
         Registries.ITEM.forEach(item ->
                 {
                     if(item instanceof WitcherPotions_Base && !(item instanceof WitcherAlcohol_Base))
@@ -285,39 +282,34 @@ public class TCOTS_ItemsGroups {
                     if(item instanceof WitcherBombs_Base) listBombs.add(item);
 
                     if(item instanceof WitcherMonsterOil_Base) listOils.add(item);
+
+                    if(AlchemyFormulaUtil.isMiscItem(item))
+                        listMisc.add(item);
                 }
                 );
 
 
         for(Item potion: listPotions){
             if(potion instanceof WitcherPotions_Base witcherPotion && !(potion instanceof WitcherPotionsSplash_Base))
-                entries.add(setFormula(Registries.ITEM.getId(potion), witcherPotion.isDecoction()), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+                entries.add(AlchemyFormulaUtil.setFormula(Registries.ITEM.getId(potion), witcherPotion.isDecoction()), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
 
             if(potion instanceof WitcherPotionsSplash_Base)
-                entries.add(setFormula(Registries.ITEM.getId(potion)), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+                entries.add(AlchemyFormulaUtil.setFormula(Registries.ITEM.getId(potion)), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
         }
 
         for(Item bomb: listBombs){
-            entries.add(setFormula(Registries.ITEM.getId(bomb)), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+            entries.add(AlchemyFormulaUtil.setFormula(Registries.ITEM.getId(bomb)), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
         }
 
         for(Item oil: listOils){
-            entries.add(setFormula(Registries.ITEM.getId(oil)), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+            entries.add(AlchemyFormulaUtil.setFormula(Registries.ITEM.getId(oil)), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
         }
 
+        for(Item misc: listMisc){
+            entries.add(AlchemyFormulaUtil.setFormula(Registries.ITEM.getId(misc)), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+        }
 
     }
 
-    public static ItemStack setFormula(Identifier id) {
-        return setFormula( id, false);
-    }
-
-    public static ItemStack setFormula(Identifier id, boolean decoction) {
-        ItemStack stack = new ItemStack(TCOTS_Items.ALCHEMY_FORMULA);
-
-        stack.getOrCreateNbt().putString("FormulaID", id.toString());
-        stack.getOrCreateNbt().putBoolean("Decoction", decoction);
-        return stack;
-    }
 
 }

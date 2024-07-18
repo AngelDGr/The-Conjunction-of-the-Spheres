@@ -12,6 +12,7 @@ import TCOTS.items.weapons.BoltItem;
 import TCOTS.items.weapons.GvalchirSword;
 import TCOTS.items.weapons.KnightCrossbow;
 import TCOTS.items.weapons.ScurverSpineItem;
+import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
@@ -29,13 +30,13 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.loot.condition.KilledByPlayerLootCondition;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.condition.RandomChanceWithLootingLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.ExplosionDecayLootFunction;
-import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.function.*;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
@@ -64,7 +65,7 @@ public class TCOTS_Items {
             //xTODO: Allspice = Moleyarrow = Mandrake root
             //xTODO: Arenaria
             //xTODO: Balisse fruit - Sweet Berries
-            //xTODO: Beggartick blossoms - Poppy Petals
+            //xTODO: Beggartick blossoms - Poppy
             //xTODO: Berbercane fruit - Glow Berries
             //xTODO: Blowball - Dandelion
             //xTODO: Bryonia
@@ -73,7 +74,7 @@ public class TCOTS_Items {
             //xTODO: Cortinarius - Brown Mushroom
             //xTODO: Crow's eye
             //xTODO: Ergot seeds - Poisonous potato like
-            //xTODO: Fool's parsley leaves - Azure Bluet Petals
+            //xTODO: Fool's parsley leaves - Azure Bluet
             //xTODO: Ginatia petals - Cornflower
             //xTODO: Green mold && Bloodmoss- Moss Block
             //xTODO: Han fiber
@@ -81,15 +82,14 @@ public class TCOTS_Items {
             //xTODO: Honeysuckle - Honey Bottle
             //xTODO: Hop umbels && Bison Grass - Beetroot
             //xTODO: Longrube - Red mushroom
-            //xTODO: Mistletoe - Oxeye Daisy Petals
+            //xTODO: Mistletoe && Ribleaf - Oxeye Daisy
             //xTODO: Nostrix && Hornwort- Glow Lichen
             //xTODO: Puffball
             //xTODO: Pringrape - Flowering Azalea
             //xTODO: Ranogrin - Fern
-            //xTODO: Ribleaf - Bunch of Leaves
             //xTODO: Sewant mushrooms
             //xTODO: Verbena
-            //xTODO: White myrtle petals - Lily of the Valley Petals
+            //xTODO: White myrtle petals - Lily of the Valley
             //TODO: Wolfsbane
 
         //and alcohol)
@@ -395,8 +395,10 @@ public class TCOTS_Items {
     public static void registerAlchemyConcoctions() {
 
         ALCHEMY_FORMULA = registerItem("alchemy_formula",
-                new AlchemyFormulaItem(new FabricItemSettings().maxCount(8))
+                new AlchemyFormulaItem(new FabricItemSettings().maxCount(1))
         );
+
+
 
         //Potions
         {
@@ -942,13 +944,6 @@ public class TCOTS_Items {
     public static Item SEWANT_MUSHROOM_BLOCK_ITEM;
     public static Item SEWANT_MUSHROOM_STEM_ITEM;
     public static Item ERGOT_SEEDS;
-    public static Item LILY_OF_THE_VALLEY_PETALS;
-    public static Item ALLIUM_PETALS;
-    public static Item POPPY_PETALS;
-    public static Item PEONY_PETALS;
-    public static Item AZURE_BLUET_PETALS;
-    public static Item OXEYE_DAISY_PETALS;
-    public static Item BUNCH_OF_LEAVES;
 
     public static void registerAlchemyIngredients(){
 
@@ -1004,6 +999,18 @@ public class TCOTS_Items {
 
         //Substances
         {
+            ALCHEMY_PASTE = registerItem("alchemy_paste",
+                    new Item(new FabricItemSettings()));
+
+            MONSTER_FAT = registerItem("monster_fat",
+                    new Item(new FabricItemSettings()));
+
+            STAMMELFORDS_DUST = registerItem("stammelfords_dust",
+                    new Item(new FabricItemSettings()));
+
+            ALCHEMISTS_POWDER = registerItem("alchemists_powder",
+                    new Item(new FabricItemSettings()));
+
             AETHER = registerItem("aether",
                     new Item(new FabricItemSettings()));
 
@@ -1026,18 +1033,6 @@ public class TCOTS_Items {
                     new Item(new FabricItemSettings()));
 
             NIGREDO = registerItem("nigredo",
-                    new Item(new FabricItemSettings()));
-
-            ALCHEMY_PASTE = registerItem("alchemy_paste",
-                    new Item(new FabricItemSettings()));
-
-            MONSTER_FAT = registerItem("monster_fat",
-                    new Item(new FabricItemSettings()));
-
-            STAMMELFORDS_DUST = registerItem("stammelfords_dust",
-                    new Item(new FabricItemSettings()));
-
-            ALCHEMISTS_POWDER = registerItem("alchemists_powder",
                     new Item(new FabricItemSettings()));
         }
 
@@ -1082,26 +1077,7 @@ public class TCOTS_Items {
             ERGOT_SEEDS = registerItem("ergot_seeds",
                     new Item(new FabricItemSettings()));
 
-            LILY_OF_THE_VALLEY_PETALS = registerItem("lily_of_the_valley_petals",
-                    new Item(new FabricItemSettings()));
 
-            ALLIUM_PETALS = registerItem("allium_petals",
-                    new Item(new FabricItemSettings()));
-
-            POPPY_PETALS = registerItem("poppy_petals",
-                    new Item(new FabricItemSettings()));
-
-            PEONY_PETALS = registerItem("peony_petals",
-                    new Item(new FabricItemSettings()));
-
-            AZURE_BLUET_PETALS = registerItem("azure_bluet_petals",
-                    new Item(new FabricItemSettings()));
-
-            OXEYE_DAISY_PETALS = registerItem("oxeye_daisy_petals",
-                    new Item(new FabricItemSettings()));
-
-            BUNCH_OF_LEAVES = registerItem("bunch_of_leaves",
-                    new Item(new FabricItemSettings()));
         }
     }
 
@@ -1162,6 +1138,404 @@ public class TCOTS_Items {
                 tableBuilder.pool(monsterFat.build());
             }
 
+            //Formulae - Alcohol
+            {
+                if (LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) && source.isBuiltin()) {
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(0, 2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                            .conditionally(RandomChanceLootCondition.builder(0.4f));
+
+                    LootPool.Builder witcher_alcohol = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,2))))
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(14).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,4))))
+                            .conditionally(RandomChanceLootCondition.builder(0.15f));
+
+                    tableBuilder.pool(witcher_alcohol.build());
+                    tableBuilder.pool(alchemy_formulae.build());
+                }
+
+                if (LootTables.ANCIENT_CITY_CHEST.equals(id) && source.isBuiltin()) {
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(0, 1))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(new AlchemyRecipeRandomlyLootFunction.Builder().add(1))
+                            .conditionally(RandomChanceLootCondition.builder(0.9f));
+
+                    LootPool.Builder witcher_alcohol = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,3))))
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,2))))
+                            .conditionally(RandomChanceLootCondition.builder(0.3f));
+
+                    tableBuilder.pool(witcher_alcohol.build());
+                    tableBuilder.pool(alchemy_formulae.build());
+                }
+
+                //Bastion
+                {
+                    if (LootTables.BASTION_BRIDGE_CHEST.equals(id) && source.isBuiltin()) {
+
+                        LootPool.Builder alchemy_formulae = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(0, 1))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                                .conditionally(RandomChanceLootCondition.builder(0.4f));
+
+                        LootPool.Builder witcher_alcohol = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(1, 2))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 3))))
+                                .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 2))))
+                                .conditionally(RandomChanceLootCondition.builder(0.05f));
+
+                        tableBuilder.pool(witcher_alcohol.build());
+                        tableBuilder.pool(alchemy_formulae.build());
+                    }
+
+                    if (LootTables.BASTION_OTHER_CHEST.equals(id) && source.isBuiltin()) {
+
+                        LootPool.Builder alchemy_formulae = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(0, 1))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                                .conditionally(RandomChanceLootCondition.builder(0.3f));
+
+                        LootPool.Builder witcher_alcohol = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(1, 2))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 3))))
+                                .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 2))))
+                                .conditionally(RandomChanceLootCondition.builder(0.05f));
+
+                        tableBuilder.pool(witcher_alcohol.build());
+                        tableBuilder.pool(alchemy_formulae.build());
+                    }
+                }
+
+                if(LootTables.DESERT_PYRAMID_CHEST.equals(id) && source.isBuiltin()){
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(0,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                            .conditionally(RandomChanceLootCondition.builder(0.4f));
+
+                    LootPool.Builder witcher_alcohol = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,3))))
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,2))))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f));
+
+                    tableBuilder.pool(witcher_alcohol.build());
+                    tableBuilder.pool(alchemy_formulae.build());
+                }
+
+                if(LootTables.IGLOO_CHEST_CHEST.equals(id) && source.isBuiltin()){
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                            .conditionally(RandomChanceLootCondition.builder(1f));
+
+                    LootPool.Builder witcher_alcohol = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,3))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5))))
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,3))))
+                            .with(ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,3))))
+                            .conditionally(RandomChanceLootCondition.builder(0.8f));
+
+                    tableBuilder.pool(witcher_alcohol.build());
+                    tableBuilder.pool(alchemy_formulae.build());
+                }
+
+                if(LootTables.JUNGLE_TEMPLE_CHEST.equals(id) && source.isBuiltin()){
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(0,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                            .conditionally(RandomChanceLootCondition.builder(0.8f));
+
+                    LootPool.Builder witcher_alcohol = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,4))))
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,2))))
+                            .conditionally(RandomChanceLootCondition.builder(0.3f));
+
+                    tableBuilder.pool(witcher_alcohol.build());
+
+                    tableBuilder.pool(alchemy_formulae.build());
+                }
+
+                if(LootTables.NETHER_BRIDGE_CHEST.equals(id) && source.isBuiltin()){
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(0,1))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                            .conditionally(RandomChanceLootCondition.builder(0.6f));
+
+                    LootPool.Builder witcher_alcohol = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,4))))
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,2))))
+                            .conditionally(RandomChanceLootCondition.builder(0.3f));
+
+                    tableBuilder.pool(witcher_alcohol.build());
+                    tableBuilder.pool(alchemy_formulae.build());
+                }
+
+
+                if(LootTables.PILLAGER_OUTPOST_CHEST.equals(id) && source.isBuiltin()){
+
+                    LootPool.Builder extra_loot_oils = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .with(ItemEntry.builder(TCOTS_Items.HANGED_OIL).weight(1).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                            .with(ItemEntry.builder(TCOTS_Items.ENHANCED_HANGED_OIL).weight(1).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                            .conditionally(RandomChanceLootCondition.builder(0.05f));
+
+                    LootPool.Builder crossbow_bolts = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,4))
+                            .with(ItemEntry.builder(TCOTS_Items.BASE_BOLT).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,12))))
+                            .with(ItemEntry.builder(TCOTS_Items.BLUNT_BOLT).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,6))))
+                            .with(ItemEntry.builder(TCOTS_Items.PRECISION_BOLT).weight(8).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,6))))
+                            .with(ItemEntry.builder(TCOTS_Items.BROADHEAD_BOLT).weight(6).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4))))
+                            .with(ItemEntry.builder(TCOTS_Items.EXPLODING_BOLT).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,2))))
+                            .conditionally(RandomChanceLootCondition.builder(0.4f));
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(0,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                            .conditionally(RandomChanceLootCondition.builder(0.5f));
+
+                    LootPool.Builder witcher_alcohol = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1, 2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(8).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 1))))
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 2))))
+
+                            .with(ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(14).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 3))))
+                            .with(ItemEntry.builder(TCOTS_Items.CHERRY_CORDIAL).weight(14).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 3))))
+                            .with(ItemEntry.builder(TCOTS_Items.VILLAGE_HERBAL).weight(11).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 3))))
+                            .with(ItemEntry.builder(TCOTS_Items.MANDRAKE_CORDIAL).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 1))))
+                            .conditionally(RandomChanceLootCondition.builder(0.25f));
+
+                    tableBuilder.pool(extra_loot_oils.build());
+                    tableBuilder.pool(crossbow_bolts.build());
+                    tableBuilder.pool(witcher_alcohol.build());
+                    tableBuilder.pool(alchemy_formulae.build());
+                }
+
+                //Shipwreck
+                {
+                    if (LootTables.SHIPWRECK_SUPPLY_CHEST.equals(id) && source.isBuiltin()) {
+                        LootPool.Builder witcher_alcohol = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(1, 4))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(8).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 1))))
+                                .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 2))))
+
+                                .with(ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(14).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 3))))
+                                .with(ItemEntry.builder(TCOTS_Items.CHERRY_CORDIAL).weight(14).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 4))))
+                                .with(ItemEntry.builder(TCOTS_Items.VILLAGE_HERBAL).weight(11).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 4))))
+                                .with(ItemEntry.builder(TCOTS_Items.MANDRAKE_CORDIAL).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0, 2))))
+
+                                .conditionally(RandomChanceLootCondition.builder(0.6f));
+
+                        tableBuilder.pool(witcher_alcohol.build());
+                    }
+
+                    if (LootTables.SHIPWRECK_MAP_CHEST.equals(id) && source.isBuiltin()) {
+
+                        LootPool.Builder alchemy_formulae = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(0, 2))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                                .conditionally(RandomChanceLootCondition.builder(0.6f));
+
+                        tableBuilder.pool(alchemy_formulae.build());
+                    }
+                }
+
+                if(LootTables.SIMPLE_DUNGEON_CHEST.equals(id) && source.isBuiltin()){
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,3))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                            .conditionally(RandomChanceLootCondition.builder(0.7f));
+
+                    LootPool.Builder witcher_alcohol = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,4))))
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,2))))
+                            .conditionally(RandomChanceLootCondition.builder(0.4f));
+
+                    tableBuilder.pool(witcher_alcohol.build());
+                    tableBuilder.pool(alchemy_formulae.build());
+                }
+
+                //Stronghold
+                {
+                    if (LootTables.STRONGHOLD_CORRIDOR_CHEST.equals(id) && source.isBuiltin()) {
+
+                        LootPool.Builder alchemy_formulae = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(0, 3))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                                .conditionally(RandomChanceLootCondition.builder(0.6f));
+
+                        LootPool.Builder witcher_alcohol = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(1,2))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,4))))
+                                .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,2))))
+                                .conditionally(RandomChanceLootCondition.builder(0.3f));
+
+                        tableBuilder.pool(witcher_alcohol.build());
+                        tableBuilder.pool(alchemy_formulae.build());
+                    }
+
+                    if (LootTables.STRONGHOLD_CROSSING_CHEST.equals(id) && source.isBuiltin()) {
+
+                        LootPool.Builder alchemy_formulae = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(0, 2))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                                .conditionally(RandomChanceLootCondition.builder(0.4f));
+
+                        tableBuilder.pool(alchemy_formulae.build());
+                    }
+
+                    if (LootTables.STRONGHOLD_LIBRARY_CHEST.equals(id) && source.isBuiltin()) {
+
+                        LootPool.Builder alchemy_formulae = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(0, 4))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                                .conditionally(RandomChanceLootCondition.builder(1f));
+
+                        tableBuilder.pool(alchemy_formulae.build());
+                    }
+                }
+
+                //Underwater
+                {
+                    if (LootTables.UNDERWATER_RUIN_BIG_CHEST.equals(id) && source.isBuiltin()) {
+
+                        LootPool.Builder alchemy_formulae = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(0, 2))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                                .conditionally(RandomChanceLootCondition.builder(0.3f));
+
+                        tableBuilder.pool(alchemy_formulae.build());
+                    }
+
+                    if (LootTables.UNDERWATER_RUIN_SMALL_CHEST.equals(id) && source.isBuiltin()) {
+
+                        LootPool.Builder alchemy_formulae = LootPool.builder()
+                                .rolls(UniformLootNumberProvider.create(0, 1))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                                .conditionally(RandomChanceLootCondition.builder(0.2f));
+
+                        tableBuilder.pool(alchemy_formulae.build());
+                    }
+                }
+
+                if(LootTables.WOODLAND_MANSION_CHEST.equals(id) && source.isBuiltin()){
+                    LootPool.Builder extra_loot_oils = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .with(ItemEntry.builder(TCOTS_Items.HANGED_OIL).weight(1).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                            .with(ItemEntry.builder(TCOTS_Items.ENHANCED_HANGED_OIL).weight(1).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                            .with(ItemEntry.builder(TCOTS_Items.SUPERIOR_HANGED_OIL).weight(1).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                            .conditionally(RandomChanceLootCondition.builder(0.05f));
+
+                    LootPool.Builder witcher_books = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,3))
+                            .with(ItemEntry.builder(TCOTS_Items.WITCHER_BESTIARY).weight(1).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_BOOK).weight(1).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                            .conditionally(RandomChanceLootCondition.builder(0.05f));
+
+                    LootPool.Builder witcher_alcohol = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 1))))
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(14).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2))))
+
+                            .with(ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(4).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3))))
+                            .with(ItemEntry.builder(TCOTS_Items.CHERRY_CORDIAL).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3))))
+                            .with(ItemEntry.builder(TCOTS_Items.VILLAGE_HERBAL).weight(8).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3))))
+                            .with(ItemEntry.builder(TCOTS_Items.MANDRAKE_CORDIAL).weight(18).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 1))))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f));
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(0, 2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                            .conditionally(RandomChanceLootCondition.builder(0.6f));
+
+                    tableBuilder.pool(extra_loot_oils.build());
+                    tableBuilder.pool(witcher_books.build());
+                    tableBuilder.pool(witcher_alcohol.build());
+                    tableBuilder.pool(alchemy_formulae.build());
+                }
+
+                //Village
+                {
+                    if(LootTables.HERO_OF_THE_VILLAGE_FARMER_GIFT_GAMEPLAY.equals(id) && source.isBuiltin()){
+                        LootPool.Builder witcher_alcohol = LootPool.builder()
+                                .rolls(ConstantLootNumberProvider.create(1))
+                                .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(15).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                                .with(ItemEntry.builder(TCOTS_Items.VILLAGE_HERBAL).weight(20).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2))))
+                                .conditionally(RandomChanceLootCondition.builder(0.5f));
+
+                        tableBuilder.pool(witcher_alcohol.build());
+                    }
+
+                    if((LootTables.VILLAGE_PLAINS_CHEST.equals(id)
+                            || LootTables.VILLAGE_DESERT_HOUSE_CHEST.equals(id)
+                            || LootTables.VILLAGE_SAVANNA_HOUSE_CHEST.equals(id)
+                            || LootTables.VILLAGE_TAIGA_HOUSE_CHEST.equals(id)
+                            || LootTables.VILLAGE_SNOWY_HOUSE_CHEST.equals(id))
+
+                            && source.isBuiltin()){
+                        LootPool.Builder witcher_alcohol = LootPool.builder()
+                                .rolls(ConstantLootNumberProvider.create(1))
+                                .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 1))))
+                                .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(11).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2))))
+
+                                .with(ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(6).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3))))
+                                .with(ItemEntry.builder(TCOTS_Items.CHERRY_CORDIAL).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3))))
+                                .with(ItemEntry.builder(TCOTS_Items.VILLAGE_HERBAL).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3))))
+                                .with(ItemEntry.builder(TCOTS_Items.MANDRAKE_CORDIAL).weight(10).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 1))))
+                                .conditionally(RandomChanceLootCondition.builder(0.15f));
+
+                        LootPool.Builder witcher_bestiary = LootPool.builder()
+                                .rolls(ConstantLootNumberProvider.create(1))
+                                .with(ItemEntry.builder(TCOTS_Items.WITCHER_BESTIARY).weight(1).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                                .conditionally(RandomChanceLootCondition.builder(0.05f));
+                        
+                        tableBuilder.pool(witcher_bestiary.build());
+                        tableBuilder.pool(witcher_alcohol.build());
+                    }
+
+                }
+
+
+                if(LootTables.SPAWN_BONUS_CHEST.equals(id) && source.isBuiltin()){
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(0,2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA)).apply(AlchemyRecipeRandomlyLootFunction.builder())
+                            .conditionally(RandomChanceLootCondition.builder(0.5f));
+
+                    LootPool.Builder witcher_alcohol = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(1,3))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(12).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,3))))
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(15).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,4))))
+                            .with(ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(18).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,5))))
+                            .conditionally(RandomChanceLootCondition.builder(0.3f));
+
+                    LootPool.Builder witcher_Books = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .with(ItemEntry.builder(TCOTS_Items.WITCHER_BESTIARY).weight(1).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_BOOK).weight(1).apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+                            .conditionally(RandomChanceLootCondition.builder(0.1f));
+
+                    tableBuilder.pool(witcher_Books);
+                    tableBuilder.pool(witcher_alcohol.build());
+                    tableBuilder.pool(alchemy_formulae.build());
+
+                }
+
+            }
+
         });
     }
 
@@ -1202,6 +1576,14 @@ public class TCOTS_Items {
         ALCHEMY_BOOK = AlchemyBookItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "alchemy_book"), new FabricItemSettings().maxCount(1));
     }
 
+    public static final LootFunctionType RANDOMIZE_FORMULA = register("randomize_formula", AlchemyRecipeRandomlyLootFunction.CODEC);
+
+    //TODO: Think what the fuck do with the Herbal Table
+    @SuppressWarnings("all")
+    private static LootFunctionType register(String id, Codec<? extends LootFunction> codec) {
+        return Registry.register(Registries.LOOT_FUNCTION_TYPE, new Identifier(TCOTS_Main.MOD_ID,id), new LootFunctionType(codec));
+    }
+
     @SuppressWarnings("unused")
     public static void registerCompostableItems(){
         float f = 0.3f;
@@ -1209,13 +1591,10 @@ public class TCOTS_Items {
         float h = 0.65f;
         float i = 0.85f;
         float j = 1.0f;
-        ComposterBlock.registerCompostableItem(0.5f, TCOTS_Items.ALLIUM_PETALS);
         ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.ARENARIA);
         ComposterBlock.registerCompostableItem(0.3f, TCOTS_Items.ALLSPICE);
-        ComposterBlock.registerCompostableItem(0.5f, TCOTS_Items.AZURE_BLUET_PETALS);
 
         ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.BRYONIA);
-        ComposterBlock.registerCompostableItem(0.15f, TCOTS_Items.BUNCH_OF_LEAVES);
 
         ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.CELANDINE);
         ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.CROWS_EYE);
@@ -1223,11 +1602,8 @@ public class TCOTS_Items {
 
         ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.HAN_FIBER);
 
-        ComposterBlock.registerCompostableItem(0.5f, TCOTS_Items.LILY_OF_THE_VALLEY_PETALS);
 
         ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.PUFFBALL);
-        ComposterBlock.registerCompostableItem(0.5f, TCOTS_Items.PEONY_PETALS);
-        ComposterBlock.registerCompostableItem(0.65f, TCOTS_Items.POPPY_PETALS);
         ComposterBlock.registerCompostableItem(0.85f, TCOTS_Items.PUFFBALL_MUSHROOM_BLOCK_ITEM);
 
 

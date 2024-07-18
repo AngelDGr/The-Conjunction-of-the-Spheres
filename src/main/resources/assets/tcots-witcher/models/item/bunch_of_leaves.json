@@ -1,7 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "tcots-witcher:item/alchemy/ingredients/bunch_of_leaves"
-  }
-
-}

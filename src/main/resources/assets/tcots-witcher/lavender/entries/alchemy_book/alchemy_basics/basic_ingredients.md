@@ -6,224 +6,8 @@
 }
 ```
 
-**{dark_green}Basic Ingredients{}**
-
-*Pre-conjunction plants*
-```xml owo-ui
-        <flow-layout direction="vertical">
-    <children>
-        <!--First Row-->
-        <flow-layout direction="horizontal">
-            <children>
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:sweet_berries
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:glow_berries
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:moss_block
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-            </children>
-            <sizing>
-                <horizontal method="content">1</horizontal>
-                <vertical method="content">1</vertical>
-            </sizing>
-            <horizontal-alignment>center</horizontal-alignment>
-            <vertical-alignment>center</vertical-alignment>
-        </flow-layout>
-
-        <!--Second Row-->
-        <flow-layout direction="horizontal">
-            <children>
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:dandelion
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:kelp
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:brown_mushroom
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-            </children>
-            <sizing>
-                <horizontal method="content">1</horizontal>
-                <vertical method="content">1</vertical>
-            </sizing>
-            <horizontal-alignment>center</horizontal-alignment>
-            <vertical-alignment>center</vertical-alignment>
-        </flow-layout>
-
-        <!--Third Row-->
-        <flow-layout direction="horizontal">
-            <children>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:red_mushroom
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:glow_lichen
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-
-
-            </children>
-            <sizing>
-                <horizontal method="content">1</horizontal>
-                <vertical method="content">1</vertical>
-            </sizing>
-            <horizontal-alignment>center</horizontal-alignment>
-            <vertical-alignment>center</vertical-alignment>
-        </flow-layout>
-
-        <!--Fourth Row-->
-        <flow-layout direction="horizontal">
-            <children>
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:flowering_azalea
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:beetroot
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-                
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:fern
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-            </children>
-            <sizing>
-                <horizontal method="content">1</horizontal>
-                <vertical method="content">1</vertical>
-            </sizing>
-            <horizontal-alignment>center</horizontal-alignment>
-            <vertical-alignment>center</vertical-alignment>
-        </flow-layout>
-
-    </children>
-    <horizontal-alignment>center</horizontal-alignment>
-    <vertical-alignment>center</vertical-alignment>
-</flow-layout>
-
-```
-
+While pre-Conjunction plants (before the Conjunction of the Spheres) used in various recipes are well-known, 
+this section will describe where to find any post-Conjunction ingredient that may be unfamiliar.
 
 ;;;;;
 
@@ -436,425 +220,6 @@ and caves.</tooltip-text>
             <horizontal-alignment>center</horizontal-alignment>
             <vertical-alignment>center</vertical-alignment>
         </flow-layout>
-```
-
----
-
-;;;;;
-
----
-
-**{dark_green}Basic Ingredients{}**
-
-*Flower petals*
-
-All of them can be harvested using shears in the respective plant
-```xml owo-ui
-        <flow-layout direction="vertical">
-            <children>
-                <!--First Row-->
-                <flow-layout direction="horizontal">
-                    <children>
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:poppy_petals
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-                        
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:allium_petals
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:lily_of_the_valley_petals
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:peony_petals
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>                               
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-                        
-                    </children>
-                    <sizing>
-                        <horizontal method="content">1</horizontal>
-                        <vertical method="content">1</vertical>
-                    </sizing>
-                    <horizontal-alignment>center</horizontal-alignment>
-                    <vertical-alignment>center</vertical-alignment>
-                </flow-layout>
-
-                <!--Second Row-->
-                <flow-layout direction="horizontal">
-                    <children>
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:azure_bluet_petals
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:oxeye_daisy_petals
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-                        
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:bunch_of_leaves
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                    </children>
-                    <sizing>
-                        <horizontal method="content">1</horizontal>
-                        <vertical method="content">1</vertical>
-                    </sizing>
-                    <horizontal-alignment>center</horizontal-alignment>
-                    <vertical-alignment>center</vertical-alignment>
-                </flow-layout>
-
-            </children>
-            <horizontal-alignment>center</horizontal-alignment>
-            <vertical-alignment>center</vertical-alignment>
-        </flow-layout>
-```
-
----
-
-;;;;;
-
----
-
-**{dark_green}Advanced Ingredients{}**
-
-*Alcohol*
-```xml owo-ui
-        <flow-layout direction="vertical">
-            <children>
-                <!--First Row-->
-                <flow-layout direction="horizontal">
-                    <children>
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:icy_spirit
-                                    </stack>
-<tooltip-text>Icy Spirit:
-Bought from herbalist 
-villagers.</tooltip-text>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-                        
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:dwarven_spirit
-                                    </stack>
-<tooltip-text>Dwarven Spirit:
-Crafted, see recipes.</tooltip-text>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:alcohest
-                                    </stack>
-<tooltip-text>Alcohest:
-Crafted, see recipes.</tooltip-text>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:village_herbal
-                                    </stack>
-<tooltip-text>Village Herbal:
-Bought from farmer
-villagers.</tooltip-text>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                    </children>
-                    <sizing>
-                        <horizontal method="content">1</horizontal>
-                        <vertical method="content">1</vertical>
-                    </sizing>
-                    <horizontal-alignment>center</horizontal-alignment>
-                    <vertical-alignment>center</vertical-alignment>
-                </flow-layout>
-
-                <!--Second Row-->
-                <flow-layout direction="horizontal">
-                    <children>
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:mandrake_cordial
-                                    </stack>
-<tooltip-text>Mandrake Cordial:
-Bought from herbalist
-villagers.</tooltip-text>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:cherry_cordial
-                                    </stack>
-<tooltip-text>Cherry Cordial:
-Bought from herbalist
-villagers.</tooltip-text>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-                        
-                    </children>
-                    <sizing>
-                        <horizontal method="content">1</horizontal>
-                        <vertical method="content">1</vertical>
-                    </sizing>
-                    <horizontal-alignment>center</horizontal-alignment>
-                    <vertical-alignment>center</vertical-alignment>
-                </flow-layout>
-
-            </children>
-            <horizontal-alignment>center</horizontal-alignment>
-            <vertical-alignment>center</vertical-alignment>
-        </flow-layout>
-```
-
----
-
-;;;;;
-
----
-
-**{dark_green}Advanced Ingredients{}**
-
-*Pre-conjunction substances*
-```xml owo-ui
-        <flow-layout direction="vertical">
-    <children>
-        <!--First Row-->
-        <flow-layout direction="horizontal">
-            <children>
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:gunpowder
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:blaze_powder
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:glowstone_dust
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:bone_meal
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-            </children>
-            <sizing>
-                <horizontal method="content">1</horizontal>
-                <vertical method="content">1</vertical>
-            </sizing>
-            <horizontal-alignment>center</horizontal-alignment>
-            <vertical-alignment>center</vertical-alignment>
-        </flow-layout>
-
-        <!--Second Row-->
-        <flow-layout direction="horizontal">
-            <children>
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:prismarine_crystals
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:ghast_tear
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-                <stack-layout>
-                    <children>
-                        <item>
-                            <stack>
-                                minecraft:amethyst_shard
-                            </stack>
-                            <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                        </item>
-                    </children>
-                    <padding>
-                        <all>5</all>
-                    </padding>
-                </stack-layout>
-
-            </children>
-            <sizing>
-                <horizontal method="content">1</horizontal>
-                <vertical method="content">1</vertical>
-            </sizing>
-            <horizontal-alignment>center</horizontal-alignment>
-            <vertical-alignment>center</vertical-alignment>
-        </flow-layout>
-
-    </children>
-    <horizontal-alignment>center</horizontal-alignment>
-    <vertical-alignment>center</vertical-alignment>
-</flow-layout>
-
 ```
 
 ---
@@ -1081,6 +446,142 @@ villagers.</tooltip-text>
                             </padding>
                         </stack-layout>
 
+                    </children>
+                    <sizing>
+                        <horizontal method="content">1</horizontal>
+                        <vertical method="content">1</vertical>
+                    </sizing>
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+                </flow-layout>
+
+            </children>
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>center</vertical-alignment>
+        </flow-layout>
+```
+
+---
+
+;;;;;
+
+---
+
+**{dark_green}Advanced Ingredients{}**
+
+*Alcohol*
+```xml owo-ui
+        <flow-layout direction="vertical">
+            <children>
+                <!--First Row-->
+                <flow-layout direction="horizontal">
+                    <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:icy_spirit
+                                    </stack>
+<tooltip-text>Icy Spirit:
+Bought from herbalist 
+villagers.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:dwarven_spirit
+                                    </stack>
+<tooltip-text>Dwarven Spirit:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:alcohest
+                                    </stack>
+<tooltip-text>Alcohest:
+Crafted, see recipes.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:village_herbal
+                                    </stack>
+<tooltip-text>Village Herbal:
+Bought from farmer
+villagers.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+                    </children>
+                    <sizing>
+                        <horizontal method="content">1</horizontal>
+                        <vertical method="content">1</vertical>
+                    </sizing>
+                    <horizontal-alignment>center</horizontal-alignment>
+                    <vertical-alignment>center</vertical-alignment>
+                </flow-layout>
+
+                <!--Second Row-->
+                <flow-layout direction="horizontal">
+                    <children>
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:mandrake_cordial
+                                    </stack>
+<tooltip-text>Mandrake Cordial:
+Bought from herbalist
+villagers.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+
+                        <stack-layout>
+                            <children>
+                                <item>
+                                    <stack>
+                                        tcots-witcher:cherry_cordial
+                                    </stack>
+<tooltip-text>Cherry Cordial:
+Bought from herbalist
+villagers.</tooltip-text>
+                                </item>
+                            </children>
+                            <padding>
+                                <all>5</all>
+                            </padding>
+                        </stack-layout>
+                        
                     </children>
                     <sizing>
                         <horizontal method="content">1</horizontal>

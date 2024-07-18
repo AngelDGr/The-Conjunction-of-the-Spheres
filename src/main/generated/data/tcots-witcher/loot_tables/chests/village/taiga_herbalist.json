@@ -9,6 +9,76 @@
           "functions": [
             {
               "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:alchemy_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "decoctions_only": 0,
+              "function": "tcots-witcher:randomize_formula"
+            }
+          ],
+          "name": "tcots-witcher:alchemy_formula",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:alcohest",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:dwarven_spirit",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:icy_spirit",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 4.0,
@@ -23,7 +93,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:fern",
-          "weight": 4
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -39,7 +109,7 @@
             }
           ],
           "name": "minecraft:brown_mushroom",
-          "weight": 3
+          "weight": 6
         },
         {
           "type": "minecraft:item",
@@ -54,8 +124,8 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "tcots-witcher:azure_bluet_petals",
-          "weight": 5
+          "name": "minecraft:azure_bluet",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
@@ -71,7 +141,7 @@
             }
           ],
           "name": "minecraft:red_mushroom",
-          "weight": 2
+          "weight": 4
         },
         {
           "type": "minecraft:item",
@@ -86,7 +156,8 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "tcots-witcher:puffball"
+          "name": "tcots-witcher:puffball",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -101,7 +172,8 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "tcots-witcher:sewant_mushrooms"
+          "name": "tcots-witcher:sewant_mushrooms",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -117,7 +189,7 @@
             }
           ],
           "name": "minecraft:sweet_berries",
-          "weight": 4
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -133,7 +205,7 @@
             }
           ],
           "name": "minecraft:spruce_sapling",
-          "weight": 4
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -142,13 +214,14 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 8.0,
-                "min": 2.0
+                "max": 4.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
           ],
-          "name": "tcots-witcher:allium_petals"
+          "name": "minecraft:allium",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -164,7 +237,7 @@
             }
           ],
           "name": "tcots-witcher:crows_eye",
-          "weight": 2
+          "weight": 4
         },
         {
           "type": "minecraft:item",
@@ -180,44 +253,22 @@
             }
           ],
           "name": "tcots-witcher:arenaria",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "tcots-witcher:bryonia",
           "weight": 2
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "tcots-witcher:organic_paste"
+          "name": "minecraft:glow_lichen",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{effects:[{duration:1600,id:\"minecraft:fire_resistance\"}]}"
-            }
-          ],
-          "name": "tcots-witcher:organic_paste"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "tcots-witcher:bryonia"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:glow_lichen"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:moss_block"
+          "name": "minecraft:moss_block",
+          "weight": 2
         }
       ],
       "rolls": {

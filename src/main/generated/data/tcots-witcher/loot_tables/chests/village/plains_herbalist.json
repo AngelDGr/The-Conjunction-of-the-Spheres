@@ -9,6 +9,76 @@
           "functions": [
             {
               "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:alchemy_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "decoctions_only": 0,
+              "function": "tcots-witcher:randomize_formula"
+            }
+          ],
+          "name": "tcots-witcher:alchemy_formula",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:alcohest",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:dwarven_spirit",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:icy_spirit",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 4.0,
@@ -34,7 +104,7 @@
             }
           ],
           "name": "minecraft:dandelion",
-          "weight": 4
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -50,7 +120,7 @@
             }
           ],
           "name": "tcots-witcher:celandine",
-          "weight": 4
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -65,8 +135,8 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "tcots-witcher:poppy_petals",
-          "weight": 5
+          "name": "minecraft:poppy",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
@@ -82,74 +152,21 @@
             }
           ],
           "name": "tcots-witcher:verbena",
-          "weight": 3
+          "weight": 6
         },
         {
           "type": "minecraft:item",
-          "name": "tcots-witcher:ergot_seeds"
+          "name": "tcots-witcher:ergot_seeds",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "name": "tcots-witcher:allspice"
+          "name": "tcots-witcher:allspice",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:flowering_azalea"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "tcots-witcher:sewant_mushrooms"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "tcots-witcher:organic_paste"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{effects:[{duration:1600,id:\"minecraft:saturation\"}]}"
-            }
-          ],
-          "name": "tcots-witcher:organic_paste"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "tcots-witcher:lily_of_the_valley_petals",
+          "name": "minecraft:flowering_azalea",
           "weight": 2
         },
         {
@@ -159,13 +176,13 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 5.0,
+                "max": 4.0,
                 "min": 1.0
               },
               "function": "minecraft:set_count"
             }
           ],
-          "name": "tcots-witcher:oxeye_daisy_petals",
+          "name": "tcots-witcher:sewant_mushrooms",
           "weight": 2
         },
         {
@@ -181,15 +198,50 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "tcots-witcher:arenaria"
+          "name": "minecraft:lily_of_the_valley",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "name": "tcots-witcher:bryonia"
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:oxeye_daisy",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:glow_lichen"
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:arenaria",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "tcots-witcher:bryonia",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:glow_lichen",
+          "weight": 2
         }
       ],
       "rolls": {

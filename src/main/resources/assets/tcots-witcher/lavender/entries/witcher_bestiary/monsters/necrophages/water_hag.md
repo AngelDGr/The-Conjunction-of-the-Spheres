@@ -74,19 +74,6 @@ The mud in your eyes it's going to wash off after a little time, and it's going 
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:bunch_of_leaves
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-                        </stack-layout>
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
                                         tcots-witcher:water_essence
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>

@@ -9,6 +9,76 @@
           "functions": [
             {
               "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:alchemy_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "decoctions_only": 0,
+              "function": "tcots-witcher:randomize_formula"
+            }
+          ],
+          "name": "tcots-witcher:alchemy_formula",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:alcohest",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:dwarven_spirit",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:icy_spirit",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 4.0,
@@ -23,12 +93,12 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:cactus",
-          "weight": 4
+          "weight": 10
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:dead_bush",
-          "weight": 4
+          "weight": 10
         },
         {
           "type": "minecraft:item",
@@ -44,21 +114,22 @@
             }
           ],
           "name": "tcots-witcher:han_fiber",
-          "weight": 2
+          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:brown_mushroom",
-          "weight": 2
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:red_mushroom"
+          "name": "minecraft:red_mushroom",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
           "name": "tcots-witcher:puffball",
-          "weight": 2
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -73,13 +144,13 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "tcots-witcher:lily_of_the_valley_petals",
-          "weight": 2
+          "name": "minecraft:lily_of_the_valley",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
           "name": "tcots-witcher:bryonia",
-          "weight": 2
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -94,7 +165,8 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "tcots-witcher:azure_bluet_petals"
+          "name": "minecraft:azure_bluet",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -109,25 +181,13 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "tcots-witcher:verbena"
+          "name": "tcots-witcher:verbena",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "tcots-witcher:organic_paste"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{effects:[{duration:1600,id:\"minecraft:night_vision\"}]}"
-            }
-          ],
-          "name": "tcots-witcher:organic_paste"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:glow_lichen"
+          "name": "minecraft:glow_lichen",
+          "weight": 3
         }
       ],
       "rolls": {

@@ -30,7 +30,6 @@
     "PotionEntityMixin",
     "ServerPlayerEntityMixin",
     "ServerWorldAccessor",
-    "ShearsItemMixin",
     "SpawnEggItemMixin",
     "TestingMixin",
     "VillagerHostilesSensorMixin",

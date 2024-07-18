@@ -1,14 +1,13 @@
 ```json
 {
-  "title": "Recipes",
+  "title": "Recipes Compendium",
   "icon_sprite": "tcots-witcher:alchemy_almanac/category/recipes",
   "ordinal": 10
 }
 ```
 
 
-***Complete collection of recipes for potions,
-decoctions, monster oils, bombs and ingredients.***
+***Compendium of recipes for potions, decoctions, monster oils, bombs, and alchemical ingredients.***
 
 ;;;;;
 

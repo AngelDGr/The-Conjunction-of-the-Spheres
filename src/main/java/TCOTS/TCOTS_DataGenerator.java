@@ -2,7 +2,7 @@ package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
-import TCOTS.items.OrganicPasteItem;
+import TCOTS.items.AlchemyRecipeRandomlyLootFunction;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeCategory;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeJsonBuilder;
@@ -19,7 +19,6 @@ import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SuspiciousStewIngredient;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeExporter;
@@ -28,7 +27,6 @@ import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.data.server.tag.TagProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageType;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -38,9 +36,8 @@ import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LeafEntry;
 import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.function.SetNbtLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
@@ -52,7 +49,6 @@ import net.minecraft.registry.tag.PointOfInterestTypeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.poi.PointOfInterestType;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
@@ -113,260 +109,308 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             super(output, LootContextTypes.CHEST);
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void accept(BiConsumer<Identifier, LootTable.Builder> exporter) {
 
             //Plains
-            exporter.accept(PLAINS_HERBALIST_CHEST,
-                    LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
+            {
+                exporter.accept(PLAINS_HERBALIST_CHEST,
+                        LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.EMERALD).weight(2))
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCHEMY_BOOK).weight(1))
+                                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA).weight(3))
+                                        .apply(AlchemyRecipeRandomlyLootFunction.builder()))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(2))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(5))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.EMERALD).weight(2))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(ItemEntry.builder(Items.DANDELION).weight(8)
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.CELANDINE).weight(8))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(ItemEntry.builder(Items.POPPY).weight(10)
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 3.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.VERBENA).weight(6))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(ItemEntry.builder(TCOTS_Items.ERGOT_SEEDS).weight(2))
+
+                                .with(ItemEntry.builder(TCOTS_Items.ALLSPICE).weight(2))
+
+                                .with(ItemEntry.builder(Items.FLOWERING_AZALEA).weight(2))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.SEWANT_MUSHROOMS).weight(2))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.LILY_OF_THE_VALLEY).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.OXEYE_DAISY).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ARENARIA).weight(2))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(2))
+
+                                .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(2))
+
+
+                        )
+                );
+            }
+
+            //Taiga
+            {
+                exporter.accept(TAIGA_HERBALIST_CHEST,
+                        LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCHEMY_BOOK).weight(1))
+                                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA).weight(3))
+                                        .apply(AlchemyRecipeRandomlyLootFunction.builder()))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(3))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.EMERALD).weight(2))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(ItemEntry.builder(Items.FERN).weight(8))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.BROWN_MUSHROOM).weight(6))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.AZURE_BLUET).weight(10))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RED_MUSHROOM).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.PUFFBALL).weight(2))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.SEWANT_MUSHROOMS).weight(2))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 5.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.SWEET_BERRIES).weight(8))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Blocks.SPRUCE_SAPLING).weight(8))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.ALLIUM).weight(2))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.CROWS_EYE).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ARENARIA).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+
+                                .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(2))
+
+                                .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(2))
+
+                                .with(ItemEntry.builder(Items.MOSS_BLOCK).weight(2))
+
+                        ));
+            }
+
+            //Snowy
+            {
+                exporter.accept(SNOWY_HERBALIST_CHEST,
+                        LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCHEMY_BOOK).weight(1))
+                                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA).weight(3))
+                                        .apply(AlchemyRecipeRandomlyLootFunction.builder()))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(3))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.EMERALD).weight(2))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(7))
+
+                                .with(ItemEntry.builder(Items.FERN).weight(7))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.BROWN_MUSHROOM).weight(7))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RED_MUSHROOM).weight(3))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Blocks.SPRUCE_SAPLING).weight(10))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.PUFFBALL).weight(7))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.VERBENA).weight(7))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.AZURE_BLUET).weight(7))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.CORNFLOWER).weight(3))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ARENARIA).weight(10))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.CROWS_EYE).weight(10))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 6.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.SWEET_BERRIES).weight(7))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+                                .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(3))
+
+
+                        ));
+            }
+
+            //Desert
+            {
+                exporter.accept(DESERT_HERBALIST_CHEST,
+                        LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCHEMY_BOOK).weight(1))
+                                        .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA).weight(3))
+                                        .apply(AlchemyRecipeRandomlyLootFunction.builder()))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(3))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(4))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.EMERALD).weight(2))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                .with(ItemEntry.builder(Items.CACTUS).weight(10))
+
+                                .with(ItemEntry.builder(Items.DEAD_BUSH).weight(10))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.HAN_FIBER).weight(5))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(ItemEntry.builder(Items.BROWN_MUSHROOM).weight(5))
+
+                                .with(ItemEntry.builder(Items.RED_MUSHROOM).weight(3))
+
+                                .with(ItemEntry.builder(TCOTS_Items.PUFFBALL).weight(5))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.LILY_OF_THE_VALLEY).weight(5))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(5))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.AZURE_BLUET).weight(3))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.VERBENA).weight(3))
+                                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(3))
+
+
+                        ));
+            }
+
+            //Savanna
+            {
+                {
+                    exporter.accept(SAVANNA_HERBALIST_CHEST,
+                            LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCHEMY_BOOK).weight(1))
+                                            .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA).weight(3))
+                                            .apply(AlchemyRecipeRandomlyLootFunction.builder()))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ALCOHEST).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT).weight(4))
                                             .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
 
-                            .with(ItemEntry.builder(Items.DANDELION).weight(4)
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.CELANDINE).weight(4))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.EMERALD).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
 
-                            .with(ItemEntry.builder(TCOTS_Items.POPPY_PETALS).weight(5)
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 3.0f))))
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.DANDELION).weight(8))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.VERBENA).weight(3))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.HAN_FIBER).weight(8))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
 
-                            .with(ItemEntry.builder(TCOTS_Items.ERGOT_SEEDS).weight(1))
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.ACACIA_SAPLING).weight(10))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
-                            .with(ItemEntry.builder(TCOTS_Items.ALLSPICE).weight(1))
+                                    .with(ItemEntry.builder(Items.BROWN_MUSHROOM).weight(3))
 
-                            .with(ItemEntry.builder(Items.FLOWERING_AZALEA).weight(1))
+                                    .with(ItemEntry.builder(Items.RED_MUSHROOM).weight(3))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.SEWANT_MUSHROOMS).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.LILY_OF_THE_VALLEY).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+                                    .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(3))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
-                                    .apply(SetNbtLootFunction.builder(
-                                            OrganicPasteItem.writeEffectsToPasteNBT(new NbtCompound(), Collections.singletonList((
-                                                    new SuspiciousStewIngredient.StewEffect(StatusEffects.SATURATION, 1600))))
-                                    )))
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.SHORT_GRASS).weight(5))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.MOSS_CARPET).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.AZURE_BLUET).weight(5))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.OXEYE_DAISY_PETALS).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 5.0f))))
+                                    .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(3))
 
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ARENARIA).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(1))
-
-                            .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(1))
-
-                    )
-            );
-
-            exporter.accept(TAIGA_HERBALIST_CHEST,
-                    LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.EMERALD).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
-
-                            .with(ItemEntry.builder(Items.FERN).weight(4))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.BROWN_MUSHROOM).weight(3))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.AZURE_BLUET_PETALS).weight(5))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.RED_MUSHROOM).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.PUFFBALL).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.SEWANT_MUSHROOMS).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 5.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.SWEET_BERRIES).weight(4))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Blocks.SPRUCE_SAPLING).weight(4))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ALLIUM_PETALS).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 8.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.CROWS_EYE).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ARENARIA).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
-                                    .apply(SetNbtLootFunction.builder(
-                                            OrganicPasteItem.writeEffectsToPasteNBT(new NbtCompound(), Collections.singletonList((
-                                                    new SuspiciousStewIngredient.StewEffect(StatusEffects.FIRE_RESISTANCE, 1600))))
-                                    )))
-
-                            .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(1))
-
-                            .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(1))
-
-                            .with(ItemEntry.builder(Items.MOSS_BLOCK).weight(1))
-                    ));
-
-            exporter.accept(SNOWY_HERBALIST_CHEST,
-                    LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.EMERALD).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
-
-                            .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(2))
-
-                            .with(ItemEntry.builder(Items.FERN).weight(2))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.BROWN_MUSHROOM).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.RED_MUSHROOM).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Blocks.SPRUCE_SAPLING).weight(3))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.PUFFBALL).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.VERBENA).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.AZURE_BLUET_PETALS).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.CORNFLOWER).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ARENARIA).weight(3))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.CROWS_EYE).weight(3))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 6.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.SWEET_BERRIES).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
-                                    .apply(SetNbtLootFunction.builder(
-                                            OrganicPasteItem.writeEffectsToPasteNBT(new NbtCompound(), Collections.singletonList((
-                                                    new SuspiciousStewIngredient.StewEffect(StatusEffects.JUMP_BOOST, 1600))))
-                                    )))
-
-
-                            .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(1))
-
-                    ));
-
-            exporter.accept(DESERT_HERBALIST_CHEST,
-                    LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.EMERALD).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
-
-                            .with(ItemEntry.builder(Items.CACTUS).weight(4))
-
-                            .with(ItemEntry.builder(Items.DEAD_BUSH).weight(4))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.HAN_FIBER).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(ItemEntry.builder(Items.BROWN_MUSHROOM).weight(2))
-
-                            .with(ItemEntry.builder(Items.RED_MUSHROOM).weight(1))
-
-                            .with(ItemEntry.builder(TCOTS_Items.PUFFBALL).weight(2))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(2))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.AZURE_BLUET_PETALS).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.VERBENA).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
-                                    .apply(SetNbtLootFunction.builder(
-                                            OrganicPasteItem.writeEffectsToPasteNBT(new NbtCompound(), Collections.singletonList((
-                                                    new SuspiciousStewIngredient.StewEffect(StatusEffects.NIGHT_VISION, 1600))))
-                                    )))
-
-                            .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(1))
-
-                    ));
-
-            exporter.accept(SAVANNA_HERBALIST_CHEST,
-                    LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 8.0f))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.EMERALD).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.DANDELION).weight(3))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.HAN_FIBER).weight(3))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.ACACIA_SAPLING).weight(4))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(ItemEntry.builder(Items.BROWN_MUSHROOM).weight(1))
-
-                            .with(ItemEntry.builder(Items.RED_MUSHROOM).weight(1))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.LILY_OF_THE_VALLEY_PETALS).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(1))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.SHORT_GRASS).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(Items.MOSS_CARPET).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.AZURE_BLUET_PETALS).weight(2))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
-                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
-
-                            .with(((LeafEntry.Builder<?>)ItemEntry.builder(TCOTS_Items.ORGANIC_PASTE).weight(1))
-                                    .apply(SetNbtLootFunction.builder(
-                                            OrganicPasteItem.writeEffectsToPasteNBT(new NbtCompound(), Collections.singletonList((
-                                                    new SuspiciousStewIngredient.StewEffect(StatusEffects.GLOWING, 1600))))
-                                    )))
-
-                            .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(1))
-
-                    ));
+                            ));
+                }
+            }
         }
     }
 
@@ -437,7 +481,6 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .addOptionalTag(BlockTags.WART_BLOCKS);
         }
     }
-
     private static class EntityTagGenerator extends FabricTagProvider.EntityTypeTagProvider {
         public EntityTagGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
             super(output, completableFuture);
@@ -461,7 +504,6 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .add(TCOTS_Entities.FOGLING);
         }
     }
-
     private static class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
 
         public ItemTagGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
@@ -478,6 +520,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .add(Items.RABBIT);
         }
     }
+
+
     private static class RecipesGenerator extends FabricRecipeProvider{
 
         public RecipesGenerator(FabricDataOutput output) {
@@ -736,13 +780,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                         AlchemyTableRecipeJsonBuilder.createPotion(
                                 0.3f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION,
                                 ingredientsList(
-                                        TCOTS_Items.BUNCH_OF_LEAVES, 2,
+                                        Items.OXEYE_DAISY, 2,
                                         TCOTS_Items.NEKKER_HEART, 4)).offerTo(exporter);
+
 
                         AlchemyTableRecipeJsonBuilder.createPotion(
                                 0.31f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED, 1,
                                 ingredientsList(
-                                        TCOTS_Items.BUNCH_OF_LEAVES, 4,
+                                        Items.OXEYE_DAISY, 4,
                                         TCOTS_Items.BRYONIA, 1,
                                         TCOTS_Items.NEKKER_HEART, 5),
                                 TCOTS_Items.WHITE_RAFFARDS_DECOCTION).offerTo(exporter);
@@ -750,7 +795,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                         AlchemyTableRecipeJsonBuilder.createPotion(
                                 0.32f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SUPERIOR, 2,
                                 ingredientsList(
-                                        TCOTS_Items.BUNCH_OF_LEAVES, 4,
+                                        Items.OXEYE_DAISY, 4,
                                         TCOTS_Items.BRYONIA, 4,
                                         Items.FLOWERING_AZALEA, 4,
                                         TCOTS_Items.VERMILION, 1),
@@ -1400,7 +1445,6 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             return List.of(new ItemStack(itemA, a), new ItemStack(itemB, b), new ItemStack(itemC, c), new ItemStack(itemD, d), new ItemStack(itemE, e));
         }
     }
-
     private static class AdvancementsRecipesUnlocker extends FabricAdvancementProvider {
 
         protected AdvancementsRecipesUnlocker(FabricDataOutput output) {
@@ -1436,8 +1480,6 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         }
     }
-
-
 }
 
 
