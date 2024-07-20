@@ -6,7 +6,6 @@ import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeModifierCreator;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -15,7 +14,9 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.PotionItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -95,28 +96,28 @@ public class WitcherPotions_Base extends PotionItem {
                 stack.decrement(1);
             }
         }
+        user.emitGameEvent(GameEvent.DRINK);
 
-        ItemStack stack_Empty = getStackEmpty();
+        ItemStack stack_Empty = getStackEmptyBottle();
 
         stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
-        if (playerEntity == null || !playerEntity.getAbilities().creativeMode) {
-            if (playerEntity != null) {
-                //If the player inventories its full
-                if(playerEntity.getInventory().getEmptySlot() == -1){
-                    playerEntity.getWorld().spawnEntity(new ItemEntity(playerEntity.getWorld(), playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), stack_Empty));
-                } else{
-                    playerEntity.getInventory().insertStack(stack_Empty);
+        if (stack.isEmpty()) {
+            return stack_Empty;
+        }
+        if (user instanceof PlayerEntity) {
+            if (!playerEntity.getAbilities().creativeMode) {
+                if (!playerEntity.getInventory().insertStack(stack_Empty)) {
+                    playerEntity.dropItem(stack_Empty, false);
                 }
             }
         }
 
-        user.emitGameEvent(GameEvent.DRINK);
         return stack;
     }
 
     @NotNull
-    private ItemStack getStackEmpty() {
+    private ItemStack getStackEmptyBottle() {
         ItemStack stack_Empty;
 
         if(!decoction){
@@ -142,6 +143,10 @@ public class WitcherPotions_Base extends PotionItem {
         return UseAction.DRINK;
     }
 
+    @Override
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        return ActionResult.PASS;
+    }
     private boolean canBeDrunk;
 
     public void setCanBeDrunk(boolean canBeDrunk) {

@@ -16,9 +16,7 @@ import net.minecraft.util.Identifier;
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
-public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
-//        implements RecipeBookProvider
-{
+public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler> {
 
     public static final ButtonTextures BUTTON_TEXTURES =
             new ButtonTextures(
@@ -96,13 +94,11 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
         buttonWidget.active = true;
         } else {
             if(recipeBook.isOpen()){
-//                recipeBook.toggleOpen();
                 this.x = recipeBook.findLeftEdge(this.width, this.backgroundWidth);
                 buttonWidget.setPosition(this.x + 5, this.height / 2 - 39);
             }
             buttonWidget.active = false;
         }
-
 
         renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);

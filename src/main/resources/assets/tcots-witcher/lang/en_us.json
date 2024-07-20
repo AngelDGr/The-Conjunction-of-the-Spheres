@@ -189,7 +189,9 @@
 
     "block.tcots-witcher.herbal_table": "Herbal Table",
     "block.tcots-witcher.herbal_table.tooltip": "Put organic matter in it",
-    "item.tcots-witcher.organic_paste": "Organic Paste",
+    "item.tcots-witcher.herbal_mixture": "Herbal Mixture",
+    "tcots-witcher.gui.herbal_table.title": "Create herbal mixtures",
+
 
     "entity.minecraft.villager.herbalist_witcher": "Herbalist",
 

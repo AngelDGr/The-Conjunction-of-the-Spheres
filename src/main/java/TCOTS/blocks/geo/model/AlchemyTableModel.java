@@ -27,7 +27,7 @@ public class AlchemyTableModel extends GeoModel<AlchemyTableBlockEntity> {
 
     @Override
     public RenderLayer getRenderType(AlchemyTableBlockEntity animatable, Identifier texture) {
-        return RenderLayer.getEntityTranslucent(texture);
+        return RenderLayer.getEntityTranslucent(getTextureResource(animatable));
     }
 
     @Override
@@ -43,11 +43,7 @@ public class AlchemyTableModel extends GeoModel<AlchemyTableBlockEntity> {
                 !animatable.getWorld().getBlockState(animatable.getPos()).get(AlchemyTableBlock.HAS_ALCHEMY_BOOK)
         ){
             book.setHidden(true);
-        } else if (!(animatable.getWorld().getBlockState(animatable.getPos()).getBlock() instanceof AlchemyTableBlock)) {
-            book.setHidden(true);
-        } else {
-            book.setHidden(false);
-        }
+        } else book.setHidden(!(animatable.getWorld().getBlockState(animatable.getPos()).getBlock() instanceof AlchemyTableBlock));
 
         super.setCustomAnimations(animatable, instanceId, animationState);
     }

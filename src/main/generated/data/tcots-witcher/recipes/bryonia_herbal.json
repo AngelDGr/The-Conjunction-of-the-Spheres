@@ -1,0 +1,14 @@
+{
+  "type": "tcots-witcher:herbal_table",
+  "amplifier": 0,
+  "base_potion": 0,
+  "effects": [
+    "minecraft:saturation",
+    "minecraft:instant_damage"
+  ],
+  "herb": {
+    "Count": 1,
+    "id": "tcots-witcher:bryonia"
+  },
+  "time": 40
+}

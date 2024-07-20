@@ -11,11 +11,12 @@ import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
 import TCOTS.entity.misc.renderers.*;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
-import TCOTS.items.concoctions.recipes.AlchemyTableRecipesRegister;
+import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
 import TCOTS.items.weapons.WitcherBaseCrossbow;
 import TCOTS.particles.*;
 import TCOTS.particles.bombEmitters.*;
 import TCOTS.screen.AlchemyTableScreen;
+import TCOTS.screen.HerbalTableScreen;
 import io.wispforest.lavender.client.LavenderBookScreen;
 import io.wispforest.lavender.md.compiler.BookCompiler;
 import io.wispforest.lavender.md.features.RecipeFeature;
@@ -169,7 +170,8 @@ public class TCOTS_Client implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.MOON_DUST_EXPLOSION_EMITTER, new MoonDust_ExplosionEmitterParticle.Factory());
 
 
-        HandledScreens.register(AlchemyTableRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, AlchemyTableScreen::new);
+        HandledScreens.register(ScreenHandlersAndRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, AlchemyTableScreen::new);
+        HandledScreens.register(ScreenHandlersAndRecipesRegister.HERBAL_TABLE_SCREEN_HANDLER, HerbalTableScreen::new);
 
         //Register Recipe Previews
         LavenderBookScreen.registerRecipePreviewBuilder(new Identifier(TCOTS_Main.MOD_ID, "alchemy_book"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));

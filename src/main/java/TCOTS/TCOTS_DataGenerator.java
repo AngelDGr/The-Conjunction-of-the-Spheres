@@ -6,6 +6,7 @@ import TCOTS.items.AlchemyRecipeRandomlyLootFunction;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeCategory;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeJsonBuilder;
+import TCOTS.items.concoctions.recipes.HerbalTableRecipeJsonBuilder;
 import TCOTS.world.TCOTS_ConfiguredFeatures;
 import TCOTS.world.TCOTS_DamageTypes;
 import TCOTS.world.TCOTS_PlacedFeature;
@@ -27,6 +28,7 @@ import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.data.server.tag.TagProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -168,7 +170,6 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                 .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(2))
 
                                 .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(2))
-
 
                         )
                 );
@@ -530,212 +531,232 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generate(RecipeExporter exporter) {
+            //Crafting Table
+            {
+                //Alchemy Table
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, TCOTS_Items.ALCHEMY_TABLE_ITEM)
+                            .pattern("B B")
+                            .pattern("CWC")
+                            .pattern("WWW")
+                            .input('B', Items.GLASS_BOTTLE)
+                            .input('C', Items.COBBLESTONE)
+                            .input('W', ItemTags.PLANKS)
+
+                            .criterion(FabricRecipeProvider.hasItem(Items.GLASS_BOTTLE), FabricRecipeProvider.conditionsFromItem(Items.GLASS_BOTTLE))
+                            .offerTo(exporter);
+                }
+
+                //Herbal Table
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, TCOTS_Items.HERBAL_TABLE_ITEM)
+                            .pattern("FF")
+                            .pattern("WW")
+                            .pattern("WW")
+                            .input('F', ItemTags.SMALL_FLOWERS)
+                            .input('W', ItemTags.PLANKS)
+
+                            .criterion(FabricRecipeProvider.hasItem(Items.DANDELION), FabricRecipeProvider.conditionsFromItem(Items.DANDELION))
+                            .criterion(FabricRecipeProvider.hasItem(Items.POPPY), FabricRecipeProvider.conditionsFromItem(Items.POPPY))
+                            .criterion(FabricRecipeProvider.hasItem(Items.CORNFLOWER), FabricRecipeProvider.conditionsFromItem(Items.CORNFLOWER))
+                            .offerTo(exporter);
+                }
+
+                //G'valchir
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.GVALCHIR)
+                            .pattern("HIH")
+                            .pattern("HIH")
+                            .pattern("NSN")
+                            .input('H', TCOTS_Items.BULLVORE_HORN_FRAGMENT)
+                            .input('I', Items.IRON_INGOT)
+                            .input('N', Items.IRON_NUGGET)
+                            .input('S', Items.STICK)
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT))
+                            .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT), FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
+                            .offerTo(exporter);
+                }
+
+                //Knight Crossbow
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.KNIGHT_CROSSBOW)
+                            .pattern("IWI")
+                            .pattern("LHL")
+                            .pattern(" S ")
+                            .input('I', Items.IRON_BLOCK)
+                            .input('W', ItemTags.WOOL)
+                            .input('L', Items.LEATHER)
+                            .input('H', Items.TRIPWIRE_HOOK)
+                            .input('S', Items.STICK)
+
+                            .criterion(FabricRecipeProvider.hasItem(Items.IRON_BLOCK), FabricRecipeProvider.conditionsFromItem(Items.IRON_BLOCK))
+                            .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                            .criterion(FabricRecipeProvider.hasItem(Items.TRIPWIRE_HOOK), FabricRecipeProvider.conditionsFromItem(Items.TRIPWIRE_HOOK))
+                            .offerTo(exporter);
+                }
+
+                //Crossbow Bolts
+                {
+                    //Normal Bolt
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BASE_BOLT, 2)
+                                .pattern(" I ")
+                                .pattern("FSF")
+                                .input('I', Items.IRON_INGOT)
+                                .input('F', Items.FEATHER)
+                                .input('S', Items.STICK)
+
+                                .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT), FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
+                                .criterion(FabricRecipeProvider.hasItem(Items.FEATHER), FabricRecipeProvider.conditionsFromItem(Items.FEATHER))
+                                .offerTo(exporter);
+                    }
+
+                    //Blunt Bolt
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BLUNT_BOLT, 2)
+                                .pattern("  P")
+                                .pattern("L# ")
+                                .pattern("TL ")
+                                .input('P', Items.GOLD_BLOCK)
+                                .input('L', Items.IRON_INGOT)
+                                .input('T', Items.IRON_BLOCK)
+                                .input('#', TCOTS_Items.BASE_BOLT)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                                .offerTo(exporter);
+                    }
+
+                    //Precision Bolt
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.PRECISION_BOLT, 2)
+                                .pattern("  P")
+                                .pattern("L# ")
+                                .pattern("LL ")
+                                .input('P', Items.IRON_NUGGET)
+                                .input('L', Items.FEATHER)
+                                .input('#', TCOTS_Items.BASE_BOLT)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                                .offerTo(exporter);
+                    }
+
+                    //Exploding Bolt
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.EXPLODING_BOLT, 2)
+                                .pattern("  P")
+                                .pattern("L# ")
+                                .pattern("TL ")
+                                .input('P', TCOTS_Items.STAMMELFORDS_DUST)
+                                .input('L', Items.STRING)
+                                .input('T', Items.PAPER)
+                                .input('#', TCOTS_Items.BASE_BOLT)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                                .offerTo(exporter);
+                    }
+
+                    //Broadhead Bolt
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BROADHEAD_BOLT, 2)
+                                .pattern("  P")
+                                .pattern("L# ")
+                                .pattern("TL ")
+                                .input('P', TCOTS_Items.FOGLET_TEETH)
+                                .input('L', Items.IRON_NUGGET)
+                                .input('T', Items.FEATHER)
+                                .input('#', TCOTS_Items.BASE_BOLT)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                                .offerTo(exporter);
+                    }
+                }
+
+                //Bone Meal from bones
+                {
+                    //Devourer teeth
+                    {
+                        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.BONE_MEAL, 12)
+                                .input(TCOTS_Items.DEVOURER_TEETH)
+                                .group("bonemeal")
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.DEVOURER_TEETH), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.DEVOURER_TEETH))
+                                .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "bone_meal_from_devourer_teeth"));
+                    }
+
+                    //Graveir bone
+                    {
+                        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.BONE_MEAL, 16)
+                                .input(TCOTS_Items.GRAVEIR_BONE)
+                                .group("bonemeal")
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.GRAVEIR_BONE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.GRAVEIR_BONE))
+                                .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "bone_meal_from_graveir_bone"));
+                    }
+                }
+
+                //Cadaverine crafting
+                {
+                    //Leather
+                    {
+                        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.LEATHER, 2)
+                                .input(TCOTS_Items.CADAVERINE)
+                                .input(Items.ROTTEN_FLESH)
+                                .group("leather")
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
+                                .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_rotten"));
+                    }
+
+                    //Head
+                    {
+                        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.SKELETON_SKULL)
+                                .input(TCOTS_Items.CADAVERINE)
+                                .input(Items.ZOMBIE_HEAD)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
+                                .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_head"));
+                    }
+
+                    //Bone
+                    {
+                        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.BONE, 2)
+                                .input(TCOTS_Items.CADAVERINE)
+                                .input(TCOTS_Items.DECAYING_FLESH)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
+                                .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_flesh"));
+                    }
+                }
+            }
 
             //Alchemy Table
             {
-                ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, TCOTS_Items.ALCHEMY_TABLE_ITEM)
-                        .pattern("B B")
-                        .pattern("CWC")
-                        .pattern("WWW")
-                        .input('B', Items.GLASS_BOTTLE)
-                        .input('C', Items.COBBLESTONE)
-                        .input('W', ItemTags.PLANKS)
-
-                        .criterion(FabricRecipeProvider.hasItem(Items.GLASS_BOTTLE), FabricRecipeProvider.conditionsFromItem(Items.GLASS_BOTTLE))
-                        .offerTo(exporter);
-            }
-
-
-            //G'valchir
-            {
-                ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.GVALCHIR)
-                        .pattern("HIH")
-                        .pattern("HIH")
-                        .pattern("NSN")
-                        .input('H', TCOTS_Items.BULLVORE_HORN_FRAGMENT)
-                        .input('I', Items.IRON_INGOT)
-                        .input('N', Items.IRON_NUGGET)
-                        .input('S', Items.STICK)
-
-                        .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT))
-                        .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT), FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
-                        .offerTo(exporter);
-            }
-
-            //Knight Crossbow
-            {
-                ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.KNIGHT_CROSSBOW)
-                        .pattern("IWI")
-                        .pattern("LHL")
-                        .pattern(" S ")
-                        .input('I', Items.IRON_BLOCK)
-                        .input('W', ItemTags.WOOL)
-                        .input('L', Items.LEATHER)
-                        .input('H', Items.TRIPWIRE_HOOK)
-                        .input('S', Items.STICK)
-
-                        .criterion(FabricRecipeProvider.hasItem(Items.IRON_BLOCK), FabricRecipeProvider.conditionsFromItem(Items.IRON_BLOCK))
-                        .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
-                        .criterion(FabricRecipeProvider.hasItem(Items.TRIPWIRE_HOOK), FabricRecipeProvider.conditionsFromItem(Items.TRIPWIRE_HOOK))
-                        .offerTo(exporter);
-            }
-
-            //Crossbow Bolts
-            {
-                //Normal Bolt
-                {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BASE_BOLT, 2)
-                            .pattern(" I ")
-                            .pattern("FSF")
-                            .input('I', Items.IRON_INGOT)
-                            .input('F', Items.FEATHER)
-                            .input('S', Items.STICK)
-
-                            .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT), FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
-                            .criterion(FabricRecipeProvider.hasItem(Items.FEATHER), FabricRecipeProvider.conditionsFromItem(Items.FEATHER))
-                            .offerTo(exporter);
-                }
-
-                //Blunt Bolt
-                {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BLUNT_BOLT, 2)
-                            .pattern("  P")
-                            .pattern("L# ")
-                            .pattern("TL ")
-                            .input('P', Items.GOLD_BLOCK)
-                            .input('L', Items.IRON_INGOT)
-                            .input('T', Items.IRON_BLOCK)
-                            .input('#', TCOTS_Items.BASE_BOLT)
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
-                            .offerTo(exporter);
-                }
-
-                //Precision Bolt
-                {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.PRECISION_BOLT, 2)
-                            .pattern("  P")
-                            .pattern("L# ")
-                            .pattern("LL ")
-                            .input('P', Items.IRON_NUGGET)
-                            .input('L', Items.FEATHER)
-                            .input('#', TCOTS_Items.BASE_BOLT)
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
-                            .offerTo(exporter);
-                }
-
-                //Exploding Bolt
-                {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.EXPLODING_BOLT, 2)
-                            .pattern("  P")
-                            .pattern("L# ")
-                            .pattern("TL ")
-                            .input('P', TCOTS_Items.STAMMELFORDS_DUST)
-                            .input('L', Items.STRING)
-                            .input('T', Items.PAPER)
-                            .input('#', TCOTS_Items.BASE_BOLT)
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
-                            .offerTo(exporter);
-                }
-
-                //Broadhead Bolt
-                {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BROADHEAD_BOLT, 2)
-                            .pattern("  P")
-                            .pattern("L# ")
-                            .pattern("TL ")
-                            .input('P', TCOTS_Items.FOGLET_TEETH)
-                            .input('L', Items.IRON_NUGGET)
-                            .input('T', Items.FEATHER)
-                            .input('#', TCOTS_Items.BASE_BOLT)
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
-                            .offerTo(exporter);
-                }
-            }
-
-
-            //Bone Meal from bones
-            {
-                //Devourer teeth
-                {
-                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.BONE_MEAL, 12)
-                            .input(TCOTS_Items.DEVOURER_TEETH)
-                            .group("bonemeal")
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.DEVOURER_TEETH), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.DEVOURER_TEETH))
-                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "bone_meal_from_devourer_teeth"));
-                }
-
-                //Graveir bone
-                {
-                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.BONE_MEAL, 16)
-                            .input(TCOTS_Items.GRAVEIR_BONE)
-                            .group("bonemeal")
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.GRAVEIR_BONE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.GRAVEIR_BONE))
-                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "bone_meal_from_graveir_bone"));
-                }
-            }
-
-            //Cadaverine crafting
-            {
-                //Leather
-                {
-                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.LEATHER, 2)
-                            .input(TCOTS_Items.CADAVERINE)
-                            .input(Items.ROTTEN_FLESH)
-                            .group("leather")
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
-                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_rotten"));
-                }
-
-                //Head
-                {
-                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.SKELETON_SKULL)
-                            .input(TCOTS_Items.CADAVERINE)
-                            .input(Items.ZOMBIE_HEAD)
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
-                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_head"));
-                }
-
-                //Bone
-                {
-                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.BONE, 2)
-                            .input(TCOTS_Items.CADAVERINE)
-                            .input(TCOTS_Items.DECAYING_FLESH)
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
-                            .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_flesh"));
-                }
-            }
-
-            //Alchemy Recipes
-            {
+                float order = 0;
                 //Potions
                 {
+
                     //Swallow
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                        0.1f, TCOTS_Items.SWALLOW_POTION,
+                                        order, TCOTS_Items.SWALLOW_POTION,
                                         ingredientsList(
                                                 TCOTS_Items.CELANDINE, 5,
                                                 TCOTS_Items.DROWNER_BRAIN, 1)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                        0.11f, TCOTS_Items.SWALLOW_POTION_ENHANCED, 1,
+                                        order, TCOTS_Items.SWALLOW_POTION_ENHANCED, 1,
                                         ingredientsList(
                                                 TCOTS_Items.DROWNER_BRAIN, 5,
                                                 TCOTS_Items.CELANDINE, 6,
                                                 Items.LILY_OF_THE_VALLEY, 4),
                                         TCOTS_Items.SWALLOW_POTION).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                        0.12f, TCOTS_Items.SWALLOW_POTION_SUPERIOR, 2,
+                                        order, TCOTS_Items.SWALLOW_POTION_SUPERIOR, 2,
                                         ingredientsList(
                                                 Items.GLOW_BERRIES, 6,
                                                 TCOTS_Items.CELANDINE, 4,
@@ -743,30 +764,34 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                                 TCOTS_Items.VITRIOL, 2),
                                         TCOTS_Items.SWALLOW_POTION_ENHANCED).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotionSplash(
-                                        0.13f, TCOTS_Items.SWALLOW_SPLASH,
+                                        order, TCOTS_Items.SWALLOW_SPLASH,
                                 TCOTS_Items.SWALLOW_POTION).offerTo(exporter);
 
                     }
 
                     //Cat
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.2f, TCOTS_Items.CAT_POTION,
+                                order, TCOTS_Items.CAT_POTION,
                                 ingredientsList(
                                         Items.GLOW_BERRIES, 4,
                                         TCOTS_Items.WATER_ESSENCE, 2)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.21f, TCOTS_Items.CAT_POTION_ENHANCED, 1,
+                                order, TCOTS_Items.CAT_POTION_ENHANCED, 1,
                                 ingredientsList(
                                         Items.GLOW_BERRIES, 5,
                                         Items.BROWN_MUSHROOM, 1,
                                         TCOTS_Items.WATER_ESSENCE, 3),
                                 TCOTS_Items.CAT_POTION).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.22f, TCOTS_Items.CAT_POTION_SUPERIOR, 2,
+                                order, TCOTS_Items.CAT_POTION_SUPERIOR, 2,
                                 ingredientsList(
                                         Items.GLOW_BERRIES, 4,
                                         Items.BROWN_MUSHROOM, 4,
@@ -777,23 +802,25 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //White Raffard's
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.3f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION,
+                                order, TCOTS_Items.WHITE_RAFFARDS_DECOCTION,
                                 ingredientsList(
                                         Items.OXEYE_DAISY, 2,
                                         TCOTS_Items.NEKKER_HEART, 4)).offerTo(exporter);
 
-
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.31f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED, 1,
+                                order, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED, 1,
                                 ingredientsList(
                                         Items.OXEYE_DAISY, 4,
                                         TCOTS_Items.BRYONIA, 1,
                                         TCOTS_Items.NEKKER_HEART, 5),
                                 TCOTS_Items.WHITE_RAFFARDS_DECOCTION).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.32f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SUPERIOR, 2,
+                                order, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SUPERIOR, 2,
                                 ingredientsList(
                                         Items.OXEYE_DAISY, 4,
                                         TCOTS_Items.BRYONIA, 4,
@@ -801,43 +828,49 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         TCOTS_Items.VERMILION, 1),
                                 TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotionSplash(
-                                0.33f, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH,
+                                order, TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH,
                                 TCOTS_Items.WHITE_RAFFARDS_DECOCTION).offerTo(exporter);
                     }
 
                     //Killer Whale
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.4f, TCOTS_Items.KILLER_WHALE_POTION,
+                                order, TCOTS_Items.KILLER_WHALE_POTION,
                                 ingredientsList(
                                         Items.KELP, 6,
                                         Items.SWEET_BERRIES, 5,
                                         TCOTS_Items.DROWNER_TONGUE, 5)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotionSplash(
-                                0.43f, TCOTS_Items.KILLER_WHALE_SPLASH,
+                                order, TCOTS_Items.KILLER_WHALE_SPLASH,
                                 TCOTS_Items.KILLER_WHALE_POTION).offerTo(exporter);
                     }
 
                     //Black Blood
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.5f, TCOTS_Items.BLACK_BLOOD_POTION,
+                                order, TCOTS_Items.BLACK_BLOOD_POTION,
                                 ingredientsList(
                                         TCOTS_Items.SEWANT_MUSHROOMS, 2,
                                         TCOTS_Items.GHOUL_BLOOD, 4)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.51f, TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED, 1,
+                                order, TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED, 1,
                                 ingredientsList(
                                         Items.ALLIUM, 2,
                                         TCOTS_Items.SEWANT_MUSHROOMS, 5,
                                         TCOTS_Items.GHOUL_BLOOD, 5),
                                 TCOTS_Items.BLACK_BLOOD_POTION).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.52f, TCOTS_Items.BLACK_BLOOD_POTION_SUPERIOR, 2,
+                                order, TCOTS_Items.BLACK_BLOOD_POTION_SUPERIOR, 2,
                                 ingredientsList(
                                         Items.ALLIUM, 6,
                                         TCOTS_Items.SEWANT_MUSHROOMS, 5,
@@ -848,23 +881,26 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Maribor Forest
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.6f, TCOTS_Items.MARIBOR_FOREST_POTION,
+                                order, TCOTS_Items.MARIBOR_FOREST_POTION,
                                 ingredientsList(
                                         Items.GLOW_BERRIES, 3,
                                         TCOTS_Items.DROWNER_TONGUE, 4,
                                         TCOTS_Items.ALGHOUL_BONE_MARROW, 2)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.61f, TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED, 1,
+                                order, TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED, 1,
                                 ingredientsList(
                                         Items.GLOW_BERRIES, 5,
                                         TCOTS_Items.CROWS_EYE, 2,
                                         TCOTS_Items.DROWNER_TONGUE, 2),
                                 TCOTS_Items.MARIBOR_FOREST_POTION).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.62f, TCOTS_Items.MARIBOR_FOREST_POTION_SUPERIOR, 2,
+                                order, TCOTS_Items.MARIBOR_FOREST_POTION_SUPERIOR, 2,
                                 ingredientsList(
                                         Items.GLOW_BERRIES, 4,
                                         TCOTS_Items.CROWS_EYE, 4,
@@ -875,22 +911,25 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Wolf
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.9f, TCOTS_Items.WOLF_POTION,
+                                order, TCOTS_Items.WOLF_POTION,
                                 ingredientsList(
                                         Items.BONE_MEAL, 12,
                                         TCOTS_Items.DEVOURER_TEETH, 2)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.91f, TCOTS_Items.WOLF_POTION_ENHANCED, 1,
+                                order, TCOTS_Items.WOLF_POTION_ENHANCED, 1,
                                 ingredientsList(
                                         Items.BONE_MEAL, 12,
                                         TCOTS_Items.GHOUL_BLOOD, 2,
                                         TCOTS_Items.DEVOURER_TEETH, 8),
                                 TCOTS_Items.WOLF_POTION).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                0.92f, TCOTS_Items.WOLF_POTION_SUPERIOR, 2,
+                                order, TCOTS_Items.WOLF_POTION_SUPERIOR, 2,
                                 ingredientsList(
                                         Items.BONE_MEAL, 16,
                                         TCOTS_Items.GHOUL_BLOOD, 4,
@@ -901,22 +940,25 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Rook
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                1.00f, TCOTS_Items.ROOK_POTION,
+                                order, TCOTS_Items.ROOK_POTION,
                                 ingredientsList(
                                         Items.POPPY, 4,
                                         TCOTS_Items.NEKKER_EYE, 3)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                1.01f, TCOTS_Items.ROOK_POTION_ENHANCED, 1,
+                                order, TCOTS_Items.ROOK_POTION_ENHANCED, 1,
                                 ingredientsList(
                                         Items.POPPY, 6,
                                         Items.BROWN_MUSHROOM, 4,
                                         TCOTS_Items.NEKKER_EYE, 6),
                                 TCOTS_Items.ROOK_POTION).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                1.02f, TCOTS_Items.ROOK_POTION_SUPERIOR, 2,
+                                order, TCOTS_Items.ROOK_POTION_SUPERIOR, 2,
                                 ingredientsList(
                                         Items.POPPY, 12,
                                         Items.BROWN_MUSHROOM, 8,
@@ -927,20 +969,23 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //White Honey
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                99.9f, TCOTS_Items.WHITE_HONEY_POTION,
+                                order, TCOTS_Items.WHITE_HONEY_POTION,
                                 ingredientsList(
                                         Items.HONEY_BOTTLE, 1)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                99.91f, TCOTS_Items.WHITE_HONEY_POTION_ENHANCED, 1,
+                                order, TCOTS_Items.WHITE_HONEY_POTION_ENHANCED, 1,
                                 ingredientsList(
                                         Items.HONEY_BOTTLE, 2,
                                         Items.LILY_OF_THE_VALLEY, 2),
                                 TCOTS_Items.WHITE_HONEY_POTION).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createPotion(
-                                99.92f, TCOTS_Items.WHITE_HONEY_POTION_SUPERIOR, 2,
+                                order, TCOTS_Items.WHITE_HONEY_POTION_SUPERIOR, 2,
                                 ingredientsList(
                                         Items.HONEY_BOTTLE, 4,
                                         Items.LILY_OF_THE_VALLEY, 4,
@@ -953,30 +998,34 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Decoctions
                 {
+                    order=order+0.01f;
                     AlchemyTableRecipeJsonBuilder.createDecoction(
-                            0.1f, TCOTS_Items.WATER_HAG_DECOCTION,
+                            order, TCOTS_Items.WATER_HAG_DECOCTION,
                             ingredientsList(
                                     TCOTS_Items.WATER_HAG_MUTAGEN, 1,
                                     Items.ECHO_SHARD, 1,
                                     Items.SWEET_BERRIES, 1)).offerTo(exporter);
 
+                    order=order+0.01f;
                     AlchemyTableRecipeJsonBuilder.createDecoction(
-                            0.2f, TCOTS_Items.GRAVE_HAG_DECOCTION,
+                            order, TCOTS_Items.GRAVE_HAG_DECOCTION,
                             ingredientsList(
                                     TCOTS_Items.GRAVE_HAG_MUTAGEN, 1,
                                     Items.ECHO_SHARD, 1,
                                     Items.RED_MUSHROOM, 2,
                                     Items.BROWN_MUSHROOM, 3)).offerTo(exporter);
 
+                    order=order+0.01f;
                     AlchemyTableRecipeJsonBuilder.createDecoction(
-                            0.3f, TCOTS_Items.ALGHOUL_DECOCTION,
+                            order, TCOTS_Items.ALGHOUL_DECOCTION,
                             ingredientsList(
                                     TCOTS_Items.ALGHOUL_BONE_MARROW, 2,
                                     Items.ECHO_SHARD, 4,
                                     Items.KELP, 2)).offerTo(exporter);
 
+                    order=order+0.01f;
                     AlchemyTableRecipeJsonBuilder.createDecoction(
-                            0.4f, TCOTS_Items.FOGLET_DECOCTION,
+                            order, TCOTS_Items.FOGLET_DECOCTION,
                             ingredientsList(
                                     TCOTS_Items.FOGLET_MUTAGEN, 1,
                                     Items.ECHO_SHARD, 1,
@@ -988,12 +1037,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                 {
                     //Grapeshot
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.1f, TCOTS_Items.GRAPESHOT,
+                                order, TCOTS_Items.GRAPESHOT,
                                         ingredientsList(Items.BONE_MEAL,12)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.11f, TCOTS_Items.GRAPESHOT_ENHANCED,
+                                order, TCOTS_Items.GRAPESHOT_ENHANCED,
                                 ingredientsList(
                                         Items.BONE_MEAL,4,
                                         Items.DANDELION,2,
@@ -1001,8 +1052,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.RED_MUSHROOM, 1),
                                 TCOTS_Items.GRAPESHOT).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.12f, TCOTS_Items.GRAPESHOT_SUPERIOR,
+                                order, TCOTS_Items.GRAPESHOT_SUPERIOR,
                                 ingredientsList(
                                         Items.BONE_MEAL,4,
                                         Items.BLAZE_POWDER,2,
@@ -1013,12 +1065,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Samum
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.2f, TCOTS_Items.SAMUM,
+                                order, TCOTS_Items.SAMUM,
                                 ingredientsList(TCOTS_Items.CELANDINE,2)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.21f, TCOTS_Items.SAMUM_ENHANCED,
+                                order, TCOTS_Items.SAMUM_ENHANCED,
                                 ingredientsList(
                                         Items.GLOWSTONE_DUST,2,
                                         TCOTS_Items.FOGLET_TEETH,2,
@@ -1026,8 +1080,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.DANDELION, 1),
                                 TCOTS_Items.SAMUM).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.22f, TCOTS_Items.SAMUM_SUPERIOR,
+                                order, TCOTS_Items.SAMUM_SUPERIOR,
                                 ingredientsList(
                                         Items.GLOWSTONE_DUST,4,
                                         TCOTS_Items.FOGLET_TEETH,4,
@@ -1038,12 +1093,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Dancing Star
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.3f, TCOTS_Items.DANCING_STAR,
+                                order, TCOTS_Items.DANCING_STAR,
                                 ingredientsList(Items.BLAZE_POWDER,2)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.31f, TCOTS_Items.DANCING_STAR_ENHANCED,
+                                order, TCOTS_Items.DANCING_STAR_ENHANCED,
                                 ingredientsList(
                                         Items.GLOWSTONE_DUST,2,
                                         Items.BLAZE_POWDER,1,
@@ -1051,8 +1108,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.ALLIUM, 4),
                                 TCOTS_Items.DANCING_STAR).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.32f, TCOTS_Items.DANCING_STAR_SUPERIOR,
+                                order, TCOTS_Items.DANCING_STAR_SUPERIOR,
                                 ingredientsList(
                                         Items.GLOWSTONE_DUST,4,
                                         Items.BLAZE_POWDER,2,
@@ -1063,12 +1121,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Devil's Puffball
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.4f, TCOTS_Items.DEVILS_PUFFBALL,
+                                order, TCOTS_Items.DEVILS_PUFFBALL,
                                 ingredientsList(TCOTS_Items.SEWANT_MUSHROOMS,2)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.41f, TCOTS_Items.DEVILS_PUFFBALL_ENHANCED,
+                                order, TCOTS_Items.DEVILS_PUFFBALL_ENHANCED,
                                 ingredientsList(
                                         Items.BONE_MEAL,4,
                                         TCOTS_Items.SEWANT_MUSHROOMS,2,
@@ -1076,8 +1136,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.MOSS_BLOCK, 1),
                                 TCOTS_Items.DEVILS_PUFFBALL).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.42f, TCOTS_Items.DEVILS_PUFFBALL_SUPERIOR,
+                                order, TCOTS_Items.DEVILS_PUFFBALL_SUPERIOR,
                                 ingredientsList(
                                         Items.BONE_MEAL,8,
                                         TCOTS_Items.SEWANT_MUSHROOMS,3,
@@ -1088,12 +1149,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Dragon's Dream
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.5f, TCOTS_Items.DRAGONS_DREAM,
+                                order, TCOTS_Items.DRAGONS_DREAM,
                                 ingredientsList(Items.GLOWSTONE_DUST,4)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.51f, TCOTS_Items.DRAGONS_DREAM_ENHANCED,
+                                order, TCOTS_Items.DRAGONS_DREAM_ENHANCED,
                                 ingredientsList(
                                         Items.GLOWSTONE_DUST,2,
                                         Items.AMETHYST_SHARD,1,
@@ -1101,8 +1164,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         TCOTS_Items.BRYONIA, 2),
                                 TCOTS_Items.DRAGONS_DREAM).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.52f, TCOTS_Items.DRAGONS_DREAM_SUPERIOR,
+                                order, TCOTS_Items.DRAGONS_DREAM_SUPERIOR,
                                 ingredientsList(
                                         Items.GLOWSTONE_DUST,4,
                                         Items.AMETHYST_SHARD,2,
@@ -1113,15 +1177,17 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Northern Wind
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.6f, TCOTS_Items.NORTHERN_WIND,
+                                order, TCOTS_Items.NORTHERN_WIND,
                                 ingredientsList(
                                         TCOTS_Items.WATER_ESSENCE,1,
                                         Items.PRISMARINE_CRYSTALS,1,
                                         TCOTS_Items.ALLSPICE,2)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.61f, TCOTS_Items.NORTHERN_WIND_ENHANCED,
+                                order, TCOTS_Items.NORTHERN_WIND_ENHANCED,
                                 ingredientsList(
                                         TCOTS_Items.WATER_ESSENCE,2,
                                         Items.PRISMARINE_CRYSTALS,1,
@@ -1129,8 +1195,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         TCOTS_Items.ALLSPICE, 2),
                                 TCOTS_Items.NORTHERN_WIND).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.create(
-                                0.62f, TCOTS_Items.NORTHERN_WIND_SUPERIOR,
+                                order, TCOTS_Items.NORTHERN_WIND_SUPERIOR,
                                 AlchemyTableRecipeCategory.BOMBS_OILS,
                                 ingredientsList(
                                         TCOTS_Items.WATER_ESSENCE,3,
@@ -1143,15 +1210,17 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Dimeritium Bomb
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.create(
-                                0.7f,
+                                order,
                                 TCOTS_Items.DIMERITIUM_BOMB,
                                 AlchemyTableRecipeCategory.BOMBS_OILS,
                                 ingredientsList(Items.AMETHYST_SHARD,2),
                                 new ItemStack(Items.GUNPOWDER, 5)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.71f, TCOTS_Items.DIMERITIUM_BOMB_ENHANCED,
+                                order, TCOTS_Items.DIMERITIUM_BOMB_ENHANCED,
                                 ingredientsList(
                                         Items.AMETHYST_SHARD,2,
                                         Items.PRISMARINE_CRYSTALS,2,
@@ -1159,8 +1228,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.CORNFLOWER, 3),
                                 TCOTS_Items.DIMERITIUM_BOMB).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.72f, TCOTS_Items.DIMERITIUM_BOMB_SUPERIOR,
+                                order, TCOTS_Items.DIMERITIUM_BOMB_SUPERIOR,
                                 ingredientsList(
                                         Items.AMETHYST_SHARD,2,
                                         Items.PRISMARINE_CRYSTALS,4,
@@ -1171,12 +1241,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Moon dust Bomb
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.8f, TCOTS_Items.MOON_DUST,
+                                order, TCOTS_Items.MOON_DUST,
                                 ingredientsList(Items.GHAST_TEAR,2)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.81f, TCOTS_Items.MOON_DUST_ENHANCED,
+                                order, TCOTS_Items.MOON_DUST_ENHANCED,
                                 ingredientsList(
                                         Items.GHAST_TEAR,1,
                                         Items.BLAZE_POWDER,2,
@@ -1184,8 +1256,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.HONEY_BOTTLE, 1),
                                 TCOTS_Items.MOON_DUST).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
-                                0.82f, TCOTS_Items.MOON_DUST_SUPERIOR,
+                                order, TCOTS_Items.MOON_DUST_SUPERIOR,
                                 ingredientsList(
                                         Items.GHAST_TEAR,2,
                                         Items.BLAZE_POWDER,4,
@@ -1199,12 +1272,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                 {
                     //Necrophage Oil
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.00f, TCOTS_Items.NECROPHAGE_OIL,
+                                order, TCOTS_Items.NECROPHAGE_OIL,
                                 ingredientsList(Items.DANDELION, 4)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.01f, TCOTS_Items.ENHANCED_NECROPHAGE_OIL,
+                                order, TCOTS_Items.ENHANCED_NECROPHAGE_OIL,
                                 ingredientsList(
                                         TCOTS_Items.ROTFIEND_BLOOD, 4,
                                         Items.DANDELION, 4,
@@ -1212,8 +1287,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.FLOWERING_AZALEA, 4), 4,
                                         TCOTS_Items.NECROPHAGE_OIL).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.02f, TCOTS_Items.SUPERIOR_NECROPHAGE_OIL,
+                                order, TCOTS_Items.SUPERIOR_NECROPHAGE_OIL,
                                 ingredientsList(
                                         TCOTS_Items.ROTFIEND_BLOOD, 4,
                                         Items.CORNFLOWER, 1,
@@ -1224,13 +1300,15 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Ogroid Oil
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.1f, TCOTS_Items.OGROID_OIL,
+                                order, TCOTS_Items.OGROID_OIL,
                                 ingredientsList(Items.CORNFLOWER, 4)).offerTo(exporter);
 
+                        order=order+0.01f;
                         //TODO: Fix recipes when added new drops (Cave troll liver)
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.11f, TCOTS_Items.ENHANCED_OGROID_OIL,
+                                order, TCOTS_Items.ENHANCED_OGROID_OIL,
                                 ingredientsList(
                                         TCOTS_Items.ROTFIEND_BLOOD, 4,
                                         Items.DANDELION, 4,
@@ -1238,8 +1316,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.FLOWERING_AZALEA, 4), 4,
                                 TCOTS_Items.OGROID_OIL).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.12f, TCOTS_Items.SUPERIOR_OGROID_OIL,
+                                order, TCOTS_Items.SUPERIOR_OGROID_OIL,
                                 ingredientsList(
                                         TCOTS_Items.ROTFIEND_BLOOD, 4,
                                         Items.CORNFLOWER, 1,
@@ -1250,12 +1329,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Beast Oil
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.2f, TCOTS_Items.BEAST_OIL,
+                                order, TCOTS_Items.BEAST_OIL,
                                 ingredientsList(Items.BEEF, 4)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.21f, TCOTS_Items.ENHANCED_BEAST_OIL,
+                                order, TCOTS_Items.ENHANCED_BEAST_OIL,
                                 ingredientsList(
                                         Items.LEATHER, 2,
                                         TCOTS_Items.CELANDINE, 1,
@@ -1263,8 +1344,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.BEETROOT, 4), 5,
                                 TCOTS_Items.BEAST_OIL).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.22f, TCOTS_Items.SUPERIOR_BEAST_OIL,
+                                order, TCOTS_Items.SUPERIOR_BEAST_OIL,
                                 ingredientsList(
                                         Items.ENDER_PEARL, 2,
                                         TCOTS_Items.CELANDINE, 1,
@@ -1275,12 +1357,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                     //Hanged Man Oil
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.3f, TCOTS_Items.HANGED_OIL,
+                                order, TCOTS_Items.HANGED_OIL,
                                 ingredientsList(TCOTS_Items.ARENARIA, 4)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.31f, TCOTS_Items.ENHANCED_HANGED_OIL,
+                                order, TCOTS_Items.ENHANCED_HANGED_OIL,
                                 ingredientsList(
                                         TCOTS_Items.HAN_FIBER, 1,
                                         TCOTS_Items.NEKKER_EYE, 1,
@@ -1288,8 +1372,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         TCOTS_Items.ARENARIA, 1), 2,
                                 TCOTS_Items.HANGED_OIL).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
-                                1.32f, TCOTS_Items.SUPERIOR_HANGED_OIL,
+                                order, TCOTS_Items.SUPERIOR_HANGED_OIL,
                                 ingredientsList(
                                         Items.MOSS_BLOCK, 1,
                                         TCOTS_Items.ROTFIEND_BLOOD, 2,
@@ -1301,16 +1386,18 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Ingredients
                 {
+                    order=order+0.01f;
                     AlchemyTableRecipeJsonBuilder.createMisc(
-                            0.1f,
+                            order,
                             new ItemStack(TCOTS_Items.DWARVEN_SPIRIT),
                             ingredientsList(
                                     TCOTS_Items.ICY_SPIRIT, 2,
                                     Items.LILY_OF_THE_VALLEY,1),
                             Items.GLASS_BOTTLE).offerTo(exporter);
 
+                    order=order+0.01f;
                     AlchemyTableRecipeJsonBuilder.createMisc(
-                            0.11f,
+                            order,
                             new ItemStack(TCOTS_Items.ALCOHEST, 2),
                             ingredientsList(
                                     Items.SWEET_BERRIES, 2,
@@ -1318,8 +1405,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     TCOTS_Items.MANDRAKE_CORDIAL,1),
                             Items.GLASS_BOTTLE).offerTo(exporter);
 
+                    order=order+0.01f;
                     AlchemyTableRecipeJsonBuilder.createMisc(
-                            0.12f,
+                            order,
                             new ItemStack(TCOTS_Items.WHITE_GULL),
                             ingredientsList(
                                     TCOTS_Items.ARENARIA, 1,
@@ -1328,8 +1416,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     TCOTS_Items.MANDRAKE_CORDIAL,1),
                             Items.GLASS_BOTTLE).offerTo(exporter);
 
+                    order=order+0.01f;
                     AlchemyTableRecipeJsonBuilder.createMisc(
-                            0.13f,
+                            order,
                             new ItemStack(TCOTS_Items.STAMMELFORDS_DUST, 2),
                             ingredientsList(
                                     Items.BONE_MEAL, 8,
@@ -1337,10 +1426,12 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     Items.GLOWSTONE_DUST,4),
                             Items.BLAZE_POWDER).offerTo(exporter);
 
+
                     //Witcher Substances
                     {
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createMisc(
-                                0.2f,
+                                order,
                                 TCOTS_Items.AETHER,
                                 ingredientsList(
                                         TCOTS_Items.VERBENA, 1,
@@ -1349,8 +1440,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         TCOTS_Items.PUFFBALL, 1,
                                         Items.RED_MUSHROOM, 1)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createMisc(
-                                0.21f,
+                                order,
                                 TCOTS_Items.HYDRAGENUM,
                                 ingredientsList(
                                         TCOTS_Items.VERBENA, 1,
@@ -1359,9 +1451,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.MOSS_BLOCK, 1,
                                         Items.GLOW_LICHEN, 1)).offerTo(exporter);
 
-
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createMisc(
-                                0.22f,
+                                order,
                                 TCOTS_Items.NIGREDO,
                                 ingredientsList(
                                         TCOTS_Items.CROWS_EYE, 1,
@@ -1370,8 +1462,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.GLOW_LICHEN, 1,
                                         Items.SWEET_BERRIES, 1)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createMisc(
-                                0.23f,
+                                order,
                                 TCOTS_Items.QUEBRITH,
                                 ingredientsList(
                                         TCOTS_Items.VERBENA, 1,
@@ -1380,8 +1473,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.GLOW_LICHEN, 1,
                                         Items.FLOWERING_AZALEA, 1)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createMisc(
-                                0.24f,
+                                order,
                                 TCOTS_Items.REBIS,
                                 ingredientsList(
                                         TCOTS_Items.VERBENA, 1,
@@ -1390,8 +1484,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.OXEYE_DAISY, 1,
                                         Items.FERN, 1)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createMisc(
-                                0.25f,
+                                order,
                                 TCOTS_Items.RUBEDO,
                                 ingredientsList(
                                         TCOTS_Items.CROWS_EYE, 1,
@@ -1400,8 +1495,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         TCOTS_Items.PUFFBALL, 1,
                                         Items.MOSS_BLOCK, 1)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createMisc(
-                                0.26f,
+                                order,
                                 TCOTS_Items.VERMILION,
                                 ingredientsList(
                                         TCOTS_Items.VERBENA, 1,
@@ -1410,8 +1506,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.POPPY, 1,
                                         TCOTS_Items.BRYONIA, 1)).offerTo(exporter);
 
+                        order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createMisc(
-                                0.27f,
+                                order,
                                 TCOTS_Items.VITRIOL,
                                 ingredientsList(
                                         Items.MOSS_BLOCK, 1,
@@ -1419,6 +1516,137 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         Items.FERN, 1,
                                         Items.ALLIUM, 1,
                                         Items.GLOW_LICHEN, 1)).offerTo(exporter);
+                    }
+                }
+            }
+
+            //Herbal Table
+            {
+                {
+                    //Witcher Plants
+                    {
+                        HerbalTableRecipeJsonBuilder
+                                .create(TCOTS_Items.ARENARIA.getDefaultStack(),
+                                        List.of(StatusEffects.STRENGTH, StatusEffects.WITHER), 20)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(TCOTS_Items.BRYONIA.getDefaultStack(),
+                                        List.of(StatusEffects.SATURATION, StatusEffects.INSTANT_DAMAGE))
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(TCOTS_Items.CELANDINE.getDefaultStack(),
+                                        List.of(StatusEffects.REGENERATION, StatusEffects.SLOWNESS), 40, 2)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(TCOTS_Items.VERBENA.getDefaultStack(),
+                                        List.of(StatusEffects.HASTE, StatusEffects.SLOWNESS), 80, 3)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(TCOTS_Items.HAN_FIBER.getDefaultStack(),
+                                        List.of(StatusEffects.FIRE_RESISTANCE, StatusEffects.BLINDNESS))
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(TCOTS_Items.CROWS_EYE.getDefaultStack(),
+                                        List.of(StatusEffects.SPEED, StatusEffects.POISON))
+                                .offerTo(exporter);
+                    }
+
+                    //Mushrooms
+                    {
+                        HerbalTableRecipeJsonBuilder
+                                .create(TCOTS_Items.PUFFBALL.getDefaultStack(),
+                                        List.of(StatusEffects.SATURATION, StatusEffects.NIGHT_VISION, StatusEffects.POISON))
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(TCOTS_Items.SEWANT_MUSHROOMS.getDefaultStack(),
+                                        List.of(StatusEffects.SATURATION, StatusEffects.NIGHT_VISION, StatusEffects.POISON))
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.RED_MUSHROOM.getDefaultStack(),
+                                        List.of(StatusEffects.SATURATION, StatusEffects.NIGHT_VISION, StatusEffects.POISON))
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.BROWN_MUSHROOM.getDefaultStack(),
+                                        List.of(StatusEffects.SATURATION, StatusEffects.NIGHT_VISION, StatusEffects.POISON))
+                                .offerTo(exporter);
+                    }
+
+
+
+                    //SuspiciousStew
+                    {
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.ALLIUM.getDefaultStack(),
+                                        List.of(StatusEffects.FIRE_RESISTANCE, StatusEffects.HUNGER), 40, 1)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.AZURE_BLUET.getDefaultStack(),
+                                        List.of(StatusEffects.INVISIBILITY, StatusEffects.BLINDNESS), 80)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.BLUE_ORCHID.getDefaultStack(),
+                                        List.of(StatusEffects.SATURATION, StatusEffects.NAUSEA), 80)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.DANDELION.getDefaultStack(),
+                                        List.of(StatusEffects.SATURATION, StatusEffects.NAUSEA), 80)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.CORNFLOWER.getDefaultStack(),
+                                        List.of(StatusEffects.JUMP_BOOST, StatusEffects.SLOWNESS), 40, 3)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.LILY_OF_THE_VALLEY.getDefaultStack(),
+                                        List.of(StatusEffects.WATER_BREATHING, StatusEffects.POISON), 80)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.OXEYE_DAISY.getDefaultStack(),
+                                        List.of(StatusEffects.REGENERATION, StatusEffects.WEAKNESS), 40,2)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.POPPY.getDefaultStack(),
+                                        List.of(StatusEffects.NIGHT_VISION, StatusEffects.MINING_FATIGUE), 20)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.TORCHFLOWER.getDefaultStack(),
+                                        List.of(StatusEffects.NIGHT_VISION, StatusEffects.MINING_FATIGUE), 20)
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.ORANGE_TULIP.getDefaultStack(),
+                                        List.of( StatusEffects.SPEED, StatusEffects.WEAKNESS))
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.PINK_TULIP.getDefaultStack(),
+                                        List.of(StatusEffects.SPEED, StatusEffects.WEAKNESS))
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.RED_TULIP.getDefaultStack(),
+                                        List.of(StatusEffects.SPEED, StatusEffects.WEAKNESS))
+                                .offerTo(exporter);
+
+                        HerbalTableRecipeJsonBuilder
+                                .create(Items.WHITE_TULIP.getDefaultStack(),
+                                        List.of(StatusEffects.SPEED, StatusEffects.WEAKNESS))
+                                .offerTo(exporter);
                     }
                 }
             }

@@ -16,7 +16,7 @@
       "item": "tcots-witcher:drowner_brain"
     }
   ],
-  "order": 0.1,
+  "order": 0.01,
   "result": {
     "item": "tcots-witcher:swallow_potion"
   }

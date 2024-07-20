@@ -66,7 +66,6 @@ public class AlchemyTableRecipeJsonBuilder {
         return create(order, output.getDefaultStack(), category, ingredients, base);
     }
 
-
     /**
     Just creates a recipe with the category misc
      */

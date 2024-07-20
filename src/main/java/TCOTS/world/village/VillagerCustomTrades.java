@@ -31,7 +31,7 @@ public class VillagerCustomTrades {
                                     //Gives
                                     new ItemStack(TCOTS_Items.ALCHEMY_BOOK, 1),
                                     3,
-                                    5,
+                                    10,
                                     0.05f));
 
 
@@ -55,15 +55,6 @@ public class VillagerCustomTrades {
                                     16,
                                     2,
                                     0.05f));
-
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(Items.POPPY, 12),
-                                    //Gives
-                                    new ItemStack(Items.EMERALD, 1),
-                                    16,
-                                    2,
-                                    0.05f));
                         }
                     });
 
@@ -77,7 +68,7 @@ public class VillagerCustomTrades {
                                     //Gives
                                     AlchemyRecipeRandomlyLootFunction.getRandomFormula(TCOTS_Items.ALCHEMY_FORMULA.getDefaultStack(), random, AlchemyRecipeRandomlyLootFunction.getConcoctionsID()),
                                     3,
-                                    30,
+                                    60,
                                     0.2f));
 
                             factories.add((entity, random) -> new TradeOffer(
@@ -98,35 +89,10 @@ public class VillagerCustomTrades {
                                     5,
                                     0.05f));
 
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(Items.EMERALD, 5),
-                                    //Gives
-                                    new ItemStack(TCOTS_Items.VERBENA, 2),
-                                    12,
-                                    2,
-                                    0.05f));
                         }
 
                         //Buys
                         {
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(Items.MOSS_BLOCK, 12),
-                                    //Gives
-                                    new ItemStack(Items.EMERALD, 4),
-                                    16,
-                                    2,
-                                    0.05f));
-
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(Items.CORNFLOWER, 4),
-                                    //Gives
-                                    new ItemStack(Items.EMERALD, 4),
-                                    12,
-                                    2,
-                                    0.05f));
 
                             factories.add((entity, random) -> new TradeOffer(
                                     //Wants
@@ -134,7 +100,7 @@ public class VillagerCustomTrades {
                                     //Gives
                                     new ItemStack(Items.EMERALD, 6),
                                     12,
-                                    2,
+                                    10,
                                     0.05f));
                         }
 
@@ -163,23 +129,6 @@ public class VillagerCustomTrades {
                                     10,
                                     0.05f));
 
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(Items.EMERALD, 12),
-                                    //Gives
-                                    new ItemStack(TCOTS_Items.CROWS_EYE, 2),
-                                    12,
-                                    10,
-                                    0.05f));
-
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(Items.EMERALD, 8),
-                                    //Gives
-                                    new ItemStack(TCOTS_Items.ARENARIA, 1),
-                                    12,
-                                    10,
-                                    0.05f));
 
                             factories.add((entity, random) -> new TradeOffer(
                                     //Wants
@@ -190,26 +139,10 @@ public class VillagerCustomTrades {
                                     10,
                                     0.05f));
 
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(Items.EMERALD, 8),
-                                    //Gives
-                                    new ItemStack(TCOTS_Items.SEWANT_MUSHROOMS, 4),
-                                    12,
-                                    10,
-                                    0.05f));
                         }
 
                         //Buys
                         {
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(Items.LILY_OF_THE_VALLEY, 16),
-                                    //Gives
-                                    new ItemStack(Items.EMERALD, 8),
-                                    16,
-                                    10,
-                                    0.05f));
 
                             factories.add((entity, random) -> new TradeOffer(
                                     //Wants
@@ -217,17 +150,9 @@ public class VillagerCustomTrades {
                                     //Gives
                                     new ItemStack(Items.EMERALD, 8),
                                     12,
-                                    10,
+                                    20,
                                     0.05f));
 
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(Items.GLOW_BERRIES, 4),
-                                    //Gives
-                                    new ItemStack(Items.EMERALD, 6),
-                                    12,
-                                    5,
-                                    0.05f));
                         }
 
                     });
@@ -242,7 +167,7 @@ public class VillagerCustomTrades {
                                     //Gives
                                     AlchemyRecipeRandomlyLootFunction.getRandomFormula(TCOTS_Items.ALCHEMY_FORMULA.getDefaultStack(), random, AlchemyRecipeRandomlyLootFunction.getConcoctionsID()),
                                     3,
-                                    30,
+                                    100,
                                     0.2f));
 
                             factories.add((entity, random) -> new TradeOffer(
@@ -263,15 +188,6 @@ public class VillagerCustomTrades {
                                     15,
                                     0.05f));
 
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(Items.EMERALD, 12),
-                                    //Gives
-                                    new ItemStack(TCOTS_Items.HAN_FIBER, 2),
-                                    16,
-                                    15,
-                                    0.05f));
-
                         }
 
                         //Buys
@@ -282,26 +198,9 @@ public class VillagerCustomTrades {
                                     //Gives
                                     new ItemStack(Items.EMERALD, 8),
                                     12,
-                                    20,
-                                    0.05f));
-
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(TCOTS_Items.BRYONIA, 12),
-                                    //Gives
-                                    new ItemStack(Items.EMERALD, 4),
-                                    16,
                                     15,
                                     0.05f));
 
-                            factories.add((entity, random) -> new TradeOffer(
-                                    //Wants
-                                    new ItemStack(TCOTS_Items.GHOUL_BLOOD, 4),
-                                    //Gives
-                                    new ItemStack(Items.EMERALD, 8),
-                                    12,
-                                    20,
-                                    0.05f));
                         }
 
                     });

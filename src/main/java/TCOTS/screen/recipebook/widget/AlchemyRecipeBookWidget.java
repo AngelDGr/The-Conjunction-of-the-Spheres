@@ -196,7 +196,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
 
         this.recipesArea.initialize(this.client, i, j, craftingScreenHandler);
 
-        listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+        listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
 
         this.recipesArea.receiveRecipesList(listRecipes, this.recipeBook);
 

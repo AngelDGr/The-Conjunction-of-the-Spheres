@@ -8,7 +8,7 @@ import TCOTS.entity.misc.WaterHag_MudBallEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
 import TCOTS.items.concoctions.TCOTS_Effects;
-import TCOTS.items.concoctions.recipes.AlchemyTableRecipesRegister;
+import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.ServerWorldSpawnersUtil;
@@ -55,7 +55,7 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_ItemsGroups.registerGroupItems();
 		TCOTS_Items.modifyLootTables();
 		TCOTS_Items.registerCompostableItems();
-		AlchemyTableRecipesRegister.registerPotionRecipes();
+		ScreenHandlersAndRecipesRegister.registerScreenHandlersAndRecipes();
 		TCOTS_Sounds.registerSounds();
 		TCOTS_Entities.addSpawns();
 		TCOTS_Entities.addAttributes();

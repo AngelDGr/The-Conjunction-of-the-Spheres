@@ -135,6 +135,7 @@ public class TCOTS_Items {
 
     public static final TagKey<Item> DECAYING_FLESH = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "decaying_flesh"));
 
+    //TODO: Think what the fuck do with the Herbal Table <----
 
     //TODO: Fix the achievement to mobs works with Monster Hunter
     public static Item DROWNER_SPAWN_EGG;
@@ -1546,7 +1547,7 @@ public class TCOTS_Items {
 
     public static Item HERBAL_TABLE_ITEM;
 
-    public static Item ORGANIC_PASTE;
+    public static Item HERBAL_MIXTURE;
     public static Item WITCHER_BESTIARY;
     public static Item ALCHEMY_BOOK;
 
@@ -1568,7 +1569,7 @@ public class TCOTS_Items {
 
         HERBAL_TABLE_ITEM = registerItem("herbal_table", new HerbalTableItem(TCOTS_Blocks.HERBAL_TABLE, new FabricItemSettings()));
 
-        ORGANIC_PASTE = registerItem("organic_paste", new OrganicPasteItem(new FabricItemSettings().food(new FoodComponent.Builder().hunger(4).saturationModifier(0.3f).alwaysEdible().build())));
+        HERBAL_MIXTURE = registerItem("herbal_mixture", new HerbalMixture(new FabricItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(0.2f).alwaysEdible().build()).maxCount(2)));
 
 
         WITCHER_BESTIARY = WitcherBestiaryItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), new FabricItemSettings().maxCount(1));
@@ -1578,7 +1579,6 @@ public class TCOTS_Items {
 
     public static final LootFunctionType RANDOMIZE_FORMULA = register("randomize_formula", AlchemyRecipeRandomlyLootFunction.CODEC);
 
-    //TODO: Think what the fuck do with the Herbal Table
     @SuppressWarnings("all")
     private static LootFunctionType register(String id, Codec<? extends LootFunction> codec) {
         return Registry.register(Registries.LOOT_FUNCTION_TYPE, new Identifier(TCOTS_Main.MOD_ID,id), new LootFunctionType(codec));

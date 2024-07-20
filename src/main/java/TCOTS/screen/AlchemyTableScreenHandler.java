@@ -3,7 +3,7 @@ package TCOTS.screen;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
-import TCOTS.items.concoctions.recipes.AlchemyTableRecipesRegister;
+import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -57,7 +57,7 @@ public class AlchemyTableScreenHandler extends
     }
 
     public AlchemyTableScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context, BlockEntity blockEntity) {
-        super(AlchemyTableRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, syncId);
+        super(ScreenHandlersAndRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, syncId);
         this.player = playerInventory.player;
         this.context = context;
         this.blockEntity= (AlchemyTableBlockEntity) blockEntity;
@@ -69,7 +69,12 @@ public class AlchemyTableScreenHandler extends
         this.addSlot(new Slot(inputInventory, 2, 104, 17));
         this.addSlot(new Slot(inputInventory, 4, 128, 26));
         //Base
-        this.addSlot(new PotionBaseSlot(inputInventory, 5, 80, 56));
+        this.addSlot(new Slot(inputInventory, 5, 80, 56){
+            @Override
+            public int getMaxItemCount() {
+                return 5;
+            }
+        });
         //Output
         this.addSlot(new PotionOutputSlot(playerInventory.player, resultInventory, inputInventory, 6, 80, 85));
 
@@ -149,11 +154,10 @@ public class AlchemyTableScreenHandler extends
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(slotIndex);
         if (slot.hasStack()) {
-
             ItemStack itemStack2 = slot.getStack();
             itemStack = itemStack2.copy();
             //If it's the result slot
-            if (slotIndex == 0) {
+            if (slotIndex == 6) {
                 this.context.run((world, pos) -> itemStack2.getItem().onCraftByPlayer(itemStack2, world, player));
 
                 if (!this.insertItem(itemStack2, 7, 43, true)) {
@@ -167,8 +171,7 @@ public class AlchemyTableScreenHandler extends
                     slotIndex >= 7 && slotIndex < 43 ?
                     !this.insertItem(itemStack2, 0, 6, false)
                     //If the slots are outside hotbar
-                    && (slotIndex < 34 ?
-                      !this.insertItem(itemStack2, 34, 43, false)
+                    && (slotIndex < 34 ? !this.insertItem(itemStack2, 34, 43, false)
                     : !this.insertItem(itemStack2, 7, 34, false))
                     : !this.insertItem(itemStack2, 7, 43, false)) {
                 return ItemStack.EMPTY;
@@ -310,7 +313,7 @@ public class AlchemyTableScreenHandler extends
 
         if(world.getServer() == null) return;
 
-        Optional<RecipeEntry<AlchemyTableRecipe>> optional = world.getServer().getRecipeManager().getFirstMatch(AlchemyTableRecipesRegister.ALCHEMY_TABLE, craftingInventory, world);
+        Optional<RecipeEntry<AlchemyTableRecipe>> optional = world.getServer().getRecipeManager().getFirstMatch(ScreenHandlersAndRecipesRegister.ALCHEMY_TABLE, craftingInventory, world);
         if (optional.isPresent()) {
             ItemStack itemStack2;
             RecipeEntry<AlchemyTableRecipe> recipeEntry = optional.get();
@@ -330,19 +333,7 @@ public class AlchemyTableScreenHandler extends
         serverPlayerEntity.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, handler.nextRevision(), 6, itemStack));
     }
 
-    public static class PotionBaseSlot extends Slot {
-        public PotionBaseSlot(Inventory inventory, int i, int j, int k) {
-            super(inventory, i, j, k);
-        }
-
-        @Override
-        public int getMaxItemCount() {
-            return 5;
-        }
-
-    }
-
-    public static class PotionOutputSlot extends Slot {
+    protected static class PotionOutputSlot extends Slot {
         private final Inventory input;
         private final PlayerEntity player;
         private int amount;
@@ -425,7 +416,7 @@ public class AlchemyTableScreenHandler extends
         }
     }
 
-    public static class AlchemyTableResultInventory implements Inventory {
+    protected static class AlchemyTableResultInventory implements Inventory {
         private final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(1, ItemStack.EMPTY);
         @Override
         public int size() {

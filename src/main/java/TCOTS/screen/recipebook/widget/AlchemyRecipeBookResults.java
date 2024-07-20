@@ -192,7 +192,7 @@ public class AlchemyRecipeBookResults {
             );
             Active_listRecipes.clear();
             Active_listRecipes.addAll(listRecipesPotions);
-            Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+            Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
             this.resetPageCount(false);
 
         }
@@ -232,7 +232,7 @@ public class AlchemyRecipeBookResults {
                     if(b==6){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesPotions);
-                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
                         break;
                     }
 
@@ -241,14 +241,14 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesPotions);
-                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
                 break;
             case DECOCTIONS:
                 for (int j = 6 * this.currentPage; j < listRecipesDecoctions.size(); ++j) {
                     if(b==6){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesDecoctions);
-                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
                         break;
                     }
 
@@ -257,7 +257,7 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesDecoctions);
-                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
                 break;
 
             case BOMBS_OILS:
@@ -265,7 +265,7 @@ public class AlchemyRecipeBookResults {
                     if(b==6){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesBombs);
-                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
                         break;
                     }
 
@@ -274,7 +274,7 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesBombs);
-                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
                 break;
 
             case MISC:
@@ -282,7 +282,7 @@ public class AlchemyRecipeBookResults {
                     if(b==6){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesMisc);
-                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
                         break;
                     }
 
@@ -291,7 +291,7 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesMisc);
-                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getId()));
+                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
                 break;
         }
 

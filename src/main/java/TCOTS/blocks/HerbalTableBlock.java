@@ -1,22 +1,17 @@
 package TCOTS.blocks;
 
 import TCOTS.blocks.entity.HerbalTableBlockEntity;
-import TCOTS.items.OrganicPasteItem;
-import TCOTS.items.TCOTS_Items;
+import TCOTS.screen.HerbalTableScreenHandler;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.text.Text;
@@ -29,17 +24,15 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class HerbalTableBlock extends BlockWithEntity implements BlockEntityProvider {
 
     public static final MapCodec<HerbalTableBlock> CODEC = HerbalTableBlock.createCodec(HerbalTableBlock::new);
-
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 9.0, 16.0);
+    private static final Text TITLE = Text.translatable("tcots-witcher.gui.herbal_table.title");
 
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() {
@@ -51,86 +44,19 @@ public class HerbalTableBlock extends BlockWithEntity implements BlockEntityProv
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
     }
 
+    @Nullable
+    @Override
+    public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
+        return new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> new HerbalTableScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos)), TITLE);
+    }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(!world.isClient){
-            ItemStack mainStack = player.getMainHandStack();
-            Item mainItem = mainStack.getItem();
-            ItemStack organicPaste;
-
-            if (mainItem instanceof BlockItem){
-                Block mainBlock = ((BlockItem) mainItem).getBlock();
-                if(mainBlock instanceof PlantBlock || mainBlock instanceof LeavesBlock || mainBlock instanceof AbstractPlantStemBlock
-                        || mainBlock instanceof BigDripleafBlock || mainBlock instanceof CocoaBlock || mainBlock instanceof CarvedPumpkinBlock
-
-                        || mainBlock.getDefaultState().isIn(BlockTags.WART_BLOCKS)
-                ){
-
-                    organicPaste = new ItemStack(TCOTS_Items.ORGANIC_PASTE,1);
-                    if(!player.isCreative()){
-                        mainStack.decrement(1);
-                    }
-                    world.playSound(null, pos, SoundEvents.BLOCK_SLIME_BLOCK_BREAK, SoundCategory.BLOCKS, 3.0f, 1.0f);
-
-                    //Leaves = Luck
-                    if(mainBlock instanceof LeavesBlock){
-                        OrganicPasteItem.writeEffectsToPaste(organicPaste, Collections.singletonList((new SuspiciousStewIngredient.StewEffect(StatusEffects.LUCK, 1600))));
-                    }
-
-                    //Mushroom = Poison & Nausea
-                    if(mainBlock instanceof MushroomPlantBlock){
-                        OrganicPasteItem.writeEffectsToPaste(organicPaste, List.of((new SuspiciousStewIngredient.StewEffect(StatusEffects.POISON, 1600)), (new SuspiciousStewIngredient.StewEffect(StatusEffects.NAUSEA, 1600)) ));
-                    }
-
-                    //Pickles/LilyPad = Water Breathing
-                    if(mainBlock instanceof SeaPickleBlock || mainBlock instanceof LilyPadBlock){
-                        OrganicPasteItem.writeEffectsToPaste(organicPaste, List.of((new SuspiciousStewIngredient.StewEffect(StatusEffects.WATER_BREATHING, 1600)), (new SuspiciousStewIngredient.StewEffect(StatusEffects.DOLPHINS_GRACE, 1600)) ));
-                    }
-
-                    //WartBlocks = Fire Resistance/Resistance
-                    if(mainBlock.getDefaultState().isIn(BlockTags.WART_BLOCKS)){
-                        OrganicPasteItem.writeEffectsToPaste(organicPaste, List.of((new SuspiciousStewIngredient.StewEffect(StatusEffects.FIRE_RESISTANCE, 1600)), (new SuspiciousStewIngredient.StewEffect(StatusEffects.RESISTANCE, 1600)) ));
-                    }
-
-                    //WartBlocks = Fire Resistance/Resistance
-                    if(mainBlock instanceof FungusBlock){
-                        OrganicPasteItem.writeEffectsToPaste(organicPaste, List.of((new SuspiciousStewIngredient.StewEffect(StatusEffects.FIRE_RESISTANCE, 1600)) ));
-                    }
-
-                    //Glow Berries = Glowing
-                    if(mainBlock instanceof CaveVinesHeadBlock){
-                        OrganicPasteItem.writeEffectsToPaste(organicPaste, List.of((new SuspiciousStewIngredient.StewEffect(StatusEffects.GLOWING, 1600))));
-                    }
-
-                    //Drip leaf =  SlowFalling/Jump boost
-                    if(mainBlock instanceof BigDripleafBlock || mainBlock instanceof BigDripleafStemBlock){
-                        OrganicPasteItem.writeEffectsToPaste(organicPaste, List.of((new SuspiciousStewIngredient.StewEffect(StatusEffects.SLOW_FALLING, 1600)), (new SuspiciousStewIngredient.StewEffect(StatusEffects.JUMP_BOOST, 1600)) ));
-                    }
-
-                    //Cocoa = Speed
-                    if(mainBlock instanceof CocoaBlock){
-                        OrganicPasteItem.writeEffectsToPaste(organicPaste, List.of((new SuspiciousStewIngredient.StewEffect(StatusEffects.SPEED, 1600))));
-                    }
-
-                    //Flowers = Stew Effects
-                    if(mainBlock instanceof FlowerBlock){
-                        OrganicPasteItem.writeEffectsToPaste(organicPaste, ((FlowerBlock) mainBlock).getStewEffects());
-                    }
-
-                    //If the player inventory it's full
-                    if(player.getInventory().getEmptySlot() == -1){
-                        player.getWorld().spawnEntity(new ItemEntity(player.getWorld(), player.getX(), player.getY(), player.getZ(), organicPaste));
-                    } else{
-                        player.getInventory().insertStack(organicPaste);
-                    }
-
-                    return ActionResult.SUCCESS;
-                }
-            }
+        if (world.isClient) {
+            return ActionResult.SUCCESS;
         }
-
-        return ActionResult.CONSUME_PARTIAL;
+        player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+        return ActionResult.CONSUME;
     }
 
     @Override

@@ -28,7 +28,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
     private final ItemStack base;
     private final List<Ingredient> recipeItems;
     private final List<Integer> recipeCounts;
-    private final float id;
+    private final float order;
 
     public static final String ID_STRING = "alchemy_table";
 
@@ -37,7 +37,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
     public AlchemyTableRecipe(float order, AlchemyTableRecipeCategory category, List<Ingredient> ingredients, List<Integer> IngredientCount, ItemStack base, ItemStack output) {
         this.output = output;
         this.recipeItems = ingredients;
-        this.id=order;
+        this.order =order;
         this.base = base;
         this.recipeCounts= IngredientCount;
         this.category = category;
@@ -61,7 +61,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
 
     @Override
     public int compareTo(@NotNull AlchemyTableRecipe o) {
-        return Float.compare(this.getId(), o.getId());
+        return Float.compare(this.getOrder(), o.getOrder());
     }
 
     public static class Type implements RecipeType<AlchemyTableRecipe> {
@@ -74,8 +74,8 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
         return Type.INSTANCE;
     }
 
-    public float getId() {
-        return this.id;
+    public float getOrder() {
+        return this.order;
     }
 
 
@@ -245,7 +245,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
                 instance -> instance.group(
                         //Order Reader
                         Codecs.POSITIVE_FLOAT.fieldOf("order").orElse(99f)
-                                .forGetter(recipe -> recipe.id),
+                                .forGetter(recipe -> recipe.order),
 
                         //Category reader
                         AlchemyTableRecipeCategory.CODEC.fieldOf("category").orElse(AlchemyTableRecipeCategory.MISC)
@@ -293,7 +293,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
         // Turns Recipe into PacketByteBuf
         @Override
         public void write(PacketByteBuf buf, AlchemyTableRecipe recipe) {
-            buf.writeFloat(recipe.getId());
+            buf.writeFloat(recipe.getOrder());
 
             recipe.getIngredients().get(0).write(buf);
             recipe.getIngredients().get(1).write(buf);

@@ -99,7 +99,6 @@ public class CrossbowMixins {
         }
     }
 
-//    @Debug(export = true)
     @Mixin(PersistentProjectileEntity.class)
     public static class PersistentProjectileEntityMixin {
 

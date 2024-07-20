@@ -1,25 +1,69 @@
 package TCOTS.mixin;
 
 import TCOTS.items.concoctions.bombs.DimeritiumBomb;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.*;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.projectile.thrown.PotionEntity;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("unused")
 public abstract class DimeritiumMagicBlock {
     //Enderman
     @Mixin(EndermanEntity.class)
-    public abstract static class BlockEndermanTeleportation{
+    public abstract static class BlockEndermanTeleportation extends HostileEntity implements Angerable {
+        protected BlockEndermanTeleportation(EntityType<? extends HostileEntity> entityType, World world) {
+            super(entityType, world);
+        }
+
         @Unique
         EndermanEntity THIS = (EndermanEntity)(Object)this;
+
+
         @Inject(method = "teleportRandomly", at = @At("HEAD"), cancellable = true)
         private void magicBlockingTeleport(CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(THIS, cir);
+        }
+
+        @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
+        private void makeTakeDamageByArrows(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+            if (this.isInvulnerableTo(source)) {
+                cir.setReturnValue(false);
+            }
+
+            if(DimeritiumBomb.checkEffect(THIS) && !(source.getSource() instanceof PotionEntity)) {
+                cir.setReturnValue(super.damage(source, amount));
+            }
+        }
+    }
+
+    @Mixin(PersistentProjectileEntity.class)
+    public abstract static class MakeEndermanArrowDamageable{
+        @Unique
+        Entity entity;
+
+        @Inject(method = "onEntityHit", at = @At("HEAD"))
+        private void getEntity(EntityHitResult entityHitResult, CallbackInfo ci){
+            entity = entityHitResult.getEntity();
+        }
+
+        @ModifyVariable(method = "onEntityHit", at = @At("STORE"), name = "bl")
+        private boolean makeArrowDamageable(boolean value){
+            if(entity!=null && entity instanceof LivingEntity livingEntity){
+                return value && !DimeritiumBomb.checkEffect(livingEntity);
+            }
+
+            return value;
         }
     }
 

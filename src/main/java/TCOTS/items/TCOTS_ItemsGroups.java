@@ -100,7 +100,7 @@ public class TCOTS_ItemsGroups {
                                 {
                                     entries.add(TCOTS_Items.ALCHEMY_TABLE_ITEM);
                                     entries.add(TCOTS_Items.HERBAL_TABLE_ITEM);
-                                    entries.add(TCOTS_Items.ORGANIC_PASTE);
+                                    entries.add(TCOTS_Items.HERBAL_MIXTURE);
 
                                     entries.add(TCOTS_Items.ALLSPICE);
                                     entries.add(TCOTS_Items.ARENARIA);

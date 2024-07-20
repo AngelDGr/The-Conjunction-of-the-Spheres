@@ -9,17 +9,15 @@ import TCOTS.sounds.TCOTS_Sounds;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.EnchantingTableBlockEntity;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
-import net.minecraft.screen.*;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -54,15 +52,15 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
         this.setDefaultState(getDefaultState().with(HAS_ALCHEMY_BOOK, false));
     }
 
+    @Override
+    public BlockRenderType getRenderType(BlockState state){
+        return BlockRenderType.MODEL;
+    }
+
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new AlchemyTableBlockEntity(pos, state);
-    }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state){
-        return BlockRenderType.MODEL;
     }
 
     @Override
@@ -100,16 +98,6 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
 
     //Crafting stuff
 
-//    @Override
-//    public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
-//        BlockEntity blockEntity = world.getBlockEntity(pos);
-//        if (blockEntity instanceof AlchemyTableBlockEntity) {
-//
-//            return new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> new AlchemyTableScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos), world.getBlockEntity(pos)), Text.translatable(this.getTranslationKey()));
-//        }
-//        return null;
-//    }
-
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
@@ -122,14 +110,6 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
             }
 
             super.onStateReplaced(state, world, pos, newState, moved);
-        }
-    }
-
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        BlockEntity blockEntity;
-        if (itemStack.hasCustomName() && (blockEntity = world.getBlockEntity(pos)) instanceof EnchantingTableBlockEntity) {
-            ((EnchantingTableBlockEntity)blockEntity).setCustomName(itemStack.getName());
         }
     }
 
@@ -235,28 +215,9 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
 
 
             //Screen opener
-//            var factory = new ExtendedScreenHandlerFactory() {
-//
-//                @Override
-//                public @NotNull ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-//                    return new AlchemyTableScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(player.getWorld(), pos), player.getWorld().getBlockEntity(pos));
-//                }
-//
-//                @Override
-//                public Text getDisplayName() {
-//                    return AlchemyTableBlock.this.getName();
-//                }
-//
-//                @Override
-//                public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-//
-//                }
-//            };
-
             NamedScreenHandlerFactory screenHandlerFactory = ((AlchemyTableBlockEntity) world.getBlockEntity(pos));
             if (screenHandlerFactory != null) {
                 player.openHandledScreen(screenHandlerFactory);
-//            player.openHandledScreen(factory);
             }
         }
 
