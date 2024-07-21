@@ -8,6 +8,7 @@ import TCOTS.blocks.geo.renderer.NestSkullBlockRenderer;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
+import TCOTS.entity.geo.renderer.ogroids.NekkerWarriorRenderer;
 import TCOTS.entity.misc.renderers.*;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
@@ -114,6 +115,8 @@ public class TCOTS_Client implements ClientModInitializer {
         EntityRendererRegistry.register(TCOTS_Entities.BULLVORE, BullvoreRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
+
+        EntityRendererRegistry.register(TCOTS_Entities.NEKKER_WARRIOR, NekkerWarriorRenderer::new);
 
         //Bomb
         EntityRendererRegistry.register(TCOTS_Entities.WITCHER_BOMB, FlyingItemEntityRenderer::new);

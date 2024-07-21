@@ -32,14 +32,15 @@ public class VillagerHostilesSensorMixin {
                         .put(TCOTS_Entities.GRAVE_HAG, distanceDanger)
                         .put(TCOTS_Entities.GHOUL, distanceDanger)
                         .put(TCOTS_Entities.ALGHOUL, distanceDanger)
-                        .put(TCOTS_Entities.SCURVER, distanceDanger)
-                        .put(TCOTS_Entities.DEVOURER, distanceDanger)
+                        .put(TCOTS_Entities.SCURVER, distanceMediumDanger)
+                        .put(TCOTS_Entities.DEVOURER, distanceMediumDanger)
                         .put(TCOTS_Entities.GRAVEIR, distanceMediumDanger)
                         .put(TCOTS_Entities.BULLVORE, distanceExtremeDanger)
 
 
                         //Ogroids
                         .put(TCOTS_Entities.NEKKER, distanceDanger)
+                        .put(TCOTS_Entities.NEKKER_WARRIOR, distanceMediumDanger)
                         .build();
     }
 

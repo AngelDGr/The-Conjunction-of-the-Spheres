@@ -6,6 +6,8 @@ import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.utils.GeoControllersUtil;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
 import TCOTS.sounds.TCOTS_Sounds;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -20,12 +22,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
@@ -440,6 +444,9 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
                 this.setOwner(list.get(0));
             }
         }
+
+        if(this.getOwner() != null && !this.getOwner().isAlive())
+            setOwner(null);
     }
 
     private void timersTick(){
@@ -572,6 +579,24 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
     @Override
     public void setLungeTicks(int lungeTicks) {
         LungeTicks=lungeTicks;
+    }
+
+    public void playSpawnEffects() {
+        if (this.getWorld().isClient) {
+            BlockState blockState = this.getSteppingBlockState();
+            if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
+
+                for (int i = 0; i < 40; ++i) {
+                    double d = this.getX() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
+                    double e = this.getY()+0.5;
+                    double f = this.getZ() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
+
+                    this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
+                }
+            }
+        } else {
+            this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_SPAWN_EFFECTS);
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import TCOTS.entity.misc.*;
 import TCOTS.entity.misc.bolts.*;
 import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.NekkerEntity;
+import TCOTS.entity.ogroids.NekkerWarriorEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -166,7 +167,13 @@ public class TCOTS_Entities {
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "nekker"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, NekkerEntity::new)
                     //Hitbox
-                    .dimensions(EntityDimensions.changing(0.65f, 0.9f)).build());
+                    .dimensions(EntityDimensions.changing(0.65f, 0.975f)).build());
+
+    public static final EntityType<NekkerWarriorEntity> NEKKER_WARRIOR = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "nekker_warrior"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, NekkerWarriorEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(0.7f, 1.3f)).build());
 
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(
@@ -422,6 +429,8 @@ public class TCOTS_Entities {
         {
             //Nekker
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
+
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER_WARRIOR, NekkerWarriorEntity.setAttributes());
         }
     }
 }

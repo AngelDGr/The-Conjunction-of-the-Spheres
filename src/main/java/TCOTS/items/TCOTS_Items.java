@@ -135,8 +135,6 @@ public class TCOTS_Items {
 
     public static final TagKey<Item> DECAYING_FLESH = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "decaying_flesh"));
 
-    //TODO: Think what the fuck do with the Herbal Table <----
-
     //TODO: Fix the achievement to mobs works with Monster Hunter
     public static Item DROWNER_SPAWN_EGG;
     public static Item DROWNER_TONGUE;
@@ -191,6 +189,8 @@ public class TCOTS_Items {
     public static Item NEKKER_HEART;
     public static Item NEKKER_EYE;
 
+    public static Item NEKKER_WARRIOR_SPAWN_EGG;
+    public static Item NEKKER_WARRIOR_MUTAGEN;
 
 
     //Register Drops from monsters
@@ -273,14 +273,18 @@ public class TCOTS_Items {
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
                         new FabricItemSettings()));
-
         NEKKER_EYE = registerItem("nekker_eye",
                 new Item(
                         new FabricItemSettings()));
-
         NEKKER_HEART = registerItem("nekker_heart",
                 new Item(
                         new FabricItemSettings().maxCount(16)));
+
+        NEKKER_WARRIOR_SPAWN_EGG = registerItem("nekker_warrior_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.NEKKER_WARRIOR, 0x97a592, 0xb12022,
+                        new FabricItemSettings()));
+        NEKKER_WARRIOR_MUTAGEN = registerItem("nekker_warrior_mutagen",
+                new Item(new FabricItemSettings().maxCount(8)));
 
 
     }

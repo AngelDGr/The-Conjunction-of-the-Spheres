@@ -178,6 +178,17 @@
     "item.tcots-witcher.nekker_eye": "Nekker Eye",
     "item.tcots-witcher.nekker_heart": "Nekker Heart",
 
+    "item.tcots-witcher.nekker_warrior_spawn_egg": "Nekker Warrior Spawn Egg",
+    "entity.tcots-witcher.nekker_warrior": "Nekker Warrior",
+    "tcots-witcher.sounds.nekker_warrior_attack": "Nekker Warrior attacks",
+    "tcots-witcher.sounds.nekker_warrior_hurt": "Nekker Warrior hurts",
+    "tcots-witcher.sounds.nekker_warrior_idle": "Nekker Warrior groans",
+    "tcots-witcher.sounds.nekker_warrior_death": "Nekker Warrior dies",
+    "tcots-witcher.sounds.nekker_warrior_lunge": "Nekker Warrior lunges",
+
+    "item.tcots-witcher.nekker_warrior_mutagen": "Nekker Warrior Mutagen",
+
+
     "block.tcots-witcher.nest_slab": "Nest Slab",
     "block.tcots-witcher.nest_skull": "Nest Skull",
     "block.tcots-witcher.monster_nest": "Monster Nest",

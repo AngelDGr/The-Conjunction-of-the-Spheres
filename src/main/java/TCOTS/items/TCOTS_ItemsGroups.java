@@ -42,14 +42,16 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.GHOUL_SPAWN_EGG);
                                 entries.add(TCOTS_Items.ALGHOUL_SPAWN_EGG);
                                 entries.add(TCOTS_Items.ROTFIEND_SPAWN_EGG);
-                                entries.add(TCOTS_Items.NEKKER_SPAWN_EGG);
-                                entries.add(TCOTS_Items.GRAVE_HAG_SPAWN_EGG);
-                                entries.add(TCOTS_Items.WATER_HAG_SPAWN_EGG);
                                 entries.add(TCOTS_Items.FOGLET_SPAWN_EGG);
+                                entries.add(TCOTS_Items.WATER_HAG_SPAWN_EGG);
+                                entries.add(TCOTS_Items.GRAVE_HAG_SPAWN_EGG);
                                 entries.add(TCOTS_Items.SCURVER_SPAWN_EGG);
                                 entries.add(TCOTS_Items.DEVOURER_SPAWN_EGG);
                                 entries.add(TCOTS_Items.GRAVEIR_SPAWN_EGG);
                                 entries.add(TCOTS_Items.BULLVORE_SPAWN_EGG);
+
+                                entries.add(TCOTS_Items.NEKKER_SPAWN_EGG);
+                                entries.add(TCOTS_Items.NEKKER_WARRIOR_SPAWN_EGG);
                             }
 
 
@@ -73,9 +75,10 @@ public class TCOTS_ItemsGroups {
 
                                 //Mutagens
                                 {
-                                    entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);
-                                    entries.add(TCOTS_Items.WATER_HAG_MUTAGEN);
                                     entries.add(TCOTS_Items.FOGLET_MUTAGEN);
+                                    entries.add(TCOTS_Items.WATER_HAG_MUTAGEN);
+                                    entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);
+                                    entries.add(TCOTS_Items.NEKKER_WARRIOR_MUTAGEN);
                                 }
                             }
 

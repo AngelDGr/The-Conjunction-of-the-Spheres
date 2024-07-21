@@ -3,14 +3,12 @@ package TCOTS.entity.ogroids;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
-import TCOTS.utils.GeoControllersUtil;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -21,6 +19,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
@@ -29,6 +28,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -37,6 +37,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -45,9 +46,10 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
+import java.util.UUID;
 
 
-public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorMob, LungeMob {
+public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorMob, LungeMob, Ownable {
 
     //xTODO: Add spawn
     //xTODO: Add drops
@@ -57,6 +59,11 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    @Nullable
+    private MobEntity owner;
+    @Nullable
+    private UUID ownerUuid;
 
     public NekkerEntity(EntityType<? extends NekkerEntity> entityType, World world) {
         super(entityType, world);
@@ -82,16 +89,20 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         //Attack
         this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false, 2400));
 
+        this.goalSelector.add(5, new FollowMonsterOwnerGoal(this, 0.75));
 
-        this.goalSelector.add(5, new WanderAroundGoal_Excavator(this, 0.75f, 20));
+        this.goalSelector.add(6, new WanderAroundGoal_Excavator(this, 0.75f, 20));
 
-        this.goalSelector.add(6, new LookAroundGoal_Excavator(this));
+        this.goalSelector.add(7, new LookAroundGoal_Excavator(this));
 
         //Objectives
-        this.targetSelector.add(0, new RevengeGoal(this, NekkerEntity.class).setGroupRevenge());
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
+        this.targetSelector.add(0, new AttackOwnerAttackerTarget(this));
+        this.targetSelector.add(1, new AttackOwnerEnemyTarget(this));
+
+        this.targetSelector.add(2, new RevengeGoal(this, NekkerEntity.class).setGroupRevenge());
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
+        this.targetSelector.add(5, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
 
     public boolean cooldownBetweenLunges = false;
@@ -186,10 +197,14 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
         nbt.putBoolean("Invisible", this.dataTracker.get(INVISIBLE));
+
+        if (this.ownerUuid != null && !(this instanceof NekkerWarriorEntity)) {
+            nbt.putUuid("Owner", this.ownerUuid);
+        }
+        super.writeCustomDataToNbt(nbt);
     }
 
     @Override
@@ -197,6 +212,10 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         this.setInGroundDataTracker(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setInvisibleData(nbt.getBoolean("Invisible"));
+
+        if (nbt.containsUuid("Owner") && !(this instanceof NekkerWarriorEntity)) {
+            this.ownerUuid = nbt.getUuid("Owner");
+        }
         super.readCustomDataFromNbt(nbt);
     }
 
@@ -255,6 +274,15 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     }
 
     @Override
+    public void pushAwayFrom(Entity entity) {
+        if(entity instanceof NekkerEntity nekker && nekker.getInGroundDataTracker()){
+            return;
+        }
+
+        super.pushAwayFrom(entity);
+    }
+
+    @Override
     public void mobTick() {
         mobTickExcavator(
                 List.of(BlockTags.DIRT),
@@ -263,6 +291,20 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         );
 
         this.setInvisible(this.getInvisibleData());
+
+        if(!(this instanceof NekkerWarriorEntity) && this.getOwner()==null){
+            List<NekkerWarriorEntity> list =
+                    this.getWorld().getEntitiesByClass(NekkerWarriorEntity.class, this.getBoundingBox().expand(10,10,10),
+                            nekkerWarrior -> true);
+
+            if(!list.isEmpty()){
+                this.setOwner(list.get(0));
+            }
+        }
+
+        if(this.getOwner() != null && !this.getOwner().isAlive())
+            setOwner(null);
+
         super.mobTick();
     }
 
@@ -323,6 +365,21 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         } else {
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_SPAWN_EFFECTS);
         }
+    }
+
+    @Nullable
+    @Override
+    public Entity getOwner() {
+        Entity entity;
+        if (this.owner == null && this.ownerUuid != null && this.getWorld() instanceof ServerWorld && (entity = ((ServerWorld)this.getWorld()).getEntity(this.ownerUuid)) instanceof LivingEntity) {
+            this.owner = (MobEntity) entity;
+        }
+        return this.owner;
+    }
+
+    public void setOwner(@Nullable MobEntity owner) {
+        this.owner = owner;
+        this.ownerUuid = owner == null ? null : owner.getUuid();
     }
 
 

@@ -114,6 +114,12 @@ public class TCOTS_Sounds {
     public static SoundEvent NEKKER_DEATH = registerSoundEvent("nekker_death");
     public static SoundEvent NEKKER_LUNGE = registerSoundEvent("nekker_lunge");
 
+    //Nekker Warrior
+    public static SoundEvent NEKKER_WARRIOR_ATTACK = registerSoundEvent("nekker_warrior_attack");
+    public static SoundEvent NEKKER_WARRIOR_HURT = registerSoundEvent("nekker_warrior_hurt");
+    public static SoundEvent NEKKER_WARRIOR_IDLE = registerSoundEvent("nekker_warrior_idle");
+    public static SoundEvent NEKKER_WARRIOR_DEATH = registerSoundEvent("nekker_warrior_death");
+    public static SoundEvent NEKKER_WARRIOR_LUNGE = registerSoundEvent("nekker_warrior_lunge");
 
 
 

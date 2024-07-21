@@ -698,5 +698,47 @@
       "tcots-witcher:entity/ogroids/nekker/nekker_lunge2",
       "tcots-witcher:entity/ogroids/nekker/nekker_lunge3"
     ]
+  },
+
+
+  "nekker_warrior_attack": {
+    "subtitle": "tcots-witcher.sounds.nekker_warrior_attack",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_attack1",
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_attack2",
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_attack3"
+    ]
+  },
+  "nekker_warrior_hurt": {
+    "subtitle": "tcots-witcher.sounds.nekker_warrior_hurt",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_hurt1",
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_hurt2",
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_hurt3"
+    ]
+  },
+  "nekker_warrior_idle": {
+    "subtitle": "tcots-witcher.sounds.nekker_warrior_idle",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_idle1",
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_idle2",
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_idle3",
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_idle4"
+    ]
+  },
+  "nekker_warrior_death": {
+    "subtitle": "tcots-witcher.sounds.nekker_warrior_death",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_death1",
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_death2"
+    ]
+  },
+  "nekker_warrior_lunge": {
+    "subtitle": "tcots-witcher.sounds.nekker_warrior_lunge",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_lunge1",
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_lunge2",
+      "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_lunge3"
+    ]
   }
 }
