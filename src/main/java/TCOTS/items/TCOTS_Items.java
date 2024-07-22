@@ -296,6 +296,7 @@ public class TCOTS_Items {
     public static Item WATER_HAG_DECOCTION;
     public static Item FOGLET_DECOCTION;
     public static Item ALGHOUL_DECOCTION;
+    public static Item NEKKER_WARRIOR_DECOCTION;
 
     //Potions
 
@@ -720,6 +721,15 @@ public class TCOTS_Items {
                 FOGLET_DECOCTION = registerItemPotion("foglet_decoction",
                         new FabricItemSettings().maxCount(1),
                         TCOTS_Effects.FOGLET_DECOCTION_EFFECT,
+                        50,
+                        1200,
+                        0,
+                        true
+                );
+
+                NEKKER_WARRIOR_DECOCTION = registerItemPotion("nekker_warrior_decoction",
+                        new FabricItemSettings().maxCount(1),
+                        TCOTS_Effects.NEKKER_WARRIOR_DECOCTION_EFFECT,
                         50,
                         1200,
                         0,

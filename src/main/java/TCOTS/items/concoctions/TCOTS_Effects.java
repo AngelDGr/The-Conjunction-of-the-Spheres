@@ -6,10 +6,7 @@ import TCOTS.items.concoctions.effects.bombs.DimeritiumBombEffect;
 import TCOTS.items.concoctions.effects.bombs.MoonDustEffect;
 import TCOTS.items.concoctions.effects.bombs.NorthernWindEffect;
 import TCOTS.items.concoctions.effects.bombs.SamumEffect;
-import TCOTS.items.concoctions.effects.decoctions.AlghoulDecoctionEffect;
-import TCOTS.items.concoctions.effects.decoctions.FogletDecoctionEffect;
-import TCOTS.items.concoctions.effects.decoctions.GraveHagDecoctionEffect;
-import TCOTS.items.concoctions.effects.decoctions.WaterHagDecoctionEffect;
+import TCOTS.items.concoctions.effects.decoctions.*;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
@@ -41,6 +38,7 @@ public class TCOTS_Effects {
         public static StatusEffect WATER_HAG_DECOCTION_EFFECT;
         public static StatusEffect FOGLET_DECOCTION_EFFECT;
         public static StatusEffect ALGHOUL_DECOCTION_EFFECT;
+        public static StatusEffect NEKKER_WARRIOR_DECOCTION_EFFECT;
 
     static final int decoctionColor=0x0b7000;
 
@@ -95,8 +93,14 @@ public class TCOTS_Effects {
 
         ALGHOUL_DECOCTION_EFFECT = registerStatusEffect("alghoul_decoction", AlghoulDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
 
-
         FOGLET_DECOCTION_EFFECT = registerStatusEffect("foglet_decoction", FogletDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+
+        NEKKER_WARRIOR_DECOCTION_EFFECT = registerEffect("nekker_warrior_decoction",
+                new NekkerWarriorDecoctionEffect(StatusEffectCategory.BENEFICIAL, decoctionColor)
+                        .addAttributeModifier(
+                                EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                                "569bab8d-90cb-4ca2-acbf-e74a31ebb265", 4.0,
+                                EntityAttributeModifier.Operation.ADDITION));
 
 
         //Bomb Effects

@@ -247,10 +247,11 @@ public class TCOTS_ItemsGroups {
 
                                 //Decoctions
                                 {
-                                    entries.add(TCOTS_Items.GRAVE_HAG_DECOCTION);
                                     entries.add(TCOTS_Items.WATER_HAG_DECOCTION);
+                                    entries.add(TCOTS_Items.GRAVE_HAG_DECOCTION);
                                     entries.add(TCOTS_Items.ALGHOUL_DECOCTION);
                                     entries.add(TCOTS_Items.FOGLET_DECOCTION);
+                                    entries.add(TCOTS_Items.NEKKER_WARRIOR_DECOCTION);
                                 }
 
                             }

@@ -371,11 +371,11 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
 
     @Override
     public boolean tryAttack(Entity target) {
+        boolean bl = super.tryAttack(target);
         if(target instanceof PlayerEntity player && player.isBlocking()){
             player.disableShield(true);
         }
-
-        return super.tryAttack(target);
+        return bl;
     }
 
     int chargeCooldownTimer;

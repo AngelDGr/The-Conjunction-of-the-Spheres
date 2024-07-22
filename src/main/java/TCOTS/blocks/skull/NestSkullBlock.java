@@ -22,6 +22,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class NestSkullBlock extends BlockWithEntity implements Equipment {
 
     public static final MapCodec<NestSkullBlock> CODEC = NestSkullBlock.createCodec(NestSkullBlock::new);

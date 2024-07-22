@@ -11,6 +11,8 @@
 ```
 
 Rotfiends resemble decomposing human bodies that have been stripped of their skin. 
+
+
 Their presence is given away by the overwhelming stench of the rot which gives them their name.
 They usually feed in large groups and thus present a danger to lone travelers – especially considering their speed.
 

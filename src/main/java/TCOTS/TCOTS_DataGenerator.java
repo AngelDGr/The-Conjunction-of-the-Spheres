@@ -1031,6 +1031,15 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     Items.ECHO_SHARD, 1,
                                     Items.AZURE_BLUET, 2,
                                     Items.DANDELION, 1)).offerTo(exporter);
+
+                    order=order+0.01f;
+                    AlchemyTableRecipeJsonBuilder.createDecoction(
+                            order, TCOTS_Items.NEKKER_WARRIOR_DECOCTION,
+                            ingredientsList(
+                                    TCOTS_Items.NEKKER_WARRIOR_MUTAGEN, 1,
+                                    Items.ECHO_SHARD, 1,
+                                    Items.AZURE_BLUET, 2,
+                                    Items.FERN, 1)).offerTo(exporter);
                 }
 
                 //Bombs

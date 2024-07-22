@@ -26,4 +26,9 @@ public class BlackBloodEffect extends WitcherPotionEffect {
     public boolean hasExtraLine(int amplifier) {
         return amplifier > 1;
     }
+
+    @Override
+    public boolean hasCustomApplyTooltip() {
+        return true;
+    }
 }

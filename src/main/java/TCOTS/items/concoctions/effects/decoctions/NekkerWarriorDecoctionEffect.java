@@ -1,26 +1,39 @@
-package TCOTS.items.concoctions.effects;
+package TCOTS.items.concoctions.effects.decoctions;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.*;
+import net.minecraft.entity.attribute.AttributeContainer;
+import net.minecraft.entity.attribute.AttributeModifierCreator;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
 import java.util.Map;
 
+public class NekkerWarriorDecoctionEffect extends DecoctionEffectBase{
+    public NekkerWarriorDecoctionEffect(StatusEffectCategory category, int color) {
+        super(category, color, 50);
+    }
 
-public class KillerWhaleEffect extends WitcherPotionEffect {
-    //xTODO: Add attack power to the player
+    @Override
+    public boolean hasCustomApplyTooltip() {
+        return true;
+    }
 
-    //Each level increase strength by 4
-    //Works like Respiration II
+    @Override
+    public boolean hasSpecialAttributes() {
+        return true;
+    }
 
+    @Override
+    public void onApplied(AttributeContainer attributeContainer, int amplifier) {
 
-    public KillerWhaleEffect(StatusEffectCategory category, int color) {
-        super(category, color);
     }
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if(entity.isTouchingWater()){
+        super.applyUpdateEffect(entity, amplifier);
+
+        if(entity.hasVehicle() && entity.getVehicle() instanceof LivingEntity){
             for (Map.Entry<EntityAttribute, AttributeModifierCreator> entry : this.getAttributeModifiers().entrySet()) {
                 EntityAttributeInstance entityAttributeInstance = entity.getAttributes().getCustomInstance(entry.getKey());
                 if (entityAttributeInstance == null) continue;
@@ -34,17 +47,10 @@ public class KillerWhaleEffect extends WitcherPotionEffect {
                 entityAttributeInstance.removeModifier(entry.getValue().getUuid());
             }
         }
-
-        super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override
-    public void onApplied(AttributeContainer attributeContainer, int amplifier) {
-        super.onApplied(attributeContainer, amplifier);
-    }
-
-    @Override
-    public boolean hasCustomApplyTooltip() {
-        return true;
+    public int getSpecialAttributesValue(int amplifier) {
+        return 50;
     }
 }

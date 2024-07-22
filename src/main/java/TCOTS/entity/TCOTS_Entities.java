@@ -44,7 +44,7 @@ public class TCOTS_Entities {
 //  Ogroids
     //W3
     //xTODO: Nekkers
-    //TODO: Nekker Warriors
+    //xTODO: Nekker Warriors
     //TODO: Cyclopses
     //TODO: Rock troll
     //TODO: Ice troll

@@ -7,7 +7,9 @@
 ```
 
 While pre-Conjunction plants (before the Conjunction of the Spheres) used in various recipes are well-known, 
-this section will describe where to find any post-Conjunction ingredient that may be unfamiliar.
+this section will describe where to find any post-Conjunction ingredient that may be unfamiliar. 
+
+This book only covers plants ingredients, to further info in monster ingredients, buy a Bestiary at your local librarian.
 
 ;;;;;
 

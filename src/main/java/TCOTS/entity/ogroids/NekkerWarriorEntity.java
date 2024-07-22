@@ -2,6 +2,7 @@ package TCOTS.entity.ogroids;
 
 import TCOTS.entity.goals.*;
 import TCOTS.sounds.TCOTS_Sounds;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
@@ -22,10 +23,10 @@ import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInst
 public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
     //xTODO: Add mutagen
     //xTODO: Add custom sounds
-    //TODO: Add bestiary entry
-    //TODO: Add decoction
-    //TODO: Add loot_table
-    //TODO: Add spawn
+    //xTODO: Add bestiary entry
+    //xTODO: Add decoction
+    //xTODO: Add loot_table
+    //xTODO: Add spawn
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public NekkerWarriorEntity(EntityType<? extends NekkerEntity> entityType, World world) {
@@ -35,7 +36,7 @@ public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f) //Amount of health that hurts you
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5f)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.28f)
 
@@ -50,7 +51,7 @@ public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
         this.goalSelector.add(0, new EmergeFromGroundGoal_Excavator(this, 500));
         this.goalSelector.add(1, new SwimGoal(this));
 
-        this.goalSelector.add(2, new LungeAttackGoal(this, 150, 1.8, 5, 40));
+        this.goalSelector.add(2, new LungeAttackGoal(this, 200, 2.0, 5, 50));
 
         //Returns to ground
         this.goalSelector.add(3, new ReturnToGroundGoal_Excavator(this));
@@ -68,6 +69,15 @@ public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
+    }
+
+    @Override
+    public boolean tryAttack(Entity target) {
+        boolean bl = super.tryAttack(target);
+        if(target instanceof PlayerEntity player && player.isBlocking() && this.getRandom().nextInt()%10==0){
+            player.disableShield(true);
+        }
+        return bl;
     }
 
     @Override

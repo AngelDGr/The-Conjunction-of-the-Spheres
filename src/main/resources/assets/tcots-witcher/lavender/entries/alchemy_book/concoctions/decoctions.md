@@ -23,3 +23,5 @@ however you only can carry one in one space and they can't be upgraded.
 
 The [toxicity levels](^tcots-witcher:alchemy_basics/toxicity) of decoctions are so high that usually you can only drink
 one at the time, but the effects are so strong that you usually don't need more than that.
+
+- __Note: The monster mutagens can be only acquired using looting__

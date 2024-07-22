@@ -83,12 +83,14 @@
 **{#395026}Decoctions{}**
 <recipe;tcots-witcher:water_hag_decoction>
 <recipe;tcots-witcher:grave_hag_decoction>
-<recipe;tcots-witcher:foglet_decoction>
+<recipe;tcots-witcher:alghoul_decoction>
 
 ;;;;;
 
 **{#395026}Decoctions{}**
-<recipe;tcots-witcher:alghoul_decoction>
+<recipe;tcots-witcher:foglet_decoction>
+<recipe;tcots-witcher:nekker_warrior_decoction>
+<recipe;tcots-witcher:troll_decoction>
 
 ;;;;;
 

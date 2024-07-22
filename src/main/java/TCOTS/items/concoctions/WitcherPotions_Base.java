@@ -211,17 +211,6 @@ public class WitcherPotions_Base extends PotionItem {
             tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".extra").formatted(Formatting.GRAY));
         }
 
-        //Special Tooltip
-        if(effectInstance.getEffectType() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasSpecialAttributes()){
-            tooltip.add(ScreenTexts.EMPTY);
-            if(((WitcherPotionEffect) effectInstance.getEffectType()).hasCustomApplyTooltip()){
-                tooltip.add(Text.translatable("tooltip." + witcherPotionEffect.getTranslationKey() +".applied").formatted(Formatting.DARK_PURPLE));
-            }
-            else {tooltip.add(Text.translatable("potion.whenDrank").formatted(Formatting.DARK_PURPLE));}
-
-            tooltip.add(Text.translatable("special.attribute."+witcherPotionEffect.getTranslationKey(),witcherPotionEffect.getSpecialAttributesValue(effectInstance.getAmplifier())).formatted(Formatting.BLUE));
-        }
-
 
         //Attributes tooltip
         if (!tooltipAttributes.isEmpty()) {
@@ -242,6 +231,21 @@ public class WitcherPotions_Base extends PotionItem {
                 if (!(d < 0.0)) continue;
                 tooltip.add(Text.translatable("attribute.modifier.take." + entityAttributeModifier.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(e * -1.0), Text.translatable(((EntityAttribute)pair.getFirst()).getTranslationKey())).formatted(Formatting.RED));
             }
+
+            //Special attribute (To mix special and normal attributes)
+            if(effectInstance.getEffectType() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasSpecialAttributes()){
+                tooltip.add(Text.translatable("special.attribute."+witcherPotionEffect.getTranslationKey(),witcherPotionEffect.getSpecialAttributesValue(effectInstance.getAmplifier())).formatted(Formatting.BLUE));
+            }
+        }
+        //Special Tooltip
+        else if(effectInstance.getEffectType() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasSpecialAttributes()){
+            tooltip.add(ScreenTexts.EMPTY);
+            if(((WitcherPotionEffect) effectInstance.getEffectType()).hasCustomApplyTooltip()){
+                tooltip.add(Text.translatable("tooltip." + witcherPotionEffect.getTranslationKey() +".applied").formatted(Formatting.DARK_PURPLE));
+            }
+            else {tooltip.add(Text.translatable("potion.whenDrank").formatted(Formatting.DARK_PURPLE));}
+
+            tooltip.add(Text.translatable("special.attribute."+witcherPotionEffect.getTranslationKey(),witcherPotionEffect.getSpecialAttributesValue(effectInstance.getAmplifier())).formatted(Formatting.BLUE));
         }
 
     }

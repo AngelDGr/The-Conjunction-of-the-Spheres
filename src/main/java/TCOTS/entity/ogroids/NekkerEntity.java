@@ -1,5 +1,6 @@
 package TCOTS.entity.ogroids;
 
+import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
@@ -13,6 +14,8 @@ import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -35,6 +38,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -67,6 +71,17 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
 
     public NekkerEntity(EntityType<? extends NekkerEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    public static DefaultAttributeContainer.Builder setAttributes() {
+        return AnimalEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 14.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0f) //Amount of health that hurts you
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5f)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.28f)
+
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.2f)
+                .add(EntityAttributes.GENERIC_ARMOR, 2f);
     }
 
     @Override
@@ -105,6 +120,24 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         this.targetSelector.add(5, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
 
+    @Nullable
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        Random random = world.getRandom();
+        if(!(spawnReason == SpawnReason.SPAWN_EGG) && !(spawnReason == SpawnReason.STRUCTURE)) {
+            //Can spawn a Nekker Warrior with it instead
+            if (random.nextInt() % 5 == 0) {
+                NekkerWarriorEntity nekker_warrior = TCOTS_Entities.NEKKER_WARRIOR.create(this.getWorld());
+                if (nekker_warrior != null) {
+                    nekker_warrior.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0f);
+                    this.getWorld().spawnEntity(nekker_warrior);
+                }
+            }
+        }
+
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
     public boolean cooldownBetweenLunges = false;
 
     public boolean getNotCooldownBetweenLunges() {
@@ -137,16 +170,7 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         ReturnToGround_Ticks = returnToGround_Ticks;
     }
 
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return AnimalEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 14.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0f) //Amount of health that hurts you
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5f)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.28f)
 
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.2f)
-                .add(EntityAttributes.GENERIC_ARMOR, 2f);
-    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
@@ -281,6 +305,8 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
 
         super.pushAwayFrom(entity);
     }
+    private static final UUID LEADER_STRENGTH_BOOST_ID = UUID.fromString("aa89212e-77c2-452e-8c3b-5963c368a683");
+    private static final EntityAttributeModifier LEADER_STRENGTH_BOOST = new EntityAttributeModifier(LEADER_STRENGTH_BOOST_ID, "Leader strength boost", 2.0f, EntityAttributeModifier.Operation.ADDITION);
 
     @Override
     public void mobTick() {
@@ -292,6 +318,15 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
 
         this.setInvisible(this.getInvisibleData());
 
+        //Adds leader boost
+        if(this.getOwner()!=null && this.getOwner().isAlive()){
+            EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            if(entityAttributeInstance!=null) {
+                entityAttributeInstance.removeModifier(LEADER_STRENGTH_BOOST.getId());
+                entityAttributeInstance.addTemporaryModifier(LEADER_STRENGTH_BOOST);
+            }
+        }
+
         if(!(this instanceof NekkerWarriorEntity) && this.getOwner()==null){
             List<NekkerWarriorEntity> list =
                     this.getWorld().getEntitiesByClass(NekkerWarriorEntity.class, this.getBoundingBox().expand(10,10,10),
@@ -302,8 +337,15 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
             }
         }
 
-        if(this.getOwner() != null && !this.getOwner().isAlive())
+        //Removes owner and strength
+        if(this.getOwner() != null && !this.getOwner().isAlive()) {
             setOwner(null);
+
+            EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            if(entityAttributeInstance!=null) entityAttributeInstance.removeModifier(LEADER_STRENGTH_BOOST.getId());
+
+        }
+
 
         super.mobTick();
     }

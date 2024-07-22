@@ -37,4 +37,5 @@ public class DecoctionEffectBase extends WitcherPotionEffect {
         }
         super.onRemoved(attributeContainer);
     }
+
 }

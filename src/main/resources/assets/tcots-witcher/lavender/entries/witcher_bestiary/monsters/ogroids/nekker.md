@@ -6,7 +6,8 @@
   "associated_items": [
     "tcots-witcher:nekker_heart",
     "tcots-witcher:nekker_eye"
-  ]
+  ],
+  "ordinal": 1
 }
 ```
 

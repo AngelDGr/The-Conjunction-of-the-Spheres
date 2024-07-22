@@ -3,8 +3,11 @@ package TCOTS.entity.goals;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
+
+import java.util.List;
 
 public class EmergeFromGroundGoal_Excavator extends Goal {
     private final ExcavatorMob excavatorMob;
@@ -31,7 +34,7 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
 
     @Override
     public boolean canStart() {
-        return canStartO() && excavatorMob.getInGroundDataTracker();
+        return (canStartO() || detectedBySomeone()) && excavatorMob.getInGroundDataTracker();
     }
     public boolean canStartO(){
         LivingEntity livingEntity = this.mob.getTarget();
@@ -46,6 +49,14 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
         else {
             return this.mob.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ()) <= 80;
         }
+    }
+
+    public boolean detectedBySomeone(){
+        List<MobEntity> enemiesList =
+        this.mob.getWorld().getEntitiesByClass(MobEntity.class, this.mob.getBoundingBox().expand(10,5,10),
+                entity -> entity.getTarget() == this.mob);
+
+        return !enemiesList.isEmpty();
     }
 
     @Override
@@ -67,7 +78,7 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
 
     @Override
     public boolean shouldContinue(){
-        return shouldContinueO() && excavatorMob.getInGroundDataTracker();
+        return (shouldContinueO() || detectedBySomeone()) && excavatorMob.getInGroundDataTracker();
     }
     public boolean shouldContinueO(){
         LivingEntity livingEntity = this.mob.getTarget();

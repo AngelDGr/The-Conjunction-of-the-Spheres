@@ -10,6 +10,9 @@ import TCOTS.items.concoctions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
@@ -42,6 +45,8 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
+
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements Attackable, LivingEntityMixinInterface {
 
@@ -391,6 +396,39 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             args.set(1, armor*0.25f);
             args.set(2, armorToughness*0.50f);
         }
+    }
+
+    //Nekker Warrior Decoction
+    @Unique
+    private boolean passengerHasDecoction =false;
+    @Unique
+    private static final UUID PASSENGER_SPEED_BOOST_ID = UUID.fromString("c06c875b-75cf-4716-a817-2c461b84f8ec");
+    @Unique
+    private static final EntityAttributeModifier PASSENGER_SPEED_BOOST = new EntityAttributeModifier(PASSENGER_SPEED_BOOST_ID, "passenger speed boost", 0.5f, EntityAttributeModifier.Operation.MULTIPLY_BASE);
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void injectExtraNekkerWarriorSpeed(CallbackInfo ci){
+        if(THIS.hasPassengers()){
+            Entity passenger = THIS.getControllingPassenger();
+
+            if(passenger instanceof LivingEntity livingPassenger){
+                if(livingPassenger.hasStatusEffect(TCOTS_Effects.NEKKER_WARRIOR_DECOCTION_EFFECT)){
+                    passengerHasDecoction = true;
+                    EntityAttributeInstance entityAttributeInstance = THIS.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+                    if(entityAttributeInstance!=null) {
+                        entityAttributeInstance.removeModifier(PASSENGER_SPEED_BOOST.getId());
+                        entityAttributeInstance.addTemporaryModifier(PASSENGER_SPEED_BOOST);
+                    }
+                } else if(passengerHasDecoction){
+                    EntityAttributeInstance entityAttributeInstance = THIS.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+                    if(entityAttributeInstance!=null) {
+                        entityAttributeInstance.removeModifier(PASSENGER_SPEED_BOOST.getId());
+                        passengerHasDecoction = false;
+                    }
+                }
+            }
+        }
+
     }
 
 }

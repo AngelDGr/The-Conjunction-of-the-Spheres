@@ -322,7 +322,7 @@
     "tooltip.effect.tcots-witcher.grave_hag_decoction.second": "enemy killed during combat",
 
     "item.tcots-witcher.water_hag_decoction": "Water Hag Decoction",
-    "tooltip.effect.tcots-witcher.water_hag_decoction.applied": "At full health:",
+    "tooltip.effect.tcots-witcher.water_hag_decoction.applied": "At Full Health:",
     "tooltip.effect.tcots-witcher.water_hag_decoction.first":  "Increases attack when the",
     "tooltip.effect.tcots-witcher.water_hag_decoction.second": "user has full health",
 
@@ -330,10 +330,16 @@
     "tooltip.effect.tcots-witcher.alghoul_decoction.first":  "Restores hunger in combat until",
     "tooltip.effect.tcots-witcher.alghoul_decoction.second": "a successful enemy hit",
 
-
     "item.tcots-witcher.foglet_decoction": "Foglet Decoction",
     "tooltip.effect.tcots-witcher.foglet_decoction.first":  "Reduces damage taken by half",
     "tooltip.effect.tcots-witcher.foglet_decoction.second": "only if it is raining",
+
+    "item.tcots-witcher.nekker_warrior_decoction": "Nekker Warrior Decoction",
+    "tooltip.effect.tcots-witcher.nekker_warrior_decoction.applied": "When Mounted:",
+    "tooltip.effect.tcots-witcher.nekker_warrior_decoction.first":  "Increases damage and speed",
+    "tooltip.effect.tcots-witcher.nekker_warrior_decoction.second": "when using a mount",
+    "special.attribute.effect.tcots-witcher.nekker_warrior_decoction": "+%s%% Mount Speed",
+
 
     "item.tcots-witcher.oil_necrophage": "Necrophage Oil",
     "item.tcots-witcher.oil_necrophage_enhanced": "Enhanced Necrophage Oil",
@@ -365,7 +371,7 @@
     "item.tcots-witcher.rook_potion_superior": "Superior Rook",
     "tooltip.effect.tcots-witcher.rook_effect.first":  "Increases dexterity, increasing",
     "tooltip.effect.tcots-witcher.rook_effect.second": "damage dealt with swords",
-    "tooltip.effect.tcots-witcher.rook_effect.applied": "When using swords:",
+    "tooltip.effect.tcots-witcher.rook_effect.applied": "When Using Swords:",
     "special.attribute.effect.tcots-witcher.rook_effect": "+%s Attack Damage",
 
 
@@ -445,6 +451,8 @@
     "effect.tcots-witcher.water_hag_decoction": "Water Hag Ferocity",
     "effect.tcots-witcher.alghoul_decoction": "Alghoul Hungry",
     "effect.tcots-witcher.foglet_decoction": "Foglet Foggy Resistance",
+    "effect.tcots-witcher.nekker_warrior_decoction": "Nekker Warrior Leadership",
+
 
     "death.attack.potionToxicity": "%1$s had too much toxicity in the blood",
 

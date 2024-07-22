@@ -1,0 +1,102 @@
+0.2.0- Necrophages & Ogroids
+> Necrophages
+ X Drowner
+ X Rotfiend
+ X Water Hag
+ X Grave Hag
+ X Foglet
+ X Ghoul & Alghouls
+ * Wights -> Need Barghest
+ X Scurvers
+ X Devourer
+ X Graveir
+ X Bullvore
+
+> Ogroids
+ X Nekkers
+ X Nekker Warriors
+ * Cyclopses
+ * Rock troll
+ * Ice troll
+ * Forest Troll (W2)
+ * Ice Giant (Boss)
+
+----------------------------------------
+
+0.4.0.- Specters & Vampires
+> Specters
+ * Barghest
+ * Banshees
+ * Wraith
+ * Nightwraith
+ * Noonwraith 
+ * Draug
+ * Draugir
+
+> Vampires
+ * Alp
+ * Bruxa
+ * Ekimmaras
+ * Fleders
+ * Garkains
+ * Katakan
+
+----------------------------------------
+
+0.6.0.- Insectoids, Beasts & Elementa
+> Insectoids
+ * Giant Centipedes
+ * Kikimore
+ * Endregas
+ * Arachas
+ * Arachnomorph
+
+> Elementa
+ * Earth Elemental
+ * Fire Elemental
+ * Ice Elemental
+ * Gargoyle
+ * Golem
+
+> Beasts
+ ** Bears
+ ** Wolves
+ * Wild boars
+ * Panthers
+
+----------------------------------------
+
+0.8.0.- Cursed Ones & Hybrids
+> Cursed Ones
+ * Archespores
+ * Berserkers
+ * Werewolves 
+
+> Hybrids
+ * Siren
+ * Harpy
+ * Griffin
+ * Succubus
+ * Vodyanoi
+
+----------------------------------------
+
+1.0.0.- Draconids & Relicts
+> Draconids
+ * Cockatrices
+ * Basilisks
+ * Forktail
+ * Wyvern
+ * Slyzards
+
+> Relicts
+ * Chort
+ * Doppler
+ * Fiend
+ * Godling
+ * Leshen
+ * Shaelmaar
+ * Spriggans?
+ * Sylvan
+
+1.1.0.- Variations?

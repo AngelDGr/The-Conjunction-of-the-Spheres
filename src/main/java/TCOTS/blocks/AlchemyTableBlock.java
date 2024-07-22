@@ -163,9 +163,11 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                             //If it has already filled the slots, it stops
                             if(loopP < 1){
                                 //Decrements the alcohol in hand
-                                player.getMainHandStack().decrement(1);
+                                if(!player.isCreative()){
+                                    player.getMainHandStack().decrement(1);
+                                }
                                 //Play a sound
-                                world.playSound(null, pos, TCOTS_Sounds.POTION_REFILLED, SoundCategory.BLOCKS, 3.0f, 1.0f);
+                                world.playSound(null, pos, TCOTS_Sounds.POTION_REFILLED, SoundCategory.BLOCKS, 1.0f, 1.0f);
                                 //Success
                                 return ActionResult.SUCCESS;
                             }
@@ -175,7 +177,9 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                     //If it doesn't fulfill all the maximum potions
                     if(i == player.getInventory().size()-1 && refilled){
                         //Decrements the alcohol in hand
-                        player.getMainHandStack().decrement(1);
+                        if(!player.isCreative()){
+                            player.getMainHandStack().decrement(1);
+                        }
                         //Play a sound
                         world.playSound(null, pos, TCOTS_Sounds.POTION_REFILLED, SoundCategory.BLOCKS, 3.0f, 1.0f);
                         //Success
