@@ -446,7 +446,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
-            this.getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR).add(TCOTS_DamageTypes.POTION_TOXICITY).add(TCOTS_DamageTypes.BLEEDING);
+            this.getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR).add(TCOTS_DamageTypes.POTION_TOXICITY).add(TCOTS_DamageTypes.BLEEDING).add(TCOTS_DamageTypes.CADAVERINE);
         }
 
     }

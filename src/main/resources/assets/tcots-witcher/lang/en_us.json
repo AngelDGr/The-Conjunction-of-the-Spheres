@@ -156,6 +156,10 @@
     "item.tcots-witcher.cadaverine": "Cadaverine",
     "item.tcots-witcher.graveir_bone": "Graveir Bone",
 
+    "effect.tcots-witcher.cadaverine": "Cadaverine Decay",
+    "death.attack.cadaverine": "%1$s flesh was dissolved",
+    "death.attack.cadaverine.player": "%1$s flesh was dissolved while fighting %2$s",
+
 
     "item.tcots-witcher.bullvore_spawn_egg": "Bullvore Spawn Egg",
     "entity.tcots-witcher.bullvore": "Bullvore",
@@ -188,6 +192,14 @@
 
     "item.tcots-witcher.nekker_warrior_mutagen": "Nekker Warrior Mutagen",
 
+
+    "item.tcots-witcher.cyclops_spawn_egg": "Cyclops Spawn Egg",
+    "entity.tcots-witcher.cyclops": "Cyclops",
+    "tcots-witcher.sounds.cyclops_attack": "Cyclops attacks",
+    "tcots-witcher.sounds.cyclops_hurt": "Cyclops hurts",
+    "tcots-witcher.sounds.cyclops_idle": "Cyclops groans",
+    "tcots-witcher.sounds.cyclops_death": "Cyclops dies",
+    "tcots-witcher.sounds.cyclops_punch": "Cyclops punches",
 
     "block.tcots-witcher.nest_slab": "Nest Slab",
     "block.tcots-witcher.nest_skull": "Nest Skull",
@@ -455,6 +467,8 @@
 
 
     "death.attack.potionToxicity": "%1$s had too much toxicity in the blood",
+    "death.attack.potionToxicity.player": "%1$s had too much toxicity in the blood while fighting %2$s",
+
 
     "item.tcots-witcher.bomb_powder": "Bomb Powder",
     "item.tcots-witcher.bomb_powder_tooltip": "(%s)",
@@ -553,6 +567,9 @@
     "entity.tcots-witcher.broadhead_bolt": "Broadhead Bolt",
     "effect.tcots-witcher.bleeding": "Bleeding",
     "death.attack.bleeding": "%1$s bled to death",
+    "death.attack.bleeding.player": "%1$s bled to death while fighting %2$s",
+
+
     "gui.jei.tcots-witcher.requires_recipe": "Requires unlock recipe",
 
 

@@ -14,7 +14,7 @@ public class RotfiendModel extends BipedGeoModelBase<RotfiendEntity> {
 
     @Override
     public Identifier getTextureResource(RotfiendEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/rotfiend/rotfiend.png");
+        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/rotfiend.png");
     }
 
     @Override

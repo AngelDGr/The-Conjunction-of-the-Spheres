@@ -80,7 +80,7 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20f)
 
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.8)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK,2.0)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK,1.5)
 
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 24);
     }

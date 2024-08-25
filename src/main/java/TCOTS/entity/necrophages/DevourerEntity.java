@@ -7,6 +7,8 @@ import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -28,10 +30,13 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -56,7 +61,8 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     private static final byte FALLING_PARTICLES = 42;
-    public static final RawAnimation JUMP = RawAnimation.begin().thenPlay("special.jumping");
+    public static final RawAnimation JUMP = RawAnimation.begin().thenPlayAndHold("special.jumping");
+    public static final RawAnimation LANDING = RawAnimation.begin().thenPlay("special.landing");
 
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -64,6 +70,8 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
 
 
     protected static final TrackedData<Boolean> FALLING = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Float> FALLING_DISTANCE = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.FLOAT);
+
 
     public DevourerEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
@@ -93,7 +101,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
         //Returns to ground
         this.goalSelector.add(2, new ReturnToGroundGoal_Excavator(this));
 
-        this.goalSelector.add(3, new DevourerJumpAttack(this,160));
+        this.goalSelector.add(3, new DevourerJumpAttack(this,140, 60));
 
         this.goalSelector.add(4, new Devourer_MeleeAttackGoal(this, 1.2D, false, 3600));
 
@@ -111,11 +119,13 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     private static class DevourerJumpAttack extends Goal {
 
         private final DevourerEntity devourer;
-        private final int jumpCooldown;
+        private final int minJumpCooldown;
+        private final int maxJumpCooldown;
 
-        public DevourerJumpAttack(DevourerEntity devourer, int jumpCooldown) {
+        public DevourerJumpAttack(DevourerEntity devourer, int minJumpCooldown, int maxExtraRandomCooldown) {
             this.devourer=devourer;
-            this.jumpCooldown=jumpCooldown;
+            this.minJumpCooldown = minJumpCooldown;
+            this.maxJumpCooldown = maxExtraRandomCooldown;
         }
 
         @Override
@@ -151,7 +161,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
             devourer.jump();
             devourer.setIsFalling(true);
             devourer.cooldownBetweenJumps=true;
-            devourer.jumpTicks=jumpCooldown;
+            devourer.jumpTicks= minJumpCooldown + devourer.random.nextBetween(0,maxJumpCooldown);
         }
     }
 
@@ -163,7 +173,6 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     @Override
     protected void jump() {
         this.playSound(TCOTS_Sounds.DEVOURER_JUMP, 1.0f, 1.0f);
-        this.triggerAnim("JumpController","jump");
         super.jump();
     }
 
@@ -189,41 +198,81 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     @Override
     public void onLanding() {
         if(isFalling()){
+            setIsFalling(false);
             if(this.getWorld().getBlockState(this.getBlockPos().down()).getFluidState().isOf(Fluids.EMPTY)
                     && !this.getWorld().getBlockState(this.getBlockPos()).isIn(TCOTS_Blocks.NEGATES_DEVOURER_JUMP)
                     && !this.getWorld().getBlockState(this.getBlockPos().down()).isIn(TCOTS_Blocks.NEGATES_DEVOURER_JUMP))
             {
+                this.triggerAnim("LandingController","landing");
                 EntitiesUtil.pushAndDamageEntities(this, 2 + (fallDistance), 1.5 + (fallDistance * 0.2f), 2, 1.2, DevourerEntity.class);
                 this.playSound(SoundEvents.ENTITY_HOSTILE_BIG_FALL, 1.0f, 1.0f);
                 this.getWorld().sendEntityStatus(this, FALLING_PARTICLES);
             }
-
-            setIsFalling(false);
         }
         super.onLanding();
     }
 
-
-    private int counter=0;
-
     @Override
     public void handleStatus(byte status) {
         if(status==FALLING_PARTICLES){
-            spawnSmokeParticles(counter);
+            spawnImpactParticles();
         } else{
             super.handleStatus(status);
         }
     }
 
-    private void spawnSmokeParticles(int counter){
-        while (counter < 40) {
-            double d = this.random.nextGaussian() * 0.2;
-            double e = this.random.nextGaussian() * 0.2;
-            double f = this.random.nextGaussian() * 0.2;
-            this.getWorld().addParticle(ParticleTypes.WHITE_SMOKE, this.getX(), this.getY()-0.5f, this.getZ(), d, e, f);
-            ++counter;
+    private void spawnImpactParticles() {
+        // Calculate the radius based on the fall distance
+        double radius = 0.85f + (1.5 + (getFallingDistance() * 0.2f));
+
+        // Calculate pQuantity based on the circumference to ensure full coverage
+        double pQuantity = Math.max(80 + getFallingDistance(), 2 * Math.PI * radius);
+
+        // To get the ground position
+        BlockPos.Mutable pos = new BlockPos.Mutable(this.getSteppingPos().getX(), this.getSteppingPos().getY(), this.getSteppingPos().getZ());
+        while (this.getWorld().getBlockState(pos).isAir()) {
+            pos.setY(pos.getY() - 1);
+        }
+        pos.setY(pos.getY() + 1);
+
+        // Fill the circle with particles
+        double stepSize = radius / 5.0;  // Adjust the step size for more or fewer particles inside the circle
+        for (double r = 0; r <= radius; r += stepSize) {
+            double particlesInRing = Math.max(pQuantity, 2 * Math.PI * r);
+            for (int i = 0; i < particlesInRing; i++) {
+                double angle = (2 * Math.PI) * i / particlesInRing;
+                double offsetX = r * Math.cos(angle);
+                double offsetZ = r * Math.sin(angle);
+
+                // Add some vertical randomness for particle height
+                double d = this.random.nextGaussian() * 0.5;
+                double e = this.random.nextGaussian() * 0.5;
+                double f = this.random.nextGaussian() * 0.5;
+
+                // Select the particle type
+                ParticleEffect particleType=ParticleTypes.POOF;
+
+                // Use a block particle for the interior
+                BlockState blockState = this.getWorld().getBlockState(
+                        new BlockPos(
+                                (int) (this.getX()+offsetX),
+                                pos.down().getY(),
+                                (int) (this.getZ()+offsetZ)));
+                if(blockState.getRenderType() != BlockRenderType.INVISIBLE) {
+                    particleType = new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState);
+                }
+
+
+                // Spawn the particle at the calculated position
+                this.getWorld().addParticle(particleType,
+                        this.getX() + offsetX,
+                        pos.getY(),
+                        this.getZ() + offsetZ,
+                        d, e, f);
+            }
         }
     }
+
 
     @Override
     protected void initDataTracker() {
@@ -232,6 +281,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
         this.dataTracker.startTracking(FALLING, Boolean.FALSE);
+        this.dataTracker.startTracking(FALLING_DISTANCE, fallDistance);
     }
 
     @Override
@@ -258,9 +308,22 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
                 new AnimationController<>(this, "EmergingController", 1, this::animationEmergingPredicate)
         );
 
+        //Jumping
         controllerRegistrar.add(
-                new AnimationController<>(this, "JumpController", 1, state -> PlayState.STOP)
-                        .triggerableAnim("jump", JUMP)
+                new AnimationController<>(this, "JumpController", 1, state -> {
+                    if(this.isFalling()){
+                        state.setAnimation(JUMP);
+                        return PlayState.CONTINUE;
+                    } else {
+                        state.getController().forceAnimationReset();
+                        return PlayState.STOP;
+                    }
+                }));
+
+        //Landing
+        controllerRegistrar.add(
+                new AnimationController<>(this, "LandingController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("landing", LANDING)
         );
     }
 
@@ -274,9 +337,6 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     private int jumpTicks;
 
     private void tickJump(){
-        if(counter>0){
-            counter=0;
-        }
 
         if (jumpTicks > 0) {
             --jumpTicks;
@@ -292,6 +352,14 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
 
     public boolean isFalling() {
         return this.dataTracker.get(FALLING);
+    }
+
+    public void setFallingDistance(float fallingDistance) {
+        this.dataTracker.set(FALLING_DISTANCE, fallingDistance);
+    }
+
+    public double getFallingDistance() {
+        return this.dataTracker.get(FALLING_DISTANCE);
     }
 
     //Excavator Common
@@ -317,6 +385,10 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     public void tick() {
         //Counter for particles
         this.tickExcavator(this);
+
+        //To sync fallDistance with the client
+        setFallingDistance(fallDistance);
+
         //Tick for jumps
         this.tickJump();
 

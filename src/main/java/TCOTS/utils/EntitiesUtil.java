@@ -56,5 +56,41 @@ public class EntitiesUtil {
         }
     }
 
+    /**
+     Util method to push and damage enemies, disable player shield and destroy End Crystals, Vehicles and Item Frames. None class has immunity
+     */
+    public static void pushAndDamageEntities(MobEntity mob, float damage, double lateralExpansion, double yExpansion, double knockbackStrength){
+
+        List<Entity> listMobs= mob.getWorld().getEntitiesByClass(Entity.class, mob.getBoundingBox().expand(lateralExpansion,yExpansion,lateralExpansion),
+                entity -> entity != mob
+        );
+
+        for (Entity entity : listMobs){
+            double d = mob.getX() - entity.getX();
+            double e = mob.getZ() - entity.getZ();
+            if(entity instanceof LivingEntity livingEntity) {
+                livingEntity.takeKnockback(knockbackStrength, d, e);
+                //Push the player
+                if (entity instanceof ServerPlayerEntity && !((ServerPlayerEntity) entity).isCreative()) {
+                    ((ServerPlayerEntity) entity).networkHandler.send(new EntityVelocityUpdateS2CPacket(entity), null);
+                }
+                //Removes the shield
+                if (livingEntity.isBlocking() && entity instanceof PlayerEntity) {
+                    ((PlayerEntity) entity).disableShield(true);
+                }
+                //Checks if the entity it's blocking, to block the damage
+                else if (!livingEntity.isBlocking()) {
+                    entity.damage(mob.getDamageSources().mobAttack(mob), damage);
+                }
+
+                //Destroys other no-living entities
+            } else if(entity instanceof VehicleEntity || entity instanceof EndCrystalEntity || entity instanceof AbstractDecorationEntity) {
+                entity.damage(mob.getDamageSources().mobAttack(mob), 50.0f);
+            } else {
+                return;
+            }
+        }
+    }
+
 }
 

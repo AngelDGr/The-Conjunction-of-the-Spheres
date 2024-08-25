@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "tcots-witcher",
-	"version": "${version}",
+	"version": "1.0.0",
 	"name": "The Conjunction of the Spheres",
 	"description": "A mod that adds a lot of enemies from the Witcher saga!",
 	"authors": [
@@ -15,7 +15,6 @@
 	"icon": "assets/tcots-witcher/icon.png",
 	"environment": "*",
 	"entrypoints": {
-
 		"main": [
 			"TCOTS.TCOTS_Main"
 		],

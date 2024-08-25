@@ -740,5 +740,46 @@
       "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_lunge2",
       "tcots-witcher:entity/ogroids/nekker_warrior/nekker_warrior_lunge3"
     ]
+  },
+
+
+  "cyclops_attack": {
+    "subtitle": "tcots-witcher.sounds.cyclops_attack",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_attack1",
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_attack2",
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_attack3"
+    ]
+  },
+  "cyclops_hurt": {
+    "subtitle": "tcots-witcher.sounds.cyclops_hurt",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_hurt1",
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_hurt2",
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_hurt3"
+    ]
+  },
+  "cyclops_idle": {
+    "subtitle": "tcots-witcher.sounds.cyclops_idle",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_idle1",
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_idle2",
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_idle3"
+    ]
+  },
+  "cyclops_death": {
+    "subtitle": "tcots-witcher.sounds.cyclops_death",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_death1",
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_death2",
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_death3"
+    ]
+  },
+  "cyclops_punch": {
+    "subtitle": "tcots-witcher.sounds.cyclops_punch",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_punch1",
+      "tcots-witcher:entity/ogroids/cyclops/cyclops_punch2"
+    ]
   }
 }

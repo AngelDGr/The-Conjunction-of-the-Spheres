@@ -1,6 +1,7 @@
-package TCOTS.items.concoctions.effects;
+package TCOTS.items.concoctions.effects.potions;
 
 import TCOTS.TCOTS_Main;
+import TCOTS.items.concoctions.effects.WitcherPotionEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.util.Identifier;
 

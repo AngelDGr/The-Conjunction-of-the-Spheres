@@ -20,7 +20,7 @@ public class GraveHagModel extends BipedGeoModelBase<GraveHagEntity> {
 
     @Override
     public Identifier getTextureResource(GraveHagEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/grave_hag/grave_hag.png");
+        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/grave_hag.png");
     }
 
     @Override

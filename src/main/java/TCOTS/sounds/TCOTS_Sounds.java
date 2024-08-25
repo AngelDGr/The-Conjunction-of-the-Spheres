@@ -121,17 +121,18 @@ public class TCOTS_Sounds {
     public static SoundEvent NEKKER_WARRIOR_DEATH = registerSoundEvent("nekker_warrior_death");
     public static SoundEvent NEKKER_WARRIOR_LUNGE = registerSoundEvent("nekker_warrior_lunge");
 
-
+    //Cyclops
+    public static SoundEvent CYCLOPS_ATTACK = registerSoundEvent("cyclops_attack");
+    public static SoundEvent CYCLOPS_HURT = registerSoundEvent("cyclops_hurt");
+    public static SoundEvent CYCLOPS_IDLE = registerSoundEvent("cyclops_idle");
+    public static SoundEvent CYCLOPS_DEATH = registerSoundEvent("cyclops_death");
+    public static SoundEvent CYCLOPS_PUNCH = registerSoundEvent("cyclops_punch");
 
     //Misc
     public static SoundEvent POTION_REFILLED = registerSoundEvent("potion_refill");
-
     public static SoundEvent OIL_APPLIED = registerSoundEvent("oil_applied");
-
     public static SoundEvent OIL_RAN_OUT = registerSoundEvent("oil_ran_out");
-
     public static SoundEvent INGREDIENT_POPS = registerSoundEvent("ingredient_pops");
-
     public static SoundEvent BLACK_BLOOD_HIT = registerSoundEvent("black_blood_hit");
 
     private static SoundEvent registerSoundEvent(String name) {

@@ -1,8 +1,9 @@
-package TCOTS.items.concoctions.effects;
+package TCOTS.items.concoctions.effects.potions;
 
+import TCOTS.items.concoctions.effects.WitcherPotionEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
-public class RookEffect extends WitcherPotionEffect{
+public class RookEffect extends WitcherPotionEffect {
     public RookEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }

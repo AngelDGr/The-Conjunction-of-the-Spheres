@@ -103,26 +103,41 @@ public class TCOTS_Items {
             //xTODO: Maribor Forest: Add when added Alghouls
             //xTODO: White Honey: Add when added toxicity mechanic
 
-            //TODO: Petri's Philter: Add when added specters
-            //TODO: Full Moon: Add when added Nightwraiths
-            //TODO: Golden Oriole: Add when added Noonwraiths
-
-            //TODO: Tawny Owl: Add when added Arachas
-            //TODO: Thunderbolt: Add when added Endregas
-            //TODO: Blizzard: Add when added Golems
+            //TODO: W3.- 2nd Update
+            //  Petri's Philter: Add when added specters
+            //  Full Moon: Add when added Nightwraiths
+            //  Golden Oriole: Add when added Noonwraiths
+            //TODO: W3.- 3rd Update
+            //  Tawny Owl: Add when added Arachas
+            //  Thunderbolt: Add when added Endregas
+            //  Blizzard: Add when added Golems
 
             //Witcher 2 Potions
             //xTODO: Rook: Increases damage with swords
-            //TODO: Brock: Makes possible apply different effects to mobs, but any damage it's received double
-            //TODO: Gadwall: Increases a lot the regeneration and health boost but also weakness
-            //TODO: Stammelford's Philtre: Something???
+            //TODO:
+            //  Brock: Makes possible apply different effects to mobs, but any damage it's received double
+            //  Gadwall: Increases a lot the regeneration and health boost but also weakness
+            //  Stammelford's Philtre: Something???
 
             //Witcher 1 Potions
             //xTODO: Wolf: Makes critical hits stronger
-            //TODO: Willow: Makes you immune to knockback
-            //TODO: De Vries' Extract: Gives glowing to near invisible enemies
-            //TODO: Wolverine: Makes you stronger when you have less health?
+            //TODO:
+            //  Willow: Makes you immune to knockback
+            //  De Vries' Extract: Gives glowing to near invisible enemies
+            //  Wolverine: Makes you stronger when you have less health?
 
+    //TODO: Armors to add
+    //  Raven's Armor   (W2 Style)
+    //  Manticore Armor (W3 Style)
+    //  Another Witcher Armors from W3?
+
+    //TODO: Weapons to add
+    //    D'yaebl: Makes enemies bleed
+    //    Ard'aenye: Massive damage
+    //    Moonblade: Massive damage to monsters
+    //  * Aerondight: Add with some quest/ritual involving the Lady of the Lake
+    //  * Addan Deith: Extra damage to Specters, found in some special place
+    //    Witcher gear swords from W3
 
     //xTODO: Add use to the items
         //xTODO: Drowner Tongue usable for Killer Whale potion
@@ -192,6 +207,7 @@ public class TCOTS_Items {
     public static Item NEKKER_WARRIOR_SPAWN_EGG;
     public static Item NEKKER_WARRIOR_MUTAGEN;
 
+    public static Item CYCLOPS_SPAWN_EGG;
 
     //Register Drops from monsters
     public static void registerDrops() {
@@ -274,11 +290,9 @@ public class TCOTS_Items {
                 new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
                         new FabricItemSettings()));
         NEKKER_EYE = registerItem("nekker_eye",
-                new Item(
-                        new FabricItemSettings()));
+                new Item(new FabricItemSettings()));
         NEKKER_HEART = registerItem("nekker_heart",
-                new Item(
-                        new FabricItemSettings().maxCount(16)));
+                new Item(new FabricItemSettings().maxCount(16)));
 
         NEKKER_WARRIOR_SPAWN_EGG = registerItem("nekker_warrior_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.NEKKER_WARRIOR, 0x97a592, 0xb12022,
@@ -286,7 +300,9 @@ public class TCOTS_Items {
         NEKKER_WARRIOR_MUTAGEN = registerItem("nekker_warrior_mutagen",
                 new Item(new FabricItemSettings().maxCount(8)));
 
-
+        CYCLOPS_SPAWN_EGG = registerItem("cyclops_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.CYCLOPS, 0xceb6b6, 0x3c4433,
+                        new FabricItemSettings()));
     }
 
     public static Item ALCHEMY_FORMULA;

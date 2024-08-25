@@ -46,6 +46,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -746,6 +747,11 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
         super.mobTick();
     }
 
+    @Override
+    public boolean canSpawn(WorldView world) {
+        return world.doesNotIntersectEntities(this);
+    }
+
     //Natural Spawn
     public static boolean canSpawnDrowner(EntityType<? extends NecrophageMonster> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         //If it's in ocean or river
@@ -755,13 +761,16 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
                 || world.getBiome(pos).isIn(BiomeTags.IS_RIVER))
 
         {
-            return
-                    spawnReason == SpawnReason.SPAWNER ||(
-                    world.getDifficulty() != Difficulty.PEACEFUL &&
-                    world.getFluidState(pos.down()).isIn(FluidTags.WATER)
-                    )
-            ;
-                }
+            int seaLevel = world.getSeaLevel();
+            int underSeaLevel = seaLevel - 13;
+
+            return spawnReason == SpawnReason.SPAWNER ||
+                    (world.getDifficulty() != Difficulty.PEACEFUL
+                            && pos.getY() >= underSeaLevel
+                            && pos.getY() <= seaLevel
+                            && world.getFluidState(pos.down()).isIn(FluidTags.WATER)
+                            && world.getBlockState(pos.up()).isOf(Blocks.WATER));
+        }
         //If it's in another spawneable biome
         else{
             return

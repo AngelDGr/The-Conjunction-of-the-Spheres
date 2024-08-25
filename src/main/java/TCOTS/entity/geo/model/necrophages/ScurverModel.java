@@ -14,7 +14,7 @@ public class ScurverModel extends BipedGeoModelBase<ScurverEntity> {
 
     @Override
     public Identifier getTextureResource(ScurverEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/scurver/scurver.png");
+        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/scurver.png");
     }
 
     @Override

@@ -1,7 +1,7 @@
 package TCOTS.mixin;
 
 import TCOTS.items.concoctions.TCOTS_Effects;
-import TCOTS.items.concoctions.effects.CatEffect;
+import TCOTS.items.concoctions.effects.potions.CatEffect;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.render.GameRenderer;

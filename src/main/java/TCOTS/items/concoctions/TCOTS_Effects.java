@@ -7,6 +7,7 @@ import TCOTS.items.concoctions.effects.bombs.MoonDustEffect;
 import TCOTS.items.concoctions.effects.bombs.NorthernWindEffect;
 import TCOTS.items.concoctions.effects.bombs.SamumEffect;
 import TCOTS.items.concoctions.effects.decoctions.*;
+import TCOTS.items.concoctions.effects.potions.*;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
@@ -48,81 +49,98 @@ public class TCOTS_Effects {
     public static StatusEffect DIMERITIUM_BOMB_EFFECT;
     public static StatusEffect MOON_DUST_EFFECT;
 
+    //Misc
     public static StatusEffect BLEEDING;
+    public static StatusEffect CADAVERINE;
 
     public static void registerEffects() {
 
         //Effects
-        //W1
-        WOLF_EFFECT = registerStatusEffect("wolf_effect", WolfEffect.class, StatusEffectCategory.BENEFICIAL, 0xdd531d);
+        //Potions
+        {
+            //W1
+            WOLF_EFFECT = registerStatusEffect("wolf_effect", WolfEffect.class, StatusEffectCategory.BENEFICIAL, 0xdd531d);
 
-        //W2
-        ROOK_EFFECT = registerStatusEffect("rook_effect", RookEffect.class, StatusEffectCategory.BENEFICIAL, 0x268e26);
-
-
-        // W3
-        KILLER_WHALE_EFFECT = registerEffect("killer_whale",
-                new KillerWhaleEffect(StatusEffectCategory.BENEFICIAL, 0xe9b044)
-                .addAttributeModifier(
-                        EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                        "3F9D6A72-8C4E-4B17-A8ED-5D2C1F8B913D", 4.0,
-                        EntityAttributeModifier.Operation.ADDITION));
-
-        SWALLOW_EFFECT = registerStatusEffect("swallow", SwallowEffect.class, StatusEffectCategory.BENEFICIAL, 0xcc624a);
-
-        WHITE_RAFFARDS_EFFECT = registerStatusEffect("white_raffards", WhiteRaffardsEffect.class, StatusEffectCategory.BENEFICIAL, 0xb4b093);
-
-        CAT_EFFECT = registerStatusEffect("cat_effect", CatEffect.class, StatusEffectCategory.BENEFICIAL, 0x595959);
-
-        BLACK_BLOOD_EFFECT = registerStatusEffect("black_blood", BlackBloodEffect.class, StatusEffectCategory.BENEFICIAL, 0x272727);
-        BLEEDING_BLACK_BLOOD_EFFECT = registerStatusEffect("bleeding_black_blood", BleedingBlackBloodEffect.class, StatusEffectCategory.HARMFUL, 0x272727);
-
-        MARIBOR_FOREST_EFFECT = registerStatusEffect("maribor_forest", MariborForestEffect.class, StatusEffectCategory.BENEFICIAL, 0xb9b9b9);
+            //W2
+            ROOK_EFFECT = registerStatusEffect("rook_effect", RookEffect.class, StatusEffectCategory.BENEFICIAL, 0x268e26);
 
 
+            // W3
+            KILLER_WHALE_EFFECT = registerEffect("killer_whale",
+                    new KillerWhaleEffect(StatusEffectCategory.BENEFICIAL, 0xe9b044)
+                            .addAttributeModifier(
+                                    EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                                    "3F9D6A72-8C4E-4B17-A8ED-5D2C1F8B913D", 4.0,
+                                    EntityAttributeModifier.Operation.ADDITION));
 
-        //Decoctions
-        GRAVE_HAG_DECOCTION_EFFECT = registerStatusEffect("grave_hag_decoction", GraveHagDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+            SWALLOW_EFFECT = registerStatusEffect("swallow", SwallowEffect.class, StatusEffectCategory.BENEFICIAL, 0xcc624a);
 
-        WATER_HAG_DECOCTION_EFFECT = registerEffect("water_hag_decoction",
-                new WaterHagDecoctionEffect(StatusEffectCategory.BENEFICIAL, decoctionColor)
-                        .addAttributeModifier(
-                                EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                                "7B3F8E12-9A6D-4C5F-B2A9-1E7C9D4A6B8F", 5.0,
-                                EntityAttributeModifier.Operation.ADDITION));
+            WHITE_RAFFARDS_EFFECT = registerStatusEffect("white_raffards", WhiteRaffardsEffect.class, StatusEffectCategory.BENEFICIAL, 0xb4b093);
 
-        ALGHOUL_DECOCTION_EFFECT = registerStatusEffect("alghoul_decoction", AlghoulDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+            CAT_EFFECT = registerStatusEffect("cat_effect", CatEffect.class, StatusEffectCategory.BENEFICIAL, 0x595959);
 
-        FOGLET_DECOCTION_EFFECT = registerStatusEffect("foglet_decoction", FogletDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+            BLACK_BLOOD_EFFECT = registerStatusEffect("black_blood", BlackBloodEffect.class, StatusEffectCategory.BENEFICIAL, 0x272727);
+            BLEEDING_BLACK_BLOOD_EFFECT = registerStatusEffect("bleeding_black_blood", BleedingBlackBloodEffect.class, StatusEffectCategory.HARMFUL, 0x272727);
 
-        NEKKER_WARRIOR_DECOCTION_EFFECT = registerEffect("nekker_warrior_decoction",
-                new NekkerWarriorDecoctionEffect(StatusEffectCategory.BENEFICIAL, decoctionColor)
-                        .addAttributeModifier(
-                                EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                                "569bab8d-90cb-4ca2-acbf-e74a31ebb265", 4.0,
-                                EntityAttributeModifier.Operation.ADDITION));
+            MARIBOR_FOREST_EFFECT = registerStatusEffect("maribor_forest", MariborForestEffect.class, StatusEffectCategory.BENEFICIAL, 0xb9b9b9);
 
+            //Decoctions
+            {
+                GRAVE_HAG_DECOCTION_EFFECT = registerStatusEffect("grave_hag_decoction", GraveHagDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+
+                WATER_HAG_DECOCTION_EFFECT = registerEffect("water_hag_decoction",
+                        new WaterHagDecoctionEffect(StatusEffectCategory.BENEFICIAL, decoctionColor)
+                                .addAttributeModifier(
+                                        EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                                        "7B3F8E12-9A6D-4C5F-B2A9-1E7C9D4A6B8F", 5.0,
+                                        EntityAttributeModifier.Operation.ADDITION));
+
+                ALGHOUL_DECOCTION_EFFECT = registerStatusEffect("alghoul_decoction", AlghoulDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+
+                FOGLET_DECOCTION_EFFECT = registerStatusEffect("foglet_decoction", FogletDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+
+                NEKKER_WARRIOR_DECOCTION_EFFECT = registerEffect("nekker_warrior_decoction",
+                        new NekkerWarriorDecoctionEffect(StatusEffectCategory.BENEFICIAL, decoctionColor)
+                                .addAttributeModifier(
+                                        EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                                        "569bab8d-90cb-4ca2-acbf-e74a31ebb265", 4.0,
+                                        EntityAttributeModifier.Operation.ADDITION));
+            }
+        }
 
         //Bomb Effects
-        SAMUM_EFFECT = registerEffect("samum",
-                new SamumEffect(StatusEffectCategory.HARMFUL, 0x6c777b)
-                        .addAttributeModifier(
-                                EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                                "7107DE5E-7CE8-4030-940E-514C1F160890", -1.0f,
-                                EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+        {
+            SAMUM_EFFECT = registerEffect("samum",
+                    new SamumEffect(StatusEffectCategory.HARMFUL, 0x6c777b)
+                            .addAttributeModifier(
+                                    EntityAttributes.GENERIC_MOVEMENT_SPEED,
+                                    "7107DE5E-7CE8-4030-940E-514C1F160890", -1.0f,
+                                    EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
 
-        NORTHERN_WIND_EFFECT = registerEffect("northern_wind",
-                new NorthernWindEffect(StatusEffectCategory.HARMFUL, 0x007b77)
-                        .addAttributeModifier(
-                                EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                                "7107DE5E-7CE8-4030-940E-514C1F160890", -1.0f,
-                                EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+            NORTHERN_WIND_EFFECT = registerEffect("northern_wind",
+                    new NorthernWindEffect(StatusEffectCategory.HARMFUL, 0x007b77)
+                            .addAttributeModifier(
+                                    EntityAttributes.GENERIC_MOVEMENT_SPEED,
+                                    "7107DE5E-7CE8-4030-940E-514C1F160890", -1.0f,
+                                    EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
 
-        DIMERITIUM_BOMB_EFFECT = registerStatusEffect("dimeritium_bomb", DimeritiumBombEffect.class, StatusEffectCategory.HARMFUL, 0x25882f);
+            DIMERITIUM_BOMB_EFFECT = registerStatusEffect("dimeritium_bomb", DimeritiumBombEffect.class, StatusEffectCategory.HARMFUL, 0x25882f);
 
-        MOON_DUST_EFFECT = registerStatusEffect("moon_dust", MoonDustEffect.class, StatusEffectCategory.HARMFUL, 0x87b8b8);
+            MOON_DUST_EFFECT = registerStatusEffect("moon_dust", MoonDustEffect.class, StatusEffectCategory.HARMFUL, 0x87b8b8);
+        }
 
-        BLEEDING = registerStatusEffect("bleeding", BleedingEffect.class, StatusEffectCategory.HARMFUL, 0xab0000);
+        //Misc Effects
+        {
+            BLEEDING = registerStatusEffect("bleeding", BleedingEffect.class, StatusEffectCategory.HARMFUL, 0xab0000);
+
+            CADAVERINE = registerEffect("cadaverine", new CadaverineEffect(StatusEffectCategory.HARMFUL,  0x00bd13))
+                    .addAttributeModifier(EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                            "aa74d9b6-6306-46b2-8af2-2af59d867f51", -2.0F,
+                            EntityAttributeModifier.Operation.ADDITION)
+                    .addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED,
+                            "cff19ae6-1622-4257-a8fc-1f47156938ea", -0.15F,
+                            EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+        }
 
     }
 

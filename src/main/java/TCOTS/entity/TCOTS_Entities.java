@@ -4,6 +4,7 @@ import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.*;
 import TCOTS.entity.misc.bolts.*;
 import TCOTS.entity.necrophages.*;
+import TCOTS.entity.ogroids.CyclopsEntity;
 import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.entity.ogroids.NekkerWarriorEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -175,6 +176,12 @@ public class TCOTS_Entities {
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.7f, 1.3f)).build());
 
+    public static final EntityType<CyclopsEntity> CYCLOPS = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "cyclops"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, CyclopsEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(1.9975f, 5.0f)).trackRangeBlocks(16).build());
+
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "witcher_bomb"),
@@ -240,7 +247,7 @@ public class TCOTS_Entities {
                                 BiomeKeys.LUKEWARM_OCEAN, BiomeKeys.DEEP_LUKEWARM_OCEAN,
                                 BiomeKeys.COLD_OCEAN, BiomeKeys.DEEP_COLD_OCEAN,
                                 BiomeKeys.RIVER), SpawnGroup.MONSTER,
-                        DROWNER, 10, 2, 3);
+                        DROWNER, 8, 2, 3);
             }
 
             //Rotfiends
@@ -371,8 +378,8 @@ public class TCOTS_Entities {
 
         //Ogroids
         {
+            //Nekkers
             {
-                //Nekkers
                 SpawnRestriction.register(NEKKER, SpawnRestriction.Location.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NekkerEntity::canSpawnNekker);
 
@@ -383,6 +390,24 @@ public class TCOTS_Entities {
                                 BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
                                 BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.DARK_FOREST), SpawnGroup.MONSTER,
                         NEKKER, 5, 4, 6);
+            }
+
+            //Cyclops
+            {
+                SpawnRestriction.register(CYCLOPS, SpawnRestriction.Location.ON_GROUND,
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CyclopsEntity::canCyclopsSpawn);
+
+                //In snowy plains/mountains/taigas
+                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                //Snowy Plains
+                                BiomeKeys.SNOWY_PLAINS, BiomeKeys.STONY_SHORE,
+                                //Is_Hill
+                                BiomeKeys.WINDSWEPT_HILLS,BiomeKeys.WINDSWEPT_FOREST,BiomeKeys.WINDSWEPT_GRAVELLY_HILLS,
+                                //Is_Mountain
+                                BiomeKeys.MEADOW,BiomeKeys.FROZEN_PEAKS,BiomeKeys.JAGGED_PEAKS,BiomeKeys.STONY_PEAKS,BiomeKeys.SNOWY_SLOPES,
+                                //Is_Taiga
+                                BiomeKeys.OLD_GROWTH_PINE_TAIGA,BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA), SpawnGroup.MONSTER,
+                        CYCLOPS, 15, 1, 1);
             }
         }
     }
@@ -431,6 +456,9 @@ public class TCOTS_Entities {
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
 
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER_WARRIOR, NekkerWarriorEntity.setAttributes());
+
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.CYCLOPS, CyclopsEntity.setAttributes());
+
         }
     }
 }

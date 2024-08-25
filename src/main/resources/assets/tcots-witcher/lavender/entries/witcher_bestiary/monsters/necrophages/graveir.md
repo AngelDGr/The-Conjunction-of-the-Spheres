@@ -22,8 +22,7 @@ the more it is to their liking.
 
 ;;;;;
 
-Its most striking features include its small red glowing eyes, 
-that causes fear in its enemy.
+The vile graveirs have cadaverine in their teeth, so anyone who engages one in battle beware
 
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_main.png,fit)
 
@@ -33,8 +32,7 @@ that causes fear in its enemy.
 - Underground
 - Dark Caves
 
-
-![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_punch.png,fit)
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_toxic.png,fit)
 
 ;;;;;
 
@@ -42,11 +40,10 @@ that causes fear in its enemy.
 
 The Graveir is a formidable foe, capable of defeating seasoned warriors with powerful strikes that deliver significant knockback.
 
-It can also unleash a devastating special move, slamming the ground to create a shockwave that deals heavy damage and knocks back nearby creatures.
-
-Its thick, resilient skin grants high resistance to explosions, making it even tougher to defeat. 
+Thanks to the cadaverine stored in its teeth, it can apply this acid to its target, rapidly decaying both health and armor.
 
 
+Its thick, resilient skin provides armor and high resistance to explosions, making it even tougher to defeat.
 
 ;;;;;
 

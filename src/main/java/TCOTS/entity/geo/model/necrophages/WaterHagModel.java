@@ -18,7 +18,7 @@ public class WaterHagModel extends BipedGeoModelBase<WaterHagEntity> {
 
     @Override
     public Identifier getTextureResource(WaterHagEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/water_hag/water_hag.png");
+        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/water_hag.png");
     }
 
     @Override

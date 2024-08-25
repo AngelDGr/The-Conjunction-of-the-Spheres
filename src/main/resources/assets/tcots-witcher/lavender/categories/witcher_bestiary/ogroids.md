@@ -6,7 +6,7 @@
 }
 ```
 
-These type of post-conjunction monster it's usually found in caves or
+These type of post-conjunction monster it's usually found in caves, mountains or
 nests, they are know to have some kind of conscience. 
 
 

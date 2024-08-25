@@ -9,10 +9,8 @@ import org.spongepowered.asm.mixin.*;
 public class VillagerHostilesSensorMixin {
     @Unique
     private static final float distanceDanger = 12.0f;
-
     @Unique
     private static final float distanceMediumDanger = 16.0f;
-
     @Unique
     private static final float distanceExtremeDanger = 24.0f;
 
@@ -41,6 +39,7 @@ public class VillagerHostilesSensorMixin {
                         //Ogroids
                         .put(TCOTS_Entities.NEKKER, distanceDanger)
                         .put(TCOTS_Entities.NEKKER_WARRIOR, distanceMediumDanger)
+                        .put(TCOTS_Entities.CYCLOPS, distanceMediumDanger)
                         .build();
     }
 

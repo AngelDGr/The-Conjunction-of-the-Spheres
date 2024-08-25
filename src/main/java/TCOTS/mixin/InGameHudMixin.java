@@ -2,6 +2,7 @@ package TCOTS.mixin;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.items.concoctions.TCOTS_Effects;
+import TCOTS.screen.TCOTS_HeartTypes;
 import TCOTS.screen.ToxicityHudOverlay;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -127,12 +128,14 @@ public abstract class InGameHudMixin {
     @Redirect(method = "renderHealthBar", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/gui/hud/InGameHud;drawHeart(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/gui/hud/InGameHud$HeartType;IIZZZ)V",
             ordinal = 3))
-    private void injectToxicHearts(InGameHud instance, DrawContext context, InGameHud.HeartType type, int x, int y, boolean hardcore, boolean blinking, boolean half){
+    private void injectEffectsHearts(InGameHud instance, DrawContext context, InGameHud.HeartType type, int x, int y, boolean hardcore, boolean blinking, boolean half){
         PlayerEntity player = this.getCameraPlayer();
         if(player!=null) {
 
             if (player.theConjunctionOfTheSpheres$toxicityOverThreshold() && !player.hasStatusEffect(StatusEffects.WITHER)) {
-                context.drawGuiTexture(ToxicityHudOverlay.HeartType.TOXIC.getTexture(hardcore,half,blinking), x, y, 9, 9);
+                context.drawGuiTexture(TCOTS_HeartTypes.TOXIC.getTexture(hardcore,half,blinking), x, y, 9, 9);
+            } else if (player.hasStatusEffect(TCOTS_Effects.CADAVERINE)){
+                context.drawGuiTexture(TCOTS_HeartTypes.CADAVERINE.getTexture(hardcore,half,blinking), x, y, 9, 9);
             }
             else {
                 drawHeart(context, type, x, y, hardcore, blinking, half);
