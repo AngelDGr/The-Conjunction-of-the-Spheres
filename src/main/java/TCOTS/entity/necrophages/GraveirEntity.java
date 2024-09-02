@@ -232,7 +232,7 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
 
     @Override
     public boolean isPushable() {
-        return !this.getIsEmerging() && !this.getInGroundDataTracker();
+        return super.isPushable() && !this.getIsEmerging() && !this.getInGroundDataTracker();
     }
 
     @Override

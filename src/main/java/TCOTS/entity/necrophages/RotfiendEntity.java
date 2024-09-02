@@ -466,7 +466,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
 
     @Override
     public boolean isPushable() {
-        return !this.getIsExploding() && !this.getIsEmerging() && !this.getInGroundDataTracker();
+        return super.isPushable() && !this.getIsExploding() && !this.getIsEmerging() && !this.getInGroundDataTracker();
     }
 
     @Override

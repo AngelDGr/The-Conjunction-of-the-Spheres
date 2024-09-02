@@ -40,6 +40,7 @@ public class TCOTS_Effects {
         public static StatusEffect FOGLET_DECOCTION_EFFECT;
         public static StatusEffect ALGHOUL_DECOCTION_EFFECT;
         public static StatusEffect NEKKER_WARRIOR_DECOCTION_EFFECT;
+        public static StatusEffect TROLL_DECOCTION_EFFECT;
 
     static final int decoctionColor=0x0b7000;
 
@@ -105,6 +106,9 @@ public class TCOTS_Effects {
                                         EntityAttributes.GENERIC_ATTACK_DAMAGE,
                                         "569bab8d-90cb-4ca2-acbf-e74a31ebb265", 4.0,
                                         EntityAttributeModifier.Operation.ADDITION));
+
+                TROLL_DECOCTION_EFFECT = registerStatusEffect("troll_decoction", TrollDecoctionEffect.class, StatusEffectCategory.BENEFICIAL, decoctionColor);
+
             }
         }
 

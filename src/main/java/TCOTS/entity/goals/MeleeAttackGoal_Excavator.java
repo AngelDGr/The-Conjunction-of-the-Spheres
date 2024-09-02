@@ -19,6 +19,15 @@ public class MeleeAttackGoal_Excavator extends MeleeAttackGoal_Animated {
         this.ticksBeforeToGround = ticksBeforeToGround;
     }
 
+    public MeleeAttackGoal_Excavator(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle, int ticksBeforeToGround, boolean twoAttacks) {
+        super(mob, speed, pauseWhenMobIdle, 2);
+        if (!(mob instanceof ExcavatorMob)) {
+            throw new IllegalArgumentException("MeleeAttackGoal_Excavator requires Mob implements ExcavatorMob");
+        }
+        this.excavatorMob = (ExcavatorMob) mob;
+        this.ticksBeforeToGround = ticksBeforeToGround;
+    }
+
     //For no returning mobs
     public MeleeAttackGoal_Excavator(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle) {
         this(mob, speed, pauseWhenMobIdle,0);

@@ -201,6 +201,21 @@
     "tcots-witcher.sounds.cyclops_death": "Cyclops dies",
     "tcots-witcher.sounds.cyclops_punch": "Cyclops punches",
 
+    "item.tcots-witcher.rock_troll_spawn_egg": "Rock Troll Spawn Egg",
+    "entity.tcots-witcher.rock_troll": "Rock Troll",
+    "tcots-witcher.sounds.troll_attack": "Troll attacks",
+    "tcots-witcher.sounds.troll_hurt": "Troll hurts",
+    "tcots-witcher.sounds.troll_idle": "Troll groans",
+    "tcots-witcher.sounds.troll_death": "Troll dies",
+    "tcots-witcher.sounds.troll_block_impact": "Troll blocks",
+    "tcots-witcher.sounds.troll_block_impact_break": "Troll block breaks",
+    "tcots-witcher.sounds.rock_projectile_impact": "Rock impacts",
+    "tcots-witcher.sounds.rock_projectile_throws": "Rock projectile flies",
+
+    "item.tcots-witcher.cave_troll_liver": "Cave Troll Liver",
+    "item.tcots-witcher.troll_mutagen": "Troll Mutagen",
+
+
     "block.tcots-witcher.nest_slab": "Nest Slab",
     "block.tcots-witcher.nest_skull": "Nest Skull",
     "block.tcots-witcher.monster_nest": "Monster Nest",
@@ -352,6 +367,9 @@
     "tooltip.effect.tcots-witcher.nekker_warrior_decoction.second": "when using a mount",
     "special.attribute.effect.tcots-witcher.nekker_warrior_decoction": "+%s%% Mount Speed",
 
+    "item.tcots-witcher.troll_decoction": "Troll Decoction",
+    "tooltip.effect.tcots-witcher.troll_decoction.first":  "Increases regeneration during",
+    "tooltip.effect.tcots-witcher.troll_decoction.second": "and outside combat",
 
     "item.tcots-witcher.oil_necrophage": "Necrophage Oil",
     "item.tcots-witcher.oil_necrophage_enhanced": "Enhanced Necrophage Oil",
@@ -464,6 +482,7 @@
     "effect.tcots-witcher.alghoul_decoction": "Alghoul Hungry",
     "effect.tcots-witcher.foglet_decoction": "Foglet Foggy Resistance",
     "effect.tcots-witcher.nekker_warrior_decoction": "Nekker Warrior Leadership",
+    "effect.tcots-witcher.troll_decoction": "Troll Healing",
 
 
     "death.attack.potionToxicity": "%1$s had too much toxicity in the blood",

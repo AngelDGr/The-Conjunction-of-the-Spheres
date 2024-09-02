@@ -326,7 +326,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
         private final int ticksBeforeToGround;
 
         public Drowner_LandWaterAttackGoal(DrownerEntity mob, double speed, boolean pauseWhenMobIdle, int cooldownBetweenWaterAttacks, int ticksBeforeToGround) {
-            super(mob, speed, pauseWhenMobIdle);
+            super(mob, speed, pauseWhenMobIdle, 2);
             this.drowner = mob;
             this.cooldownBetweenWaterAttacks = cooldownBetweenWaterAttacks;
             this.ticksBeforeToGround = ticksBeforeToGround;
@@ -472,7 +472,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
     }
     @Override
     public boolean isPushable() {
-        return !this.getIsEmerging() && !this.getInGroundDataTracker();
+        return super.isPushable() && !this.getIsEmerging() && !this.getInGroundDataTracker();
     }
 
     private class Drowner_SwimAroundGoal extends SwimAroundGoal{
@@ -649,11 +649,6 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
         controllerRegistrar.add(
                 new AnimationController<>(this, "EmergingController", 1, this::animationEmergingPredicate)
         );
-    }
-
-    @Override
-    public int getNumberOfAttackAnimations() {
-        return 2;
     }
 
     //Water creature things

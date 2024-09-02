@@ -300,10 +300,12 @@
   "water_hag_mud_ball_hit": {
     "subtitle": "tcots-witcher.sounds.water_hag_mud_ball_hit",
     "sounds": [
-      "minecraft:block/mud/hit1",
-      "minecraft:block/mud/hit2",
-      "minecraft:block/mud/hit3",
-      "minecraft:block/mud/hit4"
+      "minecraft:block/mud/step1",
+      "minecraft:block/mud/step2",
+      "minecraft:block/mud/step3",
+      "minecraft:block/mud/step4",
+      "minecraft:block/mud/step5",
+      "minecraft:block/mud/step6"
     ]
   },
 
@@ -780,6 +782,67 @@
     "sounds": [
       "tcots-witcher:entity/ogroids/cyclops/cyclops_punch1",
       "tcots-witcher:entity/ogroids/cyclops/cyclops_punch2"
+    ]
+  },
+
+  "troll_attack": {
+    "subtitle": "tcots-witcher.sounds.troll_attack",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll/troll_attack1",
+      "tcots-witcher:entity/ogroids/troll/troll_attack2",
+      "tcots-witcher:entity/ogroids/troll/troll_attack3"
+    ]
+  },
+  "troll_hurt": {
+    "subtitle": "tcots-witcher.sounds.troll_hurt",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll/troll_hurt1",
+      "tcots-witcher:entity/ogroids/troll/troll_hurt2",
+      "tcots-witcher:entity/ogroids/troll/troll_hurt3",
+      "tcots-witcher:entity/ogroids/troll/troll_hurt4"
+    ]
+  },
+  "troll_idle": {
+    "subtitle": "tcots-witcher.sounds.troll_idle",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll/troll_idle1",
+      "tcots-witcher:entity/ogroids/troll/troll_idle2",
+      "tcots-witcher:entity/ogroids/troll/troll_idle3"
+    ]
+  },
+  "troll_death": {
+    "subtitle": "tcots-witcher.sounds.troll_death",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll/troll_death1",
+      "tcots-witcher:entity/ogroids/troll/troll_death2",
+      "tcots-witcher:entity/ogroids/troll/troll_death3"
+    ]
+  },
+  "troll_block_impact": {
+    "subtitle": "tcots-witcher.sounds.troll_block_impact",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll/troll_block_impact1",
+      "tcots-witcher:entity/ogroids/troll/troll_block_impact2"
+    ]
+  },
+  "troll_block_impact_break": {
+    "subtitle": "tcots-witcher.sounds.troll_block_impact_break",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll/troll_block_impact1",
+      "tcots-witcher:entity/ogroids/troll/troll_block_impact2"
+    ]
+  },
+  "rock_projectile_impact": {
+    "subtitle": "tcots-witcher.sounds.rock_projectile_impact",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll/rock_impact1",
+      "tcots-witcher:entity/ogroids/troll/rock_impact2"
+    ]
+  },
+  "rock_projectile_throws": {
+    "subtitle": "tcots-witcher.sounds.rock_projectile_throws",
+    "sounds": [
+      "minecraft:random/bow"
     ]
   }
 }

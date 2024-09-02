@@ -94,7 +94,7 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
         this.goalSelector.add(1, new ReturnToGroundGoal_Excavator(this, true));
 
         this.goalSelector.add(2, new WaterHag_ProjectileAttackGoal(this,1.2D,10, 10.0f, 40f));
-        this.goalSelector.add(3, new MeleeAttackGoal_Excavator(this, 1.2D, false,3600));
+        this.goalSelector.add(3, new MeleeAttackGoal_Excavator(this, 1.2D, false,3600, true));
 
 
         this.goalSelector.add(4, new WanderAroundGoal_Excavator(this, 0.75, 20));
@@ -214,7 +214,7 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
     }
     @Override
     public boolean isPushable() {
-        return !this.getIsEmerging() && !this.getInGroundDataTracker();
+        return super.isPushable() && !this.getIsEmerging() && !this.getInGroundDataTracker();
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -322,11 +322,6 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
         controllers.add(
                 new AnimationController<>(this, "EmergingController", 1, this::animationEmergingPredicate)
         );
-    }
-
-    @Override
-    public int getNumberOfAttackAnimations() {
-        return 2;
     }
 
     @Override

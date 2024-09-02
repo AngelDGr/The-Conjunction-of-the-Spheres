@@ -407,11 +407,6 @@ public class GraveHagEntity extends NecrophageMonster implements GeoEntity {
                 .triggerableAnim("tongue", ATTACK_TONGUE));
     }
 
-    @Override
-    public int getNumberOfAttackAnimations() {
-        return 2;
-    }
-
     private void spawnGroundParticles() {
         BlockState blockState = this.getSteppingBlockState();
         if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {

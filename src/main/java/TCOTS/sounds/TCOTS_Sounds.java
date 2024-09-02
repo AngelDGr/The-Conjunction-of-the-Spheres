@@ -48,7 +48,7 @@ public class TCOTS_Sounds {
     public static SoundEvent WATER_HAG_EMERGING = registerSoundEvent("water_hag_emerging");
     public static SoundEvent WATER_HAG_DIGGING = registerSoundEvent("water_hag_digging");
     public static SoundEvent WATER_HAG_MUD_BALL_LAUNCH = registerSoundEvent("water_hag_mud_ball_launch");
-//    public static SoundEvent WATER_HAG_MUD_BALL_HIT = registerSoundEvent("water_hag_mud_ball_hit");
+    public static SoundEvent WATER_HAG_MUD_BALL_HIT = registerSoundEvent("water_hag_mud_ball_hit");
 
     //Foglet
     public static SoundEvent FOGLET_ATTACK = registerSoundEvent("foglet_attack");
@@ -128,6 +128,15 @@ public class TCOTS_Sounds {
     public static SoundEvent CYCLOPS_DEATH = registerSoundEvent("cyclops_death");
     public static SoundEvent CYCLOPS_PUNCH = registerSoundEvent("cyclops_punch");
 
+    //Troll (Rock/Ice)
+    public static SoundEvent TROLL_ATTACK = registerSoundEvent("troll_attack");
+    public static SoundEvent TROLL_HURT = registerSoundEvent("troll_hurt");
+    public static SoundEvent TROLL_IDLE = registerSoundEvent("troll_idle");
+    public static SoundEvent TROLL_DEATH = registerSoundEvent("troll_death");
+    public static SoundEvent TROLL_BLOCK_IMPACT = registerSoundEvent("troll_block_impact");
+    public static SoundEvent TROLL_BLOCK_IMPACT_BREAK = registerSoundEvent("troll_block_impact_break");
+    public static SoundEvent ROCK_PROJECTILE_IMPACT = registerSoundEvent("rock_projectile_impact");
+    public static SoundEvent ROCK_PROJECTILE_THROWS = registerSoundEvent("rock_projectile_throws");
     //Misc
     public static SoundEvent POTION_REFILLED = registerSoundEvent("potion_refill");
     public static SoundEvent OIL_APPLIED = registerSoundEvent("oil_applied");

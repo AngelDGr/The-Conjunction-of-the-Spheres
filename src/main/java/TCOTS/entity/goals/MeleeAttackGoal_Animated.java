@@ -1,6 +1,5 @@
 package TCOTS.entity.goals;
 
-import TCOTS.entity.WitcherMob_Class;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
@@ -23,8 +22,13 @@ public class MeleeAttackGoal_Animated extends Goal {
     private int updateCountdownTicks;
     private int cooldown;
     private long lastUpdateTime;
+    private final int attackAnimationsNumber;
 
     public MeleeAttackGoal_Animated(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle) {
+        this(mob, speed, pauseWhenMobIdle, 3);
+    }
+
+    public MeleeAttackGoal_Animated(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle, int attackAnimationsNumber) {
         if (!(mob instanceof GeoEntity)) {
             throw new IllegalArgumentException("MeleeAttackGoal_Animated requires Mob implements GeoEntity");
         }
@@ -32,6 +36,7 @@ public class MeleeAttackGoal_Animated extends Goal {
         this.speed = speed;
         this.pauseWhenMobIdle = pauseWhenMobIdle;
         this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK));
+        this.attackAnimationsNumber=attackAnimationsNumber;
     }
 
     @Override
@@ -131,9 +136,9 @@ public class MeleeAttackGoal_Animated extends Goal {
             this.mob.getRandom().nextBetween(0,1);
 
             //Triggers the Animation
-            if(this.mob instanceof WitcherMob_Class monster && this.mob instanceof GeoEntity geo) {
+            if(this.mob instanceof GeoEntity geo) {
                 int randomAttack;
-                switch (monster.getNumberOfAttackAnimations()){
+                switch (this.attackAnimationsNumber){
                     //Two attack animations
                     case 2:
                         randomAttack = this.mob.getRandom().nextBetween(0, 1);

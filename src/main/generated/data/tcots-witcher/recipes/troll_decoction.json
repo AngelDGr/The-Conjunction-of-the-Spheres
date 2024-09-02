@@ -1,0 +1,31 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:dwarven_spirit"
+  },
+  "category": "decoctions",
+  "ingredient_counters": [
+    1,
+    4,
+    4,
+    8
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:troll_mutagen"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "tcots-witcher:crows_eye"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    }
+  ],
+  "order": 0.33999994,
+  "result": {
+    "item": "tcots-witcher:troll_decoction"
+  }
+}

@@ -433,11 +433,6 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
         );
     }
 
-    @Override
-    public int getNumberOfAttackAnimations() {
-        return 2;
-    }
-
     List<FogletEntity> fogletList=new ArrayList<>();
 
     List<FogletEntity> fogletLeader=new ArrayList<>();

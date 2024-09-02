@@ -43,22 +43,26 @@
 			"bones": {
 				"FullBody": {
 					"rotation": {
-						"vector": [0, 0, "(math.cos(query.anim_time*360)*2)"]
+						"vector": [0, 0, "(math.cos(query.anim_time*360)*2)"],
+						"easing": "linear"
 					}
 				},
 				"UpperBody_head": {
 					"rotation": {
-						"vector": [0, 17.5, 0]
+						"vector": [0, 17.5, 0],
+						"easing": "linear"
 					}
 				},
 				"head": {
 					"rotation": {
-						"vector": [0, -17.5, 0]
+						"vector": [0, -17.5, 0],
+						"easing": "linear"
 					}
 				},
 				"LowerJaw": {
 					"rotation": {
-						"vector": ["(math.cos(query.anim_time*360)*2.5)", 0, 0]
+						"vector": ["(math.cos(query.anim_time*360)*2.5)", 0, 0],
+						"easing": "linear"
 					}
 				}
 			}

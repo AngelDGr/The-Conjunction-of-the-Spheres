@@ -179,7 +179,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     //Foglet Decoction
-
     @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
     private float injectFoggyResistance(float amount){
         if(this.hasStatusEffect(TCOTS_Effects.FOGLET_DECOCTION_EFFECT)

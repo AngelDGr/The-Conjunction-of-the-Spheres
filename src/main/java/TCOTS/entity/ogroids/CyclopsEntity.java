@@ -114,7 +114,7 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
         private final CyclopsEntity cyclops;
 
         public CyclopsMeleeAttackGoal(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle) {
-            super(mob, speed, pauseWhenMobIdle);
+            super(mob, speed, pauseWhenMobIdle, 2);
             this.cyclops =(CyclopsEntity) mob;
         }
 
@@ -188,99 +188,6 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
     protected float getJumpVelocity() {
         return 0.7f * this.getJumpVelocityMultiplier() + this.getJumpBoostVelocityModifier();
     }
-
-    //    private static class Graveir_GroundPunch extends Goal {
-//
-//        private final GraveirEntity graveir;
-//
-//        private final int punchCooldown;
-//
-//        public Graveir_GroundPunch(GraveirEntity graveir, int punchCooldown){
-//            this.graveir=graveir;
-//            this.punchCooldown=punchCooldown;
-//        }
-//
-//        @Override
-//        public boolean shouldRunEveryTick() {
-//            return true;
-//        }
-//
-//        @Override
-//        public boolean canStart() {
-//            LivingEntity target = this.graveir.getTarget();
-//
-//            if (target != null) {
-//                //5 square distance like 1.5 blocks approx
-//                //I want 7.5 blocks approx
-//                //So 7.5/1.5=5
-//                return
-////                        !this.graveir.cooldownBetweenPunch &&
-//                        this.graveir.isAttacking()
-//                        && !this.graveir.isInFluid()
-//                        && !this.graveir.hasVehicle()
-////                        && !this.devourer.getWorld().getBlockState(this.devourer.getBlockPos()).isOf(Blocks.HONEY_BLOCK)
-////                        && !this.devourer.getWorld().getBlockState(this.devourer.getBlockPos()).isOf(Blocks.COBWEB)
-//                        && this.graveir.squaredDistanceTo(target) < 10;
-//            } else {
-//                return false;
-//            }
-//        }
-//
-//
-//        @Override
-//        public boolean shouldContinue() {
-//            return
-////                    !graveir.cooldownBetweenPunch &&
-//                            !this.graveir.isInFluid()
-//                    && !this.graveir.hasVehicle();
-//        }
-//
-//        int ticks=34;
-//
-//        @Override
-//        public void start() {
-//            ticks=34;
-//        }
-//
-//        @Override
-//        public void tick() {
-//            LivingEntity target = this.graveir.getTarget();
-//
-//            graveir.getNavigation().stop();
-//            graveir.setTarget(this.graveir.getTarget());
-//            graveir.setAttacking(true);
-//
-//            if(target!=null && ticks==34){
-//                triggersAttack();
-//            }
-//
-//            if(ticks>0){
-//                ticks--;
-//            }
-//
-//            if(ticks==0){
-//                punchAttack();
-//            }
-//        }
-//
-//        private void triggersAttack(){
-////            graveir.setIsPunching(true);
-//            graveir.playSound(TCOTS_Sounds.GRAVEIR_GROUND_PUNCH,1.0f,1.0f);
-//            graveir.triggerAnim("GroundPunchController","ground_punch");
-//        }
-//
-//        private void punchAttack(){
-//
-//            EntitiesUtil.pushAndDamageEntities(this.graveir, 12f, 2.0, 2.0, 2.2, GraveirEntity.class);
-////            graveir.getWorld().sendEntityStatus(graveir, FALLING_PARTICLES);
-//            graveir.playSound(TCOTS_Sounds.GROUND_PUNCH,1.0f,1.0f);
-////            graveir.punchTicks=punchCooldown;
-//            ticks=34;
-////            graveir.setIsPunching(false);
-////            graveir.cooldownBetweenPunch=true;
-//        }
-//
-//    }
 
 
     @Override
@@ -462,11 +369,6 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
         return super.isInvulnerableTo(damageSource) || this.isFalling();
-    }
-
-    @Override
-    public int getNumberOfAttackAnimations() {
-        return 2;
     }
 
     @Nullable

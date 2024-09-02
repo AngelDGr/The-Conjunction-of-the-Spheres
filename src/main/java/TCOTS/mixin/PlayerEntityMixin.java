@@ -505,15 +505,20 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
         float dangerOverdoseThreshold=(this.theConjunctionOfTheSpheres$getMaxToxicity()*0.9f);
         if(this.theConjunctionOfTheSpheres$toxicityOverThreshold()){
-            int damageableTicks = (int) (50 * ((float) theConjunctionOfTheSpheres$getMaxToxicity() / (float) theConjunctionOfTheSpheres$getAllToxicity()));
+            //At 75%,  every 40 ticks
+            //At 80%,  every 37.5 ticks
+            //At 85%,  every 35.29 ticks
+            int damageableTicks = (int) (30 * ((float) theConjunctionOfTheSpheres$getMaxToxicity() / (float) theConjunctionOfTheSpheres$getAllToxicity()));
 
+            //At 90%,  every 11.11 ticks
+            //At 100%, every 10 ticks
             if(theConjunctionOfTheSpheres$getAllToxicity() > dangerOverdoseThreshold) {
-                damageableTicks = (int) (20 * ((float) theConjunctionOfTheSpheres$getMaxToxicity() / (float) theConjunctionOfTheSpheres$getAllToxicity()));
+                damageableTicks = (int) (10 * ((float) theConjunctionOfTheSpheres$getMaxToxicity() / (float) theConjunctionOfTheSpheres$getAllToxicity()));
             }
+
             if(this.age%(damageableTicks)==0){
             this.damage(TCOTS_DamageTypes.toxicityDamage(getWorld()),1);
             }
-
         }
     }
 

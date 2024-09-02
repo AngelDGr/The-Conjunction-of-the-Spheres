@@ -1040,6 +1040,15 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     Items.ECHO_SHARD, 1,
                                     Items.AZURE_BLUET, 2,
                                     Items.FERN, 1)).offerTo(exporter);
+
+                    order=order+0.01f;
+                    AlchemyTableRecipeJsonBuilder.createDecoction(
+                            order, TCOTS_Items.TROLL_DECOCTION,
+                            ingredientsList(
+                                    TCOTS_Items.TROLL_MUTAGEN, 1,
+                                    Items.ECHO_SHARD, 4,
+                                    TCOTS_Items.CROWS_EYE, 4,
+                                    Items.HONEY_BOTTLE, 8)).offerTo(exporter);
                 }
 
                 //Bombs
@@ -1315,24 +1324,23 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                 ingredientsList(Items.CORNFLOWER, 4)).offerTo(exporter);
 
                         order=order+0.01f;
-                        //TODO: Fix recipes when added new drops (Cave troll liver)
                         AlchemyTableRecipeJsonBuilder.createOil(
                                 order, TCOTS_Items.ENHANCED_OGROID_OIL,
                                 ingredientsList(
-                                        TCOTS_Items.ROTFIEND_BLOOD, 4,
-                                        Items.DANDELION, 4,
-                                        TCOTS_Items.ARENARIA, 4,
-                                        Items.FLOWERING_AZALEA, 4), 4,
+                                        TCOTS_Items.CAVE_TROLL_LIVER, 2,
+                                        Items.RED_MUSHROOM, 2,
+                                        Items.FERN, 3,
+                                        Items.CORNFLOWER, 4), 2,
                                 TCOTS_Items.OGROID_OIL).offerTo(exporter);
 
                         order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createOil(
                                 order, TCOTS_Items.SUPERIOR_OGROID_OIL,
                                 ingredientsList(
-                                        TCOTS_Items.ROTFIEND_BLOOD, 4,
-                                        Items.CORNFLOWER, 1,
-                                        TCOTS_Items.ARENARIA, 1,
-                                        TCOTS_Items.HYDRAGENUM, 1), 5,
+                                        TCOTS_Items.CAVE_TROLL_LIVER, 3,
+                                        TCOTS_Items.ARENARIA, 2,
+                                        Items.FERN, 6,
+                                        TCOTS_Items.AETHER, 1), 2,
                                 TCOTS_Items.ENHANCED_OGROID_OIL).offerTo(exporter);
                     }
 

@@ -134,7 +134,7 @@ public abstract class InGameHudMixin {
 
             if (player.theConjunctionOfTheSpheres$toxicityOverThreshold() && !player.hasStatusEffect(StatusEffects.WITHER)) {
                 context.drawGuiTexture(TCOTS_HeartTypes.TOXIC.getTexture(hardcore,half,blinking), x, y, 9, 9);
-            } else if (player.hasStatusEffect(TCOTS_Effects.CADAVERINE)){
+            } else if (player.hasStatusEffect(TCOTS_Effects.CADAVERINE) && !player.hasStatusEffect(StatusEffects.WITHER)){
                 context.drawGuiTexture(TCOTS_HeartTypes.CADAVERINE.getTexture(hardcore,half,blinking), x, y, 9, 9);
             }
             else {

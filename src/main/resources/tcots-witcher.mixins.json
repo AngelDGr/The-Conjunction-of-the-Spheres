@@ -15,6 +15,7 @@
     "DimeritiumMagicBlock$BlockWololoGoal",
     "DimeritiumMagicBlock$MakeEndermanArrowDamageable",
     "InGameHudMixin",
+    "IronGolemMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
     "MilkBucketItemMixin",

@@ -5,10 +5,10 @@
   },
   "category": "bombs_oils",
   "ingredient_counters": [
-    5,
-    4,
-    1,
-    1,
+    2,
+    3,
+    2,
+    6,
     1
   ],
   "ingredients": [
@@ -16,19 +16,19 @@
       "item": "tcots-witcher:alchemy_paste"
     },
     {
-      "item": "tcots-witcher:rotfiend_blood"
-    },
-    {
-      "item": "minecraft:cornflower"
+      "item": "tcots-witcher:cave_troll_liver"
     },
     {
       "item": "tcots-witcher:arenaria"
     },
     {
-      "item": "tcots-witcher:hydragenum"
+      "item": "minecraft:fern"
+    },
+    {
+      "item": "tcots-witcher:aether"
     }
   ],
-  "order": 0.6299997,
+  "order": 0.6399997,
   "result": {
     "item": "tcots-witcher:oil_ogroid_superior"
   }

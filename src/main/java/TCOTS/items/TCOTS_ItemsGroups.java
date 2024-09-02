@@ -53,26 +53,32 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.NEKKER_SPAWN_EGG);
                                 entries.add(TCOTS_Items.NEKKER_WARRIOR_SPAWN_EGG);
                                 entries.add(TCOTS_Items.CYCLOPS_SPAWN_EGG);
+                                entries.add(TCOTS_Items.ROCK_TROLL_SPAWN_EGG);
                             }
 
 
                             //Drops
                             {
+                                //Necrophages
                                 entries.add(TCOTS_Items.DROWNER_TONGUE);
                                 entries.add(TCOTS_Items.DROWNER_BRAIN);
                                 entries.add(TCOTS_Items.GHOUL_BLOOD);
                                 entries.add(TCOTS_Items.ALGHOUL_BONE_MARROW);
                                 entries.add(TCOTS_Items.ROTFIEND_BLOOD);
-                                entries.add(TCOTS_Items.NEKKER_EYE);
-                                entries.add(TCOTS_Items.NEKKER_HEART);
-                                entries.add(TCOTS_Items.WATER_HAG_MUD_BALL);
-                                entries.add(TCOTS_Items.WATER_ESSENCE);
                                 entries.add(TCOTS_Items.FOGLET_TEETH);
+                                entries.add(TCOTS_Items.WATER_ESSENCE);
+                                entries.add(TCOTS_Items.WATER_HAG_MUD_BALL);
                                 entries.add(TCOTS_Items.SCURVER_SPINE);
                                 entries.add(TCOTS_Items.DEVOURER_TEETH);
-                                entries.add(TCOTS_Items.GRAVEIR_BONE);
                                 entries.add(TCOTS_Items.CADAVERINE);
+                                entries.add(TCOTS_Items.GRAVEIR_BONE);
                                 entries.add(TCOTS_Items.BULLVORE_HORN_FRAGMENT);
+
+                                //Ogroids
+                                entries.add(TCOTS_Items.NEKKER_EYE);
+                                entries.add(TCOTS_Items.NEKKER_HEART);
+                                //-> Cyclops drop
+                                entries.add(TCOTS_Items.CAVE_TROLL_LIVER);
 
                                 //Mutagens
                                 {
@@ -80,6 +86,7 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.WATER_HAG_MUTAGEN);
                                     entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);
                                     entries.add(TCOTS_Items.NEKKER_WARRIOR_MUTAGEN);
+                                    entries.add(TCOTS_Items.TROLL_MUTAGEN);
                                 }
                             }
 
@@ -253,6 +260,7 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.ALGHOUL_DECOCTION);
                                     entries.add(TCOTS_Items.FOGLET_DECOCTION);
                                     entries.add(TCOTS_Items.NEKKER_WARRIOR_DECOCTION);
+                                    entries.add(TCOTS_Items.TROLL_DECOCTION);
                                 }
 
                             }

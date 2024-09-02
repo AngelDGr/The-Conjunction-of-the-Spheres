@@ -217,7 +217,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
     protected static class Ghoul_MeleeAttackGoal extends MeleeAttackGoal_Animated {
 
         public Ghoul_MeleeAttackGoal(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle) {
-            super(mob, speed, pauseWhenMobIdle);
+            super(mob, speed, pauseWhenMobIdle, 2);
         }
 
         @Override
@@ -378,11 +378,6 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
     public void setOwner(@Nullable MobEntity owner) {
         this.owner = owner;
         this.ownerUuid = owner == null ? null : owner.getUuid();
-    }
-
-    @Override
-    public int getNumberOfAttackAnimations() {
-        return 2;
     }
 
     boolean hasCooldownForRegen=false;

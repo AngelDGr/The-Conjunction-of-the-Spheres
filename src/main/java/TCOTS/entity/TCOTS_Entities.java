@@ -7,6 +7,7 @@ import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.CyclopsEntity;
 import TCOTS.entity.ogroids.NekkerEntity;
 import TCOTS.entity.ogroids.NekkerWarriorEntity;
+import TCOTS.entity.ogroids.RockTrollEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -46,7 +47,7 @@ public class TCOTS_Entities {
     //W3
     //xTODO: Nekkers
     //xTODO: Nekker Warriors
-    //TODO: Cyclopses
+    //xTODO: Cyclopses
     //TODO: Rock troll
     //TODO: Ice troll
     //TODO: Ice Giant (Boss)
@@ -181,6 +182,18 @@ public class TCOTS_Entities {
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, CyclopsEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.9975f, 5.0f)).trackRangeBlocks(16).build());
+
+    public static final EntityType<RockTrollEntity> ROCK_TROLL = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "rock_troll"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, RockTrollEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(1.8f, 2.7f)).build());
+    public static final EntityType<Troll_RockProjectileEntity> TROLL_ROCK_PROJECTILE = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "troll_rock_projectile"),
+            FabricEntityTypeBuilder.<Troll_RockProjectileEntity>create(SpawnGroup.MISC, Troll_RockProjectileEntity::new
+                    )
+                    // Hitbox
+                    .dimensions(EntityDimensions.changing(0.5f, 0.5f)).build());
 
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(
@@ -455,9 +468,14 @@ public class TCOTS_Entities {
             //Nekker
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
 
+            //Nekker Warrior
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER_WARRIOR, NekkerWarriorEntity.setAttributes());
 
+            //Cyclops
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.CYCLOPS, CyclopsEntity.setAttributes());
+
+            //Rock Troll
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.ROCK_TROLL, RockTrollEntity.setAttributes());
 
         }
     }

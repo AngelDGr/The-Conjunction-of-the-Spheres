@@ -420,7 +420,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
 
     @Override
     public boolean isPushable() {
-        return !this.getIsEmerging() && !this.getInGroundDataTracker();
+        return super.isPushable() && !this.getIsEmerging() && !this.getInGroundDataTracker();
     }
 
     @Override

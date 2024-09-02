@@ -5,10 +5,10 @@
   },
   "category": "bombs_oils",
   "ingredient_counters": [
-    4,
-    4,
-    4,
-    4,
+    2,
+    2,
+    2,
+    3,
     4
   ],
   "ingredients": [
@@ -16,19 +16,19 @@
       "item": "tcots-witcher:monster_fat"
     },
     {
-      "item": "tcots-witcher:rotfiend_blood"
+      "item": "tcots-witcher:cave_troll_liver"
     },
     {
-      "item": "minecraft:dandelion"
+      "item": "minecraft:red_mushroom"
     },
     {
-      "item": "tcots-witcher:arenaria"
+      "item": "minecraft:fern"
     },
     {
-      "item": "minecraft:flowering_azalea"
+      "item": "minecraft:cornflower"
     }
   ],
-  "order": 0.6199997,
+  "order": 0.6299997,
   "result": {
     "item": "tcots-witcher:oil_ogroid_enhanced"
   }

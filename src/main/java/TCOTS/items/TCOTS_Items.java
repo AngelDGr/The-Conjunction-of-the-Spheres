@@ -209,6 +209,10 @@ public class TCOTS_Items {
 
     public static Item CYCLOPS_SPAWN_EGG;
 
+    public static Item ROCK_TROLL_SPAWN_EGG;
+    public static Item CAVE_TROLL_LIVER;
+    public static Item TROLL_MUTAGEN;
+
     //Register Drops from monsters
     public static void registerDrops() {
         DROWNER_SPAWN_EGG = registerItem("drowner_spawn_egg",
@@ -303,6 +307,14 @@ public class TCOTS_Items {
         CYCLOPS_SPAWN_EGG = registerItem("cyclops_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.CYCLOPS, 0xceb6b6, 0x3c4433,
                         new FabricItemSettings()));
+
+        ROCK_TROLL_SPAWN_EGG = registerItem("rock_troll_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.ROCK_TROLL, 0x90acb1, 0xeeb19a,
+                        new FabricItemSettings()));
+        CAVE_TROLL_LIVER = registerItem("cave_troll_liver",
+                new Item(new FabricItemSettings()));
+        TROLL_MUTAGEN = registerItem("troll_mutagen",
+                new Item(new FabricItemSettings().maxCount(8)));
     }
 
     public static Item ALCHEMY_FORMULA;
@@ -313,6 +325,7 @@ public class TCOTS_Items {
     public static Item FOGLET_DECOCTION;
     public static Item ALGHOUL_DECOCTION;
     public static Item NEKKER_WARRIOR_DECOCTION;
+    public static Item TROLL_DECOCTION;
 
     //Potions
 
@@ -708,48 +721,27 @@ public class TCOTS_Items {
                 );
 
                 GRAVE_HAG_DECOCTION = registerItemPotion("grave_hag_decoction",
-                        new FabricItemSettings().maxCount(1),
-                        TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT,
-                        50,
-                        1200,
-                        0,
-                        true
+                        TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT
                 );
 
                 WATER_HAG_DECOCTION = registerItemPotion("water_hag_decoction",
-                        new FabricItemSettings().maxCount(1),
-                        TCOTS_Effects.WATER_HAG_DECOCTION_EFFECT,
-                        50,
-                        1200,
-                        0,
-                        true
+                        TCOTS_Effects.WATER_HAG_DECOCTION_EFFECT
                 );
 
                 ALGHOUL_DECOCTION = registerItemPotion("alghoul_decoction",
-                        new FabricItemSettings().maxCount(1),
-                        TCOTS_Effects.ALGHOUL_DECOCTION_EFFECT,
-                        50,
-                        1200,
-                        0,
-                        true
+                        TCOTS_Effects.ALGHOUL_DECOCTION_EFFECT
                 );
 
                 FOGLET_DECOCTION = registerItemPotion("foglet_decoction",
-                        new FabricItemSettings().maxCount(1),
-                        TCOTS_Effects.FOGLET_DECOCTION_EFFECT,
-                        50,
-                        1200,
-                        0,
-                        true
+                        TCOTS_Effects.FOGLET_DECOCTION_EFFECT
                 );
 
                 NEKKER_WARRIOR_DECOCTION = registerItemPotion("nekker_warrior_decoction",
-                        new FabricItemSettings().maxCount(1),
-                        TCOTS_Effects.NEKKER_WARRIOR_DECOCTION_EFFECT,
-                        50,
-                        1200,
-                        0,
-                        true
+                        TCOTS_Effects.NEKKER_WARRIOR_DECOCTION_EFFECT
+                );
+
+                TROLL_DECOCTION = registerItemPotion("troll_decoction",
+                        TCOTS_Effects.TROLL_DECOCTION_EFFECT
                 );
             }
         }
@@ -1652,6 +1644,15 @@ public class TCOTS_Items {
         return Registry.register(Registries.ITEM, new Identifier(TCOTS_Main.MOD_ID, name), item);
     }
 
+    /**
+     Creates a witcher potion
+     @param name Name of the potion
+     @param effect Decoction effect
+     @param  settings FabricSettings
+     @param toxicity Toxicity points
+     @param durationInSecs Duration in seconds of the effect
+     @param amplifier Amplifier of the effect
+     */
     private static Item registerItemPotion(String name, Item.Settings settings, StatusEffect effect, int toxicity, int durationInSecs, int amplifier, boolean decoction) {
         try {
             Identifier identifier = new Identifier(TCOTS_Main.MOD_ID, name);
@@ -1662,6 +1663,15 @@ public class TCOTS_Items {
         } catch (Exception e) {
             throw new IllegalArgumentException("Error registering potion");
         }
+    }
+
+    /**
+    Creates a witcher potion of type decoction
+     @param name Name of the potion
+     @param effect Decoction effect
+    */
+    private static Item registerItemPotion(String name, StatusEffect effect) {
+        return registerItemPotion(name, new FabricItemSettings().maxCount(1), effect, 50, 1200, 0, true);
     }
 
     private static Item registerSplashPotion(String name, Item.Settings settings, StatusEffect effect, int toxicity, int durationInSecs){

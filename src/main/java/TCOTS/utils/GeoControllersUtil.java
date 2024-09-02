@@ -3,6 +3,7 @@ package TCOTS.utils;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
@@ -41,6 +42,18 @@ public class GeoControllersUtil {
         }
     }
 
+    public static <T extends GeoAnimatable> AnimationController<?> attackController(T animatable, int attacks){
+        if(attacks==2){
+            return new AnimationController<>(animatable, "AttackController", 1, state -> PlayState.STOP)
+                    .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
+                    .triggerableAnim("attack2", GeoControllersUtil.ATTACK2);
+        } else {
+            return new AnimationController<>(animatable, "AttackController", 1, state -> PlayState.STOP)
+                    .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
+                    .triggerableAnim("attack2", GeoControllersUtil.ATTACK2)
+                    .triggerableAnim("attack3", GeoControllersUtil.ATTACK3);
+        }
+    }
 
     public static float getLimbSwing(AnimationState<?> animationState, float min, float max, float speed, float increase, boolean negative){
         return (float) MathHelper.clamp((negative? -1: 1)*((Math.sin(animationState.getLimbSwing()*speed)*(animationState.getLimbSwingAmount()*increase))), min, max);
