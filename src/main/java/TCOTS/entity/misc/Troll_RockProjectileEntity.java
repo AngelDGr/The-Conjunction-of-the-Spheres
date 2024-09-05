@@ -52,7 +52,10 @@ public class Troll_RockProjectileEntity extends ThrownItemEntity {
         Entity entity = entityHitResult.getEntity();
 
         this.playSound(TCOTS_Sounds.ROCK_PROJECTILE_IMPACT, 1, 1);
-        float i = entity instanceof RockTrollEntity ? 0 : damage;
+        //If hits another Rock Troll, and the thrower hasn't an owner, then it doesn't damage it
+        if(entity instanceof RockTrollEntity && ((this.getOwner() instanceof RockTrollEntity troll) && troll.getOwner()==null))
+            return;
+
         double d = this.getX() - entity.getX();
         double e = this.getZ() - entity.getZ();
         if(entity instanceof LivingEntity livingEntity) {
@@ -63,7 +66,7 @@ public class Troll_RockProjectileEntity extends ThrownItemEntity {
             }
         }
 
-        entity.damage(this.getDamageSources().thrown(this, this.getOwner()), i);
+        entity.damage(this.getDamageSources().thrown(this, this.getOwner()), damage);
     }
 
     @Override
