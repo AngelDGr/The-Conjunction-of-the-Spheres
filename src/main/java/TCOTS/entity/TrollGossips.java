@@ -1,4 +1,4 @@
-package TCOTS.entity.ogroids.troll;
+package TCOTS.entity;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class TrollGossipsReputation {
+public class TrollGossips {
     private static final Logger LOGGER = LogUtils.getLogger();
     private final Map<UUID, Reputation> entityReputation = Maps.newHashMap();
 
@@ -29,7 +29,7 @@ public class TrollGossipsReputation {
         HashMap<UUID, Object2IntMap<TrollGossipType>> map = Maps.newHashMap();
         this.entityReputation.keySet().forEach(uuid -> {
             Reputation reputation = this.entityReputation.get(uuid);
-            map.put(uuid, reputation.associatedGossip);
+            map.put(uuid, reputation.associatedReputation);
         });
         return map;
     }
@@ -45,7 +45,7 @@ public class TrollGossipsReputation {
     }
 
     private Stream<TrollGossipEntry> entries() {
-        return this.entityReputation.entrySet().stream().flatMap(entry -> entry.getValue().entriesFor(entry.getKey()));
+        return this.entityReputation.entrySet().stream().flatMap(entryKey -> entryKey.getValue().entriesFor(entryKey.getKey()));
     }
 
     private Collection<TrollGossipEntry> pickGossips(net.minecraft.util.math.random.Random random, int count) {
@@ -72,19 +72,24 @@ public class TrollGossipsReputation {
         return this.entityReputation.computeIfAbsent(target, uuid -> new Reputation());
     }
 
-    public void shareGossipFrom(TrollGossipsReputation from, Random random, int count) {
+    public void shareGossipFrom(TrollGossips from, Random random, int count) {
         Collection<TrollGossipEntry> collection = from.pickGossips(random, count);
         collection.forEach(gossip -> {
-            int i = gossip.value - gossip.type.shareDecrement;
+            int i = gossip.reputationValue - gossip.type.shareDecrement;
             if (i >= 2) {
-                this.getReputationFor(gossip.target).associatedGossip.mergeInt(gossip.type, i, TrollGossipsReputation::max);
+                this.getReputationFor(gossip.target).associatedReputation.mergeInt(gossip.type, i, TrollGossips::max);
             }
         });
     }
 
     public int getReputationFor(UUID target, Predicate<TrollGossipType> gossipTypeFilter) {
         Reputation reputation = this.entityReputation.get(target);
-        return reputation != null ? reputation.getValueFor(gossipTypeFilter) : 0;
+        return reputation != null ? reputation.getReputationValueFor(gossipTypeFilter) : 0;
+    }
+
+    public int getFriendshipFor(UUID target, Predicate<TrollGossipType> gossipTypeFilter) {
+        Reputation reputation = this.entityReputation.get(target);
+        return reputation != null ? reputation.getFriendshipValueFor(gossipTypeFilter) : 0;
     }
 
 //    public long getReputationCount(TrollGossipType type, DoublePredicate predicate) {
@@ -93,17 +98,19 @@ public class TrollGossipsReputation {
 //                        predicate.test(reputation.associatedGossip.getOrDefault(type, 0) * TrollGossipType.multiplier)).count();
 //    }
 
-    public void startGossip(UUID target, TrollGossipType type, int reputationValue) {
+    public void startGossip(UUID target, TrollGossipType type, int reputationValue, int friendshipValue) {
         Reputation reputation = this.getReputationFor(target);
-        reputation.associatedGossip.mergeInt(type, reputationValue, (left, right) -> this.mergeReputation(type, left, right));
-        reputation.clamp(type);
+        reputation.associatedReputation.mergeInt(type, reputationValue, (left, right) -> this.mergeReputation(type, left, right));
+        reputation.associatedFriendship.mergeInt(type, friendshipValue, (left, right) -> this.mergeFriendship(type, left, right));
+        reputation.clamp(type,reputation.associatedReputation, type.maxValue);
+        reputation.clamp(type,reputation.associatedFriendship, type.maxFriendshipValue);
         if (reputation.isObsolete()) {
             this.entityReputation.remove(target);
         }
     }
 
-    public void removeGossip(UUID target, TrollGossipType type, int value) {
-        this.startGossip(target, type, -value);
+    public void removeGossip(UUID target, TrollGossipType type, int reputationValue, int friendshipValue) {
+        this.startGossip(target, type, -reputationValue, -friendshipValue);
     }
 
     public void remove(UUID target, TrollGossipType type) {
@@ -137,7 +144,10 @@ public class TrollGossipsReputation {
                 LOGGER.warn("Failed to deserialize gossips: {}", error))
                 .stream().flatMap(
                         pair -> (pair.getFirst()).stream())
-                .forEach(entry -> this.getReputationFor(entry.target).associatedGossip.put(entry.type, entry.value));
+                .forEach(entry -> {
+                    this.getReputationFor(entry.target).associatedReputation.put(entry.type, entry.reputationValue);
+                    this.getReputationFor(entry.target).associatedFriendship.put(entry.type, entry.friendshipValue);
+                });
     }
 
     private static int max(int left, int right) {
@@ -149,97 +159,140 @@ public class TrollGossipsReputation {
         return i > type.maxValue ? Math.max(type.maxValue, left) : i;
     }
 
+    private int mergeFriendship(TrollGossipType type, int left, int right) {
+        int i = left + right;
+        return i > type.maxFriendshipValue ? Math.max(type.maxFriendshipValue, left) : i;
+    }
+
 
     static class Reputation {
-        final Object2IntMap<TrollGossipType> associatedGossip = new Object2IntOpenHashMap<>();
+        final Object2IntMap<TrollGossipType> associatedReputation = new Object2IntOpenHashMap<>();
+
+        final Object2IntMap<TrollGossipType> associatedFriendship = new Object2IntOpenHashMap<>();
 
         public Reputation() {
         }
 
-        public int getValueFor(Predicate<TrollGossipType> gossipTypeFilter) {
-            return this.associatedGossip.object2IntEntrySet().stream().filter(
+
+        public int getReputationValueFor(Predicate<TrollGossipType> gossipTypeFilter) {
+            return this.associatedReputation.object2IntEntrySet().stream().filter(
+                            entry -> gossipTypeFilter.test(entry.getKey()))
+                    .mapToInt(entry -> entry.getIntValue() * entry.getKey().multiplier).sum();
+        }
+
+        public int getFriendshipValueFor(Predicate<TrollGossipType> gossipTypeFilter) {
+            return this.associatedFriendship.object2IntEntrySet().stream().filter(
                             entry -> gossipTypeFilter.test(entry.getKey()))
                     .mapToInt(entry -> entry.getIntValue() * entry.getKey().multiplier).sum();
         }
 
         public Stream<TrollGossipEntry> entriesFor(UUID target) {
-            return this.associatedGossip.object2IntEntrySet().stream().map(
-                    entry -> new TrollGossipEntry(target, entry.getKey(), entry.getIntValue()));
+            return this.associatedReputation.object2IntEntrySet().stream().map(
+                    entry -> new TrollGossipEntry(target, entry.getKey(), entry.getIntValue(), associatedFriendship.getInt(entry.getKey())));
         }
 
         public void decay() {
-            Iterator<Object2IntMap.Entry<TrollGossipType>> objectIterator = this.associatedGossip.object2IntEntrySet().iterator();
-            while (objectIterator.hasNext()) {
-                Object2IntMap.Entry<?> entry = objectIterator.next();
-                int i = entry.getIntValue() - ((TrollGossipType)entry.getKey()).decay;
-                if (i < 2) {
-                    objectIterator.remove();
-                    continue;
+            Iterator<Object2IntMap.Entry<TrollGossipType>> reputationIterator = this.associatedReputation.object2IntEntrySet().iterator();
+            Iterator<Object2IntMap.Entry<TrollGossipType>> friendshipIterator = this.associatedFriendship.object2IntEntrySet().iterator();
+
+            while (reputationIterator.hasNext() && friendshipIterator.hasNext()) {
+                // Handle reputation
+                Object2IntMap.Entry<?> repEntry = reputationIterator.next();
+                int repValue = repEntry.getIntValue() - ((TrollGossipType) repEntry.getKey()).decay;
+
+                //To only decay if is a value above 0
+                if (!(repEntry.getIntValue() <= 0)){
+                    repEntry.setValue(repValue);
                 }
-                entry.setValue(i);
+                //If for some reason reach below 0, limits to 0
+                if(repEntry.getIntValue() < 0){
+                    repEntry.setValue(0);
+                }
+
+                // Handle friendship
+                Object2IntMap.Entry<?> friendEntry = friendshipIterator.next();
+                int friendValue = friendEntry.getIntValue() - ((TrollGossipType) friendEntry.getKey()).friendshipDecay;
+
+                //To only decay if is a value above 0
+                if (!(friendEntry.getIntValue() <= 0)){
+                    friendEntry.setValue(friendValue);
+                }
+                //If for some reason reach below 0, limits to 0
+                if(friendEntry.getIntValue() < 0){
+                    friendEntry.setValue(0);
+                }
+
+                //Only if both values are 0, remove the gossip
+                if (repValue <= 0 && friendValue<=0) {
+                    reputationIterator.remove();
+                    friendshipIterator.remove();
+                }
             }
         }
+
 
         public boolean isObsolete() {
-            return this.associatedGossip.isEmpty();
+            return this.associatedReputation.isEmpty();
         }
 
-        public void clamp(TrollGossipType gossipType) {
-            int i = this.associatedGossip.getInt(gossipType);
-            if (i > gossipType.maxValue) {
-                this.associatedGossip.put(gossipType, gossipType.maxValue);
-            }
-            if (i < 2) {
-                this.remove(gossipType);
+        public void clamp(TrollGossipType gossipType, Object2IntMap<TrollGossipType> map, int maxValue) {
+            int i = map.getInt(gossipType);
+            if (i > maxValue) {
+                map.put(gossipType, maxValue);
             }
         }
 
         public void remove(TrollGossipType gossipType) {
-            this.associatedGossip.removeInt(gossipType);
+            this.associatedReputation.removeInt(gossipType);
         }
     }
 
-    record TrollGossipEntry(UUID target, TrollGossipType type, int value) {
+    record TrollGossipEntry(UUID target, TrollGossipType type, int reputationValue, int friendshipValue) {
         public static final Codec<TrollGossipEntry> CODEC =
                 RecordCodecBuilder.create(instance -> instance.group(
                                 ( Uuids.INT_STREAM_CODEC.fieldOf("Target")).forGetter(TrollGossipEntry::target),
                                 (TrollGossipType.CODEC.fieldOf("Type")).forGetter(TrollGossipEntry::type),
-                                (Codecs.POSITIVE_INT.fieldOf("Reputation")).forGetter(TrollGossipEntry::value))
+                                (Codecs.NONNEGATIVE_INT.fieldOf("Reputation")).forGetter(TrollGossipEntry::reputationValue),
+                                (Codecs.NONNEGATIVE_INT.fieldOf("zFriendship")).forGetter(TrollGossipEntry::friendshipValue))
                         .apply(instance, TrollGossipEntry::new));
         public static final Codec<List<TrollGossipEntry>> LIST_CODEC = CODEC.listOf();
 
         public int getValue() {
-            return this.value * this.type.multiplier;
+            return this.reputationValue * this.type.multiplier;
         }
     }
 
     public enum TrollGossipType implements StringIdentifiable
     {
         //Reputation
-        BARTERING("bartering", 1, 20, 2, 20),
+        BARTERING("bartering", 1, 20,20, 2, 2, 20),
         //+20 Max -> Barter
-        FEEDING("feeding", 1, 50, 10, 20),
+        FEEDING("feeding", 1, 50, 200,10, 0, 20),
         //+50 Max -> Give meat or alcohol
-        DEFENDING("defending", 1, 150, 1, 20),
+        DEFENDING("defending", 1, 150, 200, 1, 0, 20),
         //+150 Max -> Kill an attacker
-        KILL_TROLL("kill_troll", -1, 200, 10, 10),
+        KILL_TROLL("kill_troll", -1, 200, 200, 10, 5, 10),
         //-200 Max -> Kill another troll on sight
-        HURT("hurt", -1, 200, 20, 20);
+        HURT("hurt", -1, 200, 200, 20, 10, 20);
         //-200 Max -> Hurt the troll or a troll friend
 
         public final String key;
         public final int multiplier;
         public final int maxValue;
+        public final int maxFriendshipValue;
+        public final int friendshipDecay;
         public final int decay;
         public final int shareDecrement;
         public static final Codec<TrollGossipType> CODEC;
 
-        TrollGossipType(String key, int multiplier, int maxReputation, int decay, int shareDecrement) {
+        TrollGossipType(String key, int multiplier, int maxReputation,  int maxFriendshipValue, int decay, int friendshipDecay, int shareDecrement) {
             this.key = key;
             this.multiplier = multiplier;
             this.maxValue = maxReputation;
             this.decay = decay;
+            this.friendshipDecay=friendshipDecay;
             this.shareDecrement = shareDecrement;
+            this.maxFriendshipValue=maxFriendshipValue;
         }
 
         @Override

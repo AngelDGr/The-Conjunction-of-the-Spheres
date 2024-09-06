@@ -753,6 +753,48 @@
 				}
 			}
 		},
+		"special.give": {
+			"animation_length": 0.5,
+			"bones": {
+				"left_arm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutBack",
+							"easingArgs": []
+						},
+						"0.25": {
+							"vector": [-48.99124, 12.612, 6.56779],
+							"easing": "easeInOutBack",
+							"easingArgs": []
+						},
+						"0.5": {
+							"vector": [0, 0, 0],
+							"easing": "linear"
+						}
+					}
+				}
+			}
+		},
+		"special.admire": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.0417,
+			"bones": {
+				"left_arm": {
+					"rotation": {
+						"vector": [-41.15088, 11.72145, 13.0867],
+						"easing": "easeInOutBack",
+						"easingArgs": []
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [22, -12, 10],
+						"easing": "linear"
+					}
+				}
+			}
+		},
 		"special.jumping": {
 			"animation_length": 0.5,
 			"bones": {

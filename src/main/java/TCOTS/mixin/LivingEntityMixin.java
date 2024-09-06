@@ -1,6 +1,7 @@
 package TCOTS.mixin;
 
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.ogroids.RockTrollEntity;
 import TCOTS.interfaces.LivingEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.TCOTS_Effects;
@@ -24,6 +25,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.passive.GolemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -71,6 +73,10 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @Shadow public abstract float getMaxHealth();
 
     @Shadow public abstract float getHealth();
+
+    @Shadow public abstract @Nullable LivingEntity getAttacking();
+
+    @Shadow public abstract @Nullable LivingEntity getAttacker();
 
     //Killer Whale
     @Inject(method = "getNextAirUnderwater", at = @At("TAIL"), cancellable = true)
@@ -428,6 +434,19 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             }
         }
 
+    }
+
+    //Troll Reputation
+    @Inject(method = "onDeath", at = @At("TAIL"))
+    private void injectTrollTriggerDefending(DamageSource damageSource, CallbackInfo ci){
+        if(this.getWorld() instanceof ServerWorld && getAttacking() instanceof RockTrollEntity troll && getAttacker() instanceof PlayerEntity player){
+            if(!this.getWorld().isClient) {
+                ((ServerWorld) this.getWorld()).handleInteraction(RockTrollEntity.TROLL_DEFENDING, player, troll);
+                troll.handleNearTrollsInteraction(RockTrollEntity.TROLL_DEFENDING_FRIEND, player);
+                troll.getWorld().sendEntityStatus(troll, EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+                troll.handleNearTrollsParticles(EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+            }
+        }
     }
 
 }
