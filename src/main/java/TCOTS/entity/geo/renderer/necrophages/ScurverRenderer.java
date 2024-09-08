@@ -8,6 +8,8 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class ScurverRenderer extends GeoEntityRenderer<ScurverEntity> {
     public ScurverRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new ScurverModel());
+
+        this.shadowRadius = 0.5f;
     }
 
 }

@@ -15,6 +15,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class FoglingRenderer extends GeoEntityRenderer<FoglingEntity> {
     public FoglingRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new FoglingModel());
+        this.shadowRadius = 0.6f;
     }
 
     @Override

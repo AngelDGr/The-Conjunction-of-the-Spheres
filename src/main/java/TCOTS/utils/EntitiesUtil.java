@@ -1,12 +1,14 @@
 package TCOTS.utils;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.VehicleEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -90,6 +92,21 @@ public class EntitiesUtil {
                 return;
             }
         }
+    }
+
+    /**
+    Gets an ItemStack from an ItemEntity
+    @param stack The ItemEntity
+     */
+    public static ItemStack getItemFromStack(ItemEntity stack) {
+        ItemStack itemStack = stack.getStack();
+        ItemStack itemStack2 = itemStack.split(1);
+        if (itemStack.isEmpty()) {
+            stack.discard();
+        } else {
+            stack.setStack(itemStack);
+        }
+        return itemStack2;
     }
 
 }

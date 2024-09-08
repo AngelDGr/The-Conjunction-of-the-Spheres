@@ -15,6 +15,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class FogletRenderer extends GeoEntityRenderer<FogletEntity> {
     public FogletRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new FogletModel());
+        this.shadowRadius = 0.6f;
     }
     @Override
     public Identifier getTextureLocation(FogletEntity animatable) {

@@ -782,7 +782,7 @@
 			"bones": {
 				"left_arm": {
 					"rotation": {
-						"vector": [-41.15088, 11.72145, 13.0867],
+						"vector": [-41, 11, 13],
 						"easing": "easeInOutBack",
 						"easingArgs": []
 					}
@@ -790,6 +790,31 @@
 				"head": {
 					"rotation": {
 						"vector": [22, -12, 10],
+						"easing": "linear"
+					}
+				}
+			}
+		},
+		"special.eat": {
+			"loop": true,
+			"animation_length": 0.5,
+			"bones": {
+				"left_arm": {
+					"rotation": {
+						"vector": ["-59+(math.sin((query.anim_time*360))*4)", 15, 13],
+						"easing": "easeInOutBack",
+						"easingArgs": []
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time*360)*3", -10, 0],
+						"easing": "linear"
+					}
+				},
+				"lowJaw": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time*360)*20", 0, 0],
 						"easing": "linear"
 					}
 				}

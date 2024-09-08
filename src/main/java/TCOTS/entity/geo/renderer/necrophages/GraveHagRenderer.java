@@ -8,6 +8,8 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class GraveHagRenderer extends GeoEntityRenderer<GraveHagEntity> {
     public GraveHagRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new GraveHagModel());
+
+        this.shadowRadius = 0.5f;
     }
 
     @Override

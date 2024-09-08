@@ -8,6 +8,8 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class WaterHagRenderer extends GeoEntityRenderer<WaterHagEntity> {
     public WaterHagRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new WaterHagModel());
+
+        this.shadowRadius = 0.5f;
     }
 
     @Override

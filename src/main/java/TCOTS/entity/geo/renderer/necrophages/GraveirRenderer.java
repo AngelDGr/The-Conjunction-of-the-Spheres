@@ -10,6 +10,8 @@ public class GraveirRenderer extends GeoEntityRenderer<GraveirEntity> {
     public GraveirRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new GraveirModel());
 
+        this.shadowRadius = 0.7f;
+
         addRenderLayer(new AutoGlowingGeoLayer<>(this));
     }
 

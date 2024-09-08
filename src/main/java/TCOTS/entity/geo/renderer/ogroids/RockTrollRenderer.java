@@ -29,7 +29,6 @@ public class RockTrollRenderer extends GeoEntityRenderer<RockTrollEntity> {
     protected ItemStack offhandItem;
     public RockTrollRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new RockTrollModel());
-        //TODO: Add shadows to other renderers
         this.shadowRadius = 0.75f;
 
         //Rabid eyes

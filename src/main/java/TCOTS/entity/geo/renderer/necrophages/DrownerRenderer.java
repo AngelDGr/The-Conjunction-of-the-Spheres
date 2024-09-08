@@ -10,6 +10,8 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class DrownerRenderer extends GeoEntityRenderer<DrownerEntity> {
     public DrownerRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new DrownerModel());
+
+        this.shadowRadius = 0.5f;
     }
 
     @Override

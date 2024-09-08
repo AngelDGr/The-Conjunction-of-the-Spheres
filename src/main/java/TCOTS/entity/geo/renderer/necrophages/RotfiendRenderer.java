@@ -8,6 +8,8 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class RotfiendRenderer extends GeoEntityRenderer<RotfiendEntity> {
     public RotfiendRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new RotfiendModel());
+
+        this.shadowRadius = 0.5f;
     }
 
 }

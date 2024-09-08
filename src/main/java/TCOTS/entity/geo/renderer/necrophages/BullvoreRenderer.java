@@ -8,6 +8,8 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class BullvoreRenderer extends GeoEntityRenderer<BullvoreEntity> {
     public BullvoreRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new BullvoreModel());
+
+        this.shadowRadius = 0.9f;
     }
 
     @Override

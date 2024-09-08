@@ -18,6 +18,8 @@ public class GhoulRenderer extends GeoEntityRenderer<GhoulEntity> {
     public GhoulRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new GhoulModel());
 
+        this.shadowRadius = 0.7f;
+
         addRenderLayer(new GeoRenderLayer<>(this) {
             private static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/ghoul/ghoul_regen_layer.png");
 

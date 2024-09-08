@@ -18,6 +18,8 @@ public class AlghoulRenderer extends GeoEntityRenderer<AlghoulEntity> {
     public AlghoulRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new AlghoulModel());
 
+        this.shadowRadius = 0.9f;
+
         addRenderLayer(new GeoRenderLayer<>(this) {
             private static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/alghoul/alghoul_regen_layer.png");
 

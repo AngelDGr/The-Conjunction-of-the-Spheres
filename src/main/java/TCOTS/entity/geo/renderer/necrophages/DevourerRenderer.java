@@ -10,6 +10,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class DevourerRenderer extends GeoEntityRenderer<DevourerEntity> {
     public DevourerRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new DevourerModel());
+        this.shadowRadius = 0.55f;
     }
 
     @Override

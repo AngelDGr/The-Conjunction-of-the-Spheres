@@ -1,5 +1,6 @@
 package TCOTS.entity;
 
+import TCOTS.entity.ogroids.RockTrollEntity;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
@@ -9,17 +10,18 @@ import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.Uuids;
 import net.minecraft.util.annotation.Debug;
 import net.minecraft.util.dynamic.Codecs;
-import net.minecraft.util.math.random.Random;
 import org.slf4j.Logger;
 
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+@SuppressWarnings("unused")
 public class TrollGossips {
     private static final Logger LOGGER = LogUtils.getLogger();
     private final Map<UUID, Reputation> entityReputation = Maps.newHashMap();
@@ -48,6 +50,7 @@ public class TrollGossips {
         return this.entityReputation.entrySet().stream().flatMap(entryKey -> entryKey.getValue().entriesFor(entryKey.getKey()));
     }
 
+    @SuppressWarnings("all")
     private Collection<TrollGossipEntry> pickGossips(net.minecraft.util.math.random.Random random, int count) {
         List<TrollGossipEntry> list = this.entries().toList();
         if (list.isEmpty()) {
@@ -72,14 +75,52 @@ public class TrollGossips {
         return this.entityReputation.computeIfAbsent(target, uuid -> new Reputation());
     }
 
-    public void shareGossipFrom(TrollGossips from, Random random, int count) {
-        Collection<TrollGossipEntry> collection = from.pickGossips(random, count);
-        collection.forEach(gossip -> {
-            int i = gossip.reputationValue - gossip.type.shareDecrement;
-            if (i >= 2) {
-                this.getReputationFor(gossip.target).associatedReputation.mergeInt(gossip.type, i, TrollGossips::max);
-            }
-        });
+    public void shareGossipsWith(RockTrollEntity senderTroll, RockTrollEntity receiverTroll){
+        TrollGossips senderGossips = senderTroll.getGossip();
+        TrollGossips receiverGossips = receiverTroll.getGossip();
+
+        Collection<TrollGossipEntry> collectionSender = senderGossips.pickGossips(senderTroll.getRandom(), 10);
+        Collection<TrollGossipEntry> collectionReceiver = receiverGossips.pickGossips(senderTroll.getRandom(), 10);
+
+        List<UUID> listKnowPlayersForSender = new ArrayList<>();
+        List<UUID> listKnowPlayersForReceiver = new ArrayList<>();
+
+        collectionSender.forEach(
+                gossip ->
+                {
+                    if(!listKnowPlayersForSender.contains(gossip.target)){
+                        listKnowPlayersForSender.add(gossip.target);
+                    }
+                });
+
+        collectionReceiver.forEach(
+                gossip -> {
+                    if(!listKnowPlayersForReceiver.contains(gossip.target)){
+                        listKnowPlayersForReceiver.add(gossip.target);
+                    }
+                });
+
+
+        if(listKnowPlayersForReceiver != listKnowPlayersForSender){
+            collectionSender.forEach(
+                    gossip ->
+                            listKnowPlayersForSender.forEach(
+                                    player -> {
+                                        //Doesn't know that player, so it add the new gossip
+                                        if(!listKnowPlayersForReceiver.contains(player)){
+                                            int reputation = gossip.reputationValue;
+                                            int decrement = gossip.type.shareDecrement;
+                                            receiverGossips.startGossip(
+                                                    gossip.target,
+                                                    gossip.type,
+                                                    reputation-decrement <= 0 ? 1: reputation-decrement,
+                                                    0);
+                                            receiverTroll.getWorld().sendEntityStatus(receiverTroll, EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+                                        }
+                                    }
+                            )
+            );
+        }
     }
 
     public int getReputationFor(UUID target, Predicate<TrollGossipType> gossipTypeFilter) {
@@ -91,12 +132,6 @@ public class TrollGossips {
         Reputation reputation = this.entityReputation.get(target);
         return reputation != null ? reputation.getFriendshipValueFor(gossipTypeFilter) : 0;
     }
-
-//    public long getReputationCount(TrollGossipType type, DoublePredicate predicate) {
-//        return this.entityReputation.values().stream().filter(
-//                reputation ->
-//                        predicate.test(reputation.associatedGossip.getOrDefault(type, 0) * TrollGossipType.multiplier)).count();
-//    }
 
     public void startGossip(UUID target, TrollGossipType type, int reputationValue, int friendshipValue) {
         Reputation reputation = this.getReputationFor(target);
@@ -172,7 +207,6 @@ public class TrollGossips {
 
         public Reputation() {
         }
-
 
         public int getReputationValueFor(Predicate<TrollGossipType> gossipTypeFilter) {
             return this.associatedReputation.object2IntEntrySet().stream().filter(
@@ -265,15 +299,15 @@ public class TrollGossips {
     public enum TrollGossipType implements StringIdentifiable
     {
         //Reputation
-        BARTERING("bartering", 1, 20,20, 2, 2, 20),
+        BARTERING("bartering", 1, 20,20, 2, 2, 15),
         //+20 Max -> Barter
         FEEDING("feeding", 1, 50, 200,10, 0, 20),
         //+50 Max -> Give meat or alcohol
-        DEFENDING("defending", 1, 150, 200, 1, 0, 20),
+        DEFENDING("defending", 1, 150, 200, 1, 0, 10),
         //+150 Max -> Kill an attacker
-        KILL_TROLL("kill_troll", -1, 200, 200, 10, 5, 10),
+        KILL_TROLL("kill_troll", -1, 200, 200, 10, 5, 5),
         //-200 Max -> Kill another troll on sight
-        HURT("hurt", -1, 200, 200, 20, 10, 20);
+        HURT("hurt", -1, 200, 200, 20, 10, 10);
         //-200 Max -> Hurt the troll or a troll friend
 
         public final String key;

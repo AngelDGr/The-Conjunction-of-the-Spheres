@@ -8,5 +8,6 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class CyclopsRenderer extends GeoEntityRenderer<CyclopsEntity> {
     public CyclopsRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new CyclopsModel());
+        this.shadowRadius = 1.2f;
     }
 }

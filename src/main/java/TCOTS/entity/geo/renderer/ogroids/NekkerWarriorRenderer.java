@@ -8,5 +8,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class NekkerWarriorRenderer extends GeoEntityRenderer<NekkerWarriorEntity> {
     public NekkerWarriorRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new NekkerWarriorModel());
+
+        this.shadowRadius = 0.45f;
     }
 }
