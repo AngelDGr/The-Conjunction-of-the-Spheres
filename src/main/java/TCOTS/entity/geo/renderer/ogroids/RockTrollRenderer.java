@@ -73,7 +73,7 @@ public class RockTrollRenderer extends GeoEntityRenderer<RockTrollEntity> {
 
             // Do some quick render modifications depending on what the item is
             @Override
-            protected void renderStackForBone(MatrixStack poseStack, GeoBone bone, ItemStack stack, RockTrollEntity animatable,
+            protected void renderStackForBone(MatrixStack poseStack, GeoBone bone, ItemStack stack, RockTrollEntity troll,
                                               VertexConsumerProvider bufferSource, float partialTick, int packedLight, int packedOverlay) {
                 if (stack == RockTrollRenderer.this.mainHandItem) {
                     poseStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90f));
@@ -90,7 +90,7 @@ public class RockTrollRenderer extends GeoEntityRenderer<RockTrollEntity> {
                     }
                 }
 
-                super.renderStackForBone(poseStack, bone, stack, animatable, bufferSource, partialTick, packedLight, packedOverlay);
+                super.renderStackForBone(poseStack, bone, stack, troll, bufferSource, partialTick, packedLight, packedOverlay);
             }
         });
 

@@ -43,19 +43,16 @@ public class RockTrollModel extends BipedGeoModelBase<RockTrollEntity> {
         CoreGeoBone right_leg = getAnimationProcessor().getBone("right_leg_swing");
         CoreGeoBone left_arm =  getAnimationProcessor().getBone("left_arm_swing");
         CoreGeoBone right_arm = getAnimationProcessor().getBone("right_arm_swing");
+        CoreGeoBone left_hand = getAnimationProcessor().getBone("left_hand");
+        CoreGeoBone right_hand = getAnimationProcessor().getBone("right_hand");
         CoreGeoBone low_jaw = getAnimationProcessor().getBone("lowJaw");
 
         if (head != null && low_jaw!= null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
             //Admiring
-            if(troll.hasBarteringItem() && !troll.isLeftHanded()){
+            if(troll.hasBarteringItem()){
                 head.setRotX(((-22f) * MathHelper.RADIANS_PER_DEGREE));
-                head.setRotY((( 12f) * MathHelper.RADIANS_PER_DEGREE));
-                head.setRotZ(((-10f) * MathHelper.RADIANS_PER_DEGREE));
-                low_jaw.setRotX(0);
-            } else if(troll.hasBarteringItem() && troll.isLeftHanded()){
-                head.setRotX(((-22f) * MathHelper.RADIANS_PER_DEGREE));
-                head.setRotY(((-12f) * MathHelper.RADIANS_PER_DEGREE));
+                head.setRotY((troll.isLeftHanded()? -1: 1) * (( 12f) * MathHelper.RADIANS_PER_DEGREE));
                 head.setRotZ(((-10f) * MathHelper.RADIANS_PER_DEGREE));
                 low_jaw.setRotX(0);
             }
@@ -68,9 +65,8 @@ public class RockTrollModel extends BipedGeoModelBase<RockTrollEntity> {
             }
             //Eating
             else if(troll.getEatingTime()!=-1){
-                //math.sin(query.anim_time*360)*3
                 head.setRotX(this.getAnimationProgress(troll, animationState.getPartialTick()));
-                head.setRotY( 10f * MathHelper.RADIANS_PER_DEGREE);
+                head.setRotY((troll.isLeftHanded()? -1:1) *  (10f * MathHelper.RADIANS_PER_DEGREE));
                 head.setRotZ(0);
                 //Open and closes mouth
                 low_jaw.setRotX(this.getAnimationProgress(troll, animationState.getPartialTick())*2.8f);
@@ -89,7 +85,7 @@ public class RockTrollModel extends BipedGeoModelBase<RockTrollEntity> {
             }
         }
 
-        if(left_arm!=null && right_arm!=null && left_leg!=null && right_leg!=null){
+        if(left_arm!=null && right_arm!=null && left_leg!=null && right_leg!=null && left_hand!=null && right_hand!=null){
             if(!troll.handSwinging && !troll.hasBarteringItem() && troll.getEatingTime()==-1){
                 left_leg.setRotX((float)   -(Math.sin(animationState.getLimbSwing()*getLegsSpeed())*(animationState.getLimbSwingAmount()*getLegsAmount())));
                 right_leg.setRotX((float)   (Math.sin(animationState.getLimbSwing()*getLegsSpeed())*(animationState.getLimbSwingAmount()*getLegsAmount())));
@@ -104,32 +100,24 @@ public class RockTrollModel extends BipedGeoModelBase<RockTrollEntity> {
                     right_arm.setRotZ(0);
                     left_arm.setRotZ(0);
                 }
+
+                left_hand.setRotX(0);
+                left_hand.setRotY(0);
+                left_hand.setRotZ(0);
+
+                right_hand.setRotX(0);
+                right_hand.setRotY(0);
+                right_hand.setRotZ(0);
             }
             //Admiring
-            else if (troll.hasBarteringItem() && !troll.isLeftHanded()){
-                left_arm.setRotX(( 41f) * MathHelper.RADIANS_PER_DEGREE);
-                left_arm.setRotY((-11) * MathHelper.RADIANS_PER_DEGREE);
-                left_arm.setRotZ(( 13f) * MathHelper.RADIANS_PER_DEGREE);
+            else if (troll.hasBarteringItem()){
+                left_arm.setRotX(troll.isLeftHanded()? 0 : ( 41f) * MathHelper.RADIANS_PER_DEGREE);
+                left_arm.setRotY(troll.isLeftHanded()? 0 : (-11) * MathHelper.RADIANS_PER_DEGREE);
+                left_arm.setRotZ(troll.isLeftHanded()? 0 : ( 13f) * MathHelper.RADIANS_PER_DEGREE);
 
-                right_arm.setRotX(0);
-                right_arm.setRotY(0);
-                right_arm.setRotZ(0);
-
-                left_leg.setRotX(0);
-                left_leg.setRotY(0);
-                left_leg.setRotZ(0);
-
-                right_leg.setRotX(0);
-                right_leg.setRotY(0);
-                right_leg.setRotZ(0);
-            } else if (troll.hasBarteringItem() && troll.isLeftHanded()){
-                left_arm.setRotX(0);
-                left_arm.setRotY(0);
-                left_arm.setRotZ(0);
-
-                right_arm.setRotX(( 41f) * MathHelper.RADIANS_PER_DEGREE);
-                right_arm.setRotY(( 11) * MathHelper.RADIANS_PER_DEGREE);
-                right_arm.setRotZ((-13f) * MathHelper.RADIANS_PER_DEGREE);
+                right_arm.setRotX(troll.isLeftHanded()? (( 41f) * MathHelper.RADIANS_PER_DEGREE) : 0);
+                right_arm.setRotY(troll.isLeftHanded()? (( 11) * MathHelper.RADIANS_PER_DEGREE) : 0);
+                right_arm.setRotZ(troll.isLeftHanded()? ((-13f) * MathHelper.RADIANS_PER_DEGREE) : 0);
 
                 left_leg.setRotX(0);
                 left_leg.setRotY(0);
@@ -138,14 +126,24 @@ public class RockTrollModel extends BipedGeoModelBase<RockTrollEntity> {
                 right_leg.setRotX(0);
                 right_leg.setRotY(0);
                 right_leg.setRotZ(0);
-            } else if (troll.getEatingTime()!=-1 && !troll.isLeftHanded()){
-                left_arm.setRotX(( ( 70f) * MathHelper.RADIANS_PER_DEGREE) + (this.getAnimationProgress(troll, animationState.getPartialTick())));
-                left_arm.setRotY((-15f) * MathHelper.RADIANS_PER_DEGREE);
-                left_arm.setRotZ(( 13f) * MathHelper.RADIANS_PER_DEGREE);
 
-                right_arm.setRotX(0);
-                right_arm.setRotY(0);
-                right_arm.setRotZ(0);
+                left_hand.setRotX(0);
+                left_hand.setRotY(0);
+                left_hand.setRotZ(0);
+
+                right_hand.setRotX(0);
+                right_hand.setRotY(0);
+                right_hand.setRotZ(0);
+            }
+            //Eating
+            else if (troll.getEatingTime()!=-1){
+                left_arm.setRotX(troll.isLeftHanded()? 0: ( ( 70f) * MathHelper.RADIANS_PER_DEGREE) + (this.getAnimationProgress(troll, animationState.getPartialTick())));
+                left_arm.setRotY(troll.isLeftHanded()? 0: (-15f) * MathHelper.RADIANS_PER_DEGREE);
+                left_arm.setRotZ(troll.isLeftHanded()? 0: ( 13f) * MathHelper.RADIANS_PER_DEGREE);
+
+                right_arm.setRotX(troll.isLeftHanded()?  (( ( 70f) * MathHelper.RADIANS_PER_DEGREE) + (this.getAnimationProgress(troll, animationState.getPartialTick()))): 0);
+                right_arm.setRotY(troll.isLeftHanded()?  (( 15f) * MathHelper.RADIANS_PER_DEGREE): 0);
+                right_arm.setRotZ(troll.isLeftHanded()?  (( 13f) * MathHelper.RADIANS_PER_DEGREE): 0);
 
                 left_leg.setRotX(0);
                 left_leg.setRotY(0);
@@ -154,6 +152,14 @@ public class RockTrollModel extends BipedGeoModelBase<RockTrollEntity> {
                 right_leg.setRotX(0);
                 right_leg.setRotY(0);
                 right_leg.setRotZ(0);
+
+                left_hand.setRotX(troll.isLeftHanded()? 0: this.getAnimationProgress(troll, animationState.getPartialTick()));
+                left_hand.setRotY(0);
+                left_hand.setRotZ(0);
+
+                right_hand.setRotX(troll.isLeftHanded()? this.getAnimationProgress(troll, animationState.getPartialTick()): 0);
+                right_hand.setRotY(0);
+                right_hand.setRotZ(0);
             }
         }
     }

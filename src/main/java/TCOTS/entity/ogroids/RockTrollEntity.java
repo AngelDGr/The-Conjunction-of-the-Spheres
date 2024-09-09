@@ -4,7 +4,10 @@ import TCOTS.TCOTS_Main;
 import TCOTS.entity.TrollGossips;
 import TCOTS.entity.goals.MeleeAttackGoal_Animated;
 import TCOTS.entity.misc.Troll_RockProjectileEntity;
+import TCOTS.items.HerbalMixture;
+import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.WitcherAlcohol_Base;
+import TCOTS.items.concoctions.WitcherPotions_Base;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
@@ -62,10 +65,7 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedAttackMob, Angerable, Ownable, InteractionObserver {
@@ -93,7 +93,8 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     //xTODO: Add Reputation/Friendship values
     //xTODO: Add ways to increase/decrease values
     //xTODO: Add Bartering system (Using Amethyst Shards)
-    //TODO: Add Befriending system (Using Meat and Alcohol)
+    //xTODO: Add Befriending system (Using Meat and Alcohol)
+    //TODO: Add that only can receive updates in reputation when it's no following you
     //TODO: Add three states when they are friends; Follow, Guarding and Wandering
     // Follow: They follow you around and fight for you (Right click with HIGH friendship)
     // Guarding: You can set them in a specific position, similar to a dog sitting, they will protect the place (Right click)
@@ -792,7 +793,6 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     public static final EntityInteraction TROLL_BARTER = EntityInteraction.create("troll_trade");
     public static final EntityInteraction TROLL_BARTER_FRIEND = EntityInteraction.create("troll_fed_friend");
 
-    //Barter at 0 reputation
     //Follow at 100 friendship
     public int getReputation(PlayerEntity player) {
         return this.gossip.getReputationFor(player.getUuid(), gossipType -> true);
@@ -933,6 +933,11 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                     //Gives bartered item
                     this.give(troll, itemStack, player.getPos().add(0.0, 1.0, 0.0), vec3d, 0.3f);
                 }
+                //Gives Mutagen
+                if(this.getReputation(player) >= 70 && this.getRandom().nextBetween(0,8)==1){
+                    Vec3d vec3d = new Vec3d(0.3f, 0.3f, 0.3f);
+                    this.give(troll, new ItemStack(TCOTS_Items.TROLL_MUTAGEN), player.getPos().add(0.0, 1.0, 0.0), vec3d, 0.3f);
+                }
             }
             //Resets hand/Consumes Amethyst
             this.setStackInHand(Hand.OFF_HAND, ItemStack.EMPTY);
@@ -992,9 +997,24 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     }
 
     public boolean hasFoodOrAlcohol(){
-        return this.getStackInHand(Hand.OFF_HAND).getItem() == Items.BEEF || this.getStackInHand(Hand.OFF_HAND).getItem() instanceof WitcherAlcohol_Base;
+        return this.isEdible(this.getStackInHand(Hand.OFF_HAND).getItem()) || this.isDrinkable(this.getStackInHand(Hand.OFF_HAND).getItem());
     }
 
+    private boolean isEdible(Item item){
+        return item.isFood() && Objects.requireNonNull(item.getFoodComponent()).isMeat();
+    }
+
+    private boolean isDrinkable(Item item){
+        return (
+                item instanceof PotionItem
+                && !(item instanceof SplashPotionItem)
+                && !(item instanceof LingeringPotionItem)
+                && (!(item instanceof WitcherPotions_Base))
+        )
+                || item == Items.HONEY_BOTTLE
+                || item == Items.MILK_BUCKET
+                || item instanceof WitcherAlcohol_Base;
+    }
     @Override
     protected ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getStackInHand(hand);
@@ -1015,11 +1035,11 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                 return ActionResult.CONSUME;
             }
 
-            //TODO: Add animations for eating and drinking
+            //xTODO: Add animations for eating and drinking
             //Feed Troll
-            if (item == Items.BEEF) {
+            else if (isEdible(item)) {
                 if (!this.getWorld().isClient) {
-                    this.setStackInHand(Hand.OFF_HAND, new ItemStack(item));
+                    this.setStackInHand(Hand.OFF_HAND, itemStack.copyWithCount(1));
 
                     this.setLastPlayer(player);
                     this.setEatingTime(0);
@@ -1031,9 +1051,9 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                 return ActionResult.CONSUME;
             }
             //Give Alcohol to Troll
-            if (item instanceof WitcherAlcohol_Base) {
+            else if (isDrinkable(item)) {
                 if (!this.getWorld().isClient) {
-                    this.setStackInHand(Hand.OFF_HAND, new ItemStack(item));
+                    this.setStackInHand(Hand.OFF_HAND, itemStack.copyWithCount(1));
 
                     this.setLastPlayer(player);
                     this.setEatingTime(0);
@@ -1056,7 +1076,7 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         return super.interactMob(player, hand);
     }
 
-    private int admiringTime=0;
+    private int admiringTime=-1;
     public void setAdmiringTime(int admiringTime) {
         this.admiringTime = admiringTime;
     }
@@ -1105,7 +1125,7 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
 
     private void tickAdmiringItem(){
         //If player attacks mid-animation
-        if(this.getAdmiringTime() < TOTAL_ADMIRING_TIME && this.getAngerTime() > 0){
+        if(this.getAdmiringTime()!=-1 && this.getAdmiringTime() < TOTAL_ADMIRING_TIME && this.getAngerTime() > 0){
             this.setLastPlayer(null);
             this.dropLoot(this, this.getLastPlayer());
             this.setAdmiringTime(-1);
@@ -1121,78 +1141,86 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
 
     private void tickEatingItem(){
         //If player attacks mid-animation
-        if(this.getEatingTime() < TOTAL_EATING_TIME && this.getAngerTime() > 0){
+        if(this.getEatingTime()!=-1 && this.getEatingTime() < TOTAL_EATING_TIME && this.getAngerTime() > 0){
             this.setLastPlayer(null);
             this.setEatingTime(-1);
         }
 
         if(this.getEatingTime() < TOTAL_EATING_TIME && this.getEatingTime()!=-1){
+
             ItemStack foodStack = this.getStackInHand(Hand.OFF_HAND);
             this.addEatingTime();
-            if (foodStack.getUseAction() == UseAction.DRINK && this.getEatingTime()%5==0) {
+            if ((foodStack.getUseAction() == UseAction.DRINK) && this.getEatingTime()%5==0) {
                 this.playSound(this.getDrinkSound(foodStack), 0.5f, this.getWorld().random.nextFloat() * 0.1f + 0.9f);
             }
             if (foodStack.getUseAction() == UseAction.EAT && this.getEatingTime()%5==0) {
-                this.spawnItemParticles(foodStack, 5);
+                this.spawnItemParticles(foodStack);
                 this.playSound(this.getEatSound(foodStack), 0.5f + 0.5f * (float)this.random.nextInt(2), (this.random.nextFloat() - this.random.nextFloat()) * 0.2f + 1.0f);
             }
+
         } else if (this.getEatingTime() == TOTAL_EATING_TIME){
-            ItemStack foodStack = this.getStackInHand(Hand.OFF_HAND);
-            PlayerEntity player = this.getLastPlayer();
-            this.handleFeed(player, foodStack);
-            this.setEatingTime(-1);
+            this.handleEndsFeed(this.getLastPlayer(), this.getStackInHand(Hand.OFF_HAND));
         }
     }
 
-    //TODO: Fix the position for spawn particles
-    //TODO: Fix whatever it's happening with the particles
-    //TODO: Make it heals when eats
-    private void spawnItemParticles(ItemStack stack, int count) {
-        for (int i = 0; i < count; ++i) {
-            Vec3d vec3d = new Vec3d(((double)this.random.nextFloat() - 0.5) * 0.1, Math.random() * 0.1 + 0.1, 0.0);
-            vec3d = vec3d.rotateX(-this.getPitch() * ((float)Math.PI / 180));
-            vec3d = vec3d.rotateY(-this.getYaw() * ((float)Math.PI / 180));
-            double d = (double)(-this.random.nextFloat()) * 0.6 - 0.3;
-            Vec3d vec3d2 = new Vec3d(((double)this.random.nextFloat() - 0.5) * 0.3, d, 0.6);
-//            vec3d2 = vec3d2.rotateX(-this.getPitch() * ((float)Math.PI / 180));
-//            vec3d2 = vec3d2.rotateY(-this.getYaw() * ((float)Math.PI / 180));
-            vec3d2 = vec3d2.add(this.getX(), this.getEyeY(), this.getZ());
+    //xTODO: Fix the position for spawn particles
+    //xTODO: Fix whatever it's happening with the particles
+    //xTODO: Make it heals when eats
+    private void spawnItemParticles(ItemStack stack) {
+        for (int i = 0; i < 5; ++i) {
+
+            Vec3d vec3dVelocity = new Vec3d(
+                    ((double)this.random.nextFloat() - 0.5) * 0.1,
+                    Math.random() * 0.1 + 0.1,
+                    0.0)
+                    .rotateX(-this.getPitch() * ((float)Math.PI / 180))
+                    .rotateY(-this.getYaw() * ((float)Math.PI / 180));
+
             this.getWorld().addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, stack),
                     //Position
-                    vec3d2.x,
-                    vec3d2.y,
-                    vec3d2.z,
+                    this.getX() + (this.getRotationVector().x),
+                    this.getEyeY()-0.5,
+                    this.getZ() + (this.getRotationVector().z),
                     //Velocity
-                    vec3d.x,
-                    vec3d.y + 0.05,
-                    vec3d.z);
-
-//            this.getWorld().addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack),
-//                    this.getX() + this.getRotationVector().x / 2.0,
-//                    this.getY(),
-//                    this.getZ() + this.getRotationVector().z / 2.0,
-//
-//
-//                    vec3d.x,
-//                    vec3d.y + 0.05,
-//                    vec3d.z);
+                    vec3dVelocity.x,
+                    vec3dVelocity.y + 0.05,
+                    vec3dVelocity.z);
 
         }
     }
 
-    private void handleFeed(PlayerEntity player, ItemStack foodStack){
+    private void handleEndsFeed(PlayerEntity player, ItemStack foodStack){
         if(!this.getWorld().isClient) {
             if (foodStack.getUseAction() == UseAction.DRINK) {
                 ((ServerWorld) this.getWorld()).handleInteraction(TROLL_ALCOHOL, player, this);
                 this.handleNearTrollsInteraction(TROLL_ALCOHOL_FRIEND, player);
+
+                if(isDrinkable(foodStack.getItem())){
+                    ItemStack dropStack =
+                            (foodStack.getItem() == Items.HONEY_BOTTLE || foodStack.getItem() instanceof PotionItem || foodStack.getItem() instanceof HerbalMixture) ?
+                                    new ItemStack(Items.GLASS_BOTTLE):
+                            foodStack.getItem() == Items.MILK_BUCKET ?
+                                    new ItemStack(Items.BUCKET):
+                            ItemStack.EMPTY;
+
+                    foodStack.finishUsing(this.getWorld(), this);
+
+                    this.dropStack(dropStack);
+                }
             }
 
             if (foodStack.getUseAction() == UseAction.EAT) {
                 ((ServerWorld) this.getWorld()).handleInteraction(TROLL_FED, player, this);
                 this.handleNearTrollsInteraction(TROLL_FED_FRIEND, player);
+                if(foodStack.getFoodComponent()!=null){
+                    this.heal(foodStack.getFoodComponent().getHunger());
+                }
             }
+
             this.getWorld().sendEntityStatus(this, EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
             this.setStackInHand(Hand.OFF_HAND, ItemStack.EMPTY);
+
+            this.setEatingTime(-1);
         }
     }
 
@@ -1286,8 +1314,6 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
             this.produceParticles(ParticleTypes.HAPPY_VILLAGER);
         } else if (status == EntityStatuses.ADD_SPLASH_PARTICLES) {
             this.produceParticles(ParticleTypes.SPLASH);
-        } else if (status == EntityStatuses.CREATE_EATING_PARTICLES){
-
         }
         else {
             super.handleStatus(status);

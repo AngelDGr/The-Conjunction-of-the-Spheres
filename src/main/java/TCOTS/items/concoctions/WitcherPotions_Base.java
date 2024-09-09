@@ -76,7 +76,7 @@ public class WitcherPotions_Base extends PotionItem {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        PlayerEntity playerEntity = user instanceof PlayerEntity ? (PlayerEntity)user : null;
+        PlayerEntity playerEntity = user instanceof PlayerEntity ? (PlayerEntity) user : null;
         if (playerEntity instanceof ServerPlayerEntity) {
             //Add toxicity
             playerEntity.theConjunctionOfTheSpheres$addToxicity(getToxicity(),decoction);
@@ -86,7 +86,7 @@ public class WitcherPotions_Base extends PotionItem {
 
         if (!world.isClient) {
             if(getStatusEffect().getEffectType().isInstant()){
-                this.getStatusEffect().getEffectType().applyInstantEffect(playerEntity, playerEntity, user, this.getStatusEffect().getAmplifier(), 1.0);}
+                this.getStatusEffect().getEffectType().applyInstantEffect(user, user, user, this.getStatusEffect().getAmplifier(), 1.0);}
             else{user.addStatusEffect(new StatusEffectInstance(getStatusEffect()));}
         }
 
@@ -98,13 +98,14 @@ public class WitcherPotions_Base extends PotionItem {
         }
         user.emitGameEvent(GameEvent.DRINK);
 
-        ItemStack stack_Empty = getStackEmptyBottle();
+        ItemStack stack_Empty = getStackEmptyBottle(this);
 
-        stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
+
 
         if (stack.isEmpty()) {
             return stack_Empty;
         }
+
         if (user instanceof PlayerEntity) {
             if (!playerEntity.getAbilities().creativeMode) {
                 if (!playerEntity.getInventory().insertStack(stack_Empty)) {
@@ -117,11 +118,11 @@ public class WitcherPotions_Base extends PotionItem {
     }
 
     @NotNull
-    private ItemStack getStackEmptyBottle() {
+    public static ItemStack getStackEmptyBottle(WitcherPotions_Base item) {
         ItemStack stack_Empty;
 
-        if(!decoction){
-            stack_Empty = switch (this.getMaxCount()) {
+        if(!item.decoction){
+            stack_Empty = switch (item.getMaxCount()) {
                 default -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_2);
                 case 3 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_3);
                 case 4 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_4);
@@ -129,6 +130,8 @@ public class WitcherPotions_Base extends PotionItem {
             };
         }
         else {stack_Empty = new ItemStack(TCOTS_Items.EMPTY_MONSTER_DECOCTION);}
+        stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(item).toString());
+
         return stack_Empty;
     }
 

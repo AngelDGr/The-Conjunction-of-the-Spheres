@@ -18,6 +18,7 @@ import net.minecraft.util.dynamic.Codecs;
 import org.slf4j.Logger;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -76,14 +77,15 @@ public class TrollGossips {
     }
 
     public void shareGossipsWith(RockTrollEntity senderTroll, RockTrollEntity receiverTroll){
-        TrollGossips senderGossips = senderTroll.getGossip();
+        TrollGossips senderGossips= senderTroll.getGossip();
         TrollGossips receiverGossips = receiverTroll.getGossip();
 
-        Collection<TrollGossipEntry> collectionSender = senderGossips.pickGossips(senderTroll.getRandom(), 10);
-        Collection<TrollGossipEntry> collectionReceiver = receiverGossips.pickGossips(senderTroll.getRandom(), 10);
+        Collection<TrollGossipEntry>  collectionSender = senderGossips.entries().toList();
+        Collection<TrollGossipEntry>  collectionReceiver = receiverGossips.entries().toList();
 
         List<UUID> listKnowPlayersForSender = new ArrayList<>();
         List<UUID> listKnowPlayersForReceiver = new ArrayList<>();
+
 
         collectionSender.forEach(
                 gossip ->
@@ -100,26 +102,51 @@ public class TrollGossips {
                     }
                 });
 
-
-        if(listKnowPlayersForReceiver != listKnowPlayersForSender){
+        if(!(new HashSet<>(listKnowPlayersForReceiver).containsAll(listKnowPlayersForSender))){
+            AtomicBoolean triggerParticles= new AtomicBoolean(false);
             collectionSender.forEach(
                     gossip ->
-                            listKnowPlayersForSender.forEach(
-                                    player -> {
-                                        //Doesn't know that player, so it add the new gossip
-                                        if(!listKnowPlayersForReceiver.contains(player)){
-                                            int reputation = gossip.reputationValue;
-                                            int decrement = gossip.type.shareDecrement;
-                                            receiverGossips.startGossip(
-                                                    gossip.target,
-                                                    gossip.type,
-                                                    reputation-decrement <= 0 ? 1: reputation-decrement,
-                                                    0);
-                                            receiverTroll.getWorld().sendEntityStatus(receiverTroll, EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
-                                        }
-                                    }
-                            )
+                    {
+//                        listKnowPlayersForSender.forEach(
+//                                player -> {
+//                                    //Doesn't know that player, so it add the new gossip
+//                                    if (!listKnowPlayersForReceiver.contains(player)) {
+//                                        int reputation = gossip.reputationValue;
+//                                        int decrement = gossip.type.shareDecrement;
+//
+//                                        receiverGossips.startGossip(
+//                                                gossip.target,
+//                                                gossip.type,
+//                                                reputation - decrement <= 0 ? 1 : reputation - decrement,
+//                                                0);
+//
+//                                        System.out.println("TriggerGossip");
+////                                            triggerParticles.set(true);
+//                                    } else {
+//                                        System.out.println("NotTriggerGossip");
+//                                    }
+//                                }
+//                        );
+
+                        //Doesn't know that player, so it add the new gossip
+                        if (!listKnowPlayersForReceiver.contains(gossip.target)) {
+                            int reputation = gossip.reputationValue;
+                            int decrement = gossip.type.shareDecrement;
+
+                            receiverGossips.startGossip(
+                                    gossip.target,
+                                    gossip.type,
+                                    reputation - decrement <= 0 ? 1 : reputation - decrement,
+                                    0);
+
+                          triggerParticles.set(true);
+                        }
+                    }
             );
+
+            if(triggerParticles.get()){
+                receiverTroll.getWorld().sendEntityStatus(receiverTroll, EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+            }
         }
     }
 
