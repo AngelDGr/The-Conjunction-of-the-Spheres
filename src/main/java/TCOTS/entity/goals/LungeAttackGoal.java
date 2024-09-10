@@ -67,8 +67,6 @@ public class LungeAttackGoal extends Goal {
 
         return true;
     }
-
-    Vec3d vec3D_lunge;
     int randomExtra;
 
     @Override
@@ -110,10 +108,18 @@ public class LungeAttackGoal extends Goal {
             //Extra random ticks in cooldown
             randomExtra = mob.getRandom().nextInt(51);
 
-            vec3D_lunge = getVec3d(target).normalize();
+            Vec3d vec3D_lunge = getVec3d(target).normalize();
             if(lungeMob instanceof GeoEntity){
                 ((GeoEntity) lungeMob).triggerAnim("LungeController","lunge");
             }
+
+            //Vanilla way
+//            Vec3d vec3d = this.mob.getVelocity();
+//            Vec3d vec3d2 = new Vec3d(target.getX() - this.mob.getX(), 0.0, target.getZ() - this.mob.getZ());
+//            if (vec3d2.lengthSquared() > 1.0E-7) {
+//                vec3d2 = vec3d2.normalize().multiply(0.4).add(vec3d.multiply(SpeedLungeMultiplier));
+//            }
+//            this.mob.setVelocity(vec3d2.x, 0.35, vec3d2.z);
 
             //0.35 Y default
             mob.setVelocity(mob.getVelocity().add(vec3D_lunge.x, 0.35, vec3D_lunge.z));

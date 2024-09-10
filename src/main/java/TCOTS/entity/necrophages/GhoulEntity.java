@@ -10,6 +10,8 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -267,7 +269,14 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
             List<ItemEntity> list = searchFleshList();
 
             if (!list.isEmpty()) {
-                this.ghoul.getNavigation().startMovingTo(list.get(0), speed);
+                this.startMovingTo(ghoul.getNavigation(), list.get(0), speed);
+            }
+        }
+
+        public void startMovingTo(EntityNavigation navigation, Entity entity, double speed) {
+            Path path = navigation.findPathTo(entity, 0);
+            if (path != null) {
+                navigation.startMovingAlong(path, speed);
             }
         }
 
@@ -279,7 +288,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
 
             if(timerToEat==0) {
                 if (!list.isEmpty()) {
-                    this.ghoul.getNavigation().startMovingTo(list.get(0), speed);
+                    this.startMovingTo(ghoul.getNavigation(), list.get(0), speed);
                     this.ghoul.getLookControl().lookAt(list.get(0), 30.0f, 30.0f);
                 }
 

@@ -52,8 +52,14 @@ public class Troll_RockProjectileEntity extends ThrownItemEntity {
         Entity entity = entityHitResult.getEntity();
 
         this.playSound(TCOTS_Sounds.ROCK_PROJECTILE_IMPACT, 1, 1);
-        //If hits another Rock Troll, and the thrower hasn't an owner, then it doesn't damage it
-        if(entity instanceof RockTrollEntity && ((this.getOwner() instanceof RockTrollEntity troll) && troll.getOwner()==null))
+
+
+        if(
+                //If hits another Rock Troll, and the thrower hasn't an owner, then it doesn't damage it
+                (entity instanceof RockTrollEntity && this.getOwner() instanceof RockTrollEntity troll && troll.getOwner()==null) ||
+                //If hits another troll, and the owner it's the same, then it doesn't damage it
+                (entity instanceof RockTrollEntity trollHit && this.getOwner() instanceof RockTrollEntity troll2 && troll2.getOwner()== trollHit.getOwner())
+        )
             return;
 
         double d = this.getX() - entity.getX();

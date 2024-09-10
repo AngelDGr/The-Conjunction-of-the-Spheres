@@ -216,6 +216,11 @@
     "item.tcots-witcher.cave_troll_liver": "Cave Troll Liver",
     "item.tcots-witcher.troll_mutagen": "Troll Mutagen",
 
+    "tcots-witcher.gui.troll_follows": "%1$s is now following you",
+    "tcots-witcher.gui.troll_waits": "%1$s will wait for you, guarding this position",
+    "tcots-witcher.gui.troll_wandering": "%1$s is not longer your follower",
+
+
 
     "block.tcots-witcher.nest_slab": "Nest Slab",
     "block.tcots-witcher.nest_skull": "Nest Skull",
