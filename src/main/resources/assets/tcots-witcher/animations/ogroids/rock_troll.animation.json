@@ -789,7 +789,7 @@
 				},
 				"head": {
 					"rotation": {
-						"vector": [22, -12, 10],
+						"vector": [22, -12, -10],
 						"easing": "linear"
 					}
 				}
@@ -1053,57 +1053,6 @@
 				}
 			}
 		},
-		"special.bestiary_pose": {
-			"loop": true,
-			"bones": {
-				"upperBody_Head": {
-					"rotation": {
-						"vector": [10, 15, 0],
-						"easing": "linear"
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [-2.15349, -29.69515, 0.00214],
-						"easing": "linear"
-					}
-				},
-				"left_arm": {
-					"rotation": {
-						"vector": [-32.1594, -19.89054, -33.22901],
-						"easing": "linear"
-					}
-				},
-				"right_arm": {
-					"rotation": {
-						"vector": [-24.97721, -16.04702, 45.52617],
-						"easing": "linear"
-					}
-				},
-				"right_leg": {
-					"rotation": {
-						"vector": [2.00307, 14.8687, 7.7614],
-						"easing": "linear"
-					}
-				},
-				"left_leg": {
-					"rotation": {
-						"vector": [2.59775, -27.38656, -5.63304],
-						"easing": "linear"
-					}
-				},
-				"clothFront": {
-					"rotation": {
-						"vector": [-17.5, 0, 0],
-						"easing": "linear"
-					},
-					"position": {
-						"vector": [0, 0, -2],
-						"easing": "linear"
-					}
-				}
-			}
-		},
 		"special.jumping_complete": {
 			"animation_length": 1.25,
 			"bones": {
@@ -1252,6 +1201,47 @@
 							"vector": [0, 0, 0],
 							"easing": "linear"
 						}
+					}
+				}
+			}
+		},
+		"special.bestiary_pose": {
+			"loop": true,
+			"bones": {
+				"upperBody_Head": {
+					"rotation": {
+						"vector": [12.79362, 12.19908, 2.74715],
+						"easing": "linear"
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [-3.97809, -38.202, -7.66224],
+						"easing": "linear"
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [-21.80718, 23.83006, -17.12983],
+						"easing": "linear"
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [-54.53345, -19.95465, -1.49297],
+						"easing": "linear"
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": [0.44067, 9.99038, 2.53852],
+						"easing": "linear"
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"vector": [2.4905, -0.21782, -0.00473],
+						"easing": "linear"
 					}
 				}
 			}

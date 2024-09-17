@@ -60,6 +60,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -70,6 +71,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedAttackMob, Angerable, Ownable, InteractionObserver {
     //xTODO: Add sounds
@@ -79,7 +81,7 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     //xTODO: Add drops
     //xTODO: Add mutagen and decoction
 
-    //TODO: Add villager-like system
+    //xTODO: Add villager-like system
 
     // They have two values; Reputation and Friendship.
     // Reputation determines if you can barter with them
@@ -96,25 +98,24 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     //xTODO: Add ways to increase/decrease values
     //xTODO: Add Bartering system (Using Amethyst Shards)
     //xTODO: Add Befriending system (Using Meat and Alcohol)
-    //TODO: Add that only can receive updates in reputation when it's no following you
-    //TODO: Add three states when they are friends; Follow, Guarding and Wandering
-    // Follow: They follow you around and fight for you (Right click with HIGH friendship)
-    // Guarding: You can set them in a specific position, similar to a dog sitting, they will protect the place (Right click)
-    // Wandering: They are just gonna wander on their own, like a normal mob (Shift+Right click)
+    //xTODO: Add three states when they are friends; Follow, Guarding and Wandering
+    // xFollow: They follow you around and fight for you (Right click with HIGH friendship)
+    // xGuarding: You can set them in a specific position, similar to a dog sitting, they will protect the place (Right click)
+    // xWandering: They are just gonna wander on their own, like a normal mob (Shift+Right click)
     // Orders:
     // If they are following you, you can use a stick to indicate them to move to that place, after that, they are gonna automatically going
-    // to enter in the Guarding mode. If you have multiple Trolls following you, one randomly it's going to follow the order, if the Troll has a
-    // name AND the stick has the same name, the specific named Troll it's going to move to that place, no matters if it's following you or not.
+    // to enter in the Guarding mode.
     //xYou can heal them using meat
 
-    //TODO  Add Villager-Like sounds using voice dialogue
+    //xTODO: They defend you when you are a friend (like foxes)
+    //xTODO  Add Villager-Like sounds using voice dialogue
     //      If you have neutral reputation, they just talk normally ("Talk?")
     //      If you have bad reputation,  they say other things
     //      If you have good reputation, they are happy to see u
     //      You can Amethyst to them (They say "Good!" or "Rocks!")
     //      They give you something, and also increases reputation (They say "Take!" or something)
-    //TODO: Add Follower/Pet System
-    //TODO: Add bestiary description
+    //xTODO: Add Follower/Pet System
+    //xTODO: Add bestiary description
     //TODO: Add spawn
     //TODO: Add possible village-like structure?
 
@@ -130,6 +131,7 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     protected static final TrackedData<Boolean> RABID = DataTracker.registerData(RockTrollEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Integer> EATING_TIME = DataTracker.registerData(RockTrollEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<BlockPos> GUARDING_POS = DataTracker.registerData(RockTrollEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
+    private static final TrackedData<Integer> FOLLOWER_STATE = DataTracker.registerData(RockTrollEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
 
 
@@ -150,7 +152,7 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
 
         this.goalSelector.add(4, new GoForItemInGroundGoal(this, 1.2D));
 
-        this.goalSelector.add(5, new TrollFollowFriendGoal(this, 1.2D, 10.0f, 2.0f, false));
+        this.goalSelector.add(5, new TrollFollowFriendGoal(this, 1.2D, 5.0f, 2.0f, false));
 
         this.goalSelector.add(6, new ReturnToGuardPosition(this, 1.2D));
 
@@ -170,17 +172,22 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         this.targetSelector.add(0, new AttackOwnerAttackerTarget(this));
         this.targetSelector.add(1, new AttackOwnerEnemyTarget(this));
 
+        //Defending a place
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MobEntity.class,
                 5, true, false,
                 entity -> entity instanceof Monster && !(entity instanceof CreeperEntity) && !(entity instanceof RockTrollEntity) && this.isWaiting()));
 
+        this.targetSelector.add(3, new DefendFriendGoal(this, LivingEntity.class, false, true, entity ->
+                entity instanceof PlayerEntity player?
+                !(this.getFriendship(player) > 80 && this.getReputation(player) > 100):
+                        !(entity instanceof RockTrollEntity troll) || troll.isRabid()));
 
-        this.targetSelector.add(3, new RockTrollTargetWithReputationGoal(this));
-        this.targetSelector.add(4, new TrollRevengeGoal(this).setGroupRevenge());
-        this.targetSelector.add(5, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAtPlayer));
-        this.targetSelector.add(6, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
-        this.targetSelector.add(7, new ActiveTargetGoal<>(this, RaiderEntity.class, true));
-        this.targetSelector.add(8, new TrollUniversalAngerGoal<>(this, true));
+        this.targetSelector.add(4, new RockTrollTargetWithReputationGoal(this));
+        this.targetSelector.add(5, new TrollRevengeGoal(this).setGroupRevenge());
+        this.targetSelector.add(6, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAtPlayer));
+        this.targetSelector.add(7, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
+        this.targetSelector.add(8, new ActiveTargetGoal<>(this, RaiderEntity.class, true));
+        this.targetSelector.add(9, new TrollUniversalAngerGoal<>(this, true));
     }
 
     private static class MeleeAttackGoal_Troll extends MeleeAttackGoal_Animated {
@@ -483,8 +490,8 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
 
                 if (this.mob == otherTrolls
                         || otherTrolls.getTarget() != null
-                        || this.mob instanceof TameableEntity && ((TameableEntity) this.mob).getOwner()
-                        != otherTrolls.getOwner() || otherTrolls.isTeammate(this.mob.getAttacker())
+                        || this.mob instanceof TameableEntity && ((TameableEntity) this.mob).getOwner() != otherTrolls.getOwner()
+                        || otherTrolls.isTeammate(this.mob.getAttacker())
                         || otherTrolls.isRabid()) continue;
 
                 //The Rabid Trolls don't trigger others
@@ -508,6 +515,50 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
 
         protected void setMobEntityTarget(MobEntity mob, LivingEntity target) {
             mob.setTarget(target);
+        }
+    }
+    public static class DefendFriendGoal extends ActiveTargetGoal<LivingEntity> {
+        @Nullable
+        private LivingEntity offender;
+        @Nullable
+        private LivingEntity friend;
+        private int lastAttackedTime;
+        private final RockTrollEntity troll;
+
+        public DefendFriendGoal(RockTrollEntity troll, Class<LivingEntity> targetEntityClass, boolean checkVisibility, boolean checkCanNavigate, Predicate<LivingEntity> targetPredicate) {
+            super(troll, targetEntityClass, 10, checkVisibility, checkCanNavigate, targetPredicate);
+            this.troll=troll;
+        }
+
+        @Override
+        public boolean canStart() {
+            if (this.reciprocalChance > 0 && this.mob.getRandom().nextInt(this.reciprocalChance) != 0) {
+                return false;
+            }
+
+            for (PlayerEntity player :
+                    troll.getWorld().getEntitiesByClass(PlayerEntity.class, troll.getBoundingBox().expand(10, 5, 10),
+                    player -> (troll.getReputation(player)>100) || (troll.getFriendship(player)>80))) {
+
+                LivingEntity livingEntity;
+
+                this.friend = livingEntity = player;
+
+                this.offender = livingEntity.getAttacker();
+                return livingEntity.getLastAttackedTime() != this.lastAttackedTime && this.canTrack(this.offender, this.targetPredicate);
+            }
+
+            return false;
+        }
+
+        @Override
+        public void start() {
+            this.setTargetEntity(this.offender);
+            this.targetEntity = this.offender;
+            if (this.friend != null) {
+                this.lastAttackedTime = this.friend.getLastAttackedTime();
+            }
+            super.start();
         }
     }
 
@@ -596,7 +647,9 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     }
 
     //Following
+    @SuppressWarnings("unused")
     private static class TrollFollowFriendGoal extends Goal {
+
         public static final int TELEPORT_DISTANCE = 12;
         private static final int HORIZONTAL_RANGE = 2;
         private static final int HORIZONTAL_VARIATION = 3;
@@ -681,7 +734,7 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                 return;
             }
             this.updateCountdownTicks = this.getTickCount(10);
-            if (this.troll.squaredDistanceTo(this.owner) >= 144.0) {
+            if (this.troll.squaredDistanceTo(this.owner) >= 324.0) {
                 this.tryTeleport();
             } else {
                 this.navigation.startMovingTo(this.owner, this.speed);
@@ -750,12 +803,12 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
 
         @Override
         public void start() {
-            this.troll.getNavigation().startMovingTo(troll.getGuardingPos().getX(), troll.getGuardingPos().getY(), troll.getGuardingPos().getZ(), speed);
+            this.startMovingTo(troll.getNavigation(), troll.getGuardingPos().getX(), troll.getGuardingPos().getY(), troll.getGuardingPos().getZ(), speed);
         }
 
         @Override
         public void tick() {
-            this.troll.getNavigation().startMovingTo(troll.getGuardingPos().getX(), troll.getGuardingPos().getY(), troll.getGuardingPos().getZ(), speed);
+            this.startMovingTo(troll.getNavigation(), troll.getGuardingPos().getX(), troll.getGuardingPos().getY(), troll.getGuardingPos().getZ(), speed);
         }
 
         private List<ItemEntity> searchItemsList(){
@@ -767,6 +820,11 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                                             && ((item.getStack().getItem() == RockTrollEntity.BARTERING_ITEM && troll.isWandering())
                                             || troll.isEdible(item.getStack().getItem()) || troll.isAlcohol(item.getStack().getItem())));
         }
+
+        public void startMovingTo(EntityNavigation navigation, int x, int y, int z, double speed) {
+            navigation.startMovingAlong(navigation.findPathTo(x, y, z, 0), speed);
+        }
+
     }
 
     @Override
@@ -784,6 +842,18 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         //If it's NOT rabid, doesn't attack the Raider
         if(!this.isRabid() && target instanceof RaiderEntity){
             return false;
+        }
+
+        if(target instanceof PlayerEntity player && this.getOwner() == target){
+            if(this.getFriendship(player)>=75){
+                return false;
+            } else {
+                this.setOwner(null);
+                this.setFollowerState(0);
+                player.sendMessage(Text.translatable("tcots-witcher.gui.troll_wandering", this.getName()), true);
+                this.setGuardingPos(BlockPos.ORIGIN);
+                return true;
+            }
         }
 
         if (target instanceof PlayerEntity && this.getWorld().getDifficulty() == Difficulty.PEACEFUL) {
@@ -969,6 +1039,7 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         this.dataTracker.startTracking(RABID, Boolean.FALSE);
         this.dataTracker.startTracking(EATING_TIME, -1);
         this.dataTracker.startTracking(GUARDING_POS, BlockPos.ORIGIN);
+        this.dataTracker.startTracking(FOLLOWER_STATE, 0);
     }
 
     //Reputation System
@@ -1013,8 +1084,8 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         //Good actions
         if(interaction == TROLL_DEFENDING){
             //+30 Reputation
-            //+50 Friendship
-            this.gossip.startGossip(entity.getUuid(), TrollGossips.TrollGossipType.DEFENDING, 30, 50);
+            //+50/20 Friendship (20 when they already your follower)
+            this.gossip.startGossip(entity.getUuid(), TrollGossips.TrollGossipType.DEFENDING, 30, this.getOwner() == entity? 20: 50);
         } else if(interaction == TROLL_DEFENDING_FRIEND){
             //+30 Reputation
             //+10 Friendship
@@ -1094,6 +1165,10 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     public void onDeath(DamageSource damageSource) {
         Entity attacker = damageSource.getAttacker();
 
+        if (!this.getWorld().isClient && this.getWorld().getGameRules().getBoolean(GameRules.SHOW_DEATH_MESSAGES) && this.getOwner() instanceof ServerPlayerEntity) {
+            this.getOwner().sendMessage(this.getDamageTracker().getDeathMessage());
+        }
+
         if(!this.isRabid() && this.getWorld() instanceof ServerWorld && attacker instanceof PlayerEntity player) {
             this.handleNearTrollsInteraction(TROLL_KILLED, player);
             this.handleNearTrollsParticles(EntityStatuses.ADD_VILLAGER_ANGRY_PARTICLES);
@@ -1143,6 +1218,8 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
             this.setStackInHand(Hand.OFF_HAND, ItemStack.EMPTY);
             //Removes the player from the NBT
             this.setLastPlayer(null);
+
+            this.playSound(TCOTS_Sounds.TROLL_BARTERING, 1.0f, 1.0f);
         } else {
             //Resets hand/Consumes Amethyst
             this.setStackInHand(Hand.OFF_HAND, ItemStack.EMPTY);
@@ -1188,7 +1265,6 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         }
     }
 
-
     public void give(LivingEntity entity, ItemStack stack, Vec3d targetLocation, Vec3d velocityFactor, float yOffset) {
         double d = entity.getEyeY() - (double)yOffset;
         ItemEntity itemEntity = new ItemEntity(entity.getWorld(), entity.getX(), d, entity.getZ(), stack);
@@ -1218,6 +1294,7 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                 && !(item instanceof SplashPotionItem)
                 && !(item instanceof LingeringPotionItem)
                 && (!(item instanceof WitcherPotions_Base))
+                && !this.isWandering()
         )
                 || item == Items.HONEY_BOTTLE
                 || item == Items.MILK_BUCKET
@@ -1227,89 +1304,18 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     private boolean isAlcohol(Item item){
         return item instanceof WitcherAlcohol_Base;
     }
+
     @Override
-    protected ActionResult interactMob(PlayerEntity player, Hand hand) {
+    protected ActionResult interactMob(@NotNull PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getStackInHand(hand);
         Item item = itemStack.getItem();
+
+        //Ensure this is only processed on the server
         //You can only interact with them when they aren't attacking and aren't bartering and isn't rabid and isn't blocking
-        if(!this.isAttacking() && !this.hasBarteringItem() && !this.isRabid() && !this.isBlocking() && !this.hasFoodOrAlcohol()) {
-            //Barter with Troll, only when the player it's above -75 Reputation
-            if (item == BARTERING_ITEM && this.getReputation(player)>=-75 && this.isWandering()) {
-                if (!this.getWorld().isClient) {
-                    this.setStackInHand(Hand.OFF_HAND, new ItemStack(BARTERING_ITEM));
+        if (!this.getWorld().isClient && !this.isAttacking() && !this.hasBarteringItem() && !this.isRabid() && !this.isBlocking() && !this.hasFoodOrAlcohol() && this.getAngerTime() == 0) {
 
-                    this.setLastPlayer(player);
-                    this.setAdmiringTime(0);
-
-                    itemStack.decrement(1);
-                    this.setPersistent();
-                }
-                return ActionResult.CONSUME;
-            }
-
-            //xTODO: Add animations for eating and drinking
-            //Feed Troll
-            else if (isEdible(item)) {
-                if (!this.getWorld().isClient) {
-                    this.setStackInHand(Hand.OFF_HAND, itemStack.copyWithCount(1));
-
-                    this.setLastPlayer(player);
-                    this.setEatingTime(0);
-
-                    itemStack.decrement(1);
-                    this.setPersistent();
-                }
-
-                return ActionResult.CONSUME;
-            }
-            //Give Alcohol to Troll
-            else if (isDrinkable(item)) {
-                if (!this.getWorld().isClient) {
-                    this.setStackInHand(Hand.OFF_HAND, itemStack.copyWithCount(1));
-
-                    this.setLastPlayer(player);
-                    this.setEatingTime(0);
-
-                    itemStack.decrement(1);
-                    this.setPersistent();
-                }
-                return ActionResult.CONSUME;
-            }
-
-            if (item == Items.STICK) {
-                //TODO: Only for debug, remove this later
-                if (!this.getWorld().isClient && player instanceof ServerPlayerEntity) {
-                    player.sendMessage(Text.literal("Reputation: " + this.getReputation(player)));
-                    player.sendMessage(Text.literal("Friendship: " + this.getFriendship(player)));
-                    return ActionResult.SUCCESS;
-                }
-            }
-
-            //TODO: Change required reputation from 0 to 100, only for Debug now
-            //TODO: Fix condition about owner
-            //Change in states
-            if(
-                    //From Wandering to Following
-                    (this.isWandering() && this.getFriendship(player) >= 0 && this.getOwner()==null && !player.isSneaking()) ||
-                    //From Waiting to Following and Following to Waiting
-                    (!this.isWandering() && this.getOwner()==player && !player.isSneaking())){
-                if(this.getOwner()==null){
-                    this.setOwner(player);
-                }
-
-                this.setFollowerState(this.isWandering()? 1: this.isFollowing()? 2: 1);
-
-                player.sendMessage(this.isFollowing()?
-                        Text.translatable("tcots-witcher.gui.troll_follows", this.getName()):
-                        Text.translatable("tcots-witcher.gui.troll_waits", this.getName()), true);
-
-                if(this.isWaiting()){ this.setGuardingPos(this.getSteppingPos()); }
-
-                return ActionResult.SUCCESS;
-            }
-
-            //Changes from Following/Waiting to Wandering
-            if((this.isFollowing() || this.isWaiting()) && player.isSneaking() && this.getOwner()==player){
+            // Change from Following/Waiting to Wandering
+            if ((this.isFollowing() || this.isWaiting()) && this.getOwner() == player && player.isSneaking()) {
                 this.setOwner(null);
                 this.setFollowerState(0);
                 player.sendMessage(Text.translatable("tcots-witcher.gui.troll_wandering", this.getName()), true);
@@ -1317,9 +1323,68 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                 return ActionResult.SUCCESS;
             }
 
+            // Barter with Troll, only when reputation is above -75
+            if (itemStack.isOf(BARTERING_ITEM) && this.getReputation(player) >= -75 && this.isWandering()) {
+                this.setStackInHand(Hand.OFF_HAND, new ItemStack(BARTERING_ITEM));
+                this.setLastPlayer(player);
+                this.setAdmiringTime(0);
+
+                itemStack.decrement(1);
+                this.setPersistent();
+                return ActionResult.SUCCESS;
+            }
+
+            // Feed Troll
+            else if (isEdible(item)) {
+                this.setStackInHand(Hand.OFF_HAND, itemStack.copyWithCount(1));
+                this.setLastPlayer(player);
+                this.setEatingTime(0);
+
+                itemStack.decrement(1);
+                this.setPersistent();
+                return ActionResult.SUCCESS;
+            }
+
+            // Give Alcohol to Troll
+            else if (isDrinkable(item)) {
+                this.setStackInHand(Hand.OFF_HAND, itemStack.copyWithCount(1));
+                this.setLastPlayer(player);
+                this.setEatingTime(0);
+
+                itemStack.decrement(1);
+                this.setPersistent();
+                return ActionResult.SUCCESS;
+            }
+            if (hand != Hand.MAIN_HAND) {
+                return ActionResult.PASS;
+            }
+
+            // Handle changes in states (from Wandering to Following)
+            if (((this.isWandering() && this.getFriendship(player) >= 150 && (this.getOwner() == null && this.getOwnerUuid() == null)) ||
+                    //Following <-> Waiting
+                    (!this.isWandering() && this.getOwner() == player)) && !player.isSneaking()) {
+
+                if (this.getOwner() == null) {
+                    this.setOwner(player);
+                }
+
+                this.setFollowerState(this.isWandering() ? 1 : (this.isFollowing() ? 2 : 1));
+
+                player.sendMessage(this.isFollowing() ?
+                        Text.translatable("tcots-witcher.gui.troll_follows", this.getName()) :
+                        Text.translatable("tcots-witcher.gui.troll_waits", this.getName()), true);
+
+                if (this.isWaiting()) {
+                    this.setGuardingPos(this.getSteppingPos());
+                }
+
+                return ActionResult.SUCCESS;
+            }
+
+
         }
 
-        return super.interactMob(player, hand);
+        return ActionResult.PASS;
     }
 
     private int admiringTime=-1;
@@ -1469,7 +1534,11 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                 }
             }
 
-            this.getWorld().sendEntityStatus(this, EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+
+            this.getWorld().sendEntityStatus(this,
+                    player!=null && this.getFriendship(player)>150? EntityStatuses.ADD_VILLAGER_HEART_PARTICLES:
+                            EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+
             this.setStackInHand(Hand.OFF_HAND, ItemStack.EMPTY);
 
             this.setEatingTime(-1);
@@ -1495,39 +1564,45 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
 
     //Follower system
     @Nullable
-    private LivingEntity owner;
-    @Nullable
     private UUID ownerUuid;
     @Nullable
     @Override
     public Entity getOwner() {
-        Entity entity;
-        if (this.owner == null && this.ownerUuid != null && this.getWorld() instanceof ServerWorld && (entity = ((ServerWorld)this.getWorld()).getEntity(this.ownerUuid)) instanceof LivingEntity) {
-            this.owner = (MobEntity) entity;
+        UUID uUID = this.getOwnerUuid();
+        if (uUID == null) {
+            return null;
         }
-        return this.owner;
+
+        return this.getWorld().getPlayerByUuid(uUID);
     }
     public void setOwner(@Nullable PlayerEntity owner) {
-        this.owner = owner;
         this.ownerUuid = owner == null ? null : owner.getUuid();
     }
 
-    int followerState = 0;
+    @Nullable
+    public UUID getOwnerUuid() {
+        return this.ownerUuid;
+    }
 
     public void setFollowerState(int followerState) {
-        this.followerState = followerState;
 
-        if((this.followerState==1) || this.followerState==2){
+        this.dataTracker.set(FOLLOWER_STATE, followerState);
+
+        if(this.isFollowing() || this.isWaiting()){
+            this.playSound(this.isWaiting()? TCOTS_Sounds.TROLL_WAITING: TCOTS_Sounds.TROLL_FOLLOW,1.0f,1.0f);
+
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR)).setBaseValue(16.0);
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS)).setBaseValue(8.0);
         } else {
+
+            this.playSound(TCOTS_Sounds.TROLL_DISMISS, 1.0f,1.0f);
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR)).setBaseValue(8.0);
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS)).setBaseValue(4.0);
         }
     }
 
     public int getFollowerState() {
-        return followerState;
+        return this.dataTracker.get(FOLLOWER_STATE);
     }
 
     public boolean isWaiting(){
@@ -1547,9 +1622,10 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         this.dataTracker.set(GUARDING_POS, pos);
     }
 
-    BlockPos getGuardingPos() {
+    public BlockPos getGuardingPos() {
         return this.dataTracker.get(GUARDING_POS);
     }
+
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
@@ -1751,9 +1827,13 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         return TCOTS_Sounds.TROLL_ATTACK;
     }
 
+    public int getMinAmbientSoundDelay() {
+        return 120;
+    }
+
     @Override
     protected SoundEvent getAmbientSound() {
-        return TCOTS_Sounds.TROLL_IDLE;
+        return this.isAttacking()? TCOTS_Sounds.TROLL_FURIOUS: this.isRabid()?  TCOTS_Sounds.TROLL_IDLE: TCOTS_Sounds.TROLL_GRUNT;
     }
 
     @Override

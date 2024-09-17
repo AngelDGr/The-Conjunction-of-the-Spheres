@@ -219,6 +219,11 @@
     "tcots-witcher.gui.troll_follows": "%1$s is now following you",
     "tcots-witcher.gui.troll_waits": "%1$s will wait for you, guarding this position",
     "tcots-witcher.gui.troll_wandering": "%1$s is not longer your follower",
+    "tcots-witcher.sounds.troll_agrees": "Troll agrees",
+    "tcots-witcher.sounds.troll_whines": "Troll whines",
+    "tcots-witcher.sounds.troll_grunts": "Troll grunts",
+    "tcots-witcher.sounds.troll_laugh":  "Troll laughs",
+
 
 
 

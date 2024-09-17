@@ -107,27 +107,6 @@ public class TrollGossips {
             collectionSender.forEach(
                     gossip ->
                     {
-//                        listKnowPlayersForSender.forEach(
-//                                player -> {
-//                                    //Doesn't know that player, so it add the new gossip
-//                                    if (!listKnowPlayersForReceiver.contains(player)) {
-//                                        int reputation = gossip.reputationValue;
-//                                        int decrement = gossip.type.shareDecrement;
-//
-//                                        receiverGossips.startGossip(
-//                                                gossip.target,
-//                                                gossip.type,
-//                                                reputation - decrement <= 0 ? 1 : reputation - decrement,
-//                                                0);
-//
-//                                        System.out.println("TriggerGossip");
-////                                            triggerParticles.set(true);
-//                                    } else {
-//                                        System.out.println("NotTriggerGossip");
-//                                    }
-//                                }
-//                        );
-
                         //Doesn't know that player, so it add the new gossip
                         if (!listKnowPlayersForReceiver.contains(gossip.target)) {
                             int reputation = gossip.reputationValue;

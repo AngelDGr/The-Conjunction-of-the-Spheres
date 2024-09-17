@@ -133,16 +133,14 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
             LivingEntity target = this.devourer.getTarget();
 
             if (target != null) {
-                //5 square distance like 1.5 blocks approx
-                //I want 7.5 blocks approx
-                //So 7.5/1.5=5
+
                 return !this.devourer.cooldownBetweenJumps
                         && this.devourer.isAttacking()
                         && !this.devourer.isInFluid()
                         && !this.devourer.hasVehicle()
                         && !this.devourer.getWorld().getBlockState(this.devourer.getBlockPos()).isOf(Blocks.HONEY_BLOCK)
                         && !this.devourer.getWorld().getBlockState(this.devourer.getBlockPos()).isOf(Blocks.COBWEB)
-                        && this.devourer.squaredDistanceTo(target) < 5;
+                        && this.devourer.squaredDistanceTo(target) < 4;
             } else {
                 return false;
             }

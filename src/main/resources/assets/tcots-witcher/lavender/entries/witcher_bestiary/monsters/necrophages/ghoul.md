@@ -27,7 +27,7 @@ They are driven by one thing and one thing only: an insatiable craving for human
 {dark_green}**Habitat**{}
 - Forests (at night)
 - Plains (at night)
-- Ghouls nests, found in plains or forests
+- [Ghoul nests](^tcots-witcher:misc/monster_nests), found in plains or forests
   ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_regen.png,fit)
 
 ;;;;;

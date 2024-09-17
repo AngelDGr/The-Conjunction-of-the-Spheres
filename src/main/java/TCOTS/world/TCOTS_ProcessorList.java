@@ -22,6 +22,7 @@ import net.minecraft.util.math.Direction;
 import java.util.List;
 
 public class TCOTS_ProcessorList {
+    public static final RegistryKey<StructureProcessorList> RANDOM_TROLL_CAVE = registerKey("random_troll_cave");
 
     public static final RegistryKey<StructureProcessorList> RANDOM_HERBALIST_HERBS_PLAINS = registerKey("random_herbalist_herbs_plains");
 
@@ -387,6 +388,26 @@ public class TCOTS_ProcessorList {
 
                                         //Moss
                                         addBlockReplaceable(Blocks.COBBLESTONE, Blocks.MOSSY_COBBLESTONE,0.2f)
+                                )
+                        )
+                )
+        );
+
+
+        register(processorListRegisterable, RANDOM_TROLL_CAVE,
+                ImmutableList.of(
+                        //Processor
+                        new RuleStructureProcessor(
+                                //Rules
+                                ImmutableList.of(
+                                        //Moss
+                                        addBlockReplaceable(Blocks.ANDESITE, Blocks.TUFF,0.2f),
+                                        addBlockReplaceable(Blocks.ANDESITE, Blocks.IRON_ORE,0.2f),
+
+                                        addBlockReplaceable(Blocks.IRON_ORE, Blocks.COAL_ORE,0.2f),
+                                        addBlockReplaceable(Blocks.IRON_ORE, Blocks.GOLD_ORE,0.2f),
+                                        addBlockReplaceable(Blocks.IRON_ORE, Blocks.COPPER_ORE,0.2f)
+
                                 )
                         )
                 )

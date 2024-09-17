@@ -137,6 +137,12 @@ public class TCOTS_Sounds {
     public static SoundEvent TROLL_BLOCK_IMPACT_BREAK = registerSoundEvent("troll_block_impact_break");
     public static SoundEvent ROCK_PROJECTILE_IMPACT = registerSoundEvent("rock_projectile_impact");
     public static SoundEvent ROCK_PROJECTILE_THROWS = registerSoundEvent("rock_projectile_throws");
+    public static SoundEvent TROLL_FOLLOW = registerSoundEvent("troll_follow");
+    public static SoundEvent TROLL_WAITING = registerSoundEvent("troll_waiting");
+    public static SoundEvent TROLL_DISMISS = registerSoundEvent("troll_dismiss");
+    public static SoundEvent TROLL_FURIOUS = registerSoundEvent("troll_furious");
+    public static SoundEvent TROLL_GRUNT = registerSoundEvent("troll_grunt");
+    public static SoundEvent TROLL_BARTERING = registerSoundEvent("troll_bartering");
     //Misc
     public static SoundEvent POTION_REFILLED = registerSoundEvent("potion_refill");
     public static SoundEvent OIL_APPLIED = registerSoundEvent("oil_applied");

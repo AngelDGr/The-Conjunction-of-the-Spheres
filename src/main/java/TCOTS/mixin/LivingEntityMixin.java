@@ -439,6 +439,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     //Troll Reputation
     @Inject(method = "onDeath", at = @At("TAIL"))
     private void injectTrollTriggerDefending(DamageSource damageSource, CallbackInfo ci){
+
         if(this.getWorld() instanceof ServerWorld && getAttacking() instanceof RockTrollEntity troll && getAttacker() instanceof PlayerEntity player){
             if(!this.getWorld().isClient) {
                 ((ServerWorld) this.getWorld()).handleInteraction(RockTrollEntity.TROLL_DEFENDING, player, troll);

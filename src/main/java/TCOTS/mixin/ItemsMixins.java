@@ -19,11 +19,11 @@ import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ItemsMixins {
@@ -76,15 +76,12 @@ public class ItemsMixins {
 
     //Make the stick being usable to command Trolls
     @Mixin(Item.class)
-    public static class ItemMixin {
-        @Unique
-        Item THIS = (Item) (Object) this;
+    public static abstract class ItemMixin {
 
         @Inject(method = "useOnBlock", at = @At("TAIL"), cancellable = true)
         private void injectTrollCommanding(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir){
 
-            //TODO: Make the named stick command a troll with the same name
-            if(Items.STICK == THIS){
+            if(context.getStack().isOf(Items.STICK)){
                 PlayerEntity player = context.getPlayer();
                 if(player!=null) {
                     List<RockTrollEntity> listFollowerTrolls =
@@ -92,14 +89,15 @@ public class ItemsMixins {
                             troll -> troll.isFollowing() && troll.getOwner() == player);
 
                     if(!listFollowerTrolls.isEmpty()) {
-                        RockTrollEntity trollCommanded = listFollowerTrolls.get(player.getRandom().nextBetween(0, listFollowerTrolls.size() - 1));
 
+                        listFollowerTrolls.sort(Comparator.comparing(troll -> troll.getName().getString()));
+
+                        RockTrollEntity trollCommanded = listFollowerTrolls.get(0);
                         trollCommanded.setFollowerState(2);
                         trollCommanded.setGuardingPos(context.getBlockPos());
                         player.sendMessage(Text.translatable("tcots-witcher.gui.troll_waits", trollCommanded.getName()), true);
                         cir.setReturnValue(ActionResult.SUCCESS);
                     }
-
                 }
 
             }

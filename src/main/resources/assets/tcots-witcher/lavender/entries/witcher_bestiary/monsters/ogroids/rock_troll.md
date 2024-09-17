@@ -1,51 +1,52 @@
 ```json
 {
-  "title": "Nekker Warrior",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/nekker_warrior",
+  "title": "Rock Troll",
+  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/rock_troll",
   "category": "tcots-witcher:ogroids",
   "associated_items": [
-    "tcots-witcher:nekker_warrior_mutagen"
+    "tcots-witcher:cave_troll_liver",
+    "tcots-witcher:troll_mutagen"
   ],
-  "ordinal": 2
+  "ordinal": 4
 }
 ```
 
+If while hiking high in the mountains you come across a walking stone, do not think your eyes deceive you. 
+Instead, draw your sword – for before you stands a rock troll.
 
-Nekker Warriors are a particularly dangerous subspecies of the common Nekker.
 
-These creatures' increased strength and resilience are what set them apart from their lesser kin.
-Standing slightly taller and adorned with more pronounced spines and claws, 
-Nekker Warriors lead their packs with a ferocity that makes them formidable adversaries.
+True, not every encounter with these creatures ends in a fight - while not particularly intelligent, 
+trolls are capable of reason.
 
 ;;;;;
 
-Encounters with Nekker Warriors are never solitary affairs, as these are always surrounded by other Nekkers.
+Just like other monsters though, some are outright hostile and can't be reasoned with.
 
-![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_main.png,fit)
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_main.png,fit)
 
 ;;;;;
 
 {dark_green}**Habitat**{}
-- Forests
-- Plains
-- [Nekker nests](^tcots-witcher:misc/monster_nests), found in plains or forests
-  ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_command.png,fit)
+- Mountains
+- Caves
+
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_special.png,fit)
+
 
 ;;;;;
 
 {red}**Behavior**{}
 
-Just like the common Nekker, the Nekker Warrior digs a burrow to stay 
-hidden when it doesn't have a target, jumping the moment it finds a prey.
+Rock trolls are vicious fighters, boasting both immense strength and defense, with their stone-covered backs providing formidable protection. 
+Fleeing from a troll offers little safety, as they can throw stones with surprising speed and precision.
 
 
-Their increased strength makes them tougher opponents, sometimes able to break through a warrior's shield. 
-As leaders, Nekker Warriors also boost the effectiveness of the Nekkers they command, making their packs more formidable.
+Their massive arms also allow them to block attacks, making them as sturdy as a stone wall when blocking.
 
 ;;;;;
 
-Try to focus on it when fighting a Nekker swarm; without a leader, the Nekkers lose much of their strength.
-
+Thankfully, many rock trolls are not aggressive and can even [befriend humans](^tcots-witcher:misc/befriending_troll). 
+However, a particular breed known as __rabid trolls__ is purely hostile, easily recognized by their red eyes.
 
 {blue}**Loot**{}
 ```xml owo-ui
@@ -58,7 +59,7 @@ Try to focus on it when fighting a Nekker swarm; without a leader, the Nekkers l
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:nekker_eye
+                                        tcots-witcher:cave_troll_liver
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -72,7 +73,7 @@ Try to focus on it when fighting a Nekker swarm; without a leader, the Nekkers l
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:nekker_heart
+                                        minecraft:cobblestone
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -108,7 +109,7 @@ Try to focus on it when fighting a Nekker swarm; without a leader, the Nekkers l
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:nekker_warrior_mutagen
+                                        tcots-witcher:troll_mutagen
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -137,4 +138,4 @@ Try to focus on it when fighting a Nekker swarm; without a leader, the Nekkers l
 
 
 
-![Nekker Warrior](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_full.png,fit)
+![Rock Troll](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_full.png,fit)

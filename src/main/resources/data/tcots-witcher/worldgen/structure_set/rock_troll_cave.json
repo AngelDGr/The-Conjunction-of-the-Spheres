@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "tcots-witcher:rock_troll_cave",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 2134466859,
+
+    "spacing": 45,
+
+    "separation": 12,
+
+    "type": "minecraft:random_spread"
+  }
+}

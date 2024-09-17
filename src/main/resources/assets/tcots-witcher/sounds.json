@@ -844,5 +844,64 @@
     "sounds": [
       "minecraft:random/bow"
     ]
+  },
+  "troll_follow": {
+    "subtitle": "tcots-witcher.sounds.troll_agrees",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll_talk/troll_follow1",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_follow2",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_follow3",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_follow4"
+    ]
+  },
+  "troll_waiting": {
+    "subtitle": "tcots-witcher.sounds.troll_agrees",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll_talk/troll_waiting1",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_waiting2",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_waiting3",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_waiting4"
+    ]
+  },
+  "troll_dismiss": {
+    "subtitle": "tcots-witcher.sounds.troll_whines",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll_talk/troll_dismiss1",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_dismiss2",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_dismiss3",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_dismiss4"
+    ]
+  },
+  "troll_grunt": {
+    "subtitle": "tcots-witcher.sounds.troll_grunts",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll_talk/troll_grunt1",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_grunt2",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_grunt3",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_grunt4"
+    ]
+  },
+  "troll_furious": {
+    "subtitle": "tcots-witcher.sounds.troll_grunts",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll_talk/troll_furious1",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_furious2",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_furious3",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_furious4"
+    ]
+  },
+  "troll_bartering": {
+    "subtitle": "tcots-witcher.sounds.troll_agrees",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll_talk/troll_bartering1",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_bartering2",
+      "tcots-witcher:entity/ogroids/troll_talk/troll_bartering3"
+    ]
+  },
+  "troll_laugh": {
+    "subtitle": "tcots-witcher.sounds.troll_laugh",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/troll_talk/troll_laugh1"
+    ]
   }
 }

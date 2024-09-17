@@ -114,4 +114,8 @@ public class TCOTS_VillageAdditions {
         );
     }
 
+    public static void registerNewStructures(){
+
+    }
+
 }

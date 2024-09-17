@@ -32,7 +32,7 @@ going to find more.
 {dark_green}**Habitat**{}
 - Forests
 - Plains
-- Nekker nests, found in plains or forests
+- [Nekker nests](^tcots-witcher:misc/monster_nests), found in plains or forests
   ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_lunging.png,fit)
 
 ;;;;;
@@ -110,21 +110,3 @@ Avoid being overwhelmed with the quantity of these tiny creatures, and you can m
 
 
 ![Nekker](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_full.png,fit)
-
-;;;;;
-
-{dark_green}**Monster Nests**{}
-
-These awful creatures live in nests made from dirt and bones around the world.
-The nest will host more and more monsters until it's destroyed.
-
-
-A monster nest it's very hard to break, and while it's well-known that a nest can be destroyed with an explosion, 
-some rumours say that can also be destroyed with an efficiency enchantment strong enough. 
-
-;;;;;
-
-But breaking one has a reward, the Nekkers usually hide magic goods inside them.
-
-
-![Monster Nest](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/monster_nest.png,fit)
