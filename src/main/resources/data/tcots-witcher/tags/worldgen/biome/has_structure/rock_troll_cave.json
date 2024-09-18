@@ -3,23 +3,17 @@
 
   "_comment": " This biome tag can specify the biome directly. Or specify another biome tag by starting with # ",
   "values": [
-    "minecraft:wooded_badlands",
-
-    "minecraft:savanna",
-    "minecraft:plains",
-
-    "minecraft:jungle",
-    "minecraft:sparse_jungle",
+    "minecraft:stony_peaks",
+    "minecraft:meadow",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_forest",
+    "minecraft:windswept_gravelly_hills",
 
     "minecraft:taiga",
     "minecraft:old_growth_pine_taiga",
     "minecraft:old_growth_spruce_taiga",
 
-
-    "minecraft:forest",
-    "minecraft:flower_forest",
-    "minecraft:birch_forest",
-    "minecraft:old_growth_birch_forest",
-    "minecraft:dark_forest"
+    "minecraft:dripstone_caves",
+    "minecraft:lush_caves"
   ]
 }

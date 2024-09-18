@@ -154,6 +154,8 @@
     "tcots-witcher.sounds.graveir_ground_punch": "Graveir charges a punch",
 
     "item.tcots-witcher.cadaverine": "Cadaverine",
+    "tooltip.tcots-witcher.cadaverine1": "Apply to weapons to cause decay",
+    "tooltip.tcots-witcher.cadaverine2": "on hit, consuming durability",
     "item.tcots-witcher.graveir_bone": "Graveir Bone",
 
     "effect.tcots-witcher.cadaverine": "Cadaverine Decay",

@@ -372,7 +372,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
-        this.setInGroundDataTracker(nbt.getBoolean("InGround"));
+        this.setInGround(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setInvisibleData(nbt.getBoolean("Invisible"));
         this.jumpTicks=nbt.getInt("JumpCooldown");
@@ -407,7 +407,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
 
     @Override
     protected Box calculateBoundingBox() {
-        if (getInGroundDataTracker()) {
+        if (getInGround()) {
             return groundBox(this);
         }
         else{
@@ -417,13 +417,18 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    public boolean isPushable() {
-        return super.isPushable() && !this.getIsEmerging() && !this.getInGroundDataTracker();
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return this.getIsEmerging() || this.getInGround() || super.isInvulnerableTo(damageSource) || this.isFalling();
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource) || this.isFalling();
+    public boolean isPushable() {
+        return super.isPushable() && !this.getIsEmerging() && !this.getInGround();
+    }
+
+    @Override
+    public boolean isFireImmune() {
+        return super.isFireImmune() || this.getInGround();
     }
 
     int AnimationParticlesTicks=36;
@@ -439,12 +444,12 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    public boolean getInGroundDataTracker() {
+    public boolean getInGround() {
         return this.dataTracker.get(InGROUND);
     }
 
     @Override
-    public void setInGroundDataTracker(boolean wasInGround) {
+    public void setInGround(boolean wasInGround) {
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
@@ -482,7 +487,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
-        if (!this.getInGroundDataTracker()) {
+        if (!this.getInGround()) {
             return TCOTS_Sounds.DEVOURER_IDLE;
         } else {
             return null;

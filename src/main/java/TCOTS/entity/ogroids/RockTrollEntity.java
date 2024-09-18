@@ -116,8 +116,8 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     //      They give you something, and also increases reputation (They say "Take!" or something)
     //xTODO: Add Follower/Pet System
     //xTODO: Add bestiary description
-    //TODO: Add spawn
-    //TODO: Add possible village-like structure?
+    //xTODO: Add natural spawn
+    //xTODO: Add possible village-like structure?
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -1021,7 +1021,13 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     @Nullable
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        if(spawnReason != SpawnReason.STRUCTURE){
+        if(spawnReason == SpawnReason.NATURAL){
+            //1/5 probability to be a rabid troll if it's a natural spawn
+            if(random.nextInt()%5==0){
+                this.setIsRabid(true);
+            }
+        }
+        else if(spawnReason != SpawnReason.STRUCTURE){
             //1/20 probability to be a rabid troll
             if(random.nextInt()%20==0){
                 this.setIsRabid(true);
@@ -1285,7 +1291,7 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     }
 
     private boolean isEdible(Item item){
-        return item.isFood() && Objects.requireNonNull(item.getFoodComponent()).isMeat();
+        return (item.isFood() && Objects.requireNonNull(item.getFoodComponent()).isMeat()) || item == Items.RABBIT_STEW;
     }
 
     private boolean isDrinkable(Item item){
@@ -1294,6 +1300,7 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                 && !(item instanceof SplashPotionItem)
                 && !(item instanceof LingeringPotionItem)
                 && (!(item instanceof WitcherPotions_Base))
+                //To not being able to give Potion when they aren't following you or guarding
                 && !this.isWandering()
         )
                 || item == Items.HONEY_BOTTLE
@@ -1508,30 +1515,33 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                 if(player!=null) {
                     ((ServerWorld) this.getWorld()).handleInteraction(TROLL_ALCOHOL, player, this);
                     this.handleNearTrollsInteraction(TROLL_ALCOHOL_FRIEND, player);
+                    this.setPersistent();
                 }
 
-                if(isDrinkable(foodStack.getItem())){
-                    ItemStack dropStack =
-                            (foodStack.getItem() == Items.HONEY_BOTTLE || foodStack.getItem() instanceof PotionItem || foodStack.getItem() instanceof HerbalMixture) ?
-                                    new ItemStack(Items.GLASS_BOTTLE):
-                            foodStack.getItem() == Items.MILK_BUCKET ?
-                                    new ItemStack(Items.BUCKET):
-                            ItemStack.EMPTY;
+                ItemStack dropStack =
+                        (foodStack.getItem() == Items.HONEY_BOTTLE || foodStack.getItem() instanceof PotionItem || foodStack.getItem() instanceof HerbalMixture) ?
+                                new ItemStack(Items.GLASS_BOTTLE):
+                                foodStack.getItem() == Items.MILK_BUCKET ?
+                                        new ItemStack(Items.BUCKET):
+                                        ItemStack.EMPTY;
 
-                    foodStack.finishUsing(this.getWorld(), this);
+                foodStack.finishUsing(this.getWorld(), this);
 
-                    this.dropStack(dropStack);
-                }
+                this.dropStack(dropStack);
             }
 
             if (foodStack.getUseAction() == UseAction.EAT) {
                 if(player!=null) {
                     ((ServerWorld) this.getWorld()).handleInteraction(TROLL_FED, player, this);
                     this.handleNearTrollsInteraction(TROLL_FED_FRIEND, player);
+                    this.setPersistent();
                 }
+
                 if(foodStack.getFoodComponent()!=null){
                     this.heal(foodStack.getFoodComponent().getHunger());
                 }
+
+                this.dropStack(foodStack.getItem() == Items.RABBIT_STEW? new ItemStack(Items.BOWL): ItemStack.EMPTY);
             }
 
 
@@ -1845,6 +1855,11 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return TCOTS_Sounds.TROLL_HURT;
+    }
+
+    @Override
+    protected boolean isDisallowedInPeaceful() {
+        return !this.isPersistent();
     }
 
     @Override

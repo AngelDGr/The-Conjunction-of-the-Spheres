@@ -59,10 +59,11 @@ public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
         //Attack
         this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false, 2400));
 
+        this.goalSelector.add(5, new ReturnToNestGoal(this, 0.75, 100));
 
-        this.goalSelector.add(5, new WanderAroundGoal_Excavator(this, 0.75f, 20));
+        this.goalSelector.add(6, new WanderAroundGoal_Excavator(this, 0.75f, 20));
 
-        this.goalSelector.add(6, new LookAroundGoal_Excavator(this));
+        this.goalSelector.add(7, new LookAroundGoal_Excavator(this));
 
         //Objectives
         this.targetSelector.add(0, new RevengeGoal(this, NekkerEntity.class).setGroupRevenge());
@@ -89,7 +90,7 @@ public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        if (!this.getInGroundDataTracker()) {
+        if (!this.getInGround()) {
             return TCOTS_Sounds.NEKKER_WARRIOR_IDLE;
         } else {
             return null;

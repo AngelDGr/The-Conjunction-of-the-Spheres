@@ -18,11 +18,11 @@ public class LookAroundGoal_Excavator extends LookAroundGoal {
 
     @Override
     public boolean canStart(){
-        return super.canStart() && !excavatorMob.getInGroundDataTracker();
+        return super.canStart() && !excavatorMob.getInGround();
     }
 
     @Override
     public boolean shouldContinue(){
-        return super.shouldContinue() && !excavatorMob.getInGroundDataTracker();
+        return super.shouldContinue() && !excavatorMob.getInGround();
     }
 }

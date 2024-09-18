@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -126,7 +127,7 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
         return false;
     }
 
-    public boolean destroyableBlocks(BlockState state){
+    public boolean destroyableBlocks(@NotNull BlockState state){
         return
                     state.getBlock() == TCOTS_Blocks.MONSTER_NEST
                 || (state.getBlock() == TCOTS_Blocks.NEST_SLAB && !(state == TCOTS_Blocks.NEST_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.DOUBLE)))

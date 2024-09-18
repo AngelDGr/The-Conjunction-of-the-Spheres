@@ -79,9 +79,7 @@ public class TCOTS_JEIPlugin implements IModPlugin {
     public static class AlchemyFormulaInterpreter implements IIngredientSubtypeInterpreter<ItemStack> {
         public static final AlchemyFormulaInterpreter INSTANCE = new AlchemyFormulaInterpreter();
 
-        private AlchemyFormulaInterpreter() {
-
-        }
+        private AlchemyFormulaInterpreter() {}
 
         @Override
         public @NotNull String apply(ItemStack itemStack, @NotNull UidContext context) {

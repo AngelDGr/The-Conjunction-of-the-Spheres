@@ -3,6 +3,7 @@ package TCOTS.entity.ogroids;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
+import TCOTS.entity.interfaces.GuardNestMob;
 import TCOTS.entity.interfaces.LungeMob;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.GeoControllersUtil;
@@ -50,13 +51,15 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
-public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorMob, LungeMob, Ownable {
+public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorMob, LungeMob, Ownable, GuardNestMob {
 
     //xTODO: Add spawn
     //xTODO: Add drops
+    private static final TrackedData<BlockPos> NEST_POS = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -85,6 +88,16 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     }
 
     @Override
+    public BlockPos getNestPos() {
+        return this.dataTracker.get(NEST_POS);
+    }
+
+    @Override
+    public void setNestPos(BlockPos pos) {
+        this.dataTracker.set(NEST_POS, pos);
+    }
+
+    @Override
     public int getMaxHeadRotation() {
         return 40;
     }
@@ -104,11 +117,13 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         //Attack
         this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false, 2400));
 
-        this.goalSelector.add(5, new FollowMonsterOwnerGoal(this, 0.75));
+        this.goalSelector.add(5, new ReturnToNestGoal(this, 0.75, 100));
 
-        this.goalSelector.add(6, new WanderAroundGoal_Excavator(this, 0.75f, 20));
+        this.goalSelector.add(6, new FollowMonsterOwnerGoal(this, 0.75));
 
-        this.goalSelector.add(7, new LookAroundGoal_Excavator(this));
+        this.goalSelector.add(7, new WanderAroundGoal_Excavator(this, 0.75f, 20));
+
+        this.goalSelector.add(8, new LookAroundGoal_Excavator(this));
 
         //Objectives
         this.targetSelector.add(0, new AttackOwnerAttackerTarget(this));
@@ -124,18 +139,28 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         Random random = world.getRandom();
-        if(!(spawnReason == SpawnReason.SPAWN_EGG) && !(spawnReason == SpawnReason.STRUCTURE)) {
+        if(!this.getWorld().isClient && !(spawnReason == SpawnReason.SPAWN_EGG) && !(spawnReason == SpawnReason.STRUCTURE) && this.getType()!=TCOTS_Entities.NEKKER_WARRIOR) {
             //Can spawn a Nekker Warrior with it instead
             if (random.nextInt() % 5 == 0) {
                 NekkerWarriorEntity nekker_warrior = TCOTS_Entities.NEKKER_WARRIOR.create(this.getWorld());
                 if (nekker_warrior != null) {
                     nekker_warrior.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), 0.0f);
-                    this.getWorld().spawnEntity(nekker_warrior);
+                    ((MobEntity)nekker_warrior).initialize(world, world.getLocalDifficulty(nekker_warrior.getBlockPos()), spawnReason, null, null);
+                    ((ServerWorld)(this.getWorld())).spawnNewEntityAndPassengers(nekker_warrior);
                 }
             }
         }
 
+        Optional<BlockPos> optional = this.findNest(this, 10);
+
+        optional.ifPresent(this::setNestPos);
+
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    @Override
+    public boolean getExtraReasonNotGoToNest() {
+        return this.getOwner()==null;
     }
 
     public boolean cooldownBetweenLunges = false;
@@ -169,8 +194,6 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     public void setReturnToGround_Ticks(int returnToGround_Ticks) {
         ReturnToGround_Ticks = returnToGround_Ticks;
     }
-
-
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
@@ -209,6 +232,7 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
+        this.dataTracker.startTracking(NEST_POS, BlockPos.ORIGIN);
     }
 
     @Override
@@ -221,6 +245,8 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+
         nbt.putBoolean("InGround", this.dataTracker.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
         nbt.putBoolean("Invisible", this.dataTracker.get(INVISIBLE));
@@ -228,19 +254,23 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         if (this.ownerUuid != null && !(this instanceof NekkerWarriorEntity)) {
             nbt.putUuid("Owner", this.ownerUuid);
         }
-        super.writeCustomDataToNbt(nbt);
+
+        writeNbtGuardNest(nbt);
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
-        this.setInGroundDataTracker(nbt.getBoolean("InGround"));
+        super.readCustomDataFromNbt(nbt);
+
+        this.setInGround(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setInvisibleData(nbt.getBoolean("Invisible"));
 
         if (nbt.containsUuid("Owner") && !(this instanceof NekkerWarriorEntity)) {
             this.ownerUuid = nbt.getUuid("Owner");
         }
-        super.readCustomDataFromNbt(nbt);
+
+        readNbtGuardNest(nbt);
     }
 
     @Override
@@ -261,11 +291,11 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         this.dataTracker.set(EMERGING, wasEmerging);
     }
 
-    public boolean getInGroundDataTracker() {
+    public boolean getInGround() {
         return this.dataTracker.get(InGROUND);
     }
 
-    public void setInGroundDataTracker(boolean wasInGround) {
+    public void setInGround(boolean wasInGround) {
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
@@ -294,12 +324,15 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         //Counter for particles
         this.tickExcavator(this);
 
+        //To disable the nest
+        this.tickGuardNest(this);
+
         super.tick();
     }
 
     @Override
     public void pushAwayFrom(Entity entity) {
-        if(entity instanceof NekkerEntity nekker && nekker.getInGroundDataTracker()){
+        if(entity instanceof NekkerEntity nekker && nekker.getInGround()){
             return;
         }
 
@@ -307,6 +340,8 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     }
     private static final UUID LEADER_STRENGTH_BOOST_ID = UUID.fromString("aa89212e-77c2-452e-8c3b-5963c368a683");
     private static final EntityAttributeModifier LEADER_STRENGTH_BOOST = new EntityAttributeModifier(LEADER_STRENGTH_BOOST_ID, "Leader strength boost", 2.0f, EntityAttributeModifier.Operation.ADDITION);
+
+
 
     @Override
     public void mobTick() {
@@ -340,10 +375,8 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         //Removes owner and strength
         if(this.getOwner() != null && !this.getOwner().isAlive()) {
             setOwner(null);
-
             EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
             if(entityAttributeInstance!=null) entityAttributeInstance.removeModifier(LEADER_STRENGTH_BOOST.getId());
-
         }
 
 
@@ -353,7 +386,7 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
-        if (!this.getInGroundDataTracker()) {
+        if (!this.getInGround()) {
             return TCOTS_Sounds.NEKKER_IDLE;
         } else {
             return null;
@@ -377,12 +410,17 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource);
+        return this.getIsEmerging() || this.getInGround() || super.isInvulnerableTo(damageSource);
     }
 
     @Override
     public boolean isPushable() {
-        return super.isPushable() && !this.getIsEmerging() && !this.getInGroundDataTracker();
+        return super.isPushable() && !this.getIsEmerging() && !this.getInGround();
+    }
+
+    @Override
+    public boolean isFireImmune() {
+        return super.isFireImmune() || this.getInGround();
     }
 
     //Attack Sound
@@ -439,4 +477,6 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
+
+
 }

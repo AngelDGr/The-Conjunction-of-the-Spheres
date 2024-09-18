@@ -107,6 +107,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         public static final Identifier DESERT_HERBALIST_CHEST = new Identifier(TCOTS_Main.MOD_ID, "chests/village/desert_herbalist");
         public static final Identifier SAVANNA_HERBALIST_CHEST = new Identifier(TCOTS_Main.MOD_ID, "chests/village/savanna_herbalist");
 
+        public static final Identifier TROLL_BARREL = new Identifier(TCOTS_Main.MOD_ID, "chests/troll/troll_barrel");
+
         public LootTablesHerbalistGenerator(FabricDataOutput output) {
             super(output, LootContextTypes.CHEST);
         }
@@ -408,6 +410,90 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                             .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
                                     .with(ItemEntry.builder(Items.GLOW_LICHEN).weight(3))
+
+                            ));
+                }
+            }
+
+
+            //Troll Barrel
+            {
+                {
+                    exporter.accept(TROLL_BARREL,
+                            LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 5.0f))
+
+                                    //Rocks
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COBBLESTONE).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4.0f, 8.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.ANDESITE).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4.0f, 8.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.GRANITE).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4.0f, 8.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.TUFF).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4.0f, 8.0f))))
+
+                                    //Ores
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RAW_COPPER).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3.0f, 6.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RAW_IRON).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RAW_GOLD).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+                                    //Meat
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.ROTTEN_FLESH).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3.0f, 8.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.BEEF).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.MUTTON).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.PORKCHOP).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RABBIT).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.CHICKEN).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    //Alcohol-Cooked Meat
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.VILLAGE_HERBAL).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_BEEF).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_MUTTON).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_PORKCHOP).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_RABBIT).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_CHICKEN).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(ItemEntry.builder(Items.RABBIT_STEW).weight(1))
+
+                                    //Amethyst-RawBlocks
+                                    .with(ItemEntry.builder(Items.AMETHYST_SHARD).weight(1))
+                                    .with(ItemEntry.builder(Items.RAW_COPPER).weight(1))
+                                    .with(ItemEntry.builder(Items.RAW_IRON_BLOCK).weight(1))
+                                    .with(ItemEntry.builder(Items.RAW_GOLD_BLOCK).weight(1))
+
 
                             ));
                 }

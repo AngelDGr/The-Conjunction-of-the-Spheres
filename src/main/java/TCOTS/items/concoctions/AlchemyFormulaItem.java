@@ -24,17 +24,14 @@ public class AlchemyFormulaItem extends Item {
 
     @Override
     public Rarity getRarity(ItemStack stack) {
-
         if(isDecoction(stack)){
             return Rarity.RARE;
         }
-
         return Rarity.UNCOMMON;
     }
 
     @Override
     public boolean hasGlint(ItemStack stack) {
-
         return super.hasGlint(stack) || isDecoction(stack);
     }
 

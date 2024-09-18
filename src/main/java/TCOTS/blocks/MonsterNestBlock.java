@@ -46,6 +46,8 @@ public class MonsterNestBlock extends BlockWithEntity {
         return new MonsterNestBlockEntity(pos, state);
     }
 
+
+
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
@@ -113,6 +115,4 @@ public class MonsterNestBlock extends BlockWithEntity {
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
-
-
 }

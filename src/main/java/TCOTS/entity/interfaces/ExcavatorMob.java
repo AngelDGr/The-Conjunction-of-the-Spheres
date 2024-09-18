@@ -72,7 +72,7 @@ public interface ExcavatorMob {
     }
 
     default  <T extends GeoAnimatable> PlayState animationDiggingPredicate(AnimationState<T> state) {
-        if(this.getInGroundDataTracker() && !this.getIsEmerging()){
+        if(this.getInGround() && !this.getIsEmerging()){
             state.setAnimation(getDiggingAnimation());
             return PlayState.CONTINUE;
         }else{
@@ -111,7 +111,7 @@ public interface ExcavatorMob {
 
     default void tickExcavator(LivingEntity entity) {
         //Particles when return to ground
-        if(this.getAnimationParticlesTicks() > 0 && this.getInGroundDataTracker()
+        if(this.getAnimationParticlesTicks() > 0 && this.getInGround()
                 && !(this.getIsEmerging())
         ){
             this.spawnGroundParticles(entity);
@@ -121,7 +121,7 @@ public interface ExcavatorMob {
             setAnimationParticlesTicks(-1);
         }
 
-        if(!this.getInGroundDataTracker() && !this.getIsEmerging()){
+        if(!this.getInGround() && !this.getIsEmerging()){
             setAnimationParticlesTicks(36);
         }
 
@@ -137,8 +137,8 @@ public interface ExcavatorMob {
         }
     }
 
-    boolean getInGroundDataTracker();
-    void setInGroundDataTracker(boolean wasInGround);
+    boolean getInGround();
+    void setInGround(boolean wasInGround);
 
     boolean getIsEmerging();
 
@@ -174,7 +174,7 @@ public interface ExcavatorMob {
         }else{
             if(this.getReturnToGround_Ticks()==0 && checkBlocks(blockTags, blocks, mob)
             ){
-                this.setInGroundDataTracker(true);
+                this.setInGround(true);
             }
         }
     }

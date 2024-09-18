@@ -34,7 +34,7 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
 
     @Override
     public boolean canStart() {
-        return (canStartO() || detectedBySomeone()) && excavatorMob.getInGroundDataTracker();
+        return (canStartO() || detectedBySomeone()) && excavatorMob.getInGround();
     }
     public boolean canStartO(){
         LivingEntity livingEntity = this.mob.getTarget();
@@ -78,7 +78,7 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
 
     @Override
     public boolean shouldContinue(){
-        return (shouldContinueO() || detectedBySomeone()) && excavatorMob.getInGroundDataTracker();
+        return (shouldContinueO() || detectedBySomeone()) && excavatorMob.getInGround();
     }
     public boolean shouldContinueO(){
         LivingEntity livingEntity = this.mob.getTarget();
@@ -109,9 +109,9 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
             }
         }
 
-        if(excavatorMob.getInGroundDataTracker()){
+        if(excavatorMob.getInGround()){
             excavatorMob.setReturnToGround_Ticks(returnTicks);
-            excavatorMob.setInGroundDataTracker(false);}
+            excavatorMob.setInGround(false);}
     }
 
     @Override

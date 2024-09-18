@@ -35,11 +35,6 @@ public class TCOTS_Main implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 
-	//TODO: Add Loot table to the barrels
-	//TODO: Modify slightly the structure
-	//TODO: Modify the has_structure tag for troll caves
-	//TODO: See RockTrollEntity class
-
 	public static String MOD_ID = "tcots-witcher";
 	public static final TCOTS_Config CONFIG = TCOTS_Config.createAndLoad();
 	@Override
@@ -62,7 +57,7 @@ public class TCOTS_Main implements ModInitializer {
 		ScreenHandlersAndRecipesRegister.registerScreenHandlersAndRecipes();
 		TCOTS_Sounds.registerSounds();
 		TCOTS_Entities.addSpawns();
-		TCOTS_Entities.addAttributes();
+		TCOTS_Entities.setEntitiesAttributes();
 		TCOTS_Particles.registerParticles();
 		TCOTS_Features.registerFeatures();
 

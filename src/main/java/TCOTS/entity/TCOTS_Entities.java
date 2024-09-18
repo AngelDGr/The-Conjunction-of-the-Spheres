@@ -48,7 +48,7 @@ public class TCOTS_Entities {
     //xTODO: Nekkers
     //xTODO: Nekker Warriors
     //xTODO: Cyclopses
-    //TODO: Rock troll
+    //xTODO: Rock troll
     //TODO: Ice troll
     //TODO: Ice Giant (Boss)
     //W2
@@ -266,7 +266,7 @@ public class TCOTS_Entities {
             //Rotfiends
             {
                 SpawnRestriction.register(ROTFIEND, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NecrophageMonster::canSpawnInDark);
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RotfiendEntity::canSpawnInDark);
 
                 //In night
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -280,7 +280,7 @@ public class TCOTS_Entities {
             //Foglets
             {
                 SpawnRestriction.register(FOGLET, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NecrophageMonster::canSpawnInDark_NotCaves);
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, FogletEntity::canSpawnInDark_NotCaves);
 
                 //In swamps/rivers
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP,
@@ -318,7 +318,7 @@ public class TCOTS_Entities {
             //Grave Hags
             {
                 SpawnRestriction.register(GRAVE_HAG, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NecrophageMonster::canSpawnInDarkNotBelowDeepslate);
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GraveHagEntity::canSpawnInDarkNotBelowDeepslate);
 
                 //In night
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -345,7 +345,7 @@ public class TCOTS_Entities {
             //Scurvers
             {
                 SpawnRestriction.register(SCURVER, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NecrophageMonster::canSpawnInDark);
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ScurverEntity::canSpawnInDark);
 
                 //In night
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -359,7 +359,7 @@ public class TCOTS_Entities {
             //Devourer
             {
                 SpawnRestriction.register(DEVOURER, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NecrophageMonster::canSpawnInDark);
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DevourerEntity::canSpawnInDark);
 
                 //In night
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -422,10 +422,26 @@ public class TCOTS_Entities {
                                 BiomeKeys.OLD_GROWTH_PINE_TAIGA,BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA), SpawnGroup.MONSTER,
                         CYCLOPS, 15, 1, 1);
             }
+
+            //Rock Troll
+            {
+                SpawnRestriction.register(ROCK_TROLL, SpawnRestriction.Location.ON_GROUND,
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RockTrollEntity::canSpawnInDarkNotBelowDeepslate);
+
+                //In snowy plains/mountains/taigas
+                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                //Mountains
+                                BiomeKeys.STONY_PEAKS, BiomeKeys.MEADOW, BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST,
+                                //Taiga
+                                BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA,
+                                //Caves/Shore
+                                BiomeKeys.DRIPSTONE_CAVES, BiomeKeys.STONY_SHORE), SpawnGroup.MONSTER,
+                        ROCK_TROLL, 5, 1, 1);
+            }
         }
     }
 
-    public static void addAttributes(){
+    public static void setEntitiesAttributes(){
         //Necrophages
         {
             //Drowner

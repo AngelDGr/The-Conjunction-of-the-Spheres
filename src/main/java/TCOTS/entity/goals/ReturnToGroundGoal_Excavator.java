@@ -29,11 +29,11 @@ public class ReturnToGroundGoal_Excavator extends Goal {
     }
     @Override
     public boolean canStart() {
-        return excavatorMob.getInGroundDataTracker();
+        return excavatorMob.getInGround();
     }
     @Override
     public boolean shouldContinue(){
-        return excavatorMob.getInGroundDataTracker();
+        return excavatorMob.getInGround();
     }
     @Override
     public void start(){

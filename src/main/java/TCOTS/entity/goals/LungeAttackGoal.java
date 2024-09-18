@@ -13,15 +13,11 @@ import java.util.EnumSet;
 
 public class LungeAttackGoal extends Goal {
     private final PathAwareEntity mob;
-
     private final LungeMob lungeMob;
-
     private final ExcavatorMob excavatorMob;
     private final int cooldownBetweenLungesAttacks;
     private final double SpeedLungeMultiplier;
-
     private final int minDistance;
-
     private final int maxDistance;
 
     public LungeAttackGoal(PathAwareEntity mob, int cooldownBetweenLungesAttacks, double lungeImpulse, int minDistance, int maxDistance) {
@@ -62,7 +58,7 @@ public class LungeAttackGoal extends Goal {
 
     private boolean isExcavator(){
         if(excavatorMob != null){
-            return !this.excavatorMob.getIsEmerging() && !this.excavatorMob.getInGroundDataTracker();
+            return !this.excavatorMob.getIsEmerging() && !this.excavatorMob.getInGround();
         }
 
         return true;

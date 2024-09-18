@@ -279,10 +279,10 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
         this.dataTracker.set(EMERGING, wasEmerging);
     }
 
-    public boolean getInGroundDataTracker() {
+    public boolean getInGround() {
         return this.dataTracker.get(InGROUND);
     }
-    public void setInGroundDataTracker(boolean wasInGround) {
+    public void setInGround(boolean wasInGround) {
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
@@ -295,7 +295,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);
-        if (!getInGroundDataTracker() || getInGroundDataTracker()) {
+        if (!getInGround() || getInGround()) {
             this.setBoundingBox(this.calculateBoundingBox());
         }
     }
@@ -313,7 +313,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
-        this.setInGroundDataTracker(nbt.getBoolean("InGround"));
+        this.setInGround(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setInvisibleData(nbt.getBoolean("Invisible"));
 
@@ -364,7 +364,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
 
     @Override
     protected Box calculateBoundingBox() {
-        if (getInGroundDataTracker()) {
+        if (getInGround()) {
             return groundBox(this);
         }
         else{
@@ -414,7 +414,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
-        if (!this.getIsExploding() && !this.getInGroundDataTracker()) {
+        if (!this.getIsExploding() && !this.getInGround()) {
             return getIdleSound();
         } else {
             return null;
@@ -461,12 +461,17 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getIsEmerging() || this.getInGroundDataTracker() || this.getIsExploding() || super.isInvulnerableTo(damageSource);
+        return this.getIsEmerging() || this.getInGround() || this.getIsExploding() || super.isInvulnerableTo(damageSource);
     }
 
     @Override
     public boolean isPushable() {
-        return super.isPushable() && !this.getIsExploding() && !this.getIsEmerging() && !this.getInGroundDataTracker();
+        return super.isPushable() && !this.getIsExploding() && !this.getIsEmerging() && !this.getInGround();
+    }
+
+    @Override
+    public boolean isFireImmune() {
+        return super.isFireImmune() || this.getInGround();
     }
 
     @Override

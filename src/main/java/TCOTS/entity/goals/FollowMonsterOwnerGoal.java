@@ -1,5 +1,6 @@
 package TCOTS.entity.goals;
 
+import TCOTS.entity.interfaces.ExcavatorMob;
 import net.minecraft.entity.Ownable;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.PathAwareEntity;
@@ -30,7 +31,7 @@ public class FollowMonsterOwnerGoal extends Goal {
         this.owner= (PathAwareEntity) ((Ownable)(this.mob)).getOwner();
         double d = this.mob.squaredDistanceTo(this.owner);
 
-        return !(d < 9.0) && !(d > 256.0);
+        return !(d < 9.0) && !(d > 256.0) && this.isExcavating() && mob.getTarget()==null;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class FollowMonsterOwnerGoal extends Goal {
             return false;
         }
         double d = this.mob.squaredDistanceTo(this.owner);
-        return !(d < 9.0) && !(d > 256.0);
+        return !(d < 9.0) && !(d > 256.0) && this.isExcavating();
     }
 
     @Override
@@ -63,5 +64,13 @@ public class FollowMonsterOwnerGoal extends Goal {
         }
         this.delay = this.getTickCount(10);
         this.mob.getNavigation().startMovingTo(this.owner, this.speed);
+    }
+
+    private boolean isExcavating(){
+        if(mob instanceof ExcavatorMob excavator){
+            return !excavator.getInGround() && !excavator.getIsEmerging();
+        }
+
+        return true;
     }
 }

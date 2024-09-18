@@ -340,7 +340,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
             } else {
                 return super.canStart()
                         && !this.drowner.getIsEmerging()
-                        && !this.drowner.getInGroundDataTracker();
+                        && !this.drowner.getInGround();
             }
         }
         @Override
@@ -468,11 +468,16 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource);
+        return this.getIsEmerging() || this.getInGround() || super.isInvulnerableTo(damageSource);
     }
     @Override
     public boolean isPushable() {
-        return super.isPushable() && !this.getIsEmerging() && !this.getInGroundDataTracker();
+        return super.isPushable() && !this.getIsEmerging() && !this.getInGround();
+    }
+
+    @Override
+    public boolean isFireImmune() {
+        return super.isFireImmune() || this.getInGround();
     }
 
     private class Drowner_SwimAroundGoal extends SwimAroundGoal{
@@ -483,12 +488,12 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
 
         @Override
         public boolean canStart(){
-            return super.canStart() && !DrownerEntity.this.getInGroundDataTracker();
+            return super.canStart() && !DrownerEntity.this.getInGround();
         }
 
         @Override
         public boolean shouldContinue(){
-            return super.shouldContinue() && !DrownerEntity.this.getInGroundDataTracker();
+            return super.shouldContinue() && !DrownerEntity.this.getInGround();
         }
     }
 
@@ -505,7 +510,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setSwimmingDataTracker(nbt.getBoolean("Swimming"));
-        this.setInGroundDataTracker(nbt.getBoolean("InGround"));
+        this.setInGround(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setSpawnedPuddleDataTracker(nbt.getBoolean("PuddleSpawned"));
         this.setInvisibleData(nbt.getBoolean("Invisible"));
@@ -526,10 +531,10 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
         this.dataTracker.set(EMERGING, wasEmerging);
     }
 
-    public boolean getInGroundDataTracker() {
+    public boolean getInGround() {
         return this.dataTracker.get(InGROUND);
     }
-    public void setInGroundDataTracker(boolean wasInGround) {
+    public void setInGround(boolean wasInGround) {
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
@@ -734,8 +739,8 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
             );
         }
         else{
-            if(this.getInGroundDataTracker()){
-                this.setInGroundDataTracker(false);}
+            if(this.getInGround()){
+                this.setInGround(false);}
         }
 
         this.setInvisible(this.getInvisibleData());
@@ -789,7 +794,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
-        if(!this.getInGroundDataTracker()){
+        if(!this.getInGround()){
             return TCOTS_Sounds.DROWNER_IDLE;
         }
         else{
@@ -871,6 +876,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
             this.despawnCounter = 0;
         }
     }
+
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

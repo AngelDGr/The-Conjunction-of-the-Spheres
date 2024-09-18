@@ -158,7 +158,7 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
 
             return super.canStart() && !waterHag.mudballCooldown && distanceCondition()
                     && !this.waterHag.getIsEmerging()
-                    && !this.waterHag.getInGroundDataTracker();
+                    && !this.waterHag.getInGround();
         }
 
         @Override
@@ -176,14 +176,14 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
         @Override
         public boolean canStart() {
             return super.canStart()
-                    && !WaterHagEntity.this.getInGroundDataTracker()
+                    && !WaterHagEntity.this.getInGround()
                     && !WaterHagEntity.this.getIsEmerging();
         }
 
         @Override
         public boolean shouldContinue() {
             return super.shouldContinue()
-                    && !WaterHagEntity.this.getInGroundDataTracker()
+                    && !WaterHagEntity.this.getInGround()
                     && !WaterHagEntity.this.getIsEmerging();
         }
     }
@@ -210,11 +210,16 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource);
+        return this.getIsEmerging() || this.getInGround() || super.isInvulnerableTo(damageSource);
     }
     @Override
     public boolean isPushable() {
-        return super.isPushable() && !this.getIsEmerging() && !this.getInGroundDataTracker();
+        return super.isPushable() && !this.getIsEmerging() && !this.getInGround();
+    }
+
+    @Override
+    public boolean isFireImmune() {
+        return super.isFireImmune() || this.getInGround();
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -261,10 +266,10 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
         this.dataTracker.set(EMERGING, wasEmerging);
     }
 
-    public boolean getInGroundDataTracker() {
+    public boolean getInGround() {
         return this.dataTracker.get(InGROUND);
     }
-    public void setInGroundDataTracker(boolean wasInGround) {
+    public void setInGround(boolean wasInGround) {
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
@@ -398,7 +403,7 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.ticksBetweenMudBalls = nbt.getInt("MudAttackTicks");
-        this.setInGroundDataTracker(nbt.getBoolean("InGround"));
+        this.setInGround(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setSpawnedPuddleDataTracker(nbt.getBoolean("PuddleSpawned"));
         this.setInvisibleData(nbt.getBoolean("Invisible"));
@@ -419,7 +424,7 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
-        if(!this.getInGroundDataTracker()){
+        if(!this.getInGround()){
             return TCOTS_Sounds.WATER_HAG_IDLE;
         }
         else{

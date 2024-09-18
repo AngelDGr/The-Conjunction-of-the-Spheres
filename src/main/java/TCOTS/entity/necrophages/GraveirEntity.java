@@ -194,7 +194,7 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
 
-        this.setInGroundDataTracker(nbt.getBoolean("InGround"));
+        this.setInGround(nbt.getBoolean("InGround"));
         this.ReturnToGround_Ticks = nbt.getInt("ReturnToGroundTicks");
         this.setInvisibleData(nbt.getBoolean("Invisible"));
     }
@@ -221,7 +221,7 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
 
     @Override
     protected Box calculateBoundingBox() {
-        if (getInGroundDataTracker()) {
+        if (getInGround()) {
             return groundBox(this);
         }
         else{
@@ -231,13 +231,18 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
     }
 
     @Override
-    public boolean isPushable() {
-        return super.isPushable() && !this.getIsEmerging() && !this.getInGroundDataTracker();
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return this.getIsEmerging() || this.getInGround() || super.isInvulnerableTo(damageSource);
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getIsEmerging() || this.getInGroundDataTracker() || super.isInvulnerableTo(damageSource);
+    public boolean isPushable() {
+        return super.isPushable() && !this.getIsEmerging() && !this.getInGround();
+    }
+
+    @Override
+    public boolean isFireImmune() {
+        return super.isFireImmune() || this.getInGround();
     }
 
     int AnimationParticlesTicks=36;
@@ -253,12 +258,12 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
     }
 
     @Override
-    public boolean getInGroundDataTracker() {
+    public boolean getInGround() {
         return this.dataTracker.get(InGROUND);
     }
 
     @Override
-    public void setInGroundDataTracker(boolean wasInGround) {
+    public void setInGround(boolean wasInGround) {
         this.dataTracker.set(InGROUND, wasInGround);
     }
 
@@ -296,7 +301,7 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
     //Sounds
     @Override
     protected SoundEvent getAmbientSound() {
-        if (!this.getInGroundDataTracker()) {
+        if (!this.getInGround()) {
             return TCOTS_Sounds.GRAVEIR_IDLE;
         } else {
             return null;

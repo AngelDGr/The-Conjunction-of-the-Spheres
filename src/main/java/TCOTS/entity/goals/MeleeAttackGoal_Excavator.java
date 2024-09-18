@@ -19,6 +19,7 @@ public class MeleeAttackGoal_Excavator extends MeleeAttackGoal_Animated {
         this.ticksBeforeToGround = ticksBeforeToGround;
     }
 
+    @SuppressWarnings("unused")
     public MeleeAttackGoal_Excavator(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle, int ticksBeforeToGround, boolean twoAttacks) {
         super(mob, speed, pauseWhenMobIdle, 2);
         if (!(mob instanceof ExcavatorMob)) {
@@ -37,7 +38,7 @@ public class MeleeAttackGoal_Excavator extends MeleeAttackGoal_Animated {
     public boolean canStart() {
         return super.canStart()
                 && !this.excavatorMob.getIsEmerging()
-                && !this.excavatorMob.getInGroundDataTracker();
+                && !this.excavatorMob.getInGround();
     }
 
     @Override

@@ -19,14 +19,14 @@
     },
 
     "min_inclusive": {
-      "absolute": -8
+      "absolute": -16
     }
   },
 
   "terrain_adaptation": "beard_thin",
 
   "start_height": {
-    "absolute": -30
+    "absolute": -40
   },
 
   "project_start_to_heightmap": "WORLD_SURFACE_WG",
