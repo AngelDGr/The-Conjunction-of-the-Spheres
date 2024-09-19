@@ -314,6 +314,14 @@
 					]
 				},
 				{
+					"name": "mouth_item",
+					"parent": "LowerJaw",
+					"pivot": [0, 20.75, -9],
+					"cubes": [
+						{"origin": [0, 20.75, -9], "size": [0, 0, 0], "uv": [4, 2], "mirror": true}
+					]
+				},
+				{
 					"name": "cheeks",
 					"parent": "Mouth",
 					"pivot": [0, -5.4, -9.15],

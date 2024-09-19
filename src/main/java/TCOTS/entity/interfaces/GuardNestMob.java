@@ -9,15 +9,18 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public interface GuardNestMob {
-    //TODO: Add to the ghoul
-
     BlockPos getNestPos();
     void setNestPos(BlockPos pos);
+
+    boolean canHaveNest();
+    void setCanHaveNest(boolean canHaveNest);
 
     default void writeNbtGuardNest(NbtCompound nbt){
         nbt.putInt("NestPosX", this.getNestPos().getX());
         nbt.putInt("NestPosY", this.getNestPos().getY());
         nbt.putInt("NestPosZ", this.getNestPos().getZ());
+
+        nbt.putBoolean("CanHaveNest", this.canHaveNest());
     }
 
     default void readNbtGuardNest(NbtCompound nbt){
@@ -25,26 +28,20 @@ public interface GuardNestMob {
         int y = nbt.getInt("NestPosY");
         int z = nbt.getInt("NestPosZ");
         this.setNestPos(new BlockPos(x, y, z));
+
+        this.setCanHaveNest(nbt.getBoolean("CanHaveNest"));
     }
 
     default Predicate<BlockPos> getPredicateForNest(PathAwareEntity entity){
-       return pos -> {
-//            MonsterNestBlockEntity nest = (MonsterNestBlockEntity) entity.getWorld().getBlockEntity(pos);
-//
-//            assert nest != null;
-//            assert nest.getLogic().spawnEntry != null;
-//
-//            String id = String.valueOf(nest.getLogic().spawnEntry.getNbt().get("id"));
-
-           return entity.getWorld().getBlockState(pos).isOf(TCOTS_Blocks.MONSTER_NEST);
-       };
+       return pos -> entity.getWorld().getBlockState(pos).isOf(TCOTS_Blocks.MONSTER_NEST);
     }
 
     default boolean getExtraReasonNotGoToNest(){
         return true;
     }
 
-    default Optional<BlockPos> findNest(PathAwareEntity entity, double searchDistance) {
+    private Optional<BlockPos> findNest(PathAwareEntity entity) {
+        double searchDistance = 15;
 
         Predicate<BlockPos> predicate = this.getPredicateForNest(entity);
 
@@ -75,7 +72,13 @@ public interface GuardNestMob {
     }
 
     default void tickGuardNest(PathAwareEntity entity){
-        if(!entity.getWorld().getBlockState(this.getNestPos()).isOf(TCOTS_Blocks.MONSTER_NEST)){
+        if(this.getNestPos()==BlockPos.ORIGIN && this.canHaveNest()) {
+            Optional<BlockPos> optional = this.findNest(entity);
+            optional.ifPresent(this::setNestPos);
+            this.setCanHaveNest(false);
+        }
+
+        if(!entity.getWorld().getBlockState(this.getNestPos()).isOf(TCOTS_Blocks.MONSTER_NEST) && this.getNestPos()!=BlockPos.ORIGIN){
             this.setNestPos(BlockPos.ORIGIN);
         }
     }

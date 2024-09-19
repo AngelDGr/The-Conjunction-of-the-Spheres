@@ -2,10 +2,12 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.goals.*;
+import TCOTS.entity.interfaces.GuardNestMob;
 import TCOTS.entity.interfaces.LungeMob;
-import TCOTS.utils.GeoControllersUtil;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.utils.EntitiesUtil;
+import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -29,15 +31,18 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Hand;
+import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -49,15 +54,17 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 
-public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMob, Ownable {
+public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMob, Ownable, GuardNestMob {
 
     //xTODO: Add new combat/regeneration
     //xTODO: Add Ghoul's Blood
     //xTODO: Add monster nests & spawn
     public static final byte GHOUL_REGENERATING = 99;
     public final int GHOUL_REGENERATION_TIME=200;
+    private static final TrackedData<BlockPos> NEST_POS = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
+    protected static final TrackedData<Boolean> CAN_HAVE_NEST = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
     @Nullable
     private MobEntity owner;
     @Nullable
@@ -74,10 +81,12 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
     protected static final TrackedData<Boolean> REGENERATING = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> INVOKING_REGENERATING = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Integer> TIME_FOR_REGEN = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    protected static final TrackedData<Integer> EATING_TIME = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
 
     public GhoulEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
+        this.setCanPickUpLoot(true);
     }
 
     @Override
@@ -92,6 +101,9 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         this.dataTracker.startTracking(REGENERATING, Boolean.FALSE);
         this.dataTracker.startTracking(INVOKING_REGENERATING, Boolean.FALSE);
         this.dataTracker.startTracking(TIME_FOR_REGEN, 0);
+        this.dataTracker.startTracking(NEST_POS, BlockPos.ORIGIN);
+        this.dataTracker.startTracking(CAN_HAVE_NEST, Boolean.FALSE);
+        this.dataTracker.startTracking(EATING_TIME, -1);
     }
 
     @Override
@@ -110,13 +122,15 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
 
         this.goalSelector.add(3, new Ghoul_MeleeAttackGoal(this, 1.2D, false));
 
-        this.goalSelector.add(4, new GhoulEatFlesh(this,1D));
+        this.goalSelector.add(4, new GhoulGoForFlesh(this,1D));
 
-        this.goalSelector.add(5, new FollowMonsterOwnerGoal(this, 0.75));
+        this.goalSelector.add(5, new ReturnToNestGoal(this,0.75));
 
-        this.goalSelector.add(6, new WanderAroundGoal(this, 0.75f,80));
+        this.goalSelector.add(6, new FollowMonsterOwnerGoal(this, 0.75));
 
-        this.goalSelector.add(7, new LookAroundGoal(this));
+        this.goalSelector.add(7, new WanderAroundGoal(this, 0.75f,80));
+
+        this.goalSelector.add(8, new LookAroundGoal(this));
 
         //Objectives
         this.targetSelector.add(0, new AttackOwnerAttackerTarget(this));
@@ -142,6 +156,39 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 18.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.29f);
+    }
+
+    @Override
+    public boolean getExtraReasonNotGoToNest() {
+        List<ItemEntity> listFlesh = this.getWorld().getEntitiesByClass(ItemEntity.class,
+                this.getBoundingBox().expand(8.0, 2.0, 8.0), itemEntity -> GhoulEntity.isEdibleMeat(itemEntity.getStack()));
+
+        return this.getOwner()==null && listFlesh.isEmpty();
+    }
+
+    @Override
+    public BlockPos getNestPos() {
+        return this.dataTracker.get(NEST_POS);
+    }
+
+    @Override
+    public void setNestPos(BlockPos pos) {
+        this.dataTracker.set(NEST_POS, pos);
+    }
+
+    @Override
+    public boolean canHaveNest() {
+        return this.dataTracker.get(CAN_HAVE_NEST);
+    }
+
+    @Override
+    public void setCanHaveNest(boolean canHaveNest) {
+        this.dataTracker.set(CAN_HAVE_NEST, canHaveNest);
+    }
+    private static final Vec3i ITEM_PICKUP_RANGE_EXPANDER = new Vec3i(1, 1, 1);
+    @Override
+    protected Vec3i getItemPickUpRangeExpander() {
+        return ITEM_PICKUP_RANGE_EXPANDER;
     }
 
     protected static class GhoulRegeneration extends Goal {
@@ -233,43 +280,47 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         }
     }
 
-    protected static class GhoulEatFlesh extends Goal {
+    protected static class GhoulGoForFlesh extends Goal {
 
         private final GhoulEntity ghoul;
 
         private final double speed;
 
-        public GhoulEatFlesh(GhoulEntity ghoul, double speed){
+        public GhoulGoForFlesh(GhoulEntity ghoul, double speed){
             this.ghoul=ghoul;
             this.speed=speed;
         }
 
-        public static final Predicate<ItemEntity> CAN_EAT = item -> !item.cannotPickup() && item.isAlive() &&
-                ((item.getStack().getItem() == Items.ROTTEN_FLESH)
-                        || (item.getStack().getItem() == Items.BEEF)
-                        || (item.getStack().getItem() == Items.PORKCHOP)
-                        || (item.getStack().getItem() == Items.MUTTON))
-                ;
         @Override
         public boolean canStart() {
             List<ItemEntity> list = searchFleshList();
 
-            return !list.isEmpty();
+            return !list.isEmpty() && ghoul.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem());
         }
 
         @Override
         public boolean shouldContinue() {
             List<ItemEntity> list = searchFleshList();
 
-            return !list.isEmpty();
+            return !list.isEmpty() && ghoul.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem());
         }
 
         @Override
         public void start() {
             List<ItemEntity> list = searchFleshList();
 
-            if (!list.isEmpty()) {
+            if (!list.isEmpty() && ghoul.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem())) {
                 this.startMovingTo(ghoul.getNavigation(), list.get(0), speed);
+            }
+        }
+
+        @Override
+        public void tick() {
+            List<ItemEntity> list = searchFleshList();
+
+            if (!list.isEmpty() && ghoul.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem())) {
+                this.startMovingTo(ghoul.getNavigation(), list.get(0), speed);
+                ghoul.getLookControl().lookAt(list.get(0), 30.0f, 30.0f);
             }
         }
 
@@ -280,44 +331,83 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
             }
         }
 
-        int timerToEat;
-
-        @Override
-        public void tick() {
-            List<ItemEntity> list = searchFleshList();
-
-            if(timerToEat==0) {
-                if (!list.isEmpty()) {
-                    this.startMovingTo(ghoul.getNavigation(), list.get(0), speed);
-                    this.ghoul.getLookControl().lookAt(list.get(0), 30.0f, 30.0f);
-                }
-
-                //Search the flesh
-                if (ghoul.distanceTo(list.get(0)) < 2) {
-                    list.get(0).discard();
-                    ItemStack stack = list.get(0).getStack();
-                    int i = stack.getCount();
-
-                    this.ghoul.playSound(SoundEvents.ENTITY_GENERIC_EAT, 1.0f, 1.0f);
-                    this.ghoul.getWorld().sendEntityStatus(ghoul, EntityStatuses.CREATE_EATING_PARTICLES);
-                    this.ghoul.heal(i);
-                    timerToEat = 10;
-                }
-            }
-
-            if(timerToEat>0) {
-                --timerToEat;
-            }
-        }
 
         private List<ItemEntity> searchFleshList(){
             return
                     this.ghoul.getWorld().getEntitiesByClass(ItemEntity.class,
-                    this.ghoul.getBoundingBox().expand(8.0, 2.0, 8.0), CAN_EAT);
+                    this.ghoul.getBoundingBox().expand(8.0, 2.0, 8.0), itemEntity -> GhoulEntity.isEdibleMeat(itemEntity.getStack()));
         }
     }
 
+    protected int getTotalEatingTime(){
+        return 20+this.getRandom().nextBetween(0,10);
+    }
+
+    public void setEatingTime(int eatingTime) {
+        this.dataTracker.set(EATING_TIME, eatingTime);
+    }
+    public int getEatingTime() {
+        return this.dataTracker.get(EATING_TIME);
+    }
+
+    public void addEatingTime(){
+        this.setEatingTime(getEatingTime()+1);
+    }
+
+
     @Override
+    public boolean canGather(ItemStack stack) {
+        return isEdibleMeat(stack) && this.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem());
+    }
+
+    private static boolean isEdibleMeat(ItemStack stack){
+        return stack.isOf(Items.ROTTEN_FLESH)
+                || (stack.isOf(Items.BEEF))
+                || (stack.isOf(Items.PORKCHOP))
+                || (stack.isOf(Items.MUTTON));
+    }
+
+    @Override
+    protected void loot(ItemEntity item) {
+        this.triggerItemPickedUpByEntityCriteria(item);
+        this.handleItemFromGround(item);
+    }
+
+    private void handleItemFromGround(ItemEntity item){
+        this.sendPickup(item, 1);
+        ItemStack itemStack = EntitiesUtil.getItemFromStack(item);
+        this.setStackInHand(Hand.MAIN_HAND, itemStack);
+        this.setEatingTime(0);
+    }
+
+    private void tickEatingItem(){
+
+        if(this.getEatingTime() < this.getTotalEatingTime() && this.getEatingTime()!=-1){
+            ItemStack foodStack = this.getStackInHand(Hand.MAIN_HAND);
+            this.addEatingTime();
+            if (foodStack.getUseAction() == UseAction.EAT && this.getEatingTime()%5==0) {
+                this.spawnItemParticles(foodStack);
+                this.playSound(this.getEatSound(foodStack), 0.5f + 0.5f * (float)this.random.nextInt(2), (this.random.nextFloat() - this.random.nextFloat()) * 0.2f + 1.0f);
+            }
+
+        } else if (this.getEatingTime() == this.getTotalEatingTime()){
+            this.handleEndsFeed(this.getStackInHand(Hand.MAIN_HAND));
+        }
+    }
+
+    private void handleEndsFeed(ItemStack foodStack) {
+        if(!this.getWorld().isClient) {
+
+            if(foodStack.getFoodComponent()!=null){
+                this.heal((float) foodStack.getFoodComponent().getHunger() /2);
+            }
+            this.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
+
+            this.setEatingTime(-1);
+        }
+    }
+
+        @Override
     public boolean isPushable() {
         if(this.getIsInvokingRegen()){
             return false;
@@ -336,7 +426,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
 
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(@NotNull ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         Random random = world.getRandom();
         if(!(spawnReason == SpawnReason.SPAWN_EGG) && !(spawnReason == SpawnReason.STRUCTURE)) {
             //Can spawn an Alghoul with it instead
@@ -347,6 +437,10 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
                     this.getWorld().spawnEntity(alghoul);
                 }
             }
+        }
+
+        if(spawnReason==SpawnReason.SPAWNER || spawnReason==SpawnReason.STRUCTURE){
+            this.setCanHaveNest(true);
         }
 
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -399,23 +493,38 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         this.hasCooldownForRegen = hasCooldownForRegen;
     }
 
-    @Override
-    public void handleStatus(byte status) {
-        if (status == EntityStatuses.CREATE_EATING_PARTICLES) {
-            for (int i = 0; i < 8; ++i) {
-                Vec3d vec3d = new Vec3d(((double) this.random.nextFloat() - 0.5) * 0.1, Math.random() * 0.1 + 0.1, 0.0).rotateX(-this.getPitch() * ((float) Math.PI / 180)).rotateY(-this.getYaw() * ((float) Math.PI / 180));
-                this.getWorld().addParticle(
-                        new ItemStackParticleEffect(ParticleTypes.ITEM, Items.ROTTEN_FLESH.getDefaultStack()),
-                        this.getX() + this.getRotationVector().x,
-                        this.getY(),
-                        this.getZ() + this.getRotationVector().z,
-                        vec3d.x,
-                        vec3d.y + 0.05,
-                        vec3d.z);
-            }
-        } else {
-            super.handleStatus(status);
+    protected void spawnItemParticles(ItemStack stack){
+        for (int i = 0; i < 5; ++i) {
+            Vec3d vec3dVelocity = new Vec3d(
+                    ((double) this.random.nextFloat() - 0.5) * 0.1,
+                    Math.random() * 0.1 + 0.1,
+                    0.0)
+                    .rotateX(-this.getPitch() * ((float) Math.PI / 180))
+                    .rotateY(-this.getYaw() * ((float) Math.PI / 180));
+
+
+            Vec3d vec3dPos = new Vec3d((
+                    (double)this.random.nextFloat() - 0.5) * 0.1,
+                    (double)(-this.random.nextFloat()) * 0.01,
+                    0.95 + ((double)this.random.nextFloat() - 0.5) * 0.1)
+                    .rotateY(-this.bodyYaw * ((float)Math.PI / 180))
+                    .add(this.getX(), this.getEyeY() - 0.15, this.getZ());
+
+            this.getWorld().addParticle(
+                    new ItemStackParticleEffect(ParticleTypes.ITEM, stack),
+                    vec3dPos.x,
+                    vec3dPos.y,
+                    vec3dPos.z,
+
+                    vec3dVelocity.x,
+                    vec3dVelocity.y + 0.05,
+                    vec3dVelocity.z);
         }
+    }
+
+    @Override
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        return 0.62f;
     }
 
     @Override
@@ -431,6 +540,12 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         }
 
         timersTick();
+
+        //To disable the nest
+        this.tickGuardNest(this);
+
+        this.tickEatingItem();
+
 
         super.tick();
     }
@@ -514,6 +629,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Regeneration",getIsRegenerating());
         nbt.putInt("CooldownRegen", getCooldownForRegen());
         nbt.putBoolean("CooldownRegenActive", hasCooldownForRegen);
@@ -522,11 +638,16 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         if (this.ownerUuid != null) {
             nbt.putUuid("Owner", this.ownerUuid);
         }
-        super.writeCustomDataToNbt(nbt);
+
+        nbt.putInt("EatingTime", this.getEatingTime());
+
+        this.writeNbtGuardNest(nbt);
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+
         this.setIsRegenerating(nbt.getBoolean("Regeneration"));
         this.setCooldownForRegen(nbt.getInt("CooldownRegen"));
         this.setTimeForRegen(nbt.getInt("RegenerationTime"));
@@ -535,7 +656,10 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         if (nbt.containsUuid("Owner")) {
             this.ownerUuid = nbt.getUuid("Owner");
         }
-        super.readCustomDataFromNbt(nbt);
+
+        setEatingTime(nbt.getInt("EatingTime"));
+
+        this.readNbtGuardNest(nbt);
     }
 
     @Nullable

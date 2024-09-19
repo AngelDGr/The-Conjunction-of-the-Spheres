@@ -11,18 +11,12 @@ public class ReturnToNestGoal extends Goal {
 
     private final PathAwareEntity mob;
     private final GuardNestMob guardMob;
-    private final ExcavatorMob excavatorMob;
     private final double speed;
     private final double distanceBeforeReturning;
 
 
     public ReturnToNestGoal(PathAwareEntity mob, double speed, double distanceBeforeReturning){
         this.mob = mob;
-
-        if(mob instanceof ExcavatorMob){
-            this.excavatorMob= (ExcavatorMob) mob;
-        }
-        else {this.excavatorMob=null;}
 
         if (!(mob instanceof GuardNestMob)) {
             throw new IllegalArgumentException("LungeAttackGoal requires Mob implements GuardNestMob");
@@ -32,6 +26,10 @@ public class ReturnToNestGoal extends Goal {
 
         this.speed=speed;
         this.distanceBeforeReturning=distanceBeforeReturning;
+    }
+
+    public ReturnToNestGoal(PathAwareEntity mob, double speed){
+        this(mob, speed, 100);
     }
 
     @Override
@@ -49,8 +47,8 @@ public class ReturnToNestGoal extends Goal {
     }
 
     private boolean isExcavator(){
-        if(excavatorMob != null){
-            return !this.excavatorMob.getIsEmerging() && !this.excavatorMob.getInGround();
+        if(this.mob instanceof ExcavatorMob excavatorMob){
+            return !excavatorMob.getIsEmerging() && !excavatorMob.getInGround();
         }
 
         return true;
@@ -67,7 +65,7 @@ public class ReturnToNestGoal extends Goal {
     }
 
     public void startMovingTo(EntityNavigation navigation, int x, int y, int z, double speed) {
-        navigation.startMovingAlong(navigation.findPathTo(x, y, z, 0), speed);
+        navigation.startMovingAlong(navigation.findPathTo(x, y, z, 2), speed);
     }
 
 }

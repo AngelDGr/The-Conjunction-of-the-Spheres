@@ -59,7 +59,7 @@ public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
         //Attack
         this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false, 2400));
 
-        this.goalSelector.add(5, new ReturnToNestGoal(this, 0.75, 100));
+        this.goalSelector.add(5, new ReturnToNestGoal(this, 0.75));
 
         this.goalSelector.add(6, new WanderAroundGoal_Excavator(this, 0.75f, 20));
 

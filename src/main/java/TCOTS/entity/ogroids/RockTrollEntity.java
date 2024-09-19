@@ -54,10 +54,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.NotNull;
@@ -1245,6 +1242,13 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         return !this.isAttacking() && !this.isBlocking() && !this.hasBarteringItem() && this.getAngerTime() == 0 && !this.hasFoodOrAlcohol() && this.getTarget()==null;
     }
 
+
+    private static final Vec3i ITEM_PICKUP_RANGE_EXPANDER = new Vec3i(1, 1, 1);
+    @Override
+    protected Vec3i getItemPickUpRangeExpander() {
+        return ITEM_PICKUP_RANGE_EXPANDER;
+    }
+
     @Override
     protected void loot(ItemEntity item) {
         this.triggerItemPickedUpByEntityCriteria(item);
@@ -1466,7 +1470,6 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         }
 
         if(this.getEatingTime() < TOTAL_EATING_TIME && this.getEatingTime()!=-1){
-
             ItemStack foodStack = this.getStackInHand(Hand.OFF_HAND);
             this.addEatingTime();
             if ((foodStack.getUseAction() == UseAction.DRINK) && this.getEatingTime()%5==0) {
@@ -1482,9 +1485,6 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
         }
     }
 
-    //xTODO: Fix the position for spawn particles
-    //xTODO: Fix whatever it's happening with the particles
-    //xTODO: Make it heals when eats
     private void spawnItemParticles(ItemStack stack) {
         for (int i = 0; i < 5; ++i) {
 
@@ -1495,11 +1495,19 @@ public class RockTrollEntity extends OgroidMonster implements GeoEntity, RangedA
                     .rotateX(-this.getPitch() * ((float)Math.PI / 180))
                     .rotateY(-this.getYaw() * ((float)Math.PI / 180));
 
-            this.getWorld().addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, stack),
+            Vec3d vec3dPos = new Vec3d((
+                    (double)this.random.nextFloat() - 0.5) * 0.1,
+                    (double)(-this.random.nextFloat()) * 0.01,
+                    1.2 + ((double)this.random.nextFloat() - 0.5) * 0.1)
+                    .rotateY(-this.bodyYaw * ((float)Math.PI / 180))
+                    .add(this.getX(), this.getEyeY() - 0.35, this.getZ());
+
+            this.getWorld().addParticle(
+                    new ItemStackParticleEffect(ParticleTypes.ITEM, stack),
                     //Position
-                    this.getX() + (this.getRotationVector().x),
-                    this.getEyeY()-0.5,
-                    this.getZ() + (this.getRotationVector().z),
+                    vec3dPos.x,
+                    vec3dPos.y,
+                    vec3dPos.z,
                     //Velocity
                     vec3dVelocity.x,
                     vec3dVelocity.y + 0.05,

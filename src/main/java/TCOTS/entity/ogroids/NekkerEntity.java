@@ -51,7 +51,6 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 
@@ -59,13 +58,14 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
 
     //xTODO: Add spawn
     //xTODO: Add drops
-    private static final TrackedData<BlockPos> NEST_POS = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> INVISIBLE = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<BlockPos> NEST_POS = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
+    protected static final TrackedData<Boolean> CAN_HAVE_NEST = DataTracker.registerData(NekkerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     @Nullable
     private MobEntity owner;
@@ -98,6 +98,16 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     }
 
     @Override
+    public boolean canHaveNest() {
+        return this.dataTracker.get(CAN_HAVE_NEST);
+    }
+
+    @Override
+    public void setCanHaveNest(boolean canHaveNest) {
+        this.dataTracker.set(CAN_HAVE_NEST, canHaveNest);
+    }
+
+    @Override
     public int getMaxHeadRotation() {
         return 40;
     }
@@ -117,7 +127,7 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         //Attack
         this.goalSelector.add(4, new MeleeAttackGoal_Excavator(this, 1.2D, false, 2400));
 
-        this.goalSelector.add(5, new ReturnToNestGoal(this, 0.75, 100));
+        this.goalSelector.add(5, new ReturnToNestGoal(this, 0.75));
 
         this.goalSelector.add(6, new FollowMonsterOwnerGoal(this, 0.75));
 
@@ -151,9 +161,9 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
             }
         }
 
-        Optional<BlockPos> optional = this.findNest(this, 10);
-
-        optional.ifPresent(this::setNestPos);
+        if(spawnReason==SpawnReason.SPAWNER || spawnReason==SpawnReason.STRUCTURE){
+            this.setCanHaveNest(true);
+        }
 
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
@@ -233,6 +243,7 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
         this.dataTracker.startTracking(NEST_POS, BlockPos.ORIGIN);
+        this.dataTracker.startTracking(CAN_HAVE_NEST, Boolean.FALSE);
     }
 
     @Override

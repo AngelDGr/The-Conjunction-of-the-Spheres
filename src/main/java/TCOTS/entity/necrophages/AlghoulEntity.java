@@ -1,6 +1,7 @@
 package TCOTS.entity.necrophages;
 
 import TCOTS.entity.goals.LungeAttackGoal;
+import TCOTS.entity.goals.ReturnToNestGoal;
 import TCOTS.utils.GeoControllersUtil;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
 import TCOTS.sounds.TCOTS_Sounds;
@@ -18,8 +19,10 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
+import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
@@ -66,7 +69,6 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
 
     protected static final TrackedData<Boolean> SPIKED = DataTracker.registerData(AlghoulEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Integer> TIME_FOR_SPIKES = DataTracker.registerData(AlghoulEntity.class, TrackedDataHandlerRegistry.INTEGER);
-
     protected static final TrackedData<Boolean> IS_SCREAMING = DataTracker.registerData(AlghoulEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
 
@@ -92,11 +94,13 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
 
         this.goalSelector.add(4, new Ghoul_MeleeAttackGoal(this, 1.2D, false));
 
-        this.goalSelector.add(5, new GhoulEatFlesh(this,1D));
+        this.goalSelector.add(5, new GhoulGoForFlesh(this,1D));
 
-        this.goalSelector.add(6, new WanderAroundGoal(this, 0.75f,80));
+        this.goalSelector.add(6, new ReturnToNestGoal(this,0.75));
 
-        this.goalSelector.add(7, new LookAroundGoal(this));
+        this.goalSelector.add(7, new WanderAroundGoal(this, 0.75f,80));
+
+        this.goalSelector.add(8, new LookAroundGoal(this));
 
         //Objectives
         this.targetSelector.add(0, new RevengeGoal(this, GhoulEntity.class));
@@ -332,20 +336,20 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("Spiked", getIsSpiked());
         nbt.putInt("SpikedTime", getTimeForSpikes());
         nbt.putInt("ScreamCooldown", getCooldownForScream());
         nbt.putBoolean("CooldownScreamActive", hasCooldownForScream());
-        super.writeCustomDataToNbt(nbt);
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
         this.setIsSpiked(nbt.getBoolean("Spiked"));
         this.setTimeForSpikes(nbt.getInt("SpikedTime"));
         this.setCooldownForScream(nbt.getInt("ScreamCooldown"));
         this.setHasCooldownForScream(nbt.getBoolean("CooldownScreamActive"));
-        super.readCustomDataFromNbt(nbt);
     }
 
     int counter;
@@ -400,6 +404,39 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
         }
     }
 
+
+    @Override
+    protected void spawnItemParticles(ItemStack stack){
+        for (int i = 0; i < 5; ++i) {
+            Vec3d vec3dVelocity = new Vec3d(
+                    ((double) this.random.nextFloat() - 0.5) * 0.1,
+                    Math.random() * 0.1 + 0.1,
+                    0.0)
+                    .rotateX(-this.getPitch() * ((float) Math.PI / 180))
+                    .rotateY(-this.getYaw() * ((float) Math.PI / 180));
+
+
+            Vec3d vec3dPos = new Vec3d((
+                    (double)this.random.nextFloat() - 0.5) * 0.1,
+                    (double)(-this.random.nextFloat()) * 0.01,
+                    1.2 + ((double)this.random.nextFloat() - 0.5) * 0.1)
+                    .rotateY(-this.bodyYaw * ((float)Math.PI / 180))
+                    .add(this.getX(), this.getEyeY() - 0.15, this.getZ());
+
+            this.getWorld().addParticle(
+                    new ItemStackParticleEffect(ParticleTypes.ITEM, stack),
+                    vec3dPos.x,
+                    vec3dPos.y,
+                    vec3dPos.z,
+
+                    vec3dVelocity.x,
+                    vec3dVelocity.y + 0.05,
+                    vec3dVelocity.z);
+        }
+    }
+
+
+
     @Override
     public boolean damage(DamageSource source, float amount) {
         if(this.getIsSpiked()){
@@ -422,7 +459,10 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
         return super.damage(source, amount);
     }
 
-
+    @Override
+    protected int getTotalEatingTime() {
+        return 10+this.getRandom().nextBetween(0,8);
+    }
 
     @Nullable
     @Override
