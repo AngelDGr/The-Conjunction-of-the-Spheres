@@ -1,13 +1,15 @@
 package TCOTS.entity.misc;
 
 import TCOTS.entity.TCOTS_Entities;
-import TCOTS.entity.ogroids.RockTrollEntity;
+import TCOTS.entity.ogroids.AbstractTrollEntity;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -33,7 +35,11 @@ public class Troll_RockProjectileEntity extends ThrownItemEntity {
 
     @Override
     protected Item getDefaultItem() {
-        return Items.COBBLESTONE;
+        if(this.getOwner()==null){
+            return Items.COBBLESTONE;
+        }
+
+        return this.getOwner().getType() == TCOTS_Entities.ICE_TROLL? Items.PACKED_ICE: Items.COBBLESTONE;
     }
 
     @Override
@@ -55,17 +61,26 @@ public class Troll_RockProjectileEntity extends ThrownItemEntity {
 
 
         if(
-                //If hits another Rock Troll, and the thrower hasn't an owner, then it doesn't damage it
-                (entity instanceof RockTrollEntity && this.getOwner() instanceof RockTrollEntity troll && troll.getOwner()==null) ||
+                //If hits another rock troll, and the thrower hasn't an owner, then it doesn't damage it
+                (entity.getType()==TCOTS_Entities.ROCK_TROLL && this.getOwner()!=null
+                        && this.getOwner().getType()==TCOTS_Entities.ROCK_TROLL && ((AbstractTrollEntity)(this.getOwner())).getOwner()==null) ||
+                //If hits another ice troll, and the thrower hasn't an owner, then it doesn't damage it
+                (entity.getType()==TCOTS_Entities.ICE_TROLL && this.getOwner()!=null
+                        && this.getOwner().getType()==TCOTS_Entities.ICE_TROLL && ((AbstractTrollEntity)(this.getOwner())).getOwner()==null) ||
                 //If hits another troll, and the owner it's the same, then it doesn't damage it
-                (entity instanceof RockTrollEntity trollHit && this.getOwner() instanceof RockTrollEntity troll2 && troll2.getOwner()== trollHit.getOwner())
+                (entity instanceof AbstractTrollEntity trollHit && this.getOwner()!=null
+                        && this.getOwner() instanceof AbstractTrollEntity trollThrower && trollThrower.getOwner() == trollHit.getOwner())
         )
             return;
 
         double d = this.getX() - entity.getX();
         double e = this.getZ() - entity.getZ();
         if(entity instanceof LivingEntity livingEntity) {
-            livingEntity.takeKnockback(2.0, d, e);
+            if(this.getOwner()!=null && this.getOwner().getType()==TCOTS_Entities.ICE_TROLL){
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 100, 4));
+            }
+
+            livingEntity.takeKnockback(this.getOwner()!=null && this.getOwner().getType()==TCOTS_Entities.ICE_TROLL? 0.5: 2.0, d, e);
             //Push the player
             if (entity instanceof ServerPlayerEntity && !((ServerPlayerEntity) entity).isCreative()) {
                 ((ServerPlayerEntity) entity).networkHandler.send(new EntityVelocityUpdateS2CPacket(entity), null);

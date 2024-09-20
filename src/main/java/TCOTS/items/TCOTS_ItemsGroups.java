@@ -54,6 +54,7 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.NEKKER_WARRIOR_SPAWN_EGG);
                                 entries.add(TCOTS_Items.CYCLOPS_SPAWN_EGG);
                                 entries.add(TCOTS_Items.ROCK_TROLL_SPAWN_EGG);
+                                entries.add(TCOTS_Items.ICE_TROLL_SPAWN_EGG);
                             }
 
 

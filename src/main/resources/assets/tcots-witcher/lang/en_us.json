@@ -212,8 +212,14 @@
     "tcots-witcher.sounds.troll_death": "Troll dies",
     "tcots-witcher.sounds.troll_block_impact": "Troll blocks",
     "tcots-witcher.sounds.troll_block_impact_break": "Troll block breaks",
+
+    "entity.tcots-witcher.troll_projectile": "Troll Projectile",
     "tcots-witcher.sounds.rock_projectile_impact": "Rock impacts",
     "tcots-witcher.sounds.rock_projectile_throws": "Rock projectile flies",
+
+    "item.tcots-witcher.ice_troll_spawn_egg": "Ice Troll Spawn Egg",
+    "entity.tcots-witcher.ice_troll": "Ice Troll",
+    "entity.tcots-witcher.ice_troll_rabid": "Rabid Ice Troll",
 
     "item.tcots-witcher.cave_troll_liver": "Cave Troll Liver",
     "item.tcots-witcher.troll_mutagen": "Troll Mutagen",

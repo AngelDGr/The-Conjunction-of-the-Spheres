@@ -22,7 +22,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -65,7 +64,7 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
 //    protected static final TrackedData<Boolean> PUNCHING = DataTracker.registerData(GraveirEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
 
-    public GraveirEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public GraveirEntity(EntityType<? extends GraveirEntity> entityType, World world) {
         super(entityType, world);
         experiencePoints=20;
     }

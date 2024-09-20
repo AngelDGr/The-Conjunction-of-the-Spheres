@@ -7,10 +7,7 @@ import TCOTS.blocks.geo.renderer.MonsterNestRenderer;
 import TCOTS.blocks.geo.renderer.NestSkullBlockRenderer;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.*;
-import TCOTS.entity.geo.renderer.ogroids.CyclopsRenderer;
-import TCOTS.entity.geo.renderer.ogroids.NekkerRenderer;
-import TCOTS.entity.geo.renderer.ogroids.NekkerWarriorRenderer;
-import TCOTS.entity.geo.renderer.ogroids.RockTrollRenderer;
+import TCOTS.entity.geo.renderer.ogroids.*;
 import TCOTS.entity.misc.renderers.*;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
@@ -124,6 +121,8 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.ROCK_TROLL, RockTrollRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.TROLL_ROCK_PROJECTILE, context -> new FlyingItemEntityRenderer<>(context, 2.0f, true));
+
+        EntityRendererRegistry.register(TCOTS_Entities.ICE_TROLL, IceTrollRenderer::new);
 
         //Bomb
         EntityRendererRegistry.register(TCOTS_Entities.WITCHER_BOMB, FlyingItemEntityRenderer::new);

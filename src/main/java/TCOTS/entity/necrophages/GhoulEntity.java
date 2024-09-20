@@ -84,7 +84,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
     protected static final TrackedData<Integer> EATING_TIME = DataTracker.registerData(GhoulEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
 
-    public GhoulEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public GhoulEntity(EntityType<? extends GhoulEntity> entityType, World world) {
         super(entityType, world);
         this.setCanPickUpLoot(true);
     }

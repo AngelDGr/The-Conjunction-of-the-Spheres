@@ -60,7 +60,7 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
     //xTODO: Add spawn
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-    public CyclopsEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public CyclopsEntity(EntityType<? extends CyclopsEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints=10;
     }

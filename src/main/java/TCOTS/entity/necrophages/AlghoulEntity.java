@@ -60,7 +60,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    public AlghoulEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public AlghoulEntity(EntityType<? extends AlghoulEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints=10;
     }

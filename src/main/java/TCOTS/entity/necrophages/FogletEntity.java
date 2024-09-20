@@ -74,7 +74,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
     public static final RawAnimation TRIGGER_FOG = RawAnimation.begin().thenPlay("special.fog");
 
-    public FogletEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public FogletEntity(EntityType<? extends FogletEntity> entityType, World world) {
         super(entityType, world);
         this.setPathfindingPenalty(PathNodeType.WATER, 0.2f);
         this.experiencePoints = 8;

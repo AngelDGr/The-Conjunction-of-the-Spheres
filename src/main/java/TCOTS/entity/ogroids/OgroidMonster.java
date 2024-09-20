@@ -4,11 +4,10 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.WitcherMob_Class;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.world.World;
 
 public class OgroidMonster extends WitcherMob_Class {
-    public OgroidMonster(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public OgroidMonster(EntityType<? extends OgroidMonster> entityType, World world) {
         super(entityType, world);
     }
     @Override

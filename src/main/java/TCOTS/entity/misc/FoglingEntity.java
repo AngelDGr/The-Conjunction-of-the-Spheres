@@ -1,6 +1,5 @@
 package TCOTS.entity.misc;
 
-
 import TCOTS.entity.necrophages.FogletEntity;
 import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import TCOTS.sounds.TCOTS_Sounds;
@@ -8,7 +7,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Ownable;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.RevengeGoal;
+import net.minecraft.entity.ai.goal.WanderAroundGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -16,7 +18,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
@@ -60,7 +61,7 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, Ownable {
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
 
-    public FoglingEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public FoglingEntity(EntityType<? extends FoglingEntity> entityType, World world) {
         super(entityType, world);
     }
 

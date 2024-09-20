@@ -23,7 +23,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
@@ -73,7 +72,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     protected static final TrackedData<Float> FALLING_DISTANCE = DataTracker.registerData(DevourerEntity.class, TrackedDataHandlerRegistry.FLOAT);
 
 
-    public DevourerEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public DevourerEntity(EntityType<? extends DevourerEntity> entityType, World world) {
         super(entityType, world);
         experiencePoints=10;
     }

@@ -1,6 +1,6 @@
 package TCOTS.entity;
 
-import TCOTS.entity.ogroids.RockTrollEntity;
+import TCOTS.entity.ogroids.AbstractTrollEntity;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
@@ -76,7 +76,7 @@ public class TrollGossips {
         return this.entityReputation.computeIfAbsent(target, uuid -> new Reputation());
     }
 
-    public void shareGossipsWith(RockTrollEntity senderTroll, RockTrollEntity receiverTroll){
+    public void shareGossipsWith(AbstractTrollEntity senderTroll, AbstractTrollEntity receiverTroll){
         TrollGossips senderGossips= senderTroll.getGossip();
         TrollGossips receiverGossips = receiverTroll.getGossip();
 

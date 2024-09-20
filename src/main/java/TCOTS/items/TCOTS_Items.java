@@ -213,6 +213,8 @@ public class TCOTS_Items {
     public static Item CAVE_TROLL_LIVER;
     public static Item TROLL_MUTAGEN;
 
+    public static Item ICE_TROLL_SPAWN_EGG;
+
     //Register Drops from monsters
     public static void registerDrops() {
         DROWNER_SPAWN_EGG = registerItem("drowner_spawn_egg",
@@ -315,6 +317,10 @@ public class TCOTS_Items {
                 new Item(new FabricItemSettings()));
         TROLL_MUTAGEN = registerItem("troll_mutagen",
                 new Item(new FabricItemSettings().maxCount(8)));
+
+        ICE_TROLL_SPAWN_EGG = registerItem("ice_troll_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.ICE_TROLL, 0xaadde6, 0xffd8c9,
+                        new FabricItemSettings()));
     }
 
     public static Item ALCHEMY_FORMULA;

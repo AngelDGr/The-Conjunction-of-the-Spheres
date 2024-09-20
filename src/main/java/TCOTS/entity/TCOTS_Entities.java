@@ -4,10 +4,7 @@ import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.*;
 import TCOTS.entity.misc.bolts.*;
 import TCOTS.entity.necrophages.*;
-import TCOTS.entity.ogroids.CyclopsEntity;
-import TCOTS.entity.ogroids.NekkerEntity;
-import TCOTS.entity.ogroids.NekkerWarriorEntity;
-import TCOTS.entity.ogroids.RockTrollEntity;
+import TCOTS.entity.ogroids.*;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -189,11 +186,17 @@ public class TCOTS_Entities {
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.8f, 2.7f)).build());
     public static final EntityType<Troll_RockProjectileEntity> TROLL_ROCK_PROJECTILE = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "troll_rock_projectile"),
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "troll_projectile"),
             FabricEntityTypeBuilder.<Troll_RockProjectileEntity>create(SpawnGroup.MISC, Troll_RockProjectileEntity::new
                     )
                     // Hitbox
                     .dimensions(EntityDimensions.changing(0.5f, 0.5f)).build());
+
+    public static final EntityType<IceTrollEntity> ICE_TROLL = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "ice_troll"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, IceTrollEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(1.8f, 2.7f)).build());
 
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(
@@ -266,7 +269,7 @@ public class TCOTS_Entities {
             //Rotfiends
             {
                 SpawnRestriction.register(ROTFIEND, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RotfiendEntity::canSpawnInDark);
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RotfiendEntity::canSpawnInDarkW);
 
                 //In night
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -345,7 +348,7 @@ public class TCOTS_Entities {
             //Scurvers
             {
                 SpawnRestriction.register(SCURVER, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ScurverEntity::canSpawnInDark);
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ScurverEntity::canSpawnInDarkW);
 
                 //In night
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -359,7 +362,7 @@ public class TCOTS_Entities {
             //Devourer
             {
                 SpawnRestriction.register(DEVOURER, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DevourerEntity::canSpawnInDark);
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DevourerEntity::canSpawnInDarkW);
 
                 //In night
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -385,7 +388,7 @@ public class TCOTS_Entities {
             //Bullvore
             {
                 SpawnRestriction.register(BULLVORE, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BullvoreEntity::canSpawnInDark);
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BullvoreEntity::canSpawnInDarkW);
             }
         }
 
@@ -492,6 +495,9 @@ public class TCOTS_Entities {
 
             //Rock Troll
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.ROCK_TROLL, RockTrollEntity.setAttributes());
+
+            //Ice Troll
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.ICE_TROLL, IceTrollEntity.setAttributes());
 
         }
     }

@@ -107,7 +107,7 @@ public class BullvoreSpawner implements SpecialSpawner {
         if (!SpawnHelper.canSpawn(SpawnRestriction.Location.ON_GROUND, world, pos, TCOTS_Entities.ROTFIEND)) {
             return;
         }
-        if (!NecrophageMonster.canSpawnInDark(TCOTS_Entities.ROTFIEND, world, SpawnReason.NATURAL, pos, random)) {
+        if (!NecrophageMonster.canSpawnInDarkW(TCOTS_Entities.ROTFIEND, world, SpawnReason.NATURAL, pos, random)) {
             return;
         }
 
@@ -180,7 +180,7 @@ public class BullvoreSpawner implements SpecialSpawner {
         if (!SpawnHelper.canSpawn(SpawnRestriction.Location.ON_GROUND, world, pos, TCOTS_Entities.BULLVORE)) {
             return false;
         }
-        if (!BullvoreEntity.canSpawnInDark(TCOTS_Entities.BULLVORE, world, SpawnReason.NATURAL, pos, random)) {
+        if (!BullvoreEntity.canSpawnInDarkW(TCOTS_Entities.BULLVORE, world, SpawnReason.NATURAL, pos, random)) {
             return false;
         }
         bullvoreEntity = TCOTS_Entities.BULLVORE.create(world);

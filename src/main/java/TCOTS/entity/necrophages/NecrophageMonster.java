@@ -6,11 +6,10 @@ import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.world.World;
 
 public class NecrophageMonster extends WitcherMob_Class {
-    public NecrophageMonster(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public NecrophageMonster(EntityType<? extends NecrophageMonster> entityType, World world) {
         super(entityType, world);
     }
 

@@ -1,7 +1,8 @@
 package TCOTS.mixin;
 
 import TCOTS.entity.TCOTS_Entities;
-import TCOTS.entity.ogroids.RockTrollEntity;
+import TCOTS.entity.ogroids.AbstractTrollEntity;
+import TCOTS.entity.ogroids.IceTrollEntity;
 import TCOTS.interfaces.LivingEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.TCOTS_Effects;
@@ -440,12 +441,21 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @Inject(method = "onDeath", at = @At("TAIL"))
     private void injectTrollTriggerDefending(DamageSource damageSource, CallbackInfo ci){
 
-        if(this.getWorld() instanceof ServerWorld && getAttacking() instanceof RockTrollEntity troll && getAttacker() instanceof PlayerEntity player){
+        if(this.getWorld() instanceof ServerWorld && getAttacking() instanceof AbstractTrollEntity troll && getAttacker() instanceof PlayerEntity player){
             if(!this.getWorld().isClient) {
-                ((ServerWorld) this.getWorld()).handleInteraction(RockTrollEntity.TROLL_DEFENDING, player, troll);
-                troll.handleNearTrollsInteraction(RockTrollEntity.TROLL_DEFENDING_FRIEND, player);
+                ((ServerWorld) this.getWorld()).handleInteraction(troll.getDefendingInteraction(false), player, troll);
+                troll.handleNearTrollsInteraction(troll.getDefendingInteraction(true), player);
                 troll.getWorld().sendEntityStatus(troll, EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
                 troll.handleNearTrollsParticles(EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+            }
+        }
+    }
+
+    @Inject(method = "canTarget(Lnet/minecraft/entity/LivingEntity;)Z", at = @At("HEAD"), cancellable = true)
+    private void GolemNotAttackFriendlyIceTroll(LivingEntity target, CallbackInfoReturnable<Boolean> cir){
+        if(THIS.getType() == EntityType.IRON_GOLEM){
+            if(target instanceof IceTrollEntity troll && target.getType() == TCOTS_Entities.ICE_TROLL && troll.getOwner()!=null){
+                cir.setReturnValue(false);
             }
         }
     }

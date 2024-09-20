@@ -21,7 +21,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.SheepEntity;
@@ -60,7 +59,7 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
 
     protected static final TrackedData<Boolean> CHARGING = DataTracker.registerData(BullvoreEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
-    public BullvoreEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public BullvoreEntity(EntityType<? extends BullvoreEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints=20;
         this.setStepHeight(1.0f);
