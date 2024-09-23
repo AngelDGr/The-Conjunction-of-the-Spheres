@@ -1210,37 +1210,37 @@
 			"bones": {
 				"upperBody_Head": {
 					"rotation": {
-						"vector": [12.79362, 12.19908, 2.74715],
+						"vector": [17.51154, 2.4407, 0.54143],
 						"easing": "linear"
 					}
 				},
 				"head": {
 					"rotation": {
-						"vector": [-3.97809, -38.202, -7.66224],
+						"vector": [-9.3315, -15.16597, -12.66509],
 						"easing": "linear"
 					}
 				},
 				"left_arm": {
 					"rotation": {
-						"vector": [-21.80718, 23.83006, -17.12983],
+						"vector": [-22.46276, -3.94322, -5.80917],
 						"easing": "linear"
 					}
 				},
 				"right_arm": {
 					"rotation": {
-						"vector": [-54.53345, -19.95465, -1.49297],
+						"vector": [-57.85052, -5.71467, 12.87904],
 						"easing": "linear"
 					}
 				},
 				"right_leg": {
 					"rotation": {
-						"vector": [0.44067, 9.99038, 2.53852],
+						"vector": ["linear", "linear", "linear"],
 						"easing": "linear"
 					}
 				},
 				"left_leg": {
 					"rotation": {
-						"vector": [2.4905, -0.21782, -0.00473],
+						"vector": ["linear", "linear", "linear"],
 						"easing": "linear"
 					}
 				}

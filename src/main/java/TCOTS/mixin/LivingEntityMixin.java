@@ -442,7 +442,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     private void injectTrollTriggerDefending(DamageSource damageSource, CallbackInfo ci){
 
         if(this.getWorld() instanceof ServerWorld && getAttacking() instanceof AbstractTrollEntity troll && getAttacker() instanceof PlayerEntity player){
-            if(!this.getWorld().isClient) {
+            if(!this.getWorld().isClient && !troll.isRabid()) {
                 ((ServerWorld) this.getWorld()).handleInteraction(troll.getDefendingInteraction(false), player, troll);
                 troll.handleNearTrollsInteraction(troll.getDefendingInteraction(true), player);
                 troll.getWorld().sendEntityStatus(troll, EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);

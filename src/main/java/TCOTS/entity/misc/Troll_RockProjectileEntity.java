@@ -46,7 +46,10 @@ public class Troll_RockProjectileEntity extends ThrownItemEntity {
     public void handleStatus(byte status) {
         if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
             for (int i = 0; i < 8; ++i) {
-                this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.COBBLESTONE.getDefaultState()), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+                this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK,
+                        this.getOwner()!=null && this.getOwner().getType()==TCOTS_Entities.ICE_TROLL?
+                                Blocks.PACKED_ICE.getDefaultState():
+                                Blocks.COBBLESTONE.getDefaultState()), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }
         }
     }

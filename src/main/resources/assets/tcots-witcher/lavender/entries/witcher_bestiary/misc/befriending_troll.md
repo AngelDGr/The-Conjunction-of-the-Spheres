@@ -26,8 +26,8 @@ If they see you attacking a __non-rabid__ troll, they will immediately dislike y
 
 ;;;;;
 
-They have a fondness for Amethyst Shards and may even offer items like rocks, ores or even enchanted books in exchange.
-
+Rock trolls have a fondness for amethyst shards, while ice trolls prefer lapis lazuli, 
+and they may even offer items like rocks, ores, or enchanted books in exchange.
 
 Trolls also love alcohol, honey, milk, and meat, gifting any of these will significantly boost your friendship. 
 

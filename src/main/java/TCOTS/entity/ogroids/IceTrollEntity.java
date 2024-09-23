@@ -10,7 +10,10 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
@@ -21,20 +24,31 @@ import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 
+import java.util.UUID;
+
 public class IceTrollEntity extends RockTrollEntity {
-    //TODO: Add drops
-    //TODO: Add bestiary entry
+    //xTODO: Add drops
+    //xTODO: Add bestiary entry
     //TODO: Add ice caves to spawn in the world
+    // Continue with the generation testing
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
+    @Override
+    public float getStepHeight() {
+        return super.getStepHeight();
+    }
 
     public IceTrollEntity(EntityType<? extends AbstractTrollEntity> entityType, World world) {
         super(entityType, world);
@@ -122,13 +136,13 @@ public class IceTrollEntity extends RockTrollEntity {
     @Override
     public void shootAt(@NotNull LivingEntity target, float pullProgress) {
         this.getNavigation().stop();
-        Troll_RockProjectileEntity rockProjectileEntity = new Troll_RockProjectileEntity(this.getWorld(), this, 6);
+        Troll_RockProjectileEntity rockProjectileEntity = new Troll_RockProjectileEntity(this.getWorld(), this, this.isSnowing()? 8: 6);
         double d = target.getEyeY() - (double)1.1f;
         double e = target.getX() - this.getX();
         double f = d - rockProjectileEntity.getY();
         double g = target.getZ() - this.getZ();
         double h = Math.sqrt(e * e + g * g) * (double)0.2f;
-        rockProjectileEntity.setVelocity(e, f + h, g, 2.2f, this.isWandering()? 2.0f : 1.0f);
+        rockProjectileEntity.setVelocity(e, f + h, g, 2.2f, this.isWandering()? 4.0f : 1.5f);
         this.triggerAnim("RockController", "rock_attack");
         this.playSound(TCOTS_Sounds.ROCK_PROJECTILE_THROWS, 1.0f, 0.4f / (this.getRandom().nextFloat() * 0.4f + 0.8f));
         this.getWorld().spawnEntity(rockProjectileEntity);
@@ -190,10 +204,10 @@ public class IceTrollEntity extends RockTrollEntity {
         return Items.LAPIS_LAZULI;
     }
 
-    //TODO: Modify this Loot Table
+    //xTODO: Modify this Loot Table
     @Override
     protected Identifier getTrollLootTable() {
-        return new Identifier(TCOTS_Main.MOD_ID,"gameplay/rock_troll_bartering");
+        return new Identifier(TCOTS_Main.MOD_ID,"gameplay/ice_troll_bartering");
     }
 
     @Override
@@ -259,6 +273,55 @@ public class IceTrollEntity extends RockTrollEntity {
             //-5 Friendship
             this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.HURT, 25, 15);
         }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if(this.isSnowing()){
+            this.spawnSnowflakesAround();
+        }
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return super.isInvulnerableTo(damageSource);
+    }
+
+    protected void spawnSnowflakesAround(){
+        if(this.age%6 == 0){
+            for (int i = 0; i < 8; ++i) {
+                double d = this.getX() + (double) MathHelper.nextBetween(this.getRandom(), -1F, 1F);
+                double e = (this.getEyeY()-0.5f)+ (double) MathHelper.nextBetween(this.getRandom(), -1F, 1F);
+                double f = this.getZ() + (double) MathHelper.nextBetween(this.getRandom(), -1F, 1F);
+                this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, d,e,f,0,0,0);
+            }
+        }
+    }
+
+    private static final UUID BLIZZARD_STRENGTH_BOOST_ID = UUID.fromString("6120c998-43c2-4e54-a337-8b4a95ce81de");
+    private static final EntityAttributeModifier BLIZZARD_STRENGTH_BOOST = new EntityAttributeModifier(BLIZZARD_STRENGTH_BOOST_ID, "Blizzard strength boost", 4.0f, EntityAttributeModifier.Operation.ADDITION);
+
+    @Override
+    protected void mobTick() {
+        super.mobTick();
+
+        //If it's snowing increases its strength
+        if(this.isSnowing()){
+            EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            if(entityAttributeInstance!=null) {
+                entityAttributeInstance.removeModifier(BLIZZARD_STRENGTH_BOOST.getId());
+                entityAttributeInstance.addTemporaryModifier(BLIZZARD_STRENGTH_BOOST);
+            }
+        } else {
+            EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            if(entityAttributeInstance!=null) entityAttributeInstance.removeModifier(BLIZZARD_STRENGTH_BOOST.getId());
+        }
+    }
+    private boolean isSnowing(){
+        Biome biome = this.getWorld().getBiome(this.getBlockPos()).value();
+        return this.getWorld().isRaining() && biome.canSetSnow(this.getWorld(), this.getBlockPos());
     }
 
     @Override

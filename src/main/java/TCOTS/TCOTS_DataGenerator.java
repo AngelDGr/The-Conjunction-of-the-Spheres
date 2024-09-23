@@ -44,10 +44,7 @@ import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.PointOfInterestTypeTags;
+import net.minecraft.registry.tag.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.poi.PointOfInterestType;
 
@@ -63,7 +60,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack main = fabricDataGenerator.createPack();
 
         main.addProvider(ModWorldGenerator::new);
-        main.addProvider(LootTablesHerbalistGenerator::new);
+        main.addProvider(LootTablesChestsGenerator::new);
         main.addProvider(POIProvider::new);
         main.addProvider(DamageTypeTagsGenerator::new);
         main.addProvider(BlockTagsGenerator::new);
@@ -99,7 +96,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
-    private static class LootTablesHerbalistGenerator extends SimpleFabricLootTableProvider {
+    private static class LootTablesChestsGenerator extends SimpleFabricLootTableProvider {
 
         public static final Identifier PLAINS_HERBALIST_CHEST = new Identifier(TCOTS_Main.MOD_ID, "chests/village/plains_herbalist");
         public static final Identifier TAIGA_HERBALIST_CHEST = new Identifier(TCOTS_Main.MOD_ID, "chests/village/taiga_herbalist");
@@ -108,8 +105,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         public static final Identifier SAVANNA_HERBALIST_CHEST = new Identifier(TCOTS_Main.MOD_ID, "chests/village/savanna_herbalist");
 
         public static final Identifier TROLL_BARREL = new Identifier(TCOTS_Main.MOD_ID, "chests/troll/troll_barrel");
+        public static final Identifier ICE_TROLL_BARREL = new Identifier(TCOTS_Main.MOD_ID, "chests/troll/ice_troll_barrel");
 
-        public LootTablesHerbalistGenerator(FabricDataOutput output) {
+        public LootTablesChestsGenerator(FabricDataOutput output) {
             super(output, LootContextTypes.CHEST);
         }
 
@@ -416,7 +414,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             }
 
 
-            //Troll Barrel
+            //Rock Troll Barrel
             {
                 {
                     exporter.accept(TROLL_BARREL,
@@ -494,6 +492,78 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     .with(ItemEntry.builder(Items.RAW_IRON_BLOCK).weight(1))
                                     .with(ItemEntry.builder(Items.RAW_GOLD_BLOCK).weight(1))
 
+
+                            ));
+                }
+            }
+
+            //Ice Troll Barrel
+            {
+                {
+                    exporter.accept(ICE_TROLL_BARREL,
+                            LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(4.0f, 6.0f))
+
+                                    //Rocks-Ice
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COBBLESTONE).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4.0f, 8.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.SNOWBALL).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3.0f, 12.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.SNOW_BLOCK).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 8.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.ICE).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 6.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.PACKED_ICE).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 6.0f))))
+
+                                    .with(ItemEntry.builder(Items.BLUE_ICE).weight(2))
+
+                                    //Ores
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RAW_IRON).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RAW_COPPER).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3.0f, 6.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.EMERALD).weight(1))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 6.0f))))
+
+                                    //Meat
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.ROTTEN_FLESH).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3.0f, 8.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.MUTTON).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RABBIT).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f))))
+
+                                    //Alcohol-Cooked Meat
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.VILLAGE_HERBAL).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.MANDRAKE_CORDIAL).weight(1))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_MUTTON).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_RABBIT).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(ItemEntry.builder(Items.RABBIT_STEW).weight(1))
+
+                                    //Amethyst-RawBlocks
+                                    .with(ItemEntry.builder(Items.LAPIS_LAZULI).weight(1))
+                                    .with(ItemEntry.builder(Items.RAW_COPPER).weight(1))
+                                    .with(ItemEntry.builder(Items.RAW_IRON_BLOCK).weight(1))
 
                             ));
                 }
@@ -589,6 +659,13 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             this.getOrCreateTagBuilder(TCOTS_Entities.DIMERITIUM_DAMAGE)
                     .add(EntityType.END_CRYSTAL)
                     .add(TCOTS_Entities.FOGLING);
+
+            this.getOrCreateTagBuilder(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES)
+                    .add(TCOTS_Entities.ICE_TROLL);
+
+            this.getOrCreateTagBuilder(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS)
+                    .add(TCOTS_Entities.ICE_TROLL)
+                    .add(TCOTS_Entities.CYCLOPS);
         }
     }
     private static class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {

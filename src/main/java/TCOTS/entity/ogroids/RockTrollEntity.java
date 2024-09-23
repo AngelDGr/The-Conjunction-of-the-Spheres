@@ -14,7 +14,6 @@ import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -24,6 +23,7 @@ import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -34,6 +34,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -173,6 +174,14 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
 
     @Override
     public boolean damage(DamageSource source, float amount) {
+        if(blockedByBack(source)
+                &&
+                !(source.getAttacker()!=null && source.getAttacker() instanceof LivingEntity attacker && attacker.getMainHandStack().getItem() instanceof PickaxeItem))
+        {
+            this.playSound(TCOTS_Sounds.TROLL_BLOCK_IMPACT, 1.0f, 1.0f);
+            return false;
+        }
+
         //If attacks using a pickaxe
         if(isTrollBlocking() &&
                 source.getAttacker()!=null && source.getAttacker() instanceof LivingEntity attacker
@@ -204,6 +213,24 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
         }
 
         return damage;
+    }
+
+    public boolean blockedByBack(DamageSource source) {
+        Vec3d vec3d;
+        Entity entity = source.getSource();
+
+        boolean hasPiercing = entity instanceof PersistentProjectileEntity && ((PersistentProjectileEntity) entity).getPierceLevel() > 0;
+
+
+        if (!source.isIn(DamageTypeTags.BYPASSES_SHIELD) && !hasPiercing && (vec3d = source.getPosition()) != null) {
+            Vec3d vec3d2 = this.getRotationVector(0.0f, this.getHeadYaw());
+            Vec3d vec3d3 = vec3d.relativize(this.getPos());
+            vec3d3 = new Vec3d(vec3d3.x, 0.0, vec3d3.z).normalize();
+            System.out.println("Dot Product Value: "+vec3d3.dotProduct(vec3d2));
+            return vec3d3.dotProduct(vec3d2) > 0.0;
+        }
+
+        return false;
     }
 
     @Override
@@ -466,8 +493,9 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
         return (this.isTrollBlocking()
-                && (damageSource.isOf(DamageTypes.PLAYER_ATTACK) || damageSource.isOf(DamageTypes.MOB_ATTACK) || damageSource.isOf(DamageTypes.MOB_ATTACK_NO_AGGRO))
-                && !(damageSource.isIn(DamageTypeTags.BYPASSES_ARMOR)))
+                && !damageSource.isIn(DamageTypeTags.BYPASSES_SHIELD)
+                && !damageSource.isIn(DamageTypeTags.BYPASSES_ARMOR)
+                && !(damageSource.getSource() instanceof PersistentProjectileEntity && ((PersistentProjectileEntity) damageSource.getSource()).getPierceLevel() > 0))
 
                 || super.isInvulnerableTo(damageSource);
     }
