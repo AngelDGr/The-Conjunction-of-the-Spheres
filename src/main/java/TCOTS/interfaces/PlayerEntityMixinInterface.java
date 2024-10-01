@@ -15,7 +15,7 @@ public interface PlayerEntityMixinInterface {
 
     //Toxicity
 
-    default int theConjunctionOfTheSpheres$getToxicity(){return 0;}
+    default int theConjunctionOfTheSpheres$getNormalToxicity(){return 0;}
 
     default void theConjunctionOfTheSpheres$setToxicity(int toxicity){}
 

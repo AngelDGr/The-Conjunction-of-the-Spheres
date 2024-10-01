@@ -608,8 +608,74 @@
     "death.attack.bleeding.player": "%1$s bled to death while fighting %2$s",
 
 
-    "gui.jei.tcots-witcher.requires_recipe": "Requires unlock recipe",
 
+
+    "advancements.witcher.main.title": "The Conjunction of the Spheres",
+    "advancements.witcher.main.description": "Explore this new world",
+
+        "advancements.witcher.start_alchemy.title": "The Mother of all Sciences",
+        "advancements.witcher.start_alchemy.description": "Start the path of alchemy crafting an Alchemy Table",
+
+            "advancements.witcher.use_formula.title": "Let's Cook!",
+            "advancements.witcher.use_formula.description": "Learn a new Alchemy Recipe",
+
+            "advancements.witcher.craft_potion.title": "Strong Beverage",
+            "advancements.witcher.craft_potion.description": "Get your first post-conjunction potion",
+
+                "advancements.witcher.craft_decoction.title": "Taste of Monstrosity",
+                "advancements.witcher.craft_decoction.description": "Get a decoction",
+
+                "advancements.witcher.craft_potion_superior.title": "Practicum in Advanced Alchemy",
+                "advancements.witcher.craft_potion_superior.description": "Get a Superior level potion",
+
+                "advancements.witcher.max_toxicity.title": "Can Quit Anytime I Want",
+                "advancements.witcher.max_toxicity.description": "Reach high levels of toxicity",
+
+            "advancements.witcher.craft_oil.title": "Honing the Blade",
+            "advancements.witcher.craft_oil.description": "Get your first Monster Oil",
+
+                "advancements.witcher.craft_oil_superior.title": "A Powerful Wax",
+                "advancements.witcher.craft_oil_superior.description": "Get a Superior level Monster Oil",
+
+                "advancements.witcher.kill_with_hanged.title": "...Steel for Humans",
+                "advancements.witcher.kill_with_hanged.description": "Kill an Illager using Hanged Man's Venom",
+
+            "advancements.witcher.craft_bomb.title": "Ka-Boom!",
+            "advancements.witcher.craft_bomb.description": "Get your first bomb",
+
+                "advancements.witcher.craft_bomb_superior.title": "Bombastic",
+                "advancements.witcher.craft_bomb_superior.description": "Get a Superior level bomb",
+
+                "advancements.witcher.destroy_nest.title": "Fire in the Hole",
+                "advancements.witcher.destroy_nest.description": "Destroy a monster nest using a bomb",
+
+                    "advancements.witcher.destroy_nest_multiple.title": "Pest Control",
+                    "advancements.witcher.destroy_nest_multiple.description": "Destroy 30 monster nests",
+
+                "advancements.witcher.craft_all_bomb.title": "Bombardier",
+                "advancements.witcher.craft_all_bomb.description": "Get all the kinds of bombs",
+
+                "advancements.witcher.dragons_dream_burning.title": "That Is the Evilest Thing",
+                "advancements.witcher.dragons_dream_burning.description": "Ignite a Dragon's Dream bomb using a burning opponent",
+
+                "advancements.witcher.stop_creeper.title": "Successful Gardener",
+                "advancements.witcher.stop_creeper.description": "Use a Moon Dust on a Creeper to disable its explosion forever",
+
+            "advancements.witcher.refill_concoction.title": "Deep Meditation",
+            "advancements.witcher.refill_concoction.description": "Refill a concoction using alcohol in an Alchemy Table or by sleeping",
+
+
+
+    "advancements.witcher.start_killing.title": "Silver for Monsters...",
+    "advancements.witcher.start_killing.description": "Kill a post-conjunction monster",
+
+
+
+
+
+
+
+    "gui.jei.tcots-witcher.requires_recipe": "Requires unlock recipe",
 
     "text.config.tcots_config.title": "TCOTS Config",
     "text.config.tcots_config.category.hud": "Toxicity - HUD Options",

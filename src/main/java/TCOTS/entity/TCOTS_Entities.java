@@ -46,7 +46,7 @@ public class TCOTS_Entities {
     //xTODO: Nekker Warriors
     //xTODO: Cyclopses
     //xTODO: Rock troll
-    //TODO: Ice troll
+    //xTODO: Ice troll
     //TODO: Ice Giant (Boss)
     //W2
     //TODO: Troll (Forest)
@@ -431,7 +431,7 @@ public class TCOTS_Entities {
                 SpawnRestriction.register(ROCK_TROLL, SpawnRestriction.Location.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RockTrollEntity::canSpawnInDarkNotBelowDeepslate);
 
-                //In snowy plains/mountains/taigas
+                //In mountains/taigas
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 //Mountains
                                 BiomeKeys.STONY_PEAKS, BiomeKeys.MEADOW, BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST,
@@ -440,6 +440,23 @@ public class TCOTS_Entities {
                                 //Caves/Shore
                                 BiomeKeys.DRIPSTONE_CAVES, BiomeKeys.STONY_SHORE), SpawnGroup.MONSTER,
                         ROCK_TROLL, 5, 1, 1);
+            }
+
+            //Ice Troll
+            {
+                SpawnRestriction.register(ICE_TROLL, SpawnRestriction.Location.ON_GROUND,
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, IceTrollEntity::canSpawnInDarkNotBelowDeepslate);
+//                "minecraft:jagged_peaks",
+//                        "minecraft:frozen_peaks",
+//                        "minecraft:grove",
+//                        "minecraft:snowy_slopes"
+                //In snowy plains/mountains/taigas
+                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                //Mountains
+                                BiomeKeys.JAGGED_PEAKS, BiomeKeys.SNOWY_SLOPES, BiomeKeys.GROVE,
+                                //Snowy Plains
+                                BiomeKeys.SNOWY_PLAINS, BiomeKeys.ICE_SPIKES), SpawnGroup.MONSTER,
+                        ICE_TROLL, 2, 1, 1);
             }
         }
     }

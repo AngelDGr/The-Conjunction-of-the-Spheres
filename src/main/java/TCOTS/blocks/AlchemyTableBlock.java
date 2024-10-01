@@ -1,5 +1,6 @@
 package TCOTS.blocks;
 
+import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.blocks.entity.AlchemyTableBlockEntity;
 import TCOTS.items.AlchemyBookItem;
 import TCOTS.items.TCOTS_Items;
@@ -18,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -166,6 +168,8 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                                 if(!player.isCreative()){
                                     player.getMainHandStack().decrement(1);
                                 }
+                                //Triggers the advancement
+                                if(player instanceof ServerPlayerEntity serverPlayer) TCOTS_Criteria.REFILL_CONCOCTION.trigger(serverPlayer);
                                 //Play a sound
                                 world.playSound(null, pos, TCOTS_Sounds.POTION_REFILLED, SoundCategory.BLOCKS, 1.0f, 1.0f);
                                 //Success
@@ -180,6 +184,8 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
                         if(!player.isCreative()){
                             player.getMainHandStack().decrement(1);
                         }
+                        //Triggers the advancement
+                        if(player instanceof ServerPlayerEntity serverPlayer) TCOTS_Criteria.REFILL_CONCOCTION.trigger(serverPlayer);
                         //Play a sound
                         world.playSound(null, pos, TCOTS_Sounds.POTION_REFILLED, SoundCategory.BLOCKS, 3.0f, 1.0f);
                         //Success

@@ -1,5 +1,6 @@
 package TCOTS.items.concoctions.bombs;
 
+import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.particles.TCOTS_Particles;
@@ -18,6 +19,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,10 +30,25 @@ public class SamumBomb {
     private static final byte SAMUM_EXPLODES = 34;
 
     public static void explosionLogic(WitcherBombEntity bomb){
+        Explosion explosion =
+                bomb.getWorld().createExplosion(
+                        bomb,
+                        null,
+                        null,
+                        bomb.getX(),
+                        bomb.getY(),
+                        bomb.getZ(),
+                        0.2f,
+                        false,
+                        World.ExplosionSourceType.BLOCK,
+                        TCOTS_Particles.SAMUM_EXPLOSION_EMITTER,
+                        TCOTS_Particles.SAMUM_EXPLOSION_EMITTER,
+                        SoundEvents.ENTITY_GENERIC_EXPLODE
+                );
 
-        bomb.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1,1);
-
-        bomb.getWorld().sendEntityStatus(bomb, SAMUM_EXPLODES);
+//                bomb.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1,1);
+//
+//        bomb.getWorld().sendEntityStatus(bomb, SAMUM_EXPLODES);
 
         List<LivingEntity> list = bomb.getWorld().getEntitiesByClass(LivingEntity.class, bomb.getBoundingBox().expand(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
                 livingEntity -> !(livingEntity instanceof WardenEntity) && !(livingEntity instanceof ArmorStandEntity) && !(livingEntity instanceof GuardianEntity)
@@ -48,10 +66,10 @@ public class SamumBomb {
             }
         }
 
-        SamumBomb.destroyNests(bomb);
+        SamumBomb.destroyNests(bomb, explosion);
     }
 
-    public static void destroyNests(WitcherBombEntity bomb){
+    public static void destroyNests(WitcherBombEntity bomb, Explosion explosion){
         ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList<>();
         int l;
         int k;
@@ -94,10 +112,15 @@ public class SamumBomb {
         affectedBlocks.addAll(set);
 
         for (BlockPos blockPos : affectedBlocks) {
+            BlockState state = bomb.getWorld().getBlockState(blockPos);
 
             //Destroy nest blocks
-            if(bomb.destroyableBlocks(bomb.getWorld().getBlockState(blockPos))) {
-                bomb.getWorld().breakBlock(blockPos, true, bomb);
+            if(bomb.destroyableBlocks(state)) {
+                if(state.isOf(TCOTS_Blocks.MONSTER_NEST)){
+                    state.onExploded(bomb.getWorld(), blockPos, explosion, null);
+                } else {
+                    bomb.getWorld().breakBlock(blockPos, true, bomb);
+                }
             }
         }
     }

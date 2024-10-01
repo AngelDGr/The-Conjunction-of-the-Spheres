@@ -1,5 +1,6 @@
 package TCOTS.mixin;
 
+import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.WitcherMob_Class;
 import com.mojang.authlib.GameProfile;
 import com.mojang.datafixers.util.Either;
@@ -13,8 +14,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
@@ -42,6 +45,16 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     @Shadow
     public boolean isCreative() {
      return false;
+    }
+    @Unique
+    ServerPlayerEntity THIS = (ServerPlayerEntity)(Object)this;
+    @Inject(method = "tick", at = @At("TAIL"))
+    public void injectTriggerMaxToxicity(CallbackInfo ci){
+
+        if(this.theConjunctionOfTheSpheres$getAllToxicity() >= this.theConjunctionOfTheSpheres$getMaxToxicity()*0.9){
+            TCOTS_Criteria.MAX_TOXICITY_REACHED.trigger(THIS);
+        }
+
     }
 
 }

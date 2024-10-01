@@ -1,5 +1,6 @@
 package TCOTS.items.concoctions.bombs;
 
+import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.utils.BombsUtil;
@@ -11,6 +12,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
@@ -19,7 +21,8 @@ import java.util.Optional;
 public class GrapeshotBomb {
 
     public static void explosionLogic(WitcherBombEntity bomb, @Nullable Entity entity){
-        bomb.getWorld().createExplosion(
+        Explosion explosion =
+                bomb.getWorld().createExplosion(
                 bomb,
                 null,
                 null,
@@ -37,7 +40,7 @@ public class GrapeshotBomb {
                 SoundEvents.ENTITY_GENERIC_EXPLODE
         );
 
-        GrapeshotBomb.destroyNests(bomb);
+        GrapeshotBomb.destroyNests(bomb, explosion);
 
         if(entity!=null){
             //Level 0 -> 5s
@@ -47,7 +50,7 @@ public class GrapeshotBomb {
         }
     }
 
-    public static void destroyNests(WitcherBombEntity bomb){
+    public static void destroyNests(WitcherBombEntity bomb, Explosion explosion){
         ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList<>();
         int l;
         int k;
@@ -94,8 +97,11 @@ public class GrapeshotBomb {
 
             //Destroy nest blocks
             if(bomb.destroyableBlocks(state)) {
-
-                bomb.getWorld().breakBlock(blockPos, true, bomb);
+                if(state.isOf(TCOTS_Blocks.MONSTER_NEST)){
+                    state.onExploded(bomb.getWorld(), blockPos, explosion, null);
+                } else {
+                    bomb.getWorld().breakBlock(blockPos, true, bomb);
+                }
             }
         }
     }

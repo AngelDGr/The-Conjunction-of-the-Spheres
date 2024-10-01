@@ -1,0 +1,92 @@
+{
+  "parent": "minecraft:tcots-witcher/craft_bomb",
+  "criteria": {
+    "craft_dancing": {
+      "conditions": {
+        "recipe_id": "tcots-witcher:dancing_star"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "craft_dimeritium": {
+      "conditions": {
+        "recipe_id": "tcots-witcher:dimeritium_bomb"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "craft_dragons": {
+      "conditions": {
+        "recipe_id": "tcots-witcher:dragons_dream"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "craft_grapeshot": {
+      "conditions": {
+        "recipe_id": "tcots-witcher:grapeshot"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "craft_moon_dust": {
+      "conditions": {
+        "recipe_id": "tcots-witcher:moon_dust"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "craft_northern": {
+      "conditions": {
+        "recipe_id": "tcots-witcher:northern_wind"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "craft_puffball": {
+      "conditions": {
+        "recipe_id": "tcots-witcher:devils_puffball"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "craft_samum": {
+      "conditions": {
+        "recipe_id": "tcots-witcher:samum"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.craft_all_bomb.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "item": "tcots-witcher:dimeritium_bomb"
+    },
+    "title": {
+      "translate": "advancements.witcher.craft_all_bomb.title"
+    }
+  },
+  "requirements": [
+    [
+      "craft_grapeshot"
+    ],
+    [
+      "craft_samum"
+    ],
+    [
+      "craft_dancing"
+    ],
+    [
+      "craft_puffball"
+    ],
+    [
+      "craft_dragons"
+    ],
+    [
+      "craft_northern"
+    ],
+    [
+      "craft_dimeritium"
+    ],
+    [
+      "craft_moon_dust"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

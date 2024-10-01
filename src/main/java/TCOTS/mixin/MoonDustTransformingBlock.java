@@ -88,7 +88,7 @@ public class MoonDustTransformingBlock {
         }
     }
 
-    @Mixin(targets = "net.minecraft.entity.mob.CreeperEntity" )
+    @Mixin(targets = "net.minecraft.entity.mob.CreeperEntity")
     public abstract static class BlockCreeperEntityExplosion extends HostileEntity implements SkinOverlayOwner {
         protected BlockCreeperEntityExplosion(EntityType<? extends HostileEntity> entityType, World world) {
             super(entityType, world);

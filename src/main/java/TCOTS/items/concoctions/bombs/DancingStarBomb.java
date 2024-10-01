@@ -1,5 +1,6 @@
 package TCOTS.items.concoctions.bombs;
 
+import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.utils.BombsUtil;
@@ -13,6 +14,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +25,8 @@ public class DancingStarBomb {
     private static final byte DANCING_STAR_EXPLODES_L2 = 19;
     private static final byte DANCING_STAR_EXPLODES_L3 = 20;
     public static void explosionLogic(WitcherBombEntity bomb){
-                bomb.getWorld().createExplosion(
+    Explosion explosion =
+            bomb.getWorld().createExplosion(
                 bomb,
                 null,
                 null,
@@ -70,10 +73,10 @@ public class DancingStarBomb {
             livingEntity.setOnFireFor(10+(bomb.getLevel()*5));
         }
 
-        createFire(bomb);
+        createFire(bomb, explosion);
     }
 
-    private static void createFire(WitcherBombEntity bomb){
+    private static void createFire(WitcherBombEntity bomb, Explosion explosion){
         ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList<>();
         int l;
         int k;
@@ -115,9 +118,15 @@ public class DancingStarBomb {
         affectedBlocks.addAll(set);
 
         for (BlockPos blockPos2 : affectedBlocks) {
+            BlockState state = bomb.getWorld().getBlockState(blockPos2);
+
             //Destroy nest blocks
-            if(bomb.destroyableBlocks(bomb.getWorld().getBlockState(blockPos2))) {
-                bomb.getWorld().breakBlock(blockPos2, true, bomb);
+            if(bomb.destroyableBlocks(state)) {
+                if(state.isOf(TCOTS_Blocks.MONSTER_NEST)){
+                    state.onExploded(bomb.getWorld(), blockPos2, explosion, null);
+                } else {
+                    bomb.getWorld().breakBlock(blockPos2, true, bomb);
+                }
             }
 
             //Check if it can put fire

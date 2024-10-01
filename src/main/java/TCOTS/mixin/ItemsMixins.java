@@ -35,7 +35,7 @@ public class ItemsMixins {
         private void injectInTickDecreaseToxicity(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
             if(!world.isClient){
                 if(user instanceof PlayerEntity player){
-                    player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getToxicity(),false);
+                    player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getNormalToxicity(),false);
                     player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getDecoctionToxicity(),true);
                 }
             }

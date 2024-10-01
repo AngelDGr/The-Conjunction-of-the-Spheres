@@ -1,0 +1,333 @@
+{
+  "parent": "minecraft:tcots-witcher/alchemy",
+  "criteria": {
+    "tcots-witcher:dancing_star": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:dancing_star"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:dancing_star_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:dancing_star_enhanced"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:dancing_star_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:dancing_star_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:devils_puffball": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:devils_puffball"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:devils_puffball_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:devils_puffball_enhanced"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:devils_puffball_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:devils_puffball_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:dimeritium_bomb": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:dimeritium_bomb"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:dimeritium_bomb_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:dimeritium_bomb_enhanced"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:dimeritium_bomb_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:dimeritium_bomb_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:dragons_dream": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:dragons_dream"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:dragons_dream_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:dragons_dream_enhanced"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:dragons_dream_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:dragons_dream_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:grapeshot": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:grapeshot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:grapeshot_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:grapeshot_enhanced"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:grapeshot_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:grapeshot_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:moon_dust": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:moon_dust"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:moon_dust_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:moon_dust_enhanced"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:moon_dust_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:moon_dust_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:northern_wind": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:northern_wind"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:northern_wind_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:northern_wind_enhanced"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:northern_wind_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:northern_wind_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:samum": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:samum"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:samum_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:samum_enhanced"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:samum_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:samum_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.craft_bomb.description"
+    },
+    "icon": {
+      "item": "tcots-witcher:grapeshot"
+    },
+    "title": {
+      "translate": "advancements.witcher.craft_bomb.title"
+    }
+  },
+  "requirements": [
+    [
+      "tcots-witcher:grapeshot",
+      "tcots-witcher:grapeshot_enhanced",
+      "tcots-witcher:grapeshot_superior",
+      "tcots-witcher:dancing_star",
+      "tcots-witcher:dancing_star_enhanced",
+      "tcots-witcher:dancing_star_superior",
+      "tcots-witcher:devils_puffball",
+      "tcots-witcher:devils_puffball_enhanced",
+      "tcots-witcher:devils_puffball_superior",
+      "tcots-witcher:samum",
+      "tcots-witcher:samum_enhanced",
+      "tcots-witcher:samum_superior",
+      "tcots-witcher:northern_wind",
+      "tcots-witcher:northern_wind_enhanced",
+      "tcots-witcher:northern_wind_superior",
+      "tcots-witcher:dragons_dream",
+      "tcots-witcher:dragons_dream_enhanced",
+      "tcots-witcher:dragons_dream_superior",
+      "tcots-witcher:dimeritium_bomb",
+      "tcots-witcher:dimeritium_bomb_enhanced",
+      "tcots-witcher:dimeritium_bomb_superior",
+      "tcots-witcher:moon_dust",
+      "tcots-witcher:moon_dust_enhanced",
+      "tcots-witcher:moon_dust_superior"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

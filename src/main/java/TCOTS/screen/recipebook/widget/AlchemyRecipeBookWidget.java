@@ -233,10 +233,9 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         if(this.recipesArea.mouseClicked(mouseX, mouseY, button,
                 currentTab.getCategory())){
 
-            if(recipesArea.recipe != null ){
+            if(recipesArea.recipe != null){
                 assert this.client.interactionManager != null;
-                this.client.interactionManager.clickRecipe(this.client.player.currentScreenHandler.syncId, recipesArea.recipe, Screen.hasShiftDown());
-
+                this.client.interactionManager.clickRecipe(this.client.player.currentScreenHandler.syncId, recipesArea.recipe, false);
             }
         }
 

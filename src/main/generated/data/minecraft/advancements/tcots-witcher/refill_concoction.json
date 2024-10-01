@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:tcots-witcher/alchemy",
+  "criteria": {
+    "refill_concoction": {
+      "trigger": "minecraft:tcots-witcher/refill_concoction"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.refill_concoction.description"
+    },
+    "icon": {
+      "item": "tcots-witcher:alcohest"
+    },
+    "title": {
+      "translate": "advancements.witcher.refill_concoction.title"
+    }
+  },
+  "requirements": [
+    [
+      "refill_concoction"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

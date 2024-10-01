@@ -1,14 +1,18 @@
 package TCOTS.items.concoctions.bombs;
 
+import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.utils.BombsUtil;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.WardenEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -37,6 +41,12 @@ public class MoonDustBomb {
 
             //Applies moon dust effect to entity
             entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.MOON_DUST_EFFECT, bomb.getLevel() < 1 ? 400 : 800, bomb.getLevel()), entityCause);
+            //Gives you the advancement
+            if(entity.getType() == EntityType.CREEPER && bomb.getLevel()>1 && bomb.getEffectCause() instanceof PlayerEntity player){
+                if(player instanceof ServerPlayerEntity serverPlayer){
+                    TCOTS_Criteria.STOP_CREEPER.trigger(serverPlayer);
+                }
+            }
         }
     }
 

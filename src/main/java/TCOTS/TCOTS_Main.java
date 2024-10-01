@@ -1,5 +1,6 @@
 package TCOTS;
 
+import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.config.TCOTS_Config;
 import TCOTS.entity.TCOTS_Entities;
@@ -66,6 +67,17 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_PointOfInterest.registerVillagers();
 		VillagerCustomTrades.registerTrades();
 		TCOTS_VillageAdditions.registerNewStructures();
+		TCOTS_Criteria.registerCriteria();
+
+//		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+//			TCOTS_PlayerData playerState = TCOTS_StateSaverAndLoader.getPlayerState(handler.getPlayer());
+//			PacketByteBuf data = PacketByteBufs.create();
+//			data.writeInt(playerState.nestsBroken);
+//			server.execute(() -> {
+//				ServerPlayNetworking.send(handler.getPlayer(), INITIAL_SYNC, data);
+//			});
+//		});
+
 
 		//Dispense Behaviors
 		{
@@ -92,6 +104,7 @@ public class TCOTS_Main implements ModInitializer {
 		}
 
 
+		//Bullvore Spawner
 		ServerWorldEvents.LOAD.register(((server, world) -> {
 			if (world.isClient()) {
 				return;

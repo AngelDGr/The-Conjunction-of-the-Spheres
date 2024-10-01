@@ -39,7 +39,7 @@ public class WitcherWhiteHoney extends WitcherPotions_Base{
         if (!world.isClient) {
             user.clearStatusEffects();
             if(user instanceof PlayerEntity player){
-                player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getToxicity(),false);
+                player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getNormalToxicity(),false);
                 player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getDecoctionToxicity(),true);
             }
         }

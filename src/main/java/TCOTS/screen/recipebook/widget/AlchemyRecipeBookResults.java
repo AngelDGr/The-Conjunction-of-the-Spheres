@@ -67,6 +67,7 @@ public class AlchemyRecipeBookResults {
 
         assert this.client.player != null;
         PlayerInventoryItems = this.client.player.getInventory().main;
+        AlchemyTableInventoryItems = craftingScreenHandler.inputInventory.getHeldStacks();
 
         TotalInventoryItems.addAll(PlayerInventoryItems);
         TotalInventoryItems.addAll(AlchemyTableInventoryItems);
@@ -99,9 +100,7 @@ public class AlchemyRecipeBookResults {
 
         assert this.client.player != null;
 
-        AlchemyTableInventoryItems.clear();
-
-
+        AlchemyTableInventoryItems = craftingScreenHandler.inputInventory.getHeldStacks();
         PlayerInventoryItems = this.client.player.getInventory().main;
 
         TotalInventoryItems.clear();
@@ -120,7 +119,6 @@ public class AlchemyRecipeBookResults {
             if(button.getRecipe() != null) {
 
                 if (recipeFinder.match(button.getRecipe(), null)) {
-
                     for (int i = 0; i < button.getRecipe().getIngredients().size(); i++) {
                         int ItemId = Item.getRawId(button.getRecipe().getIngredients().get(i).getMatchingStacks()[0].getItem());
                         if (recipeFinder.inputs.get(ItemId) >= button.getRecipe().getIngredientsCounts().get(i)) {

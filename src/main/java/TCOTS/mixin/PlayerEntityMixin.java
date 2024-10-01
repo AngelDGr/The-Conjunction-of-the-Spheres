@@ -1,6 +1,7 @@
 package TCOTS.mixin;
 
 import TCOTS.TCOTS_Main;
+import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
@@ -32,6 +33,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
@@ -117,7 +119,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Unique
     private void OilCounter(PlayerEntity player, NbtCompound nbt){
-
         int Uses =  nbt.getInt("Uses");
         Objects.requireNonNull(player.getMainHandStack().getSubNbt("Monster Oil")).putInt("Uses", Uses-1);
 
@@ -133,8 +134,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private void LevelOilAssigner(NbtCompound monsterOil){
         switch (monsterOil.getInt("Level")){
             case 1:
-                //For every point it's 3 more damage
-                //So 2/3 it's two of damage
                 oilDamageAdded = 2f;
                 break;
             case 2:
@@ -285,6 +284,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             TCOTS_Items.DWARVEN_SPIRIT,
             TCOTS_Items.WHITE_GULL
     );
+    @Unique
+    PlayerEntity THIS = (PlayerEntity) (Object) this;
 
     @Inject(method = "wakeUp(ZZ)V", at = @At("TAIL"))
     private void injectPotionRefilling(boolean skipSleepTimer, boolean updateSleepingPlayers, CallbackInfo ci){
@@ -325,10 +326,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                             //Put the refilled boolean in true
                             refilled=true;
 
-                            //If it has already filled 4 slots, it stops
+                            //If it has already filled the slots, it stops
                             if(loopP < 1){
                                 //Decrements the alcohol in inventory
                                 inventory.getStack(slot).decrement(1);
+                                //Triggers the advancement
+                                if(THIS instanceof ServerPlayerEntity serverPlayer) TCOTS_Criteria.REFILL_CONCOCTION.trigger(serverPlayer);
                                 //Play a sound
                                 playSound(TCOTS_Sounds.POTION_REFILLED, 3.0f, 1.0f);
                                 //Breaks the loop
@@ -341,6 +344,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                     if(i == inventory.size() - 1 && refilled){
                         //Decrements the alcohol in inventory
                         inventory.getStack(slot).decrement(1);
+                        //Triggers the advancement
+                        if(THIS instanceof ServerPlayerEntity serverPlayer) TCOTS_Criteria.REFILL_CONCOCTION.trigger(serverPlayer);
                         //Play a sound
                         playSound(TCOTS_Sounds.POTION_REFILLED, 3.0f, 1.0f);
                     }
@@ -411,7 +416,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Override
-    public int theConjunctionOfTheSpheres$getToxicity(){
+    public int theConjunctionOfTheSpheres$getNormalToxicity(){
         return this.dataTracker.get(TOXICITY);
     }
 
@@ -451,7 +456,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             theConjunctionOfTheSpheres$setDecoctionToxicity(theConjunctionOfTheSpheres$getDecoctionToxicity()+toxicity);
         }
         else {
-            theConjunctionOfTheSpheres$setToxicity(theConjunctionOfTheSpheres$getToxicity()+toxicity);
+            theConjunctionOfTheSpheres$setToxicity(theConjunctionOfTheSpheres$getNormalToxicity()+toxicity);
         }
     }
 
@@ -461,7 +466,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             theConjunctionOfTheSpheres$setDecoctionToxicity(theConjunctionOfTheSpheres$getDecoctionToxicity()-toxicity);
         }
         else {
-            theConjunctionOfTheSpheres$setToxicity(theConjunctionOfTheSpheres$getToxicity()-toxicity);
+            theConjunctionOfTheSpheres$setToxicity(theConjunctionOfTheSpheres$getNormalToxicity()-toxicity);
         }
     }
 
@@ -486,7 +491,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void injectWriteNBTToxicity(NbtCompound nbt, CallbackInfo ci){
-        nbt.putInt("Toxicity",theConjunctionOfTheSpheres$getToxicity());
+        nbt.putInt("Toxicity", theConjunctionOfTheSpheres$getNormalToxicity());
         nbt.putInt("DecoctionToxicity",theConjunctionOfTheSpheres$getDecoctionToxicity());
 
         nbt.putInt("MaxToxicity",theConjunctionOfTheSpheres$getMaxToxicity());
@@ -496,7 +501,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void injectInTickDecreaseToxicity(CallbackInfo ci){
-        if (this.theConjunctionOfTheSpheres$getToxicity()>0) {
+        if (this.theConjunctionOfTheSpheres$getNormalToxicity()>0) {
             if(this.age%40==0){
                 this.theConjunctionOfTheSpheres$decreaseToxicity(1,false);
             }
@@ -520,6 +525,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             this.damage(TCOTS_DamageTypes.toxicityDamage(getWorld()),1);
             }
         }
+
     }
 
 

@@ -1,5 +1,6 @@
 package TCOTS.items.concoctions;
 
+import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -58,8 +59,9 @@ public class AlchemyFormulaItem extends Item {
                 return TypedActionResult.pass(itemStack);
             }
 
-            serverPlayer.incrementStat(Stats.USED.getOrCreateStat(this));
 
+            serverPlayer.incrementStat(Stats.USED.getOrCreateStat(this));
+            Criteria.CONSUME_ITEM.trigger(serverPlayer, itemStack);
 
             serverPlayer.getWorld().playSoundFromEntity(null, serverPlayer, SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, serverPlayer.getSoundCategory(), 1.0f, 1.0f);
             serverPlayer.unlockRecipes(List.of(recipeIdentifier));

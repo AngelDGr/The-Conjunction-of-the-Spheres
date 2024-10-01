@@ -1,6 +1,8 @@
 package TCOTS.blocks;
 
+import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.blocks.entity.MonsterNestBlockEntity;
+import TCOTS.entity.misc.WitcherBombEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,7 +15,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.text.Text;
@@ -24,9 +28,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 @SuppressWarnings("deprecation")
 public class MonsterNestBlock extends BlockWithEntity {
@@ -46,13 +52,33 @@ public class MonsterNestBlock extends BlockWithEntity {
         return new MonsterNestBlockEntity(pos, state);
     }
 
+    @Override
+    public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+        super.afterBreak(world, player, pos, state, blockEntity, tool);
+        if(player instanceof ServerPlayerEntity serverPlayer){
+            TCOTS_Criteria.DESTROY_MULTIPLE_MONSTER_NEST.trigger(serverPlayer, serverPlayer.getStatHandler().getStat(Stats.MINED.getOrCreateStat(this)));
+        }
+    }
 
+    @Override
+    public void onExploded(BlockState state, World world, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> stackMerger) {
+        if(explosion.getEntity()!=null && explosion.getEntity() instanceof WitcherBombEntity bomb && bomb.getOwner() instanceof PlayerEntity player){
+            if(player instanceof ServerPlayerEntity serverPlayer){
+                TCOTS_Criteria.DESTROY_MONSTER_NEST.trigger(serverPlayer);
+
+                serverPlayer.incrementStat(Stats.MINED.getOrCreateStat(this));
+
+                TCOTS_Criteria.DESTROY_MULTIPLE_MONSTER_NEST.trigger(serverPlayer, serverPlayer.getStatHandler().getStat(Stats.MINED.getOrCreateStat(this)));
+            }
+        }
+
+        world.breakBlock(pos, true);
+    }
 
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return MonsterNestBlock.validateTicker(type, TCOTS_Blocks.MONSTER_NEST_ENTITY, world.isClient ? MonsterNestBlockEntity::clientTick : MonsterNestBlockEntity::serverTick);
-
     }
 
     @Override
@@ -93,7 +119,6 @@ public class MonsterNestBlock extends BlockWithEntity {
             this.dropExperience(world, pos, i);
         }
     }
-
 
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     @Override

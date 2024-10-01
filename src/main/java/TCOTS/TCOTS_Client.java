@@ -46,8 +46,11 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class TCOTS_Client implements ClientModInitializer {
+
     @Override
     public void onInitializeClient() {
+
+
         //Grass Colors
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
             if (world == null || pos == null) {

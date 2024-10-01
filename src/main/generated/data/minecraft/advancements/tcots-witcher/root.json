@@ -1,0 +1,36 @@
+{
+  "criteria": {
+    "start_mod": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:crafting_table"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.witcher.main.description"
+    },
+    "icon": {
+      "item": "tcots-witcher:witcher_bestiary"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.witcher.main.title"
+    }
+  },
+  "requirements": [
+    [
+      "start_mod"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

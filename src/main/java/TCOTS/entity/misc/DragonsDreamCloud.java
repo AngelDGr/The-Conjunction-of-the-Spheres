@@ -1,11 +1,14 @@
 package TCOTS.entity.misc;
 
+import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
@@ -46,6 +49,13 @@ public class DragonsDreamCloud extends AreaEffectCloudEntity {
         List<Entity> entitiesList = this.getWorld().getNonSpectatingEntities(Entity.class, this.getBoundingBox());
         for(Entity entity: entitiesList){
             if(entity.isOnFire() || entity.getType().isIn(TCOTS_Entities.IGNITING_ENTITIES)){
+
+                if(entity.isOnFire() && this.getOwner()!=null && this.getOwner() instanceof PlayerEntity){
+                    if(this.getOwner() instanceof ServerPlayerEntity serverPlayer){
+                        TCOTS_Criteria.DRAGONS_DREAM_BURNING.trigger(serverPlayer);
+                    }
+                }
+
                 createExplosion();
             }
         }

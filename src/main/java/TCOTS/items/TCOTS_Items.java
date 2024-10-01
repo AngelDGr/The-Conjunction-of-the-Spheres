@@ -151,6 +151,7 @@ public class TCOTS_Items {
     public static final TagKey<Item> DECAYING_FLESH = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "decaying_flesh"));
 
     //TODO: Fix the achievement to mobs works with Monster Hunter
+
     public static Item DROWNER_SPAWN_EGG;
     public static Item DROWNER_TONGUE;
     public static Item DROWNER_BRAIN;

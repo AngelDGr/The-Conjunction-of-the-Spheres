@@ -30,16 +30,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AlchemyTableScreenHandler extends
-        AbstractRecipeScreenHandler<SimpleInventory>
-{
+public class AlchemyTableScreenHandler extends AbstractRecipeScreenHandler<SimpleInventory> {
     private final RecipeMatcher recipeFinder = new RecipeMatcher();
 
-    private final SimpleInventory inputInventory = new SimpleInventory(6){
+    public final SimpleInventory inputInventory = new SimpleInventory(6){
+
         @Override
-        public void markDirty() {
-            super.markDirty();
+        public ItemStack getStack(int slot) {
+            if (slot >= this.size()) {
+                return ItemStack.EMPTY;
+            }
+            return this.heldStacks.get(slot);
+        }
+
+        @Override
+        public ItemStack removeStack(int slot) {
+            return Inventories.removeStack(this.heldStacks, slot);
+        }
+
+        @Override
+        public ItemStack removeStack(int slot, int amount) {
+            ItemStack itemStack = Inventories.splitStack(this.heldStacks, slot, amount);
+            if (!itemStack.isEmpty()) {
+                AlchemyTableScreenHandler.this.onContentChanged(this);
+            }
+            return itemStack;
+        }
+
+        @Override
+        public void setStack(int slot, ItemStack stack) {
+            super.setStack(slot, stack);
             AlchemyTableScreenHandler.this.onContentChanged(this);
+        }
+
+        @Override
+        public void clear() {
+            this.heldStacks.clear();
         }
     };
 
@@ -99,7 +125,9 @@ public class AlchemyTableScreenHandler extends
 
     @Override
     public void onContentChanged(Inventory inventory) {
-        this.context.run((world, pos) -> AlchemyTableScreenHandler.updateResult(this, world, this.player, this.inputInventory, this.resultInventory));
+        this.context.run(
+                (world, pos) ->
+                        updateResult(this, world, this.player, this.inputInventory, this.resultInventory));
     }
 
     @Override
@@ -197,14 +225,15 @@ public class AlchemyTableScreenHandler extends
         return AlchemyTableScreenHandler.canUse(this.context, player, TCOTS_Blocks.ALCHEMY_TABLE);
     }
 
+    /**
+    Used when clicking a button in the recipe book widget
+     */
     @Override
     public void fillInputSlots(boolean craftAll, RecipeEntry<?> recipe, ServerPlayerEntity player) {
-
         List<ItemStack> TotalInventoryItems = new ArrayList<>();
 
         //Mix the inventory the stacks in the player inventory and ScreenHandler inventory
         TotalInventoryItems.addAll(player.getInventory().main);
-
         TotalInventoryItems.addAll(this.inputInventory.heldStacks);
 
         this.recipeFinder.clear();
@@ -213,98 +242,55 @@ public class AlchemyTableScreenHandler extends
         }
 
         if (recipeFinder.match(recipe.value(), null) && recipe.value() instanceof AlchemyTableRecipe alchemyRecipe) {
-
-            List<ItemStack> itemStackList = alchemyRecipe.returnItemStackWithQuantity();
-            //To put ingredients in place
-            for(int i=0; i < itemStackList.size(); i++){
-                int count =  itemStackList.get(i).getCount();
-                if(this.inputInventory.getStack(i) == ItemStack.EMPTY) {
-
-                    ItemStack stack = player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).copyWithCount(count);
-
-                    player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).decrement(count);
-
-                    this.inputInventory.setStack(i, stack);
-                }
-                else{
-                    ItemStack stackInsideSlot = this.inputInventory.getStack(i);
-
-                    if(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot) != -1){
-                        player.getInventory().insertStack(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot), stackInsideSlot);
-                        this.inputInventory.setStack(i, ItemStack.EMPTY);
-
-                        ItemStack stack = player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).copyWithCount(count);
-
-                        player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).decrement(count);
-
-                        this.inputInventory.setStack(i, stack);
-                    } else if(player.getInventory().getEmptySlot()!=-1){
-                        player.getInventory().insertStack(player.getInventory().getEmptySlot(), stackInsideSlot);
-                        this.inputInventory.setStack(i, ItemStack.EMPTY);
-
-                        ItemStack stack = player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).copyWithCount(count);
-
-                        player.getInventory().getStack(player.getInventory().getSlotWithStack(itemStackList.get(i))).decrement(count);
-
-                        this.inputInventory.setStack(i, stack);
-                    }
-                }
-            }
-
-            for(int i=itemStackList.size(); i < 5; i++){
+            List<ItemStack> ingredientsStacksList = alchemyRecipe.returnItemStackWithQuantity();
+            //Empties the table inventory
+            for(int i=0; i < 6; i++){
                 ItemStack stackInsideSlot = this.inputInventory.getStack(i);
                 if(this.inputInventory.getStack(i) != ItemStack.EMPTY){
-
                     if(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot) != -1){
                         player.getInventory().insertStack(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot), stackInsideSlot);
                         this.inputInventory.setStack(i, ItemStack.EMPTY);
                     }
                     else if(player.getInventory().getEmptySlot()!=-1){
                         player.getInventory().insertStack(player.getInventory().getEmptySlot(), stackInsideSlot);
+                        this.inputInventory.setStack(i, ItemStack.EMPTY);
                     }
+                    this.inputInventory.markDirty();
                 }
             }
 
+            //To put ingredients in place
+            for(int i=0; i < ingredientsStacksList.size(); i++){
+                int slotWithIngredient = player.getInventory().getSlotWithStack(ingredientsStacksList.get(i));
+                int quantity =  ingredientsStacksList.get(i).getCount();
+
+                if(this.inputInventory.getStack(i) == ItemStack.EMPTY) {
+
+                    ItemStack stack = player.getInventory().getStack(slotWithIngredient).copyWithCount(quantity);
+
+                    player.getInventory().getStack(player.getInventory().getSlotWithStack(ingredientsStacksList.get(i))).decrement(quantity);
+
+                    this.inputInventory.setStack(i, stack);
+                }
+            }
+
+            int slotWithBase = player.getInventory().getSlotWithStack(alchemyRecipe.getBaseItem());
+            int quantity     = alchemyRecipe.getBaseItem().getCount();
             //To put the base in place
             if(this.inputInventory.getStack(5) == ItemStack.EMPTY) {
 
-                ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(alchemyRecipe.getBaseItem())).copyWithCount(alchemyRecipe.getBaseItem().getCount());
+                ItemStack base = player.getInventory().getStack(slotWithBase).copyWithCount(quantity);
 
-                player.getInventory().getStack(player.getInventory().getSlotWithStack(alchemyRecipe.getBaseItem())).decrement(alchemyRecipe.getBaseItem().getCount());
+                player.getInventory().getStack(slotWithBase).decrement(quantity);
 
                 this.inputInventory.setStack(5, base);
-            }
-            else{
-                ItemStack stackInsideSlot = this.inputInventory.getStack(5);
-                if(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot) != -1){
-
-                    player.getInventory().insertStack(player.getInventory().getOccupiedSlotWithRoomForStack(stackInsideSlot), stackInsideSlot);
-                    this.inputInventory.setStack(5, ItemStack.EMPTY);
-
-                    ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(alchemyRecipe.getBaseItem())).copyWithCount(alchemyRecipe.getBaseItem().getCount());
-
-                    player.getInventory().getStack(player.getInventory().getSlotWithStack(alchemyRecipe.getBaseItem())).decrement(alchemyRecipe.getBaseItem().getCount());
-
-                    this.inputInventory.setStack(5, base);
-                }
-                else if(player.getInventory().getEmptySlot()!=-1){
-                    player.getInventory().insertStack(player.getInventory().getEmptySlot(), stackInsideSlot);
-
-                    this.inputInventory.setStack(5, ItemStack.EMPTY);
-
-                    ItemStack base = player.getInventory().getStack(player.getInventory().getSlotWithStack(alchemyRecipe.getBaseItem())).copyWithCount(alchemyRecipe.getBaseItem().getCount());
-
-                    player.getInventory().getStack(player.getInventory().getSlotWithStack(alchemyRecipe.getBaseItem())).decrement(alchemyRecipe.getBaseItem().getCount());
-
-                    this.inputInventory.setStack(5, base);
-                }
             }
         }
 
         player.getInventory().markDirty();
     }
 
-    protected static void updateResult(ScreenHandler handler, World world, PlayerEntity player, SimpleInventory craftingInventory, AlchemyTableResultInventory resultInventory) {
+    protected void updateResult(ScreenHandler handler, World world, PlayerEntity player, SimpleInventory craftingInventory, AlchemyTableResultInventory resultInventory) {
         if (world.isClient) {
             return;
         }
@@ -312,7 +298,6 @@ public class AlchemyTableScreenHandler extends
         ItemStack itemStack = ItemStack.EMPTY;
 
         if(world.getServer() == null) return;
-
         Optional<RecipeEntry<AlchemyTableRecipe>> optional = world.getServer().getRecipeManager().getFirstMatch(ScreenHandlersAndRecipesRegister.ALCHEMY_TABLE, craftingInventory, world);
         if (optional.isPresent()) {
             ItemStack itemStack2;
@@ -325,7 +310,6 @@ public class AlchemyTableScreenHandler extends
                 }
             }
 
-
         }
 
         resultInventory.setStack(6, itemStack);
@@ -334,13 +318,13 @@ public class AlchemyTableScreenHandler extends
     }
 
     protected static class PotionOutputSlot extends Slot {
-        private final Inventory input;
+        private final SimpleInventory input;
         private final PlayerEntity player;
         private int amount;
         public PotionOutputSlot(PlayerEntity player, AlchemyTableResultInventory result, SimpleInventory input, int index, int x, int y) {
             super(result, index, x, y);
             this.player = player;
-            this.input=input;
+            this.input = input;
         }
 
         @Override
@@ -374,8 +358,18 @@ public class AlchemyTableScreenHandler extends
 
         @Override
         protected void onCrafted(ItemStack stack) {
+            Optional<RecipeEntry<AlchemyTableRecipe>> optional = Optional.empty();
+            if(player.getWorld().getServer()!=null) {
+                optional =
+                        player.getWorld().getServer().getRecipeManager()
+                                .getFirstMatch(ScreenHandlersAndRecipesRegister.ALCHEMY_TABLE, this.input, player.getWorld());
+            }
+
             if (this.amount > 0) {
                 stack.onCraftByPlayer(this.player.getWorld(), this.player, this.amount);
+                optional.ifPresent(
+                        alchemyTableRecipeRecipeEntry -> player.onRecipeCrafted(alchemyTableRecipeRecipeEntry, this.input.getHeldStacks())
+                );
             }
             this.amount = 0;
         }
@@ -383,35 +377,12 @@ public class AlchemyTableScreenHandler extends
         @Override
         public void onTakeItem(PlayerEntity player, ItemStack stack) {
             this.onCrafted(stack);
-            List<ItemStack> inventoryStacksList =
-                    List.of(this.input.getStack(0),
-                            this.input.getStack(1),
-                            this.input.getStack(2),
-                            this.input.getStack(3),
-                            this.input.getStack(4),
-                            this.input.getStack(5));
-
-            for (int i = 0; i < inventoryStacksList.size(); ++i) {
-                ItemStack itemStack = this.input.getStack(i);
-                ItemStack itemStack2 = inventoryStacksList.get(i);
-                if (!itemStack.isEmpty()) {
-                    this.input.removeStack(i, this.input.getStack(i).getCount());
-                    itemStack = this.input.getStack(i);
-                }
-                if (itemStack2.isEmpty()) continue;
-                if (itemStack.isEmpty()) {
-                    this.input.setStack(i, itemStack2);
-                    continue;
-                }
-                if (ItemStack.canCombine(itemStack, itemStack2)) {
-                    itemStack2.increment(itemStack.getCount());
-                    this.input.setStack(i, itemStack2);
-                    continue;
-                }
-                if (this.player.getInventory().insertStack(itemStack2)) continue;
-                this.player.dropItem(itemStack2, false);
-            }
-
+            this.input.setStack(0, ItemStack.EMPTY);
+            this.input.setStack(1, ItemStack.EMPTY);
+            this.input.setStack(2, ItemStack.EMPTY);
+            this.input.setStack(3, ItemStack.EMPTY);
+            this.input.setStack(4, ItemStack.EMPTY);
+            this.input.setStack(5, ItemStack.EMPTY);
             player.getWorld().syncWorldEvent(WorldEvents.BREWING_STAND_BREWS, player.getBlockPos(), 0);
         }
     }
@@ -454,7 +425,6 @@ public class AlchemyTableScreenHandler extends
 
         @Override
         public void markDirty() {
-
         }
 
         @Override

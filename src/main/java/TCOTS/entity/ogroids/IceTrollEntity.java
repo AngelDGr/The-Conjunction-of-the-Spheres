@@ -41,14 +41,9 @@ import java.util.UUID;
 public class IceTrollEntity extends RockTrollEntity {
     //xTODO: Add drops
     //xTODO: Add bestiary entry
-    //TODO: Add ice caves to spawn in the world
+    //xTODO: Add ice caves to spawn in the world
     // Continue with the generation testing
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-
-    @Override
-    public float getStepHeight() {
-        return super.getStepHeight();
-    }
 
     public IceTrollEntity(EntityType<? extends AbstractTrollEntity> entityType, World world) {
         super(entityType, world);

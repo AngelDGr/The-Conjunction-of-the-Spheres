@@ -1,5 +1,7 @@
 package TCOTS;
 
+import TCOTS.advancements.criterion.DestroyMultipleMonsterNestsCriterion;
+import TCOTS.advancements.criterion.TCOTS_CustomCriterion;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.AlchemyRecipeRandomlyLootFunction;
@@ -11,14 +13,13 @@ import TCOTS.world.TCOTS_ConfiguredFeatures;
 import TCOTS.world.TCOTS_DamageTypes;
 import TCOTS.world.TCOTS_PlacedFeature;
 import TCOTS.world.TCOTS_ProcessorList;
+import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementEntry;
-import net.minecraft.advancement.AdvancementRequirements;
-import net.minecraft.advancement.AdvancementRewards;
+import net.minecraft.advancement.*;
+import net.minecraft.advancement.criterion.*;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
@@ -34,20 +35,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
+import net.minecraft.loot.LootTables;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LeafEntry;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.*;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.poi.PointOfInterestType;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
@@ -67,7 +74,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         main.addProvider(EntityTagGenerator::new);
         main.addProvider(ItemTagGenerator::new);
         main.addProvider(RecipesGenerator::new);
-        main.addProvider(AdvancementsRecipesUnlocker::new);
+//        main.addProvider(AdvancementsRecipesUnlocker::new);
+        main.addProvider(AdvancementsGenerator::new);
     }
 
     @Override
@@ -1853,16 +1861,64 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             return List.of(new ItemStack(itemA, a), new ItemStack(itemB, b), new ItemStack(itemC, c), new ItemStack(itemD, d), new ItemStack(itemE, e));
         }
     }
-    private static class AdvancementsRecipesUnlocker extends FabricAdvancementProvider {
+    private static class AdvancementsGenerator extends FabricAdvancementProvider {
 
-        protected AdvancementsRecipesUnlocker(FabricDataOutput output) {
+        //Good names for Advancements
+        // Let's Cook!
+
+        //Advancements:
+        //Alchemy
+        //x Craft the Alchemy Table (The Mother of all Sciences)
+        //  x Create a potion (Strong Beverage)
+        //      x Create a LV3 potion (Practicum in Advanced Alchemy)
+        //      x Create a decoction (Taste of Monstrosity)
+        //      x Achieve 100% toxicity (Can Quit Anytime I Want)
+        //  x Create an Oil (Honing the Blade)
+        //      x Create a LV3 Oil (A Powerful Wax)
+        //      x Craft and use a Hanged Man's Venom (...Steel for Humans)
+        //  x Create a bomb (Ka-boom!)
+        //      x Create a LV3 bomb (Bombastic)
+        //      x Destroy a nest using a bomb (Fire in the Hole)
+        //          x Destroy 20 different nests (Pest Control)
+        //      x Craft all the bombs (Bombardier)
+        //      x Ignite a Dragon's Dream bomb using a burning opponent (That Is the Evilest Thing)
+        //      x Use a moon dust on a creeper to disable its explosion forever (Successful Gardener)
+        //  x Use an alchemy recipe (Let's Cook!)
+        //  x Refill a concoction in the table or by sleeping (Deep Meditation)
+
+
+        //Hunting
+        //x Kill a monster (Silver for Monsters...)
+        //  > Kill a Bullvore (Moo-rderer)
+        //  > Kill a rotfiend/scurver without causing an explosion (Bomb Defusal)
+        //  > Get a mutagen
+        //  > Befriend a troll (Friend of Trolls)
+        //      > Befriend an ice troll (Lots eats, lots drink)
+        //          > Get the three types of Trolls following you (Troll Trouble)
+        //  > Craft the G'valchir (Won't Hurt a Bit)
+        //  > Craft crossbows bolts (Marksman)
+        //  > Craft an armor
+        //  > Craft a horse armor
+        //  > Get Aerondight (Embodiment of the Five Virtues)
+
+
+        protected AdvancementsGenerator(FabricDataOutput output) {
             super(output);
         }
 
+        private void generateBasicRecipeAdvancement(String id, Consumer<AdvancementEntry> consumer){
+            Advancement.Builder.createUntelemetered()
+                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_TABLE_ITEM), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_TABLE_ITEM))
+                    .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
+                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_BOOK), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_BOOK))
+                    .rewards(AdvancementRewards.Builder.recipe(new Identifier(TCOTS_Main.MOD_ID,id)))
+                    .parent(CraftingRecipeJsonBuilder.ROOT)
+                    .build(consumer, new Identifier(TCOTS_Main.MOD_ID,"recipes/alchemy")+"/"+id);
+
+        }
 
         @Override
         public void generateAdvancement(Consumer<AdvancementEntry> consumer) {
-
             //Start recipes
             this.generateBasicRecipeAdvancement("swallow_potion", consumer);
             this.generateBasicRecipeAdvancement("cat_potion", consumer);
@@ -1875,17 +1931,546 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
             this.generateBasicRecipeAdvancement("dwarven_spirit", consumer);
             this.generateBasicRecipeAdvancement("alcohest", consumer);
+
+
+            AdvancementEntry rootAdvancementWitcher = Advancement.Builder.create()
+                    .display(
+                            TCOTS_Items.WITCHER_BESTIARY, // The display icon
+                            Text.translatable("advancements.witcher.main.title"), // The title
+                            Text.translatable("advancements.witcher.main.description"), // The description
+                            new Identifier("textures/gui/advancements/backgrounds/stone.png"), // Background image used
+                            AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                            false, // Show toast top right
+                            false, // Announce to chat
+                            false // Hidden in the advancement tab
+                    )
+                    // The first string used in criterion is the name referenced by other advancements when they want to have 'requirements'
+                    .criterion("start_mod", InventoryChangedCriterion.Conditions.items(Blocks.CRAFTING_TABLE))
+                    .build(consumer, TCOTS_Main.MOD_ID + "/root");
+
+            //Hunting Branch
+            {
+                AdvancementEntry rootHunting =
+                        requireListedMobsKilled(Advancement.Builder.create(), MONSTERS)
+                                .parent(rootAdvancementWitcher)
+                                .display(TCOTS_Items.GRAVEIR_BONE, // The display icon
+                                        Text.translatable("advancements.witcher.start_killing.title"), // The title
+                                        Text.translatable("advancements.witcher.start_killing.description"), // The description
+                                        null,
+                                        AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                        true, // Show toast top right
+                                        true, // Announce to chat
+                                        false // Hidden in the advancement tab
+                                )
+                                .build(consumer, TCOTS_Main.MOD_ID + "/hunting");
+            }
+
+
+            //Alchemy Branch
+            {
+                AdvancementEntry rootAlchemy =
+                        Advancement.Builder.create()
+                                .parent(rootAdvancementWitcher)
+                                .display(
+                                        TCOTS_Items.ALCHEMY_TABLE_ITEM, // The display icon
+                                        Text.translatable("advancements.witcher.start_alchemy.title"), // The title
+                                        Text.translatable("advancements.witcher.start_alchemy.description"), // The description
+                                        null,
+                                        AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                        true, // Show toast top right
+                                        true, // Announce to chat
+                                        false // Hidden in the advancement tab
+                                )
+                                .criterion("start_alchemy", InventoryChangedCriterion.Conditions.items(TCOTS_Blocks.ALCHEMY_TABLE))
+                                .build(consumer, TCOTS_Main.MOD_ID + "/alchemy");
+
+                //Potions branch
+                {
+                    AdvancementEntry craftPotion = setHasItemCriteriaOR(Advancement.Builder.create(), POTIONS)
+                            .parent(rootAlchemy)
+                            .display(
+                                    TCOTS_Items.SWALLOW_POTION, // The display icon
+                                    Text.translatable("advancements.witcher.craft_potion.title"), // The title
+                                    Text.translatable("advancements.witcher.craft_potion.description"), // The description
+                                    null,
+                                    AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .build(consumer, TCOTS_Main.MOD_ID + "/craft_potion");
+
+
+                    setHasItemCriteriaOR(Advancement.Builder.create(), DECOCTIONS)
+                            .parent(craftPotion)
+                            .display(
+                                    TCOTS_Items.GRAVE_HAG_DECOCTION, // The display icon
+                                    Text.translatable("advancements.witcher.craft_decoction.title"), // The title
+                                    Text.translatable("advancements.witcher.craft_decoction.description"), // The description
+                                    null,
+                                    AdvancementFrame.GOAL, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .build(consumer, TCOTS_Main.MOD_ID + "/craft_decoction");
+
+                    setHasItemCriteriaOR(Advancement.Builder.create(), POTION_LV3)
+                            .parent(craftPotion)
+                            .display(
+                                    TCOTS_Items.SWALLOW_POTION_SUPERIOR, // The display icon
+                                    Text.translatable("advancements.witcher.craft_potion_superior.title"), // The title
+                                    Text.translatable("advancements.witcher.craft_potion_superior.description"), // The description
+                                    null,
+                                    AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .build(consumer, TCOTS_Main.MOD_ID + "/craft_potion_superior");
+
+                    Advancement.Builder.create()
+                            .parent(craftPotion)
+                            .display(
+                                    TCOTS_Items.NEST_SKULL_ITEM, // The display icon
+                                    Text.translatable("advancements.witcher.max_toxicity.title"), // The title
+                                    Text.translatable("advancements.witcher.max_toxicity.description"), // The description
+                                    null,
+                                    AdvancementFrame.GOAL, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .criterion(
+                                    "max_toxicity",
+                                    TCOTS_CustomCriterion.Conditions.createMaxToxicityCriterion())
+                            .build(consumer, TCOTS_Main.MOD_ID + "/max_toxicity");
+                }
+
+                //Oils branch
+                {
+                    AdvancementEntry craftOil = setHasItemCriteriaOR(Advancement.Builder.create(), OILS)
+                            .parent(rootAlchemy)
+                            .display(
+                                    TCOTS_Items.NECROPHAGE_OIL, // The display icon
+                                    Text.translatable("advancements.witcher.craft_oil.title"), // The title
+                                    Text.translatable("advancements.witcher.craft_oil.description"), // The description
+                                    null,
+                                    AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .build(consumer, TCOTS_Main.MOD_ID + "/craft_oil");
+
+                    setHasItemCriteriaOR(Advancement.Builder.create(), OILS_LV3)
+                            .parent(craftOil)
+                            .display(
+                                    TCOTS_Items.SUPERIOR_NECROPHAGE_OIL, // The display icon
+                                    Text.translatable("advancements.witcher.craft_oil_superior.title"), // The title
+                                    Text.translatable("advancements.witcher.craft_oil_superior.description"), // The description
+                                    null,
+                                    AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .build(consumer, TCOTS_Main.MOD_ID + "/craft_oil_superior");
+
+                    Advancement.Builder.create()
+                            .parent(craftOil)
+                            .display(
+                                    Items.IRON_SWORD, // The display icon
+                                    Text.translatable("advancements.witcher.kill_with_hanged.title"), // The title
+                                    Text.translatable("advancements.witcher.kill_with_hanged.description"), // The description
+                                    null,
+                                    AdvancementFrame.GOAL, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .criterion(
+                                    "kill_with_hanged",
+                                    TCOTS_CustomCriterion.Conditions.createKillWithHangedCriterion())
+                            .build(consumer, TCOTS_Main.MOD_ID + "/kill_with_hanged");
+                }
+
+                //Bombs branch
+                {
+                    AdvancementEntry craftBomb = setHasItemCriteriaOR(Advancement.Builder.create(), BOMBS)
+                            .parent(rootAlchemy)
+                            .display(
+                                    TCOTS_Items.GRAPESHOT, // The display icon
+                                    Text.translatable("advancements.witcher.craft_bomb.title"), // The title
+                                    Text.translatable("advancements.witcher.craft_bomb.description"), // The description
+                                    null,
+                                    AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .build(consumer, TCOTS_Main.MOD_ID + "/craft_bomb");
+
+                    AdvancementEntry craftBombLV3 = setHasItemCriteriaOR(Advancement.Builder.create(), BOMBS_LV3)
+                            .parent(craftBomb)
+                            .display(
+                                    TCOTS_Items.GRAPESHOT_SUPERIOR, // The display icon
+                                    Text.translatable("advancements.witcher.craft_bomb_superior.title"), // The title
+                                    Text.translatable("advancements.witcher.craft_bomb_superior.description"), // The description
+                                    null,
+                                    AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .build(consumer, TCOTS_Main.MOD_ID + "/craft_bomb_superior");
+
+                    Advancement.Builder.create()
+                            .parent(craftBomb)
+                            .display(
+                                    TCOTS_Items.DIMERITIUM_BOMB, // The display icon
+                                    Text.translatable("advancements.witcher.craft_all_bomb.title"), // The title
+                                    Text.translatable("advancements.witcher.craft_all_bomb.description"), // The description
+                                    null,
+                                    AdvancementFrame.GOAL, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+
+                            .criterion(
+                                    "craft_grapeshot",
+                                    RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.GRAPESHOT)))
+                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criterion(
+                                    "craft_samum",
+                                    RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.SAMUM)))
+                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criterion(
+                                    "craft_dancing",
+                                    RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.DANCING_STAR)))
+                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criterion(
+                                    "craft_puffball",
+                                    RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.DEVILS_PUFFBALL)))
+                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criterion(
+                                    "craft_dragons",
+                                    RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.DRAGONS_DREAM)))
+                            .criterion(
+                                    "craft_northern",
+                                    RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.NORTHERN_WIND)))
+                            .criterion(
+                                    "craft_dimeritium",
+                                    RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.DIMERITIUM_BOMB)))
+                            .criterion(
+                                    "craft_moon_dust",
+                                    RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.MOON_DUST)))
+                            .build(consumer, TCOTS_Main.MOD_ID + "/craft_all_bomb");
+
+                    AdvancementEntry explodeNest = Advancement.Builder.create()
+                            .parent(craftBomb)
+                            .display(
+                                    TCOTS_Blocks.MONSTER_NEST, // The display icon
+                                    Text.translatable("advancements.witcher.destroy_nest.title"), // The title
+                                    Text.translatable("advancements.witcher.destroy_nest.description"), // The description
+                                    null,
+                                    AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .criterion(
+                                    "destroy_nest",
+                                    TCOTS_CustomCriterion.Conditions.createDestroyNestCriterion())
+                            .build(consumer, TCOTS_Main.MOD_ID + "/destroy_nest");
+
+                    Advancement.Builder.create()
+                            .parent(explodeNest)
+                            .display(
+                                    TCOTS_Blocks.MONSTER_NEST, // The display icon
+                                    Text.translatable("advancements.witcher.destroy_nest_multiple.title"), // The title
+                                    Text.translatable("advancements.witcher.destroy_nest_multiple.description"), // The description
+                                    null,
+                                    AdvancementFrame.CHALLENGE, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .criterion(
+                                    "destroy_nest_multiple",
+                                    DestroyMultipleMonsterNestsCriterion.Conditions.createMultipleDestroyNestCriterion(30))
+                            .rewards(AdvancementRewards.Builder.experience(500))
+                            .build(consumer, TCOTS_Main.MOD_ID + "/destroy_nest_multiple");
+
+                    Advancement.Builder.create()
+                            .parent(craftBomb)
+                            .display(
+                                    TCOTS_Items.DRAGONS_DREAM_SUPERIOR, // The display icon
+                                    Text.translatable("advancements.witcher.dragons_dream_burning.title"), // The title
+                                    Text.translatable("advancements.witcher.dragons_dream_burning.description"), // The description
+                                    null,
+                                    AdvancementFrame.CHALLENGE, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .criterion(
+                                    "dragons_dream_burning",
+                                    TCOTS_CustomCriterion.Conditions.createDragonsDreamBurningCriterion())
+                            .rewards(AdvancementRewards.Builder.experience(150))
+                            .build(consumer, TCOTS_Main.MOD_ID + "/dragons_dream_burning");
+
+                    Advancement.Builder.create()
+                            .parent(craftBombLV3)
+                            .display(
+                                    TCOTS_Items.MOON_DUST_SUPERIOR, // The display icon
+                                    Text.translatable("advancements.witcher.stop_creeper.title"), // The title
+                                    Text.translatable("advancements.witcher.stop_creeper.description"), // The description
+                                    null,
+                                    AdvancementFrame.CHALLENGE, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .criterion(
+                                    "stop_creeper",
+                                    TCOTS_CustomCriterion.Conditions.createStopCreeperCriterion())
+                            .rewards(AdvancementRewards.Builder.experience(150))
+                            .build(consumer, TCOTS_Main.MOD_ID + "/stop_creeper");
+                }
+
+                AdvancementEntry useAlchemyFormula = Advancement.Builder.create()
+                        .parent(rootAlchemy)
+                        .display(
+                                TCOTS_Items.ALCHEMY_FORMULA, // The display icon
+                                Text.translatable("advancements.witcher.use_formula.title"), // The title
+                                Text.translatable("advancements.witcher.use_formula.description"), // The description
+                                null, // Background image used
+                                AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                true, // Show toast top right
+                                true, // Announce to chat
+                                false // Hidden in the advancement tab
+                        )
+                        .criterion(
+                                "use_formula",
+                                ConsumeItemCriterion.Conditions.item(TCOTS_Items.ALCHEMY_FORMULA))
+                        .build(consumer, TCOTS_Main.MOD_ID + "/use_formula");
+
+                Advancement.Builder.create()
+                        .parent(rootAlchemy)
+                        .display(
+                                TCOTS_Items.ALCOHEST, // The display icon
+                                Text.translatable("advancements.witcher.refill_concoction.title"), // The title
+                                Text.translatable("advancements.witcher.refill_concoction.description"), // The description
+                                null, // Background image used
+                                AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                true, // Show toast top right
+                                true, // Announce to chat
+                                false // Hidden in the advancement tab
+                        )
+                        .criterion(
+                                "refill_concoction",
+                                TCOTS_CustomCriterion.Conditions.createRefillConcoctionCriterion())
+                        .build(consumer, TCOTS_Main.MOD_ID + "/refill_concoction");
+            }
         }
 
-        private void generateBasicRecipeAdvancement(String id, Consumer<AdvancementEntry> consumer){
-            Advancement.Builder.createUntelemetered()
-                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_TABLE_ITEM), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_TABLE_ITEM))
-                    .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
-                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_BOOK), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_BOOK))
-                    .rewards(AdvancementRewards.Builder.recipe(new Identifier(TCOTS_Main.MOD_ID,id)))
-                    .parent(CraftingRecipeJsonBuilder.ROOT)
-                    .build(consumer, new Identifier(TCOTS_Main.MOD_ID,"recipes/alchemy")+"/"+id);
+        protected static final List<Item> BOMBS_LV3 = Arrays.asList(
+                TCOTS_Items.GRAPESHOT_SUPERIOR,
 
+                TCOTS_Items.DANCING_STAR_SUPERIOR,
+
+                TCOTS_Items.DEVILS_PUFFBALL_SUPERIOR,
+
+                TCOTS_Items.SAMUM_SUPERIOR,
+
+                TCOTS_Items.NORTHERN_WIND_SUPERIOR,
+
+                TCOTS_Items.DRAGONS_DREAM_SUPERIOR,
+
+                TCOTS_Items.DIMERITIUM_BOMB_SUPERIOR,
+
+                TCOTS_Items.MOON_DUST_SUPERIOR
+        );
+
+        protected static final List<Item> BOMBS = Arrays.asList(
+        TCOTS_Items.GRAPESHOT,
+        TCOTS_Items.GRAPESHOT_ENHANCED,
+        TCOTS_Items.GRAPESHOT_SUPERIOR,
+
+        TCOTS_Items.DANCING_STAR,
+        TCOTS_Items.DANCING_STAR_ENHANCED,
+        TCOTS_Items.DANCING_STAR_SUPERIOR,
+
+        TCOTS_Items.DEVILS_PUFFBALL,
+        TCOTS_Items.DEVILS_PUFFBALL_ENHANCED,
+        TCOTS_Items.DEVILS_PUFFBALL_SUPERIOR,
+
+        TCOTS_Items.SAMUM,
+        TCOTS_Items.SAMUM_ENHANCED,
+        TCOTS_Items.SAMUM_SUPERIOR,
+
+        TCOTS_Items.NORTHERN_WIND,
+        TCOTS_Items.NORTHERN_WIND_ENHANCED,
+        TCOTS_Items.NORTHERN_WIND_SUPERIOR,
+
+        TCOTS_Items.DRAGONS_DREAM,
+        TCOTS_Items.DRAGONS_DREAM_ENHANCED,
+        TCOTS_Items.DRAGONS_DREAM_SUPERIOR,
+
+        TCOTS_Items.DIMERITIUM_BOMB,
+        TCOTS_Items.DIMERITIUM_BOMB_ENHANCED,
+        TCOTS_Items.DIMERITIUM_BOMB_SUPERIOR,
+
+        TCOTS_Items.MOON_DUST,
+        TCOTS_Items.MOON_DUST_ENHANCED,
+        TCOTS_Items.MOON_DUST_SUPERIOR
+        );
+
+        protected static final List<Item> OILS_LV3 = Arrays.asList(
+                TCOTS_Items.SUPERIOR_NECROPHAGE_OIL,
+
+                TCOTS_Items.SUPERIOR_OGROID_OIL,
+
+                TCOTS_Items.SUPERIOR_BEAST_OIL,
+
+                TCOTS_Items.SUPERIOR_HANGED_OIL
+        );
+
+        protected static final List<Item> OILS = Arrays.asList(
+                TCOTS_Items.NECROPHAGE_OIL,
+                TCOTS_Items.ENHANCED_NECROPHAGE_OIL,
+                TCOTS_Items.SUPERIOR_NECROPHAGE_OIL,
+
+                TCOTS_Items.OGROID_OIL,
+                TCOTS_Items.ENHANCED_OGROID_OIL,
+                TCOTS_Items.SUPERIOR_OGROID_OIL,
+
+                TCOTS_Items.BEAST_OIL,
+                TCOTS_Items.ENHANCED_BEAST_OIL,
+                TCOTS_Items.SUPERIOR_BEAST_OIL,
+
+                TCOTS_Items.HANGED_OIL,
+                TCOTS_Items.ENHANCED_HANGED_OIL,
+                TCOTS_Items.SUPERIOR_HANGED_OIL
+        );
+
+        protected static final List<EntityType<?>> MONSTERS = Arrays.asList(
+                TCOTS_Entities.DROWNER,
+                TCOTS_Entities.ROTFIEND,
+                TCOTS_Entities.FOGLET,
+                TCOTS_Entities.GRAVE_HAG,
+                TCOTS_Entities.WATER_HAG,
+                TCOTS_Entities.GHOUL,
+                TCOTS_Entities.ALGHOUL,
+                TCOTS_Entities.SCURVER,
+                TCOTS_Entities.DEVOURER,
+                TCOTS_Entities.GRAVEIR,
+                TCOTS_Entities.BULLVORE,
+
+                TCOTS_Entities.NEKKER,
+                TCOTS_Entities.NEKKER_WARRIOR,
+                TCOTS_Entities.CYCLOPS,
+                TCOTS_Entities.ROCK_TROLL,
+                TCOTS_Entities.ICE_TROLL
+        );
+
+        protected static final List<Item> POTION_LV3= Arrays.asList(
+                TCOTS_Items.SWALLOW_POTION_SUPERIOR,
+                TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SUPERIOR,
+                TCOTS_Items.CAT_POTION_SUPERIOR,
+                TCOTS_Items.BLACK_BLOOD_POTION_SUPERIOR,
+                TCOTS_Items.MARIBOR_FOREST_POTION_SUPERIOR,
+                TCOTS_Items.WHITE_HONEY_POTION_SUPERIOR,
+                TCOTS_Items.WOLF_POTION_SUPERIOR,
+                TCOTS_Items.ROOK_POTION_SUPERIOR
+        );
+
+        protected static final List<Item> POTIONS = Arrays.asList(
+                TCOTS_Items.SWALLOW_POTION,
+                TCOTS_Items.SWALLOW_POTION_ENHANCED,
+                TCOTS_Items.SWALLOW_POTION_SUPERIOR,
+
+                TCOTS_Items.WHITE_RAFFARDS_DECOCTION,
+                TCOTS_Items.WHITE_RAFFARDS_DECOCTION_ENHANCED,
+                TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SUPERIOR,
+
+                TCOTS_Items.CAT_POTION,
+                TCOTS_Items.CAT_POTION_ENHANCED,
+                TCOTS_Items.CAT_POTION_SUPERIOR,
+
+                TCOTS_Items.BLACK_BLOOD_POTION,
+                TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED,
+                TCOTS_Items.BLACK_BLOOD_POTION_SUPERIOR,
+
+                TCOTS_Items.MARIBOR_FOREST_POTION,
+                TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED,
+                TCOTS_Items.MARIBOR_FOREST_POTION_SUPERIOR,
+
+                TCOTS_Items.KILLER_WHALE_POTION,
+
+                TCOTS_Items.WHITE_HONEY_POTION,
+                TCOTS_Items.WHITE_HONEY_POTION_ENHANCED,
+                TCOTS_Items.WHITE_HONEY_POTION_SUPERIOR,
+
+                TCOTS_Items.WOLF_POTION,
+                TCOTS_Items.WOLF_POTION_ENHANCED,
+                TCOTS_Items.WOLF_POTION_SUPERIOR,
+
+                TCOTS_Items.ROOK_POTION,
+                TCOTS_Items.ROOK_POTION_ENHANCED,
+                TCOTS_Items.ROOK_POTION_SUPERIOR,
+
+                TCOTS_Items.ALGHOUL_DECOCTION,
+                TCOTS_Items.GRAVE_HAG_DECOCTION,
+                TCOTS_Items.WATER_HAG_DECOCTION,
+                TCOTS_Items.FOGLET_DECOCTION,
+                TCOTS_Items.TROLL_DECOCTION,
+                TCOTS_Items.NEKKER_WARRIOR_DECOCTION
+        );
+
+        protected static final List<Item> DECOCTIONS = Arrays.asList(
+                TCOTS_Items.ALGHOUL_DECOCTION,
+                TCOTS_Items.GRAVE_HAG_DECOCTION,
+                TCOTS_Items.WATER_HAG_DECOCTION,
+                TCOTS_Items.FOGLET_DECOCTION,
+                TCOTS_Items.TROLL_DECOCTION,
+                TCOTS_Items.NEKKER_WARRIOR_DECOCTION
+        );
+
+        private static Advancement.Builder requireListedMobsKilled(Advancement.Builder builder, List<EntityType<?>> entityTypes) {
+            entityTypes.forEach(type -> builder.criterion(
+                    Registries.ENTITY_TYPE.getId(type).toString(),
+                    OnKilledCriterion.Conditions.createPlayerKilledEntity(EntityPredicate.Builder.create().type(type)))
+                    .criteriaMerger(AdvancementRequirements.CriterionMerger.OR));
+            return builder;
+        }
+
+        private static Advancement.Builder setHasItemCriteriaOR(Advancement.Builder builder, List<Item> entityTypes) {
+            entityTypes.forEach(item -> builder.criterion(
+                            Registries.ITEM.getId(item).toString(),
+                            InventoryChangedCriterion.Conditions.items(item))
+                    .criteriaMerger(AdvancementRequirements.CriterionMerger.OR));
+            return builder;
+        }
+
+        private static Advancement.Builder requireMultipleNests(Advancement.Builder builder) {
+            List<Pair<String, AdvancementCriterion<PlayerGeneratesContainerLootCriterion.Conditions>>> list =
+
+                    List.of(Pair.of("desert_pyramid", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.DESERT_PYRAMID_ARCHAEOLOGY)),
+                            Pair.of("desert_well", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.DESERT_WELL_ARCHAEOLOGY)),
+                            Pair.of("ocean_ruin_cold", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY)),
+                            Pair.of("ocean_ruin_warm", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY)),
+                            Pair.of("trail_ruins_rare", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.TRAIL_RUINS_RARE_ARCHAEOLOGY)),
+                            Pair.of("trail_ruins_common", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY)));
+
+            list.forEach(pair -> builder.criterion(pair.getFirst(), pair.getSecond()));
+            String string = "has_sherd";
+            builder.criterion("has_sherd", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(ItemTags.DECORATED_POT_SHERDS)));
+
+            builder.requirements(new AdvancementRequirements(List.of(list.stream().map(Pair::getFirst).toList(), List.of("has_sherd"))));
+            return builder;
         }
     }
 }

@@ -225,9 +225,7 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
         if (!source.isIn(DamageTypeTags.BYPASSES_SHIELD) && !hasPiercing && (vec3d = source.getPosition()) != null) {
             Vec3d vec3d2 = this.getRotationVector(0.0f, this.getHeadYaw());
             Vec3d vec3d3 = vec3d.relativize(this.getPos());
-            vec3d3 = new Vec3d(vec3d3.x, 0.0, vec3d3.z).normalize();
-            System.out.println("Dot Product Value: "+vec3d3.dotProduct(vec3d2));
-            return vec3d3.dotProduct(vec3d2) > 0.0;
+            vec3d3 = new Vec3d(vec3d3.x, 0.0, vec3d3.z).normalize();return vec3d3.dotProduct(vec3d2) > 0.0;
         }
 
         return false;

@@ -1,5 +1,6 @@
 package TCOTS.mixin;
 
+import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.ogroids.AbstractTrollEntity;
 import TCOTS.entity.ogroids.IceTrollEntity;
@@ -25,11 +26,13 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.GhastEntity;
+import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.random.Random;
@@ -457,6 +460,28 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             if(target instanceof IceTrollEntity troll && target.getType() == TCOTS_Entities.ICE_TROLL && troll.getOwner()!=null){
                 cir.setReturnValue(false);
             }
+        }
+    }
+
+
+    //Trigger Advancement
+    @Inject(method = "onDeath", at = @At("TAIL"))
+    private void injectTriggerAdvancement(DamageSource damageSource, CallbackInfo ci){
+
+        if((THIS.getGroup()==EntityGroup.ILLAGER || THIS instanceof WitchEntity) && getAttacker() instanceof PlayerEntity player){
+            NbtCompound nbt = player.getMainHandStack().getNbt();
+            assert nbt != null;
+            if(nbt.contains("Monster Oil")){
+                NbtCompound monsterOil = player.getMainHandStack().getSubNbt("Monster Oil");
+                assert monsterOil != null;
+                if(monsterOil.getInt("Id")==11)
+                {
+                    if(player instanceof ServerPlayerEntity serverPlayer){
+                        TCOTS_Criteria.KILL_WITH_HANGED.trigger(serverPlayer);
+                    }
+                }
+            }
+
         }
     }
 

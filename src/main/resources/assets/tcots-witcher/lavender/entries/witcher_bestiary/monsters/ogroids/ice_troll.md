@@ -25,7 +25,7 @@ Luckily ice trolls live atop high mountain ridges so inaccessible they rarely en
 ;;;;;
 
 {dark_green}**Habitat**{}
-- Snowy Mountains
+- Snowy mountains
 - Snowy biomes
 
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_special.png,fit)
