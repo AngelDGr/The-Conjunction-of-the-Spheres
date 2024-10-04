@@ -42,7 +42,6 @@ public class IceTrollEntity extends RockTrollEntity {
     //xTODO: Add drops
     //xTODO: Add bestiary entry
     //xTODO: Add ice caves to spawn in the world
-    // Continue with the generation testing
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public IceTrollEntity(EntityType<? extends AbstractTrollEntity> entityType, World world) {
@@ -63,7 +62,7 @@ public class IceTrollEntity extends RockTrollEntity {
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
 
-        this.goalSelector.add(1, new ProjectileAttackGoal_Troll(this, 1.2D, 30, 10.0f, 40f));
+        this.goalSelector.add(1, new ProjectileAttackGoal_RockTroll(this, 1.2D, 30, 10.0f, 40f));
 
         this.goalSelector.add(2, new MeleeAttackGoal_Troll(this, 1.2D, false));
 
@@ -101,7 +100,7 @@ public class IceTrollEntity extends RockTrollEntity {
                         !(this.getFriendship(player) > 160 && this.getReputation(player) > 200):
                         (entity.getType()!=this.getType()) || (entity instanceof AbstractTrollEntity troll && troll.isRabid())));
 
-        this.targetSelector.add(4, new RockTrollTargetWithReputationGoal(this));
+        this.targetSelector.add(4, new TrollTargetWithReputationGoal(this));
         this.targetSelector.add(5, new TrollRevengeGoal(this).setGroupRevenge());
         this.targetSelector.add(6, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAtPlayer));
         this.targetSelector.add(7, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
@@ -206,7 +205,7 @@ public class IceTrollEntity extends RockTrollEntity {
     }
 
     @Override
-    protected int getMinFriendshipToBeFollower() {
+    public int getMinFriendshipToBeFollower() {
         return 250;
     }
 
@@ -252,7 +251,7 @@ public class IceTrollEntity extends RockTrollEntity {
         } else if(interaction == this.getBarterInteraction(true)){
             //+5 Reputation
             //+1 Friendship
-            this.gossip.startGossip(entity.getUuid(), TrollGossips.TrollGossipType.BARTERING, 5, 1);
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.BARTERING, 5, 1);
         }
         //Bad actions
         else if (interaction == this.getKillInteraction()) {

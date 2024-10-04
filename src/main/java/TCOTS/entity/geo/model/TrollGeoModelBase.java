@@ -11,12 +11,12 @@ import software.bernie.geckolib.model.data.EntityModelData;
 
 public abstract class TrollGeoModelBase<T extends AbstractTrollEntity> extends BipedGeoModelBase<T>  {
 
-    protected boolean hasArmZMovement(){
+    protected boolean hasArmZMovement(T troll){
         return false;
     }
 
     @Override
-    protected boolean hasNormalHead() {
+    protected boolean hasNormalHead(T troll) {
         return false;
     }
 
@@ -56,7 +56,7 @@ public abstract class TrollGeoModelBase<T extends AbstractTrollEntity> extends B
                 low_jaw.setRotX(this.getAnimationProgress(troll, animationState.getPartialTick())*2.8f);
             }
             else if(animationState.isMoving() && troll.isAttacking()){
-                head.setRotX(((entityData.headPitch()+getHeadExtraInAttacking()) * MathHelper.RADIANS_PER_DEGREE));
+                head.setRotX(((entityData.headPitch()+getHeadExtraInAttacking(troll)) * MathHelper.RADIANS_PER_DEGREE));
                 head.setRotY((entityData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE));
                 head.setRotZ(0);
                 low_jaw.setRotX(0);
@@ -71,15 +71,15 @@ public abstract class TrollGeoModelBase<T extends AbstractTrollEntity> extends B
 
         if(left_arm!=null && right_arm!=null && left_leg!=null && right_leg!=null && left_hand!=null && right_hand!=null){
             if(!troll.handSwinging && !troll.hasBarteringItem() && troll.getEatingTime()==-1){
-                left_leg.setRotX((float)   -(Math.sin(animationState.getLimbSwing()*getLegsSpeed())*(animationState.getLimbSwingAmount()*getLegsAmount())));
-                right_leg.setRotX((float)   (Math.sin(animationState.getLimbSwing()*getLegsSpeed())*(animationState.getLimbSwingAmount()*getLegsAmount())));
+                left_leg.setRotX((float)   -(Math.sin(animationState.getLimbSwing()*getLegsSpeed(troll))*(animationState.getLimbSwingAmount()*getLegsAmount(troll))));
+                right_leg.setRotX((float)   (Math.sin(animationState.getLimbSwing()*getLegsSpeed(troll))*(animationState.getLimbSwingAmount()*getLegsAmount(troll))));
 
-                left_arm.setRotX(GeoControllersUtil.getLimbSwing(animationState,  -0.9f, 0.5f, getArmsSpeed(), getArmsAmount(),false));
-                right_arm.setRotX(GeoControllersUtil.getLimbSwing(animationState, -0.5f, 0.9f, getArmsSpeed(), getArmsAmount(),true));
+                left_arm.setRotX(GeoControllersUtil.getLimbSwing(animationState,  -0.9f, 0.5f, getArmsSpeed(troll), getArmsAmount(troll),false));
+                right_arm.setRotX(GeoControllersUtil.getLimbSwing(animationState, -0.5f, 0.9f, getArmsSpeed(troll), getArmsAmount(troll),true));
 
-                if(this.hasArmZMovement()) {
-                    right_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState, -0.0f, 0.2f, getArmsSpeed(), getArmsAmount(), false));
-                    left_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState, -0.2f, 0.0f, getArmsSpeed(), getArmsAmount(), true));
+                if(this.hasArmZMovement(troll)) {
+                    right_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState, -0.0f, 0.2f, getArmsSpeed(troll), getArmsAmount(troll), false));
+                    left_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState, -0.2f, 0.0f, getArmsSpeed(troll), getArmsAmount(troll), true));
                 } else {
                     right_arm.setRotZ(0);
                     left_arm.setRotZ(0);

@@ -27,6 +27,15 @@ public class TCOTS_Criteria {
     public static final TCOTS_CustomCriterion REFILL_CONCOCTION =
             Criteria.register(TCOTS_Main.MOD_ID+"/refill_concoction", new TCOTS_CustomCriterion());
 
+    public static final TCOTS_CustomCriterion KILL_ROTFIEND =
+            Criteria.register(TCOTS_Main.MOD_ID+"/kill_rotfiend", new TCOTS_CustomCriterion());
+
+    public static final TCOTS_CustomCriterion BEFRIEND_TROLL =
+            Criteria.register(TCOTS_Main.MOD_ID+"/befriend_troll", new TCOTS_CustomCriterion());
+
+    public static final TCOTS_CustomCriterion BEFRIEND_TROLL_ICE =
+            Criteria.register(TCOTS_Main.MOD_ID+"/befriend_troll_ice", new TCOTS_CustomCriterion());
+
     public static void registerCriteria(){
     }
 }

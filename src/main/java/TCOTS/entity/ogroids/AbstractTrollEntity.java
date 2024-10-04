@@ -1,5 +1,6 @@
 package TCOTS.entity.ogroids;
 
+import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.TrollGossips;
 import TCOTS.entity.goals.MeleeAttackGoal_Animated;
@@ -28,6 +29,7 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootTable;
@@ -42,16 +44,15 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.world.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -67,7 +68,14 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     private static final TrackedData<BlockPos> GUARDING_POS = DataTracker.registerData(AbstractTrollEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
     private static final TrackedData<Integer> FOLLOWER_STATE = DataTracker.registerData(AbstractTrollEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
+
+    protected static final TrackedData<Boolean> BLOCKING = DataTracker.registerData(AbstractTrollEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Integer> TIME_BLOCKING = DataTracker.registerData(AbstractTrollEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
     public static final RawAnimation GIVE_ITEM = RawAnimation.begin().thenPlay("special.give");
+
+    public static final RawAnimation BLOCK = RawAnimation.begin().thenPlayAndHold("special.block");
+    public static final RawAnimation UNBLOCK = RawAnimation.begin().thenPlay("special.unblock");
 
     public AbstractTrollEntity(EntityType<? extends AbstractTrollEntity> entityType, World world) {
         super(entityType, world);
@@ -81,13 +89,16 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
         this.dataTracker.startTracking(EATING_TIME, -1);
         this.dataTracker.startTracking(GUARDING_POS, BlockPos.ORIGIN);
         this.dataTracker.startTracking(FOLLOWER_STATE, 0);
+
+        this.dataTracker.startTracking(BLOCKING, Boolean.FALSE);
+        this.dataTracker.startTracking(TIME_BLOCKING, 0);
     }
 
     protected static class MeleeAttackGoal_Troll extends MeleeAttackGoal_Animated {
 
-        private final RockTrollEntity troll;
+        private final AbstractTrollEntity troll;
 
-        public MeleeAttackGoal_Troll(RockTrollEntity mob, double speed, boolean pauseWhenMobIdle) {
+        public MeleeAttackGoal_Troll(AbstractTrollEntity mob, double speed, boolean pauseWhenMobIdle) {
             super(mob, speed, pauseWhenMobIdle, 2);
             this.troll = mob;
         }
@@ -102,11 +113,11 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
             return super.shouldContinue() && !troll.isTrollBlocking();
         }
     }
-    protected static class ProjectileAttackGoal_Troll extends ProjectileAttackGoal {
+    protected static class ProjectileAttackGoal_RockTroll extends ProjectileAttackGoal {
         private final RockTrollEntity troll;
         private final float distanceForAttack;
 
-        public ProjectileAttackGoal_Troll(RockTrollEntity mob, double mobSpeed, int intervalTicks, float maxShootRange, float distanceForAttack) {
+        public ProjectileAttackGoal_RockTroll(RockTrollEntity mob, double mobSpeed, int intervalTicks, float maxShootRange, float distanceForAttack) {
             super(mob, mobSpeed, intervalTicks, maxShootRange);
             this.troll = mob;
             this.distanceForAttack = distanceForAttack;
@@ -137,61 +148,63 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
 
     protected static class WanderAroundGoal_Troll extends WanderAroundGoal {
-        private final RockTrollEntity troll;
+        private final AbstractTrollEntity troll;
 
-        public WanderAroundGoal_Troll(RockTrollEntity mob, double speed, int chance) {
+        public WanderAroundGoal_Troll(AbstractTrollEntity mob, double speed, int chance) {
             super(mob, speed, chance);
             this.troll = mob;
         }
 
         @Override
         public boolean canStart() {
-            return super.canStart() && !this.troll.isTrollBlocking() && !this.troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol() && this.troll.isWandering();
+            return super.canStart() && !this.troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol() && this.troll.isWandering() && !this.troll.isTrollBlocking();
         }
 
         @Override
         public boolean shouldContinue() {
-            return super.shouldContinue() && !this.troll.isTrollBlocking() && !this.troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol() && this.troll.isWandering();
+            return super.shouldContinue() && !this.troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol() && this.troll.isWandering() && !this.troll.isTrollBlocking();
         }
     }
-    protected static class LookAroundGoal_Troll extends LookAroundGoal {
-        private final RockTrollEntity troll;
 
-        public LookAroundGoal_Troll(RockTrollEntity mob) {
+    protected static class LookAroundGoal_Troll extends LookAroundGoal {
+        private final AbstractTrollEntity troll;
+
+        public LookAroundGoal_Troll(AbstractTrollEntity mob) {
             super(mob);
             this.troll = mob;
         }
 
         @Override
         public boolean canStart() {
-            return super.canStart() && !this.troll.isTrollBlocking() && !this.troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol();
+            return super.canStart() && !this.troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol() && !this.troll.isTrollBlocking();
         }
 
         @Override
         public boolean shouldContinue() {
-            return super.shouldContinue() && !this.troll.isTrollBlocking() && !this.troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol();
+            return super.shouldContinue() && !this.troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol() && !this.troll.isTrollBlocking();
         }
     }
 
     protected static class LookAtEntityGoal_Troll extends LookAtEntityGoal {
 
-        private final RockTrollEntity troll;
+        private final AbstractTrollEntity troll;
 
-        public LookAtEntityGoal_Troll(RockTrollEntity mob, Class<? extends LivingEntity> targetType, float range) {
+        public LookAtEntityGoal_Troll(AbstractTrollEntity mob, Class<? extends LivingEntity> targetType, float range) {
             super(mob, targetType, range);
             this.troll = mob;
         }
 
         @Override
         public boolean canStart() {
-            return super.canStart() && !this.troll.isTrollBlocking() && !troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol();
+            return super.canStart() && !troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol() && !this.troll.isTrollBlocking();
         }
 
         @Override
         public boolean shouldContinue() {
-            return super.shouldContinue() && !this.troll.isTrollBlocking() && !troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol();
+            return super.shouldContinue() && !troll.hasBarteringItem() && !this.troll.hasFoodOrAlcohol() && !this.troll.isTrollBlocking();
         }
     }
+
     protected static class LookAtPlayerWithWeaponGoal extends LookAtEntityGoal {
         private final AbstractTrollEntity troll;
 
@@ -274,13 +287,13 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
         }
     }
 
-    protected static class RockTrollTargetWithReputationGoal extends TrackTargetGoal {
+    protected static class TrollTargetWithReputationGoal extends TrackTargetGoal {
         private final AbstractTrollEntity troll;
         @Nullable
         private LivingEntity target;
         private final TargetPredicate targetPredicate = TargetPredicate.createAttackable().setBaseMaxDistance(64.0);
 
-        public RockTrollTargetWithReputationGoal(AbstractTrollEntity troll) {
+        public TrollTargetWithReputationGoal(AbstractTrollEntity troll) {
             super(troll, false, true);
             this.troll = troll;
             this.setControls(EnumSet.of(Goal.Control.TARGET));
@@ -385,30 +398,30 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
             double d = this.getFollowRange();
             Box box = Box.from(this.mob.getPos()).expand(d, BOX_VERTICAL_EXPANSION, d);
             List<AbstractTrollEntity> list = this.mob.getWorld().getEntitiesByClass(AbstractTrollEntity.class, box, troll -> this.mob.getType() == troll.getType() );
-            for (AbstractTrollEntity otherTrolls : list) {
+            for (AbstractTrollEntity otherTroll : list) {
 
-                if (this.mob == otherTrolls
-                        || otherTrolls.getTarget() != null
-                        || this.mob instanceof TameableEntity && ((TameableEntity) this.mob).getOwner() != otherTrolls.getOwner()
-                        || otherTrolls.isTeammate(this.mob.getAttacker())
-                        || otherTrolls.isRabid()) continue;
+                if (this.mob == otherTroll
+                        || otherTroll.getTarget() != null
+                        || this.mob instanceof TameableEntity && ((TameableEntity) this.mob).getOwner() != otherTroll.getOwner()
+                        || otherTroll.isTeammate(this.mob.getAttacker())
+                        || (otherTroll.isRabid() && this.mob instanceof AbstractTrollEntity troll && !troll.isRabid())) continue;
 
                 //The Rabid Trolls don't trigger others
-                if (this.mob instanceof AbstractTrollEntity && ((AbstractTrollEntity) (this.mob)).isRabid()) {
+                if (this.mob instanceof AbstractTrollEntity troll && troll.isRabid() && !otherTroll.isRabid()) {
                     continue;
                 }
 
                 if (this.noHelpTypes != null) {
                     boolean bl = false;
                     for (Class<?> class_ : this.noHelpTypes) {
-                        if (otherTrolls.getClass() != class_) continue;
+                        if (otherTroll.getClass() != class_) continue;
                         bl = true;
                         break;
                     }
                     if (bl) continue;
                 }
 
-                this.setMobEntityTarget(otherTrolls, this.mob.getAttacker());
+                this.setMobEntityTarget(otherTroll, this.mob.getAttacker());
             }
         }
 
@@ -512,7 +525,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
 
         //Ensure this is only processed on the server
         //You can only interact with them when they aren't attacking and aren't bartering and isn't rabid and isn't blocking
-        if (!this.getWorld().isClient && !this.isAttacking() && !this.hasBarteringItem() && !this.isRabid() && !this.hasFoodOrAlcohol() && this.getAngerTime() == 0) {
+        if (!this.getWorld().isClient && !this.isAttacking() && !this.hasBarteringItem() && !this.isRabid() && !this.hasFoodOrAlcohol() && this.getAngerTime() == 0 && !this.isTrollBlocking()) {
 
             // Change from Following/Waiting to Wandering
             if ((this.isFollowing() || this.isWaiting()) && this.getOwner() == player && player.isSneaking()) {
@@ -595,6 +608,19 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
         if (!this.getWorld().isClient) {
             this.tickAngerLogic((ServerWorld)this.getWorld(), true);
         }
+
+        if(this.isTrollBlocking()){
+            setTimeBlocking(getTimeBlocking()+1);
+        }
+
+        if(this.isTrollBlocking() && this.getTimeBlocking()==this.maxTicksBlocking()){
+            this.setIsTrollBlocking(false);
+            setTimeBlocking(0);
+        }
+    }
+
+    protected int maxTicksBlocking(){
+        return 80;
     }
 
     protected boolean shouldAngerAtPlayer(LivingEntity entity) {
@@ -922,7 +948,14 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
             //Gives reputation
             ((ServerWorld) this.getWorld()).handleInteraction(this.getBarterInteraction(false), player, this);
             this.handleNearTrollsInteraction(this.getBarterInteraction(true), player);
-            this.getWorld().sendEntityStatus(this, EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+            this.getWorld().sendEntityStatus(this, this.getFriendship(player)>this.getMinFriendshipToBeFollower()? EntityStatuses.ADD_VILLAGER_HEART_PARTICLES: EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+            //Triggers Advancement
+            if(player instanceof ServerPlayerEntity serverPlayer && this.getFriendship(player) > this.getMinFriendshipToBeFollower()) {
+                TCOTS_Criteria.BEFRIEND_TROLL.trigger(serverPlayer);
+
+                if(this.getType()==TCOTS_Entities.ICE_TROLL)
+                    TCOTS_Criteria.BEFRIEND_TROLL_ICE.trigger(serverPlayer);
+            }
             //Only gives items to player if player it's above -30 Reputation
             if(this.getReputation(player)>=this.getMinReputationToBarter()) {
                 //Swings hand
@@ -1135,10 +1168,10 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
     protected static class ReturnToGuardPosition extends Goal {
 
-        private final RockTrollEntity troll;
+        private final AbstractTrollEntity troll;
         private final double speed;
 
-        public ReturnToGuardPosition(RockTrollEntity troll, double speed) {
+        public ReturnToGuardPosition(AbstractTrollEntity troll, double speed) {
             this.troll = troll;
             this.speed = speed;
         }
@@ -1182,7 +1215,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
         return 75;
     }
 
-    protected int getMinFriendshipToBeFollower(){
+    public int getMinFriendshipToBeFollower(){
         return 150;
     }
 
@@ -1216,21 +1249,21 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR)).setBaseValue(
                     this.getType() == TCOTS_Entities.ROCK_TROLL? 16.0:
                     this.getType() == TCOTS_Entities.ICE_TROLL?  12.0:
-                            0);
+                            4.0);
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS)).setBaseValue(
                     this.getType() == TCOTS_Entities.ROCK_TROLL? 8.0:
                     this.getType() == TCOTS_Entities.ICE_TROLL?  6.0:
-                            0);
+                            1.0);
         } else {
             this.playSound(TCOTS_Sounds.TROLL_DISMISS, 1.0f, 1.0f);
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR)).setBaseValue(
                     this.getType() == TCOTS_Entities.ROCK_TROLL? 8.0:
                     this.getType() == TCOTS_Entities.ICE_TROLL?  6.0:
-                            0);
+                            4.0);
             Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR_TOUGHNESS)).setBaseValue(
                     this.getType() == TCOTS_Entities.ROCK_TROLL? 4.0:
                     this.getType() == TCOTS_Entities.ICE_TROLL?  2.0:
-                            0);
+                            1.0);
         }
     }
 
@@ -1364,6 +1397,13 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
             this.getWorld().sendEntityStatus(this,
                     player!=null && this.getFriendship(player)>this.getMinFriendshipToBeFollower()? EntityStatuses.ADD_VILLAGER_HEART_PARTICLES:
                             EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+            //Triggers Advancement
+            if(player instanceof ServerPlayerEntity serverPlayer && this.getFriendship(player) > this.getMinFriendshipToBeFollower()) {
+                TCOTS_Criteria.BEFRIEND_TROLL.trigger(serverPlayer);
+
+                if(this.getType()==TCOTS_Entities.ICE_TROLL)
+                    TCOTS_Criteria.BEFRIEND_TROLL_ICE.trigger(serverPlayer);
+            }
 
             this.setStackInHand(Hand.OFF_HAND, ItemStack.EMPTY);
 
@@ -1469,6 +1509,10 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
         nbt.putInt("GuardPosX", this.getGuardingPos().getX());
         nbt.putInt("GuardPosY", this.getGuardingPos().getY());
         nbt.putInt("GuardPosZ", this.getGuardingPos().getZ());
+
+
+        nbt.putBoolean("Blocking", this.isTrollBlocking());
+        nbt.putInt("TimeBlocking", this.getTimeBlocking());
     }
 
     @Override
@@ -1498,11 +1542,79 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
         int y = nbt.getInt("GuardPosY");
         int z = nbt.getInt("GuardPosZ");
         this.setGuardingPos(new BlockPos(x, y, z));
+
+
+        setIsTrollBlocking(nbt.getBoolean("Blocking"));
+        setTimeBlocking(nbt.getInt("TimeBlocking"));
+    }
+
+
+    //Blocking System
+    public void setIsTrollBlocking(boolean isBlocking) {
+        this.dataTracker.set(BLOCKING, isBlocking);
+        if(!isBlocking){
+            this.triggerAnim("BlockController", "unblock");
+        }
+    }
+
+    public boolean isTrollBlocking() {
+        return this.dataTracker.get(BLOCKING);
+    }
+
+    public void setTimeBlocking(int timeBlocking) {
+        this.dataTracker.set(TIME_BLOCKING, timeBlocking);
+    }
+
+    public int getTimeBlocking() {
+        return this.dataTracker.get(TIME_BLOCKING);
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return (this.isTrollBlocking()
+                && !damageSource.isIn(DamageTypeTags.BYPASSES_SHIELD)
+                && !damageSource.isIn(DamageTypeTags.BYPASSES_ARMOR)
+                && !(damageSource.getSource() instanceof PersistentProjectileEntity && ((PersistentProjectileEntity) damageSource.getSource()).getPierceLevel() > 0)
+                && !(this instanceof ForestTrollEntity))
+
+                || super.isInvulnerableTo(damageSource);
+    }
+
+    @Override
+    public boolean isPushable() {
+        return super.isPushable() && !this.isTrollBlocking() && !this.isWaiting();
+    }
+
+    @Override
+    public boolean isCollidable() {
+        return this.isTrollBlocking() && this.isAlive();
     }
 
     @Override
     protected boolean isDisallowedInPeaceful() {
         return !this.isPersistent();
+    }
+
+    //Sounds
+    @Override
+    protected SoundEvent getAttackSound() {
+        return TCOTS_Sounds.TROLL_ATTACK;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return this.isAttacking()? TCOTS_Sounds.TROLL_FURIOUS: this.isRabid()?  TCOTS_Sounds.TROLL_IDLE: TCOTS_Sounds.TROLL_GRUNT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return TCOTS_Sounds.TROLL_DEATH;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return TCOTS_Sounds.TROLL_HURT;
     }
 
     @Override

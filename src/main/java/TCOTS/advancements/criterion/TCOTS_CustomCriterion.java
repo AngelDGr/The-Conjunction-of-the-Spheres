@@ -57,5 +57,17 @@ public class TCOTS_CustomCriterion extends AbstractCriterion<TCOTS_CustomCriteri
             return TCOTS_Criteria.REFILL_CONCOCTION.create(new Conditions(Optional.empty()));
         }
 
+        public static AdvancementCriterion<TCOTS_CustomCriterion.Conditions> createKillRotfiendCriterion() {
+            return TCOTS_Criteria.KILL_ROTFIEND.create(new Conditions(Optional.empty()));
+        }
+
+        public static AdvancementCriterion<TCOTS_CustomCriterion.Conditions> createBefriendTrollCriterion() {
+            return TCOTS_Criteria.BEFRIEND_TROLL.create(new Conditions(Optional.empty()));
+        }
+
+        public static AdvancementCriterion<TCOTS_CustomCriterion.Conditions> createBefriendTrollIceCriterion() {
+            return TCOTS_Criteria.BEFRIEND_TROLL_ICE.create(new Conditions(Optional.empty()));
+        }
+
     }
 }

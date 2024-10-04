@@ -127,6 +127,8 @@ public class TCOTS_Client implements ClientModInitializer {
 
         EntityRendererRegistry.register(TCOTS_Entities.ICE_TROLL, IceTrollRenderer::new);
 
+        EntityRendererRegistry.register(TCOTS_Entities.FOREST_TROLL, ForestTrollRenderer::new);
+
         //Bomb
         EntityRendererRegistry.register(TCOTS_Entities.WITCHER_BOMB, FlyingItemEntityRenderer::new);
         //Crossbow bolts

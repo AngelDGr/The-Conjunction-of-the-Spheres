@@ -14,13 +14,13 @@ import java.util.EnumSet;
 public class MeleeAttackGoal_Animated extends Goal {
     protected final PathAwareEntity mob;
     public final double speed;
-    private final boolean pauseWhenMobIdle;
+    protected final boolean pauseWhenMobIdle;
     private Path path;
-    private double targetX;
-    private double targetY;
-    private double targetZ;
-    private int updateCountdownTicks;
-    private int cooldown;
+    protected double targetX;
+    protected double targetY;
+    protected double targetZ;
+    protected int updateCountdownTicks;
+    protected int cooldown;
     private long lastUpdateTime;
     private final int attackAnimationsNumber;
 

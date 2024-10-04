@@ -3,7 +3,6 @@ package TCOTS.mixin;
 import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.ogroids.AbstractTrollEntity;
-import TCOTS.entity.ogroids.IceTrollEntity;
 import TCOTS.interfaces.LivingEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.TCOTS_Effects;
@@ -448,8 +447,16 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             if(!this.getWorld().isClient && !troll.isRabid()) {
                 ((ServerWorld) this.getWorld()).handleInteraction(troll.getDefendingInteraction(false), player, troll);
                 troll.handleNearTrollsInteraction(troll.getDefendingInteraction(true), player);
-                troll.getWorld().sendEntityStatus(troll, EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+                troll.getWorld().sendEntityStatus(troll, troll.getFriendship(player)>troll.getMinFriendshipToBeFollower()? EntityStatuses.ADD_VILLAGER_HEART_PARTICLES: EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
                 troll.handleNearTrollsParticles(EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
+
+                //Triggers Advancement
+                if(player instanceof ServerPlayerEntity serverPlayer && troll.getFriendship(player) > troll.getMinFriendshipToBeFollower()) {
+                    TCOTS_Criteria.BEFRIEND_TROLL.trigger(serverPlayer);
+
+                    if(troll.getType()==TCOTS_Entities.ICE_TROLL)
+                        TCOTS_Criteria.BEFRIEND_TROLL_ICE.trigger(serverPlayer);
+                }
             }
         }
     }
@@ -457,7 +464,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @Inject(method = "canTarget(Lnet/minecraft/entity/LivingEntity;)Z", at = @At("HEAD"), cancellable = true)
     private void GolemNotAttackFriendlyIceTroll(LivingEntity target, CallbackInfoReturnable<Boolean> cir){
         if(THIS.getType() == EntityType.IRON_GOLEM){
-            if(target instanceof IceTrollEntity troll && target.getType() == TCOTS_Entities.ICE_TROLL && troll.getOwner()!=null){
+            if(target instanceof AbstractTrollEntity troll && !troll.isRabid()){
                 cir.setReturnValue(false);
             }
         }

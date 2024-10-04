@@ -31,8 +31,8 @@ public class CyclopsModel extends BipedGeoModelBase<CyclopsEntity> {
         CoreGeoBone cloth_back =  getAnimationProcessor().getBone("clothBack");
 
         if(cloth_front!=null && cloth_back!=null){
-            cloth_front.setRotX((float)-(Math.sin(animationState.getLimbSwing()*getLegsSpeed())*(animationState.getLimbSwingAmount()*getLegsAmount())));
-            cloth_back.setRotX((float) (Math.sin(animationState.getLimbSwing()*getLegsSpeed())*(animationState.getLimbSwingAmount()*getLegsAmount())));
+            cloth_front.setRotX((float)-(Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));
+            cloth_back.setRotX((float) (Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));
         }
     }
 }

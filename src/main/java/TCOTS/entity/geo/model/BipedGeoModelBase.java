@@ -15,37 +15,37 @@ public abstract class BipedGeoModelBase<T extends GeoAnimatable> extends GeoMode
     //xTODO: FIX THE FUCKING ANIMATIONS I'M SO FUCKING CLOSE TO FUCKING KILLING MYSELF AAA
     //xTODO: Implement the new bones in the other mob models
 
-    protected float getLegsSpeed(){
+    protected float getLegsSpeed(T entity){
         return 0.5f;
     }
 
-    protected float getLegsAmount(){
+    protected float getLegsAmount(T entity){
         return 0.8f;
     }
 
-    protected float getArmsSpeed(){
-        return getLegsSpeed();
+    protected float getArmsSpeed(T entity){
+        return getLegsSpeed(entity);
     }
 
-    protected float getArmsAmount(){
+    protected float getArmsAmount(T entity){
         return 0.6f;
     }
 
-    protected float getHeadExtraInAttacking(){
+    protected float getHeadExtraInAttacking(T entity){
         return 10f;
     }
 
-    protected boolean hasNormalHead(){
+    protected boolean hasNormalHead(T entity){
         return true;
     }
 
-    protected boolean hasArmZMovement(){
+    protected boolean hasArmZMovement(T entity){
         return true;
     }
     @Override
     public void setCustomAnimations(T entity, long instanceId, AnimationState<T> animationState) {
         if(entity instanceof MobEntity mob){
-            CoreGeoBone head = hasNormalHead()? getAnimationProcessor().getBone("head"): null;
+            CoreGeoBone head = hasNormalHead(entity)? getAnimationProcessor().getBone("head"): null;
             CoreGeoBone left_leg =  getAnimationProcessor().getBone("left_leg_swing");
             CoreGeoBone right_leg = getAnimationProcessor().getBone("right_leg_swing");
             CoreGeoBone left_arm =  getAnimationProcessor().getBone("left_arm_swing");
@@ -55,7 +55,7 @@ public abstract class BipedGeoModelBase<T extends GeoAnimatable> extends GeoMode
             if (head != null) {
                 EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
                 if(animationState.isMoving() && mob.isAttacking()){
-                    head.setRotX(((entityData.headPitch()+getHeadExtraInAttacking()) * MathHelper.RADIANS_PER_DEGREE));
+                    head.setRotX(((entityData.headPitch()+getHeadExtraInAttacking(entity)) * MathHelper.RADIANS_PER_DEGREE));
                     head.setRotY((entityData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE));
                 }
                 else{
@@ -67,15 +67,18 @@ public abstract class BipedGeoModelBase<T extends GeoAnimatable> extends GeoMode
 
             if(left_arm!=null && right_arm!=null && left_leg!=null && right_leg!=null){
                 if(!mob.handSwinging){
-                    left_leg.setRotX((float)   -(Math.sin(animationState.getLimbSwing()*getLegsSpeed())*(animationState.getLimbSwingAmount()*getLegsAmount())));
-                    right_leg.setRotX((float)   (Math.sin(animationState.getLimbSwing()*getLegsSpeed())*(animationState.getLimbSwingAmount()*getLegsAmount())));
+                    left_leg.setRotX((float)   -(Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));
+                    right_leg.setRotX((float)   (Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));
 
-                    left_arm.setRotX(GeoControllersUtil.getLimbSwing(animationState,  -0.9f, 0.5f, getArmsSpeed(), getArmsAmount(),false));
-                    right_arm.setRotX(GeoControllersUtil.getLimbSwing(animationState, -0.5f, 0.9f, getArmsSpeed(), getArmsAmount(),true));
+                    left_arm.setRotX(GeoControllersUtil.getLimbSwing(animationState,  -0.9f, 0.5f, getArmsSpeed(entity), getArmsAmount(entity),false));
+                    right_arm.setRotX(GeoControllersUtil.getLimbSwing(animationState, -0.5f, 0.9f, getArmsSpeed(entity), getArmsAmount(entity),true));
 
-                    if(this.hasArmZMovement()) {
-                        right_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState, -0.0f, 0.2f, getArmsSpeed(), getArmsAmount(), false));
-                        left_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState, -0.2f, 0.0f, getArmsSpeed(), getArmsAmount(), true));
+                    if(this.hasArmZMovement(entity)) {
+                        right_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState, -0.0f, 0.2f, getArmsSpeed(entity), getArmsAmount(entity), false));
+                        left_arm.setRotZ(GeoControllersUtil.getLimbSwing(animationState, -0.2f, 0.0f, getArmsSpeed(entity), getArmsAmount(entity), true));
+                    } else {
+                        right_arm.setRotZ(0);
+                        left_arm.setRotZ(0);
                     }
                 }
             }

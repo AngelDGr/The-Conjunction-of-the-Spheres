@@ -4,7 +4,6 @@ import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.Entity;
@@ -26,19 +25,16 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -52,7 +48,7 @@ import java.util.EnumSet;
 public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
     //xTODO: Add drops -> Something related to the G'valchir
     //xTODO: Add Loot table
-    //xTODO: Add spawn (Like a illager patrol)
+    //xTODO: Add spawn (Like an illager patrol)
     //xTODO: Add bestiary entry
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
@@ -85,14 +81,14 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
     }
     @Override
     protected void initDataTracker() {
-        this.dataTracker.startTracking(CHARGING, Boolean.FALSE);
         super.initDataTracker();
+        this.dataTracker.startTracking(CHARGING, Boolean.FALSE);
     }
 
     @Override
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new Bullvore_MeleeAttackGoal(this, 1.2D, false, 1.2D, 100));
+        this.goalSelector.add(1, new Bullvore_MeleeAttackGoal(this, 1.2D, false, 1.6D, 100));
         this.goalSelector.add(2, new WanderAroundGoal(this, 0.75, 100));
         this.goalSelector.add(3, new LookAroundGoal(this));
 
@@ -106,7 +102,6 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
     }
 
     protected static class Bullvore_MeleeAttackGoal extends Goal {
-        //TODO: Fix the coordinates objective
 
         protected final BullvoreEntity mob;
 
@@ -123,6 +118,9 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
         private final int chargeCooldownTicks;
 
         private Path pathCharge;
+        private double toChargeX;
+        private double toChargeY;
+        private double toChargeZ;
 
         public Bullvore_MeleeAttackGoal(BullvoreEntity mob, double speed, boolean pauseWhenMobIdle, double speedMultiplier, int chargeCooldown) {
             this.mob = mob;
@@ -179,6 +177,9 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
             this.mob.setAttacking(true);
             this.updateCountdownTicks = 0;
             this.cooldown = 0;
+
+            this.mob.chargeCooldownTimer=60;
+            this.mob.chargeCooldown=true;
         }
         @Override
         public void stop() {
@@ -230,21 +231,46 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
             }
 
 
+            // Get the monster's position and facing direction
+            Vec3d monsterPosition = this.mob.getPos();
+            Vec3d monsterLookVec = this.mob.getRotationVector(0.0f, mob.getHeadYaw()); // This gives the direction the monster is facing
+            boolean isFacingTarget=false;
+            //To only active when it's facing directly to the player
+            {
+                Vec3d targetPosition = target.getPos(); // Assuming 'target' is the player or another entity
+                Vec3d directionToTarget = targetPosition.subtract(monsterPosition).normalize(); // Normalize the direction
+
+                // Calculate the dot product between the two vectors
+                double dotProduct = monsterLookVec.dotProduct(directionToTarget);
+
+                // Set a threshold for the facing direction (1.0 means exactly the same direction)
+                double threshold = 0.95; // Adjust this threshold as needed
+
+                // Activate the boolean if the monster is facing towards the target
+                if (dotProduct > threshold) {
+                    isFacingTarget = true;
+                }
+            }
+
             //Start Charging
-            if(this.mob.distanceTo(target) > 8 && !this.mob.chargeCooldown && !this.mob.isCharging()){
+            if(this.mob.distanceTo(target) > 8 && !this.mob.chargeCooldown && !this.mob.isCharging() && isFacingTarget){
 
-                if(
-                this.mob.getWorld().raycast(
-                        new RaycastContext(
-                                this.mob.getEyePos(),
-                                target.getPos(),
-                                RaycastContext.ShapeType.COLLIDER,
-                                RaycastContext.FluidHandling.NONE,
-                                mob)).getType() == HitResult.Type.BLOCK
-                )
-                    return;
+                this.mob.getLookControl().lookAt(
+                        this.targetX,
+                        this.targetY,
+                        this.targetZ,
+                        30.0f, 30.0f);
 
-                this.pathCharge = this.mob.getNavigation().findPathTo(this.targetX, this.targetY, this.targetZ, 0);
+                // Define how far you want the monster to charge (distance in blocks)
+                double chargeDistance = 20.0;
+                // Calculate the target position in front of the monster
+                Vec3d movingDirection = monsterPosition.add(monsterLookVec.multiply(chargeDistance, 0, chargeDistance));
+
+                this.toChargeX=movingDirection.x;
+                this.toChargeY=movingDirection.y;
+                this.toChargeZ=movingDirection.z;
+
+                this.pathCharge = this.mob.getNavigation().findPathTo(this.toChargeX, this.toChargeY, this.toChargeZ, 0);
 
                 if(this.pathCharge==null){
                     return;
@@ -252,9 +278,9 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
 
                 this.mob.setCharging(true);
                 this.mob.getLookControl().lookAt(
-                        this.targetX,
-                        this.targetY-4,
-                        this.targetZ,
+                        this.toChargeX,
+                        this.toChargeY-8,
+                        this.toChargeZ,
                         30.0f, 30.0f);
 
                 this.mob.playSound(TCOTS_Sounds.BULLVORE_CHARGE, 1.0f, 1.0f);
@@ -263,23 +289,22 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
             //While it's charging
             if(mob.isCharging()){
                 this.mob.getLookControl().lookAt(
-                        this.targetX,
-                        this.targetY-4,
-                        this.targetZ,
+                        this.toChargeX,
+                        this.toChargeY-8,
+                        this.toChargeZ,
                         30.0f, 30.0f);
 
                 this.mob.getNavigation().startMovingAlong(this.pathCharge,this.speed*speedMultiplierRunValue);
 
 
                 //If Bullvore reach the coordinates or something blocks the path
-                if(this.mob.squaredDistanceTo(this.targetX, this.targetY, this.targetZ) < 2 || this.mob.horizontalCollision){
+                if(this.mob.squaredDistanceTo(this.toChargeX, this.toChargeY, this.toChargeZ) < 2 || this.mob.horizontalCollision){
 
                  this.mob.setCharging(false);
 
                  this.mob.chargeCooldownTimer=this.chargeCooldownTicks;
                  this.mob.chargeCooldown=true;
                 }
-
             }
 
         }
@@ -364,7 +389,6 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
                 if (!(block instanceof LeavesBlock)) continue;
                 bl = this.getWorld().breakBlock(blockPos, true, this) || bl;
             }
-
         }
     }
 
@@ -391,7 +415,7 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
         }
 
         if(this.isCharging()){
-            spawnGroundParticles();
+            EntitiesUtil.spawnGroundParticles(this);
         }
 
         super.tick();
@@ -403,20 +427,6 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
 
         if(this.isCharging()){
             EntitiesUtil.pushAndDamageEntities(this, 14f, 1.1, 1.1, 1.5D, BullvoreEntity.class, RotfiendEntity.class);
-        }
-    }
-
-
-    private void spawnGroundParticles() {
-        BlockState blockState = this.getSteppingBlockState();
-        if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
-            for (int i = 0; i < 8; ++i) {
-                double d = this.getX() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
-                double e = this.getY();
-                double f = this.getZ() + (double) MathHelper.nextBetween(random, -0.7F, 0.7F);
-
-                this.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
-            }
         }
     }
 

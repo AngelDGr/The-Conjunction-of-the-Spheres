@@ -4,12 +4,8 @@ import TCOTS.TCOTS_Main;
 import TCOTS.entity.geo.model.BipedGeoModelBase;
 import TCOTS.entity.necrophages.BullvoreEntity;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib.core.animation.AnimationState;
 
 public class BullvoreModel extends BipedGeoModelBase<BullvoreEntity> {
-    protected boolean hasArmZMovement(){
-        return false;
-    }
 
     @Override
     public Identifier getModelResource(BullvoreEntity animatable) {
@@ -27,7 +23,17 @@ public class BullvoreModel extends BipedGeoModelBase<BullvoreEntity> {
     }
 
     @Override
-    public void setCustomAnimations(BullvoreEntity entity, long instanceId, AnimationState<BullvoreEntity> animationState) {
-        super.setCustomAnimations(entity, instanceId, animationState);
+    protected boolean hasArmZMovement(BullvoreEntity entity) {
+        return entity.isCharging();
+    }
+
+    @Override
+    protected float getLegsSpeed(BullvoreEntity entity) {
+        return entity.isCharging()? 0.8f :0.5f;
+    }
+
+    @Override
+    protected float getArmsAmount(BullvoreEntity entity) {
+        return entity.isCharging()? 0.8f :0.6f;
     }
 }

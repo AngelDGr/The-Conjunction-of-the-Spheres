@@ -22,7 +22,7 @@ public class GraveirModel extends BipedGeoModelBase<GraveirEntity> {
     }
 
     @Override
-    protected boolean hasArmZMovement() {
+    protected boolean hasArmZMovement(GraveirEntity entity) {
         return false;
     }
 }

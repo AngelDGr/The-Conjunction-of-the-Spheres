@@ -27,7 +27,7 @@ public class WaterHagModel extends BipedGeoModelBase<WaterHagEntity> {
     }
 
     @Override
-    protected boolean hasNormalHead() {
+    protected boolean hasNormalHead(WaterHagEntity entity) {
         return false;
     }
 

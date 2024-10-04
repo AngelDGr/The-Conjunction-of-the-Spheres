@@ -1889,15 +1889,17 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         //Hunting
         //x Kill a monster (Silver for Monsters...)
-        //  > Kill a Bullvore (Moo-rderer)
-        //  > Kill a rotfiend/scurver without causing an explosion (Bomb Defusal)
-        //  > Get a mutagen
-        //  > Befriend a troll (Friend of Trolls)
-        //      > Befriend an ice troll (Lots eats, lots drink)
-        //          > Get the three types of Trolls following you (Troll Trouble)
-        //  > Craft the G'valchir (Won't Hurt a Bit)
+        //  x Kill a Bullvore (Moo-rderer)
+        //      x Craft the G'valchir (Won't Hurt a Bit)
+        //  x Kill a rotfiend/scurver without causing an explosion (Bomb Defusal)
+        //  x Get a mutagen (Mutagenic)
+        //  x Befriend a troll (Friend of Trolls)
+        //      x Befriend an ice troll (Lots eats, lots drink)
+        //          > Get the three types of Trolls following you at the same time (Troll Trouble)
+
         //  > Craft crossbows bolts (Marksman)
-        //  > Craft an armor
+
+        //  > Craft the Raven armor (Tyen'sail)
         //  > Craft a horse armor
         //  > Get Aerondight (Embodiment of the Five Virtues)
 
@@ -1963,6 +1965,104 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         false // Hidden in the advancement tab
                                 )
                                 .build(consumer, TCOTS_Main.MOD_ID + "/hunting");
+
+                //Bullvore branch
+                {
+                    AdvancementEntry killBullvore =
+                            Advancement.Builder.create()
+                                    .parent(rootHunting)
+                                    .display(
+                                            TCOTS_Items.BULLVORE_HORN_FRAGMENT, // The display icon
+                                            Text.translatable("advancements.witcher.kill_bullvore.title"), // The title
+                                            Text.translatable("advancements.witcher.kill_bullvore.description"), // The description
+                                            null,
+                                            AdvancementFrame.GOAL, // Options: TASK, CHALLENGE, GOAL
+                                            true, // Show toast top right
+                                            true, // Announce to chat
+                                            false // Hidden in the advancement tab
+                                    )
+                                    .criterion("kill_bullvore", OnKilledCriterion.Conditions.createPlayerKilledEntity(EntityPredicate.Builder.create().type(TCOTS_Entities.BULLVORE)))
+                                    .build(consumer, TCOTS_Main.MOD_ID + "/kill_bullvore");
+
+                    Advancement.Builder.create()
+                            .parent(killBullvore)
+                            .display(
+                                    TCOTS_Items.GVALCHIR, // The display icon
+                                    Text.translatable("advancements.witcher.get_gvalchir.title"), // The title
+                                    Text.translatable("advancements.witcher.get_gvalchir.description"), // The description
+                                    null,
+                                    AdvancementFrame.CHALLENGE, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .criterion("get_gvalchir", InventoryChangedCriterion.Conditions.items(TCOTS_Items.GVALCHIR))
+                            .rewards(AdvancementRewards.Builder.experience(100))
+                            .build(consumer, TCOTS_Main.MOD_ID + "/get_gvalchir");
+                }
+
+
+                Advancement.Builder.create()
+                        .parent(rootHunting)
+                        .display(
+                                TCOTS_Items.ROTFIEND_BLOOD, // The display icon
+                                Text.translatable("advancements.witcher.kill_rotfiend.title"), // The title
+                                Text.translatable("advancements.witcher.kill_rotfiend.description"), // The description
+                                null,
+                                AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                true, // Show toast top right
+                                true, // Announce to chat
+                                false // Hidden in the advancement tab
+                        )
+                        .criterion("kill_rotfiend", TCOTS_CustomCriterion.Conditions.createKillRotfiendCriterion())
+                        .build(consumer, TCOTS_Main.MOD_ID + "/kill_rotfiend");
+
+                setHasItemCriteriaOR(Advancement.Builder.create(), MUTAGEN)
+                        .parent(rootHunting)
+                        .display(
+                                TCOTS_Items.FOGLET_MUTAGEN, // The display icon
+                                Text.translatable("advancements.witcher.get_mutagen.title"), // The title
+                                Text.translatable("advancements.witcher.get_mutagen.description"), // The description
+                                null,
+                                AdvancementFrame.GOAL, // Options: TASK, CHALLENGE, GOAL
+                                true, // Show toast top right
+                                true, // Announce to chat
+                                false // Hidden in the advancement tab
+                        )
+                        .build(consumer, TCOTS_Main.MOD_ID + "/get_mutagen");
+
+                //Troll branch
+                {
+                    AdvancementEntry befriendTroll =Advancement.Builder.create()
+                            .parent(rootHunting)
+                            .display(
+                                    TCOTS_Items.VILLAGE_HERBAL, // The display icon
+                                    Text.translatable("advancements.witcher.befriend_troll.title"), // The title
+                                    Text.translatable("advancements.witcher.befriend_troll.description"), // The description
+                                    null,
+                                    AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .criterion("befriend_troll", TCOTS_CustomCriterion.Conditions.createBefriendTrollCriterion())
+                            .build(consumer, TCOTS_Main.MOD_ID + "/befriend_troll");
+
+                    Advancement.Builder.create()
+                            .parent(befriendTroll)
+                            .display(
+                                    Blocks.PACKED_ICE, // The display icon
+                                    Text.translatable("advancements.witcher.befriend_troll_ice.title"), // The title
+                                    Text.translatable("advancements.witcher.befriend_troll_ice.description"), // The description
+                                    null,
+                                    AdvancementFrame.GOAL, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .criterion("befriend_troll_ice", TCOTS_CustomCriterion.Conditions.createBefriendTrollIceCriterion())
+                            .build(consumer, TCOTS_Main.MOD_ID + "/befriend_troll_ice");
+                }
             }
 
 
@@ -2036,7 +2136,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     Text.translatable("advancements.witcher.max_toxicity.title"), // The title
                                     Text.translatable("advancements.witcher.max_toxicity.description"), // The description
                                     null,
-                                    AdvancementFrame.GOAL, // Options: TASK, CHALLENGE, GOAL
+                                    AdvancementFrame.TASK, // Options: TASK, CHALLENGE, GOAL
                                     true, // Show toast top right
                                     true, // Announce to chat
                                     false // Hidden in the advancement tab
@@ -2276,6 +2376,15 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             }
         }
 
+        protected static final List<Item> MUTAGEN = Arrays.asList(
+                TCOTS_Items.FOGLET_MUTAGEN,
+                TCOTS_Items.TROLL_MUTAGEN,
+                TCOTS_Items.GRAVE_HAG_MUTAGEN,
+
+                TCOTS_Items.WATER_HAG_MUTAGEN,
+                TCOTS_Items.NEKKER_WARRIOR_MUTAGEN
+        );
+
         protected static final List<Item> BOMBS_LV3 = Arrays.asList(
                 TCOTS_Items.GRAPESHOT_SUPERIOR,
 
@@ -2373,7 +2482,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                 TCOTS_Entities.NEKKER_WARRIOR,
                 TCOTS_Entities.CYCLOPS,
                 TCOTS_Entities.ROCK_TROLL,
-                TCOTS_Entities.ICE_TROLL
+                TCOTS_Entities.ICE_TROLL,
+                TCOTS_Entities.FOREST_TROLL
         );
 
         protected static final List<Item> POTION_LV3= Arrays.asList(

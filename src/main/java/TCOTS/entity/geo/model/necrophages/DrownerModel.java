@@ -30,7 +30,7 @@ public class DrownerModel extends BipedGeoModelBase<DrownerEntity> {
     }
 
     @Override
-    protected boolean hasNormalHead() {
+    protected boolean hasNormalHead(DrownerEntity drowner) {
         return false;
     }
 
@@ -56,12 +56,12 @@ public class DrownerModel extends BipedGeoModelBase<DrownerEntity> {
                 CoreGeoBone Thingy =  getAnimationProcessor().getBone("Thingy");
 
                 if(Thingy!=null){
-                    Thingy.setRotX((float)-(Math.sin(animationState.getLimbSwing()*getLegsSpeed())*(animationState.getLimbSwingAmount()*getLegsAmount())));
+                    Thingy.setRotX((float)-(Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));
                 }
 
 
                 if(animationState.isMoving() && entity.isAttacking()){
-                    head.setRotX(((entityData.headPitch()+getHeadExtraInAttacking()+15) * MathHelper.RADIANS_PER_DEGREE));
+                    head.setRotX(((entityData.headPitch()+getHeadExtraInAttacking(entity)+15) * MathHelper.RADIANS_PER_DEGREE));
                     head.setRotY((entityData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE));
                 }
                 else{

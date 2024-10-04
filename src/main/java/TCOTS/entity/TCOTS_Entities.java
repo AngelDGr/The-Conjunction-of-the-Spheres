@@ -198,6 +198,12 @@ public class TCOTS_Entities {
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.8f, 2.7f)).build());
 
+    public static final EntityType<ForestTrollEntity> FOREST_TROLL = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "forest_troll"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, ForestTrollEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(1.8f, 2.8f)).build());
+
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "witcher_bomb"),
@@ -515,6 +521,9 @@ public class TCOTS_Entities {
 
             //Ice Troll
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.ICE_TROLL, IceTrollEntity.setAttributes());
+
+            //Forest Troll
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOREST_TROLL, ForestTrollEntity.setAttributes());
 
         }
     }

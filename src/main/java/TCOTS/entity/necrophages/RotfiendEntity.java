@@ -1,5 +1,6 @@
 package TCOTS.entity.necrophages;
 
+import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
@@ -28,6 +29,7 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -380,6 +382,17 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
                     this.getX(), this.getY(), this.getZ(), (float)3, false, World.ExplosionSourceType.MOB,
                     TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Sounds.ROTFIEND_BLOOD_EXPLOSION);
             this.discard();
+        }
+    }
+
+    @Override
+    public void onDeath(DamageSource damageSource) {
+        super.onDeath(damageSource);
+
+        if(this.isOnFire() && damageSource.getSource()!=null && damageSource.getSource() instanceof PlayerEntity player){
+            if(player instanceof ServerPlayerEntity serverPlayer){
+                TCOTS_Criteria.KILL_ROTFIEND.trigger(serverPlayer);
+            }
         }
     }
 

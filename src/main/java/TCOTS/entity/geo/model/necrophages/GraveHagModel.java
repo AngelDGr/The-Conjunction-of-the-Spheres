@@ -29,7 +29,7 @@ public class GraveHagModel extends BipedGeoModelBase<GraveHagEntity> {
     }
 
     @Override
-    protected boolean hasNormalHead() {
+    protected boolean hasNormalHead(GraveHagEntity entity) {
         return false;
     }
 

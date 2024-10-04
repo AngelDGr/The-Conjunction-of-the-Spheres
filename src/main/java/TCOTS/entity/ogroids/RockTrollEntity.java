@@ -14,9 +14,6 @@ import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
@@ -30,9 +27,6 @@ import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
@@ -91,15 +85,10 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
     //xTODO: Add Follower/Pet System
     //xTODO: Add bestiary description
     //xTODO: Add natural spawn
-    //xTODO: Add possible village-like structure?
+    //xTODO: Add possible village-like structure
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    public static final RawAnimation BLOCK = RawAnimation.begin().thenPlayAndHold("special.block");
-    public static final RawAnimation UNBLOCK = RawAnimation.begin().thenPlay("special.unblock");
     public static final RawAnimation ATTACK_THROW_ROCK = RawAnimation.begin().thenPlay("attack.rock_throw");
-
-    protected static final TrackedData<Boolean> BLOCKING = DataTracker.registerData(RockTrollEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    protected static final TrackedData<Integer> TIME_BLOCKING = DataTracker.registerData(RockTrollEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
 
     public RockTrollEntity(EntityType<? extends AbstractTrollEntity> entityType, World world) {
@@ -110,7 +99,7 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
 
-        this.goalSelector.add(1, new ProjectileAttackGoal_Troll(this, 1.2D, 30, 10.0f, 40f));
+        this.goalSelector.add(1, new ProjectileAttackGoal_RockTroll(this, 1.2D, 30, 10.0f, 40f));
 
         this.goalSelector.add(2, new MeleeAttackGoal_Troll(this, 1.2D, false));
 
@@ -141,14 +130,19 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
         //Defending a place
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MobEntity.class,
                 5, true, false,
-                entity -> entity instanceof Monster && !(entity instanceof CreeperEntity) && (entity.getType() != this.getType()) && this.isWaiting()));
+                entity -> (
+                        (entity instanceof AbstractTrollEntity troll && troll.isRabid()) ||
 
-        this.targetSelector.add(3, new DefendFriendGoal(this, LivingEntity.class, false, true, entity ->
+                        (entity instanceof Monster && !(entity instanceof AbstractTrollEntity) && !(entity instanceof CreeperEntity)))
+                        && this.isWaiting()));
+
+        this.targetSelector.add(3, new DefendFriendGoal(this, LivingEntity.class, false, true,
+                entity ->
                 entity instanceof PlayerEntity player?
                 !(this.getFriendship(player) > 80 && this.getReputation(player) > 100):
                         (entity.getType()!=this.getType()) || (entity instanceof AbstractTrollEntity troll && troll.isRabid())));
 
-        this.targetSelector.add(4, new RockTrollTargetWithReputationGoal(this));
+        this.targetSelector.add(4, new TrollTargetWithReputationGoal(this));
         this.targetSelector.add(5, new TrollRevengeGoal(this).setGroupRevenge());
         this.targetSelector.add(6, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::shouldAngerAtPlayer));
         this.targetSelector.add(7, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
@@ -232,20 +226,6 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
     }
 
     @Override
-    protected void mobTick() {
-        super.mobTick();
-
-        if(this.isTrollBlocking()){
-            setTimeBlocking(getTimeBlocking()+1);
-        }
-
-        if(this.isTrollBlocking() && this.getTimeBlocking()==80){
-            this.setIsTrollBlocking(false);
-            setTimeBlocking(0);
-        }
-    }
-
-    @Override
     public int getMaxHeadRotation() {
         return super.getMaxHeadRotation();
     }
@@ -278,13 +258,6 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
         }
 
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-    }
-
-    @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(BLOCKING, Boolean.FALSE);
-        this.dataTracker.startTracking(TIME_BLOCKING, 0);
     }
 
     //Reputation System
@@ -336,7 +309,7 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
         } else if(interaction == this.getBarterInteraction(true)){
             //+5 Reputation
             //+1 Friendship
-            this.gossip.startGossip(entity.getUuid(), TrollGossips.TrollGossipType.BARTERING, 5, 1);
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.BARTERING, 5, 1);
         }
         //Bad actions
         else if (interaction == this.getKillInteraction()) {
@@ -409,30 +382,6 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
         return new Identifier(TCOTS_Main.MOD_ID,"gameplay/rock_troll_bartering");
     }
 
-    @Override
-    protected ActionResult interactMob(@NotNull PlayerEntity player, Hand hand) {
-
-        if(!this.isTrollBlocking()){
-            return super.interactMob(player, hand);
-        }
-
-        return ActionResult.PASS;
-    }
-
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("Blocking", this.isTrollBlocking());
-        nbt.putInt("TimeBlocking", this.getTimeBlocking());
-    }
-
-    @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-
-        setIsTrollBlocking(nbt.getBoolean("Blocking"));
-        setTimeBlocking(nbt.getInt("TimeBlocking"));
-    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
@@ -468,67 +417,6 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
         );
     }
 
-    //Blocking System
-    public void setIsTrollBlocking(boolean isBlocking) {
-        this.dataTracker.set(BLOCKING, isBlocking);
-        if(!isBlocking){
-            this.triggerAnim("BlockController", "unblock");
-        }
-    }
-
-    public boolean isTrollBlocking() {
-        return this.dataTracker.get(BLOCKING);
-    }
-
-    public void setTimeBlocking(int timeBlocking) {
-        this.dataTracker.set(TIME_BLOCKING, timeBlocking);
-    }
-
-    public int getTimeBlocking() {
-        return this.dataTracker.get(TIME_BLOCKING);
-    }
-
-    @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
-        return (this.isTrollBlocking()
-                && !damageSource.isIn(DamageTypeTags.BYPASSES_SHIELD)
-                && !damageSource.isIn(DamageTypeTags.BYPASSES_ARMOR)
-                && !(damageSource.getSource() instanceof PersistentProjectileEntity && ((PersistentProjectileEntity) damageSource.getSource()).getPierceLevel() > 0))
-
-                || super.isInvulnerableTo(damageSource);
-    }
-
-    @Override
-    public boolean isPushable() {
-        return super.isPushable() && !this.isTrollBlocking() && !this.isWaiting();
-    }
-
-    @Override
-    public boolean isCollidable() {
-        return this.isTrollBlocking() && this.isAlive();
-    }
-
-    //Sounds
-    @Override
-    protected SoundEvent getAttackSound() {
-        return TCOTS_Sounds.TROLL_ATTACK;
-    }
-
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return this.isAttacking()? TCOTS_Sounds.TROLL_FURIOUS: this.isRabid()?  TCOTS_Sounds.TROLL_IDLE: TCOTS_Sounds.TROLL_GRUNT;
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        return TCOTS_Sounds.TROLL_DEATH;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return TCOTS_Sounds.TROLL_HURT;
-    }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

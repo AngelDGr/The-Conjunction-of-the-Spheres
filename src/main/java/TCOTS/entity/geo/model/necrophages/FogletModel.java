@@ -33,17 +33,17 @@ public class FogletModel extends BipedGeoModelBase<FogletEntity> {
     }
 
     @Override
-    protected boolean hasNormalHead() {
+    protected boolean hasNormalHead(FogletEntity entity) {
         return false;
     }
 
     @Override
-    protected float getArmsAmount() {
+    protected float getArmsAmount(FogletEntity entity) {
         return 0.8f;
     }
 
     @Override
-    protected float getLegsAmount() {
+    protected float getLegsAmount(FogletEntity entity) {
         return 1.0f;
     }
 

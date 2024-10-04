@@ -221,6 +221,10 @@
     "entity.tcots-witcher.ice_troll": "Ice Troll",
     "entity.tcots-witcher.ice_troll_rabid": "Rabid Ice Troll",
 
+    "item.tcots-witcher.forest_troll_spawn_egg": "Forest Troll Spawn Egg",
+    "entity.tcots-witcher.forest_troll": "Forest Troll",
+    "entity.tcots-witcher.forest_troll_rabid": "Rabid Forest Troll",
+
     "item.tcots-witcher.cave_troll_liver": "Cave Troll Liver",
     "item.tcots-witcher.troll_mutagen": "Troll Mutagen",
 
@@ -669,6 +673,26 @@
     "advancements.witcher.start_killing.title": "Silver for Monsters...",
     "advancements.witcher.start_killing.description": "Kill a post-conjunction monster",
 
+        "advancements.witcher.kill_bullvore.title": "Moo-rderer",
+        "advancements.witcher.kill_bullvore.description": "Kill a powerful Bullvore",
+
+            "advancements.witcher.get_gvalchir.title": "Won't Hurt a Bit",
+            "advancements.witcher.get_gvalchir.description": "Get the powerful sword G'valchir",
+
+        "advancements.witcher.kill_rotfiend.title": "Bomb Defusal",
+        "advancements.witcher.kill_rotfiend.description": "Kill a Rotfiend or a Scurver without causing an explosion",
+
+        "advancements.witcher.get_mutagen.title": "Mutagenic",
+        "advancements.witcher.get_mutagen.description": "Get a monster mutagen",
+
+        "advancements.witcher.befriend_troll.title": "Friend of Trolls",
+        "advancements.witcher.befriend_troll.description": "Increase your friendship with a troll enough to be considered a friend",
+
+            "advancements.witcher.befriend_troll_ice.title": "Lots Eats, Lots Drink",
+            "advancements.witcher.befriend_troll_ice.description": "Become friend with an Ice Troll",
+
+                "advancements.witcher.befriend_all_troll.title": "Troll Trouble",
+                "advancements.witcher.befriend_all_troll.description": "Get the three types of Trolls following you at the same time",
 
 
 
