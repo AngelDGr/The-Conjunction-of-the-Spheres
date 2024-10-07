@@ -582,6 +582,9 @@
     "tooltip.tcots-witcher.gvalchir": "A powerful runic sword",
     "tooltip.tcots-witcher.gvalchir.extra": "Penetrates opponent armor",
 
+    "item.tcots-witcher.manticore_armor": "Manticore Armor",
+    "item.tcots-witcher.manticore_trousers": "Manticore Trousers",
+    "item.tcots-witcher.manticore_boots": "Manticore Boots",
 
 
     "item.tcots-witcher.knight_crossbow": "Knight Crossbow",
@@ -615,10 +618,10 @@
 
 
     "advancements.witcher.main.title": "The Conjunction of the Spheres",
-    "advancements.witcher.main.description": "Explore this new world",
+    "advancements.witcher.main.description": "Explore this new world, try to buy a Monster Bestiary from a librarian for more information!",
 
         "advancements.witcher.start_alchemy.title": "The Mother of all Sciences",
-        "advancements.witcher.start_alchemy.description": "Start the path of alchemy crafting an Alchemy Table",
+        "advancements.witcher.start_alchemy.description": "Start the path of alchemy crafting an Alchemy Table, try to buy an Alchemy Almanac from a herbalist too!",
 
             "advancements.witcher.use_formula.title": "Let's Cook!",
             "advancements.witcher.use_formula.description": "Learn a new Alchemy Recipe",
@@ -686,13 +689,13 @@
         "advancements.witcher.get_mutagen.description": "Get a monster mutagen",
 
         "advancements.witcher.befriend_troll.title": "Friend of Trolls",
-        "advancements.witcher.befriend_troll.description": "Increase your friendship with a troll enough to be considered a friend",
+        "advancements.witcher.befriend_troll.description": "Become friend with a troll and get it as follower",
 
             "advancements.witcher.befriend_troll_ice.title": "Lots Eats, Lots Drink",
-            "advancements.witcher.befriend_troll_ice.description": "Become friend with an Ice Troll",
+            "advancements.witcher.befriend_troll_ice.description": "Become friend with an Ice Troll and get it as follower",
 
                 "advancements.witcher.befriend_all_troll.title": "Troll Trouble",
-                "advancements.witcher.befriend_all_troll.description": "Get the three types of Trolls following you at the same time",
+                "advancements.witcher.befriend_all_troll.description": "Get each Troll type as follower",
 
 
 

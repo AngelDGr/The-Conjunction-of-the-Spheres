@@ -1,6 +1,7 @@
 package TCOTS;
 
 import TCOTS.advancements.criterion.DestroyMultipleMonsterNestsCriterion;
+import TCOTS.advancements.criterion.GetTrollFollowerCriterion;
 import TCOTS.advancements.criterion.TCOTS_CustomCriterion;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
@@ -43,6 +44,7 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.TypeSpecificPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
@@ -56,10 +58,12 @@ import net.minecraft.world.poi.PointOfInterestType;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+@SuppressWarnings({"unused", "deprecated"})
 public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
     @Override
@@ -114,6 +118,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         public static final Identifier TROLL_BARREL = new Identifier(TCOTS_Main.MOD_ID, "chests/troll/troll_barrel");
         public static final Identifier ICE_TROLL_BARREL = new Identifier(TCOTS_Main.MOD_ID, "chests/troll/ice_troll_barrel");
+        public static final Identifier FOREST_TROLL_BARREL = new Identifier(TCOTS_Main.MOD_ID, "chests/troll/forest_troll_barrel");
 
         public LootTablesChestsGenerator(FabricDataOutput output) {
             super(output, LootContextTypes.CHEST);
@@ -422,8 +427,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             }
 
 
-            //Rock Troll Barrel
+            //Trolls barrels
             {
+                //Rock Troll Barrel
                 {
                     exporter.accept(TROLL_BARREL,
                             LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 5.0f))
@@ -503,10 +509,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                             ));
                 }
-            }
 
-            //Ice Troll Barrel
-            {
+                //Ice Troll Barrel
                 {
                     exporter.accept(ICE_TROLL_BARREL,
                             LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(4.0f, 6.0f))
@@ -575,7 +579,101 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                             ));
                 }
+
+                //Forest Troll Barrel
+                {
+                    exporter.accept(FOREST_TROLL_BARREL,
+                            LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(4.0f, 6.0f))
+
+                                    //Wood
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.OAK_LOG).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 6.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.BIRCH_LOG).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 6.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.SPRUCE_LOG).weight(4))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 6.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.DARK_OAK_LOG).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 6.0f))))
+
+                                    //Saplings
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.OAK_SAPLING).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.BIRCH_SAPLING).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.SPRUCE_SAPLING).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.DARK_OAK_SAPLING).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    //Ores
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RAW_IRON).weight(1))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RAW_COPPER).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3.0f, 6.0f))))
+
+
+                                    //Meat
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.ROTTEN_FLESH).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(6.0f, 10.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.MUTTON).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3.0f, 5.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.RABBIT).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.CHICKEN).weight(3))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.PORKCHOP).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.BEEF).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+
+                                    //Alcohol-Cooked Meat
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.VILLAGE_HERBAL).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.ICY_SPIRIT).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(TCOTS_Items.MANDRAKE_CORDIAL).weight(1))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_MUTTON).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 3.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_RABBIT).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_CHICKEN).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_BEEF).weight(1))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_PORKCHOP).weight(1))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                                    .with(ItemEntry.builder(Items.RABBIT_STEW).weight(1))
+
+                                    //CopperIngot-RawBlocks
+                                    .with(ItemEntry.builder(Items.COPPER_INGOT).weight(1))
+                                    .with(ItemEntry.builder(Items.RAW_COPPER).weight(1))
+                                    .with(ItemEntry.builder(Items.RAW_IRON_BLOCK).weight(1))
+
+                            ));
+                }
             }
+
         }
     }
 
@@ -738,10 +836,10 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.GVALCHIR)
                             .pattern("HIH")
                             .pattern("HIH")
-                            .pattern("NSN")
+                            .pattern("DSD")
                             .input('H', TCOTS_Items.BULLVORE_HORN_FRAGMENT)
                             .input('I', Items.IRON_INGOT)
-                            .input('N', Items.IRON_NUGGET)
+                            .input('D', TCOTS_Items.DEVOURER_TEETH)
                             .input('S', Items.STICK)
 
                             .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT))
@@ -2045,10 +2143,14 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     true, // Announce to chat
                                     false // Hidden in the advancement tab
                             )
-                            .criterion("befriend_troll", TCOTS_CustomCriterion.Conditions.createBefriendTrollCriterion())
+                            .criterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ROCK_TROLL)))
+                            .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
+                            .criterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL)))
+                            .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
+                            .criterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.FOREST_TROLL)))
                             .build(consumer, TCOTS_Main.MOD_ID + "/befriend_troll");
 
-                    Advancement.Builder.create()
+                    AdvancementEntry befriendIceTroll = Advancement.Builder.create()
                             .parent(befriendTroll)
                             .display(
                                     Blocks.PACKED_ICE, // The display icon
@@ -2060,8 +2162,27 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     true, // Announce to chat
                                     false // Hidden in the advancement tab
                             )
-                            .criterion("befriend_troll_ice", TCOTS_CustomCriterion.Conditions.createBefriendTrollIceCriterion())
+                            .criterion("befriend_troll_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL)))
                             .build(consumer, TCOTS_Main.MOD_ID + "/befriend_troll_ice");
+
+                    Advancement.Builder.create()
+                            .parent(befriendIceTroll)
+                            .display(
+                                    Blocks.OAK_SAPLING, // The display icon
+                                    Text.translatable("advancements.witcher.befriend_all_troll.title"), // The title
+                                    Text.translatable("advancements.witcher.befriend_all_troll.description"), // The description
+                                    null,
+                                    AdvancementFrame.CHALLENGE, // Options: TASK, CHALLENGE, GOAL
+                                    true, // Show toast top right
+                                    true, // Announce to chat
+                                    false // Hidden in the advancement tab
+                            )
+                            .criterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ROCK_TROLL)))
+                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL)))
+                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.FOREST_TROLL)))
+                            .build(consumer, TCOTS_Main.MOD_ID + "/befriend_all_troll");
                 }
             }
 
@@ -2374,6 +2495,15 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                 TCOTS_CustomCriterion.Conditions.createRefillConcoctionCriterion())
                         .build(consumer, TCOTS_Main.MOD_ID + "/refill_concoction");
             }
+        }
+
+        private static Advancement.Builder requireAllFrogsOnLeads(Advancement.Builder builder) {
+            Registries.FROG_VARIANT.streamEntries().forEach(variant ->
+                    builder.criterion(variant.registryKey().getValue().toString(),
+                            PlayerInteractedWithEntityCriterion.Conditions.create(ItemPredicate.Builder.create().items(Items.LEAD),
+                                    Optional.of(EntityPredicate.contextPredicateFromEntityPredicate(EntityPredicate.Builder.create()
+                                            .type(EntityType.FROG).typeSpecific(TypeSpecificPredicate.frog(variant.value())))))));
+            return builder;
         }
 
         protected static final List<Item> MUTAGEN = Arrays.asList(

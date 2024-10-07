@@ -6,7 +6,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
 
-        "location": "tcots-witcher:caves/rock_trolls/empty",
+        "location": "tcots-witcher:caves/empty",
 
         "processors": {
           "processors": []
@@ -20,7 +20,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
 
-        "location": "tcots-witcher:caves/rock_trolls/rabid_rock_troll",
+        "location": "tcots-witcher:caves/rock/trolls/rabid_rock",
 
         "processors": {
           "processors": []
@@ -34,7 +34,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
 
-        "location": "tcots-witcher:caves/rock_trolls/rock_troll",
+        "location": "tcots-witcher:caves/rock/trolls/rock",
 
         "processors": {
           "processors": []

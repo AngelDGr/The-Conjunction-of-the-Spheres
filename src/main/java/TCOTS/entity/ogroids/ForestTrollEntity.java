@@ -23,8 +23,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
@@ -59,11 +57,11 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.List;
 
 public class ForestTrollEntity extends AbstractTrollEntity {
-    //TODO: Change bartering loot table
-    //TODO: Add drops
-    //TODO: Add bestiary entry
-    //TODO: Add spawning structures (Like little camps)
-    //TODO: Add natural spawning
+    //xTODO: Change bartering loot table
+    //xTODO: Add drops
+    //xTODO: Add bestiary entry
+    //xTODO: Add spawning structures (Like little camps)
+    //xTODO: Add natural spawning
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public ForestTrollEntity(EntityType<? extends AbstractTrollEntity> entityType, World world) {
@@ -145,7 +143,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 25.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0f) //Amount of health that hurts you
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.23f)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.24f)
 
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 1.2f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.8f)
@@ -157,18 +155,18 @@ public class ForestTrollEntity extends AbstractTrollEntity {
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         if (spawnReason == SpawnReason.NATURAL) {
-            //1/5 probability to be a rabid troll if it's a natural spawn
-            if (random.nextInt() % 10 == 0) {
+            //1/20 probability to be a rabid troll if it's a natural spawn
+            if (random.nextInt() % 20 == 0) {
                 this.setIsRabid(true);
             }
         } else if (spawnReason != SpawnReason.STRUCTURE) {
-            //1/20 probability to be a rabid troll
+            //1/50 probability to be a rabid troll
             if (random.nextInt() % 50 == 0) {
                 this.setIsRabid(true);
             }
-
-            this.setHomePos(this.getBlockPos());
         }
+
+        if(spawnReason == SpawnReason.STRUCTURE) this.setHomePos(this.getBlockPos());
 
         //1/4 to appear with right band
         this.setClothing(random.nextBetween(0, 4) == 0, 0);
@@ -202,7 +200,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
 
         this.goalSelector.add(5, new ReturnToGuardPosition(this, 1.2D));
 
-        this.goalSelector.add(6, new ReturnToHomePosition(this, 1.2D, 100));
+        this.goalSelector.add(6, new ReturnToHomePosition(this, 0.75f, 100));
 
         this.goalSelector.add(7, new LookAtPlayerWithWeaponGoal(this, PlayerEntity.class, 10.0f));
 
@@ -257,15 +255,15 @@ public class ForestTrollEntity extends AbstractTrollEntity {
 
         @Override
         public boolean canStart() {
-            return troll.isWaiting() && troll.getTarget() == null
+            return troll.getTarget() == null
                     && !troll.isTrollBlocking()
 
                     && troll.getSteppingPos().getSquaredDistance(
                     troll.getHomePos().getX(),
                     troll.getHomePos().getY(),
                     troll.getHomePos().getZ())
-
                     > distanceBeforeReturning
+
                     && searchItemsList().isEmpty()
                     && !(troll.hasFoodOrAlcohol() || troll.hasBarteringItem())
 
@@ -310,7 +308,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
     public void setFollowerState(int followerState) {
         super.setFollowerState(followerState);
 
-        if(this.getHomePos()!=BlockPos.ORIGIN){
+        if(this.getHomePos()!=BlockPos.ORIGIN && !this.isWandering()){
             this.setHomePos(BlockPos.ORIGIN);
         }
     }
@@ -521,6 +519,10 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         if(this.isCharging()){
             EntitiesUtil.pushAndDamageEntities(this, 10f, 1.1, 1.1, 1.2D, ForestTrollEntity.class);
         }
+
+        if(this.getHealth()<this.getMaxHealth() && this.age%60==0){
+            this.heal(1);
+        }
     }
 
     @Override
@@ -636,10 +638,9 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         nbt.putInt("ChargingCooldown", this.chargeCooldownTimer);
         nbt.putBoolean("Charging", isCharging());
 
-        int x = nbt.getInt("HomePosX");
-        int y = nbt.getInt("HomePosY");
-        int z = nbt.getInt("HomePosZ");
-        this.setHomePos(new BlockPos(x, y, z));
+        nbt.putInt("HomePosX", this.getHomePos().getX());
+        nbt.putInt("HomePosY", this.getHomePos().getY());
+        nbt.putInt("HomePosZ", this.getHomePos().getZ());
     }
 
     @Override
@@ -657,9 +658,10 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         this.chargeCooldownTimer = nbt.getInt("ChargingCooldown");
         setCharging(nbt.getBoolean("Charging"));
 
-        nbt.putInt("HomePosX", this.getHomePos().getX());
-        nbt.putInt("HomePosY", this.getHomePos().getY());
-        nbt.putInt("HomePosZ", this.getHomePos().getZ());
+        int x = nbt.getInt("HomePosX");
+        int y = nbt.getInt("HomePosY");
+        int z = nbt.getInt("HomePosZ");
+        this.setHomePos(new BlockPos(x, y, z));
     }
 
     @Override
@@ -682,53 +684,54 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         if(entity==null){
             return;
         }
+
         //Good actions
         if(interaction == this.getDefendingInteraction(false)){
-            //+30 Reputation
-            //+50/20 Friendship (20 when they already your follower)
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.DEFENDING, 30, this.getOwner() == entity? 20: 50);
+            //+40 Reputation
+            //+60/30 Friendship (20 when they already your follower)
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.DEFENDING, 40, this.getOwner() == entity? 30: 60);
         } else if(interaction == this.getDefendingInteraction(true)){
-            //+30 Reputation
-            //+10 Friendship
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.DEFENDING, 30, 10);
-        } else if(interaction == this.getAlcoholInteraction(false)){
-            //+10 Reputation
-            //+20 Friendship
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.FEEDING, 10, 20);
-        } else if (interaction == this.getAlcoholInteraction(true)){
-            //+10 Reputation
-            //+1 Friendship
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.FEEDING, 10, 1);
-        } else if(interaction == this.getFeedInteraction(false)){
-            //+10 Reputation
+            //+35 Reputation
             //+15 Friendship
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.FEEDING, 10, 15);
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.DEFENDING, 35, 15);
+        } else if(interaction == this.getAlcoholInteraction(false)){
+            //+15 Reputation
+            //+40 Friendship
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.FEEDING, 15, 40);
+        } else if (interaction == this.getAlcoholInteraction(true)){
+            //+5 Reputation
+            //+1 Friendship
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.FEEDING, 5, 1);
+        } else if(interaction == this.getFeedInteraction(false)){
+            //+15 Reputation
+            //+20 Friendship
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.FEEDING, 15, 20);
         } else if (interaction == this.getFeedInteraction(true)) {
-            //+10 Reputation
+            //+5 Reputation
             //+1 Friendship
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.FEEDING, 10, 1);
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.FEEDING, 5, 1);
         } else if(interaction == this.getBarterInteraction(false)){
-            //+5 Reputation
-            //+2 Friendship
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.BARTERING, 5, 2);
+            //+10 Reputation
+            //+4 Friendship
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.BARTERING, 10, 4);
         } else if(interaction == this.getBarterInteraction(true)){
-            //+5 Reputation
+            //+2 Reputation
             //+1 Friendship
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.BARTERING, 5, 1);
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.BARTERING, 2, 1);
         }
         //Bad actions
         else if (interaction == this.getKillInteraction()) {
-            //-80 Reputation
-            //-50 Friendship
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.KILL_TROLL, 80, 50);
+            //-60 Reputation
+            //-40 Friendship
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.KILL_TROLL, 60, 40);
         } else if (interaction == this.getHurtInteraction(false)) {
-            //-25 Reputation
-            //-10 Friendship
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.HURT, 25, 10);
-        } else if (interaction == this.getHurtInteraction(true)){
-            //-10 Reputation
+            //-15 Reputation
             //-5 Friendship
-            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.HURT, 10, 5);
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.HURT, 15, 5);
+        } else if (interaction == this.getHurtInteraction(true)){
+            //-5 Reputation
+            //-5 Friendship
+            this.getGossip().startGossip(entity.getUuid(), TrollGossips.TrollGossipType.HURT, 5, 5);
         }
     }
 
@@ -786,11 +789,6 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         }
 
         return false;
-    }
-
-    @Override
-    public boolean canHaveStatusEffect(StatusEffectInstance effect) {
-        return effect.getEffectType() != StatusEffects.POISON && super.canHaveStatusEffect(effect);
     }
 
     @Override

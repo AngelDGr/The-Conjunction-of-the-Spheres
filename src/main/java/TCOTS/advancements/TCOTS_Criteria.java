@@ -2,6 +2,7 @@ package TCOTS.advancements;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.advancements.criterion.DestroyMultipleMonsterNestsCriterion;
+import TCOTS.advancements.criterion.GetTrollFollowerCriterion;
 import TCOTS.advancements.criterion.TCOTS_CustomCriterion;
 import net.minecraft.advancement.criterion.Criteria;
 
@@ -30,11 +31,8 @@ public class TCOTS_Criteria {
     public static final TCOTS_CustomCriterion KILL_ROTFIEND =
             Criteria.register(TCOTS_Main.MOD_ID+"/kill_rotfiend", new TCOTS_CustomCriterion());
 
-    public static final TCOTS_CustomCriterion BEFRIEND_TROLL =
-            Criteria.register(TCOTS_Main.MOD_ID+"/befriend_troll", new TCOTS_CustomCriterion());
-
-    public static final TCOTS_CustomCriterion BEFRIEND_TROLL_ICE =
-            Criteria.register(TCOTS_Main.MOD_ID+"/befriend_troll_ice", new TCOTS_CustomCriterion());
+    public static final GetTrollFollowerCriterion GET_TROLL_FOLLOWER =
+            Criteria.register(TCOTS_Main.MOD_ID+"/get_troll_follower", new GetTrollFollowerCriterion());
 
     public static void registerCriteria(){
     }

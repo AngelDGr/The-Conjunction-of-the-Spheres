@@ -9,7 +9,6 @@
     "description": {
       "translate": "advancements.witcher.max_toxicity.description"
     },
-    "frame": "goal",
     "icon": {
       "item": "tcots-witcher:nest_skull"
     },

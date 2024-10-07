@@ -1,0 +1,47 @@
+{
+
+  "fallback": "minecraft:empty",
+
+
+  "elements": [
+    {
+      "weight": 3,
+      "element": {
+
+        "location": "tcots-witcher:caves/forest/troll_cave_forest1",
+
+        "processors": "minecraft:empty",
+
+        "projection": "rigid",
+
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+
+        "location": "tcots-witcher:caves/forest/troll_cave_forest2",
+
+        "processors": "minecraft:empty",
+
+        "projection": "rigid",
+
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+
+        "location": "tcots-witcher:caves/forest/troll_cave_forest3",
+
+        "processors": "minecraft:empty",
+
+        "projection": "rigid",
+
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

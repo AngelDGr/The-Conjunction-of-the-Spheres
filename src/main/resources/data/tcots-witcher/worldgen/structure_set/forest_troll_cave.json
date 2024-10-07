@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "tcots-witcher:forest_troll_cave",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 2134736769,
+
+    "spacing": 55,
+
+    "separation": 10,
+
+    "type": "minecraft:random_spread"
+  }
+}

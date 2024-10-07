@@ -133,7 +133,7 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
                 entity -> (
                         (entity instanceof AbstractTrollEntity troll && troll.isRabid()) ||
 
-                        (entity instanceof Monster && !(entity instanceof AbstractTrollEntity) && !(entity instanceof CreeperEntity)))
+                                (entity instanceof Monster && !(entity instanceof AbstractTrollEntity) && !(entity instanceof CreeperEntity)))
                         && this.isWaiting()));
 
         this.targetSelector.add(3, new DefendFriendGoal(this, LivingEntity.class, false, true,

@@ -7,32 +7,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:amethyst_block",
+          "name": "minecraft:book",
           "weight": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 1
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:book",
-          "weight": 10,
-          "functions": [
-            {
-              "function": "minecraft:enchant_randomly",
-              "enchantments": [
-                "minecraft:silk_touch"
-              ]
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:book",
-          "weight": 10,
           "functions": [
             {
               "function": "minecraft:enchant_randomly",
@@ -45,7 +21,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:book",
-          "weight": 10,
+          "weight": 5,
           "functions": [
             {
               "function": "minecraft:enchant_randomly",
@@ -57,117 +33,21 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:coal",
-          "weight": 20,
+          "name": "minecraft:book",
+          "weight": 5,
           "functions": [
             {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 8,
-                "max": 24
-              }
+              "function": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:knockback"
+              ]
             }
           ]
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:flint",
-          "weight": 20,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 4,
-                "max": 12
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:redstone",
-          "weight": 20,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 8,
-                "max": 24
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:lapis_lazuli",
-          "weight": 20,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 8,
-                "max": 24
-              },
-              "add": false
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:raw_copper",
-          "weight": 25,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 4,
-                "max": 12
-              },
-              "add": false
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:raw_iron",
-          "weight": 25,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 4,
-                "max": 12
-              },
-              "add": false
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:raw_gold",
-          "weight": 25,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 4,
-                "max": 12
-              },
-              "add": false
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:obsidian",
-          "weight": 30,
+          "name": "minecraft:charcoal",
+          "weight": 15,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -181,17 +61,61 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:cobblestone",
-          "weight": 40,
+          "name": "minecraft:bone",
+          "weight": 10,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 12,
-                "max": 64
-              },
-              "add": false
+                "min": 1,
+                "max": 12
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 3,
+                "max": 8
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:apple",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 6
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stick",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 3,
+                "max": 12
+              }
             }
           ]
         },
@@ -200,75 +124,125 @@
           "children": [
             {
               "type": "minecraft:item",
-              "name": "minecraft:tuff",
+              "name": "minecraft:oak_leaves",
               "weight": 40,
               "functions": [
                 {
                   "function": "minecraft:set_count",
                   "count": {
                     "type": "minecraft:uniform",
-                    "min": 8,
-                    "max": 64
+                    "min": 1,
+                    "max": 16
                   }
                 }
               ]
             },
             {
               "type": "minecraft:item",
-              "name": "minecraft:calcite",
+              "name": "minecraft:birch_leaves",
               "weight": 40,
               "functions": [
                 {
                   "function": "minecraft:set_count",
                   "count": {
                     "type": "minecraft:uniform",
-                    "min": 8,
-                    "max": 64
+                    "min": 1,
+                    "max": 16
                   }
                 }
               ]
             },
             {
               "type": "minecraft:item",
-              "name": "minecraft:andesite",
+              "name": "minecraft:dark_oak_leaves",
               "weight": 40,
               "functions": [
                 {
                   "function": "minecraft:set_count",
                   "count": {
                     "type": "minecraft:uniform",
-                    "min": 8,
-                    "max": 64
+                    "min": 1,
+                    "max": 16
                   }
                 }
               ]
             },
             {
               "type": "minecraft:item",
-              "name": "minecraft:diorite",
+              "name": "minecraft:spruce_leaves",
               "weight": 40,
               "functions": [
                 {
                   "function": "minecraft:set_count",
                   "count": {
                     "type": "minecraft:uniform",
-                    "min": 8,
-                    "max": 64
+                    "min": 1,
+                    "max": 16
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:sequence",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:oak_log",
+              "weight": 40,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "type": "minecraft:uniform",
+                    "min": 4,
+                    "max": 32
                   }
                 }
               ]
             },
             {
               "type": "minecraft:item",
-              "name": "minecraft:granite",
+              "name": "minecraft:birch_log",
               "weight": 40,
               "functions": [
                 {
                   "function": "minecraft:set_count",
                   "count": {
                     "type": "minecraft:uniform",
-                    "min": 8,
-                    "max": 64
+                    "min": 4,
+                    "max": 32
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:dark_oak_log",
+              "weight": 40,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "type": "minecraft:uniform",
+                    "min": 4,
+                    "max": 32
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:spruce_log",
+              "weight": 40,
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": {
+                    "type": "minecraft:uniform",
+                    "min": 4,
+                    "max": 32
                   }
                 }
               ]
@@ -278,5 +252,5 @@
       ]
     }
   ],
-  "random_sequence": "tcots-witcher:gameplay/rock_troll_bartering"
+  "random_sequence": "tcots-witcher:gameplay/forest_troll_bartering"
 }

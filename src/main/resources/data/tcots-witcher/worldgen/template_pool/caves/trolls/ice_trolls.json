@@ -6,7 +6,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
 
-        "location": "tcots-witcher:caves/ice_trolls/rabid_ice_troll",
+        "location": "tcots-witcher:caves/ice/trolls/rabid_ice",
 
         "processors": {
           "processors": []
@@ -20,7 +20,7 @@
       "element": {
         "element_type": "minecraft:legacy_single_pool_element",
 
-        "location": "tcots-witcher:caves/ice_trolls/ice_troll",
+        "location": "tcots-witcher:caves/ice/trolls/ice",
 
         "processors": {
           "processors": []

@@ -3,7 +3,7 @@ package TCOTS;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.items.HerbalMixture;
 import TCOTS.items.TCOTS_Items;
-import TCOTS.items.TCOTS_Materials;
+import TCOTS.items.TCOTS_ToolMaterials;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
 import TCOTS.items.concoctions.recipes.HerbalTableRecipe;
 import TCOTS.screen.HerbalTableScreen;
@@ -429,7 +429,7 @@ public class TCOTS_JEIPlugin implements IModPlugin {
 
         private static Stream<RepairData> getRepairData() {
             return Stream.of(
-                    new RepairData(TCOTS_Materials.GVALCHIR.getRepairIngredient(),
+                    new RepairData(TCOTS_ToolMaterials.GVALCHIR.getRepairIngredient(),
                             new ItemStack(TCOTS_Items.GVALCHIR)
                     )
             );

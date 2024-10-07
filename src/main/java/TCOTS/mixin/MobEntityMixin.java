@@ -1,6 +1,7 @@
 package TCOTS.mixin;
 
 import TCOTS.entity.necrophages.BullvoreEntity;
+import TCOTS.entity.ogroids.ForestTrollEntity;
 import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import TCOTS.items.concoctions.bombs.SamumBomb;
 import net.minecraft.block.BlockState;
@@ -88,6 +89,18 @@ public class MobEntityMixin {
         private void injectNoMoonDust(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci){
             if ((entity instanceof BullvoreEntity && ((BullvoreEntity)entity).isCharging()) && world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                 world.breakBlock(pos, true, entity);
+            }
+        }
+
+    }
+
+    @Mixin(targets = "net.minecraft.block.CampfireBlock")
+    public abstract static class ForestTrollNotGetCampfireDamage{
+
+        @Inject(method = "onEntityCollision", at = @At("HEAD"), cancellable = true)
+        private void injectNoMoonDust(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci){
+            if (entity instanceof ForestTrollEntity) {
+                ci.cancel();
             }
         }
 

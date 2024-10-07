@@ -46,6 +46,7 @@ public class IceTrollEntity extends RockTrollEntity {
 
     public IceTrollEntity(EntityType<? extends AbstractTrollEntity> entityType, World world) {
         super(entityType, world);
+        this.experiencePoints=10;
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return MobEntity.createMobAttributes()
@@ -93,7 +94,11 @@ public class IceTrollEntity extends RockTrollEntity {
         //Defending a place
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, MobEntity.class,
                 5, true, false,
-                entity -> entity instanceof Monster && !(entity instanceof CreeperEntity) && (entity.getType() != this.getType()) && this.isWaiting()));
+                entity -> (
+                        (entity instanceof AbstractTrollEntity troll && troll.isRabid()) ||
+
+                                (entity instanceof Monster && !(entity instanceof AbstractTrollEntity) && !(entity instanceof CreeperEntity)))
+                        && this.isWaiting()));
 
         this.targetSelector.add(3, new DefendFriendGoal(this, LivingEntity.class, false, true, entity ->
                 entity instanceof PlayerEntity player?

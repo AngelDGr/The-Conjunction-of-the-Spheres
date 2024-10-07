@@ -23,6 +23,7 @@
     "LivingEntityMixin",
     "MobEntityMixin",
     "MobEntityMixin$BullvoreDestroyCrops",
+    "MobEntityMixin$ForestTrollNotGetCampfireDamage",
     "MoonDustTransformingBlock$BlockCreeperEntityExplosion",
     "MoonDustTransformingBlock$BlockCreeperExplosion",
     "MoonDustTransformingBlock$BlockHoglinTransformation",

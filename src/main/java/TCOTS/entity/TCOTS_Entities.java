@@ -49,7 +49,7 @@ public class TCOTS_Entities {
     //xTODO: Ice troll
     //TODO: Ice Giant (Boss)
     //W2
-    //TODO: Troll (Forest)
+    //xTODO: Troll (Forest)
 
 
     public static final TagKey<EntityType<?>> IGNITING_ENTITIES = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"igniting_entities"));
@@ -452,10 +452,6 @@ public class TCOTS_Entities {
             {
                 SpawnRestriction.register(ICE_TROLL, SpawnRestriction.Location.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, IceTrollEntity::canSpawnInDarkNotBelowDeepslate);
-//                "minecraft:jagged_peaks",
-//                        "minecraft:frozen_peaks",
-//                        "minecraft:grove",
-//                        "minecraft:snowy_slopes"
                 //In snowy plains/mountains/taigas
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
                                 //Mountains
@@ -463,6 +459,20 @@ public class TCOTS_Entities {
                                 //Snowy Plains
                                 BiomeKeys.SNOWY_PLAINS, BiomeKeys.ICE_SPIKES), SpawnGroup.MONSTER,
                         ICE_TROLL, 2, 1, 1);
+            }
+
+
+            //Forest Troll
+            {
+                SpawnRestriction.register(FOREST_TROLL, SpawnRestriction.Location.ON_GROUND,
+                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ForestTrollEntity::canSpawnInDarkNotBelowDeepslate);
+                //In forests
+                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
+                                //Forest
+                                BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys.OLD_GROWTH_BIRCH_FOREST,
+                                //Dark Forest
+                                BiomeKeys.DARK_FOREST), SpawnGroup.MONSTER,
+                        FOREST_TROLL, 5, 1, 1);
             }
         }
     }

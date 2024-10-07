@@ -26,7 +26,7 @@ If they see you attacking a __non-rabid__ troll, they will immediately dislike y
 
 ;;;;;
 
-Rock trolls have a fondness for amethyst shards, while ice trolls prefer lapis lazuli, 
+Rock trolls have a fondness for amethyst shards, ice trolls prefer lapis lazuli and forest troll prefer copper ingots, 
 and they may even offer items like rocks, ores, or enchanted books in exchange.
 
 Trolls also love alcohol, honey, milk, and meat, gifting any of these will significantly boost your friendship. 

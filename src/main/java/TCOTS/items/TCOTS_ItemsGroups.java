@@ -106,6 +106,13 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.BROADHEAD_BOLT);
                             }
 
+                            //Armors
+                            {
+                                entries.add(TCOTS_Items.MANTICORE_ARMOR);
+                                entries.add(TCOTS_Items.MANTICORE_TROUSERS);
+                                entries.add(TCOTS_Items.MANTICORE_BOOTS);
+                            }
+
 
                             //Concoctions
                             {

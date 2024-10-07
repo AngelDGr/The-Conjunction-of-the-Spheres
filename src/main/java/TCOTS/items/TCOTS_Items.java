@@ -3,6 +3,7 @@ package TCOTS.items;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.items.armor.ManticoreArmorItem;
 import TCOTS.items.blocks.AlchemyTableItem;
 import TCOTS.items.blocks.HerbalTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
@@ -912,12 +913,24 @@ public class TCOTS_Items {
     public static Item BROADHEAD_BOLT;
     public static Item GVALCHIR;
 
+    public static Item MANTICORE_ARMOR;
+    public static Item MANTICORE_TROUSERS;
+    public static Item MANTICORE_BOOTS;
+
     public static void registerWeapons_Armors(){
+
+        //Armor
+        {
+            MANTICORE_ARMOR = registerItem("manticore_armor", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.CHESTPLATE, new Item.Settings()));
+            MANTICORE_TROUSERS = registerItem("manticore_trousers", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.LEGGINGS, new Item.Settings()));
+            MANTICORE_BOOTS = registerItem("manticore_boots", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.BOOTS, new Item.Settings()));
+
+        }
 
         //Swords
         {
             GVALCHIR = registerItem("gvalchir",
-                    new GvalchirSword(TCOTS_Materials.GVALCHIR, 3, -2.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+                    new GvalchirSword(TCOTS_ToolMaterials.GVALCHIR, 3, -2.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
         }
 
         //Crossbows

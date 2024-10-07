@@ -2,7 +2,18 @@
   "parent": "minecraft:tcots-witcher/befriend_troll",
   "criteria": {
     "befriend_troll_ice": {
-      "trigger": "minecraft:tcots-witcher/befriend_troll_ice"
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots-witcher:ice_troll"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tcots-witcher/get_troll_follower"
     }
   },
   "display": {

@@ -80,6 +80,8 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     public AbstractTrollEntity(EntityType<? extends AbstractTrollEntity> entityType, World world) {
         super(entityType, world);
         this.setCanPickUpLoot(true);
+        this.experiencePoints=8;
+        this.setStepHeight(1.0f);
     }
 
     @Override
@@ -579,6 +581,8 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
 
                 if (this.getOwner() == null) {
                     this.setOwner(player);
+
+                    if(player instanceof ServerPlayerEntity serverPlayer) TCOTS_Criteria.GET_TROLL_FOLLOWER.trigger(serverPlayer, this);
                 }
 
                 this.setFollowerState(this.isWandering() ? 1 : (this.isFollowing() ? 2 : 1));
@@ -949,13 +953,6 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
             ((ServerWorld) this.getWorld()).handleInteraction(this.getBarterInteraction(false), player, this);
             this.handleNearTrollsInteraction(this.getBarterInteraction(true), player);
             this.getWorld().sendEntityStatus(this, this.getFriendship(player)>this.getMinFriendshipToBeFollower()? EntityStatuses.ADD_VILLAGER_HEART_PARTICLES: EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
-            //Triggers Advancement
-            if(player instanceof ServerPlayerEntity serverPlayer && this.getFriendship(player) > this.getMinFriendshipToBeFollower()) {
-                TCOTS_Criteria.BEFRIEND_TROLL.trigger(serverPlayer);
-
-                if(this.getType()==TCOTS_Entities.ICE_TROLL)
-                    TCOTS_Criteria.BEFRIEND_TROLL_ICE.trigger(serverPlayer);
-            }
             //Only gives items to player if player it's above -30 Reputation
             if(this.getReputation(player)>=this.getMinReputationToBarter()) {
                 //Swings hand
@@ -1397,13 +1394,6 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
             this.getWorld().sendEntityStatus(this,
                     player!=null && this.getFriendship(player)>this.getMinFriendshipToBeFollower()? EntityStatuses.ADD_VILLAGER_HEART_PARTICLES:
                             EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
-            //Triggers Advancement
-            if(player instanceof ServerPlayerEntity serverPlayer && this.getFriendship(player) > this.getMinFriendshipToBeFollower()) {
-                TCOTS_Criteria.BEFRIEND_TROLL.trigger(serverPlayer);
-
-                if(this.getType()==TCOTS_Entities.ICE_TROLL)
-                    TCOTS_Criteria.BEFRIEND_TROLL_ICE.trigger(serverPlayer);
-            }
 
             this.setStackInHand(Hand.OFF_HAND, ItemStack.EMPTY);
 

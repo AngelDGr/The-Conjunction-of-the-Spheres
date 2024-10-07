@@ -449,14 +449,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
                 troll.handleNearTrollsInteraction(troll.getDefendingInteraction(true), player);
                 troll.getWorld().sendEntityStatus(troll, troll.getFriendship(player)>troll.getMinFriendshipToBeFollower()? EntityStatuses.ADD_VILLAGER_HEART_PARTICLES: EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
                 troll.handleNearTrollsParticles(EntityStatuses.ADD_VILLAGER_HAPPY_PARTICLES);
-
-                //Triggers Advancement
-                if(player instanceof ServerPlayerEntity serverPlayer && troll.getFriendship(player) > troll.getMinFriendshipToBeFollower()) {
-                    TCOTS_Criteria.BEFRIEND_TROLL.trigger(serverPlayer);
-
-                    if(troll.getType()==TCOTS_Entities.ICE_TROLL)
-                        TCOTS_Criteria.BEFRIEND_TROLL_ICE.trigger(serverPlayer);
-                }
             }
         }
     }
