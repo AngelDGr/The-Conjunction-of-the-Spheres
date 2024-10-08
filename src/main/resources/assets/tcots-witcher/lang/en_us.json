@@ -582,9 +582,19 @@
     "tooltip.tcots-witcher.gvalchir": "A powerful runic sword",
     "tooltip.tcots-witcher.gvalchir.extra": "Penetrates opponent armor",
 
+    "item.tcots-witcher.cured_monster_leather": "Cured Monster Leather",
+
+
     "item.tcots-witcher.manticore_armor": "Manticore Armor",
     "item.tcots-witcher.manticore_trousers": "Manticore Trousers",
     "item.tcots-witcher.manticore_boots": "Manticore Boots",
+    "tooltip.tcots-witcher.manticore_armor.toxicity": "+%s Maximum Toxicity",
+    "tooltip.tcots-witcher.manticore_armor.full_set1": "Full Set Bonus:",
+    "tooltip.tcots-witcher.manticore_armor.full_set2": "* Reduce bombs cooldown",
+    "tooltip.tcots-witcher.manticore_armor.full_set3": "* Reduce potion drinking time",
+    "tooltip.tcots-witcher.manticore_armor.full_set4": "* Improve alcohol refilling efficiency",
+    "tooltip.tcots-witcher.manticore_armor.full_set.more": "Pulse shift to see...",
+
 
 
     "item.tcots-witcher.knight_crossbow": "Knight Crossbow",

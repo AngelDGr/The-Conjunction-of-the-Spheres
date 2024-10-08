@@ -1,5 +1,6 @@
 package TCOTS.items.armor;
 
+import TCOTS.interfaces.MaxToxicityIncreaser;
 import TCOTS.items.geo.renderer.ManticoreArmorRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
@@ -20,17 +21,32 @@ import software.bernie.geckolib.core.object.PlayState;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class ManticoreArmorItem extends ArmorItem implements GeoItem {
-    //TODO: Add items sprites
-    //TODO: Add functionality about toxicity
-    // Reduce bomb cooldown
-    // Increase max toxicity
+public class ManticoreArmorItem extends ArmorItem implements GeoItem, MaxToxicityIncreaser {
+    //xTODO: Add items sprites
+    //xTODO: Add functionality about toxicity
+    //Faster drinking
+    //Extra Refilling
+    //Reduce bomb cooldown
+    //Increase max toxicity
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private final Supplier<Object> renderProvider= GeoItem.makeRenderer(this);
 
+    private final int extraToxicity;
+
     public ManticoreArmorItem(ArmorMaterial material, Type type, Settings settings) {
+        this(material, type, settings, 10);
+    }
+
+    public ManticoreArmorItem(ArmorMaterial material, Type type, Settings settings, int extraToxicity) {
         super(material, type, settings);
+        this.extraToxicity=extraToxicity;
+    }
+
+
+    @Override
+    public int getExtraToxicity() {
+        return extraToxicity;
     }
 
     @Override

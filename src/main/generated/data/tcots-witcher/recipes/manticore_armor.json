@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:leather_chestplate"
+    },
+    "E": {
+      "item": "tcots-witcher:nekker_eye"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "tcots-witcher:cured_monster_leather"
+    }
+  },
+  "pattern": [
+    "LEL",
+    "IAI",
+    "ELE"
+  ],
+  "result": {
+    "item": "tcots-witcher:manticore_armor"
+  }
+}

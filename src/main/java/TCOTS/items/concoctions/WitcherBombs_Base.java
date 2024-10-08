@@ -2,6 +2,7 @@ package TCOTS.items.concoctions;
 
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.TCOTS_Items;
+import TCOTS.utils.EntitiesUtil;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,7 +44,7 @@ public class WitcherBombs_Base extends Item {
         //Launch the bomb
         if (!world.isClient) {
             WitcherBombEntity bombEntity = new WitcherBombEntity(world, playerEntity, bombId, level);
-            playerEntity.getItemCooldownManager().set(this, 40);
+            playerEntity.getItemCooldownManager().set(this, EntitiesUtil.isWearingManticoreArmor(playerEntity)? 10: 40);
             bombEntity.setItem(itemStack);
             bombEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), -20.0f, 0.8f, 1.0f);
             world.spawnEntity(bombEntity);

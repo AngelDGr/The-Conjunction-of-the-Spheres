@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ArmorMaterials;
-import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -19,7 +18,7 @@ public enum TCOTS_ArmorMaterials implements ArmorMaterial {
         map.put(ArmorItem.Type.LEGGINGS, 5);
         map.put(ArmorItem.Type.CHESTPLATE, 6);
         map.put(ArmorItem.Type.HELMET, 2);
-    }), 20, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 1.0f, 0.0f, Ingredient.ofItems(Items.LEATHER));
+    }), 20, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 1.0f, 0.0f, Ingredient.ofItems(TCOTS_Items.CURED_MONSTER_LEATHER));
 
 
     public static final Codec<ArmorMaterials> CODEC;

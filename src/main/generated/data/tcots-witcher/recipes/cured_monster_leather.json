@@ -1,17 +1,22 @@
 {
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "group": "leather",
   "ingredients": [
     {
       "item": "tcots-witcher:cadaverine"
     },
     {
+      "tag": "tcots-witcher:monster_blood"
+    },
+    {
       "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:leather"
     }
   ],
   "result": {
     "count": 2,
-    "item": "minecraft:leather"
+    "item": "tcots-witcher:cured_monster_leather"
   }
 }

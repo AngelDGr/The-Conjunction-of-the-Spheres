@@ -37,7 +37,10 @@ import net.minecraft.loot.condition.KilledByPlayerLootCondition;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.condition.RandomChanceWithLootingLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.*;
+import net.minecraft.loot.function.ExplosionDecayLootFunction;
+import net.minecraft.loot.function.LootFunction;
+import net.minecraft.loot.function.LootFunctionType;
+import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
@@ -129,8 +132,9 @@ public class TCOTS_Items {
 
     //TODO: Armors to add
     //  Raven's Armor   (W2 Style)
-    //  Manticore Armor (W3 Style)
-    //  Another Witcher Armors from W3?
+    //  Kaer Morhen Armor (W3 Style)
+    //Manticore Armor (W1/W3 Style)
+
 
     //TODO: Weapons to add
     //    D'yaebl: Makes enemies bleed
@@ -150,6 +154,8 @@ public class TCOTS_Items {
             //xTODO: Add the White Raffard's Decoction, works similar to the instant health, but works with percentage
 
     public static final TagKey<Item> DECAYING_FLESH = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "decaying_flesh"));
+
+    public static final TagKey<Item> MONSTER_BLOOD = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "monster_blood"));
 
     //TODO: Fix the achievement to mobs works with Monster Hunter
 
@@ -905,6 +911,7 @@ public class TCOTS_Items {
 
     }
 
+    public static Item CURED_MONSTER_LEATHER;
     public static Item KNIGHT_CROSSBOW;
     public static Item BASE_BOLT;
     public static Item BLUNT_BOLT;
@@ -919,11 +926,17 @@ public class TCOTS_Items {
 
     public static void registerWeapons_Armors(){
 
+        //Ingredients
+        {
+            CURED_MONSTER_LEATHER=registerItem("cured_monster_leather", new Item(new FabricItemSettings()));
+        }
+
+
         //Armor
         {
-            MANTICORE_ARMOR = registerItem("manticore_armor", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.CHESTPLATE, new Item.Settings()));
-            MANTICORE_TROUSERS = registerItem("manticore_trousers", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.LEGGINGS, new Item.Settings()));
-            MANTICORE_BOOTS = registerItem("manticore_boots", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.BOOTS, new Item.Settings()));
+            MANTICORE_ARMOR = registerItem("manticore_armor", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+            MANTICORE_TROUSERS = registerItem("manticore_trousers", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.LEGGINGS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+            MANTICORE_BOOTS = registerItem("manticore_boots", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.BOOTS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
 
         }
 

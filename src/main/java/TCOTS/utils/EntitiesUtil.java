@@ -1,8 +1,10 @@
 package TCOTS.utils;
 
+import TCOTS.items.TCOTS_Items;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.AbstractDecorationEntity;
@@ -129,6 +131,15 @@ public class EntitiesUtil {
                 entity.getWorld().addParticle(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
             }
         }
+    }
+
+    /**
+     Checks if the player it's wearing the full Manticore Armor
+     */
+    public static boolean isWearingManticoreArmor(LivingEntity player){
+        return player.getEquippedStack(EquipmentSlot.CHEST).isOf(TCOTS_Items.MANTICORE_ARMOR)
+                && player.getEquippedStack(EquipmentSlot.LEGS).isOf(TCOTS_Items.MANTICORE_TROUSERS)
+                && player.getEquippedStack(EquipmentSlot.FEET).isOf(TCOTS_Items.MANTICORE_BOOTS);
     }
 
 }

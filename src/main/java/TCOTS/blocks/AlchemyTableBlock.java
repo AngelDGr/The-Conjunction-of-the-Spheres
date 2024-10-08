@@ -7,6 +7,7 @@ import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.EmptyWitcherPotionItem;
 import TCOTS.items.concoctions.WitcherAlcohol_Base;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.utils.EntitiesUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -135,7 +136,7 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
             //If the player have an alcohol in the hand refill the potion
             if(player.getMainHandStack().getItem() instanceof WitcherAlcohol_Base alcohol){
 
-                int loopP=alcohol.getRefillQuantity();
+                int loopP= EntitiesUtil.isWearingManticoreArmor(player)? alcohol.getRefillQuantity()+2:alcohol.getRefillQuantity();
                 boolean refilled=false;
 
                 //Makes a loop across all the inventory

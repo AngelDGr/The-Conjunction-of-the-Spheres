@@ -92,6 +92,11 @@ public class TCOTS_ItemsGroups {
                                 }
                             }
 
+                            //Other Ingredients
+                            {
+                                entries.add(TCOTS_Items.CURED_MONSTER_LEATHER);
+                            }
+
 
                             //Weapons
                             {

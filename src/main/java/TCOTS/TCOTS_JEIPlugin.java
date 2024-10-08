@@ -2,6 +2,7 @@ package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.items.HerbalMixture;
+import TCOTS.items.TCOTS_ArmorMaterials;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ToolMaterials;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
@@ -430,8 +431,13 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         private static Stream<RepairData> getRepairData() {
             return Stream.of(
                     new RepairData(TCOTS_ToolMaterials.GVALCHIR.getRepairIngredient(),
-                            new ItemStack(TCOTS_Items.GVALCHIR)
-                    )
+                            new ItemStack(TCOTS_Items.GVALCHIR)),
+                    new RepairData(TCOTS_ArmorMaterials.MANTICORE.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.MANTICORE_ARMOR)),
+                    new RepairData(TCOTS_ArmorMaterials.MANTICORE.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.MANTICORE_TROUSERS)),
+                    new RepairData(TCOTS_ArmorMaterials.MANTICORE.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.MANTICORE_BOOTS))
             );
         }
 

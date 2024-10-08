@@ -10,6 +10,7 @@ import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.WitcherAlcohol_Base;
 import TCOTS.items.concoctions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.utils.EntitiesUtil;
 import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityGroup;
@@ -298,7 +299,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             if(((inventory.getSlotWithStack(alcoholBase.getDefaultStack()) != -1))
                     && !refilled
                     && potionTimer>90){
-                int loopP = alcoholBase.getRefillQuantity();
+                int loopP = EntitiesUtil.isWearingManticoreArmor(THIS)? alcoholBase.getRefillQuantity()+2 : alcoholBase.getRefillQuantity();
 
                 int slot = inventory.getSlotWithStack(alcoholBase.getDefaultStack());
 
@@ -406,6 +407,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Unique
     private static final TrackedData<Float> HUD_TRANSPARENCY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.FLOAT);
 
+
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     private void injectToxicityDataTracker(CallbackInfo ci){
         this.dataTracker.startTracking(TOXICITY, 0);
@@ -448,6 +450,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Override
     public void theConjunctionOfTheSpheres$addMaxToxicity(int MaxToxicity){
         this.dataTracker.set(MAX_TOXICITY,theConjunctionOfTheSpheres$getMaxToxicity()+MaxToxicity);
+    }
+
+    @Override
+    public void theConjunctionOfTheSpheres$decreaseMaxToxicity(int MaxToxicity){
+        this.dataTracker.set(MAX_TOXICITY,theConjunctionOfTheSpheres$getMaxToxicity()-MaxToxicity);
     }
 
     @Override
@@ -495,8 +502,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         nbt.putInt("DecoctionToxicity",theConjunctionOfTheSpheres$getDecoctionToxicity());
 
         nbt.putInt("MaxToxicity",theConjunctionOfTheSpheres$getMaxToxicity());
-
     }
+
+
 
 
     @Inject(method = "tick", at = @At("HEAD"))
@@ -525,7 +533,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             this.damage(TCOTS_DamageTypes.toxicityDamage(getWorld()),1);
             }
         }
-
     }
 
 
@@ -589,4 +596,46 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
         return value;
     }
+
+//    @Unique
+//    int refillManticoreTimer=0;
+//
+//    //Manticore Armor
+//    @Inject(method = "tickMovement", at = @At("TAIL"))
+//    private void injectInTickRandomRefillManticore(CallbackInfo ci){
+////        if(THIS.getWorld().isClient)
+////            return;
+////
+////        if(refillManticoreTimer==0) refillManticoreTimer= TimeHelper.betweenSeconds(60,240).get(this.getRandom());
+////
+////        refillManticoreTimer--;
+////
+////        if (EntitiesUtil.isWearingManticoreArmor(this) && refillManticoreTimer==0) {
+////            //Makes a loop across all the inventory
+////            for(int i=0; i<inventory.size(); i++){
+////                //If found an Empty Potion with NBT
+////                if(inventory.getStack(i).getItem() instanceof EmptyWitcherPotionItem && inventory.getStack(i).hasNbt()){
+////                    NbtCompound nbtCompoundI= inventory.getStack(i).getNbt();
+////                    //Checks if the NBT contains the "Potion" string
+////                    assert nbtCompoundI != null;
+////                    if(nbtCompoundI.contains("Potion")){
+////                        //Save the potion type
+////                        Item PotionI = Registries.ITEM.get(new Identifier(nbtCompoundI.getString("Potion")));
+////                        //Saves the count of empty bottles
+////                        int countI = inventory.getStack(i).getCount();
+////
+////                        //Erases the slot
+////                        inventory.getStack(i).decrement(inventory.getStack(i).getCount());
+////                        //Put the potion in the slot
+////                        inventory.setStack(i,new ItemStack(PotionI, countI));
+////
+////                        //Play a sound
+////                        this.playSound(TCOTS_Sounds.POTION_REFILLED, 1.0f, 1.0f);
+////
+////                        break;
+////                    }
+////                }
+////            }
+////        }
+//    }
 }

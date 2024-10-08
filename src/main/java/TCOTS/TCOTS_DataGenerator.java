@@ -78,7 +78,6 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         main.addProvider(EntityTagGenerator::new);
         main.addProvider(ItemTagGenerator::new);
         main.addProvider(RecipesGenerator::new);
-//        main.addProvider(AdvancementsRecipesUnlocker::new);
         main.addProvider(AdvancementsGenerator::new);
     }
 
@@ -788,6 +787,10 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .add(Items.MUTTON)
                     .add(Items.CHICKEN)
                     .add(Items.RABBIT);
+
+            this.getOrCreateTagBuilder(TCOTS_Items.MONSTER_BLOOD)
+                    .add(TCOTS_Items.ROTFIEND_BLOOD)
+                    .add(TCOTS_Items.GHOUL_BLOOD);
         }
     }
 
@@ -941,6 +944,66 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     }
                 }
 
+                //Manticore Armor
+                {
+                    //Chestplate
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_ARMOR)
+                                .pattern("LEL")
+                                .pattern("IAI")
+                                .pattern("ELE")
+                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                .input('E', TCOTS_Items.NEKKER_EYE)
+                                .input('I', Items.IRON_INGOT)
+                                .input('A', Items.LEATHER_CHESTPLATE)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                .offerTo(exporter);
+                    }
+
+                    //Trousers
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_TROUSERS)
+                                .pattern("LIL")
+                                .pattern("BAB")
+                                .pattern("LIL")
+                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                .input('I', Items.IRON_INGOT)
+                                .input('B', TCOTS_Items.MONSTER_BLOOD)
+                                .input('A', Items.LEATHER_LEGGINGS)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                .offerTo(exporter);
+                    }
+
+                    //Boots
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_BOOTS)
+                                .pattern("LIL")
+                                .pattern("BAB")
+                                .pattern("ILI")
+                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                .input('I', Items.IRON_INGOT)
+                                .input('B', TCOTS_Items.MONSTER_BLOOD)
+                                .input('A', Items.LEATHER_BOOTS)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                .offerTo(exporter);
+                    }
+                }
+
+                //Ingredients Crafting
+                {
+                    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, TCOTS_Items.CURED_MONSTER_LEATHER, 2)
+                            .input(TCOTS_Items.CADAVERINE)
+                            .input(TCOTS_Items.MONSTER_BLOOD)
+                            .input(Items.ROTTEN_FLESH)
+                            .input(Items.LEATHER)
+
+                            .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                            .offerTo(exporter);
+                }
+
                 //Bone Meal from bones
                 {
                     //Devourer teeth
@@ -956,8 +1019,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     //Graveir bone
                     {
                         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.BONE_MEAL, 16)
-                                .input(TCOTS_Items.GRAVEIR_BONE)
-                                .group("bonemeal")
+                            .input(TCOTS_Items.GRAVEIR_BONE)
+                            .group("bonemeal")
 
                                 .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.GRAVEIR_BONE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.GRAVEIR_BONE))
                                 .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "bone_meal_from_graveir_bone"));
@@ -966,16 +1029,6 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Cadaverine crafting
                 {
-                    //Leather
-                    {
-                        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.LEATHER, 2)
-                                .input(TCOTS_Items.CADAVERINE)
-                                .input(Items.ROTTEN_FLESH)
-                                .group("leather")
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
-                                .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_rotten"));
-                    }
 
                     //Head
                     {
@@ -997,6 +1050,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                 .offerTo(exporter, new Identifier(TCOTS_Main.MOD_ID, "cadaverine_decay_flesh"));
                     }
                 }
+
+
             }
 
             //Alchemy Table

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cadaverine": {
+    "has_cured_monster_leather": {
       "conditions": {
         "items": [
           {
             "items": [
-              "tcots-witcher:cadaverine"
+              "tcots-witcher:cured_monster_leather"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "tcots-witcher:cadaverine_decay_rotten"
+        "recipe": "tcots-witcher:manticore_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +23,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_cadaverine"
+      "has_cured_monster_leather"
     ]
   ],
   "rewards": {
     "recipes": [
-      "tcots-witcher:cadaverine_decay_rotten"
+      "tcots-witcher:manticore_boots"
     ]
   }
 }
