@@ -2,9 +2,6 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "A": {
-      "item": "minecraft:leather_leggings"
-    },
     "B": {
       "tag": "tcots-witcher:monster_blood"
     },
@@ -17,8 +14,8 @@
   },
   "pattern": [
     "LIL",
-    "BAB",
-    "LIL"
+    "B B",
+    "L L"
   ],
   "result": {
     "item": "tcots-witcher:manticore_trousers"

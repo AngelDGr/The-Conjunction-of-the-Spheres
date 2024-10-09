@@ -992,13 +992,12 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     //Chestplate
                     {
                         ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_ARMOR)
-                                .pattern("LEL")
-                                .pattern("IAI")
+                                .pattern("L L")
+                                .pattern("IEI")
                                 .pattern("ELE")
                                 .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
                                 .input('E', TCOTS_Items.NEKKER_EYE)
                                 .input('I', Items.IRON_INGOT)
-                                .input('A', Items.LEATHER_CHESTPLATE)
 
                                 .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
                                 .offerTo(exporter);
@@ -1008,12 +1007,11 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     {
                         ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_TROUSERS)
                                 .pattern("LIL")
-                                .pattern("BAB")
-                                .pattern("LIL")
+                                .pattern("B B")
+                                .pattern("L L")
                                 .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
                                 .input('I', Items.IRON_INGOT)
                                 .input('B', TCOTS_Items.MONSTER_BLOOD)
-                                .input('A', Items.LEATHER_LEGGINGS)
 
                                 .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
                                 .offerTo(exporter);
@@ -1022,13 +1020,58 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     //Boots
                     {
                         ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_BOOTS)
-                                .pattern("LIL")
-                                .pattern("BAB")
-                                .pattern("ILI")
+                                .pattern("L L")
+                                .pattern("B B")
+                                .pattern("I I")
                                 .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
                                 .input('I', Items.IRON_INGOT)
                                 .input('B', TCOTS_Items.MONSTER_BLOOD)
-                                .input('A', Items.LEATHER_BOOTS)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                .offerTo(exporter);
+                    }
+                }
+
+                //Raven's Armor
+                {
+                    //Chestplate
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.RAVENS_ARMOR)
+                                .pattern("D D")
+                                .pattern("LDL")
+                                .pattern("GIG")
+                                .input('D', Items.DIAMOND)
+                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                .input('G', TCOTS_Items.GRAVEIR_BONE)
+                                .input('I', Items.IRON_INGOT)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                .offerTo(exporter);
+                    }
+
+                    //Trousers
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.RAVENS_TROUSERS)
+                                .pattern("BLB")
+                                .pattern("D D")
+                                .pattern("L L")
+                                .input('D', Items.DIAMOND)
+                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                .input('B', TCOTS_Items.BULLVORE_HORN_FRAGMENT)
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                .offerTo(exporter);
+                    }
+
+                    //Boots
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.RAVENS_BOOTS)
+                                .pattern("D D")
+                                .pattern("L L")
+                                .pattern("T T")
+                                .input('D', Items.DIAMOND)
+                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                .input('T', TCOTS_Items.DEVOURER_TEETH)
 
                                 .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
                                 .offerTo(exporter);
@@ -2282,6 +2325,22 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .criterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.FOREST_TROLL)))
                             .build(consumer, TCOTS_Main.MOD_ID + "/befriend_all_troll");
                 }
+
+                Advancement.Builder.create()
+                        .parent(rootHunting)
+                        .display(
+                                TCOTS_Items.RAVENS_ARMOR, // The display icon
+                                Text.translatable("advancements.witcher.get_ravens_armor.title"), // The title
+                                Text.translatable("advancements.witcher.get_ravens_armor.description"), // The description
+                                null,
+                                AdvancementFrame.CHALLENGE, // Options: TASK, CHALLENGE, GOAL
+                                true, // Show toast top right
+                                true, // Announce to chat
+                                false // Hidden in the advancement tab
+                        )
+                        .criterion("get_ravens_armor", InventoryChangedCriterion.Conditions.items(TCOTS_Items.RAVENS_ARMOR, TCOTS_Items.RAVENS_TROUSERS, TCOTS_Items.RAVENS_BOOTS))
+                        .rewards(AdvancementRewards.Builder.experience(100))
+                        .build(consumer, TCOTS_Main.MOD_ID + "/get_ravens_armor");
             }
 
 

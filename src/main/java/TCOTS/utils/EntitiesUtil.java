@@ -155,7 +155,7 @@ public class EntitiesUtil {
 
 
     /**
-     Checks if the player it's wearing the full Raven's Leather Armor
+     Checks if the player it's wearing the full Raven's Armor
      */
     public static boolean isWearingRavensArmor(LivingEntity player){
         return player.getEquippedStack(EquipmentSlot.CHEST).isOf(TCOTS_Items.RAVENS_ARMOR)

@@ -2,8 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "tag": "tcots-witcher:monster_blood"
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "G": {
+      "item": "tcots-witcher:graveir_bone"
     },
     "I": {
       "item": "minecraft:iron_ingot"
@@ -13,11 +16,11 @@
     }
   },
   "pattern": [
-    "L L",
-    "B B",
-    "I I"
+    "D D",
+    "LDL",
+    "GIG"
   ],
   "result": {
-    "item": "tcots-witcher:manticore_boots"
+    "item": "tcots-witcher:ravens_armor"
   }
 }

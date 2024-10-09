@@ -594,20 +594,22 @@
     "item.tcots-witcher.manticore_trousers": "Manticore Trousers",
     "item.tcots-witcher.manticore_boots": "Manticore Boots",
     "tooltip.tcots-witcher.manticore_armor.toxicity": "+%s Maximum Toxicity",
-    "tooltip.tcots-witcher.manticore_armor.full_set1": "* 75% Reduced bombs cooldown",
-    "tooltip.tcots-witcher.manticore_armor.full_set2": "* 50% Reduced potion drinking time",
-    "tooltip.tcots-witcher.manticore_armor.full_set3": "* +2 Refilling slots when using alcohol",
+    "tooltip.tcots-witcher.manticore_armor.full_set1": "+75% Bombs cooldown reduction",
+    "tooltip.tcots-witcher.manticore_armor.full_set2": "+50% Potion drinking time reduction",
+    "tooltip.tcots-witcher.manticore_armor.full_set3": "+2 Refilling slots when using alcohol",
 
 
     "item.tcots-witcher.warriors_leather_jacket": "Warrior's Leather Jacket",
     "item.tcots-witcher.warriors_leather_trousers": "Warrior's Leather Trousers",
     "item.tcots-witcher.warriors_leather_boots": "Warrior's Leather Boots",
-    "tooltip.tcots-witcher.warriors_leather_armor.full_set1": "* 25% Resistance to damage from monsters",
+    "tooltip.tcots-witcher.warriors_leather_armor.full_set1": "+25% Resistance to damage from monsters",
 
     "item.tcots-witcher.ravens_armor": "Raven's Armor",
     "item.tcots-witcher.ravens_trousers": "Raven's Trousers",
     "item.tcots-witcher.ravens_boots": "Raven's Boots",
-    "tooltip.tcots-witcher.ravens_armor.full_set1": "* 50% Resistance to damage from monsters",
+    "tooltip.tcots-witcher.ravens_armor.full_set1": "+10% Movement Speed",
+    "tooltip.tcots-witcher.ravens_armor.full_set2": "+50% Resistance to damage from monsters",
+    "tooltip.tcots-witcher.ravens_armor.full_set3": "+2 Attack Damage against monsters",
 
 
 
@@ -684,7 +686,7 @@
                     "advancements.witcher.destroy_nest_multiple.description": "Destroy 30 monster nests",
 
                 "advancements.witcher.craft_all_bomb.title": "Bombardier",
-                "advancements.witcher.craft_all_bomb.description": "Get all the kinds of bombs",
+                "advancements.witcher.craft_all_bomb.description": "Craft all the kinds of bombs",
 
                 "advancements.witcher.dragons_dream_burning.title": "That Is the Evilest Thing",
                 "advancements.witcher.dragons_dream_burning.description": "Ignite a Dragon's Dream bomb using a burning opponent",
@@ -721,7 +723,8 @@
                 "advancements.witcher.befriend_all_troll.title": "Troll Trouble",
                 "advancements.witcher.befriend_all_troll.description": "Get each Troll type as follower",
 
-
+        "advancements.witcher.get_ravens_armor.title": "Tyen'sail",
+        "advancements.witcher.get_ravens_armor.description": "Get a full set of Raven's Armor",
 
 
 

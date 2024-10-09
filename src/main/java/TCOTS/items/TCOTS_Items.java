@@ -132,19 +132,20 @@ public class TCOTS_Items {
             //  De Vries' Extract: Gives glowing to near invisible enemies
             //  Wolverine: Makes you stronger when you have less health?
 
-    //TODO: Armors to add
-    //  Raven's Armor   (W2 Style)
-    //  Kaer Morhen Armor (W3 Style)
+    //xTODO: Armors to add
+    //Raven's Armor   (W2 Style)
+    //Kaer Morhen Armor (W3 Style)
     //Manticore Armor (W1/W3 Style)
 
 
     //TODO: Weapons to add
+    //  * Witcher gear swords from W3
+    //  * Aerondight: Add with some quest/ritual involving the Lady of the Lake
+    //  * Addan Deith: Extra damage to Specters, found in some special place
     //    D'yaebl: Makes enemies bleed
     //    Ard'aenye: Massive damage
     //    Moonblade: Massive damage to monsters
-    //  * Aerondight: Add with some quest/ritual involving the Lady of the Lake
-    //  * Addan Deith: Extra damage to Specters, found in some special place
-    //    Witcher gear swords from W3
+
 
     //xTODO: Add use to the items
         //xTODO: Drowner Tongue usable for Killer Whale potion

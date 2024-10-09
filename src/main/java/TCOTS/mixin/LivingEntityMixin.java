@@ -574,8 +574,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             cir.setReturnValue(amount);
         }
 
-
-
         if(EntitiesUtil.isWearingRavensArmor(THIS) && source.getAttacker()!=null
                 && source.getAttacker() instanceof LivingEntity attacker && EntitiesUtil.isMonster(attacker)){
             cir.setReturnValue(amount*0.50f);
@@ -584,5 +582,26 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
                 && source.getAttacker() instanceof LivingEntity attacker && EntitiesUtil.isMonster(attacker)){
             cir.setReturnValue(amount*0.75f);
         }
+    }
+
+
+    @Unique
+    private static final UUID RAVEN_SPEED_BONUS_ID = UUID.fromString("a1f7779d-f64f-4a12-b69f-1a8f4ac13419");
+    @Unique
+    private static final EntityAttributeModifier RAVEN_SPEED_BONUS = new EntityAttributeModifier(RAVEN_SPEED_BONUS_ID, "Raven speed boost", 0.1f, EntityAttributeModifier.Operation.MULTIPLY_BASE);
+    @Inject(method = "tickMovement", at = @At("TAIL"))
+    private void injectRavensArmorSetBonus(CallbackInfo ci){
+
+        //Adds Speed boost
+        if(EntitiesUtil.isWearingRavensArmor(THIS)){
+            EntityAttributeInstance entityAttributeInstance = THIS.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+                if(entityAttributeInstance!=null) {
+                    entityAttributeInstance.removeModifier(RAVEN_SPEED_BONUS.getId());
+                    entityAttributeInstance.addTemporaryModifier(RAVEN_SPEED_BONUS);}
+        } else {
+            EntityAttributeInstance entityAttributeInstance = THIS.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+            if(entityAttributeInstance!=null) entityAttributeInstance.removeModifier(RAVEN_SPEED_BONUS.getId());
+        }
+
     }
 }

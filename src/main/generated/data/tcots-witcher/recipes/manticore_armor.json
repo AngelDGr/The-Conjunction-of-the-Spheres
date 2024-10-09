@@ -2,9 +2,6 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "A": {
-      "item": "minecraft:leather_chestplate"
-    },
     "E": {
       "item": "tcots-witcher:nekker_eye"
     },
@@ -16,8 +13,8 @@
     }
   },
   "pattern": [
-    "LEL",
-    "IAI",
+    "L L",
+    "IEI",
     "ELE"
   ],
   "result": {

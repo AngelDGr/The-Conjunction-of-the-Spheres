@@ -3,21 +3,21 @@
   "category": "equipment",
   "key": {
     "B": {
-      "tag": "tcots-witcher:monster_blood"
+      "item": "tcots-witcher:bullvore_horn_fragment"
     },
-    "I": {
-      "item": "minecraft:iron_ingot"
+    "D": {
+      "item": "minecraft:diamond"
     },
     "L": {
       "item": "tcots-witcher:cured_monster_leather"
     }
   },
   "pattern": [
-    "L L",
-    "B B",
-    "I I"
+    "BLB",
+    "D D",
+    "L L"
   ],
   "result": {
-    "item": "tcots-witcher:manticore_boots"
+    "item": "tcots-witcher:ravens_trousers"
   }
 }

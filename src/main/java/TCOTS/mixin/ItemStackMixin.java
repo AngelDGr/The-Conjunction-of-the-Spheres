@@ -41,6 +41,7 @@ public abstract class ItemStackMixin {
     @Unique
     ItemStack THIS = (ItemStack) (Object) this;
     //Oil tooltip in weapons
+    @SuppressWarnings("all")
     @ModifyVariable(method = "getTooltip", at = @At(
             value = "INVOKE"
             ,target = "Lnet/minecraft/nbt/NbtCompound;contains(Ljava/lang/String;I)Z", ordinal = 0))
@@ -116,7 +117,9 @@ public abstract class ItemStackMixin {
 
     @Unique
     private void setFullSetBonus(List<Text> mainTooltip, Class<? extends ArmorItem> armorClass, List<MutableText> bonusTooltip){
-        if(MinecraftClient.getInstance()!=null && THIS.getItem().getClass() == armorClass && (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) || InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_RIGHT_SHIFT))){
+        if(
+                MinecraftClient.getInstance()!=null && (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) || InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_RIGHT_SHIFT)) &&
+                        THIS.getItem().getClass() == armorClass ){
             mainTooltip.add(Text.translatable("tooltip.tcots-witcher.generic_armor.full_set.bonus").formatted(Formatting.DARK_GREEN));
 
             bonusTooltip.forEach(
@@ -146,7 +149,9 @@ public abstract class ItemStackMixin {
                 List.of(Text.translatable("tooltip.tcots-witcher.warriors_leather_armor.full_set1")));
 
         this.setFullSetBonus(tooltip, RavensArmorItem.class,
-                List.of(Text.translatable("tooltip.tcots-witcher.ravens_armor.full_set1")));
+                List.of(Text.translatable("tooltip.tcots-witcher.ravens_armor.full_set1"),
+                        Text.translatable("tooltip.tcots-witcher.ravens_armor.full_set2"),
+                        Text.translatable("tooltip.tcots-witcher.ravens_armor.full_set3")));
 
         return tooltip;
     }
@@ -179,9 +184,6 @@ public abstract class ItemStackMixin {
             cir.setReturnValue(this.getItem().getMaxUseTime(THIS)/2);
         }
     }
-
-    //Warrior's Leather Armor
-
 
 
 }

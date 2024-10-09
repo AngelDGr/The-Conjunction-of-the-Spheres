@@ -597,4 +597,24 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return value;
     }
 
+
+    //Raven Armor
+    @Unique
+    private float ravensArmorExtraDamage = 0;
+
+    @Inject(method = "attack", at = @At("HEAD"))
+    private void getIsMonsterForRavenBonus(Entity target, CallbackInfo ci){
+        ravensArmorExtraDamage = EntitiesUtil.isWearingRavensArmor(THIS) && target instanceof LivingEntity livingTarget && EntitiesUtil.isMonster(livingTarget)? 2.0f : 0.0f;
+    }
+
+    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
+            , slice = @Slice(
+            from = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/entity/attribute/EntityAttribute;)D", ordinal = 0),
+            to = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
+    )
+    private float injectRavenBonusToDamage(float value){
+        return value + ravensArmorExtraDamage;
+    }
 }

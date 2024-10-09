@@ -2,22 +2,22 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "tag": "tcots-witcher:monster_blood"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
+    "D": {
+      "item": "minecraft:diamond"
     },
     "L": {
       "item": "tcots-witcher:cured_monster_leather"
+    },
+    "T": {
+      "item": "tcots-witcher:devourer_teeth"
     }
   },
   "pattern": [
+    "D D",
     "L L",
-    "B B",
-    "I I"
+    "T T"
   ],
   "result": {
-    "item": "tcots-witcher:manticore_boots"
+    "item": "tcots-witcher:ravens_boots"
   }
 }
