@@ -1,22 +1,24 @@
 package TCOTS.utils;
 
+import TCOTS.TCOTS_Main;
+import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.TCOTS_Items;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
+import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.VehicleEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.MathHelper;
 
@@ -140,6 +142,55 @@ public class EntitiesUtil {
         return player.getEquippedStack(EquipmentSlot.CHEST).isOf(TCOTS_Items.MANTICORE_ARMOR)
                 && player.getEquippedStack(EquipmentSlot.LEGS).isOf(TCOTS_Items.MANTICORE_TROUSERS)
                 && player.getEquippedStack(EquipmentSlot.FEET).isOf(TCOTS_Items.MANTICORE_BOOTS);
+    }
+
+    /**
+     Checks if the player it's wearing the full Warrior's Leather Armor
+     */
+    public static boolean isWearingWarriorsLeatherArmor(LivingEntity player){
+        return player.getEquippedStack(EquipmentSlot.CHEST).isOf(TCOTS_Items.WARRIORS_LEATHER_JACKET)
+                && player.getEquippedStack(EquipmentSlot.LEGS).isOf(TCOTS_Items.WARRIORS_LEATHER_TROUSERS)
+                && player.getEquippedStack(EquipmentSlot.FEET).isOf(TCOTS_Items.WARRIORS_LEATHER_BOOTS);
+    }
+
+
+    /**
+     Checks if the player it's wearing the full Raven's Leather Armor
+     */
+    public static boolean isWearingRavensArmor(LivingEntity player){
+        return player.getEquippedStack(EquipmentSlot.CHEST).isOf(TCOTS_Items.RAVENS_ARMOR)
+                && player.getEquippedStack(EquipmentSlot.LEGS).isOf(TCOTS_Items.RAVENS_TROUSERS)
+                && player.getEquippedStack(EquipmentSlot.FEET).isOf(TCOTS_Items.RAVENS_BOOTS);
+    }
+
+    /**
+    Checks if the entity it's a magical monster
+     @param livingTarget The entity to check
+     */
+
+    public static boolean isMonster(LivingEntity livingTarget){
+        return
+                //Necrophage
+                (livingTarget.getGroup() == TCOTS_Entities.NECROPHAGES || livingTarget.getGroup() == EntityGroup.UNDEAD || TCOTS_Main.CONFIG.monsters.Necrophages().contains(Registries.ENTITY_TYPE.getId(livingTarget.getType()).toString())) ||
+                //Ogroid
+                (livingTarget.getGroup() == TCOTS_Entities.OGROIDS || livingTarget instanceof AbstractPiglinEntity || TCOTS_Main.CONFIG.monsters.Ogroids().contains(Registries.ENTITY_TYPE.getId(livingTarget.getType()).toString())) ||
+                //Specter
+                (livingTarget.getGroup() == TCOTS_Entities.SPECTERS) ||
+                //Vampires
+                (livingTarget.getGroup() == TCOTS_Entities.VAMPIRES) ||
+                //Insectoid
+                (livingTarget.getGroup() == TCOTS_Entities.INSECTOIDS || livingTarget.getGroup() == EntityGroup.ARTHROPOD) ||
+                //Elementa
+                (livingTarget.getGroup() == TCOTS_Entities.ELEMENTA || livingTarget instanceof GolemEntity) ||
+                //Cursed One
+                (livingTarget.getGroup() == TCOTS_Entities.CURSED_ONES) ||
+                //Hybrid
+                (livingTarget.getGroup() == TCOTS_Entities.HYBRIDS) ||
+                //Draconid
+                (livingTarget.getGroup() == TCOTS_Entities.DRACONIDS) ||
+                //Relict
+                (livingTarget.getGroup() == TCOTS_Entities.CURSED_ONES)
+                ;
     }
 
 }

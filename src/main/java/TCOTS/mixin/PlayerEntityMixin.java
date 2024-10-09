@@ -151,7 +151,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Inject(method = "attack", at = @At("HEAD"))
     private void injectMonsterOil(Entity target, CallbackInfo ci){
         PlayerEntity thisObject = (PlayerEntity)(Object)this;
-        if(target instanceof LivingEntity){
+        if(target instanceof LivingEntity livingTarget){
             if(thisObject.getMainHandStack().hasNbt()){
                 NbtCompound nbt=thisObject.getMainHandStack().getNbt();
 
@@ -162,7 +162,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                     if(monsterOil.contains("Id") && monsterOil.contains("Level") && monsterOil.contains("Uses")){
                         switch (monsterOil.getInt("Id")){
                             case 0:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.NECROPHAGES || ((LivingEntity) target).getGroup() == EntityGroup.UNDEAD
+                                if(livingTarget.getGroup() == TCOTS_Entities.NECROPHAGES || livingTarget.getGroup() == EntityGroup.UNDEAD
                                         || TCOTS_Main.CONFIG.monsters.Necrophages().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
                                 ){
 
@@ -171,7 +171,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                 break;
 
                             case 1:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.OGROIDS || target instanceof AbstractPiglinEntity
+                                if(livingTarget.getGroup() == TCOTS_Entities.OGROIDS || target instanceof AbstractPiglinEntity
                                         || TCOTS_Main.CONFIG.monsters.Ogroids().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
                                 ){
                                     LevelOilAssigner(monsterOil);
@@ -179,25 +179,25 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                 break;
 
                             case 2:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.SPECTERS){
+                                if(livingTarget.getGroup() == TCOTS_Entities.SPECTERS){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 3:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.VAMPIRES){
+                                if(livingTarget.getGroup() == TCOTS_Entities.VAMPIRES){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 4:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.INSECTOIDS || ((LivingEntity) target).getGroup() == EntityGroup.ARTHROPOD){
+                                if(livingTarget.getGroup() == TCOTS_Entities.INSECTOIDS || livingTarget.getGroup() == EntityGroup.ARTHROPOD){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 5:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.BEASTS || target instanceof AnimalEntity || target instanceof RavagerEntity ||
+                                if(livingTarget.getGroup() == TCOTS_Entities.BEASTS || target instanceof AnimalEntity || target instanceof RavagerEntity ||
                                         TCOTS_Main.CONFIG.monsters.Beasts().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
                                 ){
                                     LevelOilAssigner(monsterOil);
@@ -205,37 +205,37 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                 break;
 
                             case 6:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.ELEMENTA || target instanceof GolemEntity){
+                                if(livingTarget.getGroup() == TCOTS_Entities.ELEMENTA || target instanceof GolemEntity){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 7:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.CURSED_ONES){
+                                if(livingTarget.getGroup() == TCOTS_Entities.CURSED_ONES){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 8:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.HYBRIDS){
+                                if(livingTarget.getGroup() == TCOTS_Entities.HYBRIDS){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 9:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.DRACONIDS){
+                                if(livingTarget.getGroup() == TCOTS_Entities.DRACONIDS){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 10:
-                                if(((LivingEntity) target).getGroup() == TCOTS_Entities.RELICTS){
+                                if(livingTarget.getGroup() == TCOTS_Entities.RELICTS){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 11:
-                                if(((LivingEntity) target).getGroup() == EntityGroup.ILLAGER || target instanceof MerchantEntity || target instanceof WitchEntity || target instanceof PlayerEntity
+                                if(livingTarget.getGroup() == EntityGroup.ILLAGER || target instanceof MerchantEntity || target instanceof WitchEntity || target instanceof PlayerEntity
                                 || TCOTS_Main.CONFIG.monsters.Humanoids().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
                                 ){
                                     LevelOilAssigner(monsterOil);
@@ -597,45 +597,4 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return value;
     }
 
-//    @Unique
-//    int refillManticoreTimer=0;
-//
-//    //Manticore Armor
-//    @Inject(method = "tickMovement", at = @At("TAIL"))
-//    private void injectInTickRandomRefillManticore(CallbackInfo ci){
-////        if(THIS.getWorld().isClient)
-////            return;
-////
-////        if(refillManticoreTimer==0) refillManticoreTimer= TimeHelper.betweenSeconds(60,240).get(this.getRandom());
-////
-////        refillManticoreTimer--;
-////
-////        if (EntitiesUtil.isWearingManticoreArmor(this) && refillManticoreTimer==0) {
-////            //Makes a loop across all the inventory
-////            for(int i=0; i<inventory.size(); i++){
-////                //If found an Empty Potion with NBT
-////                if(inventory.getStack(i).getItem() instanceof EmptyWitcherPotionItem && inventory.getStack(i).hasNbt()){
-////                    NbtCompound nbtCompoundI= inventory.getStack(i).getNbt();
-////                    //Checks if the NBT contains the "Potion" string
-////                    assert nbtCompoundI != null;
-////                    if(nbtCompoundI.contains("Potion")){
-////                        //Save the potion type
-////                        Item PotionI = Registries.ITEM.get(new Identifier(nbtCompoundI.getString("Potion")));
-////                        //Saves the count of empty bottles
-////                        int countI = inventory.getStack(i).getCount();
-////
-////                        //Erases the slot
-////                        inventory.getStack(i).decrement(inventory.getStack(i).getCount());
-////                        //Put the potion in the slot
-////                        inventory.setStack(i,new ItemStack(PotionI, countI));
-////
-////                        //Play a sound
-////                        this.playSound(TCOTS_Sounds.POTION_REFILLED, 1.0f, 1.0f);
-////
-////                        break;
-////                    }
-////                }
-////            }
-////        }
-//    }
 }

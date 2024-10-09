@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ArmorMaterials;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -18,7 +19,22 @@ public enum TCOTS_ArmorMaterials implements ArmorMaterial {
         map.put(ArmorItem.Type.LEGGINGS, 5);
         map.put(ArmorItem.Type.CHESTPLATE, 6);
         map.put(ArmorItem.Type.HELMET, 2);
-    }), 20, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 1.0f, 0.0f, Ingredient.ofItems(TCOTS_Items.CURED_MONSTER_LEATHER));
+    }), 20, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 1.0f, 0.0f, Ingredient.ofItems(TCOTS_Items.CURED_MONSTER_LEATHER)),
+
+    WARRIORS_LEATHER("warriors_leather", 15, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+        map.put(ArmorItem.Type.BOOTS, 1);
+        map.put(ArmorItem.Type.LEGGINGS, 4);
+        map.put(ArmorItem.Type.CHESTPLATE, 5);
+        map.put(ArmorItem.Type.HELMET, 2);
+    }), 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0f, 0.0f, Ingredient.ofItems(Items.LEATHER)),
+
+    RAVEN("raven", 30, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+        map.put(ArmorItem.Type.BOOTS, 3);
+        map.put(ArmorItem.Type.LEGGINGS, 6);
+        map.put(ArmorItem.Type.CHESTPLATE, 8);
+        map.put(ArmorItem.Type.HELMET, 3);
+    }), 25, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 2.0f, 0.1f, Ingredient.ofItems(TCOTS_Items.CURED_MONSTER_LEATHER))
+    ;
 
 
     public static final Codec<ArmorMaterials> CODEC;

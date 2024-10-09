@@ -11,6 +11,7 @@ import TCOTS.items.concoctions.bombs.MoonDustBomb;
 import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import TCOTS.items.concoctions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.utils.EntitiesUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -33,6 +34,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
@@ -565,4 +567,22 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     }
 
+    
+    @Inject(method ="modifyAppliedDamage", at = @At("RETURN"), cancellable = true)
+    private void injectArmorExtraMonsterResistance(DamageSource source, float amount, CallbackInfoReturnable<Float> cir){
+        if(source.isIn(DamageTypeTags.BYPASSES_ENCHANTMENTS)){
+            cir.setReturnValue(amount);
+        }
+
+
+
+        if(EntitiesUtil.isWearingRavensArmor(THIS) && source.getAttacker()!=null
+                && source.getAttacker() instanceof LivingEntity attacker && EntitiesUtil.isMonster(attacker)){
+            cir.setReturnValue(amount*0.50f);
+        } else
+        if(EntitiesUtil.isWearingWarriorsLeatherArmor(THIS) && source.getAttacker()!=null
+                && source.getAttacker() instanceof LivingEntity attacker && EntitiesUtil.isMonster(attacker)){
+            cir.setReturnValue(amount*0.75f);
+        }
+    }
 }

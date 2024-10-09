@@ -432,12 +432,27 @@ public class TCOTS_JEIPlugin implements IModPlugin {
             return Stream.of(
                     new RepairData(TCOTS_ToolMaterials.GVALCHIR.getRepairIngredient(),
                             new ItemStack(TCOTS_Items.GVALCHIR)),
+
                     new RepairData(TCOTS_ArmorMaterials.MANTICORE.getRepairIngredient(),
                             new ItemStack(TCOTS_Items.MANTICORE_ARMOR)),
                     new RepairData(TCOTS_ArmorMaterials.MANTICORE.getRepairIngredient(),
                             new ItemStack(TCOTS_Items.MANTICORE_TROUSERS)),
                     new RepairData(TCOTS_ArmorMaterials.MANTICORE.getRepairIngredient(),
-                            new ItemStack(TCOTS_Items.MANTICORE_BOOTS))
+                            new ItemStack(TCOTS_Items.MANTICORE_BOOTS)),
+
+                    new RepairData(TCOTS_ArmorMaterials.WARRIORS_LEATHER.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.WARRIORS_LEATHER_JACKET)),
+                    new RepairData(TCOTS_ArmorMaterials.WARRIORS_LEATHER.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.WARRIORS_LEATHER_TROUSERS)),
+                    new RepairData(TCOTS_ArmorMaterials.WARRIORS_LEATHER.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.WARRIORS_LEATHER_BOOTS)),
+
+                    new RepairData(TCOTS_ArmorMaterials.RAVEN.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.RAVENS_ARMOR)),
+                    new RepairData(TCOTS_ArmorMaterials.RAVEN.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.RAVENS_TROUSERS)),
+                    new RepairData(TCOTS_ArmorMaterials.RAVEN.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.RAVENS_BOOTS))
             );
         }
 

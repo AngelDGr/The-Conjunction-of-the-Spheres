@@ -1,12 +1,14 @@
-package TCOTS.items.blocks;
+package TCOTS.items.armor;
 
-import TCOTS.items.geo.renderer.MonsterNestItemRenderer;
+import TCOTS.items.geo.renderer.WarriorsLeatherArmorRenderer;
 import TCOTS.utils.GeoControllersUtil;
-import net.minecraft.block.Block;
-import net.minecraft.client.render.item.BuiltinModelItemRenderer;
-import net.minecraft.item.BlockItem;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.ItemStack;
 import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.animatable.client.RenderProvider;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -15,24 +17,27 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class MonsterNestItem extends BlockItem implements GeoItem {
-
+public class WarriorsLeatherArmorItem extends ArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-
     private final Supplier<Object> renderProvider= GeoItem.makeRenderer(this);
-    public MonsterNestItem(Block block, Settings settings) {
-        super(block, settings);
-        SingletonGeoAnimatable.registerSyncedAnimatable(this);
+
+    public WarriorsLeatherArmorItem(ArmorMaterial material, Type type, Settings settings) {
+        super(material, type, settings);
     }
 
     @Override
     public void createRenderer(Consumer<Object> consumer) {
         consumer.accept(new RenderProvider() {
 
-            private final MonsterNestItemRenderer renderer = new MonsterNestItemRenderer();
+            private WarriorsLeatherArmorRenderer renderer;
 
             @Override
-            public BuiltinModelItemRenderer getCustomRenderer() {
+            public BipedEntityModel<LivingEntity> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, BipedEntityModel<LivingEntity> original) {
+                if(this.renderer==null)
+                    this.renderer=new WarriorsLeatherArmorRenderer();
+
+                this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
+
                 return this.renderer;
             }
         });

@@ -585,15 +585,29 @@
     "item.tcots-witcher.cured_monster_leather": "Cured Monster Leather",
 
 
+    "tooltip.tcots-witcher.generic_armor.full_set.bonus": "Full Set Bonus:",
+    "tooltip.tcots-witcher.generic_armor.full_set.more": "Pulse shift to see...",
+
+
+
     "item.tcots-witcher.manticore_armor": "Manticore Armor",
     "item.tcots-witcher.manticore_trousers": "Manticore Trousers",
     "item.tcots-witcher.manticore_boots": "Manticore Boots",
     "tooltip.tcots-witcher.manticore_armor.toxicity": "+%s Maximum Toxicity",
-    "tooltip.tcots-witcher.manticore_armor.full_set1": "Full Set Bonus:",
-    "tooltip.tcots-witcher.manticore_armor.full_set2": "* Reduce bombs cooldown",
-    "tooltip.tcots-witcher.manticore_armor.full_set3": "* Reduce potion drinking time",
-    "tooltip.tcots-witcher.manticore_armor.full_set4": "* Improve alcohol refilling efficiency",
-    "tooltip.tcots-witcher.manticore_armor.full_set.more": "Pulse shift to see...",
+    "tooltip.tcots-witcher.manticore_armor.full_set1": "* 75% Reduced bombs cooldown",
+    "tooltip.tcots-witcher.manticore_armor.full_set2": "* 50% Reduced potion drinking time",
+    "tooltip.tcots-witcher.manticore_armor.full_set3": "* +2 Refilling slots when using alcohol",
+
+
+    "item.tcots-witcher.warriors_leather_jacket": "Warrior's Leather Jacket",
+    "item.tcots-witcher.warriors_leather_trousers": "Warrior's Leather Trousers",
+    "item.tcots-witcher.warriors_leather_boots": "Warrior's Leather Boots",
+    "tooltip.tcots-witcher.warriors_leather_armor.full_set1": "* 25% Resistance to damage from monsters",
+
+    "item.tcots-witcher.ravens_armor": "Raven's Armor",
+    "item.tcots-witcher.ravens_trousers": "Raven's Trousers",
+    "item.tcots-witcher.ravens_boots": "Raven's Boots",
+    "tooltip.tcots-witcher.ravens_armor.full_set1": "* 50% Resistance to damage from monsters",
 
 
 

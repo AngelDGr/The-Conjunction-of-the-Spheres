@@ -4,6 +4,8 @@ import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.armor.ManticoreArmorItem;
+import TCOTS.items.armor.RavensArmorItem;
+import TCOTS.items.armor.WarriorsLeatherArmorItem;
 import TCOTS.items.blocks.AlchemyTableItem;
 import TCOTS.items.blocks.HerbalTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
@@ -920,9 +922,17 @@ public class TCOTS_Items {
     public static Item BROADHEAD_BOLT;
     public static Item GVALCHIR;
 
+    public static Item WARRIORS_LEATHER_JACKET;
+    public static Item WARRIORS_LEATHER_TROUSERS;
+    public static Item WARRIORS_LEATHER_BOOTS;
+
     public static Item MANTICORE_ARMOR;
     public static Item MANTICORE_TROUSERS;
     public static Item MANTICORE_BOOTS;
+
+    public static Item RAVENS_ARMOR;
+    public static Item RAVENS_TROUSERS;
+    public static Item RAVENS_BOOTS;
 
     public static void registerWeapons_Armors(){
 
@@ -938,6 +948,13 @@ public class TCOTS_Items {
             MANTICORE_TROUSERS = registerItem("manticore_trousers", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.LEGGINGS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
             MANTICORE_BOOTS = registerItem("manticore_boots", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.BOOTS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
 
+            WARRIORS_LEATHER_JACKET = registerItem("warriors_leather_jacket", new WarriorsLeatherArmorItem(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+            WARRIORS_LEATHER_TROUSERS = registerItem("warriors_leather_trousers", new WarriorsLeatherArmorItem(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+            WARRIORS_LEATHER_BOOTS = registerItem("warriors_leather_boots", new WarriorsLeatherArmorItem(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+
+            RAVENS_ARMOR = registerItem("ravens_armor", new RavensArmorItem(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.CHESTPLATE, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+            RAVENS_TROUSERS = registerItem("ravens_trousers", new RavensArmorItem(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.LEGGINGS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+            RAVENS_BOOTS = registerItem("ravens_boots", new RavensArmorItem(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.BOOTS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
         }
 
         //Swords

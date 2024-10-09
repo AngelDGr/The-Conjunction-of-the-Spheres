@@ -113,9 +113,17 @@ public class TCOTS_ItemsGroups {
 
                             //Armors
                             {
+                                entries.add(TCOTS_Items.WARRIORS_LEATHER_JACKET);
+                                entries.add(TCOTS_Items.WARRIORS_LEATHER_TROUSERS);
+                                entries.add(TCOTS_Items.WARRIORS_LEATHER_BOOTS);
+
                                 entries.add(TCOTS_Items.MANTICORE_ARMOR);
                                 entries.add(TCOTS_Items.MANTICORE_TROUSERS);
                                 entries.add(TCOTS_Items.MANTICORE_BOOTS);
+
+                                entries.add(TCOTS_Items.RAVENS_ARMOR);
+                                entries.add(TCOTS_Items.RAVENS_TROUSERS);
+                                entries.add(TCOTS_Items.RAVENS_BOOTS);
                             }
 
 

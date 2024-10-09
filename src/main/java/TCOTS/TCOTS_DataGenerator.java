@@ -944,6 +944,49 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     }
                 }
 
+                //Warrior's Leather Armor
+                {
+                    //Jacket
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.WARRIORS_LEATHER_JACKET)
+                                .pattern("I I")
+                                .pattern("LLL")
+                                .pattern("NIN")
+                                .input('L', Items.LEATHER)
+                                .input('I', Items.IRON_INGOT)
+                                .input('N', Items.IRON_NUGGET)
+
+                                .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                                .offerTo(exporter);
+                    }
+
+                    //Trousers
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.WARRIORS_LEATHER_TROUSERS)
+                                .pattern("NIN")
+                                .pattern("L L")
+                                .pattern("L L")
+                                .input('L', Items.LEATHER)
+                                .input('I', Items.IRON_INGOT)
+                                .input('N', Items.IRON_NUGGET)
+
+                                .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                                .offerTo(exporter);
+                    }
+
+                    //Boots
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.WARRIORS_LEATHER_BOOTS)
+                                .pattern("L L")
+                                .pattern("I I")
+                                .input('L', Items.LEATHER)
+                                .input('I', Items.IRON_INGOT)
+
+                                .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                                .offerTo(exporter);
+                    }
+                }
+
                 //Manticore Armor
                 {
                     //Chestplate

@@ -1,6 +1,7 @@
 package TCOTS.items.blocks;
 
 import TCOTS.items.geo.renderer.NestSkullItemRenderer;
+import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -18,16 +19,14 @@ import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.animatable.client.RenderProvider;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.RenderUtils;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class NestSkullItem extends BlockItem implements GeoItem {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     private final Supplier<Object> renderProvider= GeoItem.makeRenderer(this);
 
@@ -62,10 +61,7 @@ public class NestSkullItem extends BlockItem implements GeoItem {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, state ->{
-            state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }));
+        controllers.add(GeoControllersUtil.genericIdleController(this));
     }
 
     @Override
@@ -86,7 +82,7 @@ public class NestSkullItem extends BlockItem implements GeoItem {
         for (Direction direction : context.getPlacementDirections()) {
             BlockState blockState3;
             if (direction == this.verticalAttachmentDirection.getOpposite()) continue;
-            BlockState blockState4 = blockState3 = direction == this.verticalAttachmentDirection ? this.getBlock().getPlacementState(context) : blockState;
+            blockState3 = direction == this.verticalAttachmentDirection ? this.getBlock().getPlacementState(context) : blockState;
             if (blockState3 == null || !this.canPlaceAt(worldView, blockState3, blockPos)) continue;
             blockState2 = blockState3;
             break;
@@ -98,11 +94,6 @@ public class NestSkullItem extends BlockItem implements GeoItem {
     public void appendBlocks(Map<Block, Item> map, Item item) {
         super.appendBlocks(map, item);
         map.put(this.wallBlock, item);
-    }
-
-    @Override
-    public double getTick(Object itemStack) {
-        return RenderUtils.getCurrentTick();
     }
 
 

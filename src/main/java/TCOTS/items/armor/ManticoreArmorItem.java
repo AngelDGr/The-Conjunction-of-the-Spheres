@@ -2,6 +2,7 @@ package TCOTS.items.armor;
 
 import TCOTS.interfaces.MaxToxicityIncreaser;
 import TCOTS.items.geo.renderer.ManticoreArmorRenderer;
+import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -13,10 +14,6 @@ import software.bernie.geckolib.animatable.client.RenderProvider;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.Animation;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -74,10 +71,7 @@ public class ManticoreArmorItem extends ArmorItem implements GeoItem, MaxToxicit
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, state ->{
-            state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }));
+        controllers.add(GeoControllersUtil.genericIdleController(this));
     }
 
     @Override

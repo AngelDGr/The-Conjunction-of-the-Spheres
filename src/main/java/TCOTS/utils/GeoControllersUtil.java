@@ -3,6 +3,7 @@ package TCOTS.utils;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
@@ -57,6 +58,17 @@ public class GeoControllersUtil {
 
     public static float getLimbSwing(AnimationState<?> animationState, float min, float max, float speed, float increase, boolean negative){
         return (float) MathHelper.clamp((negative? -1: 1)*((Math.sin(animationState.getLimbSwing()*speed)*(animationState.getLimbSwingAmount()*increase))), min, max);
+    }
+
+    /**
+    Generic idle controller
+     */
+    public static <T extends GeoAnimatable> AnimationController<?> genericIdleController(T animatable){
+        return
+        new AnimationController<>(animatable, "controller", 0, state ->{
+            state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        });
     }
 
 }
