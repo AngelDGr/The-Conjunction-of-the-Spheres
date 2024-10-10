@@ -12,7 +12,7 @@ import TCOTS.items.blocks.MonsterNestItem;
 import TCOTS.items.blocks.NestSkullItem;
 import TCOTS.items.concoctions.*;
 import TCOTS.items.weapons.BoltItem;
-import TCOTS.items.weapons.GvalchirSword;
+import TCOTS.items.weapons.SwordWithTooltip;
 import TCOTS.items.weapons.KnightCrossbow;
 import TCOTS.items.weapons.ScurverSpineItem;
 import com.mojang.serialization.Codec;
@@ -50,6 +50,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.Util;
@@ -144,7 +146,9 @@ public class TCOTS_Items {
     //  * Addan Deith: Extra damage to Specters, found in some special place
     //    D'yaebl: Makes enemies bleed
     //    Ard'aenye: Massive damage
-    //    Moonblade: Massive damage to monsters
+    //    Winter's Blade: Can freeze
+    //Moonblade: Massive damage to monsters
+
 
 
     //xTODO: Add use to the items
@@ -922,6 +926,8 @@ public class TCOTS_Items {
     public static Item EXPLODING_BOLT;
     public static Item BROADHEAD_BOLT;
     public static Item GVALCHIR;
+    public static Item MOONBLADE;
+    public static Item WINTERS_BLADE;
 
     public static Item WARRIORS_LEATHER_JACKET;
     public static Item WARRIORS_LEATHER_TROUSERS;
@@ -961,7 +967,26 @@ public class TCOTS_Items {
         //Swords
         {
             GVALCHIR = registerItem("gvalchir",
-                    new GvalchirSword(TCOTS_ToolMaterials.GVALCHIR, 3, -2.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+                    new SwordWithTooltip(TCOTS_ToolMaterials.GVALCHIR, 3, -2.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON),
+                            List.of(
+                                    Text.translatable("tooltip.tcots-witcher.gvalchir").formatted(Formatting.GRAY, Formatting.ITALIC),
+                                    Text.translatable("tooltip.tcots-witcher.gvalchir.extra").formatted(Formatting.DARK_GREEN))
+                    ));
+
+            MOONBLADE = registerItem("moonblade",
+                    new SwordWithTooltip(TCOTS_ToolMaterials.MOONBLADE, 3, -2.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON),
+                            List.of(
+                                    Text.translatable("tooltip.tcots-witcher.moonblade").formatted(Formatting.GRAY, Formatting.ITALIC),
+                                    Text.translatable("tooltip.tcots-witcher.moonblade.extra").formatted(Formatting.DARK_GREEN))
+                    ));
+
+            WINTERS_BLADE = registerItem("winters_blade",
+                    new SwordWithTooltip(TCOTS_ToolMaterials.WINTERS_BLADE, 4, -2.4f, new FabricItemSettings().rarity(Rarity.RARE),
+                            List.of(
+                                    Text.translatable("tooltip.tcots-witcher.winters_blade").formatted(Formatting.GRAY, Formatting.ITALIC),
+                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra").withColor(0x007b77)
+                            )
+                    ));
         }
 
         //Crossbows

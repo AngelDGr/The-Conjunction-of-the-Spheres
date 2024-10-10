@@ -5,20 +5,20 @@
     "D": {
       "item": "tcots-witcher:devourer_teeth"
     },
+    "F": {
+      "item": "tcots-witcher:foglet_teeth"
+    },
     "H": {
       "item": "tcots-witcher:bullvore_horn_fragment"
     },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
     "S": {
-      "item": "minecraft:stick"
+      "item": "minecraft:iron_sword"
     }
   },
   "pattern": [
-    "HIH",
-    "HIH",
-    "DSD"
+    "FHD",
+    "HSH",
+    "DHF"
   ],
   "result": {
     "item": "tcots-witcher:gvalchir"

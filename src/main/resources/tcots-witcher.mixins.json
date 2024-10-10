@@ -54,6 +54,7 @@
     "CrossbowMixins$PlayerEntityRendererMixin",
     "GameRendererMixin",
     "LightmapTextureManagerMixin",
+    "PlayerEntityRendererMixin",
     "northern_wind.BlazeEntityMixin",
     "northern_wind.geckolib.GeoEntityRendererMixin"
   ]

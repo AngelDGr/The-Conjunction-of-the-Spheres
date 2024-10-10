@@ -35,6 +35,8 @@ public class RavensArmorItem extends ArmorItem implements GeoItem {
                 if(this.renderer==null)
                     this.renderer=new RavensArmorRenderer();
 
+
+
                 this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
 
                 return this.renderer;

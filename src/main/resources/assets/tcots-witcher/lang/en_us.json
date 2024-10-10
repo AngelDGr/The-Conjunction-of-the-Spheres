@@ -582,6 +582,15 @@
     "tooltip.tcots-witcher.gvalchir": "A powerful runic sword",
     "tooltip.tcots-witcher.gvalchir.extra": "Penetrates opponent armor",
 
+    "item.tcots-witcher.moonblade": "Moonblade",
+    "tooltip.tcots-witcher.moonblade": "A powerful holy sword",
+    "tooltip.tcots-witcher.moonblade.extra": "Extra damage against monsters",
+
+    "item.tcots-witcher.winters_blade": "Winter's Blade",
+    "tooltip.tcots-witcher.winters_blade": "Contains the winter itself",
+    "tooltip.tcots-witcher.winters_blade.extra": "Chance to freeze enemies",
+
+
     "item.tcots-witcher.cured_monster_leather": "Cured Monster Leather",
 
 

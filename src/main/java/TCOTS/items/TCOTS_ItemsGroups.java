@@ -101,6 +101,8 @@ public class TCOTS_ItemsGroups {
                             //Weapons
                             {
                                 entries.add(TCOTS_Items.GVALCHIR);
+                                entries.add(TCOTS_Items.MOONBLADE);
+                                entries.add(TCOTS_Items.WINTERS_BLADE);
 
 
                                 entries.add(TCOTS_Items.KNIGHT_CROSSBOW);

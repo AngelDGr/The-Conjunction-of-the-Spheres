@@ -837,16 +837,36 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                 //G'valchir
                 {
                     ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.GVALCHIR)
-                            .pattern("HIH")
-                            .pattern("HIH")
-                            .pattern("DSD")
+                            .pattern("FHD")
+                            .pattern("HSH")
+                            .pattern("DHF")
+                            .input('F', TCOTS_Items.FOGLET_TEETH)
                             .input('H', TCOTS_Items.BULLVORE_HORN_FRAGMENT)
-                            .input('I', Items.IRON_INGOT)
                             .input('D', TCOTS_Items.DEVOURER_TEETH)
-                            .input('S', Items.STICK)
+                            .input('S', Items.IRON_SWORD)
+
+
 
                             .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT))
-                            .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT), FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
+                            .criterion(FabricRecipeProvider.hasItem(Items.IRON_SWORD), FabricRecipeProvider.conditionsFromItem(Items.IRON_SWORD))
+                            .offerTo(exporter);
+                }
+
+                //Moonblade
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MOONBLADE)
+                            .pattern("HBG")
+                            .pattern("BSB")
+                            .pattern("GBH")
+                            .input('G', TCOTS_Items.GRAVEIR_BONE)
+                            .input('H', TCOTS_Items.NEKKER_HEART)
+                            .input('B', TCOTS_Items.MONSTER_BLOOD)
+                            .input('S', Items.GOLDEN_SWORD)
+
+
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.GRAVEIR_BONE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.GRAVEIR_BONE))
+                            .criterion(FabricRecipeProvider.hasItem(Items.GOLDEN_SWORD), FabricRecipeProvider.conditionsFromItem(Items.GOLDEN_SWORD))
                             .offerTo(exporter);
                 }
 

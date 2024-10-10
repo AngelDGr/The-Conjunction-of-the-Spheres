@@ -433,6 +433,12 @@ public class TCOTS_JEIPlugin implements IModPlugin {
                     new RepairData(TCOTS_ToolMaterials.GVALCHIR.getRepairIngredient(),
                             new ItemStack(TCOTS_Items.GVALCHIR)),
 
+                    new RepairData(TCOTS_ToolMaterials.MOONBLADE.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.MOONBLADE)),
+
+                    new RepairData(TCOTS_ToolMaterials.WINTERS_BLADE.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.WINTERS_BLADE)),
+
                     new RepairData(TCOTS_ArmorMaterials.MANTICORE.getRepairIngredient(),
                             new ItemStack(TCOTS_Items.MANTICORE_ARMOR)),
                     new RepairData(TCOTS_ArmorMaterials.MANTICORE.getRepairIngredient(),

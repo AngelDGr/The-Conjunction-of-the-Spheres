@@ -617,4 +617,24 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private float injectRavenBonusToDamage(float value){
         return value + ravensArmorExtraDamage;
     }
+
+
+    //Moonblade
+    @Unique
+    private float moonbladeExtraDamage = 0.0f;
+
+    @Inject(method = "attack", at = @At("HEAD"))
+    private void getIsMonsterMoonblade(Entity target, CallbackInfo ci){
+        moonbladeExtraDamage = THIS.getMainHandStack().getItem() == TCOTS_Items.MOONBLADE && target instanceof LivingEntity livingTarget && EntitiesUtil.isMonster(livingTarget)? 1.5f : 1.0f;
+    }
+    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 0
+            , slice = @Slice(
+            from = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/Entity;handleAttack(Lnet/minecraft/entity/Entity;)Z", ordinal = 0),
+            to = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/enchantment/EnchantmentHelper;getAttackDamage(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityGroup;)F", ordinal = 0))
+    )
+    private float injectMoonBladeDamage(float value){
+        return value*moonbladeExtraDamage;
+    }
 }

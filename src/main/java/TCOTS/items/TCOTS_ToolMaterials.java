@@ -1,6 +1,7 @@
 package TCOTS.items;
 
 import net.fabricmc.yarn.constants.MiningLevels;
+import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 
@@ -8,7 +9,15 @@ import java.util.function.Supplier;
 
 public enum TCOTS_ToolMaterials implements ToolMaterial {
 
-    GVALCHIR(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(TCOTS_Items.BULLVORE_HORN_FRAGMENT));
+    GVALCHIR(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(TCOTS_Items.BULLVORE_HORN_FRAGMENT)),
+
+    MOONBLADE(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.GOLD_INGOT)),
+
+    WINTERS_BLADE(MiningLevels.NETHERITE, 2031, 9.0f, 4.0f, 30, () -> Ingredient.ofItems(Items.NETHERITE_INGOT))
+    ;
+
+
+
     private final int miningLevel;
     private final int itemDurability;
     private final float miningSpeed;

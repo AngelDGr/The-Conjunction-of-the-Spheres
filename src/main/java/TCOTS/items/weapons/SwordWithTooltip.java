@@ -4,24 +4,29 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.screen.ScreenTexts;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GvalchirSword extends SwordItem {
-    public GvalchirSword(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
+public class SwordWithTooltip extends SwordItem {
+    private final List<MutableText> tooltip;
+
+    public SwordWithTooltip(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings, List<MutableText> tooltip) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
+
+        this.tooltip=tooltip;
     }
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
 
-        tooltip.add(Text.translatable("tooltip.tcots-witcher.gvalchir").formatted(Formatting.GRAY, Formatting.ITALIC));
-        tooltip.add(Text.translatable("tooltip.tcots-witcher.gvalchir.extra").formatted(Formatting.DARK_GREEN));
+        tooltip.addAll(this.tooltip);
+
+        if(stack.hasEnchantments()) tooltip.add(ScreenTexts.EMPTY);
     }
 
 }
