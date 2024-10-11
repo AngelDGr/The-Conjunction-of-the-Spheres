@@ -11,13 +11,11 @@ public class BleedingBlackBloodEffect extends StatusEffect {
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return true;
+        return duration%20==0;
     }
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if(entity.age%20==0){
         entity.damage(entity.getDamageSources().magic(), amplifier+1);
-        }
     }
 }

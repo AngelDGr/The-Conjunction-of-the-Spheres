@@ -27,7 +27,6 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.GhastEntity;
-import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -221,7 +220,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             if(source.getAttacker() != null && source.getAttacker() instanceof LivingEntity attackerBlack &&
                     !((source.getSource() instanceof ProjectileEntity) || (source.getSource() instanceof PersistentProjectileEntity))){
                 //Damage
-                if(amount > 0 && (attackerBlack.getGroup() == TCOTS_Entities.NECROPHAGES || attackerBlack.getGroup() == EntityGroup.UNDEAD)){
+                if(amount > 0 && (EntitiesUtil.isNecrophage(attackerBlack) || EntitiesUtil.isVampire(attackerBlack))){
                     attackerBlack.damage(attackerBlack.getDamageSources().magic(), amount*damageMultiplier);
                 }
 
@@ -243,7 +242,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             int amplifier = Objects.requireNonNull(this.getStatusEffect(TCOTS_Effects.BLACK_BLOOD_EFFECT)).getAmplifier();
             if(amplifier> 1){
                 List<LivingEntity> list= this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(5,2,5),
-                livingEntity -> (livingEntity.getGroup() == TCOTS_Entities.NECROPHAGES || livingEntity.getGroup() == EntityGroup.UNDEAD));
+                livingEntity -> EntitiesUtil.isNecrophage(livingEntity) || EntitiesUtil.isVampire(livingEntity));
                 //To apply bleeding effect to near mobs
                 if(!list.isEmpty()) {
                     list.forEach(livingEntity -> {
@@ -473,7 +472,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @Inject(method = "onDeath", at = @At("TAIL"))
     private void injectTriggerAdvancement(DamageSource damageSource, CallbackInfo ci){
 
-        if((THIS.getGroup()==EntityGroup.ILLAGER || THIS instanceof WitchEntity) && getAttacker() instanceof PlayerEntity player){
+        if(EntitiesUtil.isHumanoid(THIS) && getAttacker() instanceof PlayerEntity player){
             NbtCompound nbt = player.getMainHandStack().getNbt();
             assert nbt != null;
             if(nbt.contains("Monster Oil")){
@@ -585,6 +584,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
 
+    //Raven Armor Set Bonus
     @Unique
     private static final UUID RAVEN_SPEED_BONUS_ID = UUID.fromString("a1f7779d-f64f-4a12-b69f-1a8f4ac13419");
     @Unique
@@ -603,5 +603,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             if(entityAttributeInstance!=null) entityAttributeInstance.removeModifier(RAVEN_SPEED_BONUS.getId());
         }
 
+    }
+
+    @Inject(method =  "tick", at= @At("HEAD"))
+    private void injectWintersBladeExtinguish(CallbackInfo ci){
+        if(THIS.isOnFire()){
+            if(THIS.getMainHandStack().isOf(TCOTS_Items.WINTERS_BLADE) || THIS.getOffHandStack().isOf(TCOTS_Items.WINTERS_BLADE)) THIS.extinguish();
+        }
     }
 }

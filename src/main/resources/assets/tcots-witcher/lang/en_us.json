@@ -469,7 +469,7 @@
     "tooltip.effect.tcots-witcher.black_blood.applied": "In Monster Melee Hit:",
     "special.attribute.effect.tcots-witcher.black_blood": "%s%% Reflected Damage",
 
-    "tcots-witcher.sounds.black_blood_hit": "Black blood spills",
+    "tcots-witcher.sounds.black_blood_hit": "Blood spills",
 
     "item.tcots-witcher.maribor_forest_potion": "Maribor Forest",
     "item.tcots-witcher.maribor_forest_potion_enhanced": "Enhanced Maribor Forest",
@@ -580,22 +580,34 @@
 
     "item.tcots-witcher.gvalchir": "G'valchir",
     "tooltip.tcots-witcher.gvalchir": "A powerful runic sword",
-    "tooltip.tcots-witcher.gvalchir.extra": "Penetrates opponent armor",
+    "tooltip.tcots-witcher.gvalchir.extra": "+75% Armor Penetration",
 
     "item.tcots-witcher.moonblade": "Moonblade",
     "tooltip.tcots-witcher.moonblade": "A powerful holy sword",
-    "tooltip.tcots-witcher.moonblade.extra": "Extra damage against monsters",
+    "tooltip.tcots-witcher.moonblade.extra": "+50% Attack Damage against monsters",
+
+    "item.tcots-witcher.dyaebl": "D'yaebl",
+    "tooltip.tcots-witcher.dyaebl": "Coated in monster blood",
+    "tooltip.tcots-witcher.dyaebl.extra": " 20% Chance to cause bleeding",
+
 
     "item.tcots-witcher.winters_blade": "Winter's Blade",
     "tooltip.tcots-witcher.winters_blade": "Contains the winter itself",
-    "tooltip.tcots-witcher.winters_blade.extra": "Chance to freeze enemies",
+    "tooltip.tcots-witcher.winters_blade.extra":  "+2 Attack Damage to fiery enemies",
+    "tooltip.tcots-witcher.winters_blade.extra2": " 20% Chance to freeze enemies",
+    "tooltip.tcots-witcher.winters_blade.extra3": " Extinguish flames from the user",
+
+    "item.tcots-witcher.ardaenye": "Ard'aenye",
+
+
 
 
     "item.tcots-witcher.cured_monster_leather": "Cured Monster Leather",
 
 
-    "tooltip.tcots-witcher.generic_armor.full_set.bonus": "Full Set Bonus:",
-    "tooltip.tcots-witcher.generic_armor.full_set.more": "Pulse shift to see...",
+    "tooltip.tcots-witcher.generic_tooltip.full_set_bonus": "Full Set Bonus:",
+    "tooltip.tcots-witcher.generic_tooltip.see_more": "Pulse shift to see...",
+    "tooltip.tcots-witcher.generic_tooltip.special_abilities": "Special Abilities:",
 
 
 
@@ -680,7 +692,7 @@
                 "advancements.witcher.craft_oil_superior.description": "Get a Superior level Monster Oil",
 
                 "advancements.witcher.kill_with_hanged.title": "...Steel for Humans",
-                "advancements.witcher.kill_with_hanged.description": "Kill an Illager using Hanged Man's Venom",
+                "advancements.witcher.kill_with_hanged.description": "Kill an humanoid using Hanged Man's Venom",
 
             "advancements.witcher.craft_bomb.title": "Ka-Boom!",
             "advancements.witcher.craft_bomb.description": "Get your first bomb",
@@ -754,9 +766,35 @@
     "text.config.tcots_config.enum.aNCHORS.right_down": "RIGHT DOWN",
 
     "text.config.tcots_config.category.monsters": "Monsters - Add a monster in a monster category",
-    "text.config.tcots_config.category.monsters.tooltip": "Add mobs to work with the respective monster oils",
+    "text.config.tcots_config.category.monsters.tooltip": "Add mobs to work with the respective monster oils and monster resistances/damage",
     "text.config.tcots_config.option.monsters.Necrophages": "Necrophage Category",
     "text.config.tcots_config.option.monsters.Ogroids": "Ogroid Category",
     "text.config.tcots_config.option.monsters.Beasts": "Beast Category",
-    "text.config.tcots_config.option.monsters.Humanoids": "Humanoid Category"
+    "text.config.tcots_config.option.monsters.Humanoids": "Humanoid Category",
+
+
+
+    "text.config.tcots_config.option.monsters.Specters": "Specter Category",
+    "text.config.tcots_config.option.monsters.Specters.tooltip": "Upcoming type, currently covering Ghasts",
+
+    "text.config.tcots_config.option.monsters.Vampires": "Vampire Category",
+    "text.config.tcots_config.option.monsters.Vampires.tooltip": "Upcoming type",
+
+    "text.config.tcots_config.option.monsters.Insectoids": "Insectoid Category",
+    "text.config.tcots_config.option.monsters.Insectoids.tooltip": "Upcoming type, currently covering Arthropods",
+
+    "text.config.tcots_config.option.monsters.Elementa": "Elementa Category",
+    "text.config.tcots_config.option.monsters.Elementa.tooltip": "Upcoming type, currently covering Golems, Blazes-like, Allays-like and Slime-like",
+
+    "text.config.tcots_config.option.monsters.Hybrids": "Hybrid Category",
+    "text.config.tcots_config.option.monsters.Hybrids.tooltip": "Upcoming type",
+
+    "text.config.tcots_config.option.monsters.Cursed_Ones": "Cursed One Category",
+    "text.config.tcots_config.option.monsters.Cursed_Ones.tooltip": "Upcoming type, currently covering Creepers and Ravagers",
+
+    "text.config.tcots_config.option.monsters.Draconids": "Draconid Category",
+    "text.config.tcots_config.option.monsters.Draconids.tooltip": "Upcoming type, currently covering the Ender Dragon (duh)",
+
+    "text.config.tcots_config.option.monsters.Relicts": "Relict Category",
+    "text.config.tcots_config.option.monsters.Relicts.tooltip": "Upcoming type, currently covering Endermen, Guardians and the Warden"
 }

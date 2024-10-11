@@ -1,8 +1,6 @@
 package TCOTS.mixin;
 
-import TCOTS.TCOTS_Main;
 import TCOTS.advancements.TCOTS_Criteria;
-import TCOTS.entity.TCOTS_Entities;
 import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.EmptyWitcherPotionItem;
@@ -13,19 +11,12 @@ import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.mob.AbstractPiglinEntity;
-import net.minecraft.entity.mob.RavagerEntity;
-import net.minecraft.entity.mob.WitchEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.GolemEntity;
-import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.FoodComponent;
@@ -34,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Arm;
@@ -162,82 +154,73 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                     if(monsterOil.contains("Id") && monsterOil.contains("Level") && monsterOil.contains("Uses")){
                         switch (monsterOil.getInt("Id")){
                             case 0:
-                                if(livingTarget.getGroup() == TCOTS_Entities.NECROPHAGES || livingTarget.getGroup() == EntityGroup.UNDEAD
-                                        || TCOTS_Main.CONFIG.monsters.Necrophages().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
-                                ){
-
+                                if(EntitiesUtil.isNecrophage(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 1:
-                                if(livingTarget.getGroup() == TCOTS_Entities.OGROIDS || target instanceof AbstractPiglinEntity
-                                        || TCOTS_Main.CONFIG.monsters.Ogroids().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
-                                ){
+                                if(EntitiesUtil.isOgroid(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 2:
-                                if(livingTarget.getGroup() == TCOTS_Entities.SPECTERS){
+                                if(EntitiesUtil.isSpecter(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 3:
-                                if(livingTarget.getGroup() == TCOTS_Entities.VAMPIRES){
+                                if(EntitiesUtil.isVampire(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 4:
-                                if(livingTarget.getGroup() == TCOTS_Entities.INSECTOIDS || livingTarget.getGroup() == EntityGroup.ARTHROPOD){
+                                if(EntitiesUtil.isInsectoid(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 5:
-                                if(livingTarget.getGroup() == TCOTS_Entities.BEASTS || target instanceof AnimalEntity || target instanceof RavagerEntity ||
-                                        TCOTS_Main.CONFIG.monsters.Beasts().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
-                                ){
+                                if(EntitiesUtil.isBeast(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 6:
-                                if(livingTarget.getGroup() == TCOTS_Entities.ELEMENTA || target instanceof GolemEntity){
+                                if(EntitiesUtil.isElementa(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 7:
-                                if(livingTarget.getGroup() == TCOTS_Entities.CURSED_ONES){
+                                if(EntitiesUtil.isCursedOne(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 8:
-                                if(livingTarget.getGroup() == TCOTS_Entities.HYBRIDS){
+                                if(EntitiesUtil.isHybrid(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 9:
-                                if(livingTarget.getGroup() == TCOTS_Entities.DRACONIDS){
+                                if(EntitiesUtil.isDraconid(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 10:
-                                if(livingTarget.getGroup() == TCOTS_Entities.RELICTS){
+                                if(EntitiesUtil.isRelict(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
 
                             case 11:
-                                if(livingTarget.getGroup() == EntityGroup.ILLAGER || target instanceof MerchantEntity || target instanceof WitchEntity || target instanceof PlayerEntity
-                                || TCOTS_Main.CONFIG.monsters.Humanoids().contains(Registries.ENTITY_TYPE.getId(target.getType()).toString())
-                                ){
+                                if(EntitiesUtil.isHumanoid(livingTarget)){
                                     LevelOilAssigner(monsterOil);
                                 }
                                 break;
@@ -637,4 +620,25 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private float injectMoonBladeDamage(float value){
         return value*moonbladeExtraDamage;
     }
+
+    //Moonblade
+    @Unique
+    private float wintersBladeExtraDamage = 0.0f;
+
+    @Inject(method = "attack", at = @At("HEAD"))
+    private void getIsFireMonster(Entity target, CallbackInfo ci){
+        wintersBladeExtraDamage = THIS.getMainHandStack().getItem() == TCOTS_Items.WINTERS_BLADE && target instanceof LivingEntity livingTarget && livingTarget.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)? 2.0f : 0.0f;
+    }
+    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
+            , slice = @Slice(
+            from = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/entity/attribute/EntityAttribute;)D", ordinal = 0),
+            to = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
+    )
+    private float injectWintersBladeDamage(float value){
+        return value+wintersBladeExtraDamage;
+    }
+
+
 }

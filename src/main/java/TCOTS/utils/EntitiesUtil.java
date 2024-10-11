@@ -6,12 +6,14 @@ import TCOTS.items.TCOTS_Items;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
-import net.minecraft.entity.mob.AbstractPiglinEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.mob.*;
+import net.minecraft.entity.passive.AllayEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.GolemEntity;
+import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.VehicleEntity;
 import net.minecraft.item.ItemStack;
@@ -165,32 +167,101 @@ public class EntitiesUtil {
 
     /**
     Checks if the entity it's a magical monster
-     @param livingTarget The entity to check
+     @param entity The entity to check
      */
 
-    public static boolean isMonster(LivingEntity livingTarget){
+    public static boolean isMonster(LivingEntity entity){
         return
-                //Necrophage
-                (livingTarget.getGroup() == TCOTS_Entities.NECROPHAGES || livingTarget.getGroup() == EntityGroup.UNDEAD || TCOTS_Main.CONFIG.monsters.Necrophages().contains(Registries.ENTITY_TYPE.getId(livingTarget.getType()).toString())) ||
-                //Ogroid
-                (livingTarget.getGroup() == TCOTS_Entities.OGROIDS || livingTarget instanceof AbstractPiglinEntity || TCOTS_Main.CONFIG.monsters.Ogroids().contains(Registries.ENTITY_TYPE.getId(livingTarget.getType()).toString())) ||
-                //Specter
-                (livingTarget.getGroup() == TCOTS_Entities.SPECTERS) ||
-                //Vampires
-                (livingTarget.getGroup() == TCOTS_Entities.VAMPIRES) ||
-                //Insectoid
-                (livingTarget.getGroup() == TCOTS_Entities.INSECTOIDS || livingTarget.getGroup() == EntityGroup.ARTHROPOD) ||
-                //Elementa
-                (livingTarget.getGroup() == TCOTS_Entities.ELEMENTA || livingTarget instanceof GolemEntity) ||
-                //Cursed One
-                (livingTarget.getGroup() == TCOTS_Entities.CURSED_ONES) ||
-                //Hybrid
-                (livingTarget.getGroup() == TCOTS_Entities.HYBRIDS) ||
-                //Draconid
-                (livingTarget.getGroup() == TCOTS_Entities.DRACONIDS) ||
-                //Relict
-                (livingTarget.getGroup() == TCOTS_Entities.CURSED_ONES)
-                ;
+                isNecrophage(entity) ||
+                isOgroid(entity)||
+                isSpecter(entity) ||
+                isVampire(entity) ||
+                isInsectoid(entity) ||
+                isElementa(entity) ||
+                isCursedOne(entity) ||
+                isHybrid(entity) ||
+                isDraconid(entity) ||
+                isRelict(entity);
+    }
+
+    public static boolean isNecrophage(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.NECROPHAGES ||
+                entity.getGroup() == EntityGroup.UNDEAD ||
+                TCOTS_Main.CONFIG.monsters.Necrophages().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isOgroid(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.OGROIDS ||
+                entity instanceof AbstractPiglinEntity ||
+                TCOTS_Main.CONFIG.monsters.Ogroids().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isSpecter(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.SPECTERS ||
+                entity instanceof GhastEntity ||
+                TCOTS_Main.CONFIG.monsters.Specters().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isVampire(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.VAMPIRES ||
+                TCOTS_Main.CONFIG.monsters.Vampires().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isInsectoid(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.INSECTOIDS ||
+                entity.getGroup() == EntityGroup.ARTHROPOD ||
+                TCOTS_Main.CONFIG.monsters.Insectoids().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isBeast(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.BEASTS ||
+                entity instanceof AnimalEntity ||
+                TCOTS_Main.CONFIG.monsters.Beasts().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isElementa(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.ELEMENTA ||
+                entity instanceof AllayEntity  ||
+                entity instanceof GolemEntity  ||
+                entity instanceof BlazeEntity  ||
+                entity instanceof BreezeEntity ||
+                entity instanceof SlimeEntity  ||
+                entity instanceof VexEntity ||
+                TCOTS_Main.CONFIG.monsters.Elementa().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isHybrid(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.HYBRIDS ||
+                TCOTS_Main.CONFIG.monsters.Hybrids().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isCursedOne(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.CURSED_ONES ||
+                entity instanceof CreeperEntity ||
+                entity instanceof RavagerEntity ||
+                TCOTS_Main.CONFIG.monsters.Cursed_Ones().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isDraconid(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.DRACONIDS ||
+                entity instanceof EnderDragonEntity ||
+                TCOTS_Main.CONFIG.monsters.Draconids().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isRelict(LivingEntity entity){
+        return entity.getGroup() == TCOTS_Entities.RELICTS ||
+                entity instanceof EndermanEntity ||
+                entity instanceof GuardianEntity ||
+                entity instanceof WardenEntity   ||
+                TCOTS_Main.CONFIG.monsters.Relicts().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
+    }
+
+    public static boolean isHumanoid(LivingEntity entity){
+        return entity.getGroup() == EntityGroup.ILLAGER ||
+                entity instanceof MerchantEntity ||
+                entity instanceof WitchEntity ||
+                entity instanceof PlayerEntity ||
+                TCOTS_Main.CONFIG.monsters.Humanoids().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
 
 }

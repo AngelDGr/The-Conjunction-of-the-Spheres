@@ -41,7 +41,7 @@ than the last. They also can be [refilled](^tcots-witcher:alchemy_basics/refilli
 **{red}List of Oils{}**
 - {#b71520}Necrophage Oil{}: {black}Extra damage against necrophages and undead{}.
 - {#cc341d}Ogroid Oil{}: {black}Extra damage against ogroids and piglins{}.
-- {#411106}Beast Oil{}: {black}Extra damage against beasts, animals and the ravager{}.
+- {#411106}Beast Oil{}: {black}Extra damage against beasts and animals{}.
 - {#00752b}Hanged Man's Venom{}: {black}Extra damage against villagers, illagers and humans{}.
 
 

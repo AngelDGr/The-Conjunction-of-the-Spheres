@@ -13,9 +13,15 @@ public enum TCOTS_ToolMaterials implements ToolMaterial {
 
     MOONBLADE(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.GOLD_INGOT)),
 
-    WINTERS_BLADE(MiningLevels.NETHERITE, 2031, 9.0f, 4.0f, 30, () -> Ingredient.ofItems(Items.NETHERITE_INGOT))
-    ;
+    DYAEBL(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.IRON_INGOT)),
 
+    WINTERS_BLADE(MiningLevels.NETHERITE, 2031, 9.0f, 4.0f, 30, () -> Ingredient.ofItems(Items.NETHERITE_INGOT)),
+
+    ARDAENYE(MiningLevels.NETHERITE, 1400, 9.0f, 4.0f, 20, () -> Ingredient.ofItems(TCOTS_Items.DEVOURER_TEETH))
+
+
+
+    ;
 
 
     private final int miningLevel;

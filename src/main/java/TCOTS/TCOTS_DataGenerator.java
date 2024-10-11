@@ -870,6 +870,41 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .offerTo(exporter);
                 }
 
+                //Ard'aenye
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.ARDAENYE)
+                            .pattern("BDC")
+                            .pattern("DSD")
+                            .pattern("CDB")
+                            .input('C', TCOTS_Items.CADAVERINE)
+                            .input('D', TCOTS_Items.DEVOURER_TEETH)
+                            .input('B', Items.BLAZE_POWDER)
+                            .input('S', Items.DIAMOND_SWORD)
+
+
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
+                            .criterion(FabricRecipeProvider.hasItem(Items.DIAMOND_SWORD), FabricRecipeProvider.conditionsFromItem(Items.DIAMOND_SWORD))
+                            .offerTo(exporter);
+                }
+
+                //D'yaebl
+                {
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.DYAEBL)
+                            .pattern("GRG")
+                            .pattern("RSR")
+                            .pattern("GRG")
+                            .input('R', TCOTS_Items.ROTFIEND_BLOOD)
+                            .input('G', TCOTS_Items.GHOUL_BLOOD)
+                            .input('S', Items.IRON_SWORD)
+
+
+
+                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ROTFIEND_BLOOD), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ROTFIEND_BLOOD))
+                            .criterion(FabricRecipeProvider.hasItem(Items.IRON_SWORD), FabricRecipeProvider.conditionsFromItem(Items.IRON_SWORD))
+                            .offerTo(exporter);
+                }
+
                 //Knight Crossbow
                 {
                     ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.KNIGHT_CROSSBOW)

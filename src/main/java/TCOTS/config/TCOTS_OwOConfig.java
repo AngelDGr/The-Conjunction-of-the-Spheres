@@ -20,6 +20,16 @@ public class TCOTS_OwOConfig {
         public List<String> Ogroids = new ArrayList<>(List.of());
         public List<String> Beasts = new ArrayList<>(List.of());
         public List<String> Humanoids = new ArrayList<>(List.of());
+
+        //Upcoming types
+        public List<String> Specters = new ArrayList<>(List.of());
+        public List<String> Vampires = new ArrayList<>(List.of());
+        public List<String> Insectoids = new ArrayList<>(List.of());
+        public List<String> Elementa = new ArrayList<>(List.of());
+        public List<String> Hybrids = new ArrayList<>(List.of());
+        public List<String> Cursed_Ones = new ArrayList<>(List.of());
+        public List<String> Draconids = new ArrayList<>(List.of());
+        public List<String> Relicts = new ArrayList<>(List.of());
     }
 
     @Nest

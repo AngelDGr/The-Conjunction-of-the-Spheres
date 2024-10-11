@@ -1,14 +1,8 @@
 package TCOTS.mixin;
 
 import TCOTS.interfaces.MaxToxicityIncreaser;
-import TCOTS.items.armor.ManticoreArmorItem;
-import TCOTS.items.armor.RavensArmorItem;
-import TCOTS.items.armor.WarriorsLeatherArmorItem;
 import TCOTS.utils.EntitiesUtil;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
@@ -22,7 +16,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -115,47 +108,6 @@ public abstract class ItemStackMixin {
 
     }
 
-    @Unique
-    private void setFullSetBonus(List<Text> mainTooltip, Class<? extends ArmorItem> armorClass, List<MutableText> bonusTooltip){
-        if(
-                MinecraftClient.getInstance()!=null && (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) || InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_RIGHT_SHIFT)) &&
-                        THIS.getItem().getClass() == armorClass ){
-            mainTooltip.add(Text.translatable("tooltip.tcots-witcher.generic_armor.full_set.bonus").formatted(Formatting.DARK_GREEN));
-
-            bonusTooltip.forEach(
-                    text -> mainTooltip.add(ScreenTexts.space().append(text.formatted(Formatting.DARK_GREEN, Formatting.ITALIC)))
-            );
-            if(THIS.hasEnchantments()) mainTooltip.add(ScreenTexts.EMPTY);
-        } else if(THIS.getItem().getClass() == armorClass){
-            mainTooltip.add(Text.translatable("tooltip.tcots-witcher.generic_armor.full_set.bonus").formatted(Formatting.GRAY));
-            mainTooltip.add(ScreenTexts.space().append(Text.translatable("tooltip.tcots-witcher.generic_armor.full_set.more").formatted(Formatting.GRAY, Formatting.ITALIC)));
-            if(THIS.hasEnchantments()) mainTooltip.add(ScreenTexts.EMPTY);
-        }
-    }
-
-    //Armors
-    @ModifyVariable(method = "getTooltip", at = @At(
-            value = "INVOKE"
-            ,target = "Lnet/minecraft/item/Item;appendTooltip(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Ljava/util/List;Lnet/minecraft/client/item/TooltipContext;)V",
-            ordinal = 0))
-    private List<Text> armorsSetFullSetBonusTooltip(List<Text> tooltip){
-
-        this.setFullSetBonus(tooltip, ManticoreArmorItem.class,
-                List.of(Text.translatable("tooltip.tcots-witcher.manticore_armor.full_set1"),
-                        Text.translatable("tooltip.tcots-witcher.manticore_armor.full_set2"),
-                        Text.translatable("tooltip.tcots-witcher.manticore_armor.full_set3")));
-
-        this.setFullSetBonus(tooltip, WarriorsLeatherArmorItem.class,
-                List.of(Text.translatable("tooltip.tcots-witcher.warriors_leather_armor.full_set1")));
-
-        this.setFullSetBonus(tooltip, RavensArmorItem.class,
-                List.of(Text.translatable("tooltip.tcots-witcher.ravens_armor.full_set1"),
-                        Text.translatable("tooltip.tcots-witcher.ravens_armor.full_set2"),
-                        Text.translatable("tooltip.tcots-witcher.ravens_armor.full_set3")));
-
-        return tooltip;
-    }
-
 
     //Manticore Armor
     @ModifyVariable(method = "getTooltip", at = @At(
@@ -184,6 +136,5 @@ public abstract class ItemStackMixin {
             cir.setReturnValue(this.getItem().getMaxUseTime(THIS)/2);
         }
     }
-
 
 }

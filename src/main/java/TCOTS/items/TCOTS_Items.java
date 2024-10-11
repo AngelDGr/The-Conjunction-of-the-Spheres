@@ -144,9 +144,9 @@ public class TCOTS_Items {
     //  * Witcher gear swords from W3
     //  * Aerondight: Add with some quest/ritual involving the Lady of the Lake
     //  * Addan Deith: Extra damage to Specters, found in some special place
-    //    D'yaebl: Makes enemies bleed
-    //    Ard'aenye: Massive damage
-    //    Winter's Blade: Can freeze
+    //D'yaebl: Makes enemies bleed
+    //Ard'aenye: Massive damage
+    //Winter's Blade: Can freeze
     //Moonblade: Massive damage to monsters
 
 
@@ -164,7 +164,7 @@ public class TCOTS_Items {
 
     public static final TagKey<Item> MONSTER_BLOOD = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "monster_blood"));
 
-    //TODO: Fix the achievement to mobs works with Monster Hunter
+    //TODO: Fix the achievement to mobs works with Monster Hunter?? Probably impossible
 
     public static Item DROWNER_SPAWN_EGG;
     public static Item DROWNER_TONGUE;
@@ -208,9 +208,9 @@ public class TCOTS_Items {
     //  xFoglet
     //  xScurver
     //  xDevourer
-    //TODO: Add more uses to Cadaverine
+    //xTODO: Add more uses to Cadaverine
     public static Item GRAVEIR_BONE;
-    //TODO: Add more uses to Graveir Bone
+    //xTODO: Add more uses to Graveir Bone
 
     public static Item BULLVORE_SPAWN_EGG;
     public static Item BULLVORE_HORN_FRAGMENT;
@@ -928,6 +928,9 @@ public class TCOTS_Items {
     public static Item GVALCHIR;
     public static Item MOONBLADE;
     public static Item WINTERS_BLADE;
+    public static Item ARDAENYE;
+    public static Item DYAEBL;
+
 
     public static Item WARRIORS_LEATHER_JACKET;
     public static Item WARRIORS_LEATHER_TROUSERS;
@@ -968,25 +971,38 @@ public class TCOTS_Items {
         {
             GVALCHIR = registerItem("gvalchir",
                     new SwordWithTooltip(TCOTS_ToolMaterials.GVALCHIR, 3, -2.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON),
+                            Text.translatable("tooltip.tcots-witcher.gvalchir").formatted(Formatting.GRAY, Formatting.ITALIC),
                             List.of(
-                                    Text.translatable("tooltip.tcots-witcher.gvalchir").formatted(Formatting.GRAY, Formatting.ITALIC),
                                     Text.translatable("tooltip.tcots-witcher.gvalchir.extra").formatted(Formatting.DARK_GREEN))
                     ));
 
             MOONBLADE = registerItem("moonblade",
                     new SwordWithTooltip(TCOTS_ToolMaterials.MOONBLADE, 3, -2.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON),
+                            Text.translatable("tooltip.tcots-witcher.moonblade").formatted(Formatting.GRAY, Formatting.ITALIC),
                             List.of(
-                                    Text.translatable("tooltip.tcots-witcher.moonblade").formatted(Formatting.GRAY, Formatting.ITALIC),
                                     Text.translatable("tooltip.tcots-witcher.moonblade.extra").formatted(Formatting.DARK_GREEN))
+                    ));
+
+            DYAEBL = registerItem("dyaebl",
+                    new SwordWithTooltip(TCOTS_ToolMaterials.DYAEBL, 3, -2.4f, new FabricItemSettings().rarity(Rarity.UNCOMMON),
+                            Text.translatable("tooltip.tcots-witcher.dyaebl").formatted(Formatting.GRAY, Formatting.ITALIC),
+                            List.of(
+                                    Text.translatable("tooltip.tcots-witcher.dyaebl.extra").formatted(Formatting.DARK_RED))
                     ));
 
             WINTERS_BLADE = registerItem("winters_blade",
                     new SwordWithTooltip(TCOTS_ToolMaterials.WINTERS_BLADE, 4, -2.4f, new FabricItemSettings().rarity(Rarity.RARE),
+                            Text.translatable("tooltip.tcots-witcher.winters_blade").formatted(Formatting.GRAY, Formatting.ITALIC),
                             List.of(
-                                    Text.translatable("tooltip.tcots-witcher.winters_blade").formatted(Formatting.GRAY, Formatting.ITALIC),
-                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra").withColor(0x007b77)
-                            )
+                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra").withColor(0x007b77),
+                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra2").withColor(0x007b77),
+                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra3").withColor(0x007b77))
                     ));
+
+            ARDAENYE = registerItem("ardaenye",
+                new SwordItem(TCOTS_ToolMaterials.ARDAENYE, 4, -2.6f, new FabricItemSettings()));
+
+
         }
 
         //Crossbows

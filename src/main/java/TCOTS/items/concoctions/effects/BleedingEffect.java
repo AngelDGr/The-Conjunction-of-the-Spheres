@@ -12,13 +12,12 @@ public class BleedingEffect extends StatusEffect {
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return true;
+        return duration%40==0;
     }
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if(entity.age%40==0){
-            entity.damage(TCOTS_DamageTypes.bleedDamage(entity.getWorld()), amplifier+1);
-        }
+        entity.damage(TCOTS_DamageTypes.bleedDamage(entity.getWorld()), amplifier+1);
     }
+
 }
