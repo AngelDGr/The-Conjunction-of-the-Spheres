@@ -53,6 +53,7 @@
     "CrossbowMixins$HeldItemRendererMixin",
     "CrossbowMixins$PlayerEntityRendererMixin",
     "GameRendererMixin",
+    "HorseEntityRendererMixin",
     "LightmapTextureManagerMixin",
     "PlayerEntityRendererMixin",
     "northern_wind.BlazeEntityMixin",

@@ -6,6 +6,7 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.armor.ManticoreArmorItem;
 import TCOTS.items.armor.RavensArmorItem;
 import TCOTS.items.armor.WarriorsLeatherArmorItem;
+import TCOTS.items.armor.WitcherHorseArmorItem;
 import TCOTS.items.blocks.AlchemyTableItem;
 import TCOTS.items.blocks.HerbalTableItem;
 import TCOTS.items.blocks.MonsterNestItem;
@@ -150,6 +151,11 @@ public class TCOTS_Items {
     //Moonblade: Massive damage to monsters
 
 
+    //TODO: Add Horse Armors
+    // Caed Myrkvid Armor
+    // Knight errant's armor
+    //Undvik Armor
+    //TODO: Add crafting and possible bonus?
 
     //xTODO: Add use to the items
         //xTODO: Drowner Tongue usable for Killer Whale potion
@@ -919,6 +925,7 @@ public class TCOTS_Items {
     }
 
     public static Item CURED_MONSTER_LEATHER;
+    //Weapons
     public static Item KNIGHT_CROSSBOW;
     public static Item BASE_BOLT;
     public static Item BLUNT_BOLT;
@@ -932,6 +939,7 @@ public class TCOTS_Items {
     public static Item DYAEBL;
 
 
+    //Armors
     public static Item WARRIORS_LEATHER_JACKET;
     public static Item WARRIORS_LEATHER_TROUSERS;
     public static Item WARRIORS_LEATHER_BOOTS;
@@ -944,6 +952,9 @@ public class TCOTS_Items {
     public static Item RAVENS_TROUSERS;
     public static Item RAVENS_BOOTS;
 
+    //Horse Armor
+    public static Item TUNDRA_HORSE_ARMOR;
+
     public static void registerWeapons_Armors(){
 
         //Ingredients
@@ -951,20 +962,20 @@ public class TCOTS_Items {
             CURED_MONSTER_LEATHER=registerItem("cured_monster_leather", new Item(new FabricItemSettings()));
         }
 
-
-        //Armor
+        //Crossbows
         {
-            MANTICORE_ARMOR = registerItem("manticore_armor", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
-            MANTICORE_TROUSERS = registerItem("manticore_trousers", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.LEGGINGS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
-            MANTICORE_BOOTS = registerItem("manticore_boots", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.BOOTS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+            KNIGHT_CROSSBOW = registerItem("knight_crossbow",
+                    new KnightCrossbow(new FabricItemSettings().maxCount(1).maxDamage(600)));
 
-            WARRIORS_LEATHER_JACKET = registerItem("warriors_leather_jacket", new WarriorsLeatherArmorItem(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
-            WARRIORS_LEATHER_TROUSERS = registerItem("warriors_leather_trousers", new WarriorsLeatherArmorItem(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
-            WARRIORS_LEATHER_BOOTS = registerItem("warriors_leather_boots", new WarriorsLeatherArmorItem(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.BOOTS, new FabricItemSettings()));
+            BASE_BOLT = registerItem("base_bolt", new BoltItem(new FabricItemSettings(), "base_bolt"));
 
-            RAVENS_ARMOR = registerItem("ravens_armor", new RavensArmorItem(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.CHESTPLATE, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
-            RAVENS_TROUSERS = registerItem("ravens_trousers", new RavensArmorItem(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.LEGGINGS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
-            RAVENS_BOOTS = registerItem("ravens_boots", new RavensArmorItem(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.BOOTS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+            BLUNT_BOLT = registerItem("blunt_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "blunt_bolt"));
+
+            PRECISION_BOLT = registerItem("precision_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "precision_bolt"));
+
+            EXPLODING_BOLT = registerItem("exploding_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "exploding_bolt"));
+
+            BROADHEAD_BOLT = registerItem("broadhead_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "broadhead_bolt"));
         }
 
         //Swords
@@ -1000,28 +1011,30 @@ public class TCOTS_Items {
                     ));
 
             ARDAENYE = registerItem("ardaenye",
-                new SwordItem(TCOTS_ToolMaterials.ARDAENYE, 4, -2.6f, new FabricItemSettings()));
+                    new SwordItem(TCOTS_ToolMaterials.ARDAENYE, 4, -2.6f, new FabricItemSettings()));
 
 
         }
 
-        //Crossbows
+        //Armor
         {
-            KNIGHT_CROSSBOW = registerItem("knight_crossbow",
-                    new KnightCrossbow(new FabricItemSettings().maxCount(1).maxDamage(600)));
+            MANTICORE_ARMOR = registerItem("manticore_armor", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+            MANTICORE_TROUSERS = registerItem("manticore_trousers", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.LEGGINGS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+            MANTICORE_BOOTS = registerItem("manticore_boots", new ManticoreArmorItem(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.BOOTS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
 
-            BASE_BOLT = registerItem("base_bolt", new BoltItem(new FabricItemSettings(), "base_bolt"));
+            WARRIORS_LEATHER_JACKET = registerItem("warriors_leather_jacket", new WarriorsLeatherArmorItem(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
+            WARRIORS_LEATHER_TROUSERS = registerItem("warriors_leather_trousers", new WarriorsLeatherArmorItem(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
+            WARRIORS_LEATHER_BOOTS = registerItem("warriors_leather_boots", new WarriorsLeatherArmorItem(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.BOOTS, new FabricItemSettings()));
 
-            BLUNT_BOLT = registerItem("blunt_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "blunt_bolt"));
-
-            PRECISION_BOLT = registerItem("precision_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "precision_bolt"));
-
-            EXPLODING_BOLT = registerItem("exploding_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "exploding_bolt"));
-
-            BROADHEAD_BOLT = registerItem("broadhead_bolt", new BoltItem(new FabricItemSettings().maxCount(32), "broadhead_bolt"));
+            RAVENS_ARMOR = registerItem("ravens_armor", new RavensArmorItem(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.CHESTPLATE, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+            RAVENS_TROUSERS = registerItem("ravens_trousers", new RavensArmorItem(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.LEGGINGS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
+            RAVENS_BOOTS = registerItem("ravens_boots", new RavensArmorItem(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.BOOTS, new FabricItemSettings().rarity(Rarity.UNCOMMON)));
         }
 
-
+        //Horse Armor
+        {
+            TUNDRA_HORSE_ARMOR = registerItem("tundra_horse_armor", new WitcherHorseArmorItem(4, "tundra", new FabricItemSettings().maxCount(1)));
+        }
     }
 
     //xTODO: Add buy mechanic to alcohol

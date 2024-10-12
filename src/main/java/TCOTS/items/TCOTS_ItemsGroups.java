@@ -128,6 +128,8 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.RAVENS_ARMOR);
                                 entries.add(TCOTS_Items.RAVENS_TROUSERS);
                                 entries.add(TCOTS_Items.RAVENS_BOOTS);
+
+                                entries.add(TCOTS_Items.TUNDRA_HORSE_ARMOR);
                             }
 
 

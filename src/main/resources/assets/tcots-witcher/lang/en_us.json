@@ -578,60 +578,9 @@
     "tooltip.moon_dust.extra":   "Stop Creepers from exploding.",
     "effect.tcots-witcher.moon_dust": "Moon Dust Splinters",
 
-    "item.tcots-witcher.gvalchir": "G'valchir",
-    "tooltip.tcots-witcher.gvalchir": "A powerful runic sword",
-    "tooltip.tcots-witcher.gvalchir.extra": "+75% Armor Penetration",
-
-    "item.tcots-witcher.moonblade": "Moonblade",
-    "tooltip.tcots-witcher.moonblade": "A powerful holy sword",
-    "tooltip.tcots-witcher.moonblade.extra": "+50% Attack Damage against monsters",
-
-    "item.tcots-witcher.dyaebl": "D'yaebl",
-    "tooltip.tcots-witcher.dyaebl": "Coated in monster blood",
-    "tooltip.tcots-witcher.dyaebl.extra": " 20% Chance to cause bleeding",
-
-
-    "item.tcots-witcher.winters_blade": "Winter's Blade",
-    "tooltip.tcots-witcher.winters_blade": "Contains the winter itself",
-    "tooltip.tcots-witcher.winters_blade.extra":  "+2 Attack Damage to fiery enemies",
-    "tooltip.tcots-witcher.winters_blade.extra2": " 20% Chance to freeze enemies",
-    "tooltip.tcots-witcher.winters_blade.extra3": " Extinguish flames from the user",
-
-    "item.tcots-witcher.ardaenye": "Ard'aenye",
-
-
 
 
     "item.tcots-witcher.cured_monster_leather": "Cured Monster Leather",
-
-
-    "tooltip.tcots-witcher.generic_tooltip.full_set_bonus": "Full Set Bonus:",
-    "tooltip.tcots-witcher.generic_tooltip.see_more": "Pulse shift to see...",
-    "tooltip.tcots-witcher.generic_tooltip.special_abilities": "Special Abilities:",
-
-
-
-    "item.tcots-witcher.manticore_armor": "Manticore Armor",
-    "item.tcots-witcher.manticore_trousers": "Manticore Trousers",
-    "item.tcots-witcher.manticore_boots": "Manticore Boots",
-    "tooltip.tcots-witcher.manticore_armor.toxicity": "+%s Maximum Toxicity",
-    "tooltip.tcots-witcher.manticore_armor.full_set1": "+75% Bombs cooldown reduction",
-    "tooltip.tcots-witcher.manticore_armor.full_set2": "+50% Potion drinking time reduction",
-    "tooltip.tcots-witcher.manticore_armor.full_set3": "+2 Refilling slots when using alcohol",
-
-
-    "item.tcots-witcher.warriors_leather_jacket": "Warrior's Leather Jacket",
-    "item.tcots-witcher.warriors_leather_trousers": "Warrior's Leather Trousers",
-    "item.tcots-witcher.warriors_leather_boots": "Warrior's Leather Boots",
-    "tooltip.tcots-witcher.warriors_leather_armor.full_set1": "+25% Resistance to damage from monsters",
-
-    "item.tcots-witcher.ravens_armor": "Raven's Armor",
-    "item.tcots-witcher.ravens_trousers": "Raven's Trousers",
-    "item.tcots-witcher.ravens_boots": "Raven's Boots",
-    "tooltip.tcots-witcher.ravens_armor.full_set1": "+10% Movement Speed",
-    "tooltip.tcots-witcher.ravens_armor.full_set2": "+50% Resistance to damage from monsters",
-    "tooltip.tcots-witcher.ravens_armor.full_set3": "+2 Attack Damage against monsters",
-
 
 
     "item.tcots-witcher.knight_crossbow": "Knight Crossbow",
@@ -660,6 +609,57 @@
     "effect.tcots-witcher.bleeding": "Bleeding",
     "death.attack.bleeding": "%1$s bled to death",
     "death.attack.bleeding.player": "%1$s bled to death while fighting %2$s",
+
+
+    "item.tcots-witcher.gvalchir": "G'valchir",
+    "tooltip.tcots-witcher.gvalchir": "A powerful runic sword",
+    "tooltip.tcots-witcher.gvalchir.extra": "+75% Armor Penetration",
+
+    "item.tcots-witcher.moonblade": "Moonblade",
+    "tooltip.tcots-witcher.moonblade": "A powerful holy sword",
+    "tooltip.tcots-witcher.moonblade.extra": "+50% Attack Damage against monsters",
+
+    "item.tcots-witcher.dyaebl": "D'yaebl",
+    "tooltip.tcots-witcher.dyaebl": "Coated in monster blood",
+    "tooltip.tcots-witcher.dyaebl.extra": " 20% Chance to cause bleeding",
+
+    "item.tcots-witcher.winters_blade": "Winter's Blade",
+    "tooltip.tcots-witcher.winters_blade": "Contains the winter itself",
+    "tooltip.tcots-witcher.winters_blade.extra":  "+2 Attack Damage to fiery enemies",
+    "tooltip.tcots-witcher.winters_blade.extra2": " 20% Chance to freeze enemies",
+    "tooltip.tcots-witcher.winters_blade.extra3": " Extinguish flames from the user",
+
+    "item.tcots-witcher.ardaenye": "Ard'aenye",
+
+
+    "tooltip.tcots-witcher.generic_tooltip.full_set_bonus": "Full Set Bonus:",
+    "tooltip.tcots-witcher.generic_tooltip.see_more": "Pulse shift to see...",
+    "tooltip.tcots-witcher.generic_tooltip.special_abilities": "Special Abilities:",
+
+    "item.tcots-witcher.manticore_armor": "Manticore Armor",
+    "item.tcots-witcher.manticore_trousers": "Manticore Trousers",
+    "item.tcots-witcher.manticore_boots": "Manticore Boots",
+    "tooltip.tcots-witcher.manticore_armor.toxicity": "+%s Maximum Toxicity",
+    "tooltip.tcots-witcher.manticore_armor.full_set1": "+75% Bombs cooldown reduction",
+    "tooltip.tcots-witcher.manticore_armor.full_set2": "+50% Potion drinking time reduction",
+    "tooltip.tcots-witcher.manticore_armor.full_set3": "+2 Refilling slots when using alcohol",
+
+    "item.tcots-witcher.warriors_leather_jacket": "Warrior's Leather Jacket",
+    "item.tcots-witcher.warriors_leather_trousers": "Warrior's Leather Trousers",
+    "item.tcots-witcher.warriors_leather_boots": "Warrior's Leather Boots",
+    "tooltip.tcots-witcher.warriors_leather_armor.full_set1": "+25% Resistance to damage from monsters",
+
+    "item.tcots-witcher.ravens_armor": "Raven's Armor",
+    "item.tcots-witcher.ravens_trousers": "Raven's Trousers",
+    "item.tcots-witcher.ravens_boots": "Raven's Boots",
+    "tooltip.tcots-witcher.ravens_armor.full_set1": "+10% Movement Speed",
+    "tooltip.tcots-witcher.ravens_armor.full_set2": "+50% Resistance to damage from monsters",
+    "tooltip.tcots-witcher.ravens_armor.full_set3": "+2 Attack Damage against monsters",
+
+
+    "item.tcots-witcher.tundra_horse_armor": "Tundra Horse Armor",
+
+
 
 
 
