@@ -54,6 +54,7 @@
     "CrossbowMixins$PlayerEntityRendererMixin",
     "GameRendererMixin",
     "HorseEntityRendererMixin",
+    "HorseEntityRendererMixin$PowderSnow_TundraArmor",
     "LightmapTextureManagerMixin",
     "PlayerEntityRendererMixin",
     "northern_wind.BlazeEntityMixin",

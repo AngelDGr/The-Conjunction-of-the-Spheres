@@ -791,6 +791,21 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             this.getOrCreateTagBuilder(TCOTS_Items.MONSTER_BLOOD)
                     .add(TCOTS_Items.ROTFIEND_BLOOD)
                     .add(TCOTS_Items.GHOUL_BLOOD);
+
+            this.getOrCreateTagBuilder(ItemTags.FREEZE_IMMUNE_WEARABLES)
+                    .add(TCOTS_Items.WARRIORS_LEATHER_BOOTS)
+                    .add(TCOTS_Items.WARRIORS_LEATHER_TROUSERS)
+                    .add(TCOTS_Items.WARRIORS_LEATHER_JACKET)
+
+                    .add(TCOTS_Items.MANTICORE_BOOTS)
+                    .add(TCOTS_Items.MANTICORE_TROUSERS)
+                    .add(TCOTS_Items.MANTICORE_ARMOR)
+
+                    .add(TCOTS_Items.RAVENS_BOOTS)
+                    .add(TCOTS_Items.RAVENS_TROUSERS)
+                    .add(TCOTS_Items.RAVENS_ARMOR)
+
+                    .add(TCOTS_Items.TUNDRA_HORSE_ARMOR);
         }
     }
 
@@ -807,7 +822,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             {
                 //Alchemy Table
                 {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, TCOTS_Items.ALCHEMY_TABLE_ITEM)
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, TCOTS_Items.ALCHEMY_TABLE_ITEM)
                             .pattern("B B")
                             .pattern("CWC")
                             .pattern("WWW")
@@ -821,7 +836,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Herbal Table
                 {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, TCOTS_Items.HERBAL_TABLE_ITEM)
+                    ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, TCOTS_Items.HERBAL_TABLE_ITEM)
                             .pattern("FF")
                             .pattern("WW")
                             .pattern("WW")
@@ -832,305 +847,6 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .criterion(FabricRecipeProvider.hasItem(Items.POPPY), FabricRecipeProvider.conditionsFromItem(Items.POPPY))
                             .criterion(FabricRecipeProvider.hasItem(Items.CORNFLOWER), FabricRecipeProvider.conditionsFromItem(Items.CORNFLOWER))
                             .offerTo(exporter);
-                }
-
-                //G'valchir
-                {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.GVALCHIR)
-                            .pattern("FHD")
-                            .pattern("HSH")
-                            .pattern("DHF")
-                            .input('F', TCOTS_Items.FOGLET_TEETH)
-                            .input('H', TCOTS_Items.BULLVORE_HORN_FRAGMENT)
-                            .input('D', TCOTS_Items.DEVOURER_TEETH)
-                            .input('S', Items.IRON_SWORD)
-
-
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT))
-                            .criterion(FabricRecipeProvider.hasItem(Items.IRON_SWORD), FabricRecipeProvider.conditionsFromItem(Items.IRON_SWORD))
-                            .offerTo(exporter);
-                }
-
-                //Moonblade
-                {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MOONBLADE)
-                            .pattern("HBG")
-                            .pattern("BSB")
-                            .pattern("GBH")
-                            .input('G', TCOTS_Items.GRAVEIR_BONE)
-                            .input('H', TCOTS_Items.NEKKER_HEART)
-                            .input('B', TCOTS_Items.MONSTER_BLOOD)
-                            .input('S', Items.GOLDEN_SWORD)
-
-
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.GRAVEIR_BONE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.GRAVEIR_BONE))
-                            .criterion(FabricRecipeProvider.hasItem(Items.GOLDEN_SWORD), FabricRecipeProvider.conditionsFromItem(Items.GOLDEN_SWORD))
-                            .offerTo(exporter);
-                }
-
-                //Ard'aenye
-                {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.ARDAENYE)
-                            .pattern("BDC")
-                            .pattern("DSD")
-                            .pattern("CDB")
-                            .input('C', TCOTS_Items.CADAVERINE)
-                            .input('D', TCOTS_Items.DEVOURER_TEETH)
-                            .input('B', Items.BLAZE_POWDER)
-                            .input('S', Items.DIAMOND_SWORD)
-
-
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
-                            .criterion(FabricRecipeProvider.hasItem(Items.DIAMOND_SWORD), FabricRecipeProvider.conditionsFromItem(Items.DIAMOND_SWORD))
-                            .offerTo(exporter);
-                }
-
-                //D'yaebl
-                {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.DYAEBL)
-                            .pattern("GRG")
-                            .pattern("RSR")
-                            .pattern("GRG")
-                            .input('R', TCOTS_Items.ROTFIEND_BLOOD)
-                            .input('G', TCOTS_Items.GHOUL_BLOOD)
-                            .input('S', Items.IRON_SWORD)
-
-
-
-                            .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ROTFIEND_BLOOD), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ROTFIEND_BLOOD))
-                            .criterion(FabricRecipeProvider.hasItem(Items.IRON_SWORD), FabricRecipeProvider.conditionsFromItem(Items.IRON_SWORD))
-                            .offerTo(exporter);
-                }
-
-                //Knight Crossbow
-                {
-                    ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.KNIGHT_CROSSBOW)
-                            .pattern("IWI")
-                            .pattern("LHL")
-                            .pattern(" S ")
-                            .input('I', Items.IRON_BLOCK)
-                            .input('W', ItemTags.WOOL)
-                            .input('L', Items.LEATHER)
-                            .input('H', Items.TRIPWIRE_HOOK)
-                            .input('S', Items.STICK)
-
-                            .criterion(FabricRecipeProvider.hasItem(Items.IRON_BLOCK), FabricRecipeProvider.conditionsFromItem(Items.IRON_BLOCK))
-                            .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
-                            .criterion(FabricRecipeProvider.hasItem(Items.TRIPWIRE_HOOK), FabricRecipeProvider.conditionsFromItem(Items.TRIPWIRE_HOOK))
-                            .offerTo(exporter);
-                }
-
-                //Crossbow Bolts
-                {
-                    //Normal Bolt
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BASE_BOLT, 2)
-                                .pattern(" I ")
-                                .pattern("FSF")
-                                .input('I', Items.IRON_INGOT)
-                                .input('F', Items.FEATHER)
-                                .input('S', Items.STICK)
-
-                                .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT), FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
-                                .criterion(FabricRecipeProvider.hasItem(Items.FEATHER), FabricRecipeProvider.conditionsFromItem(Items.FEATHER))
-                                .offerTo(exporter);
-                    }
-
-                    //Blunt Bolt
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BLUNT_BOLT, 2)
-                                .pattern("  P")
-                                .pattern("L# ")
-                                .pattern("TL ")
-                                .input('P', Items.GOLD_BLOCK)
-                                .input('L', Items.IRON_INGOT)
-                                .input('T', Items.IRON_BLOCK)
-                                .input('#', TCOTS_Items.BASE_BOLT)
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
-                                .offerTo(exporter);
-                    }
-
-                    //Precision Bolt
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.PRECISION_BOLT, 2)
-                                .pattern("  P")
-                                .pattern("L# ")
-                                .pattern("LL ")
-                                .input('P', Items.IRON_NUGGET)
-                                .input('L', Items.FEATHER)
-                                .input('#', TCOTS_Items.BASE_BOLT)
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
-                                .offerTo(exporter);
-                    }
-
-                    //Exploding Bolt
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.EXPLODING_BOLT, 2)
-                                .pattern("  P")
-                                .pattern("L# ")
-                                .pattern("TL ")
-                                .input('P', TCOTS_Items.STAMMELFORDS_DUST)
-                                .input('L', Items.STRING)
-                                .input('T', Items.PAPER)
-                                .input('#', TCOTS_Items.BASE_BOLT)
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
-                                .offerTo(exporter);
-                    }
-
-                    //Broadhead Bolt
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BROADHEAD_BOLT, 2)
-                                .pattern("  P")
-                                .pattern("L# ")
-                                .pattern("TL ")
-                                .input('P', TCOTS_Items.FOGLET_TEETH)
-                                .input('L', Items.IRON_NUGGET)
-                                .input('T', Items.FEATHER)
-                                .input('#', TCOTS_Items.BASE_BOLT)
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
-                                .offerTo(exporter);
-                    }
-                }
-
-                //Warrior's Leather Armor
-                {
-                    //Jacket
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.WARRIORS_LEATHER_JACKET)
-                                .pattern("I I")
-                                .pattern("LLL")
-                                .pattern("NIN")
-                                .input('L', Items.LEATHER)
-                                .input('I', Items.IRON_INGOT)
-                                .input('N', Items.IRON_NUGGET)
-
-                                .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
-                                .offerTo(exporter);
-                    }
-
-                    //Trousers
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.WARRIORS_LEATHER_TROUSERS)
-                                .pattern("NIN")
-                                .pattern("L L")
-                                .pattern("L L")
-                                .input('L', Items.LEATHER)
-                                .input('I', Items.IRON_INGOT)
-                                .input('N', Items.IRON_NUGGET)
-
-                                .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
-                                .offerTo(exporter);
-                    }
-
-                    //Boots
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.WARRIORS_LEATHER_BOOTS)
-                                .pattern("L L")
-                                .pattern("I I")
-                                .input('L', Items.LEATHER)
-                                .input('I', Items.IRON_INGOT)
-
-                                .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
-                                .offerTo(exporter);
-                    }
-                }
-
-                //Manticore Armor
-                {
-                    //Chestplate
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_ARMOR)
-                                .pattern("L L")
-                                .pattern("IEI")
-                                .pattern("ELE")
-                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
-                                .input('E', TCOTS_Items.NEKKER_EYE)
-                                .input('I', Items.IRON_INGOT)
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
-                                .offerTo(exporter);
-                    }
-
-                    //Trousers
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_TROUSERS)
-                                .pattern("LIL")
-                                .pattern("B B")
-                                .pattern("L L")
-                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
-                                .input('I', Items.IRON_INGOT)
-                                .input('B', TCOTS_Items.MONSTER_BLOOD)
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
-                                .offerTo(exporter);
-                    }
-
-                    //Boots
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_BOOTS)
-                                .pattern("L L")
-                                .pattern("B B")
-                                .pattern("I I")
-                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
-                                .input('I', Items.IRON_INGOT)
-                                .input('B', TCOTS_Items.MONSTER_BLOOD)
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
-                                .offerTo(exporter);
-                    }
-                }
-
-                //Raven's Armor
-                {
-                    //Chestplate
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.RAVENS_ARMOR)
-                                .pattern("D D")
-                                .pattern("LDL")
-                                .pattern("GIG")
-                                .input('D', Items.DIAMOND)
-                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
-                                .input('G', TCOTS_Items.GRAVEIR_BONE)
-                                .input('I', Items.IRON_INGOT)
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
-                                .offerTo(exporter);
-                    }
-
-                    //Trousers
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.RAVENS_TROUSERS)
-                                .pattern("BLB")
-                                .pattern("D D")
-                                .pattern("L L")
-                                .input('D', Items.DIAMOND)
-                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
-                                .input('B', TCOTS_Items.BULLVORE_HORN_FRAGMENT)
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
-                                .offerTo(exporter);
-                    }
-
-                    //Boots
-                    {
-                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.RAVENS_BOOTS)
-                                .pattern("D D")
-                                .pattern("L L")
-                                .pattern("T T")
-                                .input('D', Items.DIAMOND)
-                                .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
-                                .input('T', TCOTS_Items.DEVOURER_TEETH)
-
-                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
-                                .offerTo(exporter);
-                    }
                 }
 
                 //Ingredients Crafting
@@ -1144,6 +860,344 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
                             .offerTo(exporter);
                 }
+
+                //Crossbows
+                {
+                    //Knight Crossbow
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.KNIGHT_CROSSBOW)
+                                .pattern("IWI")
+                                .pattern("LHL")
+                                .pattern(" S ")
+                                .input('I', Items.IRON_BLOCK)
+                                .input('W', ItemTags.WOOL)
+                                .input('L', Items.LEATHER)
+                                .input('H', Items.TRIPWIRE_HOOK)
+                                .input('S', Items.STICK)
+
+                                .criterion(FabricRecipeProvider.hasItem(Items.IRON_BLOCK), FabricRecipeProvider.conditionsFromItem(Items.IRON_BLOCK))
+                                .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                                .criterion(FabricRecipeProvider.hasItem(Items.TRIPWIRE_HOOK), FabricRecipeProvider.conditionsFromItem(Items.TRIPWIRE_HOOK))
+                                .offerTo(exporter);
+                    }
+
+                    //Crossbow Bolts
+                    {
+                        //Normal Bolt
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BASE_BOLT, 2)
+                                    .pattern(" I ")
+                                    .pattern("FSF")
+                                    .input('I', Items.IRON_INGOT)
+                                    .input('F', Items.FEATHER)
+                                    .input('S', Items.STICK)
+
+                                    .criterion(FabricRecipeProvider.hasItem(Items.IRON_INGOT), FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
+                                    .criterion(FabricRecipeProvider.hasItem(Items.FEATHER), FabricRecipeProvider.conditionsFromItem(Items.FEATHER))
+                                    .offerTo(exporter);
+                        }
+
+                        //Blunt Bolt
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BLUNT_BOLT, 2)
+                                    .pattern("  P")
+                                    .pattern("L# ")
+                                    .pattern("TL ")
+                                    .input('P', Items.GOLD_BLOCK)
+                                    .input('L', Items.IRON_INGOT)
+                                    .input('T', Items.IRON_BLOCK)
+                                    .input('#', TCOTS_Items.BASE_BOLT)
+
+                                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                                    .offerTo(exporter);
+                        }
+
+                        //Precision Bolt
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.PRECISION_BOLT, 2)
+                                    .pattern("  P")
+                                    .pattern("L# ")
+                                    .pattern("LL ")
+                                    .input('P', Items.IRON_NUGGET)
+                                    .input('L', Items.FEATHER)
+                                    .input('#', TCOTS_Items.BASE_BOLT)
+
+                                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                                    .offerTo(exporter);
+                        }
+
+                        //Exploding Bolt
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.EXPLODING_BOLT, 2)
+                                    .pattern("  P")
+                                    .pattern("L# ")
+                                    .pattern("TL ")
+                                    .input('P', TCOTS_Items.STAMMELFORDS_DUST)
+                                    .input('L', Items.STRING)
+                                    .input('T', Items.PAPER)
+                                    .input('#', TCOTS_Items.BASE_BOLT)
+
+                                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                                    .offerTo(exporter);
+                        }
+
+                        //Broadhead Bolt
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.BROADHEAD_BOLT, 2)
+                                    .pattern("  P")
+                                    .pattern("L# ")
+                                    .pattern("TL ")
+                                    .input('P', TCOTS_Items.FOGLET_TEETH)
+                                    .input('L', Items.IRON_NUGGET)
+                                    .input('T', Items.FEATHER)
+                                    .input('#', TCOTS_Items.BASE_BOLT)
+
+                                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BASE_BOLT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BASE_BOLT))
+                                    .offerTo(exporter);
+                        }
+                    }
+                }
+
+                //Swords
+                {
+                    //G'valchir
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.GVALCHIR)
+                                .pattern("FHD")
+                                .pattern("HSH")
+                                .pattern("DHF")
+                                .input('F', TCOTS_Items.FOGLET_TEETH)
+                                .input('H', TCOTS_Items.BULLVORE_HORN_FRAGMENT)
+                                .input('D', TCOTS_Items.DEVOURER_TEETH)
+                                .input('S', Items.IRON_SWORD)
+
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.BULLVORE_HORN_FRAGMENT))
+                                .criterion(FabricRecipeProvider.hasItem(Items.IRON_SWORD), FabricRecipeProvider.conditionsFromItem(Items.IRON_SWORD))
+                                .offerTo(exporter);
+                    }
+
+                    //Moonblade
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MOONBLADE)
+                                .pattern("HBG")
+                                .pattern("BSB")
+                                .pattern("GBH")
+                                .input('G', TCOTS_Items.GRAVEIR_BONE)
+                                .input('H', TCOTS_Items.NEKKER_HEART)
+                                .input('B', TCOTS_Items.MONSTER_BLOOD)
+                                .input('S', Items.GOLDEN_SWORD)
+
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.GRAVEIR_BONE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.GRAVEIR_BONE))
+                                .criterion(FabricRecipeProvider.hasItem(Items.GOLDEN_SWORD), FabricRecipeProvider.conditionsFromItem(Items.GOLDEN_SWORD))
+                                .offerTo(exporter);
+                    }
+
+                    //Ard'aenye
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.ARDAENYE)
+                                .pattern("BDC")
+                                .pattern("DSD")
+                                .pattern("CDB")
+                                .input('C', TCOTS_Items.CADAVERINE)
+                                .input('D', TCOTS_Items.DEVOURER_TEETH)
+                                .input('B', Items.BLAZE_POWDER)
+                                .input('S', Items.DIAMOND_SWORD)
+
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CADAVERINE), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CADAVERINE))
+                                .criterion(FabricRecipeProvider.hasItem(Items.DIAMOND_SWORD), FabricRecipeProvider.conditionsFromItem(Items.DIAMOND_SWORD))
+                                .offerTo(exporter);
+                    }
+
+                    //D'yaebl
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.DYAEBL)
+                                .pattern("GRG")
+                                .pattern("RSR")
+                                .pattern("GRG")
+                                .input('R', TCOTS_Items.ROTFIEND_BLOOD)
+                                .input('G', TCOTS_Items.GHOUL_BLOOD)
+                                .input('S', Items.IRON_SWORD)
+
+
+                                .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ROTFIEND_BLOOD), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ROTFIEND_BLOOD))
+                                .criterion(FabricRecipeProvider.hasItem(Items.IRON_SWORD), FabricRecipeProvider.conditionsFromItem(Items.IRON_SWORD))
+                                .offerTo(exporter);
+                    }
+                }
+
+                //Armors
+                {
+                    //Warrior's Leather Armor
+                    {
+                        //Jacket
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.WARRIORS_LEATHER_JACKET)
+                                    .pattern("I I")
+                                    .pattern("LLL")
+                                    .pattern("NIN")
+                                    .input('L', Items.LEATHER)
+                                    .input('I', Items.IRON_INGOT)
+                                    .input('N', Items.IRON_NUGGET)
+
+                                    .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                                    .offerTo(exporter);
+                        }
+
+                        //Trousers
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.WARRIORS_LEATHER_TROUSERS)
+                                    .pattern("NIN")
+                                    .pattern("L L")
+                                    .pattern("L L")
+                                    .input('L', Items.LEATHER)
+                                    .input('I', Items.IRON_INGOT)
+                                    .input('N', Items.IRON_NUGGET)
+
+                                    .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                                    .offerTo(exporter);
+                        }
+
+                        //Boots
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.WARRIORS_LEATHER_BOOTS)
+                                    .pattern("L L")
+                                    .pattern("I I")
+                                    .input('L', Items.LEATHER)
+                                    .input('I', Items.IRON_INGOT)
+
+                                    .criterion(FabricRecipeProvider.hasItem(Items.LEATHER), FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                                    .offerTo(exporter);
+                        }
+                    }
+
+                    //Manticore Armor
+                    {
+                        //Chestplate
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_ARMOR)
+                                    .pattern("L L")
+                                    .pattern("IEI")
+                                    .pattern("ELE")
+                                    .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                    .input('E', TCOTS_Items.NEKKER_EYE)
+                                    .input('I', Items.IRON_INGOT)
+
+                                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                    .offerTo(exporter);
+                        }
+
+                        //Trousers
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_TROUSERS)
+                                    .pattern("LIL")
+                                    .pattern("B B")
+                                    .pattern("L L")
+                                    .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                    .input('I', Items.IRON_INGOT)
+                                    .input('B', TCOTS_Items.MONSTER_BLOOD)
+
+                                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                    .offerTo(exporter);
+                        }
+
+                        //Boots
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.MANTICORE_BOOTS)
+                                    .pattern("L L")
+                                    .pattern("B B")
+                                    .pattern("I I")
+                                    .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                    .input('I', Items.IRON_INGOT)
+                                    .input('B', TCOTS_Items.MONSTER_BLOOD)
+
+                                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                    .offerTo(exporter);
+                        }
+                    }
+
+                    //Raven's Armor
+                    {
+                        //Chestplate
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.RAVENS_ARMOR)
+                                    .pattern("D D")
+                                    .pattern("LDL")
+                                    .pattern("GIG")
+                                    .input('D', Items.DIAMOND)
+                                    .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                    .input('G', TCOTS_Items.GRAVEIR_BONE)
+                                    .input('I', Items.IRON_INGOT)
+
+                                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                    .offerTo(exporter);
+                        }
+
+                        //Trousers
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.RAVENS_TROUSERS)
+                                    .pattern("BLB")
+                                    .pattern("D D")
+                                    .pattern("L L")
+                                    .input('D', Items.DIAMOND)
+                                    .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                    .input('B', TCOTS_Items.BULLVORE_HORN_FRAGMENT)
+
+                                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                    .offerTo(exporter);
+                        }
+
+                        //Boots
+                        {
+                            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, TCOTS_Items.RAVENS_BOOTS)
+                                    .pattern("D D")
+                                    .pattern("L L")
+                                    .pattern("T T")
+                                    .input('D', Items.DIAMOND)
+                                    .input('L', TCOTS_Items.CURED_MONSTER_LEATHER)
+                                    .input('T', TCOTS_Items.DEVOURER_TEETH)
+
+                                    .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.CURED_MONSTER_LEATHER), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.CURED_MONSTER_LEATHER))
+                                    .offerTo(exporter);
+                        }
+                    }
+                }
+
+                //Horse Armors
+                {
+                    //Tundra Armor
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, TCOTS_Items.TUNDRA_HORSE_ARMOR)
+                                .pattern("WWI")
+                                .pattern("LAI")
+                                .pattern("LLL")
+                                .input('L', Items.LEATHER)
+                                .input('I', Items.IRON_INGOT)
+                                .input('W', ItemTags.WOOL)
+                                .input('A', Items.LEATHER_HORSE_ARMOR)
+
+                                .criterion(FabricRecipeProvider.hasItem(Items.LEATHER_HORSE_ARMOR), FabricRecipeProvider.conditionsFromItem(Items.LEATHER_HORSE_ARMOR))
+                                .offerTo(exporter);
+                    }
+
+                    //Knight Errant's
+                    {
+                        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, TCOTS_Items.KNIGHT_ERRANTS_HORSE_ARMOR)
+                                .pattern("  I")
+                                .pattern("BAN")
+                                .pattern("IIN")
+                                .input('N', Items.IRON_NUGGET)
+                                .input('I', Items.IRON_INGOT)
+                                .input('B', Items.IRON_INGOT)
+                                .input('A', Items.IRON_HORSE_ARMOR)
+
+                                .criterion(FabricRecipeProvider.hasItem(Items.IRON_HORSE_ARMOR), FabricRecipeProvider.conditionsFromItem(Items.IRON_HORSE_ARMOR))
+                                .offerTo(exporter);
+                    }
+                }
+
 
                 //Bone Meal from bones
                 {

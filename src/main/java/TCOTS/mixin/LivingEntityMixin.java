@@ -12,6 +12,8 @@ import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import TCOTS.items.concoctions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -28,6 +30,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.passive.GolemEntity;
+import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -605,10 +608,60 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     }
 
+    //Winter's Blade
     @Inject(method =  "tick", at= @At("HEAD"))
     private void injectWintersBladeExtinguish(CallbackInfo ci){
         if(THIS.isOnFire()){
             if(THIS.getMainHandStack().isOf(TCOTS_Items.WINTERS_BLADE) || THIS.getOffHandStack().isOf(TCOTS_Items.WINTERS_BLADE)) THIS.extinguish();
         }
     }
+
+    //Tundra Horse Armor
+    @Unique
+    private static final UUID TUNDRA_ARMOR_SPEED_BONUS_ID = UUID.fromString("c0ee7c38-8973-49a3-bfbd-9b62e1e494ec");
+    @Unique
+    private static final EntityAttributeModifier TUNDRA_ARMOR_BONUS = new EntityAttributeModifier(TUNDRA_ARMOR_SPEED_BONUS_ID, "Tundra armor speed boost", 0.2f, EntityAttributeModifier.Operation.MULTIPLY_BASE);
+
+    @Inject(method = "tickMovement", at = @At("TAIL"))
+    private void injectSnowSpeed(CallbackInfo ci){
+        if(THIS instanceof HorseEntity horse){
+            if(horse.getArmorType().isOf(TCOTS_Items.TUNDRA_HORSE_ARMOR) &&
+                    (this.isSteepingOrInside(horse, Blocks.POWDER_SNOW)
+                            || this.isSteepingOrInside(horse, Blocks.SNOW_BLOCK) || this.isSteepingOrInside(horse, Blocks.SNOW) ||
+                            this.isSteepingOrInside(horse, Blocks.ICE) || this.isSteepingOrInside(horse, Blocks.BLUE_ICE) || this.isSteepingOrInside(horse, Blocks.PACKED_ICE) || this.isSteepingOrInside(horse, Blocks.FROSTED_ICE)
+                    )){
+                EntityAttributeInstance entityAttributeInstance = THIS.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+                if(entityAttributeInstance!=null) {
+                    entityAttributeInstance.removeModifier(TUNDRA_ARMOR_BONUS.getId());
+                    entityAttributeInstance.addTemporaryModifier(TUNDRA_ARMOR_BONUS);}
+            } else {
+                EntityAttributeInstance entityAttributeInstance = THIS.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+                if(entityAttributeInstance!=null) entityAttributeInstance.removeModifier(TUNDRA_ARMOR_BONUS.getId());
+            }
+        }
+
+    }
+
+    @Unique
+    private boolean isSteepingOrInside(LivingEntity entity, Block block){
+        return entity.getSteppingBlockState().isOf(block) || entity.getWorld().getBlockState(entity.getBlockPos()).isOf(block);
+    }
+
+    @Inject(method ="modifyAppliedDamage", at = @At("RETURN"), cancellable = true)
+    private void injectKnightHorseArmorResistance(DamageSource source, float amount, CallbackInfoReturnable<Float> cir){
+        if(THIS instanceof HorseEntity horse && horse.getArmorType().isOf(TCOTS_Items.KNIGHT_ERRANTS_HORSE_ARMOR)){
+            if(source.isIn(DamageTypeTags.BYPASSES_ENCHANTMENTS)){
+                cir.setReturnValue(amount);
+            }
+
+            if(source.isIn(DamageTypeTags.IS_PROJECTILE)){
+                cir.setReturnValue(amount*0.60f);
+            }
+
+            if(source.isIn(DamageTypeTags.IS_EXPLOSION)){
+                cir.setReturnValue(amount*0.80f);
+            }
+        }
+    }
+
 }

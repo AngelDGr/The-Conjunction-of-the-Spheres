@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "tcots-witcher:warriors_leather_boots",
+    "tcots-witcher:warriors_leather_trousers",
+    "tcots-witcher:warriors_leather_jacket",
+    "tcots-witcher:manticore_boots",
+    "tcots-witcher:manticore_trousers",
+    "tcots-witcher:manticore_armor",
+    "tcots-witcher:ravens_boots",
+    "tcots-witcher:ravens_trousers",
+    "tcots-witcher:ravens_armor",
+    "tcots-witcher:tundra_horse_armor"
+  ]
+}

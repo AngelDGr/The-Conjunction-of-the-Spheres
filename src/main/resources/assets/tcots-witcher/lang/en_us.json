@@ -658,7 +658,12 @@
 
 
     "item.tcots-witcher.tundra_horse_armor": "Tundra Horse Armor",
+    "tooltip.tcots-witcher.tundra_horse_armor":  "+20% Speed Movement in Snow and Ice",
+    "tooltip.tcots-witcher.tundra_horse_armor2": " Can ride across Powder Snow",
 
+    "item.tcots-witcher.knight_errants_horse_armor": "Knight Errant's Horse Armor",
+    "tooltip.tcots-witcher.knight_errants_horse_armor":  "+40% Projectile Resistance",
+    "tooltip.tcots-witcher.knight_errants_horse_armor2": "+20% Explosion Resistance",
 
 
 

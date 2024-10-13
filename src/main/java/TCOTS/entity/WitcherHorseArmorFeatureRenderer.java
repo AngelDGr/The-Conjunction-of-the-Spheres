@@ -8,7 +8,6 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.model.HorseEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
@@ -18,17 +17,8 @@ import net.minecraft.item.ItemStack;
 
 public class WitcherHorseArmorFeatureRenderer extends FeatureRenderer<HorseEntity, HorseEntityModel<HorseEntity>> {
     private final HorseEntityModel<HorseEntity> model;
-    public WitcherHorseArmorFeatureRenderer(FeatureRendererContext<HorseEntity, HorseEntityModel<HorseEntity>> context, EntityModelLoader loader) {
+    public WitcherHorseArmorFeatureRenderer(FeatureRendererContext<HorseEntity, HorseEntityModel<HorseEntity>> context) {
         super(context);
-//        this.model = new HorseEntityModel<>(loader.getModelPart(EntityModelLayers.HORSE));
-
-//        this.model = new HorseEntityModel<>(HorseEntityModel.getModelData(new Dilation(0.8f)).getRoot().createPart(64, 64));
-//        this.model = new HorseEntityModel<>(HorseEntityModel.getModelData(new Dilation(0.8f))
-//                .getRoot().getChild(EntityModelPartNames.BODY).createPart(64,64));
-//        loader.getModelPart(EntityModelLayers.HORSE).getChild(EntityModelPartNames.BODY);
-//        HorseEntityModel.getModelData(new Dilation(1f));
-
-//        this.model= new HorseEntityModel<>(modelPartData2.createPart(64,64));
         this.model=new HorseArmorModel<>(HorseArmorModel.getModelData(new Dilation(0.1f)).getRoot().createPart(64,96));
     }
 
@@ -73,7 +63,8 @@ public class WitcherHorseArmorFeatureRenderer extends FeatureRenderer<HorseEntit
 
 
 
-            ModelPartData modelPartData3 = modelPartData.addChild(HEAD_PARTS, ModelPartBuilder.create().uv(0, 75).cuboid(-2.05f, -6.0f, -2.0f, 4.0f, 12.0f, 9.0f, new Dilation(0.05f)), ModelTransform.of(0.0f, 4.0f, -12.0f, 0.5235988f, 0.0f, 0.0f));
+            ModelPartData modelPartData3 = modelPartData.addChild(HEAD_PARTS, ModelPartBuilder.create().uv(0, 70).cuboid(-2.05f, -11.0f, -2.0f, 4.0f, 17.0f, 9.0f, new Dilation(0.05f)), ModelTransform.of(0.0f, 4.0f, -12.0f, 0.5235988f, 0.0f, 0.0f));
+
             ModelPartData modelPartData4 = modelPartData3.addChild(EntityModelPartNames.HEAD, ModelPartBuilder.create().uv(0, 13).cuboid(-3.0f, -11.0f, -2.0f, 6.0f, 5.0f, 7.0f, dilation), ModelTransform.NONE);
             modelPartData3.addChild(EntityModelPartNames.MANE, ModelPartBuilder.create().uv(56, 36).cuboid(-1.0f, -11.0f, 5.01f, 2.0f, 16.0f, 2.0f, dilation), ModelTransform.NONE);
             modelPartData3.addChild("upper_mouth", ModelPartBuilder.create().uv(0, 25).cuboid(-2.0f, -11.0f, -7.0f, 4.0f, 5.0f, 5.0f, dilation), ModelTransform.NONE);

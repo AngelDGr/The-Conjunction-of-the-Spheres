@@ -152,10 +152,10 @@ public class TCOTS_Items {
 
 
     //TODO: Add Horse Armors
-    // Caed Myrkvid Armor
-    // Knight errant's armor
+    // Caed Myrkvid Armor??
+    //Knight errant's armor
     //Undvik Armor
-    //TODO: Add crafting and possible bonus?
+    //xTODO: Add crafting and bonus
 
     //xTODO: Add use to the items
         //xTODO: Drowner Tongue usable for Killer Whale potion
@@ -954,6 +954,7 @@ public class TCOTS_Items {
 
     //Horse Armor
     public static Item TUNDRA_HORSE_ARMOR;
+    public static Item KNIGHT_ERRANTS_HORSE_ARMOR;
 
     public static void registerWeapons_Armors(){
 
@@ -1033,7 +1034,17 @@ public class TCOTS_Items {
 
         //Horse Armor
         {
-            TUNDRA_HORSE_ARMOR = registerItem("tundra_horse_armor", new WitcherHorseArmorItem(4, "tundra", new FabricItemSettings().maxCount(1)));
+            TUNDRA_HORSE_ARMOR = registerItem("tundra_horse_armor",
+                    new WitcherHorseArmorItem(4, "tundra", new FabricItemSettings().maxCount(1),
+                            List.of(
+                                    Text.translatable("tooltip.tcots-witcher.tundra_horse_armor").formatted(Formatting.AQUA),
+                                    Text.translatable("tooltip.tcots-witcher.tundra_horse_armor2").formatted(Formatting.AQUA))));
+
+            KNIGHT_ERRANTS_HORSE_ARMOR = registerItem("knight_errants_horse_armor",
+                    new WitcherHorseArmorItem(8, "knight_errants", new FabricItemSettings().maxCount(1),
+                            List.of(
+                                    Text.translatable("tooltip.tcots-witcher.knight_errants_horse_armor").formatted(Formatting.DARK_GREEN),
+                                    Text.translatable("tooltip.tcots-witcher.knight_errants_horse_armor2").formatted(Formatting.DARK_GREEN))));
         }
     }
 

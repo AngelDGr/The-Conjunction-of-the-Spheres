@@ -130,6 +130,7 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.RAVENS_BOOTS);
 
                                 entries.add(TCOTS_Items.TUNDRA_HORSE_ARMOR);
+                                entries.add(TCOTS_Items.KNIGHT_ERRANTS_HORSE_ARMOR);
                             }
 
 
