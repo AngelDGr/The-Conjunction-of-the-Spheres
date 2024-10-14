@@ -238,6 +238,8 @@ public class TCOTS_Items {
 
     public static Item FOREST_TROLL_SPAWN_EGG;
 
+    public static Item ICE_GIANT_SPAWN_EGG;
+
     //Register Drops from monsters
     public static void registerDrops() {
         DROWNER_SPAWN_EGG = registerItem("drowner_spawn_egg",
@@ -347,6 +349,10 @@ public class TCOTS_Items {
 
         FOREST_TROLL_SPAWN_EGG = registerItem("forest_troll_spawn_egg",
                 new SpawnEggItem(TCOTS_Entities.FOREST_TROLL, 0x265558, 0xcfcfb4,
+                        new FabricItemSettings()));
+
+        ICE_GIANT_SPAWN_EGG = registerItem("ice_giant_spawn_egg",
+                new SpawnEggItem(TCOTS_Entities.ICE_GIANT, 0x93b7b7, 0x1d1919,
                         new FabricItemSettings()));
     }
 

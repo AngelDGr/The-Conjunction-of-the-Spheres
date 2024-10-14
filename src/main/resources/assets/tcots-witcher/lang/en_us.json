@@ -237,6 +237,14 @@
     "tcots-witcher.sounds.troll_laugh":  "Troll laughs",
 
 
+    "item.tcots-witcher.ice_giant_spawn_egg": "Ice Giant Spawn Egg",
+    "entity.tcots-witcher.ice_giant": "Ice Giant",
+    "tcots-witcher.sounds.ice_giant_attack": "Ice Giant attacks",
+    "tcots-witcher.sounds.ice_giant_hurt": "Ice Giant hurts",
+    "tcots-witcher.sounds.ice_giant_idle": "Ice Giant groans",
+    "tcots-witcher.sounds.ice_giant_death": "Ice Giant dies",
+    "tcots-witcher.sounds.ice_giant_punch": "Ice Giant punches",
+
 
 
     "block.tcots-witcher.nest_slab": "Nest Slab",

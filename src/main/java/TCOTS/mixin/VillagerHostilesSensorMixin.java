@@ -41,6 +41,7 @@ public class VillagerHostilesSensorMixin {
                         .put(TCOTS_Entities.NEKKER_WARRIOR, distanceMediumDanger)
                         .put(TCOTS_Entities.CYCLOPS, distanceMediumDanger)
                         .put(TCOTS_Entities.ICE_TROLL, distanceMediumDanger)
+                        .put(TCOTS_Entities.ICE_GIANT, distanceExtremeDanger)
 
                         .build();
     }

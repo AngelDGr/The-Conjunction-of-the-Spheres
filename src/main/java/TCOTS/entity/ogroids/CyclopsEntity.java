@@ -202,7 +202,6 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
                 new AnimationController<>(this, "AttackController", 1, state -> PlayState.STOP)
                         .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
                         .triggerableAnim("attack2", GeoControllersUtil.ATTACK2)
-                        .triggerableAnim("attack3", GeoControllersUtil.ATTACK3)
         );
 
         //Jumping

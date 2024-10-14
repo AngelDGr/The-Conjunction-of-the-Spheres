@@ -141,6 +141,20 @@
       },
       "trigger": "minecraft:player_killed_entity"
     },
+    "tcots-witcher:ice_giant": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots-witcher:ice_giant"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
     "tcots-witcher:ice_troll": {
       "conditions": {
         "entity": [
@@ -269,7 +283,8 @@
       "tcots-witcher:cyclops",
       "tcots-witcher:rock_troll",
       "tcots-witcher:ice_troll",
-      "tcots-witcher:forest_troll"
+      "tcots-witcher:forest_troll",
+      "tcots-witcher:ice_giant"
     ]
   ],
   "sends_telemetry_event": true

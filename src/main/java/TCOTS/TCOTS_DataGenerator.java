@@ -744,6 +744,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         }
     }
     private static class EntityTagGenerator extends FabricTagProvider.EntityTypeTagProvider {
+
         public EntityTagGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
             super(output, completableFuture);
         }
@@ -770,7 +771,11 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
             this.getOrCreateTagBuilder(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS)
                     .add(TCOTS_Entities.ICE_TROLL)
-                    .add(TCOTS_Entities.CYCLOPS);
+                    .add(TCOTS_Entities.CYCLOPS)
+                    .add(TCOTS_Entities.ICE_GIANT);
+
+            this.getOrCreateTagBuilder(TCOTS_Entities.BOSS_TAG)
+                    .add(TCOTS_Entities.ICE_GIANT);
         }
     }
     private static class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
@@ -2879,7 +2884,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                 TCOTS_Entities.CYCLOPS,
                 TCOTS_Entities.ROCK_TROLL,
                 TCOTS_Entities.ICE_TROLL,
-                TCOTS_Entities.FOREST_TROLL
+                TCOTS_Entities.FOREST_TROLL,
+                TCOTS_Entities.ICE_GIANT
         );
 
         protected static final List<Item> POTION_LV3= Arrays.asList(

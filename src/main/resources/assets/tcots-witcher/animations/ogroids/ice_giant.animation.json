@@ -39,7 +39,15 @@
 		},
 		"move.walking": {
 			"loop": true,
-			"animation_length": 1
+			"animation_length": 1,
+			"bones": {
+				"FullBody": {
+					"rotation": {
+						"vector": [0, 0, "(math.cos(query.anim_time*360)*2)"],
+						"easing": "linear"
+					}
+				}
+			}
 		},
 		"move.running": {
 			"loop": true,
@@ -302,6 +310,23 @@
 					"rotation": {
 						"vector": [-15, 0, 0],
 						"easing": "linear"
+					}
+				},
+				"BottomMouth": {
+					"rotation": {
+						"0.0": {
+							"vector": [10, 0, 0],
+							"easing": "linear"
+						},
+						"0.25": {
+							"vector": [30, 0, 0],
+							"easing": "easeInOutBack",
+							"easingArgs": []
+						},
+						"0.5": {
+							"vector": [10, 0, 0],
+							"easing": "linear"
+						}
 					}
 				},
 				"left_arm": {

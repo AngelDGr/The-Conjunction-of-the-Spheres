@@ -5,6 +5,7 @@ import TCOTS.entity.TrollGossips;
 import TCOTS.entity.goals.AttackOwnerAttackerTarget;
 import TCOTS.entity.goals.AttackOwnerEnemyTarget;
 import TCOTS.entity.misc.Troll_RockProjectileEntity;
+import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -14,6 +15,7 @@ import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.Monster;
@@ -321,6 +323,11 @@ public class IceTrollEntity extends RockTrollEntity {
     private boolean isSnowing(){
         Biome biome = this.getWorld().getBiome(this.getBlockPos()).value();
         return this.getWorld().isRaining() && biome.canSetSnow(this.getWorld(), this.getBlockPos());
+    }
+
+    @Override
+    public boolean canHaveStatusEffect(StatusEffectInstance effect) {
+        return effect.getEffectType() != TCOTS_Effects.NORTHERN_WIND_EFFECT && super.canHaveStatusEffect(effect);
     }
 
     @Override

@@ -55,6 +55,8 @@ public class TCOTS_Entities {
     public static final TagKey<EntityType<?>> IGNITING_ENTITIES = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"igniting_entities"));
     public static final TagKey<EntityType<?>> DIMERITIUM_REMOVAL = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"dimeritium_removal"));
     public static final TagKey<EntityType<?>> DIMERITIUM_DAMAGE = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"dimeritium_damage"));
+    public static final TagKey<EntityType<?>> BOSS_TAG = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("c", "bosses"));
+
 
     public static final WitcherGroup NECROPHAGES = new WitcherGroup("necrophages",0);
     public static final WitcherGroup OGROIDS = new WitcherGroup("ogroids",1);
@@ -203,6 +205,13 @@ public class TCOTS_Entities {
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, ForestTrollEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.8f, 2.8f)).build());
+
+
+    public static final EntityType<IceGiantEntity> ICE_GIANT = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "ice_giant"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, IceGiantEntity::new)
+                    //Hitbox
+                    .dimensions(EntityDimensions.changing(1.9975f, 4.4f)).trackRangeBlocks(16).build());
 
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(
@@ -534,6 +543,9 @@ public class TCOTS_Entities {
 
             //Forest Troll
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOREST_TROLL, ForestTrollEntity.setAttributes());
+
+            //Ice Giant
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities.ICE_GIANT, IceGiantEntity.setAttributes());
 
         }
     }
