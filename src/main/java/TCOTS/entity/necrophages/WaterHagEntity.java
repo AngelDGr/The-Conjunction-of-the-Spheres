@@ -9,9 +9,7 @@ import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.ProjectileAttackGoal;
@@ -252,10 +250,19 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
     }
 
     @Override
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        if(this.getInGround()){
+            return 0.1f;
+        } else {
+            return super.getActiveEyeHeight(pose, dimensions);
+        }
+    }
+    @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);
-        if (!dataTracker.get(InGROUND) || dataTracker.get(InGROUND)) {
+        if (!this.getInGround() || this.getInGround()) {
             this.setBoundingBox(this.calculateBoundingBox());
+            this.calculateDimensions();
         }
     }
 
@@ -390,6 +397,8 @@ public class WaterHagEntity extends NecrophageMonster implements GeoEntity, Rang
         this.setInvisible(this.getInvisibleData());
         super.mobTick();
     }
+
+
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {

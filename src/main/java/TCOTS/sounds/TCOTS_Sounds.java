@@ -143,6 +143,18 @@ public class TCOTS_Sounds {
     public static SoundEvent TROLL_FURIOUS = registerSoundEvent("troll_furious");
     public static SoundEvent TROLL_GRUNT = registerSoundEvent("troll_grunt");
     public static SoundEvent TROLL_BARTERING = registerSoundEvent("troll_bartering");
+
+    //Ice Giant
+    public static SoundEvent ICE_GIANT_ATTACK = registerSoundEvent("ice_giant_attack");
+    public static SoundEvent ICE_GIANT_HURT = registerSoundEvent("ice_giant_hurt");
+    public static SoundEvent ICE_GIANT_IDLE = registerSoundEvent("ice_giant_idle");
+    public static SoundEvent ICE_GIANT_DEATH = registerSoundEvent("ice_giant_death");
+    public static SoundEvent ICE_GIANT_PUNCH = registerSoundEvent("ice_giant_punch");
+    public static SoundEvent ICE_GIANT_CHARGE = registerSoundEvent("ice_giant_charge");
+    public static SoundEvent ICE_GIANT_SNORE = registerSoundEvent("ice_giant_snore");
+    public static SoundEvent ANCHOR_IDLE = registerSoundEvent("anchor_idle");
+    public static SoundEvent ANCHOR_IMPACT = registerSoundEvent("anchor_impact");
+
     //Misc
     public static SoundEvent POTION_REFILLED = registerSoundEvent("potion_refill");
     public static SoundEvent OIL_APPLIED = registerSoundEvent("oil_applied");

@@ -15,7 +15,11 @@ public class IceGiantModel extends BipedGeoModelBase<IceGiantEntity> {
 
     @Override
     public Identifier getTextureResource(IceGiantEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/ogroids/ice_giant.png");
+        if(animatable.isGiantSleeping() && !animatable.isGiantWakingUp()){
+            return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/ogroids/ice_giant/ice_giant_sleeping.png");
+        }
+
+        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/ogroids/ice_giant/ice_giant.png");
     }
 
     @Override
@@ -34,5 +38,21 @@ public class IceGiantModel extends BipedGeoModelBase<IceGiantEntity> {
             cloth_front.setRotX((float)-(Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));
             cloth_back.setRotX((float) (Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));
         }
+
+    }
+
+    @Override
+    protected boolean hasArmZMovement(IceGiantEntity entity) {
+        return entity.isCharging();
+    }
+
+    @Override
+    protected float getLegsSpeed(IceGiantEntity entity) {
+        return entity.isCharging()? 0.6f :0.5f;
+    }
+
+    @Override
+    protected float getArmsAmount(IceGiantEntity entity) {
+        return entity.isCharging()? 0.7f :0.6f;
     }
 }

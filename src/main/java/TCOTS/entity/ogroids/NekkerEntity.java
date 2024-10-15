@@ -247,10 +247,19 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     }
 
     @Override
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        if(this.getInGround()){
+            return 0.1f;
+        } else {
+            return super.getActiveEyeHeight(pose, dimensions);
+        }
+    }
+    @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);
-        if (!dataTracker.get(InGROUND) || dataTracker.get(InGROUND)) {
+        if (!this.getInGround() || this.getInGround()) {
             this.setBoundingBox(this.calculateBoundingBox());
+            this.calculateDimensions();
         }
     }
 
@@ -393,6 +402,8 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
 
         super.mobTick();
     }
+
+
 
     //Sounds
     @Override

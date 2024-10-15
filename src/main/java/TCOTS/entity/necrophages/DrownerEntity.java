@@ -575,13 +575,22 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
         this.dataTracker.startTracking(SPAWNED_PUDDLE, Boolean.FALSE);
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
     }
+
+    @Override
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        if(this.getInGround()){
+            return 0.1f;
+        } else {
+            return super.getActiveEyeHeight(pose, dimensions);
+        }
+    }
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);
-        if (dataTracker.get(SWIM) || !dataTracker.get(InGROUND) || dataTracker.get(InGROUND)) {
+        if (dataTracker.get(SWIM) || !dataTracker.get(SWIM) || !this.getInGround() || this.getInGround()) {
             this.setBoundingBox(this.calculateBoundingBox());
+            this.calculateDimensions();
         }
-
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {

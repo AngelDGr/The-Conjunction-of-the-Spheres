@@ -6,7 +6,7 @@
 				"identifier": "geometry.unknown",
 				"texture_width": 256,
 				"texture_height": 256,
-				"visible_bounds_width": 4,
+				"visible_bounds_width": 9,
 				"visible_bounds_height": 7.5,
 				"visible_bounds_offset": [0, 3.25, 0]
 			},
@@ -21,8 +21,13 @@
 					"pivot": [0, 32, 0]
 				},
 				{
-					"name": "head",
+					"name": "head_swing",
 					"parent": "upperBody_Head",
+					"pivot": [0, 57, -5]
+				},
+				{
+					"name": "head",
+					"parent": "head_swing",
 					"pivot": [0, 57, -5],
 					"cubes": [
 						{"origin": [-7, 63, -16], "size": [14, 7, 2], "uv": [0, 72]},
@@ -181,12 +186,12 @@
 							"origin": [-0.575, 58.75, -13.75],
 							"size": [0.6, 1, 0],
 							"uv": {
-								"north": {"uv": [0, 0], "uv_size": [0, 1]},
+								"north": {"uv": [0, 0], "uv_size": [1, 1]},
 								"east": {"uv": [0, 0], "uv_size": [0, 1]},
-								"south": {"uv": [0, 0], "uv_size": [0, 1]},
-								"west": {"uv": [0, 0], "uv_size": [0, 1]},
-								"up": {"uv": [0, 0], "uv_size": [0, 0]},
-								"down": {"uv": [0, 0], "uv_size": [0, 0]}
+								"south": {"uv": [1, 0], "uv_size": [1, 1]},
+								"west": {"uv": [1, 0], "uv_size": [0, 1]},
+								"up": {"uv": [1, 0], "uv_size": [-1, 0]},
+								"down": {"uv": [2, 0], "uv_size": [-1, 0]}
 							}
 						},
 						{
@@ -244,7 +249,14 @@
 						{"origin": [-13, 46, -8], "size": [26, 17, 15], "inflate": 0.75, "uv": [129, 195]},
 						{"origin": [-13, 46, -8], "size": [26, 17, 15], "inflate": 0.5, "uv": [155, 19]},
 						{"origin": [-6.725, 57.75, -3.5], "size": [13.45, 9.575, 7.375], "inflate": 0.5, "pivot": [0, 62.75, -1], "rotation": [37.5, 0, 0], "uv": [165, 0]},
-						{"origin": [-6, 57.75, -3.5], "size": [12, 10, 7.425], "pivot": [0, 62.75, -1], "rotation": [37.5, 0, 0], "uv": [218, 239]},
+						{"origin": [-6, 57.75, -3.5], "size": [12, 10, 7.425], "pivot": [0, 62.75, -1], "rotation": [37.5, 0, 0], "uv": [218, 239]}
+					]
+				},
+				{
+					"name": "belly",
+					"parent": "body",
+					"pivot": [0, 32, -4],
+					"cubes": [
 						{"origin": [-11, 32, -8], "size": [22, 14, 15], "uv": [64, 102]},
 						{"origin": [-11, 32, -8], "size": [22, 14, 15], "inflate": 0.5, "uv": [0, 182]},
 						{"origin": [-11, 32, -8], "size": [22, 14, 15], "inflate": 0.6, "uv": [0, 212]}

@@ -10,6 +10,8 @@ import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -480,6 +482,24 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     @Override
     public void setInvisibleData(boolean isInvisible) {
         this.dataTracker.set(INVISIBLE, isInvisible);
+    }
+
+
+    @Override
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        if(this.getInGround()){
+            return 0.1f;
+        } else {
+            return super.getActiveEyeHeight(pose, dimensions);
+        }
+    }
+    @Override
+    public void onTrackedDataSet(TrackedData<?> data) {
+        super.onTrackedDataSet(data);
+        if (!this.getInGround() || this.getInGround()) {
+            this.setBoundingBox(this.calculateBoundingBox());
+            this.calculateDimensions();
+        }
     }
 
 

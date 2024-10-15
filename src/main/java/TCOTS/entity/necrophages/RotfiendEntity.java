@@ -9,10 +9,7 @@ import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Ownable;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -295,10 +292,19 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
         this.dataTracker.set(INVISIBLE, isInvisible);
     }
     @Override
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        if(this.getInGround()){
+            return 0.1f;
+        } else {
+            return super.getActiveEyeHeight(pose, dimensions);
+        }
+    }
+    @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);
-        if (!getInGround() || getInGround()) {
+        if (!this.getInGround() || this.getInGround()) {
             this.setBoundingBox(this.calculateBoundingBox());
+            this.calculateDimensions();
         }
     }
 
@@ -423,6 +429,8 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     public boolean canExplosionDestroyBlock(Explosion explosion, BlockView world, BlockPos pos, BlockState state, float explosionPower) {
         return false;
     }
+
+
 
     //Sounds
     @Override

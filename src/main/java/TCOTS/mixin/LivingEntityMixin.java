@@ -477,8 +477,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
         if(EntitiesUtil.isHumanoid(THIS) && getAttacker() instanceof PlayerEntity player){
             NbtCompound nbt = player.getMainHandStack().getNbt();
-            assert nbt != null;
-            if(nbt.contains("Monster Oil")){
+
+            if(nbt!=null && nbt.contains("Monster Oil")){
                 NbtCompound monsterOil = player.getMainHandStack().getSubNbt("Monster Oil");
                 assert monsterOil != null;
                 if(monsterOil.getInt("Id")==11)

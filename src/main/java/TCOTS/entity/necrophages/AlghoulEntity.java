@@ -496,7 +496,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
                 .triggerableAnim("start_regen", START_REGEN)
         );
 
-        //RegenAnimation Controller
+        //Scream Controller
         controllerRegistrar.add(new AnimationController<>(this, "ScreamController", 1, state -> PlayState.STOP)
                 .triggerableAnim("scream", SCREAM)
         );

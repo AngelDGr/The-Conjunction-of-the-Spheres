@@ -62,6 +62,7 @@ public abstract class BipedGeoModelBase<T extends GeoAnimatable> extends GeoMode
                     head.setRotX((entityData.headPitch()) * MathHelper.RADIANS_PER_DEGREE);
                     head.setRotY(entityData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE);
                 }
+                head.setRotZ(0);
             }
 
 

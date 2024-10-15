@@ -51,7 +51,6 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.List;
@@ -67,9 +66,6 @@ public class ForestTrollEntity extends AbstractTrollEntity {
     public ForestTrollEntity(EntityType<? extends AbstractTrollEntity> entityType, World world) {
         super(entityType, world);
     }
-
-    public static final RawAnimation BLOCK = RawAnimation.begin().thenPlayAndHold("special.block");
-    public static final RawAnimation UNBLOCK = RawAnimation.begin().thenPlay("special.unblock");
 
     protected static final TrackedData<Boolean> BAND_RIGHT_UP = DataTracker.registerData(ForestTrollEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> BAND_LEFT_UP = DataTracker.registerData(ForestTrollEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -318,7 +314,6 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         private final double speedMultiplierRunValue;
         private final int chargeCooldownTicks;
 
-
         private Path pathCharge;
         private double toChargeX;
         private double toChargeY;
@@ -353,7 +348,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         public void stop() {
             super.stop();
 
-            this.troll.setCharging(false);
+            this.troll.setIsCharging(false);
         }
 
         @Override
@@ -434,7 +429,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
                         return;
                     }
 
-                    this.troll.setCharging(true);
+                    this.troll.setIsCharging(true);
                     this.troll.getLookControl().lookAt(
                             this.toChargeX,
                             this.toChargeY - 8,
@@ -458,7 +453,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
                     //If Bullvore reach the coordinates or something blocks the path
                     if (this.troll.squaredDistanceTo(this.toChargeX, this.toChargeY, this.toChargeZ) < 2 || this.troll.horizontalCollision) {
 
-                        this.troll.setCharging(false);
+                        this.troll.setIsCharging(false);
 
                         this.troll.chargeCooldownTimer = this.chargeCooldownTicks;
                         this.troll.chargeCooldown = true;
@@ -476,7 +471,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         return this.dataTracker.get(CHARGING);
     }
 
-    public void setCharging(boolean wasCharging) {
+    public void setIsCharging(boolean wasCharging) {
         this.dataTracker.set(CHARGING, wasCharging);
     }
 
@@ -656,7 +651,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         this.setClothing(nbtClothing.getBoolean("NeckBone"), 4);
 
         this.chargeCooldownTimer = nbt.getInt("ChargingCooldown");
-        setCharging(nbt.getBoolean("Charging"));
+        setIsCharging(nbt.getBoolean("Charging"));
 
         int x = nbt.getInt("HomePosX");
         int y = nbt.getInt("HomePosY");

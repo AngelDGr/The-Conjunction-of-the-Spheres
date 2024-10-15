@@ -903,5 +903,83 @@
     "sounds": [
       "tcots-witcher:entity/ogroids/troll_talk/troll_laugh1"
     ]
+  },
+
+
+  "ice_giant_attack": {
+    "subtitle": "tcots-witcher.sounds.ice_giant_attack",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_attack1",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_attack2",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_attack3"
+    ]
+  },
+  "ice_giant_hurt": {
+    "subtitle": "tcots-witcher.sounds.ice_giant_hurt",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_hurt1",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_hurt2",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_hurt3"
+    ]
+  },
+  "ice_giant_idle": {
+    "subtitle": "tcots-witcher.sounds.ice_giant_idle",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_idle1",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_idle2",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_idle3"
+    ]
+  },
+  "ice_giant_death": {
+    "subtitle": "tcots-witcher.sounds.ice_giant_death",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_death1",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_death2",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_death3"
+    ]
+  },
+  "ice_giant_punch": {
+    "subtitle": "tcots-witcher.sounds.ice_giant_punch",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_punch1",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_punch2",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_punch2"
+    ]
+  },
+  "ice_giant_charge": {
+    "subtitle": "tcots-witcher.sounds.ice_giant_charge",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_charge1",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_charge2",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_charge3"
+    ]
+  },
+  "ice_giant_snore": {
+    "subtitle": "tcots-witcher.sounds.ice_giant_snore",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_snore1",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_snore2",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_snore3"
+    ]
+  },
+
+
+  "anchor_idle": {
+    "subtitle": "tcots-witcher.sounds.anchor_idle",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/ice_giant/anchor_idle1",
+      "tcots-witcher:entity/ogroids/ice_giant/anchor_idle2",
+      "tcots-witcher:entity/ogroids/ice_giant/anchor_idle3"
+    ]
+  },
+  "anchor_impact": {
+    "subtitle": "tcots-witcher.sounds.anchor_impact",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/ice_giant/anchor_impact1",
+      "tcots-witcher:entity/ogroids/ice_giant/anchor_impact2",
+      "tcots-witcher:entity/ogroids/ice_giant/anchor_impact3",
+      "tcots-witcher:entity/ogroids/ice_giant/anchor_impact4"
+    ]
   }
+
 }
