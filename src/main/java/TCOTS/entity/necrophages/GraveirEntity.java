@@ -35,10 +35,10 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
     //xTODO: Add drop
     //xTODO: Add new attack
 
-    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
 //    public static final byte FALLING_PARTICLES = 42;
 //    public static final RawAnimation GROUND_PUNCH = RawAnimation.begin().thenPlay("special.ground_punch");

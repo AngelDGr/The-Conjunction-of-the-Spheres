@@ -246,9 +246,13 @@
     "tcots-witcher.sounds.ice_giant_punch": "Ice Giant punches",
     "tcots-witcher.sounds.ice_giant_charge": "Ice Giant charges",
     "tcots-witcher.sounds.ice_giant_snore": "Ice Giant snore",
+    "tcots-witcher.sounds.ice_giant_wake_up": "Ice Giant wakes Up",
+
 
     "tcots-witcher.sounds.anchor_idle": "Anchor clanks",
     "tcots-witcher.sounds.anchor_impact": "Anchor impacts",
+    "tcots-witcher.sounds.medium_impact": "Something impacts",
+    "tcots-witcher.sounds.big_impact": "Something big impacts",
 
 
 

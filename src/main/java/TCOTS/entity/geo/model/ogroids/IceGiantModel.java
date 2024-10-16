@@ -34,11 +34,11 @@ public class IceGiantModel extends BipedGeoModelBase<IceGiantEntity> {
         CoreGeoBone cloth_front =  getAnimationProcessor().getBone("clothFront");
         CoreGeoBone cloth_back =  getAnimationProcessor().getBone("clothBack");
 
+
         if(cloth_front!=null && cloth_back!=null){
             cloth_front.setRotX((float)-(Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));
             cloth_back.setRotX((float) (Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));
         }
-
     }
 
     @Override

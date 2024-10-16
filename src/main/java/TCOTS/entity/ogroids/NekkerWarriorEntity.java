@@ -18,7 +18,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
     //xTODO: Add mutagen
@@ -27,7 +27,7 @@ public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
     //xTODO: Add decoction
     //xTODO: Add loot_table
     //xTODO: Add spawn
-    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public NekkerWarriorEntity(EntityType<? extends NekkerEntity> entityType, World world) {
         super(entityType, world);

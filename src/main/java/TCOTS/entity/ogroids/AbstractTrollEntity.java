@@ -1415,7 +1415,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
                     (double)(-this.random.nextFloat()) * 0.01,
                     1.2 + ((double)this.random.nextFloat() - 0.5) * 0.1)
                     .rotateY(-this.bodyYaw * ((float)Math.PI / 180))
-                    .add(this.getX(), this.getEyeY() - 0.35, this.getZ());
+                    .add(this.getX(), this.getY(), this.getZ());
 
             this.getWorld().addParticle(
                     new ItemStackParticleEffect(ParticleTypes.ITEM, stack),
@@ -1427,7 +1427,6 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
                     vec3dVelocity.x,
                     vec3dVelocity.y + 0.05,
                     vec3dVelocity.z);
-
         }
     }
 

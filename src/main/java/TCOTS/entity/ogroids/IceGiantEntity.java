@@ -5,6 +5,10 @@ import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
+import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Dynamic;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.Path;
@@ -12,56 +16,72 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
+import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.GameEventTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.event.EntityPositionSource;
+import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.event.PositionSource;
+import net.minecraft.world.event.Vibrations;
+import net.minecraft.world.event.listener.EntityGameEventHandler;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
-import java.util.List;
+import java.util.function.BiConsumer;
 
-public class IceGiantEntity extends OgroidMonster implements GeoEntity {
+public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibrations {
     //xTODO: Add sounds
     //TODO: Add behavior
-    // Can make a ground punch
     // When it reaches 66%, it pushes the player away, and go for its anchor
-    // Sleeps and only wake up if you attack, walk above snow or make any sound (Similar to Warden??)
+    // Can make a ground punch
+    //Sleeps and only wake up if you attack, walk above snow or make any sound (Similar to Warden??)
     //Can charge
     //TODO: Add drops
     //TODO: Add bestiary entry
     //TODO: Add structure
     //TODO: Add map to find structure
+
+    private static final Logger LOGGER = LogUtils.getLogger();
     protected static final TrackedData<Boolean> CHARGING = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> HAS_ANCHOR = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<BlockPos>  ANCHOR_POS = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
     private static final TrackedData<Boolean>   SLEEPING = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean>   WAKING_UP = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private static final TrackedData<Boolean>   GOING_TO_SLEEP = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     @Nullable
     @Override
@@ -69,18 +89,22 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
-    public static final RawAnimation SLEEPING_IDLE = RawAnimation.begin().thenLoop("sleeping.idle");
-    public static final RawAnimation GO_TO_SLEEP = RawAnimation.begin().thenPlayAndHold("sleeping.go_to_sleep");
     public static final RawAnimation WAKE_UP = RawAnimation.begin().thenPlayAndHold("sleeping.wake_up");
+
+    public static final RawAnimation GO_TO_SLEEP = RawAnimation.begin().thenPlay("sleeping.go_to_sleep").thenLoop("sleeping.idle");
 
 
     private final ServerBossBar bossBar = (ServerBossBar)new ServerBossBar(this.getDisplayName(), BossBar.Color.BLUE, BossBar.Style.PROGRESS).setDarkenSky(true);
 
-    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public IceGiantEntity(EntityType<? extends OgroidMonster> entityType, World world) {
         super(entityType, world);
         this.setStepHeight(1.5f);
         this.experiencePoints=25;
+
+        this.vibrationCallback = new VibrationCallback(this);
+        this.vibrationListenerData = new Vibrations.ListenerData();
+        this.gameEventHandler = new EntityGameEventHandler<>(new Vibrations.VibrationListener(this));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -104,7 +128,6 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         this.dataTracker.startTracking(HAS_ANCHOR, Boolean.FALSE);
         this.dataTracker.startTracking(SLEEPING, Boolean.FALSE);
         this.dataTracker.startTracking(WAKING_UP, Boolean.FALSE);
-        this.dataTracker.startTracking(GOING_TO_SLEEP, Boolean.FALSE);
         this.dataTracker.startTracking(ANCHOR_POS, BlockPos.ORIGIN);
     }
 
@@ -130,6 +153,26 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         this.targetSelector.add(2, new RevengeGoal(this));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
+    private Vibrations.ListenerData vibrationListenerData;
+    private final Vibrations.Callback vibrationCallback;
+    private final EntityGameEventHandler<Vibrations.VibrationListener> gameEventHandler;
+    @Override
+    public void updateEventHandler(BiConsumer<EntityGameEventHandler<?>, ServerWorld> callback) {
+        World world = this.getWorld();
+        if (world instanceof ServerWorld serverWorld) {
+            callback.accept(this.gameEventHandler, serverWorld);
+        }
+    }
+    @Override
+    public ListenerData getVibrationListenerData() {
+        return vibrationListenerData;
+    }
+
+    @Override
+    public Callback getVibrationCallback() {
+        return vibrationCallback;
+    }
+
 
     private static class MeleeAttackGoal_IceGiant extends MeleeAttackGoal_Animated{
         private final IceGiantEntity giant;
@@ -151,12 +194,12 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
 
         @Override
         public boolean canStart() {
-            return super.canStart();
+            return super.canStart() && (!giant.isGiantWakingUp() || !giant.isGiantSleeping());
         }
 
         @Override
         public boolean shouldContinue() {
-            return super.shouldContinue();
+            return super.shouldContinue() && (!giant.isGiantWakingUp() || !giant.isGiantSleeping());
         }
 
         @Override
@@ -309,38 +352,69 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
                 return false;
             }
 
-            return !giant.isAttacking() && isAtFavoredLocation() && !giant.cannotSleep && !giant.isGiantWakingUp();
+            return !giant.isAttacking() && isAtFavoredLocation() && !giant.getSleepCooldown() && !giant.isGiantWakingUp();
         }
 
-        int AnimationTicks=70;
+//        int AnimationTicks=5;
         @Override
         public void start() {
             giant.getNavigation().stop();
-            AnimationTicks=70;
-            giant.setIsGiantGoingToSleep(true);
-        }
-
-        @Override
-        public void tick() {
-            if (AnimationTicks > 0) {
-                --AnimationTicks;
-            }else {
-                stop();
-            }
-        }
-
-        @Override
-        public void stop() {
-            giant.setIsGiantGoingToSleep(false);
-
-            if(!giant.isGiantSleeping()){
-                giant.setIsGiantSleeping(true);
-            }
+//            AnimationTicks=5;
+            giant.setIsGiantSleeping(true);
+//            giant.setIsGiantGoingToSleep(true);
+            this.stop();
         }
 
         @Override
         public boolean shouldRunEveryTick() {
             return true;
+        }
+    }
+
+
+    boolean listenToSound=false;
+    private static class VibrationCallback implements Vibrations.Callback {
+        private static final int RANGE = 16;
+        private final PositionSource positionSource;
+
+        private final IceGiantEntity giant;
+
+        VibrationCallback(IceGiantEntity giant) {
+            this.giant=giant;
+            this.positionSource = new EntityPositionSource(giant, (float)(giant.getY()));
+        }
+
+        @Override
+        public int getRange() {
+            return RANGE;
+        }
+
+        @Override
+        public PositionSource getPositionSource() {
+            return this.positionSource;
+        }
+
+        @Override
+        public TagKey<GameEvent> getTag() {
+            return GameEventTags.WARDEN_CAN_LISTEN;
+        }
+
+        @Override
+        public boolean accepts(ServerWorld world, BlockPos pos, GameEvent event, GameEvent.Emitter emitter) {
+            if (giant.isAiDisabled() || !giant.isGiantSleeping() || giant.isDead() || giant.isGiantWakingUp()) {
+                return false;
+            }
+
+            Entity entity = emitter.sourceEntity();
+            return !(entity instanceof LivingEntity) || giant.canTarget((LivingEntity)entity);
+        }
+
+        @Override
+        public void accept(ServerWorld world, BlockPos pos, GameEvent event, @Nullable Entity sourceEntity, @Nullable Entity entity, float distance) {
+            if (giant.isDead()) {
+                return;
+            }
+            giant.listenToSound=true;
         }
     }
 
@@ -356,16 +430,9 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         }
 
 
-        //TODO: Make wake up system
         @Override
         public boolean canStart() {
-            Iterable<VoxelShape> iterable = giant.getWorld().getBlockCollisions(giant, giant.getDimensions(EntityPose.STANDING).getBoxAt(giant.getX(), giant.getY(), giant.getZ()));
-            for (VoxelShape voxelShape : iterable) {
-                if (voxelShape.isEmpty()) continue;
-                return false;
-            }
-
-            return giant.isGiantSleeping() && canStartO();
+            return giant.isGiantSleeping() && giant.listenToSound;
         }
 
         @Override
@@ -373,58 +440,19 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
             return giant.isGiantSleeping();
         }
 
-        public boolean canStartO(){
-            LivingEntity livingEntity = this.giant.getTarget();
-            //If it doesn't have target
-            if (livingEntity == null) {
-                return false;
-            }
-            //If it's the target dead
-            else if (!livingEntity.isAlive()) {
-                return false;
-            }
-            else {
-                return this.giant.squaredDistanceTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ()) <= 80;
-            }
-        }
-
-        public boolean detectedBySomeone(){
-            List<MobEntity> enemiesList =
-                    this.giant.getWorld().getEntitiesByClass(MobEntity.class, this.giant.getBoundingBox().expand(10,5,10),
-                            entity -> entity.getTarget() == this.giant);
-
-            return !enemiesList.isEmpty();
-        }
-
         int AnimationTicks=70;
         @Override
         public void start(){
-            this.giant.playSound(TCOTS_Sounds.ICE_GIANT_CHARGE, 1.0F, 1.0F);
-
+            giant.playSound(TCOTS_Sounds.ICE_GIANT_WAKE_UP, 1, 1);
             AnimationTicks=70;
             giant.setIsGiantWakingUp(true);
         }
-
-//        @Override
-//        public boolean shouldContinue(){
-//            return (shouldContinueO() || detectedBySomeone()) && excavatorMob.getInGround();
-//        }
-//        public boolean shouldContinueO(){
-//            LivingEntity livingEntity = this.mob.getTarget();
-//            if (livingEntity == null) {
-//                return false;
-//            } else if (!livingEntity.isAlive()) {
-//                return false;
-//            } else {
-//                return !(livingEntity instanceof PlayerEntity) || !livingEntity.isSpectator() && !((PlayerEntity)livingEntity).isCreative();
-//            }
-//        }
 
         @Override
         public void tick(){
             if (AnimationTicks > 0) {
                 --AnimationTicks;
-            }else {
+            } else {
                 stop();
             }
         }
@@ -432,11 +460,10 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         @Override
         public void stop(){
             giant.setIsGiantWakingUp(false);
-
-            if(giant.isGiantSleeping()){
-                giant.canSleepTimer=returnTicks+giant.getRandom().nextBetween(1,501);
-                giant.setIsGiantSleeping(false);
-            }
+            giant.canSleepTimer=returnTicks+giant.getRandom().nextBetween(1,501);
+            giant.setIsGiantSleeping(false);
+            giant.listenToSound=false;
+            giant.setSleepCooldown(true);
         }
 
         @Override
@@ -458,12 +485,12 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
 
         @Override
         public boolean canStart() {
-            return super.canStart() && !giant.isGiantSleeping();
+            return super.canStart() && !giant.isGiantSleeping() && !giant.isGiantWakingUp();
         }
 
         @Override
         public boolean shouldContinue() {
-            return super.shouldContinue() && !giant.isGiantSleeping();
+            return super.shouldContinue() && !giant.isGiantSleeping() && !giant.isGiantWakingUp();
         }
     }
 
@@ -510,14 +537,6 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         return this.dataTracker.get(WAKING_UP);
     }
 
-    public void setIsGiantGoingToSleep(boolean isSleeping) {
-        this.dataTracker.set(GOING_TO_SLEEP, isSleeping);
-    }
-
-    public boolean isGiantGoingToSleep() {
-        return this.dataTracker.get(GOING_TO_SLEEP);
-    }
-
     public void setHasAnchor(boolean hasAnchor) {
         this.dataTracker.set(HAS_ANCHOR, hasAnchor);
     }
@@ -534,34 +553,21 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         return this.dataTracker.get(ANCHOR_POS);
     }
 
+    public void setSleepCooldown(boolean cannotSleep) {
+        this.sleepCooldown=cannotSleep;
+    }
+
+    public boolean getSleepCooldown() {
+        return sleepCooldown;
+    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         //Walk/Idle Controller
         controllerRegistrar.add(new AnimationController<>(this, "Idle/Walk", 5, state ->
                 {
-                    if(!this.isGiantSleeping() && !this.isGiantWakingUp() && !this.isGiantGoingToSleep()) {
-                        //If it's aggressive and it is moving
-                        MobEntity entity = state.getAnimatable();
-                        if (entity.isAttacking() && state.isMoving()) {
-                            return state.setAndContinue(RUNNING);
-                        }
-                        //It's not attacking and/or it's no moving
-                        else {
-                            //If it's attacking but NO moving
-                            if (entity.isAttacking()) {
-                                return state.setAndContinue(RUNNING);
-                            } else {
-                                //If it's just moving
-                                if (state.isMoving()) {
-                                    return state.setAndContinue(WALKING);
-                                }
-                                //Anything else
-                                else {
-                                    return state.setAndContinue(IDLE);
-                                }
-                            }
-                        }
+                    if(!this.isGiantSleeping() && !this.isGiantWakingUp()) {
+                        return GeoControllersUtil.idleWalkRunController(state);
                     } else {
                         state.getController().forceAnimationReset();
                         return PlayState.STOP;
@@ -579,8 +585,8 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         //Sleep Control
         controllerRegistrar.add(
                 new AnimationController<>(this, "SleepingController", 1, state -> {
-                    if(this.isGiantSleeping() && !this.isGiantWakingUp() && !this.isGiantGoingToSleep()){
-                        state.setAnimation(SLEEPING_IDLE);
+                    if(this.isGiantSleeping()){
+                        state.setAnimation(GO_TO_SLEEP);
                         return PlayState.CONTINUE;
                     } else {
                         state.getController().forceAnimationReset();
@@ -588,18 +594,6 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
                     }
                 }));
 
-        controllerRegistrar.add(
-                new AnimationController<>(this, "GoingToSleepController", 1, state -> {
-                    if (this.isGiantGoingToSleep()){
-                        state.setAnimation(GO_TO_SLEEP);
-                        return PlayState.CONTINUE;
-                    }
-                    else {
-                        state.getController().forceAnimationReset();
-                        return PlayState.STOP;
-                    }
-                })
-        );
 
         controllerRegistrar.add(
                 new AnimationController<>(this, "WakingUpController", 1, state -> {
@@ -611,12 +605,48 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
                         state.getController().forceAnimationReset();
                         return PlayState.STOP;
                     }
-                })
+                }).setParticleKeyframeHandler(event -> {
+                        BlockState blockState = this.getSteppingBlockState();
+                        if (blockState.getRenderType() != BlockRenderType.INVISIBLE) {
+                            for (int i = 0; i < 32; ++i) {
+
+                                Vec3d vec3dVelocity = new Vec3d(
+                                        ((double)this.random.nextFloat()) * 0.3,
+                                        0.0,
+                                        ((double)this.random.nextFloat()) * 0.3)
+                                        .rotateX(-this.getPitch() * ((float)Math.PI / 180))
+                                        .rotateY(-this.getYaw() * ((float)Math.PI / 180));
+
+                                Vec3d vec3dPos = new Vec3d((
+                                        (double)this.random.nextFloat() - 0.5) * 0.6,
+                                        (double)(-this.random.nextFloat()) * 0.01,
+                                        1.6 + ((double)this.random.nextFloat() - 0.5) * 0.6)
+                                        .rotateY(-this.bodyYaw * ((float)Math.PI / 180))
+                                        .add(this.getX(), this.getY(), this.getZ());
+
+                                this.getWorld().addParticle(
+                                        new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState),
+                                        //Position
+                                        vec3dPos.x,
+                                        vec3dPos.y,
+                                        vec3dPos.z,
+                                        //Velocity
+                                        vec3dVelocity.x,
+                                        vec3dVelocity.y + 0.1,
+                                        vec3dVelocity.z);
+                            }
+                        }
+                }).setSoundKeyframeHandler(event -> this.playSound(TCOTS_Sounds.BIG_IMPACT, 1, 1))
+
         );
 
-
-
     }
+
+    @Override
+    public void handleStatus(byte status) {
+        super.handleStatus(status);
+    }
+
     int chargeCooldownTimer;
 
     boolean chargeCooldown = false;
@@ -633,17 +663,14 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         }
     }
 
-    boolean cannotSleep = false;
-
-    int canSleepTimer;
+    private int canSleepTimer;
+    private boolean sleepCooldown;
 
     private void tickSleep(){
-
         if(canSleepTimer>0){
             --canSleepTimer;
-            cannotSleep=true;
-        } else if (cannotSleep){
-            cannotSleep =false;
+        } else if (this.getSleepCooldown()){
+            this.setSleepCooldown(false);
         }
     }
 
@@ -680,6 +707,8 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         }
     }
 
+
+
     @Override
     public void tick() {
         super.tick();
@@ -687,6 +716,12 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         this.tickCharge();
 
         this.tickSleep();
+
+
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            Vibrations.Ticker.tick(serverWorld, this.vibrationListenerData, this.vibrationCallback);
+        }
+
     }
 
     @Override
@@ -698,6 +733,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
 
         nbt.putBoolean("Sleeping", this.isGiantSleeping());
         nbt.putInt("CanSleepTimer", this.canSleepTimer);
+        nbt.putBoolean("SleepCooldown", this.getSleepCooldown());
 
         nbt.putBoolean("HasAnchor", this.hasAnchor());
 
@@ -705,6 +741,9 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         nbt.putInt("AnchorPosX", this.getAnchorPos().getX());
         nbt.putInt("AnchorPosY", this.getAnchorPos().getY());
         nbt.putInt("AnchorPosZ", this.getAnchorPos().getZ());
+
+        Vibrations.ListenerData.CODEC.encodeStart(NbtOps.INSTANCE, this.vibrationListenerData).resultOrPartial(LOGGER::error).ifPresent(listenerData -> nbt.put("listener", listenerData));
+        nbt.putBoolean("ListenToSound",this.listenToSound);
     }
 
     @Override
@@ -719,6 +758,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
 
         this.setIsGiantSleeping(nbt.getBoolean("Sleeping"));
         this.canSleepTimer = nbt.getInt("CanSleepTimer");
+        this.setSleepCooldown(nbt.getBoolean("SleepCooldown"));
 
         this.setHasAnchor(nbt.getBoolean("HasAnchor"));
 
@@ -727,6 +767,13 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
         int z = nbt.getInt("AnchorPosZ");
 
         this.setAnchorPos(new BlockPos(x,y,z));
+
+        if (nbt.contains("listener", NbtElement.COMPOUND_TYPE)) {
+            Vibrations.ListenerData.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, nbt.getCompound("listener")))
+                    .resultOrPartial(LOGGER::error).ifPresent(listenerData -> this.vibrationListenerData = listenerData);
+        }
+
+        this.listenToSound=nbt.getBoolean("ListenToSound");
     }
 
     @Override
@@ -742,6 +789,28 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
 
         if(this.isCharging()){
             EntitiesUtil.pushAndDamageEntities(this, 12f, 1.3, 1.2, 1.6D, IceGiantEntity.class);
+        }
+
+        //Destroys blocks to avoid suffocation when waking up
+        int j;
+        int i;
+        if (this.isGiantWakingUp() && this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+            i = MathHelper.floor(this.getY());
+            j = MathHelper.floor(this.getX());
+            int k = MathHelper.floor(this.getZ());
+            for (int l = -1; l <= 1; ++l) {
+                for (int m = -1; m <= 1; ++m) {
+                    for (int n = 0; n <= 4; ++n) {
+                        int o = j + l;
+                        int p = i + n;
+                        int q = k + m;
+                        BlockPos blockPos = new BlockPos(o, p, q);
+                        BlockState blockState = this.getWorld().getBlockState(blockPos);
+                        if (!WitherEntity.canDestroy(blockState)) continue;
+                        this.getWorld().breakBlock(blockPos, true, this);
+                    }
+                }
+            }
         }
     }
 
@@ -775,10 +844,15 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        if(this.isGiantSleeping()){
-            return TCOTS_Sounds.ICE_GIANT_SNORE;
-        } else {
-            return TCOTS_Sounds.ICE_GIANT_IDLE;
+        if(!this.isGiantWakingUp()) {
+            if (this.isGiantSleeping()) {
+                return TCOTS_Sounds.ICE_GIANT_SNORE;
+            } else {
+                return TCOTS_Sounds.ICE_GIANT_IDLE;
+            }
+        }
+        else {
+            return null;
         }
     }
 

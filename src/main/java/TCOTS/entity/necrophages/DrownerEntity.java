@@ -48,9 +48,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
 //xTODO: Make the puddle entity spawn when digging
 //xTODO: Add drops (Add loot tables)
 //xTODO: Add spawn
-    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     protected final SwimNavigation waterNavigation;
     protected final MobNavigation landNavigation;
 

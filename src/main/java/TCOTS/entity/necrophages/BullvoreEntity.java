@@ -38,10 +38,10 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
 
@@ -51,7 +51,7 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
     //xTODO: Add spawn (Like an illager patrol)
     //xTODO: Add bestiary entry
 
-    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     protected static final TrackedData<Boolean> CHARGING = DataTracker.registerData(BullvoreEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 

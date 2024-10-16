@@ -962,6 +962,14 @@
       "tcots-witcher:entity/ogroids/ice_giant/ice_giant_snore3"
     ]
   },
+  "ice_giant_wake_up": {
+    "subtitle": "tcots-witcher.sounds.ice_giant_wake_up",
+    "sounds": [
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_wake_up1",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_wake_up2",
+      "tcots-witcher:entity/ogroids/ice_giant/ice_giant_wake_up3"
+    ]
+  },
 
 
   "anchor_idle": {
@@ -979,6 +987,22 @@
       "tcots-witcher:entity/ogroids/ice_giant/anchor_impact2",
       "tcots-witcher:entity/ogroids/ice_giant/anchor_impact3",
       "tcots-witcher:entity/ogroids/ice_giant/anchor_impact4"
+    ]
+  },
+
+
+  "medium_impact": {
+    "subtitle": "tcots-witcher.sounds.medium_impact",
+    "sounds": [
+      "tcots-witcher:entity/common/medium_impact1",
+      "tcots-witcher:entity/common/medium_impact2"
+    ]
+  },
+  "big_impact": {
+    "subtitle": "tcots-witcher.sounds.big_impact",
+    "sounds": [
+      "tcots-witcher:entity/common/big_impact1",
+      "tcots-witcher:entity/common/big_impact2"
     ]
   }
 

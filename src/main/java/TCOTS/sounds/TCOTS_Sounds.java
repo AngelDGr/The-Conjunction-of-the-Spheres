@@ -11,6 +11,8 @@ public class TCOTS_Sounds {
     public static SoundEvent MONSTER_EMERGING = registerSoundEvent("monster_emerging");
     public static SoundEvent MONSTER_DIGGING = registerSoundEvent("monster_digging");
     public static SoundEvent GROUND_PUNCH = registerSoundEvent("ground_punch");
+    public static SoundEvent BIG_IMPACT = registerSoundEvent("big_impact");
+    public static SoundEvent MEDIUM_IMPACT = registerSoundEvent("medium_impact");
 
     //Drowner
     public static SoundEvent DROWNER_ATTACK = registerSoundEvent("drowner_attack");
@@ -152,6 +154,7 @@ public class TCOTS_Sounds {
     public static SoundEvent ICE_GIANT_PUNCH = registerSoundEvent("ice_giant_punch");
     public static SoundEvent ICE_GIANT_CHARGE = registerSoundEvent("ice_giant_charge");
     public static SoundEvent ICE_GIANT_SNORE = registerSoundEvent("ice_giant_snore");
+    public static SoundEvent ICE_GIANT_WAKE_UP = registerSoundEvent("ice_giant_wake_up");
     public static SoundEvent ANCHOR_IDLE = registerSoundEvent("anchor_idle");
     public static SoundEvent ANCHOR_IMPACT = registerSoundEvent("anchor_impact");
 

@@ -42,11 +42,11 @@ import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
@@ -59,7 +59,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     //xTODO: Add natural spawn
     //xTODO: Add drop
 
-    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private static final byte FALLING_PARTICLES = 42;
     public static final RawAnimation JUMP = RawAnimation.begin().thenPlayAndHold("special.jumping");
