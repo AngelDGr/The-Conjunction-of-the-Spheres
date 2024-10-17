@@ -1,14 +1,17 @@
 package TCOTS.entity.ogroids;
 
+import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.goals.MeleeAttackGoal_Animated;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
+import TCOTS.utils.MiscUtil;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.Path;
@@ -26,11 +29,14 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.GameEventTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -68,7 +74,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     //xTODO: Add sounds
     //TODO: Add behavior
     // When it reaches 66%, it pushes the player away, and go for its anchor
-    // Can make a ground punch
+    //Can make a ground punch
     //Sleeps and only wake up if you attack, walk above snow or make any sound (Similar to Warden??)
     //Can charge
     //TODO: Add drops
@@ -83,6 +89,10 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     private static final TrackedData<Boolean>   SLEEPING = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean>   WAKING_UP = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
+
+    protected static final TrackedData<Boolean> FALLING = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Float> FALLING_DISTANCE = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.FLOAT);
+
     @Nullable
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
@@ -90,10 +100,10 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     }
 
     public static final RawAnimation WAKE_UP = RawAnimation.begin().thenPlayAndHold("sleeping.wake_up");
-
     public static final RawAnimation GO_TO_SLEEP = RawAnimation.begin().thenPlay("sleeping.go_to_sleep").thenLoop("sleeping.idle");
 
-
+    public static final RawAnimation JUMP = RawAnimation.begin().thenPlayAndHold("special.jumping");
+    public static final RawAnimation LANDING = RawAnimation.begin().thenPlay("special.landing");
     private final ServerBossBar bossBar = (ServerBossBar)new ServerBossBar(this.getDisplayName(), BossBar.Color.BLUE, BossBar.Style.PROGRESS).setDarkenSky(true);
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -114,10 +124,10 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.23f)
 
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 3.0f)
-                .add(EntityAttributes.GENERIC_ARMOR, 8f)
-                .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 3f)
+                .add(EntityAttributes.GENERIC_ARMOR, 10f)
+                .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 4f)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.8f)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 35.0);
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 40.0);
     }
 
     @Override
@@ -129,30 +139,88 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
         this.dataTracker.startTracking(SLEEPING, Boolean.FALSE);
         this.dataTracker.startTracking(WAKING_UP, Boolean.FALSE);
         this.dataTracker.startTracking(ANCHOR_POS, BlockPos.ORIGIN);
+
+        this.dataTracker.startTracking(FALLING, Boolean.FALSE);
+        this.dataTracker.startTracking(FALLING_DISTANCE, fallDistance);
     }
 
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new WakeUpGoal(this, 1000));
+        this.goalSelector.add(0, new WakeUpGoal(this, MiscUtil.getTimeInTicks(120)));
 
         this.goalSelector.add(1, new SwimGoal(this));
 
         this.goalSelector.add(2, new GoToSleepGoal(this));
 
-        this.goalSelector.add(3, new MeleeAttackGoal_IceGiant(this,1.2D, false, 1.4D, 8*20));
+        this.goalSelector.add(3, new IceGiantJumpAttack(this, MiscUtil.getTimeInTicks(20), MiscUtil.getTimeInTicks(10)));
 
-//        this.goalSelector.add(2, new CyclopsEntity.CyclopsMeleeAttackGoal(this, 1.2D, false));
+        this.goalSelector.add(4, new MeleeAttackGoal_IceGiant(this,1.2D, false, 1.4D, MiscUtil.getTimeInTicks(8), MiscUtil.getTimeInTicks(120)));
 
-        this.goalSelector.add(4, new WanderAroundGoal_Giant(this, 0.75f, 20));
+        this.goalSelector.add(5, new WanderAroundGoal_Giant(this, 0.75f, 20));
 
-        this.goalSelector.add(5, new LookAroundGoal_Giant(this));
+        this.goalSelector.add(6, new LookAroundGoal_Giant(this));
 
         this.targetSelector.add(0, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, MerchantEntity.class, true));
         this.targetSelector.add(2, new RevengeGoal(this));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
+    private static class IceGiantJumpAttack extends Goal {
+
+        private final IceGiantEntity giant;
+        private final int minJumpCooldown;
+        private final int maxJumpCooldown;
+
+        public IceGiantJumpAttack(IceGiantEntity giant, int minJumpCooldown, int maxExtraRandomCooldown) {
+            this.giant = giant;
+            this.minJumpCooldown = minJumpCooldown;
+            this.maxJumpCooldown = maxExtraRandomCooldown;
+        }
+
+        @Override
+        public boolean canStart() {
+            LivingEntity target = this.giant.getTarget();
+
+            if (target != null) {
+                //5 square distance like 1.5 blocks approx
+                //I want 7.5 blocks approx
+                //So 7.5/1.5=5
+                return !this.giant.cooldownBetweenJumps
+                        && this.giant.isAttacking()
+                        && !this.giant.isInFluid()
+                        && !this.giant.hasVehicle()
+                        && !this.giant.getWorld().getBlockState(this.giant.getBlockPos()).isOf(Blocks.HONEY_BLOCK)
+                        && !this.giant.getWorld().getBlockState(this.giant.getBlockPos()).isOf(Blocks.COBWEB)
+                        //Max
+                        && this.giant.distanceTo(target) < 8
+                        //Min
+//                        && this.giant.distanceTo(target) > 2
+                        ;
+
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public void tick() {
+            LivingEntity target = this.giant.getTarget();
+
+            if(target!=null){
+                jumpAttack();
+            }
+        }
+
+        private void jumpAttack(){
+            giant.jump();
+            giant.setIsFalling(true);
+            giant.cooldownBetweenJumps=true;
+            giant.jumpTicks= minJumpCooldown + giant.random.nextBetween(0,maxJumpCooldown);
+        }
+    }
+
+
     private Vibrations.ListenerData vibrationListenerData;
     private final Vibrations.Callback vibrationCallback;
     private final EntityGameEventHandler<Vibrations.VibrationListener> gameEventHandler;
@@ -178,28 +246,30 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
         private final IceGiantEntity giant;
         private final double speedMultiplierRunValue;
         private final int chargeCooldownTicks;
+        private final int sleepColdown;
 
         private Path pathCharge;
         private double toChargeX;
         private double toChargeY;
         private double toChargeZ;
 
-        public MeleeAttackGoal_IceGiant(IceGiantEntity mob, double speed, boolean pauseWhenMobIdle, double speedMultiplier, int chargeCooldown) {
+        public MeleeAttackGoal_IceGiant(IceGiantEntity mob, double speed, boolean pauseWhenMobIdle, double speedMultiplier, int chargeCooldown, int sleepCooldown) {
             super(mob, speed, pauseWhenMobIdle, 2);
 
             this.giant =mob;
             this.speedMultiplierRunValue = speedMultiplier;
             this.chargeCooldownTicks = chargeCooldown;
+            this.sleepColdown=sleepCooldown;
         }
 
         @Override
         public boolean canStart() {
-            return super.canStart() && (!giant.isGiantWakingUp() || !giant.isGiantSleeping());
+            return super.canStart() && (!giant.isGiantWakingUp() || !giant.isGiantSleeping()) && !giant.isFalling();
         }
 
         @Override
         public boolean shouldContinue() {
-            return super.shouldContinue() && (!giant.isGiantWakingUp() || !giant.isGiantSleeping());
+            return super.shouldContinue() && (!giant.isGiantWakingUp() || !giant.isGiantSleeping()) && !giant.isFalling();
         }
 
         @Override
@@ -208,7 +278,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
 
             this.giant.chargeCooldownTimer = 40;
             this.giant.chargeCooldown = true;
-            this.giant.canSleepTimer=1000+giant.getRandom().nextBetween(1,501);
+            this.giant.canSleepTimer=sleepColdown+giant.getRandom().nextBetween(1,501);
         }
 
         @Override
@@ -273,7 +343,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
                 }
 
                 //Start Charging
-                if (this.giant.distanceTo(target) > 8 && !this.giant.chargeCooldown && !this.giant.isCharging() && isFacingTarget) {
+                if (this.giant.distanceTo(target) > 1 && !this.giant.chargeCooldown && !this.giant.isCharging() && isFacingTarget) {
 
                     this.giant.getLookControl().lookAt(
                             this.targetX,
@@ -594,7 +664,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
                     }
                 }));
 
-
+        //Waking Up
         controllerRegistrar.add(
                 new AnimationController<>(this, "WakingUpController", 1, state -> {
                     if (this.isGiantWakingUp()){
@@ -637,14 +707,25 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
                             }
                         }
                 }).setSoundKeyframeHandler(event -> this.playSound(TCOTS_Sounds.BIG_IMPACT, 1, 1))
-
         );
 
-    }
+        //Jumping
+        controllerRegistrar.add(
+                new AnimationController<>(this, "JumpController", 1, state -> {
+                    if(this.isFalling()){
+                        state.setAnimation(JUMP);
+                        return PlayState.CONTINUE;
+                    } else {
+                        state.getController().forceAnimationReset();
+                        return PlayState.STOP;
+                    }
+                }));
 
-    @Override
-    public void handleStatus(byte status) {
-        super.handleStatus(status);
+        //Landing
+        controllerRegistrar.add(
+                new AnimationController<>(this, "LandingController", 1, state -> PlayState.STOP)
+                        .triggerableAnim("landing", LANDING)
+        );
     }
 
     int chargeCooldownTimer;
@@ -722,6 +803,11 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
             Vibrations.Ticker.tick(serverWorld, this.vibrationListenerData, this.vibrationCallback);
         }
 
+        //To sync fallDistance with the client
+        setFallingDistance(fallDistance);
+
+        //Tick for jumps
+        tickJump();
     }
 
     @Override
@@ -744,6 +830,8 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
 
         Vibrations.ListenerData.CODEC.encodeStart(NbtOps.INSTANCE, this.vibrationListenerData).resultOrPartial(LOGGER::error).ifPresent(listenerData -> nbt.put("listener", listenerData));
         nbt.putBoolean("ListenToSound",this.listenToSound);
+
+        nbt.putInt("JumpCooldown", this.jumpTicks);
     }
 
     @Override
@@ -774,6 +862,8 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
         }
 
         this.listenToSound=nbt.getBoolean("ListenToSound");
+
+        this.jumpTicks=nbt.getInt("JumpCooldown");
     }
 
     @Override
@@ -838,9 +928,145 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return super.isInvulnerableTo(damageSource) || this.isGiantWakingUp();
+        return super.isInvulnerableTo(damageSource) || this.isGiantWakingUp() || this.isFalling();
     }
 
+    @Override
+    protected float modifyAppliedDamage(DamageSource source, float amount) {
+        if (source.isIn(DamageTypeTags.BYPASSES_EFFECTS)) {
+            return amount;
+        }
+        if(source.isIn(DamageTypeTags.IS_PROJECTILE)){
+            return amount*0.2f;
+        }
+
+        return super.modifyAppliedDamage(source, amount);
+    }
+
+    //Jumping Stuff
+    @Override
+    protected float getJumpVelocity() {
+        return 0.7f * this.getJumpVelocityMultiplier() + this.getJumpBoostVelocityModifier();
+    }
+
+    protected int computeFallDamage(float fallDistance, float damageMultiplier) {
+        return super.computeFallDamage(fallDistance, damageMultiplier) - 4;
+    }
+
+    @Override
+    protected void jump() {
+        this.playSound(TCOTS_Sounds.ICE_GIANT_PUNCH, 1.0f, 1.0f);
+        super.jump();
+    }
+    private static final byte FALLING_PARTICLES = 42;
+    @Override
+    public void onLanding() {
+        if(isFalling()){
+            setIsFalling(false);
+            if(this.getWorld().getBlockState(this.getBlockPos().down()).getFluidState().isOf(Fluids.EMPTY)
+                    && !this.getWorld().getBlockState(this.getBlockPos()).isIn(TCOTS_Blocks.NEGATES_DEVOURER_JUMP)
+                    && !this.getWorld().getBlockState(this.getBlockPos().down()).isIn(TCOTS_Blocks.NEGATES_DEVOURER_JUMP))
+            {
+                this.triggerAnim("LandingController","landing");
+                EntitiesUtil.pushAndDamageEntities(this, 8 + (fallDistance*2f), 4.0f + (fallDistance * 0.5f), 3, 3.0);
+                this.playSound(TCOTS_Sounds.BIG_IMPACT, 1.0f, 1.0f);
+                this.getWorld().sendEntityStatus(this, FALLING_PARTICLES);
+            }
+        }
+
+        super.onLanding();
+    }
+    @Override
+    public void handleStatus(byte status) {
+        if(status==FALLING_PARTICLES){
+            spawnImpactParticles();
+        } else{
+            super.handleStatus(status);
+        }
+    }
+
+    private void spawnImpactParticles() {
+        // Calculate the radius based on the fall distance
+        double radius = 1.9975f + (2.8f + (getFallingDistance() * 0.5f));
+
+        // Calculate pQuantity based on the circumference to ensure full coverage
+        double pQuantity = Math.max(80 + getFallingDistance(), 2 * Math.PI * radius);
+
+        // To get the ground position
+        BlockPos.Mutable pos = new BlockPos.Mutable(this.getSteppingPos().getX(), this.getSteppingPos().getY(), this.getSteppingPos().getZ());
+        while (this.getWorld().getBlockState(pos).isAir()) {
+            pos.setY(pos.getY() - 1);
+        }
+        pos.setY(pos.getY() + 1);
+
+        // Fill the circle with particles
+        double stepSize = radius / 10.0;  // Adjust the step size for more or fewer particles inside the circle
+        for (double r = 0; r <= radius; r += stepSize) {
+            double particlesInRing = Math.max(pQuantity, 2 * Math.PI * r);
+            for (int i = 0; i < particlesInRing; i++) {
+                double angle = (2 * Math.PI) * i / particlesInRing;
+                double offsetX = r * Math.cos(angle);
+                double offsetZ = r * Math.sin(angle);
+
+                // Add some vertical randomness for particle height
+                double d = this.random.nextGaussian() * 0.5;
+                double e = this.random.nextGaussian() * 0.5;
+                double f = this.random.nextGaussian() * 0.5;
+
+                // Select the particle type
+                ParticleEffect particleType=ParticleTypes.POOF;
+
+                // Use a block particle for the interior
+                BlockState blockState = this.getWorld().getBlockState(
+                        new BlockPos(
+                                (int) (this.getX()+offsetX),
+                                pos.down().getY(),
+                                (int) (this.getZ()+offsetZ)));
+                if(blockState.getRenderType() != BlockRenderType.INVISIBLE) {
+                    particleType = new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState);
+                }
+
+
+                // Spawn the particle at the calculated position
+                this.getWorld().addParticle(particleType,
+                        this.getX() + offsetX,
+                        pos.getY(),
+                        this.getZ() + offsetZ,
+                        d, e, f);
+            }
+        }
+    }
+
+    public boolean cooldownBetweenJumps=false;
+    private int jumpTicks;
+
+    private void tickJump(){
+
+        if (jumpTicks > 0) {
+            --jumpTicks;
+        } else {
+            cooldownBetweenJumps=false;
+        }
+    }
+
+
+    public void setIsFalling(boolean isFalling) {
+        this.dataTracker.set(FALLING, isFalling);
+    }
+
+    public boolean isFalling() {
+        return this.dataTracker.get(FALLING);
+    }
+
+    public void setFallingDistance(float fallingDistance) {
+        this.dataTracker.set(FALLING_DISTANCE, fallingDistance);
+    }
+
+    public double getFallingDistance() {
+        return this.dataTracker.get(FALLING_DISTANCE);
+    }
+
+    //Sounds
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

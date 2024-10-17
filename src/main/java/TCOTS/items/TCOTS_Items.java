@@ -7,10 +7,7 @@ import TCOTS.items.armor.ManticoreArmorItem;
 import TCOTS.items.armor.RavensArmorItem;
 import TCOTS.items.armor.WarriorsLeatherArmorItem;
 import TCOTS.items.armor.WitcherHorseArmorItem;
-import TCOTS.items.blocks.AlchemyTableItem;
-import TCOTS.items.blocks.HerbalTableItem;
-import TCOTS.items.blocks.MonsterNestItem;
-import TCOTS.items.blocks.NestSkullItem;
+import TCOTS.items.blocks.*;
 import TCOTS.items.concoctions.*;
 import TCOTS.items.weapons.BoltItem;
 import TCOTS.items.weapons.SwordWithTooltip;
@@ -1697,6 +1694,8 @@ public class TCOTS_Items {
 
     public static Item HERBAL_TABLE_ITEM;
 
+    public static Item GIANT_ANCHOR_BLOCK_ITEM;
+
     public static Item HERBAL_MIXTURE;
     public static Item WITCHER_BESTIARY;
     public static Item ALCHEMY_BOOK;
@@ -1721,6 +1720,8 @@ public class TCOTS_Items {
 
         HERBAL_MIXTURE = registerItem("herbal_mixture", new HerbalMixture(new FabricItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(0.2f).alwaysEdible().build()).maxCount(2)));
 
+
+        GIANT_ANCHOR_BLOCK_ITEM = registerItem("giant_anchor_block", new GiantAnchorBlockItem(TCOTS_Blocks.GIANT_ANCHOR, new FabricItemSettings()));
 
         WITCHER_BESTIARY = WitcherBestiaryItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), new FabricItemSettings().maxCount(1));
 

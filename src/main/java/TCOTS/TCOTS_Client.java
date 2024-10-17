@@ -1,10 +1,7 @@
 package TCOTS;
 
 import TCOTS.blocks.TCOTS_Blocks;
-import TCOTS.blocks.geo.renderer.AlchemyTableRenderer;
-import TCOTS.blocks.geo.renderer.HerbalTableRenderer;
-import TCOTS.blocks.geo.renderer.MonsterNestRenderer;
-import TCOTS.blocks.geo.renderer.NestSkullBlockRenderer;
+import TCOTS.blocks.geo.renderer.*;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.*;
@@ -166,6 +163,7 @@ public class TCOTS_Client implements ClientModInitializer {
         BlockEntityRendererFactories.register(TCOTS_Blocks.MONSTER_NEST_ENTITY, MonsterNestRenderer::new);
         BlockEntityRendererFactories.register(TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, AlchemyTableRenderer::new);
         BlockEntityRendererFactories.register(TCOTS_Blocks.HERBAL_TABLE_ENTITY, HerbalTableRenderer::new);
+        BlockEntityRendererFactories.register(TCOTS_Blocks.GIANT_ANCHOR_ENTITY, GiantAnchorRenderer::new);
 
 
         //Particles

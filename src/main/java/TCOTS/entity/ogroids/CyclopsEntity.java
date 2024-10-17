@@ -30,7 +30,6 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
@@ -269,7 +268,7 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
             {
                 this.triggerAnim("LandingController","landing");
                 EntitiesUtil.pushAndDamageEntities(this, 6 + (fallDistance*2f), 3.0f + (fallDistance * 0.5f), 3, 3.0);
-                this.playSound(SoundEvents.ENTITY_HOSTILE_BIG_FALL, 1.0f, 1.0f);
+                this.playSound(TCOTS_Sounds.MEDIUM_IMPACT, 1.0f, 1.0f);
                 this.getWorld().sendEntityStatus(this, FALLING_PARTICLES);
             }
         }

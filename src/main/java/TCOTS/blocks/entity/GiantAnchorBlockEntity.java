@@ -10,11 +10,10 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class HerbalTableBlockEntity extends BlockEntity implements GeoBlockEntity {
+public class GiantAnchorBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
-    public HerbalTableBlockEntity(BlockPos pos, BlockState state) {
-        super(TCOTS_Blocks.HERBAL_TABLE_ENTITY, pos, state);
+    public GiantAnchorBlockEntity( BlockPos pos, BlockState state) {
+        super(TCOTS_Blocks.GIANT_ANCHOR_ENTITY, pos, state);
     }
 
     @Override

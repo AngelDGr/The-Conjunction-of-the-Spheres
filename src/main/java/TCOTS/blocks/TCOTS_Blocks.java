@@ -1,10 +1,7 @@
 package TCOTS.blocks;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.blocks.entity.AlchemyTableBlockEntity;
-import TCOTS.blocks.entity.HerbalTableBlockEntity;
-import TCOTS.blocks.entity.MonsterNestBlockEntity;
-import TCOTS.blocks.entity.NestSkullBlockEntity;
+import TCOTS.blocks.entity.*;
 import TCOTS.blocks.plants.*;
 import TCOTS.blocks.skull.NestSkullBlock;
 import TCOTS.blocks.skull.NestWallSkullBlock;
@@ -26,7 +23,6 @@ import net.minecraft.util.Identifier;
 public class TCOTS_Blocks {
     public static final TagKey<Block> IGNITING_BLOCKS = TagKey.of(RegistryKeys.BLOCK, new Identifier(TCOTS_Main.MOD_ID,"igniting_blocks"));
     public static final TagKey<Block> DESTROYABLE_MAGIC_BLOCKS = TagKey.of(RegistryKeys.BLOCK, new Identifier(TCOTS_Main.MOD_ID,"destroyable_magic_blocks"));
-
     public static final TagKey<Block> NEGATES_DEVOURER_JUMP = TagKey.of(RegistryKeys.BLOCK, new Identifier(TCOTS_Main.MOD_ID,"negates_devourer_jump"));
 
 
@@ -60,12 +56,14 @@ public class TCOTS_Blocks {
     public static final Block MONSTER_NEST  = new MonsterNestBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).mapColor(MapColor.DIRT_BROWN));
     public static final Block ALCHEMY_TABLE  = new AlchemyTableBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOD).mapColor(MapColor.DARK_GREEN).nonOpaque());
     public static final Block HERBAL_TABLE  = new HerbalTableBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOD).mapColor(MapColor.CYAN).burnable().nonOpaque());
+    public static final Block GIANT_ANCHOR = new GiantAnchorBlock(FabricBlockSettings.create().requiresTool().strength(55.0f, 1200.0f).sounds(BlockSoundGroup.ANVIL).mapColor(MapColor.BROWN).burnable().nonOpaque());
+
 
     public static BlockEntityType<NestSkullBlockEntity> SKULL_NEST_ENTITY;
     public static BlockEntityType<MonsterNestBlockEntity> MONSTER_NEST_ENTITY;
     public static BlockEntityType<AlchemyTableBlockEntity> ALCHEMY_TABLE_ENTITY;
     public static BlockEntityType<HerbalTableBlockEntity> HERBAL_TABLE_ENTITY;
-
+    public static BlockEntityType<GiantAnchorBlockEntity> GIANT_ANCHOR_ENTITY;
 
 
     public static void registerBlocks(){
@@ -84,6 +82,8 @@ public class TCOTS_Blocks {
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "alchemy_table"), ALCHEMY_TABLE);
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "herbal_table"), HERBAL_TABLE);
+
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "giant_anchor"), GIANT_ANCHOR);
 
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "celandine_plant"), CELANDINE_PLANT);
@@ -142,5 +142,10 @@ public class TCOTS_Blocks {
                 Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(TCOTS_Main.MOD_ID, "herbal_table"),
                 FabricBlockEntityTypeBuilder.create(HerbalTableBlockEntity::new, HERBAL_TABLE).build());
+
+        GIANT_ANCHOR_ENTITY = Registry.register(
+                Registries.BLOCK_ENTITY_TYPE,
+                new Identifier(TCOTS_Main.MOD_ID, "giant_anchor"),
+                FabricBlockEntityTypeBuilder.create(GiantAnchorBlockEntity::new, GIANT_ANCHOR).build());
     }
 }

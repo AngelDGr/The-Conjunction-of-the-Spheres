@@ -54,4 +54,8 @@ public class MiscUtil {
 
         if(stack.hasEnchantments()) mainTooltip.add(ScreenTexts.EMPTY);
     }
+
+    public static int getTimeInTicks(int seconds){
+        return seconds*20;
+    }
 }
