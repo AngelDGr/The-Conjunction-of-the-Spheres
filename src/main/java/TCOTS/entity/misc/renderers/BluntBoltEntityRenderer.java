@@ -6,7 +6,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
 
 public class BluntBoltEntityRenderer extends BoltEntityRenderer<BluntBoltProjectile> {
-    public static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/entity/misc/blunt_bolt.png");
+    public static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/entity/blunt_bolt.png");
     public BluntBoltEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
     }

@@ -35,3 +35,5 @@ accessible method net/minecraft/client/gui/hud/InGameHud drawHeart (Lnet/minecra
 accessible class net/minecraft/client/render/item/HeldItemRenderer$HandRenderType
 
 accessible method net/minecraft/block/ComposterBlock registerCompostableItem (FLnet/minecraft/item/ItemConvertible;)V
+
+accessible field net/minecraft/client/render/WorldRenderer bufferBuilders Lnet/minecraft/client/render/BufferBuilderStorage;

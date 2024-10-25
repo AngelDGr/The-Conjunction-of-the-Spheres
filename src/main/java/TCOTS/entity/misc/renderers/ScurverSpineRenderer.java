@@ -16,7 +16,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class ScurverSpineRenderer<T extends ScurverSpineEntity> extends EntityRenderer<T> {
-    public static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/entity/misc/scurver_spike.png");
+    public static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/entity/scurver_spike.png");
 
     public ScurverSpineRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);

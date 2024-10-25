@@ -59,6 +59,7 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.ICE_GIANT_SPAWN_EGG);
 
                                 entries.add(TCOTS_Items.GIANT_ANCHOR_BLOCK_ITEM);
+                                entries.add(TCOTS_Items.GIANT_ANCHOR);
                             }
 
 
@@ -229,6 +230,15 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.WHITE_HONEY_POTION_ENHANCED.getDefaultStack());
                                     entries.add(TCOTS_Items.WHITE_HONEY_POTION_SUPERIOR.getDefaultStack());
 
+                                    //Decoctions
+                                    {
+                                        entries.add(TCOTS_Items.WATER_HAG_DECOCTION);
+                                        entries.add(TCOTS_Items.GRAVE_HAG_DECOCTION);
+                                        entries.add(TCOTS_Items.ALGHOUL_DECOCTION);
+                                        entries.add(TCOTS_Items.FOGLET_DECOCTION);
+                                        entries.add(TCOTS_Items.NEKKER_WARRIOR_DECOCTION);
+                                        entries.add(TCOTS_Items.TROLL_DECOCTION);
+                                    }
                                 }
 
                                 //Bombs
@@ -284,17 +294,6 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.ENHANCED_HANGED_OIL);
                                     entries.add(TCOTS_Items.SUPERIOR_HANGED_OIL);
                                 }
-
-                                //Decoctions
-                                {
-                                    entries.add(TCOTS_Items.WATER_HAG_DECOCTION);
-                                    entries.add(TCOTS_Items.GRAVE_HAG_DECOCTION);
-                                    entries.add(TCOTS_Items.ALGHOUL_DECOCTION);
-                                    entries.add(TCOTS_Items.FOGLET_DECOCTION);
-                                    entries.add(TCOTS_Items.NEKKER_WARRIOR_DECOCTION);
-                                    entries.add(TCOTS_Items.TROLL_DECOCTION);
-                                }
-
                             }
 
 

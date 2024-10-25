@@ -2,6 +2,7 @@ package TCOTS.mixin;
 
 import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.misc.AnchorProjectileEntity;
 import TCOTS.entity.ogroids.AbstractTrollEntity;
 import TCOTS.interfaces.LivingEntityMixinInterface;
 import TCOTS.interfaces.MaxToxicityIncreaser;
@@ -499,6 +500,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @Shadow
     private ItemStack getSyncedArmorStack(EquipmentSlot slot){return null;}
 
+    @Shadow public abstract ItemStack getMainHandStack();
+
     @Inject(method = "getEquipmentChanges", at = @At("TAIL"))
     private void injectExtraToxicity(CallbackInfoReturnable<Map<EquipmentSlot, ItemStack>> cir){
         if(THIS instanceof PlayerEntity player) {
@@ -664,4 +667,24 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         }
     }
 
+    //Giant Anchor
+    @Unique
+    @Nullable
+    public AnchorProjectileEntity anchorProjectile;
+    @Override
+    public AnchorProjectileEntity theConjunctionOfTheSpheres$getAnchor(){
+        return anchorProjectile;
+    }
+
+    @Override
+    public void theConjunctionOfTheSpheres$setAnchor(AnchorProjectileEntity anchor) {
+        this.anchorProjectile=anchor;
+    }
+
+    @Inject(method = "onDeath", at = @At("HEAD"))
+    private void injectDiscardAnchor(CallbackInfo ci){
+        if(!this.getWorld().isClient && this.theConjunctionOfTheSpheres$getAnchor()!=null){
+            this.theConjunctionOfTheSpheres$getAnchor().setOwner(null);
+        }
+    }
 }

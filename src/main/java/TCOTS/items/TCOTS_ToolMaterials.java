@@ -17,8 +17,9 @@ public enum TCOTS_ToolMaterials implements ToolMaterial {
 
     WINTERS_BLADE(MiningLevels.NETHERITE, 2031, 9.0f, 4.0f, 30, () -> Ingredient.ofItems(Items.NETHERITE_INGOT)),
 
-    ARDAENYE(MiningLevels.NETHERITE, 1400, 9.0f, 4.0f, 20, () -> Ingredient.ofItems(TCOTS_Items.DEVOURER_TEETH))
+    ARDAENYE(MiningLevels.NETHERITE, 1400, 9.0f, 4.0f, 20, () -> Ingredient.ofItems(TCOTS_Items.DEVOURER_TEETH)),
 
+    ANCHOR(MiningLevels.NETHERITE, 100, 9.0f, 9.0f, 5, () -> Ingredient.ofItems(Items.IRON_BLOCK))
 
 
     ;

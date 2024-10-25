@@ -972,21 +972,30 @@
   },
 
 
-  "anchor_idle": {
-    "subtitle": "tcots-witcher.sounds.anchor_idle",
+  "anchor_chain": {
+    "subtitle": "tcots-witcher.sounds.anchor_chain",
     "sounds": [
-      "tcots-witcher:entity/ogroids/ice_giant/anchor_idle1",
-      "tcots-witcher:entity/ogroids/ice_giant/anchor_idle2",
-      "tcots-witcher:entity/ogroids/ice_giant/anchor_idle3"
+      "tcots-witcher:item/anchor/anchor_chain1",
+      "tcots-witcher:item/anchor/anchor_chain2",
+      "tcots-witcher:item/anchor/anchor_chain3"
     ]
   },
   "anchor_impact": {
     "subtitle": "tcots-witcher.sounds.anchor_impact",
     "sounds": [
-      "tcots-witcher:entity/ogroids/ice_giant/anchor_impact1",
-      "tcots-witcher:entity/ogroids/ice_giant/anchor_impact2",
-      "tcots-witcher:entity/ogroids/ice_giant/anchor_impact3",
-      "tcots-witcher:entity/ogroids/ice_giant/anchor_impact4"
+      "tcots-witcher:item/anchor/anchor_impact1",
+      "tcots-witcher:item/anchor/anchor_impact2",
+      "tcots-witcher:item/anchor/anchor_impact3",
+      "tcots-witcher:item/anchor/anchor_impact4"
+    ]
+  },
+
+  "anchor_throw": {
+    "subtitle": "tcots-witcher.sounds.anchor_throw",
+    "sounds": [
+      "tcots-witcher:item/anchor/anchor_throw1",
+      "tcots-witcher:item/anchor/anchor_throw2",
+      "tcots-witcher:item/anchor/anchor_throw3"
     ]
   },
 

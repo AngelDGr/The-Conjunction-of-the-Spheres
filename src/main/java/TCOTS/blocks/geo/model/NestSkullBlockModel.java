@@ -35,10 +35,10 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
         CoreGeoBone head = getAnimationProcessor().getBone("head");
 
         BlockState blockState = animatable.getCachedState();
-        boolean bl = blockState.getBlock() instanceof NestWallSkullBlock;
+        boolean isInWall = blockState.getBlock() instanceof NestWallSkullBlock;
 
         Direction direction;
-        if(bl){
+        if(isInWall){
             direction=blockState.get(NestWallSkullBlock.FACING);
         }
         else{
@@ -47,7 +47,7 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
 
         int k;
 
-        if (bl) {
+        if (isInWall) {
             k = RotationPropertyHelper.fromDirection(direction.getOpposite());
         } else {
             k = blockState.get(SkullBlock.ROTATION);
@@ -55,7 +55,7 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
 
         float h = RotationPropertyHelper.toDegrees(k);
 
-        if(bl){
+        if(isInWall){
             head.setRotY(0);
             head.setPosY(4);
             head.setPosX(0);
@@ -72,9 +72,6 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
             }
             head.setRotY( h * ((float)Math.PI / -180));
         }
-
-
-
     }
 
 }

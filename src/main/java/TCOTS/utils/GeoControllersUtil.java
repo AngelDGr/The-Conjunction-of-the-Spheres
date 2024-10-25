@@ -2,6 +2,8 @@ package TCOTS.utils;
 
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -65,10 +67,25 @@ public class GeoControllersUtil {
      */
     public static <T extends GeoAnimatable> AnimationController<?> genericIdleController(T animatable){
         return
-        new AnimationController<>(animatable, "controller", 0, state ->{
+        new AnimationController<>(animatable, "IdleController", 0, state ->{
             state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         });
+    }
+
+    @SuppressWarnings("unused")
+    public static boolean isThirdPerson(@NotNull AnimationState<?> state){
+        return state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE).getIndex()==1 || state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE).getIndex()==2;
+    }
+
+    @SuppressWarnings("unused")
+    public static boolean isFirstPerson(@NotNull AnimationState<?> state){
+        return state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE).isFirstPerson();
+    }
+
+    @SuppressWarnings("unused")
+    public static boolean inInventory(@NotNull AnimationState<?> state){
+        return state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE).getIndex()==6;
     }
 
 }

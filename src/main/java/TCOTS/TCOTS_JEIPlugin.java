@@ -445,6 +445,9 @@ public class TCOTS_JEIPlugin implements IModPlugin {
                     new RepairData(TCOTS_ToolMaterials.ARDAENYE.getRepairIngredient(),
                             new ItemStack(TCOTS_Items.ARDAENYE)),
 
+                    new RepairData(TCOTS_ToolMaterials.ANCHOR.getRepairIngredient(),
+                            new ItemStack(TCOTS_Items.GIANT_ANCHOR)),
+
                     new RepairData(TCOTS_ArmorMaterials.MANTICORE.getRepairIngredient(),
                             new ItemStack(TCOTS_Items.MANTICORE_ARMOR)),
                     new RepairData(TCOTS_ArmorMaterials.MANTICORE.getRepairIngredient(),

@@ -155,8 +155,9 @@ public class TCOTS_Sounds {
     public static SoundEvent ICE_GIANT_CHARGE = registerSoundEvent("ice_giant_charge");
     public static SoundEvent ICE_GIANT_SNORE = registerSoundEvent("ice_giant_snore");
     public static SoundEvent ICE_GIANT_WAKE_UP = registerSoundEvent("ice_giant_wake_up");
-    public static SoundEvent ANCHOR_IDLE = registerSoundEvent("anchor_idle");
+    public static SoundEvent ANCHOR_CHAIN = registerSoundEvent("anchor_chain");
     public static SoundEvent ANCHOR_IMPACT = registerSoundEvent("anchor_impact");
+    public static SoundEvent ANCHOR_THROW = registerSoundEvent("anchor_throw");
 
     //Misc
     public static SoundEvent POTION_REFILLED = registerSoundEvent("potion_refill");

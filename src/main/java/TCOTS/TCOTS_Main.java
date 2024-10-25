@@ -10,15 +10,16 @@ import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
+import TCOTS.mixin.ServerWorldAccessor;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
-import TCOTS.utils.ServerWorldSpawnersUtil;
 import TCOTS.world.TCOTS_Features;
 import TCOTS.world.TCOTS_PlacedFeature;
 import TCOTS.world.spawn.BullvoreSpawner;
 import TCOTS.world.village.TCOTS_PointOfInterest;
 import TCOTS.world.village.TCOTS_VillageAdditions;
 import TCOTS.world.village.VillagerCustomTrades;
+import com.mojang.logging.LogUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.block.DispenserBlock;
@@ -26,13 +27,19 @@ import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
+import net.minecraft.world.spawner.SpecialSpawner;
+import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
-public class TCOTS_Main implements ModInitializer {
+import java.util.ArrayList;
+import java.util.List;
 
+public class TCOTS_Main implements ModInitializer {
+	public static final Logger LOGGER = LogUtils.getLogger();
 	public static String MOD_ID = "tcots-witcher";
 	public static final TCOTS_Config CONFIG = TCOTS_Config.createAndLoad();
 	@Override
@@ -111,6 +118,12 @@ public class TCOTS_Main implements ModInitializer {
 		}));
 	}
 
-
+	public static class ServerWorldSpawnersUtil {
+		public static void register(ServerWorld world, SpecialSpawner spawner) {
+			List<SpecialSpawner> spawnerList = new ArrayList<>(((ServerWorldAccessor) world).getSpawners());
+			spawnerList.add(spawner);
+			((ServerWorldAccessor) world).setSpawners(spawnerList);
+		}
+	}
 
 }

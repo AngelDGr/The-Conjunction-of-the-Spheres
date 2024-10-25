@@ -39,4 +39,5 @@ public interface PlayerEntityMixinInterface {
 
     default boolean theConjunctionOfTheSpheres$toxicityOverThreshold(){return false;}
 
+
 }

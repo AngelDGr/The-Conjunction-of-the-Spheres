@@ -212,6 +212,11 @@ public class TCOTS_Entities {
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, IceGiantEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.9975f, 4.4f)).trackRangeBlocks(16).build());
+    public static final EntityType<AnchorProjectileEntity> ANCHOR_PROJECTILE =
+            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "anchor_projectile"),
+                    FabricEntityTypeBuilder.<AnchorProjectileEntity>create(SpawnGroup.MISC, AnchorProjectileEntity::new)
+                            .dimensions(EntityDimensions.fixed(1.25f, 1.8f))
+                            .trackRangeBlocks(4).trackedUpdateRate(20).fireImmune().build());
 
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(

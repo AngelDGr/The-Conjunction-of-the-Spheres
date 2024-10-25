@@ -248,10 +248,14 @@
     "tcots-witcher.sounds.ice_giant_snore": "Ice Giant snore",
     "tcots-witcher.sounds.ice_giant_wake_up": "Ice Giant wakes Up",
 
-
+    "item.tcots-witcher.giant_anchor": "Giant Anchor",
     "block.tcots-witcher.giant_anchor": "Ice Giant Anchor",
-    "tcots-witcher.sounds.anchor_idle": "Anchor clanks",
+    "entity.tcots-witcher.anchor_projectile": "Anchor",
+    "tcots-witcher.sounds.anchor_throw": "Anchor threw",
+    "tcots-witcher.sounds.anchor_chain": "Anchor returns",
     "tcots-witcher.sounds.anchor_impact": "Anchor impacts",
+    "death.attack.anchor": "%1$s was crushed by an anchor",
+    "death.attack.anchor.item": "%1$s was crushed by %2$s with an anchor",
     "tcots-witcher.sounds.medium_impact": "Something impacts",
     "tcots-witcher.sounds.big_impact": "Something big impacts",
 

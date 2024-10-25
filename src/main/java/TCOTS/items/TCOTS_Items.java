@@ -148,7 +148,7 @@ public class TCOTS_Items {
     //Moonblade: Massive damage to monsters
 
 
-    //TODO: Add Horse Armors
+    //xTODO: Add Horse Armors
     // Caed Myrkvid Armor??
     //Knight errant's armor
     //Undvik Armor
@@ -236,6 +236,7 @@ public class TCOTS_Items {
     public static Item FOREST_TROLL_SPAWN_EGG;
 
     public static Item ICE_GIANT_SPAWN_EGG;
+
 
     //Register Drops from monsters
     public static void registerDrops() {
@@ -940,7 +941,7 @@ public class TCOTS_Items {
     public static Item WINTERS_BLADE;
     public static Item ARDAENYE;
     public static Item DYAEBL;
-
+    public static Item GIANT_ANCHOR;
 
     //Armors
     public static Item WARRIORS_LEATHER_JACKET;
@@ -1048,6 +1049,11 @@ public class TCOTS_Items {
                             List.of(
                                     Text.translatable("tooltip.tcots-witcher.knight_errants_horse_armor").formatted(Formatting.DARK_GREEN),
                                     Text.translatable("tooltip.tcots-witcher.knight_errants_horse_armor2").formatted(Formatting.DARK_GREEN))));
+        }
+
+        //Misc
+        {
+            GIANT_ANCHOR=registerItem("giant_anchor", new GiantAnchorItem(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON)));
         }
     }
 

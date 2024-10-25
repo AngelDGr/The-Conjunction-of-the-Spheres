@@ -5,8 +5,6 @@ import TCOTS.entity.goals.MeleeAttackGoal_Animated;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -26,9 +24,6 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -278,61 +273,9 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
     @Override
     public void handleStatus(byte status) {
         if(status==FALLING_PARTICLES){
-            spawnImpactParticles();
+            EntitiesUtil.spawnImpactParticles(this, 1.9975f + (2.8f + (getFallingDistance() * 0.5f)), this.getFallingDistance());
         } else{
             super.handleStatus(status);
-        }
-    }
-
-    private void spawnImpactParticles() {
-        // Calculate the radius based on the fall distance
-        double radius = 1.9975f + (2.8f + (getFallingDistance() * 0.5f));
-
-        // Calculate pQuantity based on the circumference to ensure full coverage
-        double pQuantity = Math.max(80 + getFallingDistance(), 2 * Math.PI * radius);
-
-        // To get the ground position
-        BlockPos.Mutable pos = new BlockPos.Mutable(this.getSteppingPos().getX(), this.getSteppingPos().getY(), this.getSteppingPos().getZ());
-        while (this.getWorld().getBlockState(pos).isAir()) {
-            pos.setY(pos.getY() - 1);
-        }
-        pos.setY(pos.getY() + 1);
-
-        // Fill the circle with particles
-        double stepSize = radius / 10.0;  // Adjust the step size for more or fewer particles inside the circle
-        for (double r = 0; r <= radius; r += stepSize) {
-            double particlesInRing = Math.max(pQuantity, 2 * Math.PI * r);
-            for (int i = 0; i < particlesInRing; i++) {
-                double angle = (2 * Math.PI) * i / particlesInRing;
-                double offsetX = r * Math.cos(angle);
-                double offsetZ = r * Math.sin(angle);
-
-                // Add some vertical randomness for particle height
-                double d = this.random.nextGaussian() * 0.5;
-                double e = this.random.nextGaussian() * 0.5;
-                double f = this.random.nextGaussian() * 0.5;
-
-                // Select the particle type
-                ParticleEffect particleType=ParticleTypes.POOF;
-
-                // Use a block particle for the interior
-                BlockState blockState = this.getWorld().getBlockState(
-                        new BlockPos(
-                                (int) (this.getX()+offsetX),
-                                pos.down().getY(),
-                                (int) (this.getZ()+offsetZ)));
-                if(blockState.getRenderType() != BlockRenderType.INVISIBLE) {
-                    particleType = new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState);
-                }
-
-
-                // Spawn the particle at the calculated position
-                this.getWorld().addParticle(particleType,
-                        this.getX() + offsetX,
-                        pos.getY(),
-                        this.getZ() + offsetZ,
-                        d, e, f);
-            }
         }
     }
 

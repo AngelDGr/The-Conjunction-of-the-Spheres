@@ -1,5 +1,7 @@
 package TCOTS.interfaces;
 
+import TCOTS.entity.misc.AnchorProjectileEntity;
+
 public interface LivingEntityMixinInterface {
 
     default int theConjunctionOfTheSpheres$getKillCount() {
@@ -31,5 +33,13 @@ public interface LivingEntityMixinInterface {
     default boolean theConjunctionOfTheSpheres$hasSilverSplinters(){
         return false;
     }
+
+
+    //Anchor
+    default AnchorProjectileEntity theConjunctionOfTheSpheres$getAnchor(){
+        return null;
+    }
+
+    default void theConjunctionOfTheSpheres$setAnchor(AnchorProjectileEntity anchor){}
 
 }

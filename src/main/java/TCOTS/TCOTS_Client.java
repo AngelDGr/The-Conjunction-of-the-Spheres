@@ -3,9 +3,11 @@ package TCOTS;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.blocks.geo.renderer.*;
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.geo.renderer.AnchorProjectileRenderer;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.*;
 import TCOTS.entity.misc.renderers.*;
+import TCOTS.items.GiantAnchorItem;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
 import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
@@ -86,6 +88,8 @@ public class TCOTS_Client implements ClientModInitializer {
         ModelPredicateProviderRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW, new Identifier("bolt"), (stack, world, entity, seed) -> CrossbowItem.isCharged(stack) && WitcherBaseCrossbow.hasBoltProjectile(stack) ? 1.0f : 0.0f);
         ModelPredicateProviderRegistry.register(Items.CROSSBOW, new Identifier("bolt"), (stack, world, entity, seed) -> CrossbowItem.isCharged(stack) && WitcherBaseCrossbow.hasBoltProjectile(stack) ? 1.0f : 0.0f);
 
+
+
         //Monsters
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER, DrownerRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.DROWNER_PUDDLE, DrownerPuddleRenderer::new);
@@ -127,6 +131,11 @@ public class TCOTS_Client implements ClientModInitializer {
         EntityRendererRegistry.register(TCOTS_Entities.FOREST_TROLL, ForestTrollRenderer::new);
 
         EntityRendererRegistry.register(TCOTS_Entities.ICE_GIANT, IceGiantRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities.ANCHOR_PROJECTILE, AnchorProjectileRenderer::new);
+
+        ModelPredicateProviderRegistry.register(TCOTS_Items.GIANT_ANCHOR, new Identifier("invisible"), (stack, world, entity, seed) ->
+                GiantAnchorItem.wasLaunched(stack)? 1.0f : 0.0f);
+
 
         //Bomb
         EntityRendererRegistry.register(TCOTS_Entities.WITCHER_BOMB, FlyingItemEntityRenderer::new);
@@ -136,6 +145,8 @@ public class TCOTS_Client implements ClientModInitializer {
         EntityRendererRegistry.register(TCOTS_Entities.PRECISION_BOLT, PrecisionBoltEntityRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.EXPLODING_BOLT, ExplodingBoltEntityRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.BROADHEAD_BOLT, BroadheadBoltEntityRenderer::new);
+
+//        EntityModelLayerRegistry.registerModelLayer(ANCH, AnchorProjectileModel);
 
         //Blocks
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.ARENARIA_BUSH, RenderLayer.getCutout());
