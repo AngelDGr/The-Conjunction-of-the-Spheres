@@ -7,7 +7,7 @@ import TCOTS.entity.geo.renderer.AnchorProjectileRenderer;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.*;
 import TCOTS.entity.misc.renderers.*;
-import TCOTS.items.GiantAnchorItem;
+import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
 import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
@@ -136,7 +136,6 @@ public class TCOTS_Client implements ClientModInitializer {
         ModelPredicateProviderRegistry.register(TCOTS_Items.GIANT_ANCHOR, new Identifier("invisible"), (stack, world, entity, seed) ->
                 GiantAnchorItem.wasLaunched(stack)? 1.0f : 0.0f);
 
-
         //Bomb
         EntityRendererRegistry.register(TCOTS_Entities.WITCHER_BOMB, FlyingItemEntityRenderer::new);
         //Crossbow bolts
@@ -146,7 +145,6 @@ public class TCOTS_Client implements ClientModInitializer {
         EntityRendererRegistry.register(TCOTS_Entities.EXPLODING_BOLT, ExplodingBoltEntityRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.BROADHEAD_BOLT, BroadheadBoltEntityRenderer::new);
 
-//        EntityModelLayerRegistry.registerModelLayer(ANCH, AnchorProjectileModel);
 
         //Blocks
         BlockRenderLayerMap.INSTANCE.putBlock(TCOTS_Blocks.ARENARIA_BUSH, RenderLayer.getCutout());
@@ -175,6 +173,8 @@ public class TCOTS_Client implements ClientModInitializer {
         BlockEntityRendererFactories.register(TCOTS_Blocks.ALCHEMY_TABLE_ENTITY, AlchemyTableRenderer::new);
         BlockEntityRendererFactories.register(TCOTS_Blocks.HERBAL_TABLE_ENTITY, HerbalTableRenderer::new);
         BlockEntityRendererFactories.register(TCOTS_Blocks.GIANT_ANCHOR_ENTITY, GiantAnchorRenderer::new);
+        BlockEntityRendererFactories.register(TCOTS_Blocks.WINTERS_BLADE_SKELETON_ENTITY, WintersBladeSkeletonRenderer::new);
+        BlockEntityRendererFactories.register(TCOTS_Blocks.SKELETON_BLOCK_ENTITY, SkeletonBlockRenderer::new);
 
 
         //Particles

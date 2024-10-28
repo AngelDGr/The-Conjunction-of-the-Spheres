@@ -8,7 +8,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class MonsterNestModel extends GeoModel<MonsterNestBlockEntity> {
     @Override
     public Identifier getModelResource(MonsterNestBlockEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/misc/monster_nest.geo.json");
+        return new Identifier(TCOTS_Main.MOD_ID, "geo/block/monster_nest.geo.json");
     }
 
     @Override

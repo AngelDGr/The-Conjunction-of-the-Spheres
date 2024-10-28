@@ -9,10 +9,7 @@ import TCOTS.items.armor.WarriorsLeatherArmorItem;
 import TCOTS.items.armor.WitcherHorseArmorItem;
 import TCOTS.items.blocks.*;
 import TCOTS.items.concoctions.*;
-import TCOTS.items.weapons.BoltItem;
-import TCOTS.items.weapons.SwordWithTooltip;
-import TCOTS.items.weapons.KnightCrossbow;
-import TCOTS.items.weapons.ScurverSpineItem;
+import TCOTS.items.weapons.*;
 import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
@@ -960,6 +957,7 @@ public class TCOTS_Items {
     public static Item TUNDRA_HORSE_ARMOR;
     public static Item KNIGHT_ERRANTS_HORSE_ARMOR;
 
+
     public static void registerWeapons_Armors(){
 
         //Ingredients
@@ -1054,6 +1052,7 @@ public class TCOTS_Items {
         //Misc
         {
             GIANT_ANCHOR=registerItem("giant_anchor", new GiantAnchorItem(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON)));
+
         }
     }
 
@@ -1701,6 +1700,8 @@ public class TCOTS_Items {
     public static Item HERBAL_TABLE_ITEM;
 
     public static Item GIANT_ANCHOR_BLOCK_ITEM;
+    public static Item WINTERS_BLADE_SKELETON_ITEM;
+    public static Item SKELETON_BLOCK_ITEM;
 
     public static Item HERBAL_MIXTURE;
     public static Item WITCHER_BESTIARY;
@@ -1728,6 +1729,11 @@ public class TCOTS_Items {
 
 
         GIANT_ANCHOR_BLOCK_ITEM = registerItem("giant_anchor_block", new GiantAnchorBlockItem(TCOTS_Blocks.GIANT_ANCHOR, new FabricItemSettings()));
+
+        WINTERS_BLADE_SKELETON_ITEM = registerItem("winters_blade_skeleton", new WintersBladeSkeletonItem(TCOTS_Blocks.WINTERS_BLADE_SKELETON, new FabricItemSettings()));
+
+        SKELETON_BLOCK_ITEM = registerItem("skeleton_block", new SkeletonBlockItem(TCOTS_Blocks.SKELETON_BLOCK, new FabricItemSettings()));
+
 
         WITCHER_BESTIARY = WitcherBestiaryItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), new FabricItemSettings().maxCount(1));
 

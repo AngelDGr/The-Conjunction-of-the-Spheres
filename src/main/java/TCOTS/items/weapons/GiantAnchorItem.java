@@ -1,6 +1,7 @@
-package TCOTS.items;
+package TCOTS.items.weapons;
 
 import TCOTS.entity.misc.AnchorProjectileEntity;
+import TCOTS.items.TCOTS_ToolMaterials;
 import TCOTS.items.geo.renderer.GiantAnchorItemRenderer;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.GeoControllersUtil;
@@ -123,12 +124,8 @@ public class GiantAnchorItem extends ToolItem implements GeoItem {
     }
     @Override
     public UseAction getUseAction(@NotNull ItemStack stack) {
-        if(stack.hasNbt()){
-            assert stack.getNbt() != null;
-            NbtCompound nbt = stack.getNbt().getCompound("State");
-            if(nbt.getBoolean("nextRetrieve")){
-                return UseAction.NONE;
-            }
+        if(wasLaunched(stack)){
+            return UseAction.NONE;
         }
 
         return UseAction.SPEAR;
@@ -140,9 +137,13 @@ public class GiantAnchorItem extends ToolItem implements GeoItem {
         }
         return super.getAttributeModifiers(slot);
     }
+
+
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damage(1, attacker, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity user) {
+        stack.damage(1, user, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+
+        GiantAnchorItem.retrieveAnchor(user);
         return true;
     }
 
@@ -151,6 +152,8 @@ public class GiantAnchorItem extends ToolItem implements GeoItem {
         if (state.getHardness(world, pos) != 0.0f) {
             stack.damage(2, miner, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
         }
+
+        GiantAnchorItem.retrieveAnchor(miner);
         return true;
     }
 

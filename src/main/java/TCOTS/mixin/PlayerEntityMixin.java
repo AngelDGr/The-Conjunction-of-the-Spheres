@@ -7,9 +7,11 @@ import TCOTS.items.concoctions.EmptyWitcherPotionItem;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.WitcherAlcohol_Base;
 import TCOTS.items.concoctions.bombs.SamumBomb;
+import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.world.TCOTS_DamageTypes;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -29,6 +31,7 @@ import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Arm;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
@@ -641,5 +644,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
 
+    //Giant Anchor
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void autoAnchorRetrieve(CallbackInfo ci){
+
+        ItemStack stack = this.getStackInHand(Hand.MAIN_HAND);
+        MinecraftClient client = MinecraftClient.getInstance();
+        if(stack.isOf(TCOTS_Items.GIANT_ANCHOR) && GiantAnchorItem.wasLaunched(stack) && !this.getWorld().isClient && client!=null){
+           while((client.options.attackKey.wasPressed())) GiantAnchorItem.retrieveAnchor(this);
+        }
+
+    }
 
 }

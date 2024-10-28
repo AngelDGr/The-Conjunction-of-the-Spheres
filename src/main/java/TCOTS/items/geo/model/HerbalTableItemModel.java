@@ -9,7 +9,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class HerbalTableItemModel extends GeoModel<HerbalTableItem> {
     @Override
     public Identifier getModelResource(HerbalTableItem animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/misc/herbal_table.geo.json");
+        return new Identifier(TCOTS_Main.MOD_ID, "geo/block/herbal_table.geo.json");
     }
 
     @Override

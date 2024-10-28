@@ -11,7 +11,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class AlchemyTableItemModel extends GeoModel<AlchemyTableItem> {
     @Override
     public Identifier getModelResource(AlchemyTableItem animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/misc/alchemy_table.geo.json");
+        return new Identifier(TCOTS_Main.MOD_ID, "geo/block/alchemy_table.geo.json");
     }
 
     @Override

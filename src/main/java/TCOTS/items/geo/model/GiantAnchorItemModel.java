@@ -1,7 +1,7 @@
 package TCOTS.items.geo.model;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.items.GiantAnchorItem;
+import TCOTS.items.weapons.GiantAnchorItem;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.model.GeoModel;
 

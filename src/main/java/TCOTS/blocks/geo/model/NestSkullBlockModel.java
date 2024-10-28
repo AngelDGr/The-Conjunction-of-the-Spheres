@@ -15,7 +15,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
     @Override
     public Identifier getModelResource(NestSkullBlockEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/misc/nest_skull.geo.json");
+        return new Identifier(TCOTS_Main.MOD_ID, "geo/block/nest_skull.geo.json");
     }
 
     @Override
@@ -31,7 +31,6 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
 
     @Override
     public void setCustomAnimations(NestSkullBlockEntity animatable, long instanceId, AnimationState<NestSkullBlockEntity> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
         CoreGeoBone head = getAnimationProcessor().getBone("head");
 
         BlockState blockState = animatable.getCachedState();

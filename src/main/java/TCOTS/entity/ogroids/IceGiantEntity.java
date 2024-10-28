@@ -89,8 +89,10 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     //Can make a ground punch
     //Sleeps and only wake up if you attack, walk above snow or make any sound (Similar to Warden??)
     //Can charge
+    //TODO: Add return to anchor block if it's far (Return to home)
     //TODO: Add structure
-    //TODO: Add drops
+    //TODO: Add map
+    //TODO: Add drops to monster & sword block
     //TODO: Add bestiary entry
     //TODO: Add map to find structure
 
@@ -447,7 +449,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
 
         protected boolean isAtFavoredLocation() {
             BlockPos blockPos = BlockPos.ofFloored(giant.getX(), giant.getBoundingBox().maxY, giant.getZ());
-            return !giant.getWorld().isSkyVisible(blockPos) && giant.getPathfindingFavor(blockPos) >= 0.0f;
+            return (!giant.getWorld().isSkyVisible(blockPos) && giant.getPathfindingFavor(blockPos) >= 0.0f ) || giant.getWorld().isNight();
         }
 
         @Override

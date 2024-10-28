@@ -57,6 +57,8 @@ public class TCOTS_Blocks {
     public static final Block ALCHEMY_TABLE  = new AlchemyTableBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOD).mapColor(MapColor.DARK_GREEN).nonOpaque());
     public static final Block HERBAL_TABLE  = new HerbalTableBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOD).mapColor(MapColor.CYAN).burnable().nonOpaque());
     public static final Block GIANT_ANCHOR = new GiantAnchorBlock(FabricBlockSettings.create().requiresTool().strength(55.0f, 1200.0f).sounds(BlockSoundGroup.ANVIL).mapColor(MapColor.BROWN).burnable().nonOpaque());
+    public static final Block WINTERS_BLADE_SKELETON = new WintersBladeSkeletonBlock();
+    public static final Block SKELETON_BLOCK = new SkeletonBlock();
 
 
     public static BlockEntityType<NestSkullBlockEntity> SKULL_NEST_ENTITY;
@@ -64,6 +66,8 @@ public class TCOTS_Blocks {
     public static BlockEntityType<AlchemyTableBlockEntity> ALCHEMY_TABLE_ENTITY;
     public static BlockEntityType<HerbalTableBlockEntity> HERBAL_TABLE_ENTITY;
     public static BlockEntityType<GiantAnchorBlockEntity> GIANT_ANCHOR_ENTITY;
+    public static BlockEntityType<WintersBladeSkeletonBlockEntity> WINTERS_BLADE_SKELETON_ENTITY;
+    public static BlockEntityType<SkeletonBlockEntity> SKELETON_BLOCK_ENTITY;
 
 
     public static void registerBlocks(){
@@ -85,6 +89,8 @@ public class TCOTS_Blocks {
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "giant_anchor"), GIANT_ANCHOR);
 
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "winters_blade_skeleton"), WINTERS_BLADE_SKELETON);
+        Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "skeleton_block"), SKELETON_BLOCK);
 
         Registry.register(Registries.BLOCK, new Identifier(TCOTS_Main.MOD_ID, "celandine_plant"), CELANDINE_PLANT);
 
@@ -147,5 +153,15 @@ public class TCOTS_Blocks {
                 Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(TCOTS_Main.MOD_ID, "giant_anchor"),
                 FabricBlockEntityTypeBuilder.create(GiantAnchorBlockEntity::new, GIANT_ANCHOR).build());
+
+        WINTERS_BLADE_SKELETON_ENTITY = Registry.register(
+                Registries.BLOCK_ENTITY_TYPE,
+                new Identifier(TCOTS_Main.MOD_ID, "winters_blade_skeleton"),
+                BlockEntityType.Builder.create(WintersBladeSkeletonBlockEntity::new, WINTERS_BLADE_SKELETON).build());
+
+        SKELETON_BLOCK_ENTITY = Registry.register(
+                Registries.BLOCK_ENTITY_TYPE,
+                new Identifier(TCOTS_Main.MOD_ID, "skeleton_block"),
+                BlockEntityType.Builder.create(SkeletonBlockEntity::new, SKELETON_BLOCK).build());
     }
 }

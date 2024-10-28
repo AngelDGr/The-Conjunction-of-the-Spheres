@@ -154,8 +154,6 @@
     "tcots-witcher.sounds.graveir_ground_punch": "Graveir charges a punch",
 
     "item.tcots-witcher.cadaverine": "Cadaverine",
-    "tooltip.tcots-witcher.cadaverine1": "Apply to weapons to cause decay",
-    "tooltip.tcots-witcher.cadaverine2": "on hit, consuming durability",
     "item.tcots-witcher.graveir_bone": "Graveir Bone",
 
     "effect.tcots-witcher.cadaverine": "Cadaverine Decay",
@@ -259,7 +257,13 @@
     "tcots-witcher.sounds.medium_impact": "Something impacts",
     "tcots-witcher.sounds.big_impact": "Something big impacts",
 
+    "item.tcots-witcher.winters_blade_skeleton": "Warrior's Skeleton",
+    "block.tcots-witcher.winters_blade_skeleton": "Warrior's Skeleton",
 
+    "item.tcots-witcher.skeleton_block":    "Old Skeleton",
+    "block.tcots-witcher.skeleton_block":   "Old Skeleton",
+    "tooltip.tcots-witcher.skeleton_block1": "Creative Only",
+    "tooltip.tcots-witcher.skeleton_block2": "Change States with Debug Stick",
 
 
     "block.tcots-witcher.nest_slab": "Nest Slab",

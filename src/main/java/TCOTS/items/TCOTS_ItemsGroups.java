@@ -184,7 +184,6 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.RUBEDO);
                                     entries.add(TCOTS_Items.VERMILION);
                                     entries.add(TCOTS_Items.VITRIOL);
-
                                 }
 
                                 //Potions
@@ -302,6 +301,8 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.NEST_SLAB_ITEM);
                                 entries.add(TCOTS_Items.NEST_SKULL_ITEM);
                                 entries.add(TCOTS_Items.MONSTER_NEST_ITEM);
+                                entries.add(TCOTS_Items.WINTERS_BLADE_SKELETON_ITEM);
+                                entries.add(TCOTS_Items.SKELETON_BLOCK_ITEM);
                             }
 
 

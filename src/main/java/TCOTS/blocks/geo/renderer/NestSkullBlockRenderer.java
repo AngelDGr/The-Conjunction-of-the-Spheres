@@ -5,6 +5,7 @@ import TCOTS.blocks.geo.model.NestSkullBlockModel;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
+@SuppressWarnings("unused")
 public class NestSkullBlockRenderer extends GeoBlockRenderer<NestSkullBlockEntity> {
 
     public NestSkullBlockRenderer(BlockEntityRendererFactory.Context ctx) {

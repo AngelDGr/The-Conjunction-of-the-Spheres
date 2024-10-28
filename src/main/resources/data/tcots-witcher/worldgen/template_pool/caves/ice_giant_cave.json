@@ -1,0 +1,21 @@
+{
+
+  "fallback": "minecraft:empty",
+
+
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+
+        "location": "tcots-witcher:caves/giant/ice_giant_cave",
+
+        "processors": "minecraft:empty",
+
+        "projection": "rigid",
+
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

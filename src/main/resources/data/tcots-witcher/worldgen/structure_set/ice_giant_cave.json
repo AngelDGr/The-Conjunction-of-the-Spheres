@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "tcots-witcher:ice_giant_cave",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 2144667919,
+
+    "spacing": 65,
+
+    "separation": 16,
+
+    "type": "minecraft:random_spread"
+  }
+}

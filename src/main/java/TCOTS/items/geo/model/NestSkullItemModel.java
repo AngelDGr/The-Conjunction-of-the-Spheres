@@ -10,7 +10,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class NestSkullItemModel extends GeoModel<NestSkullItem> {
     @Override
     public Identifier getModelResource(NestSkullItem animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/misc/nest_skull.geo.json");
+        return new Identifier(TCOTS_Main.MOD_ID, "geo/block/nest_skull.geo.json");
     }
 
     @Override

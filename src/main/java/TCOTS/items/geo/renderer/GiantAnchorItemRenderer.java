@@ -1,7 +1,7 @@
 package TCOTS.items.geo.renderer;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.items.GiantAnchorItem;
+import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.items.geo.model.GiantAnchorItemModel;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;

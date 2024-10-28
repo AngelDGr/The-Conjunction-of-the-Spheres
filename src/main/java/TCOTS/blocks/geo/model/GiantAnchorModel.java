@@ -8,7 +8,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class GiantAnchorModel extends GeoModel<GiantAnchorBlockEntity> {
     @Override
     public Identifier getModelResource(GiantAnchorBlockEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/misc/giant_anchor.geo.json");
+        return new Identifier(TCOTS_Main.MOD_ID, "geo/block/giant_anchor.geo.json");
     }
 
     @Override

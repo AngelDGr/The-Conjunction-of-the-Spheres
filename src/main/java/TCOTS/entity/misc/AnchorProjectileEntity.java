@@ -2,7 +2,7 @@ package TCOTS.entity.misc;
 
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.ogroids.IceGiantEntity;
-import TCOTS.items.GiantAnchorItem;
+import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;

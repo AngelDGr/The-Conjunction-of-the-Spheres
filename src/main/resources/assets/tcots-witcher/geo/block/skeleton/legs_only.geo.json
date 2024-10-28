@@ -1,0 +1,75 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 128,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "bb_main",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "block",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "skeleton",
+					"parent": "block",
+					"pivot": [0, -8.75, 5.25]
+				},
+				{
+					"name": "downBody",
+					"parent": "skeleton",
+					"pivot": [0, 1.25, 5.25],
+					"rotation": [72.5, 0, 0]
+				},
+				{
+					"name": "left_leg",
+					"parent": "downBody",
+					"pivot": [2, 1.25, 5.35],
+					"rotation": [-162.89959, -3.15894, 14.4151],
+					"mirror": true,
+					"cubes": [
+						{"origin": [1, -10.75, 4.25], "size": [2, 12, 2], "uv": [0, 16]}
+					]
+				},
+				{
+					"name": "armorLeftBoot",
+					"parent": "left_leg",
+					"pivot": [1.9, 1.25, 5.25],
+					"cubes": [
+						{"origin": [0, -10.75, 3.25], "size": [4, 4, 4], "inflate": 0.65, "uv": [72, 48]},
+						{"origin": [0, -10.75, 3.25], "size": [4, 4, 4], "inflate": 0.75, "uv": [72, 56]},
+						{"origin": [0, -10.75, 3.25], "size": [4, 12, 4], "inflate": 0.45, "uv": [72, 16]}
+					]
+				},
+				{
+					"name": "right_leg",
+					"parent": "downBody",
+					"pivot": [-2, 1.25, 5.35],
+					"rotation": [-162.98918, 3.84097, -14.51082],
+					"cubes": [
+						{"origin": [-3, -10.75, 4.25], "size": [2, 12, 2], "uv": [0, 16]}
+					]
+				},
+				{
+					"name": "armorRightBoot",
+					"parent": "right_leg",
+					"pivot": [-1.9, 1.25, 5.25],
+					"cubes": [
+						{"origin": [-4, -10.75, 3.25], "size": [4, 4, 4], "inflate": 0.65, "uv": [72, 48], "mirror": true},
+						{"origin": [-4, -10.75, 3.25], "size": [4, 4, 4], "inflate": 0.75, "uv": [72, 56], "mirror": true},
+						{"origin": [-4, -10.75, 3.25], "size": [4, 12, 4], "inflate": 0.45, "uv": [72, 16], "mirror": true}
+					]
+				}
+			]
+		}
+	]
+}
