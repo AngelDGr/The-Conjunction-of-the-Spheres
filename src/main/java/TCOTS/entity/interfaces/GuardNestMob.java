@@ -36,7 +36,7 @@ public interface GuardNestMob {
        return pos -> entity.getWorld().getBlockState(pos).isOf(TCOTS_Blocks.MONSTER_NEST);
     }
 
-    default boolean getExtraReasonNotGoToNest(){
+    default boolean getExtraReasonToNotGoToNest(){
         return true;
     }
 

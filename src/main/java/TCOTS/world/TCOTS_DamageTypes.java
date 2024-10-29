@@ -9,6 +9,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class TCOTS_DamageTypes {
@@ -18,7 +19,7 @@ public class TCOTS_DamageTypes {
 
     public static final RegistryKey<DamageType> ANCHOR = registerKey("anchor");
 
-    public static void boostrap(Registerable<DamageType> damageTypeRegisterable) {
+    public static void boostrap(@NotNull Registerable<DamageType> damageTypeRegisterable) {
         damageTypeRegisterable.register(POTION_TOXICITY, new DamageType("potionToxicity", 0.1f));
         damageTypeRegisterable.register(BLEEDING, new DamageType("bleeding", 0.5f));
         damageTypeRegisterable.register(CADAVERINE, new DamageType("cadaverine", 0.5f));

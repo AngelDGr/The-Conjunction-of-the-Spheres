@@ -55,7 +55,9 @@
 		},
 		"loom:injected_interfaces": {
 			"net/minecraft/class_1309": ["TCOTS/interfaces/LivingEntityMixinInterface"],
-			"net/minecraft/class_1657": ["TCOTS/interfaces/PlayerEntityMixinInterface"]
+			"net/minecraft/class_1657": ["TCOTS/interfaces/PlayerEntityMixinInterface"],
+			"net/minecraft/class_22":   ["TCOTS/interfaces/MapStateMixinInterface"]
+
 		}
 	}
 }

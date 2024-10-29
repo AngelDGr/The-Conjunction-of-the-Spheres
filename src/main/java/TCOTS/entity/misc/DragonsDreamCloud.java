@@ -50,7 +50,7 @@ public class DragonsDreamCloud extends AreaEffectCloudEntity {
         for(Entity entity: entitiesList){
             if(entity.isOnFire() || entity.getType().isIn(TCOTS_Entities.IGNITING_ENTITIES)){
 
-                if(entity.isOnFire() && this.getOwner()!=null && this.getOwner() instanceof PlayerEntity){
+                if(entity.isOnFire() && this.getOwner()!=null && this.getOwner() instanceof PlayerEntity && entity instanceof LivingEntity){
                     if(this.getOwner() instanceof ServerPlayerEntity serverPlayer){
                         TCOTS_Criteria.DRAGONS_DREAM_BURNING.trigger(serverPlayer);
                     }

@@ -21,6 +21,7 @@
     "ItemsMixins$SpawnEggItemMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
+    "MapStateMixin",
     "MobEntityMixin",
     "MobEntityMixin$BullvoreDestroyCrops",
     "MobEntityMixin$ForestTrollNotGetCampfireDamage",

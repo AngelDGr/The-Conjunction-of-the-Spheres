@@ -159,7 +159,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
     }
 
     @Override
-    public boolean getExtraReasonNotGoToNest() {
+    public boolean getExtraReasonToNotGoToNest() {
         List<ItemEntity> listFlesh = this.getWorld().getEntitiesByClass(ItemEntity.class,
                 this.getBoundingBox().expand(8.0, 2.0, 8.0), itemEntity -> GhoulEntity.isEdibleMeat(itemEntity.getStack()));
 

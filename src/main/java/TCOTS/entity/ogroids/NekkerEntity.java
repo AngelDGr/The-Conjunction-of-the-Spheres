@@ -169,7 +169,7 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     }
 
     @Override
-    public boolean getExtraReasonNotGoToNest() {
+    public boolean getExtraReasonToNotGoToNest() {
         return this.getOwner()==null;
     }
 

@@ -10,10 +10,7 @@ import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeCategory;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeJsonBuilder;
 import TCOTS.items.concoctions.recipes.HerbalTableRecipeJsonBuilder;
-import TCOTS.world.TCOTS_ConfiguredFeatures;
-import TCOTS.world.TCOTS_DamageTypes;
-import TCOTS.world.TCOTS_PlacedFeature;
-import TCOTS.world.TCOTS_ProcessorList;
+import TCOTS.world.*;
 import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -47,10 +44,7 @@ import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.TypeSpecificPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryBuilder;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -118,6 +112,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         public static final Identifier TROLL_BARREL = new Identifier(TCOTS_Main.MOD_ID, "chests/troll/troll_barrel");
         public static final Identifier ICE_TROLL_BARREL = new Identifier(TCOTS_Main.MOD_ID, "chests/troll/ice_troll_barrel");
         public static final Identifier FOREST_TROLL_BARREL = new Identifier(TCOTS_Main.MOD_ID, "chests/troll/forest_troll_barrel");
+
+        public static final Identifier ICE_GIANT_CAVE_NEST = new Identifier(TCOTS_Main.MOD_ID, "chests/ice_giant_treasure");
 
         public LootTablesChestsGenerator(FabricDataOutput output) {
             super(output, LootContextTypes.CHEST);
@@ -670,6 +666,47 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     .with(ItemEntry.builder(Items.RAW_IRON_BLOCK).weight(1))
 
                             ));
+                }
+
+
+                //Ice Giant
+                {
+                    exporter.accept(ICE_GIANT_CAVE_NEST,
+                            LootTable.builder().pool(LootPool.builder().rolls(UniformLootNumberProvider.create(3.0f, 6.0f))
+                                    //Treasure
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.DIAMOND).weight(5))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 6.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.IRON_INGOT).weight(15))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 12.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.GOLD_INGOT).weight(15))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 16.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.EMERALD).weight(5))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 8.0f))))
+
+                                            .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.AMETHYST_SHARD).weight(5))
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 12.0f))))
+
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.ENCHANTED_GOLDEN_APPLE).weight(2))
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
+
+                            )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(2.0f, 4.0f))
+                                            //Food
+                                            .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_BEEF).weight(4))
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))))
+
+                                            .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_MUTTON).weight(6))
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 6.0f))))
+
+                                            .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.COOKED_COD).weight(5))
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 6.0f))))
+
+                                            .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.LEATHER).weight(3))
+                                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0f, 4.0f))))
+                                    ));
                 }
             }
 
@@ -2248,6 +2285,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         //Hunting
         //x Kill a monster (Silver for Monsters...)
+        //x Find and defeat an Ice Giant (The Lord of Ice)
         //  x Kill a Bullvore (Moo-rderer)
         //      x Craft the G'valchir (Won't Hurt a Bit)
         //  x Kill a rotfiend/scurver without causing an explosion (Bomb Defusal)
@@ -2324,6 +2362,23 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         false // Hidden in the advancement tab
                                 )
                                 .build(consumer, TCOTS_Main.MOD_ID + "/hunting");
+
+
+                Advancement.Builder.create()
+                                .parent(rootHunting)
+                                .display(
+                                        TCOTS_Items.WINTERS_BLADE, // The display icon
+                                        Text.translatable("advancements.witcher.kill_giant.title"), // The title
+                                        Text.translatable("advancements.witcher.kill_giant.description"), // The description
+                                        null,
+                                        AdvancementFrame.CHALLENGE, // Options: TASK, CHALLENGE, GOAL
+                                        true, // Show toast top right
+                                        true, // Announce to chat
+                                        false // Hidden in the advancement tab
+                                )
+                                .criterion("kill_giant", OnKilledCriterion.Conditions.createPlayerKilledEntity(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_GIANT)))
+                                .rewards(AdvancementRewards.Builder.experience(100))
+                                .build(consumer, TCOTS_Main.MOD_ID + "/kill_giant");
 
                 //Bullvore branch
                 {

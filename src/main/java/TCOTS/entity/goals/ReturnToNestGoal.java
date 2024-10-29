@@ -43,7 +43,7 @@ public class ReturnToNestGoal extends Goal {
 
                 > distanceBeforeReturning
                 && this.isExcavator()
-                && guardMob.getExtraReasonNotGoToNest();
+                && guardMob.getExtraReasonToNotGoToNest();
     }
 
     private boolean isExcavator(){

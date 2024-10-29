@@ -9,8 +9,7 @@
 
   "biomes": "#tcots-witcher:has_structure/ice_giant_cave",
 
-
-  "step": "underground_structures",
+  "step": "surface_structures",
 
   "height": {
     "type": "minecraft:uniform",
@@ -19,11 +18,11 @@
     },
 
     "min_inclusive": {
-      "absolute": -16
+      "absolute": 62
     }
   },
 
-  "terrain_adaptation": "beard_thin",
+  "terrain_adaptation": "none",
 
   "start_height": {
     "absolute": -15
