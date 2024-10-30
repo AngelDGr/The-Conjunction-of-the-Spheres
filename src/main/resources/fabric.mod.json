@@ -54,10 +54,10 @@
 			}
 		},
 		"loom:injected_interfaces": {
-			"net/minecraft/class_1309": ["TCOTS/interfaces/LivingEntityMixinInterface"],
-			"net/minecraft/class_1657": ["TCOTS/interfaces/PlayerEntityMixinInterface"],
-			"net/minecraft/class_22":   ["TCOTS/interfaces/MapStateMixinInterface"]
-
+			"net/minecraft/class_1309": 		 	  ["TCOTS/interfaces/LivingEntityMixinInterface"],
+			"net/minecraft/class_1657": 		 	  ["TCOTS/interfaces/PlayerEntityMixinInterface"],
+			"net/minecraft/class_20":   			  ["TCOTS/interfaces/MapIconMixinInterface"],
+			"net/minecraft/class_20\u0024class_21":   ["TCOTS/interfaces/MapIconTypeMixinInterface"]
 		}
 	}
 }

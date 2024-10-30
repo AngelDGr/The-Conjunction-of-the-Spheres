@@ -22,6 +22,8 @@
     "ItemStackMixin",
     "LivingEntityMixin",
     "MapStateMixin",
+    "MapStateMixin$MapIconTypeMixin",
+    "MapStateMixin$MapIconTypeTypeMixin",
     "MobEntityMixin",
     "MobEntityMixin$BullvoreDestroyCrops",
     "MobEntityMixin$ForestTrollNotGetCampfireDamage",
@@ -57,6 +59,7 @@
     "HorseEntityRendererMixin",
     "HorseEntityRendererMixin$PowderSnow_TundraArmor",
     "LightmapTextureManagerMixin",
+    "MapStateMixin$MapTextureMixin",
     "PlayerEntityRendererMixin",
     "northern_wind.BlazeEntityMixin",
     "northern_wind.geckolib.GeoEntityRendererMixin"

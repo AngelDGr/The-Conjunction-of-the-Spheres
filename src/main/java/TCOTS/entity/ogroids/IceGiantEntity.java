@@ -94,7 +94,8 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     //Can charge
     //xTODO: Add return to anchor block if it's far (Return to home)
     //xTODO: Add structure
-    //TODO: Add map
+    //xTODO: Add map
+
     //TODO: Add drops to monster & sword block
     //TODO: Add bestiary entry
     //TODO: Add map to find structure

@@ -1,13 +1,19 @@
 package TCOTS.world.village;
 
+import TCOTS.TCOTS_Main;
 import TCOTS.items.AlchemyRecipeRandomlyLootFunction;
 import TCOTS.items.TCOTS_Items;
+import TCOTS.items.maps.TCOTS_MapIcons;
+import TCOTS.items.maps.TCOTS_SellMapFactory;
 import TCOTS.utils.AlchemyFormulaUtil;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.VillagerProfession;
 
@@ -421,6 +427,20 @@ public class VillagerCustomTrades {
                                 5,
                                 0.05f));
                     }
+            );
+        }
+
+        //Cartographer
+        {
+            TradeOfferHelper.registerVillagerOffers(VillagerProfession.CARTOGRAPHER, 3,
+                factories -> factories.add(
+                        new TCOTS_SellMapFactory(
+                                16,
+                                TagKey.of(RegistryKeys.STRUCTURE, new Identifier(TCOTS_Main.MOD_ID, "on_ice_giant_maps")),
+                                "filled_map.giant_cave",
+                                TCOTS_MapIcons.Type.GIANT_CAVE,
+                                12,
+                                10))
             );
         }
     }

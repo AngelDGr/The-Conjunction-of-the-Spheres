@@ -1,13 +1,24 @@
 package TCOTS.items.maps;
 
+import TCOTS.TCOTS_Main;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.MapColor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.map.MapIcon;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public record TCOTS_MapIcons(net.minecraft.item.map.MapIcon.Type type, byte x, byte z, byte rotation, @Nullable Text text) {
+import java.util.Objects;
+
+@SuppressWarnings("unused")
+public record TCOTS_MapIcons(Type type, byte x, byte z, byte rotation, @Nullable Text text) {
     public byte getTypeId() {
         return this.type.getId();
     }
@@ -23,9 +34,9 @@ public record TCOTS_MapIcons(net.minecraft.item.map.MapIcon.Type type, byte x, b
 
     public enum Type implements StringIdentifiable
     {
-        GIANT_CAVE("giant_cave", true, 3830373, false, true);
+        GIANT_CAVE("giant_cave", true, 9615870, false, true);
 
-        public static final Codec<net.minecraft.item.map.MapIcon.Type> CODEC;
+        public static final Codec<Type> CODEC;
         private final String name;
         private final byte id;
         private final boolean alwaysRender;
@@ -33,11 +44,11 @@ public record TCOTS_MapIcons(net.minecraft.item.map.MapIcon.Type type, byte x, b
         private final boolean structure;
         private final boolean useIconCountLimit;
 
-        private Type(String name, boolean alwaysRender, boolean useIconCountLimit) {
+        Type(String name, boolean alwaysRender, boolean useIconCountLimit) {
             this(name, alwaysRender, -1, useIconCountLimit, false);
         }
 
-        private Type(String name, boolean alwaysRender, int tintColor, boolean useIconCountLimit, boolean structure) {
+        Type(String name, boolean alwaysRender, int tintColor, boolean useIconCountLimit, boolean structure) {
             this.name = name;
             this.useIconCountLimit = useIconCountLimit;
             this.id = (byte)this.ordinal();
@@ -58,6 +69,10 @@ public record TCOTS_MapIcons(net.minecraft.item.map.MapIcon.Type type, byte x, b
             return this.alwaysRender;
         }
 
+        public Identifier getTexture(){
+            return new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/map_icons/"+name+".png");
+        }
+
         public boolean hasTintColor() {
             return this.tintColor >= 0;
         }
@@ -66,8 +81,8 @@ public record TCOTS_MapIcons(net.minecraft.item.map.MapIcon.Type type, byte x, b
             return this.tintColor;
         }
 
-        public static net.minecraft.item.map.MapIcon.Type byId(byte id) {
-            return net.minecraft.item.map.MapIcon.Type.values()[MathHelper.clamp(id, 0, net.minecraft.item.map.MapIcon.Type.values().length - 1)];
+        public static Type byId(byte id) {
+            return Type.values()[MathHelper.clamp(id, 0, Type.values().length - 1)];
         }
 
         public boolean shouldUseIconCountLimit() {
@@ -80,7 +95,35 @@ public record TCOTS_MapIcons(net.minecraft.item.map.MapIcon.Type type, byte x, b
         }
 
         static {
-            CODEC = StringIdentifiable.createCodec(net.minecraft.item.map.MapIcon.Type::values);
+            CODEC = StringIdentifiable.createCodec(Type::values);
+        }
+    }
+
+    public static void addCustomStructureIconsNbt(@NotNull ItemStack stack, BlockPos pos, String id, TCOTS_MapIcons.Type customType){
+        addCustomIconsNbt(stack, pos, id, MapIcon.Type.MANSION, customType);
+    }
+
+    public static void addCustomIconsNbt(@NotNull ItemStack stack, BlockPos pos, String id, MapIcon.Type type, TCOTS_MapIcons.Type customType) {
+        NbtList nbtList;
+        if (stack.hasNbt() && Objects.requireNonNull(stack.getNbt()).contains("CustomIcons", NbtElement.LIST_TYPE)) {
+            nbtList = stack.getNbt().getList("CustomIcons", NbtElement.COMPOUND_TYPE);
+        } else {
+            nbtList = new NbtList();
+            stack.setSubNbt("CustomIcons", nbtList);
+        }
+
+        NbtCompound nbtCompound = new NbtCompound();
+        nbtCompound.putByte("customType", customType.getId());
+        nbtCompound.putByte("type", type.getId());
+        nbtCompound.putString("id", id);
+        nbtCompound.putDouble("x", pos.getX());
+        nbtCompound.putDouble("z", pos.getZ());
+        nbtCompound.putDouble("rot", 180.0);
+        nbtList.add(nbtCompound);
+
+        if(customType.hasTintColor()) {
+            NbtCompound nbtCompound2 = stack.getOrCreateSubNbt("display");
+            nbtCompound2.putInt("MapColor", customType.getTintColor());
         }
     }
 }

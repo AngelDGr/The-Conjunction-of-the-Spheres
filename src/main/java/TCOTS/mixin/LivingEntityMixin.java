@@ -475,7 +475,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     //Trigger Advancement
     @Inject(method = "onDeath", at = @At("TAIL"))
     private void injectTriggerAdvancement(DamageSource damageSource, CallbackInfo ci){
-
         if(EntitiesUtil.isHumanoid(THIS) && getAttacker() instanceof PlayerEntity player){
             NbtCompound nbt = player.getMainHandStack().getNbt();
 
@@ -492,7 +491,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
         }
     }
-
 
     @Shadow
     private ItemStack getSyncedHandStack(EquipmentSlot slot){return null;}

@@ -42,6 +42,7 @@ public class TCOTS_Main implements ModInitializer {
 	public static final Logger LOGGER = LogUtils.getLogger();
 	public static String MOD_ID = "tcots-witcher";
 	public static final TCOTS_Config CONFIG = TCOTS_Config.createAndLoad();
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
