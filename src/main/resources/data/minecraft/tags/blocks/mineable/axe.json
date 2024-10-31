@@ -2,6 +2,8 @@
     "replace": false,
   "values": [
     "tcots-witcher:alchemy_table",
-    "tcots-witcher:puffball_mushroom_block"
+    "tcots-witcher:puffball_mushroom_block",
+    "tcots-witcher:puffball_mushroom_block",
+    "tcots-witcher:giant_anchor_block"
   ]
 }

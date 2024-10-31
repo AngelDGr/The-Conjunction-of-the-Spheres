@@ -4,6 +4,7 @@ import TCOTS.blocks.entity.GiantAnchorBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -85,6 +86,11 @@ public class GiantAnchorBlock extends BlockWithEntity {
     @Override
     public boolean hasSidedTransparency(BlockState state) {
         return true;
+    }
+
+    @Override
+    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+        return false;
     }
 
     @Nullable

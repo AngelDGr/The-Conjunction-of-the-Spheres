@@ -1812,7 +1812,7 @@ public class TCOTS_Items {
      @param effect Decoction effect
     */
     private static Item registerItemPotion(String name, StatusEffect effect) {
-        return registerItemPotion(name, new FabricItemSettings().maxCount(1), effect, 50, 1200, 0, true);
+        return registerItemPotion(name, new FabricItemSettings().maxCount(1), effect, 50, 600, 0, true);
     }
 
     private static Item registerSplashPotion(String name, Item.Settings settings, StatusEffect effect, int toxicity, int durationInSecs){

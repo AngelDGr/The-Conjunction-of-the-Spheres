@@ -56,7 +56,7 @@ public class TCOTS_Blocks {
     public static final Block MONSTER_NEST  = new MonsterNestBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.GRAVEL).mapColor(MapColor.DIRT_BROWN));
     public static final Block ALCHEMY_TABLE  = new AlchemyTableBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOD).mapColor(MapColor.DARK_GREEN).nonOpaque());
     public static final Block HERBAL_TABLE  = new HerbalTableBlock(FabricBlockSettings.create().strength(1.0f).sounds(BlockSoundGroup.WOOD).mapColor(MapColor.CYAN).burnable().nonOpaque());
-    public static final Block GIANT_ANCHOR = new GiantAnchorBlock(FabricBlockSettings.create().requiresTool().strength(55.0f, 1200.0f).sounds(BlockSoundGroup.ANVIL).mapColor(MapColor.BROWN).burnable().nonOpaque());
+    public static final Block GIANT_ANCHOR = new GiantAnchorBlock(FabricBlockSettings.create().strength(8.0f, 600.0f).sounds(BlockSoundGroup.ANVIL).mapColor(MapColor.BROWN).burnable().nonOpaque());
     public static final Block WINTERS_BLADE_SKELETON = new WintersBladeSkeletonBlock();
     public static final Block SKELETON_BLOCK = new SkeletonBlock();
 

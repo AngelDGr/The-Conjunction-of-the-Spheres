@@ -94,11 +94,10 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     //Can charge
     //xTODO: Add return to anchor block if it's far (Return to home)
     //xTODO: Add structure
-    //xTODO: Add map
+    //xTODO: Add map to find structure
 
-    //TODO: Add drops to monster & sword block
+    //xTODO: Add drops to monster & sword block
     //TODO: Add bestiary entry
-    //TODO: Add map to find structure
 
     private static final Logger LOGGER = LogUtils.getLogger();
     protected static final TrackedData<Boolean> CHARGING = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -1214,6 +1213,15 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
         }
 
         return super.modifyAppliedDamage(source, amount);
+    }
+
+    @Override
+    protected void dropLoot(DamageSource damageSource, boolean causedByPlayer) {
+        super.dropLoot(damageSource, causedByPlayer);
+
+        if(this.hasAnchor() && causedByPlayer && this.random.nextBetween(0,10)==0){
+            this.dropItem(this.getMainHandStack().getItem());
+        }
     }
 
     //Jumping Stuff
