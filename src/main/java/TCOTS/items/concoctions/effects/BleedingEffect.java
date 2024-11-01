@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
 public class BleedingEffect extends StatusEffect {
+
     public BleedingEffect(StatusEffectCategory category, int color) {
         super(category, color);
     }
@@ -17,6 +18,7 @@ public class BleedingEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+
         entity.damage(TCOTS_DamageTypes.bleedDamage(entity.getWorld()), amplifier+1);
     }
 

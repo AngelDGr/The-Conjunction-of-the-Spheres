@@ -107,8 +107,8 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.GVALCHIR);
                                 entries.add(TCOTS_Items.MOONBLADE);
                                 entries.add(TCOTS_Items.DYAEBL);
-                                entries.add(TCOTS_Items.WINTERS_BLADE);
                                 entries.add(TCOTS_Items.ARDAENYE);
+                                entries.add(TCOTS_Items.WINTERS_BLADE);
 
 
                                 entries.add(TCOTS_Items.KNIGHT_CROSSBOW);

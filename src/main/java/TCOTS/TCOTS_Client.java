@@ -7,10 +7,10 @@ import TCOTS.entity.geo.renderer.AnchorProjectileRenderer;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.*;
 import TCOTS.entity.misc.renderers.*;
-import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
 import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
+import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.items.weapons.WitcherBaseCrossbow;
 import TCOTS.particles.*;
 import TCOTS.particles.bombEmitters.*;
@@ -194,6 +194,36 @@ public class TCOTS_Client implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.YELLOW_CLOUD, CloudParticleColor.YellowCloudFactory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DIMERITIUM_FLASH, DimeritiumFlash.FlashFactory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.MOON_DUST_EXPLOSION_EMITTER, new MoonDust_ExplosionEmitterParticle.Factory());
+
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.FALLING_BLOOD_PARTICLE,
+                (spriteProvider) ->
+                (type, world, x, y, z, velocityX, velocityY, velocityZ) ->
+                        new BloodParticle.Factory(spriteProvider,
+                                BloodParticle.createFallingBlood(type, world, x, y, z, velocityX, velocityY, velocityZ))
+                                .createParticle(type, world, x, y, z, velocityX, velocityY, velocityZ)
+        );
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.LANDING_BLOOD_PARTICLE,
+                (spriteProvider) ->
+                        (type, world, x, y, z, velocityX, velocityY, velocityZ) ->
+                                new BloodParticle.Factory(spriteProvider,
+                                        BloodParticle.createLandingBlood(type, world, x, y, z, velocityX, velocityY, velocityZ))
+                                        .createParticle(type, world, x, y, z, velocityX, velocityY, velocityZ)
+        );
+
+
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.FALLING_BLACK_BLOOD_PARTICLE,
+                (spriteProvider) ->
+                (type, world, x, y, z, velocityX, velocityY, velocityZ) ->
+                        new BloodParticle.Factory(spriteProvider,
+                                BloodParticle.createFallingBlackBlood(type, world, x, y, z, velocityX, velocityY, velocityZ))
+                                .createParticle(type, world, x, y, z, velocityX, velocityY, velocityZ)
+        );
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.LANDING_BLACK_BLOOD_PARTICLE,                 (spriteProvider) ->
+                (type, world, x, y, z, velocityX, velocityY, velocityZ) ->
+                        new BloodParticle.Factory(spriteProvider,
+                                BloodParticle.createLandingBlackBlood(type, world, x, y, z, velocityX, velocityY, velocityZ))
+                                .createParticle(type, world, x, y, z, velocityX, velocityY, velocityZ)
+        );
 
 
         HandledScreens.register(ScreenHandlersAndRecipesRegister.ALCHEMY_TABLE_SCREEN_HANDLER, AlchemyTableScreen::new);

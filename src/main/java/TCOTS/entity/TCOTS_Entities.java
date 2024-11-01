@@ -21,7 +21,7 @@ import net.minecraft.world.biome.BiomeKeys;
 @SuppressWarnings("all")
 public class TCOTS_Entities {
 
-//    0.2.0- Necrophages & Ogroids
+//    1.0.0- Necrophages & Ogroids
 // Necrophages
     //W3
     //xTODO: Drowner
@@ -47,7 +47,7 @@ public class TCOTS_Entities {
     //xTODO: Cyclopses
     //xTODO: Rock troll
     //xTODO: Ice troll
-    //TODO: Ice Giant (Boss)
+    //xTODO: Ice Giant (Boss)
     //W2
     //xTODO: Troll (Forest)
 

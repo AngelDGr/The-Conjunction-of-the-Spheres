@@ -1,49 +1,50 @@
 ```json
 {
-"title": "Cyclops",
-"icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/cyclops",
-"category": "tcots-witcher:ogroids",
-"associated_items": [
-
-],
-"ordinal": 3
+  "title": "Ice Giant",
+  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/ice_giant",
+  "category": "tcots-witcher:ogroids",
+  "associated_items": [
+    "tcots-witcher:giant_anchor"
+  ],
+  "ordinal": 7
 }
 ```
 
-Cyclopses can easily be recognized by the single eye located in the center of their foreheads. 
-
-If for some reason that is not visible, other tell-tale signs are their enormous size, 
-incredible strength and a seething hatred for all humans.
-
-Cyclopses go where they want; any warrior should move to the side if a cyclops is charging forward.
+These kind of powerful, primeval monsters are quite rare these days, possibly being near extinction. 
+The Ice Giant resembles an humanoid in many respects, but is blue as frost and taller than a tree. 
+Though it seems capable of reason, all attempts to communicate with it to date have ended the 
+same way – in a quick and painful death.
 
 ;;;;;
 
-They rarely flinch from anything a warrior can do to them, so they keep trying to fight no matter how many cuts from a blade they take.
-![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_main.png,fit)
+Some claim its skin is blue because it was born of snow and ice, which is clearly impossible –
+though it's capable of withstanding the fiercest frosts.
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_main.png,fit)
 
 ;;;;;
 
 {dark_green}**Habitat**{}
-- Mountains
-- Old Growth Taigas
-- Snowy Plains
+- *Unknown*
 
-![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_special.png,fit)
+
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_special.png,fit)
 
 ;;;;;
 
 {red}**Behavior**{}
 
-The Cyclops is a large but simple-minded creature. Its massive muscles allow it to deliver powerful punches with significant knockback and damage.
+The Ice Giant is the most powerful ogroid known. Often found sleeping in its lair, it’s best left undisturbed, 
+but if you choose to face it, prepare for a fierce fight.
 
-At longer ranges, a Cyclops can leap into the air, crashing down and knocking over anything near its landing site.
+If you’re seeking an Ice Giant’s lair, your best option is to find a cartographer for a map to its cave.
 
-These solitary beings are ruthless, showing no hesitation in killing one of their own kind.
+But beware, as survivors of past confrontations report that these giants favor a deadly weapon: a massive ship’s anchor.
 
 ;;;;;
 
-When battling a Cyclops, maintain a medium distance. If it starts to jump, either raise your shield or run for your life.
+Many have sought out an Ice Giant in hopes of slaying it, yet few return. 
+Legends tell of these warriors wielding a powerful weapon called {#007b77}Winter’s Blade{}—a relic 
+that might still lie hidden within the monster’s lair.
 
 
 {blue}**Loot**{}
@@ -66,12 +67,12 @@ When battling a Cyclops, maintain a medium distance. If it starts to jump, eithe
                                 <all>5</all>
                             </padding>
                         </stack-layout>
-
+                        
                         <stack-layout>
                             <children>
                                 <item>
                                     <stack>
-                                        minecraft:rabbit_hide
+                                        minecraft:bone
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -80,6 +81,7 @@ When battling a Cyclops, maintain a medium distance. If it starts to jump, eithe
                                 <all>5</all>
                             </padding>
                         </stack-layout>
+                        
                         
                     </children>
                     <sizing>
@@ -101,4 +103,4 @@ When battling a Cyclops, maintain a medium distance. If it starts to jump, eithe
 
 
 
-![Cyclops](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_full.png,fit)
+![Ice Giant](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_full.png,fit)

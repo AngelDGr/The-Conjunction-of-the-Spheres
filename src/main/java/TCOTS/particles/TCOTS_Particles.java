@@ -26,6 +26,11 @@ public class TCOTS_Particles {
     public static final DefaultParticleType FOGLET_FOG = FabricParticleTypes.simple();
     public static final DefaultParticleType FOGLET_FOG_AROUND = FabricParticleTypes.simple();
 
+    public static final DefaultParticleType FALLING_BLOOD_PARTICLE = FabricParticleTypes.simple();
+    public static final DefaultParticleType LANDING_BLOOD_PARTICLE = FabricParticleTypes.simple();
+    public static final DefaultParticleType FALLING_BLACK_BLOOD_PARTICLE = FabricParticleTypes.simple();
+    public static final DefaultParticleType LANDING_BLACK_BLOOD_PARTICLE = FabricParticleTypes.simple();
+
     public static void registerParticles() {
 
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "rotfiend_blood_explosion"),
@@ -70,6 +75,17 @@ public class TCOTS_Particles {
 
         Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "moon_dust_emitter"),
                 MOON_DUST_EXPLOSION_EMITTER);
+
+
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "falling_blood"),
+                FALLING_BLOOD_PARTICLE);
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "landing_blood"),
+                LANDING_BLOOD_PARTICLE);
+
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "falling_black_blood"),
+                FALLING_BLACK_BLOOD_PARTICLE);
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(TCOTS_Main.MOD_ID, "landing_black_blood"),
+                LANDING_BLACK_BLOOD_PARTICLE);
     }
 
 }

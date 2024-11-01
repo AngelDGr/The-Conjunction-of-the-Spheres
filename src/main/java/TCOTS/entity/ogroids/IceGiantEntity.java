@@ -21,6 +21,7 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
@@ -64,6 +65,7 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.event.EntityPositionSource;
 import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.event.PositionSource;
@@ -82,6 +84,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
@@ -97,7 +100,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     //xTODO: Add map to find structure
 
     //xTODO: Add drops to monster & sword block
-    //TODO: Add bestiary entry
+    //xTODO: Add bestiary entry
 
     private static final Logger LOGGER = LogUtils.getLogger();
     protected static final TrackedData<Boolean> CHARGING = DataTracker.registerData(IceGiantEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -1072,7 +1075,13 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
         tickFindAnchor();
 
         tickAnchorLaunch();
+
+        if(this.isSnowing()){
+            this.spawnSnowflakesAround();
+        }
     }
+
+
 
     @Override
     protected void mobTick() {
@@ -1106,6 +1115,49 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
         }
 
         this.retrieveAnchorTimer();
+
+        //If it's snowing increases its strength
+        if(this.isSnowing()){
+            EntityAttributeInstance entityAttributeInstance_attack = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            if(entityAttributeInstance_attack!=null) {
+                entityAttributeInstance_attack.removeModifier(BLIZZARD_STRENGTH_BOOST.getId());
+                entityAttributeInstance_attack.addTemporaryModifier(BLIZZARD_STRENGTH_BOOST);
+            }
+
+            EntityAttributeInstance entityAttributeInstance_speed = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+            if(entityAttributeInstance_speed!=null) {
+                entityAttributeInstance_speed.removeModifier(BLIZZARD_SPEED_BOOST.getId());
+                entityAttributeInstance_speed.addTemporaryModifier(BLIZZARD_SPEED_BOOST);
+            }
+        } else {
+            EntityAttributeInstance entityAttributeInstance_attack = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            if(entityAttributeInstance_attack!=null) entityAttributeInstance_attack.removeModifier(BLIZZARD_STRENGTH_BOOST.getId());
+
+            EntityAttributeInstance entityAttributeInstance_speed = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+            if(entityAttributeInstance_speed!=null) entityAttributeInstance_speed.removeModifier(BLIZZARD_SPEED_BOOST.getId());
+        }
+    }
+
+    private static final EntityAttributeModifier BLIZZARD_STRENGTH_BOOST = new EntityAttributeModifier(UUID.fromString("5c470b47-3ac4-46d9-a010-efacfdf41fea"),
+            "Blizzard strength boost", 4.0f,
+            EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier BLIZZARD_SPEED_BOOST = new EntityAttributeModifier(UUID.fromString("40feeb3e-2964-453a-874e-e297121de288"),
+            "Blizzard speed boost", 0.1f, EntityAttributeModifier.Operation.MULTIPLY_BASE);
+
+    private boolean isSnowing(){
+        Biome biome = this.getWorld().getBiome(this.getBlockPos()).value();
+        return this.getWorld().isRaining() && biome.canSetSnow(this.getWorld(), this.getBlockPos());
+    }
+
+    protected void spawnSnowflakesAround(){
+        if(this.age%6 == 0){
+            for (int i = 0; i < 8; ++i) {
+                double d = this.getX() + (double) MathHelper.nextBetween(this.getRandom(), -1F, 1F);
+                double e = (this.getEyeY()-0.5f)+ (double) MathHelper.nextBetween(this.getRandom(), -1F, 1F);
+                double f = this.getZ() + (double) MathHelper.nextBetween(this.getRandom(), -1F, 1F);
+                this.getWorld().addParticle(ParticleTypes.SNOWFLAKE, d,e,f,0,0,0);
+            }
+        }
     }
 
     @Override
@@ -1310,6 +1362,8 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
             return null;
         }
     }
+
+
 
     @Override
     protected SoundEvent getAttackSound() {

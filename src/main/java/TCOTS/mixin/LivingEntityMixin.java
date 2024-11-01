@@ -1,7 +1,6 @@
 package TCOTS.mixin;
 
 import TCOTS.advancements.TCOTS_Criteria;
-import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.misc.AnchorProjectileEntity;
 import TCOTS.entity.ogroids.AbstractTrollEntity;
 import TCOTS.interfaces.LivingEntityMixinInterface;
@@ -11,6 +10,7 @@ import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
 import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import TCOTS.items.concoctions.bombs.SamumBomb;
+import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import net.minecraft.block.Block;
@@ -29,14 +29,13 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
-import net.minecraft.entity.mob.GhastEntity;
-import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -251,7 +250,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
                 if(!list.isEmpty()) {
                     list.forEach(livingEntity -> {
                         if(!(livingEntity.hasStatusEffect(TCOTS_Effects.BLEEDING_BLACK_BLOOD_EFFECT))){
-                            livingEntity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.BLEEDING_BLACK_BLOOD_EFFECT, 10, 0));
+                            livingEntity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.BLEEDING_BLACK_BLOOD_EFFECT, 60, 0, true, false, false));
                         }
                     });
                 }
@@ -376,13 +375,13 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     //Immunity to bleeding
     @Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
     private void injectImmunityToBleeding(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir){
-        if(((THIS instanceof AbstractSkeletonEntity)
-                || (THIS instanceof GhastEntity)
-                || (THIS instanceof GolemEntity)
+        if((
+                (THIS instanceof AbstractSkeletonEntity)
+                || EntitiesUtil.isElementa(THIS)
                 || (THIS instanceof WitherEntity)
-                || (THIS.getGroup() == TCOTS_Entities.SPECTERS)
-        )
-                && effect.getEffectType()==TCOTS_Effects.BLEEDING)
+                || EntitiesUtil.isSpecter(THIS))
+
+                && (effect.getEffectType()==TCOTS_Effects.BLEEDING || effect.getEffectType()==TCOTS_Effects.BLEEDING_BLACK_BLOOD_EFFECT))
             cir.setReturnValue(false);
     }
 
@@ -684,5 +683,49 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         if(!this.getWorld().isClient && this.theConjunctionOfTheSpheres$getAnchor()!=null){
             this.theConjunctionOfTheSpheres$getAnchor().setOwner(null);
         }
+    }
+
+    //Bleeding effect
+    @Unique
+    private static final byte BLOOD_PARTICLES = 72;
+
+    @Unique
+    private static final byte BLACK_BLOOD_PARTICLES = 73;
+    @Inject(method = "handleStatus", at = @At("TAIL"))
+    private void injectParticles(byte status, CallbackInfo ci){
+        if(status == BLOOD_PARTICLES){
+            spawnBloodParticles(THIS, TCOTS_Particles.FALLING_BLOOD_PARTICLE);
+        }
+
+        if(status == BLACK_BLOOD_PARTICLES){
+            spawnBloodParticles(THIS, TCOTS_Particles.FALLING_BLACK_BLOOD_PARTICLE);
+        }
+    }
+
+
+    @SuppressWarnings("all")
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void injectInTickBlood(CallbackInfo ci){
+        if(THIS.hasStatusEffect(TCOTS_Effects.BLEEDING) && this.getStatusEffect(TCOTS_Effects.BLEEDING).getDuration()%40==0){
+            this.getWorld().sendEntityStatus(THIS, BLOOD_PARTICLES);
+        }
+
+        if(THIS.hasStatusEffect(TCOTS_Effects.BLEEDING_BLACK_BLOOD_EFFECT) && this.getStatusEffect(TCOTS_Effects.BLEEDING_BLACK_BLOOD_EFFECT).getDuration()%20==0){
+            this.getWorld().sendEntityStatus(THIS, BLACK_BLOOD_PARTICLES);
+        }
+    }
+
+    //TODO: Test this to better adapt to size
+    @Unique
+    protected void spawnBloodParticles(LivingEntity entity, DefaultParticleType particle){
+
+        for(int i=0; i<10; i++){
+            double d = entity.getX() + (double) MathHelper.nextBetween(entity.getRandom(), (float)-0.5, (float) 0.5);
+            double e =  (entity.getEyeY()-0.5f)+ (double) MathHelper.nextBetween(entity.getRandom(), -0.5f, 0.1f);
+            double f = entity.getZ() + (double) MathHelper.nextBetween(entity.getRandom(), (float) -0.5, (float) 0.5);
+            entity.getWorld().addParticle(particle, d,e,f,0,0,0);
+        }
+
+
     }
 }

@@ -15,11 +15,11 @@
 > Ogroids
  X Nekkers
  X Nekker Warriors
- * Cyclopses
- * Rock troll
- * Ice troll
- * Forest Troll (W2)
- * Ice Giant (Boss)
+ X Cyclopses
+ X Rock troll
+ X Ice troll
+ X Forest Troll (W2)
+ X Ice Giant (Boss)
 
 ----------------------------------------
 
