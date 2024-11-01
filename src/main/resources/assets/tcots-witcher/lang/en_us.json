@@ -1,5 +1,7 @@
 {
-    "itemgroup.tcots-witcher": "The Conjunction of the Spheres",
+    "itemgroup.tcots-witcher": "TCOTS - Combat",
+    "itemgroup.tcots-witcher-alchemy": "TCOTS - Alchemy",
+
 
     "item.tcots-witcher.witcher_bestiary": "Monster Bestiary",
     "tooltip.tcots-witcher.witcher_bestiary": "Learn about the dangers of this new world",

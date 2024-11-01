@@ -89,21 +89,14 @@ public class AlchemyFormulaItem extends Item {
                 }
 
                 Text text = Text.translatable("item.tcots-witcher.alchemy_formula.tooltip", output.getName()).formatted(Formatting.BLUE);
+
                 if(isDecoction(stack)){
                     text = Text.translatable("item.tcots-witcher.alchemy_formula.tooltip", output.getName()).withColor(0x41d331);
                 }
 
                 tooltip.add(text);
             }
-            else {
-                tooltip.add(Text.translatable("item.tcots-witcher.alchemy_formula.tooltip_n"));
-            }
-
         }
-        else {
-            tooltip.add(Text.translatable("item.tcots-witcher.alchemy_formula.tooltip_n"));
-        }
-
     }
 
 }

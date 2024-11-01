@@ -1004,7 +1004,7 @@ public class TCOTS_Items {
                                     Text.translatable("tooltip.tcots-witcher.dyaebl.extra").formatted(Formatting.DARK_RED))
                     ));
 
-            WINTERS_BLADE = registerItem("winters_blade.json",
+            WINTERS_BLADE = registerItem("winters_blade",
                     new SwordWithTooltip(TCOTS_ToolMaterials.WINTERS_BLADE, 4, -2.4f, new FabricItemSettings().rarity(Rarity.RARE),
                             Text.translatable("tooltip.tcots-witcher.winters_blade").formatted(Formatting.GRAY, Formatting.ITALIC),
                             List.of(

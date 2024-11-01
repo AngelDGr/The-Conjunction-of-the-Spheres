@@ -1,5 +1,6 @@
 package TCOTS.items.concoctions.effects;
 
+import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -16,6 +17,6 @@ public class BleedingBlackBloodEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        entity.damage(entity.getDamageSources().magic(), amplifier+1);
+        entity.damage(TCOTS_DamageTypes.bleedDamage(entity.getWorld()), amplifier+1);
     }
 }

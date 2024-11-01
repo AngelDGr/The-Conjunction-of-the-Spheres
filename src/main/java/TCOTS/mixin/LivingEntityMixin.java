@@ -13,6 +13,7 @@ import TCOTS.items.concoctions.bombs.SamumBomb;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
+import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -236,6 +237,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             }
 
             this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), TCOTS_Sounds.BLACK_BLOOD_HIT, this.getSoundCategory(),1f,1f);
+
+            this.getWorld().sendEntityStatus(THIS, BLACK_BLOOD_PARTICLES);
         }
     }
 
@@ -702,27 +705,28 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         }
     }
 
-
-    @SuppressWarnings("all")
-    @Inject(method = "tick", at = @At("TAIL"))
-    private void injectInTickBlood(CallbackInfo ci){
-        if(THIS.hasStatusEffect(TCOTS_Effects.BLEEDING) && this.getStatusEffect(TCOTS_Effects.BLEEDING).getDuration()%40==0){
-            this.getWorld().sendEntityStatus(THIS, BLOOD_PARTICLES);
-        }
-
-        if(THIS.hasStatusEffect(TCOTS_Effects.BLEEDING_BLACK_BLOOD_EFFECT) && this.getStatusEffect(TCOTS_Effects.BLEEDING_BLACK_BLOOD_EFFECT).getDuration()%20==0){
-            this.getWorld().sendEntityStatus(THIS, BLACK_BLOOD_PARTICLES);
+    @Inject(method = "damage", at = @At("TAIL"))
+    private void injectInDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+        if(source.isOf(TCOTS_DamageTypes.BLEEDING) && !this.hasStatusEffect(TCOTS_Effects.BLACK_BLOOD_EFFECT)){
+            this.getWorld().sendEntityStatus(THIS,
+                    THIS.hasStatusEffect(TCOTS_Effects.BLEEDING_BLACK_BLOOD_EFFECT)? BLACK_BLOOD_PARTICLES :BLOOD_PARTICLES);
         }
     }
 
-    //TODO: Test this to better adapt to size
+    //xTODO: Test this to better adapt to size
     @Unique
     protected void spawnBloodParticles(LivingEntity entity, DefaultParticleType particle){
 
         for(int i=0; i<10; i++){
-            double d = entity.getX() + (double) MathHelper.nextBetween(entity.getRandom(), (float)-0.5, (float) 0.5);
-            double e =  (entity.getEyeY()-0.5f)+ (double) MathHelper.nextBetween(entity.getRandom(), -0.5f, 0.1f);
-            double f = entity.getZ() + (double) MathHelper.nextBetween(entity.getRandom(), (float) -0.5, (float) 0.5);
+            double d = entity.getX() + (double) MathHelper.nextBetween(entity.getRandom(),
+                    (float)-entity.getBoundingBox().getLengthX()/2,
+                    (float) entity.getBoundingBox().getLengthX()/2);
+            double e =  (entity.getEyeY())+ (double) MathHelper.nextBetween(entity.getRandom(),
+                    -0.5f,
+                    0.25f);
+            double f = entity.getZ() + (double) MathHelper.nextBetween(entity.getRandom(),
+                    (float)-entity.getBoundingBox().getLengthZ()/2,
+                    (float) entity.getBoundingBox().getLengthZ()/2);
             entity.getWorld().addParticle(particle, d,e,f,0,0,0);
         }
 

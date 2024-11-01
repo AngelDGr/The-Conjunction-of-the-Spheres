@@ -33,7 +33,7 @@ public class TCOTS_ItemsGroups {
                             //Books
                             {
                                 entries.add(TCOTS_Items.WITCHER_BESTIARY);
-                                entries.add(TCOTS_Items.ALCHEMY_BOOK);
+//                                entries.add(TCOTS_Items.ALCHEMY_BOOK);
                             }
 
                             //Spawn Eggs
@@ -62,45 +62,12 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.GIANT_ANCHOR);
                             }
 
-
                             //Drops
-                            {
-                                //Necrophages
-                                entries.add(TCOTS_Items.DROWNER_TONGUE);
-                                entries.add(TCOTS_Items.DROWNER_BRAIN);
-                                entries.add(TCOTS_Items.GHOUL_BLOOD);
-                                entries.add(TCOTS_Items.ALGHOUL_BONE_MARROW);
-                                entries.add(TCOTS_Items.ROTFIEND_BLOOD);
-                                entries.add(TCOTS_Items.FOGLET_TEETH);
-                                entries.add(TCOTS_Items.WATER_ESSENCE);
-                                entries.add(TCOTS_Items.WATER_HAG_MUD_BALL);
-                                entries.add(TCOTS_Items.SCURVER_SPINE);
-                                entries.add(TCOTS_Items.DEVOURER_TEETH);
-                                entries.add(TCOTS_Items.CADAVERINE);
-                                entries.add(TCOTS_Items.GRAVEIR_BONE);
-                                entries.add(TCOTS_Items.BULLVORE_HORN_FRAGMENT);
-
-                                //Ogroids
-                                entries.add(TCOTS_Items.NEKKER_EYE);
-                                entries.add(TCOTS_Items.NEKKER_HEART);
-                                //-> Cyclops drop
-                                entries.add(TCOTS_Items.CAVE_TROLL_LIVER);
-
-                                //Mutagens
-                                {
-                                    entries.add(TCOTS_Items.FOGLET_MUTAGEN);
-                                    entries.add(TCOTS_Items.WATER_HAG_MUTAGEN);
-                                    entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);
-                                    entries.add(TCOTS_Items.NEKKER_WARRIOR_MUTAGEN);
-                                    entries.add(TCOTS_Items.TROLL_MUTAGEN);
-                                }
-                            }
 
                             //Other Ingredients
                             {
                                 entries.add(TCOTS_Items.CURED_MONSTER_LEATHER);
                             }
-
 
                             //Weapons
                             {
@@ -133,12 +100,37 @@ public class TCOTS_ItemsGroups {
                                 entries.add(TCOTS_Items.RAVENS_TROUSERS);
                                 entries.add(TCOTS_Items.RAVENS_BOOTS);
 
+                                //Horse Armors
                                 entries.add(TCOTS_Items.TUNDRA_HORSE_ARMOR);
                                 entries.add(TCOTS_Items.KNIGHT_ERRANTS_HORSE_ARMOR);
                             }
 
+                            //Alchemy
 
-                            //Concoctions
+
+                            //Misc/Blocks
+                            {
+                                entries.add(TCOTS_Items.NEST_SLAB_ITEM);
+                                entries.add(TCOTS_Items.NEST_SKULL_ITEM);
+                                entries.add(TCOTS_Items.MONSTER_NEST_ITEM);
+                                entries.add(TCOTS_Items.WINTERS_BLADE_SKELETON_ITEM);
+                                entries.add(TCOTS_Items.SKELETON_BLOCK_ITEM);
+                            }
+
+//                            //Formulae
+//                            addFormulaeEntries(entries);
+
+                        }).build());
+
+        TheConjunctionOfTheSpheres_Alchemy = Registry.register(Registries.ITEM_GROUP,
+                new Identifier(TCOTS_Main.MOD_ID, "tcots-witcher_alchemy"),
+                FabricItemGroup.builder().displayName(Text.translatable("itemgroup.tcots-witcher-alchemy"))
+                        .icon(() -> new ItemStack(TCOTS_Items.ALCHEMY_BOOK))
+                        .entries(((displayContext, entries) -> {
+
+                            entries.add(TCOTS_Items.ALCHEMY_BOOK);
+
+                            //Alchemy
                             {
                                 //Ingredients
                                 {
@@ -184,6 +176,39 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.RUBEDO);
                                     entries.add(TCOTS_Items.VERMILION);
                                     entries.add(TCOTS_Items.VITRIOL);
+                                }
+
+                                //Drops
+                                {
+                                    //Necrophages
+                                    entries.add(TCOTS_Items.DROWNER_TONGUE);
+                                    entries.add(TCOTS_Items.DROWNER_BRAIN);
+                                    entries.add(TCOTS_Items.GHOUL_BLOOD);
+                                    entries.add(TCOTS_Items.ALGHOUL_BONE_MARROW);
+                                    entries.add(TCOTS_Items.ROTFIEND_BLOOD);
+                                    entries.add(TCOTS_Items.FOGLET_TEETH);
+                                    entries.add(TCOTS_Items.WATER_ESSENCE);
+                                    entries.add(TCOTS_Items.WATER_HAG_MUD_BALL);
+                                    entries.add(TCOTS_Items.SCURVER_SPINE);
+                                    entries.add(TCOTS_Items.DEVOURER_TEETH);
+                                    entries.add(TCOTS_Items.CADAVERINE);
+                                    entries.add(TCOTS_Items.GRAVEIR_BONE);
+                                    entries.add(TCOTS_Items.BULLVORE_HORN_FRAGMENT);
+
+                                    //Ogroids
+                                    entries.add(TCOTS_Items.NEKKER_EYE);
+                                    entries.add(TCOTS_Items.NEKKER_HEART);
+                                    //-> Cyclops drop
+                                    entries.add(TCOTS_Items.CAVE_TROLL_LIVER);
+
+                                    //Mutagens
+                                    {
+                                        entries.add(TCOTS_Items.FOGLET_MUTAGEN);
+                                        entries.add(TCOTS_Items.WATER_HAG_MUTAGEN);
+                                        entries.add(TCOTS_Items.GRAVE_HAG_MUTAGEN);
+                                        entries.add(TCOTS_Items.NEKKER_WARRIOR_MUTAGEN);
+                                        entries.add(TCOTS_Items.TROLL_MUTAGEN);
+                                    }
                                 }
 
                                 //Potions
@@ -294,22 +319,10 @@ public class TCOTS_ItemsGroups {
                                     entries.add(TCOTS_Items.SUPERIOR_HANGED_OIL);
                                 }
                             }
-
-
-                            //Misc/Blocks
-                            {
-                                entries.add(TCOTS_Items.NEST_SLAB_ITEM);
-                                entries.add(TCOTS_Items.NEST_SKULL_ITEM);
-                                entries.add(TCOTS_Items.MONSTER_NEST_ITEM);
-                                entries.add(TCOTS_Items.WINTERS_BLADE_SKELETON_ITEM);
-                                entries.add(TCOTS_Items.SKELETON_BLOCK_ITEM);
-                            }
-
-
                             //Formulae
                             addFormulaeEntries(entries);
-
-                        }).build());
+                        }))
+                        .build());
     }
 
     private static void addFormulaeEntries(ItemGroup.Entries entries){

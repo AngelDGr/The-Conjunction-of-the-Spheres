@@ -90,7 +90,6 @@ public class TCOTS_JEIPlugin implements IModPlugin {
 
             NbtCompound nbtCompound = itemStack.getNbt();
 
-
             String formulaString=null;
             if(nbtCompound != null && nbtCompound.contains("FormulaID")){
                 formulaString = nbtCompound.getString("FormulaID");
