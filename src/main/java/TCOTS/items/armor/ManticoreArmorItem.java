@@ -58,6 +58,7 @@ public class ManticoreArmorItem extends ArmorItem implements GeoItem, MaxToxicit
 
             private ManticoreArmorRenderer renderer;
 
+            @SuppressWarnings("all")
             @Override
             public BipedEntityModel<LivingEntity> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, BipedEntityModel<LivingEntity> original) {
                 if(this.renderer==null)

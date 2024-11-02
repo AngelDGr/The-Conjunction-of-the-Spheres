@@ -137,6 +137,7 @@ public class AnchorProjectileEntity extends ProjectileEntity implements GeoEntit
     }
 
     //xTODO: Fix the immediate respawn bug-Unnecessary
+    @SuppressWarnings("all")
     @Override
     public void tick() {
         //8 Damage outside water
@@ -308,7 +309,7 @@ public class AnchorProjectileEntity extends ProjectileEntity implements GeoEntit
                     EnchantmentHelper.onUserDamaged(livingEntity2, entity2);
                     EnchantmentHelper.onTargetDamaged((LivingEntity)entity2, livingEntity2);
                 }
-                this.onHit(livingEntity2);
+                this.onHit();
             }
         } else if (entity.getType().isIn(EntityTypeTags.DEFLECTS_TRIDENTS)) {
             this.deflect();
@@ -394,7 +395,7 @@ public class AnchorProjectileEntity extends ProjectileEntity implements GeoEntit
         return this.sound;
     }
 
-    protected void onHit(LivingEntity target) {
+    protected void onHit() {
     }
 
     @Nullable
@@ -508,16 +509,7 @@ public class AnchorProjectileEntity extends ProjectileEntity implements GeoEntit
         return 0.13f;
     }
 
-//    public void applyEnchantmentEffects(LivingEntity entity, float damageModifier) {
-//        int i = EnchantmentHelper.getEquipmentLevel(Enchantments.POWER, entity);
-//        this.setDamage((double)(damageModifier * 2.0f) + this.random.nextTriangular((double)this.getWorld().getDifficulty().getId() * 0.11, 0.57425));
-//        if (i > 0) {
-//            this.setDamage(this.getDamage() + (double)i * 0.5 + 0.5);
-//        }
-//        if (EnchantmentHelper.getEquipmentLevel(Enchantments.FLAME, entity) > 0) {
-//            this.setOnFireFor(100);
-//        }
-//    }
+
 
     protected float getDragInWater() {
         return 0.8f;

@@ -29,6 +29,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
 
     public static final MapCodec<CrowsEyeFern> CODEC = CrowsEyeFern.createCodec(CrowsEyeFern::new);
@@ -102,6 +103,7 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
         return state.get(HALF) == DoubleBlockHalf.LOWER && !this.isFullyGrown(state);
     }
 
+    @SuppressWarnings("all")
     private boolean isFullyGrown(BlockState state) {
         return state.get(AGE) >= 4;
     }
@@ -208,6 +210,7 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
         this.tryGrow(world, lowerHalfContext.state, lowerHalfContext.pos, 1);
     }
 
+    @SuppressWarnings("all")
     private void tryGrow(ServerWorld world, BlockState state, BlockPos pos, int amount) {
         int i = Math.min(state.get(AGE) + amount, 4);
         if (!this.canGrow(world, pos, state, i)) {

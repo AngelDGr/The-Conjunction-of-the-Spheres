@@ -17,6 +17,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         super(ctx, model, shadowRadius);
     }
 
+    //TODO: See if i can erase this
     //xTODO: Check correctly the pivots
     @Inject(method = "setModelPose", at = @At("TAIL"))
     private void hidePartsForArmor(AbstractClientPlayerEntity player, CallbackInfo ci){

@@ -20,6 +20,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -50,17 +51,7 @@ public class WitcherWhiteHoney extends WitcherPotions_Base{
                 stack.decrement(1);
             }
         }
-        ItemStack stack_Empty;
-
-        if(!decoction){
-            stack_Empty = switch (this.getMaxCount()) {
-                default -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_2);
-                case 3 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_3);
-                case 4 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_4);
-                case 5 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_5);
-            };
-        }
-        else {stack_Empty = new ItemStack(TCOTS_Items.EMPTY_MONSTER_DECOCTION);}
+        ItemStack stack_Empty = getEmptyStack();
 
         stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
 
@@ -78,6 +69,22 @@ public class WitcherWhiteHoney extends WitcherPotions_Base{
 
         user.emitGameEvent(GameEvent.DRINK);
         return stack;
+    }
+
+    @NotNull
+    private ItemStack getEmptyStack() {
+        ItemStack stack_Empty;
+
+        if(!decoction){
+            stack_Empty = switch (this.getMaxCount()) {
+                default -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_2);
+                case 3 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_3);
+                case 4 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_4);
+                case 5 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_5);
+            };
+        }
+        else {stack_Empty = new ItemStack(TCOTS_Items.EMPTY_MONSTER_DECOCTION);}
+        return stack_Empty;
     }
 
     @Override

@@ -51,9 +51,6 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-//    public static final byte FALLING_PARTICLES = 42;
-//    public static final RawAnimation GROUND_PUNCH = RawAnimation.begin().thenPlay("special.ground_punch");
-
 
     protected static final TrackedData<Boolean> InGROUND = DataTracker.registerData(GraveirEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> EMERGING = DataTracker.registerData(GraveirEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -139,14 +136,6 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
         controllerRegistrar.add(
                 new AnimationController<>(this, "EmergingController", 1, this::animationEmergingPredicate)
         );
-
-//        //Ground Punch Controller
-//        controllerRegistrar.add(
-//                new AnimationController<>(this, "GroundPunchController", 1, state -> {
-//                    state.getController().setAnimationSpeed(0.6f);
-//                    return PlayState.STOP;
-//                }).triggerableAnim("ground_punch", GROUND_PUNCH)
-//        );
     }
 
 

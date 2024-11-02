@@ -37,6 +37,7 @@ public class WarriorsLeatherArmorItem extends ArmorItem implements GeoItem {
 
             private WarriorsLeatherArmorRenderer renderer;
 
+            @SuppressWarnings("all")
             @Override
             public BipedEntityModel<LivingEntity> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, BipedEntityModel<LivingEntity> original) {
                 if(this.renderer==null)

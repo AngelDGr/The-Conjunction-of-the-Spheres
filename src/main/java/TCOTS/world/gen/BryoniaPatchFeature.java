@@ -36,11 +36,7 @@ public class BryoniaPatchFeature extends Feature<BryoniaPatchFeatureConfig> {
         }
 
         List<Direction> list = bryoniaGrowthFeatureConfig.shuffleDirections(random);
-        if (generate(structureWorldAccess, blockPos, structureWorldAccess.getBlockState(blockPos), bryoniaGrowthFeatureConfig, random, list)) {
-            return true;
-        }
-
-        return false;
+        return generate(structureWorldAccess, blockPos, structureWorldAccess.getBlockState(blockPos), bryoniaGrowthFeatureConfig, random, list);
     }
 
     public static boolean generate(StructureWorldAccess world, BlockPos pos, BlockState state, BryoniaPatchFeatureConfig config, Random random, List<Direction> directions) {

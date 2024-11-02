@@ -46,10 +46,6 @@ public class SamumBomb {
                         SoundEvents.ENTITY_GENERIC_EXPLODE
                 );
 
-//                bomb.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1,1);
-//
-//        bomb.getWorld().sendEntityStatus(bomb, SAMUM_EXPLODES);
-
         List<LivingEntity> list = bomb.getWorld().getEntitiesByClass(LivingEntity.class, bomb.getBoundingBox().expand(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
                 livingEntity -> !(livingEntity instanceof WardenEntity) && !(livingEntity instanceof ArmorStandEntity) && !(livingEntity instanceof GuardianEntity)
                         && livingEntity != bomb.getOwner());

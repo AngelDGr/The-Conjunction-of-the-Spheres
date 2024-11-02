@@ -393,16 +393,6 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
                 }
             }
         }
-
-        @Override
-        public void start() {
-            super.start();
-        }
-
-        @Override
-        public void stop() {
-            super.stop();
-        }
     }
     //To manage the lunge attack
     private class Drowner_Attack_Lunge extends LungeAttackGoal {

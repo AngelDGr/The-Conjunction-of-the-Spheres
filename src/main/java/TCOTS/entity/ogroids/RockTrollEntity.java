@@ -224,11 +224,6 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
 
         return false;
     }
-
-    @Override
-    public int getMaxHeadRotation() {
-        return super.getMaxHeadRotation();
-    }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D)

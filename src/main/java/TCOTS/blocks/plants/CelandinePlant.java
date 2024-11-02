@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
+@SuppressWarnings("deprecation")
 public class CelandinePlant extends PlantBlock implements Fertilizable {
 
     public static final MapCodec<CelandinePlant> CODEC = CelandinePlant.createCodec(CelandinePlant::new);
