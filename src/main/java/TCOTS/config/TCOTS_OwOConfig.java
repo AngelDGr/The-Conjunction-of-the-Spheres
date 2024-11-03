@@ -39,10 +39,29 @@ public class TCOTS_OwOConfig {
         public ANCHORS anchor = ANCHORS.LEFT_UP;
         public int Hud_Y=0;
         public int Hud_X=0;
+    }
 
+    @Nest
+    public NestedWitcherEyesConfig witcher_eyes = new NestedWitcherEyesConfig();
+
+    public static class NestedWitcherEyesConfig{
+        public boolean activate=false;
+        public EYE_SHAPE eyeShape = EYE_SHAPE.NORMAL;
+        public EYE_SEPARATION eyeSeparation = EYE_SEPARATION.TWO;
+
+        public int XEyePos=0;
+        public int YEyePos=0;
     }
 
     public enum ANCHORS {
         CENTER_DOWN, CENTER_UP, RIGHT_DOWN, RIGHT_UP, LEFT_DOWN, LEFT_UP
+    }
+
+    public enum EYE_SHAPE {
+        NORMAL, TALL, LONG, TALL_SHADOW, BIG
+    }
+
+    public enum EYE_SEPARATION {
+        ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
     }
 }

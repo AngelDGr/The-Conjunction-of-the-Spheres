@@ -791,17 +791,6 @@
     "gui.jei.tcots-witcher.requires_recipe": "Requires unlock recipe",
 
     "text.config.tcots_config.title": "TCOTS Config",
-    "text.config.tcots_config.category.hud": "Toxicity - HUD Options",
-    "text.config.tcots_config.category.hud.tooltip": "Modify the toxicity hud position",
-    "text.config.tcots_config.option.hud.Hud_Y": "Y Offset",
-    "text.config.tcots_config.option.hud.Hud_X": "X Offset",
-    "text.config.tcots_config.option.hud.anchor": "Anchor",
-    "text.config.tcots_config.enum.aNCHORS.center_down": "CENTER DOWN",
-    "text.config.tcots_config.enum.aNCHORS.center_up": "CENTER UP",
-    "text.config.tcots_config.enum.aNCHORS.left_up": "LEFT UP",
-    "text.config.tcots_config.enum.aNCHORS.left_down": "LEFT DOWN",
-    "text.config.tcots_config.enum.aNCHORS.right_up": "RIGHT UP",
-    "text.config.tcots_config.enum.aNCHORS.right_down": "RIGHT DOWN",
 
     "text.config.tcots_config.category.monsters": "Monsters - Add a monster in a monster category",
     "text.config.tcots_config.category.monsters.tooltip": "Add mobs to work with the respective monster oils and monster resistances/damage",
@@ -834,5 +823,45 @@
     "text.config.tcots_config.option.monsters.Draconids.tooltip": "Upcoming type, currently covering the Ender Dragon (duh)",
 
     "text.config.tcots_config.option.monsters.Relicts": "Relict Category",
-    "text.config.tcots_config.option.monsters.Relicts.tooltip": "Upcoming type, currently covering Endermen, Guardians and the Warden"
+    "text.config.tcots_config.option.monsters.Relicts.tooltip": "Upcoming type, currently covering Endermen, Guardians and the Warden",
+
+    "text.config.tcots_config.category.hud": "Toxicity - HUD Options",
+    "text.config.tcots_config.category.hud.tooltip": "Modify the toxicity hud position",
+    "text.config.tcots_config.option.hud.Hud_Y": "Y Offset",
+    "text.config.tcots_config.option.hud.Hud_X": "X Offset",
+    "text.config.tcots_config.option.hud.anchor": "Anchor",
+    "text.config.tcots_config.enum.aNCHORS.center_down": "CENTER DOWN",
+    "text.config.tcots_config.enum.aNCHORS.center_up": "CENTER UP",
+    "text.config.tcots_config.enum.aNCHORS.left_up": "LEFT UP",
+    "text.config.tcots_config.enum.aNCHORS.left_down": "LEFT DOWN",
+    "text.config.tcots_config.enum.aNCHORS.right_up": "RIGHT UP",
+    "text.config.tcots_config.enum.aNCHORS.right_down": "RIGHT DOWN",
+
+    "text.config.tcots_config.category.witcher_eyes": "Witcher Eyes",
+    "text.config.tcots_config.category.witcher_eyes.tooltip": "Options for some bright and yellow Witcher Eyes",
+    "text.config.tcots_config.option.witcher_eyes.activate": "Activate Witcher Eyes",
+
+    "text.config.tcots_config.option.witcher_eyes.eyeShape": "Eye Shape",
+    "text.config.tcots_config.option.witcher_eyes.eyeShape.tooltip": "Select the shape that better fit your skin's pupils",
+    "text.config.tcots_config.enum.eYE_SHAPE.normal": "Normal (1x1)",
+    "text.config.tcots_config.enum.eYE_SHAPE.tall": "Tall (1x2)",
+    "text.config.tcots_config.enum.eYE_SHAPE.long": "Long (2x1)",
+    "text.config.tcots_config.enum.eYE_SHAPE.tall_shadow": "Tall (1x2)-With Shadow",
+    "text.config.tcots_config.enum.eYE_SHAPE.big": "Big (2x2)",
+
+    "text.config.tcots_config.option.witcher_eyes.eyeSeparation": "Eye Separation",
+    "text.config.tcots_config.option.witcher_eyes.eyeSeparation.tooltip": "Select the separation between the two pupils",
+    "text.config.tcots_config.enum.eYE_SEPARATION.zero": "0px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.one": "1px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.two": "2px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.three": "3px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.four": "4px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.five": "5px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.six": "6px",
+
+    "text.config.tcots_config.option.witcher_eyes.XEyePos": "Eye X Pos",
+    "text.config.tcots_config.option.witcher_eyes.XEyePos.tooltip": "Modify the X position",
+
+    "text.config.tcots_config.option.witcher_eyes.YEyePos": "Eye YPos",
+    "text.config.tcots_config.option.witcher_eyes.YEyePos.tooltip": "Modify the Y position"
 }

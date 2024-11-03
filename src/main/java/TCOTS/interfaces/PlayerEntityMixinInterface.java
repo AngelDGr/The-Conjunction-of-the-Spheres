@@ -1,5 +1,7 @@
 package TCOTS.interfaces;
 
+import org.joml.Vector3f;
+
 @SuppressWarnings("unused")
 public interface PlayerEntityMixinInterface {
 
@@ -39,5 +41,17 @@ public interface PlayerEntityMixinInterface {
 
     default boolean theConjunctionOfTheSpheres$toxicityOverThreshold(){return false;}
 
+    //Witcher Eyes
+    default boolean theConjunctionOfTheSpheres$getWitcherEyesActivated(){return false;}
+    default void theConjunctionOfTheSpheres$setWitcherEyesActivated(boolean activate){}
 
+    default Vector3f theConjunctionOfTheSpheres$getEyesPivot(){return new Vector3f();}
+    default void theConjunctionOfTheSpheres$setEyesPivot(Vector3f vector3f){}
+
+
+    default int theConjunctionOfTheSpheres$getEyeSeparation(){return 2;}
+    default void theConjunctionOfTheSpheres$setEyeSeparation(int separation){}
+
+    default int theConjunctionOfTheSpheres$getEyeShape(){return 0;}
+    default void theConjunctionOfTheSpheres$setEyeShape(int shape){}
 }

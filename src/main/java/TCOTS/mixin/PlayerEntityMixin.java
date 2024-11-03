@@ -26,6 +26,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -34,6 +35,8 @@ import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,7 +49,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-//@Debug(export = true) // Enables exporting for the targets of this mixin
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityMixinInterface {
 
@@ -107,6 +109,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void injectWriteNBTMud(NbtCompound nbt, CallbackInfo ci){
         nbt.putInt("MudTicks", theConjunctionOfTheSpheres$getMudInFace());
+
+
     }
 
     //Oils
@@ -654,6 +658,86 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
            while((client.options.attackKey.wasPressed())) GiantAnchorItem.retrieveAnchor(this);
         }
 
+    }
+
+
+    //Witcher Eyes
+    @Unique
+    private static final TrackedData<Boolean> EYES_ACTIVATE = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique
+    private static final TrackedData<Vector3f> EYES_POSITION = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.VECTOR3F);
+    @Unique
+    private static final TrackedData<Integer> EYES_SEPARATION = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
+    @Unique
+    private static final TrackedData<Integer> EYES_SHAPE = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
+
+
+    @Override
+    public boolean theConjunctionOfTheSpheres$getWitcherEyesActivated(){return this.dataTracker.get(EYES_ACTIVATE);}
+    @Override
+    public void theConjunctionOfTheSpheres$setWitcherEyesActivated(boolean activate){this.dataTracker.set(EYES_ACTIVATE, activate);}
+
+    @Override
+    public Vector3f theConjunctionOfTheSpheres$getEyesPivot(){return this.dataTracker.get(EYES_POSITION);}
+    @Override
+    public void theConjunctionOfTheSpheres$setEyesPivot(Vector3f vector3f){this.dataTracker.set(EYES_POSITION,vector3f);}
+
+    @Override
+    public int theConjunctionOfTheSpheres$getEyeSeparation(){return this.dataTracker.get(EYES_SEPARATION);}
+    @Override
+    public void theConjunctionOfTheSpheres$setEyeSeparation(int separation){this.dataTracker.set(EYES_SEPARATION, separation);}
+
+    @Override
+    public int theConjunctionOfTheSpheres$getEyeShape(){return this.dataTracker.get(EYES_SHAPE);}
+    @Override
+    public void theConjunctionOfTheSpheres$setEyeShape(int shape){this.dataTracker.set(EYES_SHAPE, shape);}
+
+    @Inject(method = "initDataTracker", at = @At("TAIL"))
+    private void injectWitcherEyesData(CallbackInfo ci){
+        this.dataTracker.startTracking(EYES_ACTIVATE, false);
+        this.dataTracker.startTracking(EYES_POSITION, new Vector3f(0,0,0));
+        this.dataTracker.startTracking(EYES_SEPARATION,2);
+        this.dataTracker.startTracking(EYES_SHAPE,      0);
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+    private void injectReadNBTWitcherEyes(NbtCompound nbt, CallbackInfo ci){
+        NbtCompound nbtEyes = getSubNbt("WitcherEyes", nbt);
+        if(nbtEyes!=null) {
+            this.theConjunctionOfTheSpheres$setWitcherEyesActivated(nbtEyes.getBoolean("Activated"));
+
+            //TODO: Remember, EyeY goes inverted: positive values goes up, negative values goes down
+            this.theConjunctionOfTheSpheres$setEyesPivot(new Vector3f(nbtEyes.getFloat("EyesX"), nbtEyes.getFloat("EyesY"), 0));
+
+            this.theConjunctionOfTheSpheres$setEyeSeparation(nbtEyes.getInt("EyesSeparation"));
+
+            this.theConjunctionOfTheSpheres$setEyeShape(nbtEyes.getInt("EyesShape"));
+        }
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void injectWriteNBTWitcherEyes(NbtCompound nbt, CallbackInfo ci){
+        NbtCompound nbtEyes = new NbtCompound();
+
+        nbtEyes.putBoolean("Activated", this.theConjunctionOfTheSpheres$getWitcherEyesActivated());
+
+        nbtEyes.putFloat("EyesX", this.theConjunctionOfTheSpheres$getEyesPivot().x);
+        nbtEyes.putFloat("EyesY", this.theConjunctionOfTheSpheres$getEyesPivot().y);
+
+        nbtEyes.putInt("EyesSeparation", this.theConjunctionOfTheSpheres$getEyeSeparation());
+        nbtEyes.putInt("EyesShape", this.theConjunctionOfTheSpheres$getEyeShape());
+
+        nbt.put("WitcherEyes", nbtEyes);
+    }
+
+    @SuppressWarnings("all")
+    @Unique
+    @Nullable
+    private static NbtCompound getSubNbt(String key, NbtCompound compound) {
+        if (compound == null || !compound.contains(key, NbtElement.COMPOUND_TYPE)) {
+            return null;
+        }
+        return compound.getCompound(key);
     }
 
 }

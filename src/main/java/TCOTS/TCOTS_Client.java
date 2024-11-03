@@ -7,6 +7,7 @@ import TCOTS.entity.geo.renderer.AnchorProjectileRenderer;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.*;
 import TCOTS.entity.misc.renderers.*;
+import TCOTS.entity.witcher_eyes.WitcherEyesModel;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
 import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
@@ -26,6 +27,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
@@ -36,6 +38,7 @@ import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
@@ -45,7 +48,7 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 public class TCOTS_Client implements ClientModInitializer {
-
+    public static EntityModelLayer WITCHER_EYES_LAYER = new EntityModelLayer(new Identifier(TCOTS_Main.MOD_ID, "witcher_eyes"), "witcher_eyes");
 
     @Override
     public void onInitializeClient() {
@@ -234,6 +237,7 @@ public class TCOTS_Client implements ClientModInitializer {
 
         LavenderBookScreen.registerRecipePreviewBuilder(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
 
+        EntityModelLayerRegistry.registerModelLayer(WITCHER_EYES_LAYER, WitcherEyesModel.createModelData());
     }
 
     private static final RecipeFeature.RecipePreviewBuilder<AlchemyTableRecipe> alchemyTable_RecipePreviewBuilder = new RecipeFeature.RecipePreviewBuilder<>() {
