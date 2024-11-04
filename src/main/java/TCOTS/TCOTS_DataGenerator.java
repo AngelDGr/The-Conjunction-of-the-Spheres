@@ -841,17 +841,11 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .add(TCOTS_Items.GHOUL_BLOOD);
 
             this.getOrCreateTagBuilder(ItemTags.FREEZE_IMMUNE_WEARABLES)
-                    .add(TCOTS_Items.WARRIORS_LEATHER_BOOTS)
-                    .add(TCOTS_Items.WARRIORS_LEATHER_TROUSERS)
-                    .add(TCOTS_Items.WARRIORS_LEATHER_JACKET)
+                    .add(TCOTS_Items.WARRIORS_LEATHER_BOOTS, TCOTS_Items.WARRIORS_LEATHER_TROUSERS, TCOTS_Items.WARRIORS_LEATHER_JACKET)
 
-                    .add(TCOTS_Items.MANTICORE_BOOTS)
-                    .add(TCOTS_Items.MANTICORE_TROUSERS)
-                    .add(TCOTS_Items.MANTICORE_ARMOR)
+                    .add(TCOTS_Items.MANTICORE_BOOTS,TCOTS_Items.MANTICORE_TROUSERS,TCOTS_Items.MANTICORE_ARMOR)
 
-                    .add(TCOTS_Items.RAVENS_BOOTS)
-                    .add(TCOTS_Items.RAVENS_TROUSERS)
-                    .add(TCOTS_Items.RAVENS_ARMOR)
+                    .add(TCOTS_Items.RAVENS_BOOTS,TCOTS_Items.RAVENS_TROUSERS,TCOTS_Items.RAVENS_ARMOR)
 
                     .add(TCOTS_Items.TUNDRA_HORSE_ARMOR);
         }

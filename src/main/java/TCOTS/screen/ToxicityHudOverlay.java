@@ -44,7 +44,6 @@ public class ToxicityHudOverlay {
     }
 
     public static void onHudRender(DrawContext context, float tickDelta) {
-
         MinecraftClient client = MinecraftClient.getInstance();
 
         if (client != null) {

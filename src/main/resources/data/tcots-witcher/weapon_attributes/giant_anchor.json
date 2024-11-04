@@ -1,0 +1,6 @@
+{
+  "parent": "bettercombat:anchor",
+  "attributes" : {
+    "attack_range": 2.25
+  }
+}

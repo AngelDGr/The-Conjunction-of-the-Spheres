@@ -20,18 +20,23 @@ import TCOTS.world.village.TCOTS_PointOfInterest;
 import TCOTS.world.village.TCOTS_VillageAdditions;
 import TCOTS.world.village.VillagerCustomTrades;
 import com.mojang.logging.LogUtils;
+import io.wispforest.owo.network.OwoNetChannel;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.minecraft.world.spawner.SpecialSpawner;
+import org.joml.Vector3f;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
@@ -42,6 +47,9 @@ public class TCOTS_Main implements ModInitializer {
 	public static final Logger LOGGER = LogUtils.getLogger();
 	public static String MOD_ID = "tcots-witcher";
 	public static final TCOTS_Config CONFIG = TCOTS_Config.createAndLoad();
+	public static final OwoNetChannel MY_CHANNEL = OwoNetChannel.create(new Identifier(TCOTS_Main.MOD_ID, "main"));
+	public record WitcherEyesPacket(int someData, String otherData, Identifier aMinecraftClass) {}
+
 
 	@Override
 	public void onInitialize() {
@@ -74,14 +82,29 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_VillageAdditions.registerNewStructures();
 		TCOTS_Criteria.registerCriteria();
 
-//		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-//			TCOTS_PlayerData playerState = TCOTS_StateSaverAndLoader.getPlayerState(handler.getPlayer());
-//			PacketByteBuf data = PacketByteBufs.create();
-//			data.writeInt(playerState.nestsBroken);
-//			server.execute(() -> {
-//				ServerPlayNetworking.send(handler.getPlayer(), INITIAL_SYNC, data);
-//			});
-//		});
+		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+			ServerPlayerEntity player = handler.getPlayer();
+
+			player.theConjunctionOfTheSpheres$setWitcherEyesActivated(TCOTS_Main.CONFIG.witcher_eyes.activate());
+
+			player.theConjunctionOfTheSpheres$setEyeSeparation(TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal());
+
+			player.theConjunctionOfTheSpheres$setEyeShape(TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal());
+
+
+			player.theConjunctionOfTheSpheres$setEyesPivot(
+					new Vector3f(
+							TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
+							-TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+							0));
+		});
+
+		//OwO Networking
+//		MY_CHANNEL.registerServerbound(WitcherEyesPacket.class, ((message, access) -> {
+//			ClientPlayerEntity clientPlayer = MinecraftClient.getInstance().player;
+//
+//			MY_CHANNEL.serverHandle(clientPlayer).send(new WitcherEyesPacket());
+//		}));
 
 
 		//Dispense Behaviors

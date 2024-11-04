@@ -161,8 +161,8 @@ public class TCOTS_Items {
             //xTODO: Add the White Raffard's Decoction, works similar to the instant health, but works with percentage
 
     public static final TagKey<Item> DECAYING_FLESH = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "decaying_flesh"));
-
     public static final TagKey<Item> MONSTER_BLOOD = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "monster_blood"));
+
 
     //TODO: Fix the achievement to mobs works with Monster Hunter?? Probably impossible
 

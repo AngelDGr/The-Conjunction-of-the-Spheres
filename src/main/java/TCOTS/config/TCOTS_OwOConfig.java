@@ -1,8 +1,6 @@
 package TCOTS.config;
 
-import io.wispforest.owo.config.annotation.Config;
-import io.wispforest.owo.config.annotation.Modmenu;
-import io.wispforest.owo.config.annotation.Nest;
+import io.wispforest.owo.config.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +42,19 @@ public class TCOTS_OwOConfig {
     @Nest
     public NestedWitcherEyesConfig witcher_eyes = new NestedWitcherEyesConfig();
 
+
     public static class NestedWitcherEyesConfig{
+        @Hook
         public boolean activate=false;
+
+        @Hook
         public EYE_SHAPE eyeShape = EYE_SHAPE.NORMAL;
+        @Hook
         public EYE_SEPARATION eyeSeparation = EYE_SEPARATION.TWO;
 
+        @Hook
         public int XEyePos=0;
+        @Hook
         public int YEyePos=0;
     }
 

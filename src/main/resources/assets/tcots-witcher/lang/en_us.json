@@ -1,6 +1,12 @@
 {
-    "itemgroup.tcots-witcher": "TCOTS - Combat",
-    "itemgroup.tcots-witcher-alchemy": "TCOTS - Alchemy",
+    "itemGroup.tcots-witcher.main": "The Conjunction of the Spheres",
+    "itemGroup.tcots-witcher.main.tab.combat":   "TCOTS - Combat",
+    "itemGroup.tcots-witcher.main.tab.alchemy":  "TCOTS - Alchemy",
+    "itemGroup.tcots-witcher.main.tab.formulae": "TCOTS - Formulae",
+    "itemGroup.tcots-witcher.main.button.github": "GitHub",
+    "itemGroup.tcots-witcher.main.button.curseforge": "CurseForge",
+    "itemGroup.tcots-witcher.main.button.modrinth": "Modrinth",
+
 
 
     "item.tcots-witcher.witcher_bestiary": "Monster Bestiary",
@@ -793,7 +799,7 @@
     "text.config.tcots_config.title": "TCOTS Config",
 
     "text.config.tcots_config.category.monsters": "Monsters - Add a monster in a monster category",
-    "text.config.tcots_config.category.monsters.tooltip": "Add mobs to work with the respective monster oils and monster resistances/damage",
+    "text.config.tcots_config.category.monsters.tooltip": "Add mobs to work with the respective monster\noils and monster resistances/damage",
     "text.config.tcots_config.option.monsters.Necrophages": "Necrophage Category",
     "text.config.tcots_config.option.monsters.Ogroids": "Ogroid Category",
     "text.config.tcots_config.option.monsters.Beasts": "Beast Category",
@@ -802,28 +808,28 @@
 
 
     "text.config.tcots_config.option.monsters.Specters": "Specter Category",
-    "text.config.tcots_config.option.monsters.Specters.tooltip": "Upcoming type, currently covering Ghasts",
+    "text.config.tcots_config.option.monsters.Specters.tooltip": "Upcoming type\nCurrently covering Ghasts",
 
     "text.config.tcots_config.option.monsters.Vampires": "Vampire Category",
     "text.config.tcots_config.option.monsters.Vampires.tooltip": "Upcoming type",
 
     "text.config.tcots_config.option.monsters.Insectoids": "Insectoid Category",
-    "text.config.tcots_config.option.monsters.Insectoids.tooltip": "Upcoming type, currently covering Arthropods",
+    "text.config.tcots_config.option.monsters.Insectoids.tooltip": "Upcoming type\nCurrently covering Arthropods",
 
     "text.config.tcots_config.option.monsters.Elementa": "Elementa Category",
-    "text.config.tcots_config.option.monsters.Elementa.tooltip": "Upcoming type, currently covering Golems, Blazes-like, Allays-like and Slime-like",
+    "text.config.tcots_config.option.monsters.Elementa.tooltip": "Upcoming type\nCurrently covering Golems, Blazes-like, Allays-like and Slime-like",
 
     "text.config.tcots_config.option.monsters.Hybrids": "Hybrid Category",
     "text.config.tcots_config.option.monsters.Hybrids.tooltip": "Upcoming type",
 
     "text.config.tcots_config.option.monsters.Cursed_Ones": "Cursed One Category",
-    "text.config.tcots_config.option.monsters.Cursed_Ones.tooltip": "Upcoming type, currently covering Creepers and Ravagers",
+    "text.config.tcots_config.option.monsters.Cursed_Ones.tooltip": "Upcoming type\nCurrently covering Creepers and Ravagers",
 
     "text.config.tcots_config.option.monsters.Draconids": "Draconid Category",
-    "text.config.tcots_config.option.monsters.Draconids.tooltip": "Upcoming type, currently covering the Ender Dragon (duh)",
+    "text.config.tcots_config.option.monsters.Draconids.tooltip": "Upcoming type\nCurrently covering the Ender Dragon (duh)",
 
     "text.config.tcots_config.option.monsters.Relicts": "Relict Category",
-    "text.config.tcots_config.option.monsters.Relicts.tooltip": "Upcoming type, currently covering Endermen, Guardians and the Warden",
+    "text.config.tcots_config.option.monsters.Relicts.tooltip": "Upcoming type\nCurrently covering Endermen, Guardians and the Warden",
 
     "text.config.tcots_config.category.hud": "Toxicity - HUD Options",
     "text.config.tcots_config.category.hud.tooltip": "Modify the toxicity hud position",
@@ -838,11 +844,11 @@
     "text.config.tcots_config.enum.aNCHORS.right_down": "RIGHT DOWN",
 
     "text.config.tcots_config.category.witcher_eyes": "Witcher Eyes",
-    "text.config.tcots_config.category.witcher_eyes.tooltip": "Options for some bright and yellow Witcher Eyes",
+    "text.config.tcots_config.category.witcher_eyes.tooltip": "Options to add Witcher Eyes\nto the player",
     "text.config.tcots_config.option.witcher_eyes.activate": "Activate Witcher Eyes",
 
     "text.config.tcots_config.option.witcher_eyes.eyeShape": "Eye Shape",
-    "text.config.tcots_config.option.witcher_eyes.eyeShape.tooltip": "Select the shape that better fit your skin's pupils",
+    "text.config.tcots_config.option.witcher_eyes.eyeShape.tooltip": "Select the shape that better\nfit your skin's pupils",
     "text.config.tcots_config.enum.eYE_SHAPE.normal": "Normal (1x1)",
     "text.config.tcots_config.enum.eYE_SHAPE.tall": "Tall (1x2)",
     "text.config.tcots_config.enum.eYE_SHAPE.long": "Long (2x1)",
@@ -850,7 +856,7 @@
     "text.config.tcots_config.enum.eYE_SHAPE.big": "Big (2x2)",
 
     "text.config.tcots_config.option.witcher_eyes.eyeSeparation": "Eye Separation",
-    "text.config.tcots_config.option.witcher_eyes.eyeSeparation.tooltip": "Select the separation between the two pupils",
+    "text.config.tcots_config.option.witcher_eyes.eyeSeparation.tooltip": "Select the separation between\nthe two pupils",
     "text.config.tcots_config.enum.eYE_SEPARATION.zero": "0px",
     "text.config.tcots_config.enum.eYE_SEPARATION.one": "1px",
     "text.config.tcots_config.enum.eYE_SEPARATION.two": "2px",
