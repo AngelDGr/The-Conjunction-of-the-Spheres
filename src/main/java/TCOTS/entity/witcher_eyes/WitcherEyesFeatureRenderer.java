@@ -16,13 +16,13 @@ import net.minecraft.util.Identifier;
 
 public class WitcherEyesFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
-    private final WitcherEyesModel<AbstractClientPlayerEntity> eyesModel;
+    private final WitcherEyesModel eyesModel;
     private final PlayerEntityModel<AbstractClientPlayerEntity> playerModel;
 
     public WitcherEyesFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureContext, EntityRendererFactory.Context rendererContext) {
         super(featureContext);
 
-       this.eyesModel = new WitcherEyesModel<>(rendererContext.getPart(TCOTS_Client.WITCHER_EYES_LAYER));
+       this.eyesModel = new WitcherEyesModel(rendererContext.getPart(TCOTS_Client.WITCHER_EYES_LAYER));
        this.playerModel = this.getContextModel();
     }
 
@@ -33,7 +33,6 @@ public class WitcherEyesFeatureRenderer extends FeatureRenderer<AbstractClientPl
         if(!player.theConjunctionOfTheSpheres$getWitcherEyesActivated()){
             return;
         }
-
 
         VertexConsumer buffer = vertexConsumers.getBuffer(getEyeSeparationAndShape(player));
 

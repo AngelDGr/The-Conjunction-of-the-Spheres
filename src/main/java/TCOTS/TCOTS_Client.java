@@ -24,7 +24,10 @@ import io.wispforest.owo.ui.component.Components;
 import io.wispforest.owo.ui.container.Containers;
 import io.wispforest.owo.ui.core.*;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -47,12 +50,90 @@ import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
+@Environment(value= EnvType.CLIENT)
 public class TCOTS_Client implements ClientModInitializer {
     public static EntityModelLayer WITCHER_EYES_LAYER = new EntityModelLayer(new Identifier(TCOTS_Main.MOD_ID, "witcher_eyes"), "witcher_eyes");
 
     @Override
     public void onInitializeClient() {
 
+        //Send data when join
+        {
+            ClientPlayConnectionEvents.JOIN.register((handler, sender, client) ->
+                    TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(new TCOTS_Main.WitcherEyesFullPacket(
+                            TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                            TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
+                            TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
+                            TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
+                            TCOTS_Main.CONFIG.witcher_eyes.YEyePos()
+                    )
+            ));
+        }
+
+
+
+        //Send client-packets to server
+        {
+            TCOTS_Main.CONFIG.witcher_eyes.subscribeToActivate(activate ->
+            {
+                if (MinecraftClient.getInstance().getNetworkHandler() == null) return;
+                TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
+                        new TCOTS_Main.WitcherEyesFullPacket(
+                                activate,
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
+                                TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
+                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+            });
+
+            TCOTS_Main.CONFIG.witcher_eyes.subscribeToEyeSeparation(eye_separation ->
+            {
+                if (MinecraftClient.getInstance().getNetworkHandler() == null) return;
+                TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
+                        new TCOTS_Main.WitcherEyesFullPacket(
+                                TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
+                                eye_separation.ordinal(),
+                                TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
+                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+            });
+
+            TCOTS_Main.CONFIG.witcher_eyes.subscribeToEyeShape(eye_shape ->
+            {
+                if(MinecraftClient.getInstance().getNetworkHandler()==null)return;
+                TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
+                        new TCOTS_Main.WitcherEyesFullPacket(
+                                TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                                eye_shape.ordinal(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
+                                TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
+                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+            });
+
+            TCOTS_Main.CONFIG.witcher_eyes.subscribeToXEyePos(xEyePos ->
+            {
+                if(MinecraftClient.getInstance().getNetworkHandler()==null)return;
+                TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
+                        new TCOTS_Main.WitcherEyesFullPacket(
+                                TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
+                                xEyePos,
+                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+            });
+
+            TCOTS_Main.CONFIG.witcher_eyes.subscribeToYEyePos(yEyePos ->
+            {
+                if(MinecraftClient.getInstance().getNetworkHandler()==null)return;
+                TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
+                        new TCOTS_Main.WitcherEyesFullPacket(
+                                TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
+                                TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
+                                yEyePos));
+            });
+        }
 
         //Grass Colors
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {

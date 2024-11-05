@@ -1,6 +1,5 @@
 package TCOTS.mixin;
 
-import TCOTS.TCOTS_Main;
 import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
@@ -8,11 +7,9 @@ import TCOTS.items.concoctions.EmptyWitcherPotionItem;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.WitcherAlcohol_Base;
 import TCOTS.items.concoctions.bombs.SamumBomb;
-import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.world.TCOTS_DamageTypes;
-import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -33,9 +30,7 @@ import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Arm;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -74,8 +69,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Shadow public abstract void playSound(SoundEvent sound, float volume, float pitch);
 
     @Shadow public abstract Arm getMainArm();
-
-    @Shadow public abstract float getAttackCooldownProgress(float baseTime);
 
     @Override
     public int theConjunctionOfTheSpheres$getMudInFace() {
@@ -651,19 +644,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return value+wintersBladeExtraDamage;
     }
 
-
-    //Giant Anchor
-    @Inject(method = "tick", at = @At("HEAD"))
-    private void injectRetrieveAnchor(CallbackInfo ci){
-        if(!this.getWorld().isClient && this.getAttackCooldownProgress(0.0f) < 1.0){
-
-            ItemStack stack = this.getStackInHand(Hand.MAIN_HAND);
-            if (stack.isOf(TCOTS_Items.GIANT_ANCHOR) && GiantAnchorItem.wasLaunched(stack) ) {
-                GiantAnchorItem.retrieveAnchor(this);
-            }
-        }
-    }
-
     //Witcher Eyes
     @Unique
     private static final TrackedData<Boolean> EYES_ACTIVATE = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -709,7 +689,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         if(nbtEyes!=null) {
             this.theConjunctionOfTheSpheres$setWitcherEyesActivated(nbtEyes.getBoolean("Activated"));
 
-            //TODO: Remember, EyeY goes inverted: positive values goes up, negative values goes down
             this.theConjunctionOfTheSpheres$setEyesPivot(new Vector3f(nbtEyes.getFloat("EyesX"), nbtEyes.getFloat("EyesY"), 0));
 
             this.theConjunctionOfTheSpheres$setEyeSeparation(nbtEyes.getInt("EyesSeparation"));
@@ -741,34 +720,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             return null;
         }
         return compound.getCompound(key);
-    }
-
-    @Inject(method = "<init>", at = @At("TAIL"))
-    private void initEyesValues(World world, BlockPos pos, float yaw, GameProfile gameProfile, CallbackInfo ci){
-
-    }
-
-
-    @SuppressWarnings("all")
-    @Inject(method = "tick", at = @At("TAIL"))
-    private void injectChangesInEyes(CallbackInfo ci){
-        TCOTS_Main.CONFIG.witcher_eyes.subscribeToActivate(this::theConjunctionOfTheSpheres$setWitcherEyesActivated);
-
-        TCOTS_Main.CONFIG.witcher_eyes.subscribeToEyeSeparation(eye_separation -> {
-            this.theConjunctionOfTheSpheres$setEyeSeparation(eye_separation.ordinal());
-        });
-
-        TCOTS_Main.CONFIG.witcher_eyes.subscribeToEyeShape(eye_shape -> {
-            this.theConjunctionOfTheSpheres$setEyeShape(eye_shape.ordinal());
-        });
-
-        TCOTS_Main.CONFIG.witcher_eyes.subscribeToXEyePos(xEyePos -> {
-            this.theConjunctionOfTheSpheres$setEyesPivot(new Vector3f(xEyePos, -TCOTS_Main.CONFIG.witcher_eyes.YEyePos(), 0));
-        });
-
-        TCOTS_Main.CONFIG.witcher_eyes.subscribeToYEyePos(yEyePos -> {
-            this.theConjunctionOfTheSpheres$setEyesPivot(new Vector3f(TCOTS_Main.CONFIG.witcher_eyes.XEyePos(), -yEyePos, 0));
-        });
     }
 
 }

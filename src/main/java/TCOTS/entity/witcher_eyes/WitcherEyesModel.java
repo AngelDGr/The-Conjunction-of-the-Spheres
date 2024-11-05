@@ -2,14 +2,12 @@ package TCOTS.entity.witcher_eyes;
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
 import org.joml.Vector3f;
 
-public class WitcherEyesModel<T extends PlayerEntity> extends PlayerEntityModel<T> {
+public class WitcherEyesModel extends PlayerEntityModel<AbstractClientPlayerEntity> {
     private static final String EAR = "ear";
     private static final String CLOAK = "cloak";
     private static final String LEFT_SLEEVE = "left_sleeve";
@@ -28,12 +26,12 @@ public class WitcherEyesModel<T extends PlayerEntity> extends PlayerEntityModel<
 
 
     @Override
-    public void setAngles(T playerEntity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+    public void setAngles(AbstractClientPlayerEntity playerEntity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
         super.setAngles(playerEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 
         Vector3f Eyes_Pivot = playerEntity.theConjunctionOfTheSpheres$getEyesPivot();
 
-        this.eyes.setPivot(Eyes_Pivot.x,Eyes_Pivot.y, Eyes_Pivot.z);
+        this.eyes.setPivot(Eyes_Pivot.x, Eyes_Pivot.y, Eyes_Pivot.z);
     }
 
     public static ModelData getModelData(Dilation dilation) {
@@ -70,13 +68,6 @@ public class WitcherEyesModel<T extends PlayerEntity> extends PlayerEntityModel<
 
         return modelData;
     }
-
-    @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-        super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
-    }
-
-
 
     public static EntityModelLayerRegistry.TexturedModelDataProvider createModelData(){
 

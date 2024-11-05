@@ -60,6 +60,7 @@
     "HorseEntityRendererMixin$PowderSnow_TundraArmor",
     "LightmapTextureManagerMixin",
     "MapStateMixin$MapTextureMixin",
+    "MinecraftClientMixin",
     "PlayerEntityRendererMixin",
     "northern_wind.BlazeEntityMixin",
     "northern_wind.geckolib.GeoEntityRendererMixin"

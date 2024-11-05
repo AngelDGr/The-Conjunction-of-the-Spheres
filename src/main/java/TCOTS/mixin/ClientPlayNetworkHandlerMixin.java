@@ -1,5 +1,6 @@
 package TCOTS.mixin;
 
+import TCOTS.TCOTS_Main;
 import TCOTS.entity.necrophages.GhoulEntity;
 import TCOTS.sounds.GhoulRegeneratingSoundInstance;
 import net.fabricmc.api.EnvType;
@@ -14,6 +15,8 @@ import net.minecraft.network.ClientConnection;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.listener.TickablePacketListener;
 import net.minecraft.network.packet.s2c.play.EntityStatusS2CPacket;
+import net.minecraft.network.packet.s2c.play.PlayerRespawnS2CPacket;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(value= EnvType.CLIENT)
-@Mixin(value = ClientPlayNetworkHandler.class,  priority = 99999)
+@Mixin(ClientPlayNetworkHandler.class)
 public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonNetworkHandler implements TickablePacketListener, ClientPlayPacketListener {
     @Shadow private ClientWorld world;
 
@@ -30,8 +33,7 @@ public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonNetworkH
     }
 
     @Inject(method = "onEntityStatus", at = @At("TAIL"), cancellable = true)
-    private void injectGhoulSound(EntityStatusS2CPacket packet, CallbackInfo ci) {
-
+    private void injectGhoulSound(@NotNull EntityStatusS2CPacket packet, CallbackInfo ci) {
         Entity entity = packet.getEntity(this.world);
         if (entity != null) {
             if (packet.getStatus() == GhoulEntity.GHOUL_REGENERATING) {
@@ -40,4 +42,18 @@ public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonNetworkH
             }
         }
     }
+
+    @Inject(method = "onPlayerRespawn", at = @At("TAIL"))
+    private void injectChangesInEyesRespawn(PlayerRespawnS2CPacket packet, CallbackInfo ci){
+        TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(new TCOTS_Main.WitcherEyesFullPacket(
+                TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
+                TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
+                TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
+                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()
+                )
+        );
+    }
+
+
 }

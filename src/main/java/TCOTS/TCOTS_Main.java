@@ -10,6 +10,7 @@ import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
+import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.mixin.ServerWorldAccessor;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
@@ -23,9 +24,9 @@ import com.mojang.logging.LogUtils;
 import io.wispforest.owo.network.OwoNetChannel;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
@@ -36,7 +37,6 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.minecraft.world.spawner.SpecialSpawner;
-import org.joml.Vector3f;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
@@ -47,16 +47,18 @@ public class TCOTS_Main implements ModInitializer {
 	public static final Logger LOGGER = LogUtils.getLogger();
 	public static String MOD_ID = "tcots-witcher";
 	public static final TCOTS_Config CONFIG = TCOTS_Config.createAndLoad();
-	public static final OwoNetChannel MY_CHANNEL = OwoNetChannel.create(new Identifier(TCOTS_Main.MOD_ID, "main"));
-	public record WitcherEyesPacket(int someData, String otherData, Identifier aMinecraftClass) {}
+	public static final OwoNetChannel PACKETS_CHANNEL = OwoNetChannel.create(new Identifier(TCOTS_Main.MOD_ID, "main"));
 
+
+	public record WitcherEyesFullPacket(Boolean activate, int shape, int separation, float eyePosX, float eyePosY) {}
+
+	public record RetrieveAnchorPacket() {}
 
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-
 		GeckoLib.initialize();
 		TCOTS_Blocks.registerBlocks();
 		TCOTS_Effects.registerEffects();
@@ -82,30 +84,55 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_VillageAdditions.registerNewStructures();
 		TCOTS_Criteria.registerCriteria();
 
-		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-			ServerPlayerEntity player = handler.getPlayer();
+		//OwO Networking receivers
+		{
+			//Witcher Eyes
+			{
+				//Receive the packet from the client <-
+				TCOTS_Main.PACKETS_CHANNEL.registerServerbound(WitcherEyesFullPacket.class, ((message, access) ->
+				{
+					ServerPlayerEntity player = access.player();
 
-			player.theConjunctionOfTheSpheres$setWitcherEyesActivated(TCOTS_Main.CONFIG.witcher_eyes.activate());
+					player.theConjunctionOfTheSpheres$setWitcherEyesActivated(message.activate);
 
-			player.theConjunctionOfTheSpheres$setEyeSeparation(TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal());
+					player.theConjunctionOfTheSpheres$setEyeShape(message.shape);
 
-			player.theConjunctionOfTheSpheres$setEyeShape(TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal());
+					player.theConjunctionOfTheSpheres$setEyeSeparation(message.separation);
+
+					player.theConjunctionOfTheSpheres$getEyesPivot().setComponent(0, message.eyePosX);
+
+					player.theConjunctionOfTheSpheres$getEyesPivot().setComponent(1, -1*message.eyePosY);
+
+					//Send another packet to the client, for full sync ->
+					TCOTS_Main.PACKETS_CHANNEL.serverHandle(player).send(new WitcherEyesFullPacket(
+							message.activate, message.shape, message.separation, message.eyePosX, message.eyePosY));
+				}));
 
 
-			player.theConjunctionOfTheSpheres$setEyesPivot(
-					new Vector3f(
-							TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-							-TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
-							0));
-		});
+				//Receive the packet from the server
+				TCOTS_Main.PACKETS_CHANNEL.registerClientbound(TCOTS_Main.WitcherEyesFullPacket.class, ((message, access) ->
+				{
+					ClientPlayerEntity player = access.player();
 
-		//OwO Networking
-//		MY_CHANNEL.registerServerbound(WitcherEyesPacket.class, ((message, access) -> {
-//			ClientPlayerEntity clientPlayer = MinecraftClient.getInstance().player;
-//
-//			MY_CHANNEL.serverHandle(clientPlayer).send(new WitcherEyesPacket());
-//		}));
+					player.theConjunctionOfTheSpheres$setWitcherEyesActivated(message.activate);
 
+					player.theConjunctionOfTheSpheres$setEyeShape(message.shape);
+
+					player.theConjunctionOfTheSpheres$setEyeSeparation(message.separation);
+
+					player.theConjunctionOfTheSpheres$getEyesPivot().setComponent(0, message.eyePosX);
+
+					player.theConjunctionOfTheSpheres$getEyesPivot().setComponent(1, -1*message.eyePosY);
+
+				}));
+			}
+
+			//Anchor
+			{
+				TCOTS_Main.PACKETS_CHANNEL.registerServerbound(RetrieveAnchorPacket.class, ((message, access) ->
+						GiantAnchorItem.retrieveAnchor(access.player())));
+			}
+		}
 
 		//Dispense Behaviors
 		{
@@ -133,13 +160,15 @@ public class TCOTS_Main implements ModInitializer {
 
 
 		//Bullvore Spawner
-		ServerWorldEvents.LOAD.register(((server, world) -> {
-			if (world.isClient()) {
-				return;
-			}
+		{
+			ServerWorldEvents.LOAD.register(((server, world) -> {
+				if (world.isClient()) {
+					return;
+				}
 
-			ServerWorldSpawnersUtil.register(world, new BullvoreSpawner());
-		}));
+				ServerWorldSpawnersUtil.register(world, new BullvoreSpawner());
+			}));
+		}
 	}
 
 	public static class ServerWorldSpawnersUtil {

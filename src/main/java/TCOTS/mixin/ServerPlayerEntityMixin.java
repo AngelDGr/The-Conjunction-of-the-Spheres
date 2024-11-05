@@ -50,11 +50,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     ServerPlayerEntity THIS = (ServerPlayerEntity)(Object)this;
     @Inject(method = "tick", at = @At("TAIL"))
     public void injectTriggerMaxToxicity(CallbackInfo ci){
-
         if(this.theConjunctionOfTheSpheres$getAllToxicity() >= this.theConjunctionOfTheSpheres$getMaxToxicity()*0.9){
             TCOTS_Criteria.MAX_TOXICITY_REACHED.trigger(THIS);
         }
-
     }
 
 }

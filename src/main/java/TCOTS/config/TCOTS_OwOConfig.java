@@ -1,5 +1,6 @@
 package TCOTS.config;
 
+import io.wispforest.owo.config.Option;
 import io.wispforest.owo.config.annotation.*;
 
 import java.util.ArrayList;
@@ -33,9 +34,13 @@ public class TCOTS_OwOConfig {
     @Nest
     public NestedHudConfig hud = new NestedHudConfig();
 
+    @Sync(Option.SyncMode.INFORM_SERVER)
     public static class NestedHudConfig {
+        @Sync(Option.SyncMode.INFORM_SERVER)
         public ANCHORS anchor = ANCHORS.LEFT_UP;
+        @Sync(Option.SyncMode.INFORM_SERVER)
         public int Hud_Y=0;
+        @Sync(Option.SyncMode.INFORM_SERVER)
         public int Hud_X=0;
     }
 
@@ -44,16 +49,23 @@ public class TCOTS_OwOConfig {
 
 
     public static class NestedWitcherEyesConfig{
+
+        @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
         public boolean activate=false;
 
+        @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
         public EYE_SHAPE eyeShape = EYE_SHAPE.NORMAL;
+        @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
         public EYE_SEPARATION eyeSeparation = EYE_SEPARATION.TWO;
 
+
+        @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
         public int XEyePos=0;
+        @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
         public int YEyePos=0;
     }
