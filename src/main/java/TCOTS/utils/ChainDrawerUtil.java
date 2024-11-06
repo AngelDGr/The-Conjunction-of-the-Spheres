@@ -21,7 +21,6 @@ import java.util.List;
 /**
  Logic based in the mod <a href="https://github.com/legoatoom/ConnectibleChains/tree/main">Connectible Chains</a> by <a href="https://www.curseforge.com/members/legoatoom/projects">legoatoom</a>
  */
-
 public class ChainDrawerUtil {
 
     private static final Identifier TEXTURE = new Identifier("textures/block/chain.png");

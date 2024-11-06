@@ -5,6 +5,8 @@ import org.spongepowered.asm.mixin.Mixin;
 
 
 //@Debug(export = true)
+//@Environment(value= EnvType.CLIENT)
+
 @Mixin(Item.class)
 public class TestingMixin {
 

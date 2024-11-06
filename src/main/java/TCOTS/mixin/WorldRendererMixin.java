@@ -1,6 +1,8 @@
 package TCOTS.mixin;
 
 import TCOTS.items.concoctions.TCOTS_Effects;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.WorldRenderer;
@@ -24,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Environment(value= EnvType.CLIENT)
 @Mixin(WorldRenderer.class)
 public abstract class WorldRendererMixin {
     @Shadow

@@ -311,9 +311,9 @@ public class TCOTS_ItemsGroups {
                                             },
                                             true);
 
-                                    owoItemGroup.addButton(ItemGroupButton.curseforge(owoItemGroup, ""));
+                                    owoItemGroup.addButton(ItemGroupButton.curseforge(owoItemGroup, "https://www.curseforge.com/minecraft/mc-mods/the-conjunction-of-the-spheres"));
 
-                                    owoItemGroup.addButton(ItemGroupButton.modrinth(owoItemGroup, ""));
+                                    owoItemGroup.addButton(ItemGroupButton.modrinth(owoItemGroup, "https://modrinth.com/mod/the-conjunction-of-the-spheres"));
 
                                     owoItemGroup.addButton(ItemGroupButton.github(owoItemGroup, "https://github.com/AngelDGr/The-Conjunction-of-the-Spheres"));
                                 })

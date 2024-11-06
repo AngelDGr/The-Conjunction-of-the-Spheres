@@ -14,7 +14,6 @@
     "DimeritiumMagicBlock$BlockShulkerBullet",
     "DimeritiumMagicBlock$BlockWololoGoal",
     "DimeritiumMagicBlock$MakeEndermanArrowDamageable",
-    "InGameHudMixin",
     "IronGolemMixin",
     "ItemsMixins$ItemMixin",
     "ItemsMixins$MilkBucketItemMixin",
@@ -40,11 +39,12 @@
     "ServerWorldAccessor",
     "TestingMixin",
     "VillagerHostilesSensorMixin",
-    "WorldRendererMixin",
-    "northern_wind.LivingEntityRendererMixin",
     "northern_wind.geckolib.GeoReplacedEntityRendererMixin",
     "samum.LookAroundGoalMixin",
-    "samum.LookAtEntityGoalMixin"
+    "samum.LookAtEntityGoalMixin",
+    "structurized.PoolStructurePieceMixin",
+    "structurized.RegistryLoaderMixin",
+    "structurized.StructurePoolAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -58,11 +58,14 @@
     "GameRendererMixin",
     "HorseEntityRendererMixin",
     "HorseEntityRendererMixin$PowderSnow_TundraArmor",
+    "InGameHudMixin",
     "LightmapTextureManagerMixin",
     "MapStateMixin$MapTextureMixin",
     "MinecraftClientMixin",
     "PlayerEntityRendererMixin",
+    "WorldRendererMixin",
     "northern_wind.BlazeEntityMixin",
+    "northern_wind.LivingEntityRendererMixin",
     "northern_wind.geckolib.GeoEntityRendererMixin"
   ]
 }

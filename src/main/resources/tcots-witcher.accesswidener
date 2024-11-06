@@ -37,3 +37,6 @@ accessible class net/minecraft/client/render/item/HeldItemRenderer$HandRenderTyp
 accessible method net/minecraft/block/ComposterBlock registerCompostableItem (FLnet/minecraft/item/ItemConvertible;)V
 
 accessible field net/minecraft/client/render/WorldRenderer bufferBuilders Lnet/minecraft/client/render/BufferBuilderStorage;
+
+accessible field net/minecraft/structure/processor/StructureProcessorLists EMPTY Lnet/minecraft/registry/RegistryKey;
+mutable    field    net/minecraft/structure/pool/StructurePool    elementCounts    Ljava/util/List;

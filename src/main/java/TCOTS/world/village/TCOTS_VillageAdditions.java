@@ -2,7 +2,7 @@ package TCOTS.world.village;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.world.TCOTS_ProcessorList;
-import fzzyhmstrs.structurized_reborn.impl.FabricStructurePoolRegistry;
+import TCOTS.structurized.impl.FabricStructurePoolRegistry;
 import net.minecraft.util.Identifier;
 
 public class TCOTS_VillageAdditions {

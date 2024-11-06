@@ -2,6 +2,8 @@ package TCOTS.mixin;
 
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.effects.potions.CatEffect;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.client.render.GameRenderer;
@@ -16,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@Environment(value= EnvType.CLIENT)
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
 
