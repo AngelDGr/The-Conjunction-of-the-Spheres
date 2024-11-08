@@ -44,7 +44,7 @@ public class TCOTS_SellMapFactory implements TradeOffers.Factory {
         if (blockPos != null) {
             ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte)2, true, true);
             FilledMapItem.fillExplorationMap(serverWorld, itemStack);
-            TCOTS_MapIcons.addCustomStructureIconsNbt(itemStack, blockPos, "+", this.iconType);
+            TCOTS_MapIcons.addCustomStructureIconsNbt(itemStack, blockPos, "++", this.iconType);
             itemStack.setCustomName(Text.translatable(this.nameKey));
             return new TradeOffer(new ItemStack(Items.EMERALD, this.price), new ItemStack(Items.COMPASS), itemStack, this.maxUses, this.experience, 0.2f);
         }

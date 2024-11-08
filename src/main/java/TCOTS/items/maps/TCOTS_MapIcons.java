@@ -114,8 +114,8 @@ public record TCOTS_MapIcons(Type type, byte x, byte z, byte rotation, @Nullable
 
         NbtCompound nbtCompound = new NbtCompound();
         nbtCompound.putByte("customType", customType.getId());
-        nbtCompound.putByte("type", type.getId());
-        nbtCompound.putString("id", id);
+        nbtCompound.putByte("originalType", type.getId());
+        nbtCompound.putString("customId", id);
         nbtCompound.putDouble("x", pos.getX());
         nbtCompound.putDouble("z", pos.getZ());
         nbtCompound.putDouble("rot", 180.0);

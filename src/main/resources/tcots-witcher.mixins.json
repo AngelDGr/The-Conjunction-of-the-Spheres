@@ -21,8 +21,7 @@
     "ItemStackMixin",
     "LivingEntityMixin",
     "MapStateMixin",
-    "MapStateMixin$MapIconTypeMixin",
-    "MapStateMixin$MapIconTypeTypeMixin",
+    "MapStateMixin$MapIconMixin",
     "MobEntityMixin",
     "MobEntityMixin$BullvoreDestroyCrops",
     "MobEntityMixin$ForestTrollNotGetCampfireDamage",
@@ -67,5 +66,6 @@
     "northern_wind.BlazeEntityMixin",
     "northern_wind.LivingEntityRendererMixin",
     "northern_wind.geckolib.GeoEntityRendererMixin"
-  ]
+  ],
+  "refmap": "tcots-witcher-refmap.json"
 }

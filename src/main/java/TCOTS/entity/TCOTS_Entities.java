@@ -180,7 +180,7 @@ public class TCOTS_Entities {
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "cyclops"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, CyclopsEntity::new)
                     //Hitbox
-                    .dimensions(EntityDimensions.changing(1.9975f, 5.0f)).trackRangeBlocks(16).build());
+                    .dimensions(EntityDimensions.changing(1.9975f, 5.0f)).build());
 
     public static final EntityType<RockTrollEntity> ROCK_TROLL = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "rock_troll"),
@@ -211,12 +211,12 @@ public class TCOTS_Entities {
             Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "ice_giant"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, IceGiantEntity::new)
                     //Hitbox
-                    .dimensions(EntityDimensions.changing(1.9975f, 4.4f)).trackRangeBlocks(16).build());
+                    .dimensions(EntityDimensions.changing(1.9975f, 4.4f)).build());
     public static final EntityType<AnchorProjectileEntity> ANCHOR_PROJECTILE =
             Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "anchor_projectile"),
                     FabricEntityTypeBuilder.<AnchorProjectileEntity>create(SpawnGroup.MISC, AnchorProjectileEntity::new)
                             .dimensions(EntityDimensions.fixed(1.25f, 1.8f))
-                            .trackRangeBlocks(4).trackedUpdateRate(20).fireImmune().build());
+                            .trackRangeBlocks(8).trackedUpdateRate(20).fireImmune().build());
 
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(

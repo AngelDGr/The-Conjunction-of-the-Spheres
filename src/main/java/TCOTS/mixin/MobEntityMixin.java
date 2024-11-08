@@ -77,7 +77,7 @@ public class MobEntityMixin {
         }
     }
 
-    @ModifyVariable(method = "isAffectedByDaylight", at = @At("STORE"), name = "bl")
+    @ModifyVariable(method = "isAffectedByDaylight", at = @At("STORE"), ordinal = 0)
     private boolean injectNoFireWhenFreeze(boolean value){
         return value || NorthernWindBomb.checkEffect(THIS);
     }

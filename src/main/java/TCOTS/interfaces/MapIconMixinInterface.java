@@ -1,9 +1,11 @@
 package TCOTS.interfaces;
 
 
+import TCOTS.items.maps.TCOTS_MapIcons;
 
 public interface MapIconMixinInterface {
+    default TCOTS_MapIcons.Type theConjunctionOfTheSpheres$customIcon(){return null;}
 
-    default boolean theConjunctionOfTheSpheres$hasCustomIcon(){return false;}
+    default void theConjunctionOfTheSpheres$setCustomIcon(TCOTS_MapIcons.Type type){}
 
 }

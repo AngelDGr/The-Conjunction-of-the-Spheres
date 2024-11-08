@@ -1,6 +1,5 @@
 package TCOTS.mixin;
 
-import TCOTS.interfaces.MapIconTypeMixinInterface;
 import TCOTS.interfaces.MapIconMixinInterface;
 import TCOTS.items.maps.TCOTS_MapIcons;
 import net.minecraft.client.render.RenderLayer;
@@ -14,24 +13,41 @@ import net.minecraft.item.map.MapState;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.text.Text;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
 @Mixin(MapState.class)
 public abstract class MapStateMixin {
-
-    @Shadow protected abstract void addIcon(MapIcon.Type type, @Nullable WorldAccess world, String key, double x, double z, double rotation, @Nullable Text text);
-
     @Shadow @Final
     Map<String, MapIcon> icons;
+
+    @Shadow private int iconCount;
+
+    @Shadow protected abstract void markIconsDirty();
+
+    @Shadow @Final public byte scale;
+
+    @Shadow @Final public int centerX;
+
+    @Shadow @Final public int centerZ;
+
+    @Shadow @Final public RegistryKey<World> dimension;
+
+    @Shadow protected abstract void removeIcon(String id);
 
     @Inject(method = "update", at = @At("TAIL"))
     public void injectCustomIcons(PlayerEntity player, ItemStack stack, CallbackInfo ci){
@@ -42,19 +58,50 @@ public abstract class MapStateMixin {
 
                 NbtCompound nbtCompound2 = nbtList.getCompound(j);
 
-                if (this.icons.containsKey(nbtCompound2.getString("id"))) continue;
+                if (this.icons.containsKey(nbtCompound2.getString("customId"))) continue;
 
-                MapIcon.Type icon = MapIcon.Type.byId(nbtCompound2.getByte("type"));
+                TCOTS_MapIcons.Type type = TCOTS_MapIcons.Type.byId(nbtCompound2.getByte("customType"));
 
-                icon.theConjunctionOfTheSpheres$setCustomIcon(TCOTS_MapIcons.Type.byId(nbtCompound2.getByte("customType")));
+                MapIcon mapIcon;
+                MapIcon mapIcon2;
 
-                this.addIcon(
-                        icon,
-                        player.getWorld(), nbtCompound2.getString("id"),
-                        nbtCompound2.getDouble("x"),
-                        nbtCompound2.getDouble("z"),
-                        nbtCompound2.getDouble("rot"),
-                        null);
+                String key = nbtCompound2.getString("customId");
+
+                byte d;
+                int i = 1 << this.scale;
+                double rotation = nbtCompound2.getDouble("rot");
+                float f = (float)(nbtCompound2.getDouble("x") - (double)this.centerX) / (float)i;
+                float g = (float)(nbtCompound2.getDouble("z") - (double)this.centerZ) / (float)i;
+                byte b = (byte)((double)(f * 2.0f) + 0.5);
+                byte c = (byte)((double)(g * 2.0f) + 0.5);
+
+                if (f >= -63.0f && g >= -63.0f && f <= 63.0f && g <= 63.0f) {
+                    d = (byte)((rotation + (rotation < 0.0 ? -8.0 : 8.0)) * 16.0 / 360.0);
+                    if (this.dimension == World.NETHER && player.getWorld() != null) {
+                        int k = (int)(player.getWorld().getLevelProperties().getTimeOfDay() / 10L);
+                        d = (byte)(k * k * 34187121 + k * 121 >> 15 & 0xF);
+                    }
+                } else {
+                    this.removeIcon(key);
+                    return;
+                }
+
+                if (!(mapIcon = new MapIcon(
+                        MapIcon.Type.MANSION,
+                        b,
+                        c,
+                        d,
+                        null)).equals(mapIcon2 = this.icons.put(key, mapIcon))) {
+                    if (mapIcon2 != null && mapIcon2.type().shouldUseIconCountLimit()) {
+                        --this.iconCount;
+                    }
+                    if (type.shouldUseIconCountLimit()) {
+                        ++this.iconCount;
+                    }
+
+                    mapIcon.theConjunctionOfTheSpheres$setCustomIcon(type);
+                    this.markIconsDirty();
+                }
             }
         }
     }
@@ -70,7 +117,6 @@ public abstract class MapStateMixin {
         @ModifyVariable(method = "draw", at = @At(value = "LOAD", ordinal = 4), ordinal = 0)
         private MapIcon getIcon(MapIcon icon){
             this.icon=icon;
-
             return icon;
         }
 
@@ -114,7 +160,7 @@ public abstract class MapStateMixin {
 
         @Unique
         private int setTransparency(int alpha){
-            if(icon!=null && icon.theConjunctionOfTheSpheres$hasCustomIcon()){
+            if(icon!=null && icon.theConjunctionOfTheSpheres$customIcon()!=null){
                 return 0;
             }
             return alpha;
@@ -123,7 +169,7 @@ public abstract class MapStateMixin {
         @Inject(method = "draw", at = @At(value = "TAIL"))
         private void injectCustomIconDrawing(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, boolean hidePlayerIcons, int light, CallbackInfo ci){
             for(MapIcon mapIcon : this.state.getIcons()){
-                if(mapIcon.type().theConjunctionOfTheSpheres$customIcon()!=null){
+                if(mapIcon.theConjunctionOfTheSpheres$customIcon()!=null){
 
                     if (hidePlayerIcons && !mapIcon.isAlwaysRendered()) continue;
                     int k = 2;
@@ -136,7 +182,7 @@ public abstract class MapStateMixin {
 
                     Matrix4f matrix4f2 = matrices.peek().getPositionMatrix();
 
-                    VertexConsumer vertexConsumer2 = vertexConsumerProvider.getBuffer(RenderLayer.getText(mapIcon.type().theConjunctionOfTheSpheres$customIcon().getTexture()));
+                    VertexConsumer vertexConsumer2 = vertexConsumerProvider.getBuffer(RenderLayer.getText(mapIcon.theConjunctionOfTheSpheres$customIcon().getTexture()));
 
 
                     vertexConsumer2.vertex(matrix4f2, -1.0f, 1.0f, (float)k * -0.001f).color(255, 255, 255, 255)
@@ -162,33 +208,21 @@ public abstract class MapStateMixin {
         }
     }
 
-    @Mixin(MapIcon.Type.class)
-    public abstract static class MapIconTypeTypeMixin implements MapIconTypeMixinInterface {
-
+    @Mixin(MapIcon.class)
+    public abstract static class MapIconMixin implements MapIconMixinInterface {
         @Unique
         @Nullable
         public TCOTS_MapIcons.Type TYPE;
 
-        @Nullable
+
+        @Override
+        public void theConjunctionOfTheSpheres$setCustomIcon(TCOTS_MapIcons.Type type) {
+            TYPE=type;
+        }
+
         @Override
         public TCOTS_MapIcons.Type theConjunctionOfTheSpheres$customIcon() {
             return TYPE;
-        }
-
-        @Override
-        public void theConjunctionOfTheSpheres$setCustomIcon(@Nullable TCOTS_MapIcons.Type type) {
-            this.TYPE=type;
-        }
-    }
-
-    @Mixin(MapIcon.class)
-    public abstract static class MapIconTypeMixin implements MapIconMixinInterface {
-
-        @Shadow @Final private MapIcon.Type type;
-
-        @Override
-        public boolean theConjunctionOfTheSpheres$hasCustomIcon() {
-            return type.theConjunctionOfTheSpheres$customIcon() != null;
         }
     }
 }

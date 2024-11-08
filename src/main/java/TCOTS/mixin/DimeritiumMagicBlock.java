@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@SuppressWarnings("unused")
 public abstract class DimeritiumMagicBlock {
     //Enderman
     @Mixin(EndermanEntity.class)
@@ -48,7 +47,7 @@ public abstract class DimeritiumMagicBlock {
     }
 
     @Mixin(PersistentProjectileEntity.class)
-    public abstract static class MakeEndermanArrowDamageable{
+    public abstract static class MakeEndermanArrowDamageable {
         @Unique
         Entity entity;
 
@@ -57,7 +56,7 @@ public abstract class DimeritiumMagicBlock {
             entity = entityHitResult.getEntity();
         }
 
-        @ModifyVariable(method = "onEntityHit", at = @At("STORE"), name = "bl")
+        @ModifyVariable(method = "onEntityHit", at = @At("STORE"), ordinal = 0)
         private boolean makeArrowDamageable(boolean value){
             if(entity!=null && entity instanceof LivingEntity livingEntity){
                 return value && !DimeritiumBomb.checkEffect(livingEntity);
