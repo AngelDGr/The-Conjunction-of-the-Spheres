@@ -32,7 +32,7 @@ public abstract class HorseEntityRendererMixin extends AbstractHorseEntityRender
 
         @Inject(method = "canWalkOnPowderSnow", at = @At("HEAD"), cancellable = true)
         private static void canWalkWithArmor(Entity entity, CallbackInfoReturnable<Boolean> cir){
-            if(entity instanceof HorseEntity horse && horse.getArmorType().isOf(TCOTS_Items.TUNDRA_HORSE_ARMOR)){
+            if(entity instanceof HorseEntity horse && horse.getBodyArmor().isOf(TCOTS_Items.TUNDRA_HORSE_ARMOR)){
                 cir.setReturnValue(true);
             }
         }

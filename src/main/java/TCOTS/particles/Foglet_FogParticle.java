@@ -7,7 +7,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 
 public class Foglet_FogParticle extends SpriteBillboardParticle {
     private final SpriteProvider spriteProvider;
@@ -63,7 +63,7 @@ public class Foglet_FogParticle extends SpriteBillboardParticle {
     }
 
     @Environment(value=EnvType.CLIENT)
-    public static class FogFactory implements ParticleFactory<DefaultParticleType> {
+    public static class FogFactory implements ParticleFactory<SimpleParticleType> {
         private final SpriteProvider spriteProvider;
 
         public FogFactory(SpriteProvider spriteProvider) {
@@ -71,7 +71,7 @@ public class Foglet_FogParticle extends SpriteBillboardParticle {
         }
 
         @Override
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             return new Foglet_FogParticle(clientWorld, d, e, f, g, h, i, this.spriteProvider);
         }
     }

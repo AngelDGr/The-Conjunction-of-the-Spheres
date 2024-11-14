@@ -17,7 +17,7 @@ public class SwallowEffect extends WitcherPotionEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier){
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier){
         if (entity.getHealth() < entity.getMaxHealth()) {
 
             entity.heal(0.05F * (float) (amplifier + 1));
@@ -26,7 +26,8 @@ public class SwallowEffect extends WitcherPotionEffect {
             }
         }
 
-        super.applyUpdateEffect(entity, amplifier);
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
 }

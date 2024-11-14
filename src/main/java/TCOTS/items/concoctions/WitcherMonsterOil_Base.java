@@ -1,10 +1,8 @@
 package TCOTS.items.concoctions;
 
-import TCOTS.entity.WitcherGroup;
 import TCOTS.items.TCOTS_Items;
+import TCOTS.items.components.MonsterOilComponent;
 import TCOTS.sounds.TCOTS_Sounds;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
@@ -12,14 +10,16 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
-import net.minecraft.util.*;
+import net.minecraft.util.ClickType;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -31,28 +31,17 @@ public class WitcherMonsterOil_Base extends Item {
         //                                                           Smite IV : 10.0 damage
         //                                                           Smite V  : 12.5 damage
 
-    private final int group_value;
+    private final int group_id;
     private final int uses;
     private final int extraDamage;
     private final int level;
     private final Text againstDescription;
 
-    public WitcherMonsterOil_Base(Settings settings, EntityGroup group, int uses, int level) {
+    public WitcherMonsterOil_Base(Settings settings, MonsterOilType group, int uses, int level) {
         super(settings);
 
-        if(group instanceof WitcherGroup witcherGroup){
-            group_value=witcherGroup.getNumericID();
-            againstDescription =
-                    Text.translatable("tooltip.tcots-witcher.oils", Text.translatable(witcherGroup.getTranslationKey())).formatted(Formatting.GRAY);
-        } else if (group == EntityGroup.ILLAGER) {
-            group_value=11;
-            againstDescription =
-                    Text.translatable("tooltip.tcots-witcher.oils", Text.translatable("entity.tcots-witcher.group.humanoids")).formatted(Formatting.GRAY);
-        } else {
-            group_value=100;
-            againstDescription =
-                    Text.translatable("tooltip.tcots-witcher.oils", "Missigno").formatted(Formatting.GRAY);
-        }
+        group_id =group.getNumericID();
+        againstDescription = Text.translatable("tooltip.tcots-witcher.oils", Text.translatable(group.getTranslationKey())).formatted(Formatting.GRAY);
 
         extraDamage = level*2;
 
@@ -69,63 +58,45 @@ public class WitcherMonsterOil_Base extends Item {
     }
 
     @Override
-    public Rarity getRarity(ItemStack stack) {
-        return switch (getLevel()) {
-            case 2, 3 -> Rarity.UNCOMMON;
-            default -> Rarity.COMMON;
-        };
-    }
-
-    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        NbtCompound nbt;
         if(user.getMainHandStack().getItem() instanceof SwordItem || user.getMainHandStack().getItem() instanceof AxeItem){
-            if(user.getMainHandStack().hasNbt()){
-                nbt = user.getMainHandStack().getNbt();
-                assert nbt != null;
-                if (nbt.contains("Monster Oil")){
-                    NbtCompound monsterOil= user.getMainHandStack().getSubNbt("Monster Oil");
+            if (notHasSameOil(user.getMainHandStack())){
+                ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL);
+                stack_Empty.set(TCOTS_Items.REFILL_RECIPE, Registries.ITEM.getId(this).toString());
 
-                    //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
-                    assert monsterOil != null;
-                    if(monsterOil.getInt("Uses")==getUses() && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==getLevel()){
-                        return TypedActionResult.fail(user.getStackInHand(hand));
+
+                user.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1 );
+
+                user.getMainHandStack().set(TCOTS_Items.MONSTER_OIL_COMPONENT, MonsterOilComponent.of(group_id, getUses(), getLevel(), Registries.ITEM.getId(this).toString()));
+
+                if(!user.getAbilities().creativeMode){
+                    user.getOffHandStack().decrement(1);
+
+                    //If the player inventory it's full
+                    if(user.getInventory().getEmptySlot() == -1){
+                        user.getWorld().spawnEntity(new ItemEntity(user.getWorld(), user.getX(), user.getY(), user.getZ(), stack_Empty));
+                    } else{
+                        user.giveItemStack(stack_Empty);
                     }
+
                 }
+                return TypedActionResult.consume(user.getOffHandStack());
             }
-
-            ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL);
-            stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
-
-            user.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1 );
-            NbtCompound nbtOil = new NbtCompound();
-
-
-            nbtOil.putInt("Id", group_value);
-            nbtOil.putInt("Uses", getUses());
-            nbtOil.putInt("Level", getLevel());
-            nbtOil.putString("Item", Registries.ITEM.getId(this).toString());
-
-            user.getMainHandStack().getOrCreateNbt().put("Monster Oil", nbtOil);
-
-            if(!user.getAbilities().creativeMode){
-                user.getOffHandStack().decrement(1);
-
-                //If the player inventory it's full
-                if(user.getInventory().getEmptySlot() == -1){
-                    user.getWorld().spawnEntity(new ItemEntity(user.getWorld(), user.getX(), user.getY(), user.getZ(), stack_Empty));
-                } else{
-                    user.giveItemStack(stack_Empty);
-                }
-
-            }
-
-
-            return TypedActionResult.consume(user.getOffHandStack());
         }
 
         return TypedActionResult.pass(user.getStackInHand(hand));
 
+    }
+
+    private boolean notHasSameOil(ItemStack stack){
+        if(!stack.contains(TCOTS_Items.MONSTER_OIL_COMPONENT)){
+            return true;
+        }
+
+
+        MonsterOilComponent monsterOil = stack.get(TCOTS_Items.MONSTER_OIL_COMPONENT);
+        //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
+        return monsterOil == null || monsterOil.uses() != getUses() || monsterOil.groupId() != this.group_id || monsterOil.level() != getLevel();
     }
 
     @Override
@@ -134,88 +105,15 @@ public class WitcherMonsterOil_Base extends Item {
             return false;
         }
 
-        NbtCompound nbt;
+
         if(otherStack.getItem() instanceof SwordItem || otherStack.getItem() instanceof AxeItem){
-            if(otherStack.hasNbt()){
-                nbt = otherStack.getNbt();
-                assert nbt != null;
-                if (nbt.contains("Monster Oil")){
-                    NbtCompound monsterOil= otherStack.getSubNbt("Monster Oil");
-
-                    //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
-                    assert monsterOil != null;
-                    if(monsterOil.getInt("Uses")==getUses() && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==getLevel()){
-                        return false;
-                    }
-                }
-            }
-
-
-            ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL);
-            stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
-
-            player.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1);
-            NbtCompound nbtOil= new NbtCompound();
-
-
-            nbtOil.putInt("Id", group_value);
-            nbtOil.putInt("Uses", getUses());
-            nbtOil.putInt("Level", getLevel());
-            nbtOil.putString("Item", Registries.ITEM.getId(this).toString());
-
-            otherStack.getOrCreateNbt().put("Monster Oil", nbtOil);
-
-            stack.decrement(1);
-
-            //If the player inventory it's full
-            if(player.getInventory().getEmptySlot() == -1){
-                player.getWorld().spawnEntity(new ItemEntity(player.getWorld(), player.getX(), player.getY(), player.getZ(), stack_Empty));
-            } else{
-                player.giveItemStack(stack_Empty);
-            }
-
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player) {
-        if (clickType != ClickType.RIGHT) {
-            return false;
-        }
-        NbtCompound nbt;
-        ItemStack itemStackInSlot = slot.getStack();
-
-        if(itemStackInSlot.getItem() instanceof SwordItem || itemStackInSlot.getItem() instanceof AxeItem){
-            if(itemStackInSlot.hasNbt()){
-                nbt = itemStackInSlot.getNbt();
-                assert nbt != null;
-                if (nbt.contains("Monster Oil")){
-                    NbtCompound monsterOil= itemStackInSlot.getSubNbt("Monster Oil");
-
-                    //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
-                    assert monsterOil != null;
-                    if(monsterOil.getInt("Uses")==getUses() && monsterOil.getInt("Id") == this.group_value && monsterOil.getInt("Level")==getLevel()){
-                        return false;
-                    }
-                }
-            }
-
-
+            if (notHasSameOil(otherStack)){
                 ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL);
-                stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
+                stack_Empty.set(TCOTS_Items.REFILL_RECIPE, Registries.ITEM.getId(this).toString());
 
+                player.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1);
 
-                player.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1 );
-                NbtCompound nbtOil= new NbtCompound();
-
-
-                nbtOil.putInt("Id", group_value);
-                nbtOil.putInt("Uses", getUses());
-                nbtOil.putInt("Level", getLevel());
-                nbtOil.putString("Item", Registries.ITEM.getId(this).toString());
-
-                itemStackInSlot.getOrCreateNbt().put("Monster Oil", nbtOil);
+                otherStack.set(TCOTS_Items.MONSTER_OIL_COMPONENT, MonsterOilComponent.of(group_id, getUses(), getLevel(), Registries.ITEM.getId(this).toString()));
 
                 stack.decrement(1);
 
@@ -225,14 +123,46 @@ public class WitcherMonsterOil_Base extends Item {
                 } else{
                     player.giveItemStack(stack_Empty);
                 }
-
             }
+        }
 
         return true;
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public boolean onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player) {
+        if (clickType != ClickType.RIGHT) {
+            return false;
+        }
+
+        ItemStack itemStackInSlot = slot.getStack();
+        if(itemStackInSlot.getItem() instanceof SwordItem || itemStackInSlot.getItem() instanceof AxeItem){
+            if (notHasSameOil(itemStackInSlot)){
+
+                ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL);
+                stack_Empty.set(TCOTS_Items.REFILL_RECIPE, Registries.ITEM.getId(this).toString());
+
+
+                player.playSound(TCOTS_Sounds.OIL_APPLIED, 1,1 );
+
+                itemStackInSlot.set(TCOTS_Items.MONSTER_OIL_COMPONENT, MonsterOilComponent.of(group_id, getUses(), getLevel(), Registries.ITEM.getId(this).toString()));
+
+                stack.decrement(1);
+
+                //If the player inventory it's full
+                if(player.getInventory().getEmptySlot() == -1){
+                    player.getWorld().spawnEntity(new ItemEntity(player.getWorld(), player.getX(), player.getY(), player.getZ(), stack_Empty));
+                } else{
+                    player.giveItemStack(stack_Empty);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         //Against Necrophages:
         tooltip.add(this.againstDescription);
         //  +2 Attack Damage
@@ -241,5 +171,36 @@ public class WitcherMonsterOil_Base extends Item {
         tooltip.add(Text.translatable("tooltip.tcots-witcher.oils.duration").formatted(Formatting.GRAY));
         //  60 Hits
         tooltip.add(ScreenTexts.space().append(Text.translatable("tooltip.tcots-witcher.oils.uses", getUses()).formatted(Formatting.BLUE)));
+    }
+
+    public enum MonsterOilType {
+        NECROPHAGES ("necrophages",0),
+        OGROIDS ("ogroids",1),
+        SPECTERS ("specters",2),
+        VAMPIRES ("vampires",3),
+        INSECTOIDS ("insectoids",4),
+        BEASTS ("beasts",5),
+        ELEMENTA ("elementa",6),
+        CURSED_ONES ("cursed_ones",7),
+        HYBRIDS ("hybrids",8),
+        DRACONIDS ("draconids",9),
+        RELICTS("relicts",10),
+        HUMANOID("humanoids",11);
+        private final String id;
+
+        private final int numericID;
+
+        MonsterOilType(String id, int numericID){
+            this.id=id;
+            this.numericID=numericID;
+        }
+
+        public String getTranslationKey() {
+            return "entity.tcots-witcher.group."+id;
+        }
+
+        public int getNumericID() {
+            return numericID;
+        }
     }
 }

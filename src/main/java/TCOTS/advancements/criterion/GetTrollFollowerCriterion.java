@@ -10,7 +10,6 @@ import net.minecraft.loot.context.LootContext;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.dynamic.Codecs;
 
 import java.util.Optional;
 
@@ -33,9 +32,9 @@ public class GetTrollFollowerCriterion extends AbstractCriterion<GetTrollFollowe
         public static final Codec<GetTrollFollowerCriterion.Conditions> CODEC =
                 RecordCodecBuilder.create(instance ->
                         instance.group(
-                                        Codecs.createStrictOptionalFieldCodec(EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC, "player")
+                                        EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
                                                 .forGetter(GetTrollFollowerCriterion.Conditions::player),
-                                        Codecs.createStrictOptionalFieldCodec(EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC, "entity")
+                                        EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("entity")
                                                 .forGetter(GetTrollFollowerCriterion.Conditions::entity))
                                 .apply(instance, GetTrollFollowerCriterion.Conditions::new));
 

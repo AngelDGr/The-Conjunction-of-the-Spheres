@@ -8,30 +8,31 @@ import net.minecraft.block.SkullBlock;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.RotationPropertyHelper;
-import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 
 public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
     @Override
     public Identifier getModelResource(NestSkullBlockEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/block/nest_skull.geo.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "geo/block/nest_skull.geo.json");
     }
+    
 
     @Override
     public Identifier getTextureResource(NestSkullBlockEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/block/nest_skull.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/block/nest_skull.png");
     }
 
     @Override
     public Identifier getAnimationResource(NestSkullBlockEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 
 
     @Override
     public void setCustomAnimations(NestSkullBlockEntity animatable, long instanceId, AnimationState<NestSkullBlockEntity> animationState) {
-        CoreGeoBone head = getAnimationProcessor().getBone("head");
+        GeoBone head = getAnimationProcessor().getBone("head");
 
         BlockState blockState = animatable.getCachedState();
         boolean isInWall = blockState.getBlock() instanceof NestWallSkullBlock;

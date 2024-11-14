@@ -38,12 +38,12 @@ public class AlchemyRecipeBookResults {
     private MinecraftClient client;
     private ToggleButtonWidget nextPageButton;
     public static final ButtonTextures TEXTURES_RIGHT_PAGE = new ButtonTextures(
-            new Identifier(TCOTS_Main.MOD_ID, "buttons/page_right"),
-            new Identifier(TCOTS_Main.MOD_ID, "buttons/page_right_highlighted"));
+            Identifier.of(TCOTS_Main.MOD_ID, "buttons/page_right"),
+            Identifier.of(TCOTS_Main.MOD_ID, "buttons/page_right_highlighted"));
 
     public static final ButtonTextures TEXTURES_LEFT_PAGE = new ButtonTextures(
-            new Identifier(TCOTS_Main.MOD_ID, "buttons/page_left"),
-            new Identifier(TCOTS_Main.MOD_ID, "buttons/page_left_highlighted"));
+            Identifier.of(TCOTS_Main.MOD_ID, "buttons/page_left"),
+            Identifier.of(TCOTS_Main.MOD_ID, "buttons/page_left_highlighted"));
 
     private ToggleButtonWidget prevPageButton;
     private int pageCount;

@@ -9,7 +9,10 @@ import TCOTS.utils.GeoControllersUtil;
 import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -25,6 +28,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.EntityTypeTags;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
@@ -39,8 +43,8 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
@@ -79,11 +83,10 @@ public class AnchorProjectileEntity extends ProjectileEntity implements GeoEntit
         this.sound = sound;
     }
 
-
     @Override
-    protected void initDataTracker() {
-        this.dataTracker.startTracking(FALLING_DISTANCE, fallDistance);
-        this.dataTracker.startTracking(ENCHANTED, false);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        builder.add(FALLING_DISTANCE, fallDistance);
+        builder.add(ENCHANTED, false);
     }
 
     public void setFallingDistance(float fallingDistance) {
@@ -304,14 +307,16 @@ public class AnchorProjectileEntity extends ProjectileEntity implements GeoEntit
             if (entity.getType() == EntityType.ENDERMAN) {
                 return;
             }
-            if (entity instanceof LivingEntity livingEntity2) {
-                if (entity2 instanceof LivingEntity) {
-                    EnchantmentHelper.onUserDamaged(livingEntity2, entity2);
-                    EnchantmentHelper.onTargetDamaged((LivingEntity)entity2, livingEntity2);
-                }
-                this.onHit();
+
+            if (this.getWorld() instanceof ServerWorld serverWorld) {
+                EnchantmentHelper.onTargetDamaged(serverWorld, entity, damageSource, this.getWeaponStack());
             }
-        } else if (entity.getType().isIn(EntityTypeTags.DEFLECTS_TRIDENTS)) {
+
+            if (entity instanceof LivingEntity livingEntity) {
+                this.knockback(livingEntity, damageSource);
+                this.onHit(livingEntity);
+            }
+        } else if (entity.getType().isIn(EntityTypeTags.DEFLECTS_PROJECTILES)) {
             this.deflect();
             return;
         }
@@ -395,7 +400,22 @@ public class AnchorProjectileEntity extends ProjectileEntity implements GeoEntit
         return this.sound;
     }
 
-    protected void onHit() {
+    protected void knockback(LivingEntity target, DamageSource source) {
+//        double d = (double)(
+//                this.weapon != null && this.getWorld() instanceof ServerWorld serverWorld
+//                        ? EnchantmentHelper.modifyKnockback(serverWorld, this.weapon, target, source, 0.0F)
+//                        : 0.0F
+//        );
+//        if (d > 0.0) {
+//            double e = Math.max(0.0, 1.0 - target.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE));
+//            Vec3d vec3d = this.getVelocity().multiply(1.0, 0.0, 1.0).normalize().multiply(d * 0.6 * e);
+//            if (vec3d.lengthSquared() > 0.0) {
+//                target.addVelocity(vec3d.x, 0.1, vec3d.z);
+//            }
+//        }
+    }
+
+    protected void onHit(LivingEntity target) {
     }
 
     @Nullable
@@ -440,7 +460,7 @@ public class AnchorProjectileEntity extends ProjectileEntity implements GeoEntit
             this.damage = nbt.getDouble("damage");
         }
         if (nbt.contains("SoundEvent", NbtElement.STRING_TYPE)) {
-            this.sound = Registries.SOUND_EVENT.getOrEmpty(new Identifier(nbt.getString("SoundEvent"))).orElse(this.getHitSound());
+            this.sound = Registries.SOUND_EVENT.getOrEmpty(Identifier.of(nbt.getString("SoundEvent"))).orElse(this.getHitSound());
         }
         this.dealtDamage = nbt.getBoolean("DealtDamage");
 
@@ -503,13 +523,6 @@ public class AnchorProjectileEntity extends ProjectileEntity implements GeoEntit
     public boolean isAttackable() {
         return false;
     }
-
-    @Override
-    protected float getEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.13f;
-    }
-
-
 
     protected float getDragInWater() {
         return 0.8f;

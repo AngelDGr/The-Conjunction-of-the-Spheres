@@ -1,29 +1,49 @@
 package TCOTS.blocks.entity;
 
 import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
 import TCOTS.screen.AlchemyTableScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.ScreenHandler;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.Animation;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEntity, ExtendedScreenHandlerFactory  {
+public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEntity, ExtendedScreenHandlerFactory<BlockPos> {
+
+    @Override
+    public BlockPos getScreenOpeningData(ServerPlayerEntity player) {
+        return this.pos;
+    }
+
+    public record AlchemyBlockData(BlockPos pos) {
+        public static final PacketCodec<RegistryByteBuf, BlockPos> PACKET_CODEC = PacketCodec.ofStatic(
+                AlchemyBlockData::write,
+                AlchemyBlockData::read
+        );
+
+
+        public static void write(RegistryByteBuf buf, BlockPos pos) {
+            buf.writeBlockPos(pos);
+        }
+
+
+        public static BlockPos read(RegistryByteBuf buf) {
+            return new BlockPos(buf.readBlockPos());
+        }
+
+    }
 
     //Gecko stuff
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -45,19 +65,17 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
         return cache;
     }
 
-    @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeBlockPos(this.pos);
-    }
 
     @Override
     public Text getDisplayName() {
         return Text.translatable("block.tcots-witcher.alchemy_table");
     }
 
-    @Nullable
     @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractRecipeScreenHandler<AlchemyTableRecipe.AlchemyTableInventory, AlchemyTableRecipe> createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         return new AlchemyTableScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(this.getWorld(), pos), this);
     }
+
+
+
 }

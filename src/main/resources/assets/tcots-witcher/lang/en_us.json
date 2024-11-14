@@ -795,6 +795,9 @@
     "filled_map.giant_cave": "Giant Cave Explorer Map",
 
     "gui.jei.tcots-witcher.requires_recipe": "Requires unlock recipe",
+    "tag.item.tcots-witcher.monster_blood": "Monster Blood",
+    "tag.item.tcots-witcher.decaying_flesh": "Decaying Flesh",
+
 
     "text.config.tcots_config.title": "TCOTS Config",
 

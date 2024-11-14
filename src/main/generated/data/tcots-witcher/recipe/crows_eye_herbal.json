@@ -1,0 +1,14 @@
+{
+  "type": "tcots-witcher:herbal_table",
+  "amplifier": 0,
+  "base_potion": 0,
+  "effects": [
+    "minecraft:speed",
+    "minecraft:poison"
+  ],
+  "herb": {
+    "count": 1,
+    "id": "tcots-witcher:crows_eye"
+  },
+  "time": 40
+}

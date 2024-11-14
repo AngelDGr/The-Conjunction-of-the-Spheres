@@ -8,17 +8,17 @@ import net.minecraft.util.Identifier;
 public class GraveirModel extends BipedGeoModelBase<GraveirEntity> {
     @Override
     public Identifier getModelResource(GraveirEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/necrophages/graveir.geo.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "geo/necrophages/graveir.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(GraveirEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/graveir/graveir.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/graveir/graveir.png");
     }
 
     @Override
     public Identifier getAnimationResource(GraveirEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/necrophages/graveir.animation.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "animations/necrophages/graveir.animation.json");
     }
 
     @Override

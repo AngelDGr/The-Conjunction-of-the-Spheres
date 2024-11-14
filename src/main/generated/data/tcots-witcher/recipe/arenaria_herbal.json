@@ -1,0 +1,14 @@
+{
+  "type": "tcots-witcher:herbal_table",
+  "amplifier": 0,
+  "base_potion": 0,
+  "effects": [
+    "minecraft:strength",
+    "minecraft:wither"
+  ],
+  "herb": {
+    "count": 1,
+    "id": "tcots-witcher:arenaria"
+  },
+  "time": 20
+}

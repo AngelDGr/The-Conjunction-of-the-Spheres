@@ -2,10 +2,7 @@ package TCOTS.items.concoctions.effects.potions;
 
 import TCOTS.items.concoctions.effects.WitcherPotionEffect;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.effect.StatusEffectCategory;
-
-import java.util.Map;
 
 
 public class KillerWhaleEffect extends WitcherPotionEffect {
@@ -20,28 +17,12 @@ public class KillerWhaleEffect extends WitcherPotionEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if(entity.isTouchingWater()){
-            for (Map.Entry<EntityAttribute, AttributeModifierCreator> entry : this.getAttributeModifiers().entrySet()) {
-                EntityAttributeInstance entityAttributeInstance = entity.getAttributes().getCustomInstance(entry.getKey());
-                if (entityAttributeInstance == null) continue;
-                entityAttributeInstance.removeModifier(entry.getValue().getUuid());
-                entityAttributeInstance.addPersistentModifier(entry.getValue().createAttributeModifier(amplifier));
-            }
-        } else {
-            for (Map.Entry<EntityAttribute, AttributeModifierCreator> entry : this.getAttributeModifiers().entrySet()) {
-                EntityAttributeInstance entityAttributeInstance = entity.getAttributes().getCustomInstance(entry.getKey());
-                if (entityAttributeInstance == null) continue;
-                entityAttributeInstance.removeModifier(entry.getValue().getUuid());
-            }
-        }
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+        boolean up = super.applyUpdateEffect(entity, amplifier);
 
-        super.applyUpdateEffect(entity, amplifier);
-    }
+        this.removeAndApplyAttributes(entity, amplifier, entity.isTouchingWater());
 
-    @Override
-    public void onApplied(AttributeContainer attributeContainer, int amplifier) {
-        super.onApplied(attributeContainer, amplifier);
+        return up;
     }
 
     @Override

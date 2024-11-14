@@ -5,8 +5,8 @@ import TCOTS.entity.ogroids.RockTrollEntity;
 import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.util.math.MathHelper;
 import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.model.data.EntityModelData;
 
 public abstract class TrollGeoModelBase<T extends AbstractTrollEntity> extends BipedGeoModelBase<T>  {
@@ -22,14 +22,14 @@ public abstract class TrollGeoModelBase<T extends AbstractTrollEntity> extends B
 
     @Override
     public void setCustomAnimations(T troll, long instanceId, AnimationState<T> animationState) {
-        CoreGeoBone head = getAnimationProcessor().getBone("head");
-        CoreGeoBone left_leg =  getAnimationProcessor().getBone("left_leg_swing");
-        CoreGeoBone right_leg = getAnimationProcessor().getBone("right_leg_swing");
-        CoreGeoBone left_arm =  getAnimationProcessor().getBone("left_arm_swing");
-        CoreGeoBone right_arm = getAnimationProcessor().getBone("right_arm_swing");
-        CoreGeoBone left_hand = getAnimationProcessor().getBone("left_hand");
-        CoreGeoBone right_hand = getAnimationProcessor().getBone("right_hand");
-        CoreGeoBone low_jaw = getAnimationProcessor().getBone("lowJaw");
+        GeoBone head = getAnimationProcessor().getBone("head");
+        GeoBone left_leg =  getAnimationProcessor().getBone("left_leg_swing");
+        GeoBone right_leg = getAnimationProcessor().getBone("right_leg_swing");
+        GeoBone left_arm =  getAnimationProcessor().getBone("left_arm_swing");
+        GeoBone right_arm = getAnimationProcessor().getBone("right_arm_swing");
+        GeoBone left_hand = getAnimationProcessor().getBone("left_hand");
+        GeoBone right_hand = getAnimationProcessor().getBone("right_hand");
+        GeoBone low_jaw = getAnimationProcessor().getBone("lowJaw");
 
         if (head != null && low_jaw!= null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);

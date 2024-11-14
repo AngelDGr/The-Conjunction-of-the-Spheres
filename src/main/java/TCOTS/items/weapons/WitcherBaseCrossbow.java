@@ -1,25 +1,24 @@
 package TCOTS.items.weapons;
 
-import com.google.common.collect.Lists;
+import TCOTS.items.TCOTS_Items;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.EnchantmentEffectComponentTypes;
+import net.minecraft.component.type.ChargedProjectilesComponent;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class WitcherBaseCrossbow extends CrossbowItem {
     public WitcherBaseCrossbow(Settings settings) {
@@ -29,88 +28,120 @@ public class WitcherBaseCrossbow extends CrossbowItem {
     private boolean charged = false;
     private boolean loaded = false;
 
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
-        if (CrossbowItem.isCharged(itemStack)) {
-            CrossbowItem.shootAll(world, user, hand, itemStack, this.getProjectileSpeed(itemStack), 1.0f);
-            CrossbowItem.setCharged(itemStack, false);
+        ChargedProjectilesComponent chargedProjectilesComponent = itemStack.get(DataComponentTypes.CHARGED_PROJECTILES);
+        if (chargedProjectilesComponent != null && !chargedProjectilesComponent.isEmpty()) {
+            this.shootAll(world, user, hand, itemStack, getSpeed(chargedProjectilesComponent), 1.0F, null);
             return TypedActionResult.consume(itemStack);
-        }
-        if (!user.getProjectileType(itemStack).isEmpty()) {
-            if (!CrossbowItem.isCharged(itemStack)) {
-                this.charged = false;
-                this.loaded = false;
-                user.setCurrentHand(hand);
-            }
+        } else if (!user.getProjectileType(itemStack).isEmpty()) {
+            this.charged = false;
+            this.loaded = false;
+            user.setCurrentHand(hand);
             return TypedActionResult.consume(itemStack);
+        } else {
+            return TypedActionResult.fail(itemStack);
         }
-        return TypedActionResult.fail(itemStack);
     }
 
+    private static final CrossbowItem.LoadingSounds DEFAULT_LOADING_SOUNDS = new CrossbowItem.LoadingSounds(
+            Optional.of(SoundEvents.ITEM_CROSSBOW_LOADING_START),
+            Optional.of(SoundEvents.ITEM_CROSSBOW_LOADING_MIDDLE),
+            Optional.of(SoundEvents.ITEM_CROSSBOW_LOADING_END)
+    );
+
+    CrossbowItem.LoadingSounds getLoadingSounds(ItemStack stack) {
+        return EnchantmentHelper.getEffect(stack, EnchantmentEffectComponentTypes.CROSSBOW_CHARGING_SOUNDS)
+                .orElse(DEFAULT_LOADING_SOUNDS);
+    }
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
         if (!world.isClient) {
-            int i = EnchantmentHelper.getLevel(Enchantments.QUICK_CHARGE, stack);
-            SoundEvent soundEvent = this.getQuickChargeSound(i);
-            SoundEvent soundEvent2 = i == 0 ? SoundEvents.ITEM_CROSSBOW_LOADING_MIDDLE : null;
-            float f = (float) (stack.getMaxUseTime() - remainingUseTicks) / (float) this.getCrossbowPullTime(stack);
-            if (f < 0.2f) {
+            CrossbowItem.LoadingSounds loadingSounds = this.getLoadingSounds(stack);
+            float f = (float)(stack.getMaxUseTime(user) - remainingUseTicks) / (float)getPullTime(stack, user);
+            if (f < 0.2F) {
                 this.charged = false;
                 this.loaded = false;
             }
-            if (f >= 0.2f && !this.charged) {
+
+            if (f >= 0.2F && !this.charged) {
                 this.charged = true;
-                world.playSound(null, user.getX(), user.getY(), user.getZ(), soundEvent, SoundCategory.PLAYERS, 0.5f, 1.0f);
+                loadingSounds.start()
+                        .ifPresent(sound -> world.playSound(null, user.getX(), user.getY(), user.getZ(), sound.value(), SoundCategory.PLAYERS, 0.5F, 1.0F));
             }
-            if (f >= 0.5f && soundEvent2 != null && !this.loaded) {
+
+            if (f >= 0.5F && !this.loaded) {
                 this.loaded = true;
-                world.playSound(null, user.getX(), user.getY(), user.getZ(), soundEvent2, SoundCategory.PLAYERS, 0.5f, 1.0f);
+                loadingSounds.mid()
+                        .ifPresent(sound -> world.playSound(null, user.getX(), user.getY(), user.getZ(), sound.value(), SoundCategory.PLAYERS, 0.5F, 1.0F));
             }
         }
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
-        return this.getCrossbowPullTime(stack) + 3;
-    }
-
-    private SoundEvent getQuickChargeSound(int stage) {
-        return switch (stage) {
-            case 1 -> SoundEvents.ITEM_CROSSBOW_QUICK_CHARGE_1;
-            case 2 -> SoundEvents.ITEM_CROSSBOW_QUICK_CHARGE_2;
-            case 3 -> SoundEvents.ITEM_CROSSBOW_QUICK_CHARGE_3;
-            default -> SoundEvents.ITEM_CROSSBOW_LOADING_START;
-        };
-    }
-
-    protected float getProjectileSpeed(ItemStack stack) {
-        if (CrossbowItem.hasProjectile(stack, Items.FIREWORK_ROCKET)) {
-            return 1.6f;
+    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+        int i = this.getMaxUseTime(stack, user) - remainingUseTicks;
+        float f = getPullProgress(i, stack, user);
+        if (f >= 1.0F && !isCharged(stack) && loadProjectiles(user, stack)) {
+            CrossbowItem.LoadingSounds loadingSounds = this.getLoadingSounds(stack);
+            loadingSounds.end()
+                    .ifPresent(
+                            sound -> world.playSound(
+                                    null,
+                                    user.getX(),
+                                    user.getY(),
+                                    user.getZ(),
+                                    sound.value(),
+                                    user.getSoundCategory(),
+                                    1.0F,
+                                    1.0F / (world.getRandom().nextFloat() * 0.5F + 1.0F) + 0.2F
+                            )
+                    );
         }
-        return 3.15f;
     }
 
-    protected int getCrossbowPullTime(ItemStack stack) {
-        int i = EnchantmentHelper.getLevel(Enchantments.QUICK_CHARGE, stack);
-        return i == 0 ? 25 : 25 - 5 * i;
+    private static boolean loadProjectiles(LivingEntity shooter, ItemStack crossbow) {
+        List<ItemStack> list = load(crossbow, shooter.getProjectileType(crossbow), shooter);
+        if (!list.isEmpty()) {
+            crossbow.set(DataComponentTypes.CHARGED_PROJECTILES, ChargedProjectilesComponent.of(list));
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private float getPullProgress(int useTicks, ItemStack stack, LivingEntity user) {
+        float f = (float)useTicks / (float)getCrossbowPullTime(stack, user);
+        if (f > 1.0F) {
+            f = 1.0F;
+        }
+
+        return f;
+    }
+
+    @Override
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+        return this.getCrossbowPullTime(stack, user) + 3;
+    }
+
+    protected float getSpeed(ChargedProjectilesComponent stack) {
+        return stack.contains(Items.FIREWORK_ROCKET) ? 1.6F : 3.15F;
+    }
+
+    public int getCrossbowPullTime(ItemStack stack, LivingEntity user) {
+        float f = EnchantmentHelper.getCrossbowChargeTime(stack, user, 1.25F);
+        return MathHelper.floor(f * 20.0F);
     }
 
     public static boolean hasBoltProjectile(ItemStack crossbow) {
-        return WitcherBaseCrossbow.getProjectiles(crossbow).stream().anyMatch(s -> s.getItem() instanceof BoltItem);
-    }
-
-    private static final String CHARGED_PROJECTILES_KEY = "ChargedProjectiles";
-    private static List<ItemStack> getProjectiles(ItemStack crossbow) {
-        NbtList nbtList;
-        ArrayList<ItemStack> list = Lists.newArrayList();
-        NbtCompound nbtCompound = crossbow.getNbt();
-        if (nbtCompound != null && nbtCompound.contains(CHARGED_PROJECTILES_KEY, NbtElement.LIST_TYPE) && (nbtList = nbtCompound.getList(CHARGED_PROJECTILES_KEY, NbtElement.COMPOUND_TYPE)) != null) {
-            for (int i = 0; i < nbtList.size(); ++i) {
-                NbtCompound nbtCompound2 = nbtList.getCompound(i);
-                list.add(ItemStack.fromNbt(nbtCompound2));
-            }
-        }
-        return list;
+        ChargedProjectilesComponent chargedProjectilesComponent = crossbow.get(DataComponentTypes.CHARGED_PROJECTILES);
+        return chargedProjectilesComponent != null && (
+                chargedProjectilesComponent.contains(TCOTS_Items.BASE_BOLT)
+                        || chargedProjectilesComponent.contains(TCOTS_Items.BLUNT_BOLT)
+                        || chargedProjectilesComponent.contains(TCOTS_Items.BROADHEAD_BOLT)
+                        || chargedProjectilesComponent.contains(TCOTS_Items.PRECISION_BOLT)
+                        || chargedProjectilesComponent.contains(TCOTS_Items.EXPLODING_BOLT)
+        );
     }
 }

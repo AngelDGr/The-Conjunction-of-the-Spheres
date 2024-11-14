@@ -1,0 +1,21 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "minecraft:honeycomb"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:beef"
+    }
+  ],
+  "order": 0.6499997,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:oil_beast"
+  }
+}

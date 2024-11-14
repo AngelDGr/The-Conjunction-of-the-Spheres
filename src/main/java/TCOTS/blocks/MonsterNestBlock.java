@@ -3,18 +3,20 @@ package TCOTS.blocks;
 import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.blocks.entity.MonsterNestBlockEntity;
 import TCOTS.entity.misc.WitcherBombEntity;
+import TCOTS.utils.MiscUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.Spawner;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
@@ -34,7 +36,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-@SuppressWarnings("deprecation")
 public class MonsterNestBlock extends BlockWithEntity {
     public static final MapCodec<MonsterNestBlock> CODEC = MonsterNestBlock.createCodec(MonsterNestBlock::new);
     public MapCodec<MonsterNestBlock> getCodec() {
@@ -92,24 +93,23 @@ public class MonsterNestBlock extends BlockWithEntity {
         return SHAPE;
     }
 
+
+
     @Override
     public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos) {
-        if (
-                player.getMainHandStack().getItem() instanceof ShovelItem &&
-                EnchantmentHelper.getEfficiency(player) >= 3
-        ) {
-            return super.calcBlockBreakingDelta(state, player, world, pos);}
-        else{
+        ItemStack shovel = player.getMainHandStack();
+        if(shovel.getItem() instanceof ShovelItem && MiscUtil.getEnchantmentLevel(Enchantments.EFFICIENCY, shovel) >= 3){
+            return super.calcBlockBreakingDelta(state, player, world, pos);
+        } else {
             return 0.0f;
         }
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-        super.appendTooltip(stack, world, tooltip, options);
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
+        super.appendTooltip(stack, context, tooltip, options);
         Spawner.appendSpawnDataToTooltip(stack, tooltip, "SpawnData");
     }
-
 
     @Override
     public void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {

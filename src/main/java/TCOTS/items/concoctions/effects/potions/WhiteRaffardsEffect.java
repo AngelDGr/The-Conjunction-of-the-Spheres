@@ -3,6 +3,7 @@ package TCOTS.items.concoctions.effects.potions;
 import TCOTS.items.concoctions.effects.WitcherPotionEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.registry.tag.EntityTypeTags;
 
 public class WhiteRaffardsEffect extends WitcherPotionEffect {
 
@@ -14,8 +15,8 @@ public class WhiteRaffardsEffect extends WitcherPotionEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier){
-        if(!entity.isUndead()) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier){
+        if(!entity.getType().isIn(EntityTypeTags.UNDEAD)) {
             if(amplifier==0){
                 entity.heal(0.35f * entity.getMaxHealth());
             } else if (amplifier==1) {
@@ -25,7 +26,8 @@ public class WhiteRaffardsEffect extends WitcherPotionEffect {
                 entity.heal(entity.getMaxHealth());
             }
         }
-        super.applyUpdateEffect(entity, amplifier);
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

@@ -10,7 +10,7 @@ public class MoonDustEffect extends BombEffectBase{
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         //Remove invisibility effect
         if(entity.hasStatusEffect(StatusEffects.INVISIBILITY))
             entity.removeStatusEffect(StatusEffects.INVISIBILITY);
@@ -18,5 +18,7 @@ public class MoonDustEffect extends BombEffectBase{
         //Removes regeneration effect
         if(entity.hasStatusEffect(StatusEffects.REGENERATION))
             entity.removeStatusEffect(StatusEffects.REGENERATION);
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
 }

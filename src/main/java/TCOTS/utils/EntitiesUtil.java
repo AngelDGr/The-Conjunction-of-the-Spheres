@@ -17,12 +17,14 @@ import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.VehicleEntity;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -67,7 +69,7 @@ public class EntitiesUtil {
                 }
                 //Removes the shield
                 if (livingEntity.isBlocking() && entity instanceof PlayerEntity) {
-                    ((PlayerEntity) entity).disableShield(true);
+                    ((PlayerEntity) entity).disableShield();
                 }
                 //Checks if the entity it's blocking, to block the damage
                 else if (!livingEntity.isBlocking()) {
@@ -175,6 +177,26 @@ public class EntitiesUtil {
     }
 
     /**
+    Damages the equipment of an entity
+     @param entity The entity that uses the armor
+     @param source The DamageSource
+     @param amount The amount of damage
+     @param slots The slots to damage
+     */
+    public static void damageEquipment(LivingEntity entity,DamageSource source, float amount, EquipmentSlot... slots) {
+        if (!(amount <= 0.0F)) {
+            int i = (int)Math.max(1.0F, amount / 4.0F);
+
+            for (EquipmentSlot equipmentSlot : slots) {
+                ItemStack itemStack = entity.getEquippedStack(equipmentSlot);
+                if (itemStack.getItem() instanceof ArmorItem && itemStack.takesDamageFrom(source)) {
+                    itemStack.damage(i, entity, equipmentSlot);
+                }
+            }
+        }
+    }
+
+    /**
      Checks if the player it's wearing the full Manticore Armor
      */
     public static boolean isWearingManticoreArmor(LivingEntity player){
@@ -221,42 +243,42 @@ public class EntitiesUtil {
     }
 
     public static boolean isNecrophage(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.NECROPHAGES ||
-                entity.getGroup() == EntityGroup.UNDEAD ||
+        return entity.getType().isIn(TCOTS_Entities.NECROPHAGES) ||
+                entity.getType().isIn(EntityTypeTags.UNDEAD) ||
                 TCOTS_Main.CONFIG.monsters.Necrophages().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
 
     public static boolean isOgroid(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.OGROIDS ||
+        return entity.getType().isIn(TCOTS_Entities.OGROIDS) ||
                 entity instanceof AbstractPiglinEntity ||
                 TCOTS_Main.CONFIG.monsters.Ogroids().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
 
     public static boolean isSpecter(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.SPECTERS ||
+        return entity.getType().isIn(TCOTS_Entities.SPECTERS) ||
                 entity instanceof GhastEntity ||
                 TCOTS_Main.CONFIG.monsters.Specters().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
 
     public static boolean isVampire(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.VAMPIRES ||
+        return entity.getType().isIn(TCOTS_Entities.VAMPIRES) ||
                 TCOTS_Main.CONFIG.monsters.Vampires().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
 
     public static boolean isInsectoid(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.INSECTOIDS ||
-                entity.getGroup() == EntityGroup.ARTHROPOD ||
+        return entity.getType().isIn(TCOTS_Entities.INSECTOIDS) ||
+                entity.getType().isIn(EntityTypeTags.ARTHROPOD) ||
                 TCOTS_Main.CONFIG.monsters.Insectoids().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
 
     public static boolean isBeast(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.BEASTS ||
+        return entity.getType().isIn(TCOTS_Entities.BEASTS) ||
                 entity instanceof AnimalEntity ||
                 TCOTS_Main.CONFIG.monsters.Beasts().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
 
     public static boolean isElementa(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.ELEMENTA ||
+        return entity.getType().isIn(TCOTS_Entities.ELEMENTA) ||
                 entity instanceof AllayEntity  ||
                 entity instanceof GolemEntity  ||
                 entity instanceof BlazeEntity  ||
@@ -267,25 +289,25 @@ public class EntitiesUtil {
     }
 
     public static boolean isHybrid(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.HYBRIDS ||
+        return entity.getType().isIn(TCOTS_Entities.HYBRIDS) ||
                 TCOTS_Main.CONFIG.monsters.Hybrids().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
 
     public static boolean isCursedOne(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.CURSED_ONES ||
+        return entity.getType().isIn(TCOTS_Entities.CURSED_ONES) ||
                 entity instanceof CreeperEntity ||
                 entity instanceof RavagerEntity ||
                 TCOTS_Main.CONFIG.monsters.Cursed_Ones().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
 
     public static boolean isDraconid(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.DRACONIDS ||
+        return entity.getType().isIn(TCOTS_Entities.DRACONIDS) ||
                 entity instanceof EnderDragonEntity ||
                 TCOTS_Main.CONFIG.monsters.Draconids().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
 
     public static boolean isRelict(LivingEntity entity){
-        return entity.getGroup() == TCOTS_Entities.RELICTS ||
+        return entity.getType().isIn(TCOTS_Entities.RELICTS) ||
                 entity instanceof EndermanEntity ||
                 entity instanceof GuardianEntity ||
                 entity instanceof WardenEntity   ||
@@ -293,7 +315,7 @@ public class EntitiesUtil {
     }
 
     public static boolean isHumanoid(LivingEntity entity){
-        return entity.getGroup() == EntityGroup.ILLAGER ||
+        return entity.getType().isIn(EntityTypeTags.ILLAGER) ||
                 entity instanceof MerchantEntity ||
                 entity instanceof WitchEntity ||
                 entity instanceof PlayerEntity ||

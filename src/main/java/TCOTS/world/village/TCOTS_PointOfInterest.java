@@ -22,7 +22,7 @@ public class TCOTS_PointOfInterest {
     public static final VillagerProfession HERBALIST = registerProfession("herbalist_witcher", HERBAL_POI_KEY);
 
     private static VillagerProfession registerProfession(String name, RegistryKey<PointOfInterestType> type) {
-        return Registry.register(Registries.VILLAGER_PROFESSION, new Identifier(TCOTS_Main.MOD_ID, name),
+        return Registry.register(Registries.VILLAGER_PROFESSION, Identifier.of(TCOTS_Main.MOD_ID, name),
                 new VillagerProfession(name,
                         entry -> entry.matchesKey(type),
                         entry -> entry.matchesKey(type),
@@ -31,11 +31,11 @@ public class TCOTS_PointOfInterest {
     }
 
     private static PointOfInterestType registerPoi(String name, Block block) {
-        return PointOfInterestHelper.register(new Identifier(TCOTS_Main.MOD_ID, name), 1, 1, block);
+        return PointOfInterestHelper.register(Identifier.of(TCOTS_Main.MOD_ID, name), 1, 1, block);
     }
 
     public static RegistryKey<PointOfInterestType> registerKey(String name) {
-        return RegistryKey.of(RegistryKeys.POINT_OF_INTEREST_TYPE, new Identifier(TCOTS_Main.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.POINT_OF_INTEREST_TYPE, Identifier.of(TCOTS_Main.MOD_ID, name));
     }
 
     public static void registerVillagers() {

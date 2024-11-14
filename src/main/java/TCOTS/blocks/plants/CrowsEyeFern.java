@@ -19,6 +19,7 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -29,7 +30,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
+
 public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
 
     public static final MapCodec<CrowsEyeFern> CODEC = CrowsEyeFern.createCodec(CrowsEyeFern::new);
@@ -119,13 +120,17 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        boolean bl;
+    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         int i = state.get(AGE);
-        bl = i == 4;
-        if (!bl && player.getStackInHand(hand).isOf(Items.BONE_MEAL)) {
-            return ActionResult.PASS;
-        }
+        boolean bl = i == 4;
+        return !bl && stack.isOf(Items.BONE_MEAL)
+                ? ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION
+                : super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+    }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        int i = state.get(AGE);
         if (i > 3) {
             int j = 1 + world.random.nextInt(4);
             SweetBerryBushBlock.dropStack(world, pos, new ItemStack(TCOTS_Items.CROWS_EYE, j));
@@ -151,7 +156,7 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
 
             return ActionResult.success(world.isClient);
         }
-        return super.onUse(state, world, pos, player, hand, hit);
+        return super.onUse(state, world, pos, player, hit);
     }
 
     @Override

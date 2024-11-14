@@ -21,7 +21,7 @@ public class TCOTS_ItemsGroups {
     public static OwoItemGroup owoItemGroup;
 
     public static void registerGroupItems() {
-        owoItemGroup  = OwoItemGroup.builder(new Identifier(TCOTS_Main.MOD_ID, "main"), () -> Icon.of(TCOTS_Items.WITCHER_BESTIARY))
+        owoItemGroup  = OwoItemGroup.builder(Identifier.of(TCOTS_Main.MOD_ID, "main"), () -> Icon.of(TCOTS_Items.WITCHER_BESTIARY))
                         .initializer(
                                 owoItemGroup -> {
 

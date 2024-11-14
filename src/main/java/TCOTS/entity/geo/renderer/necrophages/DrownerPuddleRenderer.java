@@ -11,6 +11,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
@@ -21,18 +22,14 @@ public class DrownerPuddleRenderer extends GeoEntityRenderer<DrownerPuddleEntity
 
     @Override
     public Identifier getTextureLocation(DrownerPuddleEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner_puddle.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner_puddle.png");
     }
 
     @Override
-    public void actuallyRender(MatrixStack poseStack, DrownerPuddleEntity animatable, BakedGeoModel model, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void actuallyRender(MatrixStack poseStack, DrownerPuddleEntity animatable, BakedGeoModel model, @Nullable RenderLayer renderType, VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
 
         int waterColor = BiomeColors.getWaterColor(animatable.getWorld(), new BlockPos((int) animatable.getX(), (int) animatable.getY(), (int) animatable.getZ()));
-        float redWater = ((waterColor >> 16) & 255) / 255.0F;
-        float greenWater = ((waterColor >> 8) & 255) / 255.0F;
-        float blueWater = (waterColor & 255) / 255.0F;
 
-        super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, redWater, greenWater, blueWater, alpha);
+        super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, waterColor);
     }
-
 }

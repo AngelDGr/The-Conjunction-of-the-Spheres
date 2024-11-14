@@ -2,6 +2,8 @@ package TCOTS.screen;
 
 import TCOTS.items.concoctions.recipes.HerbalTableRecipe;
 import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -9,7 +11,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.screen.ScreenHandler;
@@ -78,7 +79,16 @@ public class HerbalTableScreenHandler extends ScreenHandler {
     }
 
     private boolean isFitPotion(ItemStack stack){
-         return PotionUtil.getPotion(stack) == Potions.WATER || PotionUtil.getPotion(stack) == Potions.THICK || PotionUtil.getPotion(stack) == Potions.MUNDANE;
+        if(!stack.contains(DataComponentTypes.POTION_CONTENTS)){
+            return false;
+        }
+
+        PotionContentsComponent potionContents = stack.get(DataComponentTypes.POTION_CONTENTS);
+
+         return potionContents!=null &&
+                 (potionContents.potion().get().equals(Potions.WATER)
+                 || potionContents.potion().get().equals(Potions.THICK)
+                 || potionContents.potion().get().equals(Potions.MUNDANE));
     }
 
     @Override
@@ -151,10 +161,16 @@ public class HerbalTableScreenHandler extends ScreenHandler {
 
     @Override
     public void onContentChanged(Inventory inventory) {
-        this.context.run((world, pos) -> HerbalTableScreenHandler.updateResult(this, world, this.player, this.inputInventory, this.resultInventory));
+        this.context.run((world, pos) -> HerbalTableScreenHandler.updateResult(
+                this,
+                world,
+                this.player,
+                new HerbalTableRecipe.HerbalTableInventory(this.inputInventory.getStack(0),
+                        this.inputInventory.getStack(1)) ,
+                this.resultInventory));
     }
 
-    protected static void updateResult(ScreenHandler handler, World world, PlayerEntity player, SimpleInventory craftingInventory, HerbalTableResultInventory resultInventory) {
+    protected static void updateResult(ScreenHandler handler, World world, PlayerEntity player, HerbalTableRecipe.HerbalTableInventory craftingInventory, HerbalTableResultInventory resultInventory) {
         if (world.isClient) {
             return;
         }
@@ -252,7 +268,7 @@ public class HerbalTableScreenHandler extends ScreenHandler {
                     this.input.setStack(i, itemStack2);
                     continue;
                 }
-                if (ItemStack.canCombine(itemStack, itemStack2)) {
+                if (ItemStack.areItemsAndComponentsEqual(itemStack, itemStack2)) {
                     itemStack2.increment(itemStack.getCount());
                     this.input.setStack(i, itemStack2);
                     continue;

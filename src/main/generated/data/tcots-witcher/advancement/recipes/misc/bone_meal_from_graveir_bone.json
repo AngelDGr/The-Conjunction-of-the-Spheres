@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_graveir_bone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots-witcher:graveir_bone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tcots-witcher:bone_meal_from_graveir_bone"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_graveir_bone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tcots-witcher:bone_meal_from_graveir_bone"
+    ]
+  }
+}

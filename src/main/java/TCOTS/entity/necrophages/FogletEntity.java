@@ -29,6 +29,8 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -37,11 +39,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayList;
@@ -300,7 +302,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
                     FoglingEntity foglingEntity = TCOTS_Entities.FOGLING.create(actor.getWorld());
                     if (foglingEntity == null) continue;
                     foglingEntity.refreshPositionAndAngles(blockPos, 0.0f, 0.0f);
-                    foglingEntity.initialize(serverWorld, actor.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, null, null);
+                    foglingEntity.initialize(serverWorld, actor.getWorld().getLocalDifficulty(blockPos), SpawnReason.MOB_SUMMONED, null);
                     foglingEntity.setOwner((MobEntity) actor);
                     serverWorld.spawnEntityAndPassengers(foglingEntity);
                     ((FogletEntity) actor).foglingsList.add(foglingEntity);
@@ -541,11 +543,12 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
         this.dataTracker.set(ALPHA_VALUE, AlphaValue);
     }
 
+
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(ACTIVATES_FOG, Boolean.FALSE);
-        this.dataTracker.startTracking(ALPHA_VALUE, 1f);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(ACTIVATES_FOG, Boolean.FALSE);
+        builder.add(ALPHA_VALUE, 1f);
     }
 
     @Override

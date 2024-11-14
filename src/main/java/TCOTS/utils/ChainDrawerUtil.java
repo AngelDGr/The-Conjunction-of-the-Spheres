@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class ChainDrawerUtil {
 
-    private static final Identifier TEXTURE = new Identifier("textures/block/chain.png");
+    private static final Identifier TEXTURE = Identifier.of("textures/block/chain.png");
 
 
     public static void renderChain(Entity fromEntity, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, Entity toEntity) {
@@ -114,8 +114,7 @@ public class ChainDrawerUtil {
                     .overlay(OverlayTexture.DEFAULT_UV)
                     .light(light)
                     // trial and error magic values that change the overall brightness of the chain
-                    .normal(1, 0.35f, 0)
-                    .next();
+                    .normal(1, 0.35f, 0);
         }
     }
 

@@ -7,23 +7,23 @@ import net.minecraft.util.Identifier;
 
 @Environment(value= EnvType.CLIENT)
 public enum TCOTS_HeartTypes {
-    TOXIC(new Identifier(TCOTS_Main.MOD_ID,"hud/heart/toxic_full"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/toxic_full_blinking"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/toxic_half"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/toxic_half_blinking"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/toxic_hardcore_full"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/toxic_hardcore_full_blinking"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/toxic_hardcore_half"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/toxic_hardcore_half_blinking")),
+    TOXIC(Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/toxic_full"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/toxic_full_blinking"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/toxic_half"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/toxic_half_blinking"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/toxic_hardcore_full"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/toxic_hardcore_full_blinking"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/toxic_hardcore_half"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/toxic_hardcore_half_blinking")),
 
-    CADAVERINE(new Identifier(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_full"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_full_blinking"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_half"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_half_blinking"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_hardcore_full"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_hardcore_full_blinking"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_hardcore_half"),
-            new Identifier(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_hardcore_half_blinking"));
+    CADAVERINE(Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_full"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_full_blinking"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_half"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_half_blinking"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_hardcore_full"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_hardcore_full_blinking"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_hardcore_half"),
+            Identifier.of(TCOTS_Main.MOD_ID,"hud/heart/cadaverine_hardcore_half_blinking"));
 
     private final Identifier fullTexture;
     private final Identifier fullBlinkingTexture;

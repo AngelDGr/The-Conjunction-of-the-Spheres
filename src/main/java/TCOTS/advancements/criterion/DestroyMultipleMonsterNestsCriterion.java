@@ -30,9 +30,9 @@ public class DestroyMultipleMonsterNestsCriterion extends AbstractCriterion<Dest
         public static final Codec<DestroyMultipleMonsterNestsCriterion.Conditions> CODEC =
                 RecordCodecBuilder.create(instance ->
                         instance.group(
-                                        Codecs.createStrictOptionalFieldCodec(EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC, "player")
+                                        EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
                                                 .forGetter(DestroyMultipleMonsterNestsCriterion.Conditions::player),
-                                        Codecs.createStrictOptionalFieldCodec(Codec.INT ,"quantity")
+                                        Codecs.POSITIVE_INT.optionalFieldOf("quantity")
                                                 .forGetter(DestroyMultipleMonsterNestsCriterion.Conditions::quantity)
                                 )
                                 .apply(instance, DestroyMultipleMonsterNestsCriterion.Conditions::new));

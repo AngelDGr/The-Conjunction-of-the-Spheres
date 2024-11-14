@@ -21,17 +21,17 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
     public static final ButtonTextures BUTTON_TEXTURES =
             new ButtonTextures(
                     //Enabled
-                    new Identifier(TCOTS_Main.MOD_ID, "buttons/recipe_book_button"),
+                    Identifier.of(TCOTS_Main.MOD_ID, "buttons/recipe_book_button"),
                     //Disabled
-                    new Identifier(TCOTS_Main.MOD_ID, "buttons/recipe_book_disabled"),
+                    Identifier.of(TCOTS_Main.MOD_ID, "buttons/recipe_book_disabled"),
                     //EnabledFocus
-                    new Identifier(TCOTS_Main.MOD_ID, "buttons/recipe_book_button_highlighted"),
+                    Identifier.of(TCOTS_Main.MOD_ID, "buttons/recipe_book_button_highlighted"),
                     //DisableFocus
-                    new Identifier(TCOTS_Main.MOD_ID, "buttons/recipe_book_disabled")
+                    Identifier.of(TCOTS_Main.MOD_ID, "buttons/recipe_book_disabled")
 
             );
     public static final Identifier SCREEN_BACKGROUND =
-            new Identifier(TCOTS_Main.MOD_ID, "textures/gui/alchemy_table.png");
+            Identifier.of(TCOTS_Main.MOD_ID, "textures/gui/alchemy_table.png");
 
     private final AlchemyRecipeBookWidget recipeBook = new AlchemyRecipeBookWidget();
 
@@ -90,6 +90,7 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
         if(conditionForBook()){
         buttonWidget.active = true;
         } else {
@@ -100,8 +101,6 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
             buttonWidget.active = false;
         }
 
-        renderBackground(context, mouseX, mouseY, delta);
-        super.render(context, mouseX, mouseY, delta);
         drawMouseoverTooltip(context, mouseX, mouseY);
     }
 

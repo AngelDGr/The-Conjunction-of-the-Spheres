@@ -23,6 +23,7 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
 
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AlchemyTableScreenHandler extends AbstractRecipeScreenHandler<SimpleInventory> {
+public class AlchemyTableScreenHandler extends AbstractRecipeScreenHandler<AlchemyTableRecipe.AlchemyTableInventory, AlchemyTableRecipe> {
     private final RecipeMatcher recipeFinder = new RecipeMatcher();
 
     public final SimpleInventory inputInventory = new SimpleInventory(6){
@@ -74,8 +75,8 @@ public class AlchemyTableScreenHandler extends AbstractRecipeScreenHandler<Simpl
     private final PlayerEntity player;
     private final AlchemyTableBlockEntity blockEntity;
 
-    public AlchemyTableScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        this(syncId, playerInventory, ScreenHandlerContext.EMPTY, playerInventory.player.getWorld().getBlockEntity(buf.readBlockPos()));
+    public AlchemyTableScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos pos) {
+        this(syncId, playerInventory, ScreenHandlerContext.EMPTY, playerInventory.player.getWorld().getBlockEntity(pos));
     }
 
     public AlchemyTableBlockEntity getBlockEntity() {
@@ -127,7 +128,14 @@ public class AlchemyTableScreenHandler extends AbstractRecipeScreenHandler<Simpl
     public void onContentChanged(Inventory inventory) {
         this.context.run(
                 (world, pos) ->
-                        updateResult(this, world, this.player, this.inputInventory, this.resultInventory));
+                        updateResult(this, world, this.player, new AlchemyTableRecipe.AlchemyTableInventory(
+                                this.inputInventory.getStack(0),
+                                this.inputInventory.getStack(1),
+                                this.inputInventory.getStack(2),
+                                this.inputInventory.getStack(3),
+                                this.inputInventory.getStack(4),
+                                this.inputInventory.getStack(5)
+                        ), this.resultInventory));
     }
 
     @Override
@@ -142,9 +150,19 @@ public class AlchemyTableScreenHandler extends AbstractRecipeScreenHandler<Simpl
         this.context.run((world, pos) -> this.dropInventory(player, this.inputInventory));
     }
 
+
     @Override
-    public boolean matches(RecipeEntry<? extends Recipe<SimpleInventory>> recipe) {
-        return recipe.value().matches(this.inputInventory, this.player.getWorld());
+    public boolean matches(RecipeEntry<AlchemyTableRecipe> recipe) {
+        return recipe.value().matches(new AlchemyTableRecipe.AlchemyTableInventory(
+                this.inputInventory.getStack(0),
+                this.inputInventory.getStack(1),
+                this.inputInventory.getStack(2),
+                this.inputInventory.getStack(3),
+                this.inputInventory.getStack(4),
+                this.inputInventory.getStack(5)
+        ),
+
+                this.player.getWorld());
     }
 
     @Override
@@ -290,7 +308,8 @@ public class AlchemyTableScreenHandler extends AbstractRecipeScreenHandler<Simpl
         player.getInventory().markDirty();
     }
 
-    protected void updateResult(ScreenHandler handler, World world, PlayerEntity player, SimpleInventory craftingInventory, AlchemyTableResultInventory resultInventory) {
+    protected void updateResult(ScreenHandler handler, World world, PlayerEntity player, AlchemyTableRecipe.AlchemyTableInventory craftingInventory, AlchemyTableResultInventory resultInventory) {
+
         if (world.isClient) {
             return;
         }
@@ -298,7 +317,9 @@ public class AlchemyTableScreenHandler extends AbstractRecipeScreenHandler<Simpl
         ItemStack itemStack = ItemStack.EMPTY;
 
         if(world.getServer() == null) return;
-        Optional<RecipeEntry<AlchemyTableRecipe>> optional = world.getServer().getRecipeManager().getFirstMatch(ScreenHandlersAndRecipesRegister.ALCHEMY_TABLE, craftingInventory, world);
+        Optional<RecipeEntry<AlchemyTableRecipe>> optional = world.getServer().getRecipeManager().getFirstMatch(
+                ScreenHandlersAndRecipesRegister.ALCHEMY_TABLE,
+                craftingInventory, world);
         if (optional.isPresent()) {
             ItemStack itemStack2;
             RecipeEntry<AlchemyTableRecipe> recipeEntry = optional.get();
@@ -362,7 +383,14 @@ public class AlchemyTableScreenHandler extends AbstractRecipeScreenHandler<Simpl
             if(player.getWorld().getServer()!=null) {
                 optional =
                         player.getWorld().getServer().getRecipeManager()
-                                .getFirstMatch(ScreenHandlersAndRecipesRegister.ALCHEMY_TABLE, this.input, player.getWorld());
+                                .getFirstMatch(ScreenHandlersAndRecipesRegister.ALCHEMY_TABLE, new AlchemyTableRecipe.AlchemyTableInventory(
+                                        this.input.getStack(0),
+                                        this.input.getStack(1),
+                                        this.input.getStack(2),
+                                        this.input.getStack(3),
+                                        this.input.getStack(4),
+                                        this.input.getStack(5)
+                                ), player.getWorld());
             }
 
             if (this.amount > 0) {

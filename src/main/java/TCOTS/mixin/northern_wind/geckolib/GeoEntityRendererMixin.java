@@ -10,13 +10,14 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.GeoRenderer;
@@ -34,9 +35,9 @@ public abstract class GeoEntityRendererMixin<T extends Entity & GeoAnimatable> e
         this.blockRenderManager = ctx.getBlockRenderManager();
     }
 
-    @Inject(method = "actuallyRender(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/entity/Entity;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/render/RenderLayer;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/client/render/VertexConsumer;ZFIIFFFF)V",
+    @Inject(method = "actuallyRender(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/entity/Entity;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/render/RenderLayer;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/client/render/VertexConsumer;ZFIII)V",
             at = @At(value = "TAIL"))
-    private void renderIceOnEntity(MatrixStack matrixStack, T animatable, BakedGeoModel model, RenderLayer renderType, VertexConsumerProvider vertexConsumerProvider, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha, CallbackInfo ci) {
+    private void renderIceOnEntity(MatrixStack matrixStack, T animatable, BakedGeoModel model, @Nullable RenderLayer renderType, VertexConsumerProvider vertexConsumerProvider, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour, CallbackInfo ci) {
         if (animatable instanceof LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$isFrozen()) {
             NorthernWindBomb.renderIce(livingEntity, matrixStack, vertexConsumerProvider, blockRenderManager);
         }

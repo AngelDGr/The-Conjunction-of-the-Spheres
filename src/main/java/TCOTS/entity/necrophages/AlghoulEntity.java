@@ -31,11 +31,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
@@ -278,11 +278,11 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
     }
 
     @Override
-    protected void initDataTracker() {
-        this.dataTracker.startTracking(SPIKED, Boolean.FALSE);
-        this.dataTracker.startTracking(TIME_FOR_SPIKES, 0);
-        this.dataTracker.startTracking(IS_SCREAMING, Boolean.FALSE);
-        super.initDataTracker();
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(SPIKED, Boolean.FALSE);
+        builder.add(TIME_FOR_SPIKES, 0);
+        builder.add(IS_SCREAMING, Boolean.FALSE);
     }
 
     private int cooldownForScream;

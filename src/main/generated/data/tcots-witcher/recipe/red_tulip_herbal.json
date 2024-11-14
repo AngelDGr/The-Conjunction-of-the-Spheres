@@ -1,0 +1,14 @@
+{
+  "type": "tcots-witcher:herbal_table",
+  "amplifier": 0,
+  "base_potion": 0,
+  "effects": [
+    "minecraft:speed",
+    "minecraft:weakness"
+  ],
+  "herb": {
+    "count": 1,
+    "id": "minecraft:red_tulip"
+  },
+  "time": 40
+}

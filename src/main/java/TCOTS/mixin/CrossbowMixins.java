@@ -4,7 +4,6 @@ import TCOTS.entity.misc.ScurverSpineEntity;
 import TCOTS.entity.misc.bolts.WitcherBolt;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.weapons.BoltItem;
-import TCOTS.items.weapons.KnightCrossbow;
 import TCOTS.items.weapons.WitcherBaseCrossbow;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -13,6 +12,7 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -65,9 +65,9 @@ public class CrossbowMixins {
     @Mixin(CrossbowItem.class)
     public static class CrossbowItemMixin {
         @Inject(method = "getPullTime", at = @At("HEAD"), cancellable = true)
-        private static void getPullTimeCorrectly(ItemStack stack, CallbackInfoReturnable<Integer> cir){
-            if(stack.isOf(TCOTS_Items.KNIGHT_CROSSBOW)){
-                cir.setReturnValue(KnightCrossbow.getPullTime(stack));
+        private static void getPullTimeCorrectlyForAnimation(ItemStack stack, LivingEntity user, CallbackInfoReturnable<Integer> cir){
+            if(stack.getItem() instanceof WitcherBaseCrossbow crossbow){
+                cir.setReturnValue(crossbow.getCrossbowPullTime(stack, user));
             }
         }
 
@@ -88,13 +88,16 @@ public class CrossbowMixins {
             cir.setReturnValue(cir.getReturnValue().or(CROSSBOW_BOLTS));
         }
 
-        @Inject(method = "createArrow", at = @At("RETURN"), cancellable = true)
-        private static void injectExtraPiercing(World world, LivingEntity entity, ItemStack crossbow, ItemStack arrow, CallbackInfoReturnable<PersistentProjectileEntity> cir){
+        @Inject(method = "createArrowEntity", at = @At("RETURN"), cancellable = true)
+        private void injectExtraPiercing(World world, LivingEntity shooter, ItemStack weaponStack, ItemStack arrow, boolean critical, CallbackInfoReturnable<ProjectileEntity> cir){
             boolean precisionBolt = arrow.getItem() instanceof BoltItem bolt && Objects.equals(bolt.getId(), "precision_bolt");
             if(precisionBolt) {
-                PersistentProjectileEntity arrowEntity = cir.getReturnValue();
-                arrowEntity.setPierceLevel((byte) (arrowEntity.getPierceLevel() + 2));
-                cir.setReturnValue(arrowEntity);
+                if(cir.getReturnValue() instanceof PersistentProjectileEntity persistentProjectileEntity){
+                    persistentProjectileEntity.setPierceLevel((byte) (persistentProjectileEntity.getPierceLevel() + 2));
+                    cir.setReturnValue(persistentProjectileEntity);
+                }
+
+
             }
         }
     }

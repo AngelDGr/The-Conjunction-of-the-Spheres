@@ -17,41 +17,31 @@ import net.minecraft.util.Identifier;
 public class WitcherEyesFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
     private final WitcherEyesModel eyesModel;
-    private final PlayerEntityModel<AbstractClientPlayerEntity> playerModel;
 
     public WitcherEyesFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureContext, EntityRendererFactory.Context rendererContext) {
         super(featureContext);
-
        this.eyesModel = new WitcherEyesModel(rendererContext.getPart(TCOTS_Client.WITCHER_EYES_LAYER));
-       this.playerModel = this.getContextModel();
     }
 
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light,
                        AbstractClientPlayerEntity player,
                        float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-        if(!player.theConjunctionOfTheSpheres$getWitcherEyesActivated()){
+        if(!player.theConjunctionOfTheSpheres$getWitcherEyesActivated() || player.isInvisible()){
             return;
         }
 
         VertexConsumer buffer = vertexConsumers.getBuffer(getEyeSeparationAndShape(player));
 
-        playerModel.copyStateTo(eyesModel);
+        this.getContextModel().copyBipedStateTo(eyesModel);
 
         eyesModel.setAngles(player, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 
-        this.setModelPose(player);
-
-        eyesModel.animateModel(player, limbAngle, limbDistance, tickDelta);
-
         eyesModel.render(matrices, buffer,
                 0xF00000,
-                OverlayTexture.DEFAULT_UV,
-                1.0f,
-                1.0f,
-                1.0f,
-                1.0f);
+                OverlayTexture.DEFAULT_UV);
     }
+
 
     private RenderLayer getEyeSeparationAndShape(AbstractClientPlayerEntity player){
         int separation = player.theConjunctionOfTheSpheres$getEyeSeparation();
@@ -67,20 +57,7 @@ public class WitcherEyesFeatureRenderer extends FeatureRenderer<AbstractClientPl
         };
 
         return
-        RenderLayer.getEyes(new Identifier(TCOTS_Main.MOD_ID,
+        RenderLayer.getEyes(Identifier.of(TCOTS_Main.MOD_ID,
                 "textures/entity/player/witcher_eyes/"+shapeKey+"/"+(Math.min(separation, 6))+ "px.png"));
     }
-
-
-    private void setModelPose(AbstractClientPlayerEntity player) {
-        if (player.isSpectator()) {
-            this.eyesModel.setVisible(false);
-            this.eyesModel.head.visible = true;
-            this.eyesModel.hat.visible = true;
-        } else {
-            this.eyesModel.setVisible(true);
-            this.eyesModel.sneaking = player.isInSneakingPose();
-        }
-    }
-
 }

@@ -1,0 +1,21 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:dwarven_spirit"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:honey_bottle"
+    }
+  ],
+  "order": 0.26000002,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:white_honey_potion"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:dwarven_spirit"
+  },
+  "category": "decoctions",
+  "ingredient_counters": [
+    1,
+    1,
+    2,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:nekker_warrior_mutagen"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "minecraft:azure_bluet"
+    },
+    {
+      "item": "minecraft:fern"
+    }
+  ],
+  "order": 0.32999995,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:nekker_warrior_decoction"
+  }
+}

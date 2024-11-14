@@ -37,10 +37,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
@@ -58,7 +58,6 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
     public BullvoreEntity(EntityType<? extends BullvoreEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints=20;
-        this.setStepHeight(1.0f);
         this.setPathfindingPenalty(PathNodeType.LEAVES, 0.0f);
     }
 
@@ -70,6 +69,8 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0)
+
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 80.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 14.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20f)
@@ -79,10 +80,11 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
 
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 24);
     }
+
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(CHARGING, Boolean.FALSE);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(CHARGING, Boolean.FALSE);
     }
 
     @Override
@@ -396,7 +398,7 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
     public boolean tryAttack(Entity target) {
         boolean bl = super.tryAttack(target);
         if(target instanceof PlayerEntity player && player.isBlocking()){
-            player.disableShield(true);
+            player.disableShield();
         }
         return bl;
     }

@@ -1,0 +1,37 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:dancing_star"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    1,
+    2,
+    1,
+    1,
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:stammelfords_dust"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "tcots-witcher:sewant_mushrooms"
+    },
+    {
+      "item": "minecraft:allium"
+    }
+  ],
+  "order": 0.41999987,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:dancing_star_enhanced"
+  }
+}

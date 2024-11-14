@@ -8,16 +8,16 @@ import net.minecraft.util.Identifier;
 public class IceTrollModel extends TrollGeoModelBase<IceTrollEntity> {
     @Override
     public Identifier getModelResource(IceTrollEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/ogroids/ice_troll.geo.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "geo/ogroids/ice_troll.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(IceTrollEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/ogroids/troll/ice_troll.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/ogroids/troll/ice_troll.png");
     }
 
     @Override
     public Identifier getAnimationResource(IceTrollEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/ogroids/ice_troll.animation.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "animations/ogroids/ice_troll.animation.json");
     }
 }

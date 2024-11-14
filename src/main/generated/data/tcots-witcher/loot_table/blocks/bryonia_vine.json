@@ -1,0 +1,208 @@
+{
+  "type": "minecraft:block",
+  "functions": [
+    {
+      "function": "minecraft:explosion_decay"
+    }
+  ],
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "3"
+              }
+            },
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "north": "true"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:bryonia"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "3"
+              }
+            },
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "south": "true"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:bryonia"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "3"
+              }
+            },
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "east": "true"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:bryonia"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "3"
+              }
+            },
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "west": "true"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:bryonia"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "3"
+              }
+            },
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "down": "true"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:bryonia"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "age": "3"
+              }
+            },
+            {
+              "block": "tcots-witcher:bryonia_vine",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "up": "true"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tcots-witcher:bryonia"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

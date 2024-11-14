@@ -19,6 +19,7 @@ import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.layer.BlockAndItemGeoLayer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
+import software.bernie.geckolib.util.Color;
 
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public class AlghoulRenderer extends GeoEntityRenderer<AlghoulEntity> {
 
         //Regen effect layer
         addRenderLayer(new GeoRenderLayer<>(this) {
-            private static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/alghoul/alghoul_regen_layer.png");
+            private static final Identifier TEXTURE = Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/alghoul/alghoul_regen_layer.png");
 
             @Override
             public void render(MatrixStack poseStack, AlghoulEntity animatable, BakedGeoModel bakedModel, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
@@ -44,7 +45,11 @@ public class AlghoulRenderer extends GeoEntityRenderer<AlghoulEntity> {
 
                     getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, armorRenderType,
                             bufferSource.getBuffer(armorRenderType), partialTick, packedLight, OverlayTexture.DEFAULT_UV,
-                            1, 1, 1, 0.5f);
+                    1
+//                            1,
+//                            1,
+//                            1, 0.5f
+                            );
                 }
             }
 
@@ -55,7 +60,7 @@ public class AlghoulRenderer extends GeoEntityRenderer<AlghoulEntity> {
 
         //Spikes layer
         addRenderLayer(new GeoRenderLayer<>(this) {
-            private static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/alghoul/alghoul_spikes_layer.png");
+            private static final Identifier TEXTURE = Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/alghoul/alghoul_spikes_layer.png");
 
             @Override
             public void render(MatrixStack poseStack, AlghoulEntity animatable, BakedGeoModel bakedModel, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
@@ -64,7 +69,12 @@ public class AlghoulRenderer extends GeoEntityRenderer<AlghoulEntity> {
 
                     getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, armorRenderType,
                             bufferSource.getBuffer(armorRenderType), partialTick, packedLight, OverlayTexture.DEFAULT_UV,
-                            1, 1, 1, 1f);
+                            Color.ofARGB(1, 1, 1, 0.5f).argbInt()
+//                            1,
+//                            1,
+//                            1,
+//                            1f
+                    );
                 }
             }
         });
@@ -99,8 +109,8 @@ public class AlghoulRenderer extends GeoEntityRenderer<AlghoulEntity> {
     }
 
     @Override
-    public void preRender(MatrixStack poseStack, AlghoulEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+    public void preRender(MatrixStack poseStack, AlghoulEntity animatable, BakedGeoModel model, @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
 
         this.mouthItem = animatable.getMainHandStack();
     }

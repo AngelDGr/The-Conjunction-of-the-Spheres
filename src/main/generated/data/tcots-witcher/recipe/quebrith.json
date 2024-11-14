@@ -1,0 +1,37 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:white_gull"
+  },
+  "category": "misc",
+  "ingredient_counters": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:verbena"
+    },
+    {
+      "item": "tcots-witcher:puffball"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    },
+    {
+      "item": "minecraft:glow_lichen"
+    },
+    {
+      "item": "minecraft:flowering_azalea"
+    }
+  ],
+  "order": 0.77999955,
+  "result": {
+    "count": 2,
+    "id": "tcots-witcher:quebrith"
+  }
+}

@@ -3,17 +3,19 @@ package TCOTS.items.concoctions;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.utils.EntitiesUtil;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
-import net.minecraft.util.*;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,13 +27,6 @@ public class WitcherBombs_Base extends Item {
         super(settings);
         this.bombId=bombId;
         this.level=level;
-    }
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        return switch (this.level) {
-            case 1, 2 -> Rarity.UNCOMMON;
-            default -> Rarity.COMMON;
-        };
     }
 
     public int getLevel() {
@@ -56,13 +51,11 @@ public class WitcherBombs_Base extends Item {
 
         //Gives player the powder
         //Select the powder
-        ItemStack stack_Empty = switch (this.getMaxCount()) {
-            default -> new ItemStack(TCOTS_Items.EMPTY_BOMB_POWDER_2);
-            case 3 -> new ItemStack(TCOTS_Items.EMPTY_BOMB_POWDER_3);
-            case 4 -> new ItemStack(TCOTS_Items.EMPTY_BOMB_POWDER_4);
-        };
+        ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_BOMB_POWDER);
 
-        stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(this).toString());
+        stack_Empty.set(DataComponentTypes.MAX_STACK_SIZE, this.getMaxCount());
+
+        stack_Empty.set(TCOTS_Items.REFILL_RECIPE, Registries.ITEM.getId(this).toString());
 
         if(itemStack.getCount()==0){
             //If you spend all the bombs in the slot, and can't insert the stack in any other place other than your hand
@@ -84,7 +77,7 @@ public class WitcherBombs_Base extends Item {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         if(Objects.equals(bombId, "grapeshot") || Objects.equals(bombId, "dancing_star") || Objects.equals(bombId, "samum")  ){
             tooltip.add(Text.translatable("tooltip.bomb.monster_nest.first").formatted(Formatting.GRAY,Formatting.ITALIC));
             tooltip.add(Text.translatable("tooltip.bomb.monster_nest.second").formatted(Formatting.GRAY,Formatting.ITALIC));

@@ -2,18 +2,24 @@ package TCOTS.items.concoctions;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ProjectileItem;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
-public class WitcherPotionsSplash_Base extends WitcherPotions_Base {
+public class WitcherPotionsSplash_Base extends WitcherPotions_Base implements ProjectileItem {
 
-    public WitcherPotionsSplash_Base(Settings settings, StatusEffectInstance effect, int toxicity) {
+    public WitcherPotionsSplash_Base(Item.Settings settings, StatusEffectInstance effect, int toxicity) {
         super(settings, effect, toxicity, false);
     }
 
@@ -36,4 +42,8 @@ public class WitcherPotionsSplash_Base extends WitcherPotions_Base {
         return TypedActionResult.success(itemStack, world.isClient());
     }
 
+    @Override
+    public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
+        return Util.make(new PotionEntity(world, pos.getX(), pos.getY(), pos.getZ()), entity -> entity.setItem(stack));
+    }
 }

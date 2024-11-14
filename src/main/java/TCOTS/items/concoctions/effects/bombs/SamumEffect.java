@@ -10,11 +10,12 @@ public class SamumEffect extends BombEffectBase {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        super.applyUpdateEffect(entity,amplifier);
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         if(entity instanceof MobEntity mob){
             mob.setTarget(null);
             mob.getLookControl().lookAt(entity.getX(), entity.getY()-5, entity.getZ());
         }
+
+        return super.applyUpdateEffect(entity,amplifier);
     }
 }

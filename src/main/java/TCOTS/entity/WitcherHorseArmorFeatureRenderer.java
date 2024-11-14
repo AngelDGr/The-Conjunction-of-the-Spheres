@@ -14,6 +14,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.item.ItemStack;
+import software.bernie.geckolib.util.Color;
 
 public class WitcherHorseArmorFeatureRenderer extends FeatureRenderer<HorseEntity, HorseEntityModel<HorseEntity>> {
     private final HorseEntityModel<HorseEntity> model;
@@ -25,7 +26,7 @@ public class WitcherHorseArmorFeatureRenderer extends FeatureRenderer<HorseEntit
     @Override
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, HorseEntity horseEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 
-        ItemStack itemStack = horseEntity.getArmorType();
+        ItemStack itemStack = horseEntity.getBodyArmor();
         if (!(itemStack.getItem() instanceof WitcherHorseArmorItem horseArmorItem)) {
             return;
         }
@@ -34,7 +35,7 @@ public class WitcherHorseArmorFeatureRenderer extends FeatureRenderer<HorseEntit
         this.model.animateModel(horseEntity, limbAngle, limbDistance, tickDelta);
         this.model.setAngles(horseEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCull(horseArmorItem.getOuterTexture()));
-        this.model.render(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0f, 1.0f, 1.0f, 1.0f);
+        this.model.render(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, Color.ofARGB(1.0f, 1.0f, 1.0f, 1.0f).argbInt());
     }
 
     private static class HorseArmorModel<T extends AbstractHorseEntity> extends HorseEntityModel<T> {

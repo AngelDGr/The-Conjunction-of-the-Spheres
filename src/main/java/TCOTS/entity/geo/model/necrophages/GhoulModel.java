@@ -8,16 +8,16 @@ import net.minecraft.util.Identifier;
 public class GhoulModel extends QuadrupedGhoulModelBase<GhoulEntity> {
     @Override
     public Identifier getModelResource(GhoulEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/necrophages/ghoul.geo.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "geo/necrophages/ghoul.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(GhoulEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/ghoul/ghoul.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/ghoul/ghoul.png");
     }
 
     @Override
     public Identifier getAnimationResource(GhoulEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/necrophages/ghoul.animation.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "animations/necrophages/ghoul.animation.json");
     }
 }

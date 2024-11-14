@@ -3,17 +3,20 @@ package TCOTS.screen;
 import TCOTS.TCOTS_Main;
 import TCOTS.config.TCOTS_OwOConfig;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
+@Environment(EnvType.CLIENT)
 @SuppressWarnings("unused")
 public class ToxicityHudOverlay {
-    private static final Identifier TOXICITY_BAR_EMPTY = new Identifier(TCOTS_Main.MOD_ID, "hud/toxicity_bar");
-    private static final Identifier TOXICITY_BAR_FULL = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/hud/toxicity_bar_filled.png");
-    private static final Identifier TOXICITY_BAR_FULL_DECOCTION = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/hud/toxicity_bar_filled_decoction.png");
-    private static final Identifier TOXICITY_OVERLAY = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/hud/toxicity_overlay.png");
+    private static final Identifier TOXICITY_BAR_EMPTY = Identifier.of(TCOTS_Main.MOD_ID, "hud/toxicity_bar");
+    private static final Identifier TOXICITY_BAR_FULL = Identifier.of(TCOTS_Main.MOD_ID, "textures/gui/sprites/hud/toxicity_bar_filled.png");
+    private static final Identifier TOXICITY_BAR_FULL_DECOCTION = Identifier.of(TCOTS_Main.MOD_ID, "textures/gui/sprites/hud/toxicity_bar_filled_decoction.png");
+    private static final Identifier TOXICITY_OVERLAY = Identifier.of(TCOTS_Main.MOD_ID, "textures/gui/sprites/hud/toxicity_overlay.png");
 
 
     //xTODO: Fix chat transparency

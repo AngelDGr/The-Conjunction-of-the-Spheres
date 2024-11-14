@@ -1,0 +1,37 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:devils_puffball_enhanced"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    1,
+    8,
+    3,
+    2,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alchemists_powder"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "tcots-witcher:sewant_mushrooms"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    },
+    {
+      "item": "tcots-witcher:rebis"
+    }
+  ],
+  "order": 0.45999983,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:devils_puffball_superior"
+  }
+}

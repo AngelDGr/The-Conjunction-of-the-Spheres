@@ -1,15 +1,13 @@
 package TCOTS.items.concoctions;
 
-import net.minecraft.client.item.TooltipContext;
+import TCOTS.items.TCOTS_Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -25,11 +23,15 @@ public class EmptyBombPowderItem extends EmptyWitcherPotionItem {
 
     @SuppressWarnings("all")
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        NbtCompound nbtCompound = stack.getNbt();
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        if(!stack.contains(TCOTS_Items.REFILL_RECIPE)){
+            return;
+        }
 
-        if(nbtCompound != null && nbtCompound.contains("Potion")){
-            Item bomb = Registries.ITEM.get(new Identifier(nbtCompound.getString("Potion")));
+        String refillItem = stack.get(TCOTS_Items.REFILL_RECIPE);
+
+        if(refillItem != null){
+            Item bomb = Registries.ITEM.get(Identifier.of(refillItem));
             if(bomb!=null){
                 tooltip.add(Text.translatable("item.tcots-witcher.bomb_powder_tooltip", bomb.getName().getString()).formatted(Formatting.GRAY,Formatting.ITALIC));
             }

@@ -10,6 +10,7 @@ import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
@@ -42,17 +43,17 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMob, Ownable, GuardNestMob {
@@ -95,15 +96,15 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
-        this.dataTracker.startTracking(REGENERATING, Boolean.FALSE);
-        this.dataTracker.startTracking(INVOKING_REGENERATING, Boolean.FALSE);
-        this.dataTracker.startTracking(TIME_FOR_REGEN, 0);
-        this.dataTracker.startTracking(NEST_POS, BlockPos.ORIGIN);
-        this.dataTracker.startTracking(CAN_HAVE_NEST, Boolean.FALSE);
-        this.dataTracker.startTracking(EATING_TIME, -1);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(LUGGING, Boolean.FALSE);
+        builder.add(REGENERATING, Boolean.FALSE);
+        builder.add(INVOKING_REGENERATING, Boolean.FALSE);
+        builder.add(TIME_FOR_REGEN, 0);
+        builder.add(NEST_POS, BlockPos.ORIGIN);
+        builder.add(CAN_HAVE_NEST, Boolean.FALSE);
+        builder.add(EATING_TIME, -1);
     }
 
     @Override
@@ -398,8 +399,10 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
     private void handleEndsFeed(ItemStack foodStack) {
         if(!this.getWorld().isClient) {
 
-            if(foodStack.getFoodComponent()!=null){
-                this.heal((float) foodStack.getFoodComponent().getHunger() /2);
+            if(foodStack.contains(DataComponentTypes.FOOD)){
+
+                this.heal((float) Objects.requireNonNull(foodStack.get(DataComponentTypes.FOOD)).nutrition() /2);
+
             }
             this.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
 
@@ -426,7 +429,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
 
     @Nullable
     @Override
-    public EntityData initialize(@NotNull ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
         Random random = world.getRandom();
         if(!(spawnReason == SpawnReason.SPAWN_EGG) && !(spawnReason == SpawnReason.STRUCTURE)) {
             //Can spawn an Alghoul with it instead
@@ -443,7 +446,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
             this.setCanHaveNest(true);
         }
 
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.initialize(world, difficulty, spawnReason, entityData);
     }
 
     @Override
@@ -520,11 +523,6 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
                     vec3dVelocity.y + 0.05,
                     vec3dVelocity.z);
         }
-    }
-
-    @Override
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.62f;
     }
 
     @Override

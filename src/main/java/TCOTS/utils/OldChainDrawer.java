@@ -303,7 +303,7 @@ public class OldChainDrawer {
 
                 .texture(0, (float)1/16)
 
-                .light(lightPack).next();
+                .light(lightPack);
 
         vertexConsumer
                 .vertex(matrix4f, startB.x(), startB.y(), startB.z())
@@ -313,7 +313,7 @@ public class OldChainDrawer {
 
                 .texture((float)2/16, (float)1/16)
 
-                .light(lightPack).next();
+                .light(lightPack);
 
         vertexConsumer
                 .vertex(matrix4f, endB.x(), endB.y(), endB.z())
@@ -323,7 +323,7 @@ public class OldChainDrawer {
 
                 .texture(0, (float)3/16)
 
-                .light(lightPack).next();
+                .light(lightPack);
 
         vertexConsumer
                 .vertex(matrix4f, endA.x(), endA.y(), endA.z())
@@ -333,7 +333,7 @@ public class OldChainDrawer {
 
                 .texture((float)2/16, (float)3/16)
 
-                .light(lightPack).next();
+                .light(lightPack);
 
     }
 

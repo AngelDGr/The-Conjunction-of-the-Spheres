@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "tcots-witcher:devourer_teeth"
+    },
+    "F": {
+      "item": "tcots-witcher:foglet_teeth"
+    },
+    "H": {
+      "item": "tcots-witcher:bullvore_horn_fragment"
+    },
+    "S": {
+      "item": "minecraft:iron_sword"
+    }
+  },
+  "pattern": [
+    "FHD",
+    "HSH",
+    "DHF"
+  ],
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:gvalchir"
+  }
+}

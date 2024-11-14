@@ -8,16 +8,16 @@ import net.minecraft.util.Identifier;
 public class DevourerModel extends BipedGeoModelBase<DevourerEntity> {
     @Override
     public Identifier getModelResource(DevourerEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/necrophages/devourer.geo.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "geo/necrophages/devourer.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(DevourerEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/devourer.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/devourer.png");
     }
 
     @Override
     public Identifier getAnimationResource(DevourerEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/necrophages/devourer.animation.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "animations/necrophages/devourer.animation.json");
     }
 }

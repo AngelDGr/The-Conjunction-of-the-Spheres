@@ -3,6 +3,7 @@ package TCOTS.mixin;
 import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
+import TCOTS.items.components.MonsterOilComponent;
 import TCOTS.items.concoctions.EmptyWitcherPotionItem;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.WitcherAlcohol_Base;
@@ -10,16 +11,19 @@ import TCOTS.items.concoctions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.world.TCOTS_DamageTypes;
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -55,15 +59,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
     @Final
     @Shadow
-    private PlayerInventory inventory;
+    PlayerInventory inventory;
 
     //Mud Things
     @Unique
     private static final TrackedData<Integer> MUD_TICKS = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
-    private void injectMudTicks(CallbackInfo ci){
-        this.dataTracker.startTracking(MUD_TICKS, 0);
+    private void injectMudTicks(DataTracker.Builder builder, CallbackInfo ci){
+        builder.add(MUD_TICKS, 0);
     }
 
     @Shadow public abstract void playSound(SoundEvent sound, float volume, float pitch);
@@ -106,30 +110,79 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void injectWriteNBTMud(NbtCompound nbt, CallbackInfo ci){
         nbt.putInt("MudTicks", theConjunctionOfTheSpheres$getMudInFace());
-
-
     }
 
     //Oils
     @Unique
     private float oilDamageAdded = 0;
 
-    @Unique
-    private void OilCounter(PlayerEntity player, NbtCompound nbt){
-        int Uses =  nbt.getInt("Uses");
-        Objects.requireNonNull(player.getMainHandStack().getSubNbt("Monster Oil")).putInt("Uses", Uses-1);
+    @Inject(method = "attack", at = @At("HEAD"))
+    private void injectMonsterOil(Entity target, CallbackInfo ci){
 
+        if(target instanceof LivingEntity livingTarget){
+            if(THIS.getMainHandStack().contains(TCOTS_Items.MONSTER_OIL_COMPONENT)){
+                MonsterOilComponent monsterOil =THIS.getMainHandStack().get(TCOTS_Items.MONSTER_OIL_COMPONENT);
+                switch (Objects.requireNonNull(monsterOil).groupId()){
+                    case 0:
+                        if(EntitiesUtil.isNecrophage(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
 
-        if(Objects.requireNonNull(player.getMainHandStack().getSubNbt("Monster Oil")).getInt("Uses") == 0){
+                    case 1:
+                        if(EntitiesUtil.isOgroid(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
 
-            Objects.requireNonNull(player.getMainHandStack().getNbt()).remove("Monster Oil");
-            player.playSound(TCOTS_Sounds.OIL_RAN_OUT, 1, 2);
+                    case 2:
+                        if(EntitiesUtil.isSpecter(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
+
+                    case 3:
+                        if(EntitiesUtil.isVampire(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
+
+                    case 4:
+                        if(EntitiesUtil.isInsectoid(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
+
+                    case 5:
+                        if(EntitiesUtil.isBeast(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
+
+                    case 6:
+                        if(EntitiesUtil.isElementa(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
+
+                    case 7:
+                        if(EntitiesUtil.isCursedOne(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
+
+                    case 8:
+                        if(EntitiesUtil.isHybrid(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
+
+                    case 9:
+                        if(EntitiesUtil.isDraconid(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
+
+                    case 10:
+                        if(EntitiesUtil.isRelict(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
+
+                    case 11:
+                        if(EntitiesUtil.isHumanoid(livingTarget)) LevelOilAssigner(monsterOil);
+                        break;
+
+                    default:
+                        break;
+                }
+
+                OilUsesManager(THIS, monsterOil);
+            }
         }
     }
 
     @Unique
-    private void LevelOilAssigner(NbtCompound monsterOil){
-        switch (monsterOil.getInt("Level")){
+    private void LevelOilAssigner(MonsterOilComponent monsterOil){
+        switch (monsterOil.level()){
             case 1:
                 oilDamageAdded = 2f;
                 break;
@@ -144,110 +197,28 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         }
     }
 
-    @Inject(method = "attack", at = @At("HEAD"))
-    private void injectMonsterOil(Entity target, CallbackInfo ci){
-        PlayerEntity thisObject = (PlayerEntity)(Object)this;
-        if(target instanceof LivingEntity livingTarget){
-            if(thisObject.getMainHandStack().hasNbt()){
-                NbtCompound nbt=thisObject.getMainHandStack().getNbt();
+    @Unique
+    private void OilUsesManager(PlayerEntity player, MonsterOilComponent monsterOil){
+        ItemStack weapon = player.getMainHandStack();
 
-                assert nbt != null;
-                if(nbt.contains("Monster Oil")){
-                    NbtCompound monsterOil = thisObject.getMainHandStack().getSubNbt("Monster Oil");
-                    assert monsterOil != null;
-                    if(monsterOil.contains("Id") && monsterOil.contains("Level") && monsterOil.contains("Uses")){
-                        switch (monsterOil.getInt("Id")){
-                            case 0:
-                                if(EntitiesUtil.isNecrophage(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
+        MonsterOilComponent newMonsterOil= MonsterOilComponent.decreaseUse(monsterOil);
+        weapon.set(TCOTS_Items.MONSTER_OIL_COMPONENT, newMonsterOil);
 
-                            case 1:
-                                if(EntitiesUtil.isOgroid(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
+        if(newMonsterOil.uses()==0){
+            weapon.remove(TCOTS_Items.MONSTER_OIL_COMPONENT);
 
-                            case 2:
-                                if(EntitiesUtil.isSpecter(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
-
-                            case 3:
-                                if(EntitiesUtil.isVampire(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
-
-                            case 4:
-                                if(EntitiesUtil.isInsectoid(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
-
-                            case 5:
-                                if(EntitiesUtil.isBeast(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
-
-                            case 6:
-                                if(EntitiesUtil.isElementa(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
-
-                            case 7:
-                                if(EntitiesUtil.isCursedOne(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
-
-                            case 8:
-                                if(EntitiesUtil.isHybrid(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
-
-                            case 9:
-                                if(EntitiesUtil.isDraconid(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
-
-                            case 10:
-                                if(EntitiesUtil.isRelict(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
-
-                            case 11:
-                                if(EntitiesUtil.isHumanoid(livingTarget)){
-                                    LevelOilAssigner(monsterOil);
-                                }
-                                break;
-
-                            default:
-                                break;
-
-                        }
-                    }
-                    OilCounter(thisObject, monsterOil);
-                }
-            }
+            player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), TCOTS_Sounds.OIL_RAN_OUT, player.getSoundCategory(), 1, 1);
         }
     }
 
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
             , slice = @Slice(
             from = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/entity/attribute/EntityAttribute;)D", ordinal = 0),
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/registry/entry/RegistryEntry;)D", ordinal = 0),
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
     )
-    private float injectMonsterOilAttack(float value){
+    private float injectMonsterOilAttack(float value, @Local(argsOnly = true) Entity target){
         return value + oilDamageAdded;
     }
 
@@ -293,13 +264,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 //Makes a loop across all the inventory
                 for(int i=0; i<inventory.size(); i++){
                     //If found an Empty Potion with NBT
-                    if(inventory.getStack(i).getItem() instanceof EmptyWitcherPotionItem && inventory.getStack(i).hasNbt()){
-                        NbtCompound nbtCompoundI= inventory.getStack(i).getNbt();
+                    if(inventory.getStack(i).getItem() instanceof EmptyWitcherPotionItem && inventory.getStack(i).contains(TCOTS_Items.REFILL_RECIPE)){
+                        String refillItem= inventory.getStack(i).get(TCOTS_Items.REFILL_RECIPE);
                         //Checks if the NBT contains the "Potion" string
-                        assert nbtCompoundI != null;
-                        if(nbtCompoundI.contains("Potion")){
+
+                        if(refillItem!=null){
                             //Save the potion type
-                            Item PotionI = Registries.ITEM.get(new Identifier(nbtCompoundI.getString("Potion")));
+                            Item PotionI = Registries.ITEM.get(Identifier.of(refillItem));
                             //Saves the count of empty bottles
                             int countI = inventory.getStack(i).getCount();
 
@@ -357,16 +328,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     //Maribor Forest
     @Inject(method = "eatFood", at = @At("TAIL"))
-    private void injectMariborForestImprove(World world, ItemStack stack, CallbackInfoReturnable<ItemStack> cir){
+    private void injectMariborForestImprove(World world, ItemStack stack, FoodComponent foodComponent, CallbackInfoReturnable<ItemStack> cir){
         PlayerEntity THIS = (PlayerEntity)(Object)this;
         if(this.hasStatusEffect(TCOTS_Effects.MARIBOR_FOREST_EFFECT)){
             int amplifier = Objects.requireNonNull(this.getStatusEffect(TCOTS_Effects.MARIBOR_FOREST_EFFECT)).getAmplifier();
-            if(stack.getItem().isFood()){
-                FoodComponent foodComponent = stack.getItem().getFoodComponent();
+            if(stack.contains(DataComponentTypes.FOOD)){
                 assert foodComponent != null;
 
-                int foodQuantity= (int) (foodComponent.getHunger()*(0.25f+(0.25f*amplifier)));
-                float saturationQuantity= foodComponent.getSaturationModifier()*(0.25f+(0.25f*amplifier));
+                int foodQuantity= (int) (foodComponent.nutrition()*(0.25f+(0.25f*amplifier)));
+                float saturationQuantity= foodComponent.saturation()*(0.25f+(0.25f*amplifier));
 
                 if(foodQuantity < 1){
                     foodQuantity=1;
@@ -396,12 +366,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
-    private void injectToxicityDataTracker(CallbackInfo ci){
-        this.dataTracker.startTracking(TOXICITY, 0);
-        this.dataTracker.startTracking(DECOCTION_TOXICITY, 0);
-        this.dataTracker.startTracking(MAX_TOXICITY,100);
-        this.dataTracker.startTracking(HUD_ACTIVE, false);
-        this.dataTracker.startTracking(HUD_TRANSPARENCY, 0.0f);
+    private void injectToxicityDataTracker(DataTracker.Builder builder, CallbackInfo ci){
+        builder.add(TOXICITY, 0);
+        builder.add(DECOCTION_TOXICITY, 0);
+        builder.add(MAX_TOXICITY,100);
+        builder.add(HUD_ACTIVE, false);
+        builder.add(HUD_TRANSPARENCY, 0.0f);
     }
 
     @Override
@@ -524,16 +494,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
 
     //SamumEffect
-    @Unique
-    private Entity target;
-
-    @Inject(method = "attack", at = @At("HEAD"))
-    private void getTarget(Entity target, CallbackInfo ci){
-        this.target=target;
-    }
-
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 2)
-    private boolean injectCriticalWithSamum(boolean value){
+    private boolean injectCriticalWithSamum(boolean value, @Local(argsOnly = true) Entity target){
         if(target instanceof LivingEntity entity){
             if(SamumBomb.checkSamumEffect(entity)){
                 StatusEffectInstance instance = entity.getStatusEffect(TCOTS_Effects.SAMUM_EFFECT);
@@ -543,8 +505,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 return value || amplifier > 1;
             }
         }
-
-
 
         return value;
     }
@@ -567,7 +527,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
             , slice = @Slice(
             from = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/entity/attribute/EntityAttribute;)D", ordinal = 0),
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/registry/entry/RegistryEntry;)D", ordinal = 0),
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
     )
@@ -586,62 +546,51 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
 
     //Raven Armor
-    @Unique
-    private float ravensArmorExtraDamage = 0;
-
-    @Inject(method = "attack", at = @At("HEAD"))
-    private void getIsMonsterForRavenBonus(Entity target, CallbackInfo ci){
-        ravensArmorExtraDamage = EntitiesUtil.isWearingRavensArmor(THIS) && target instanceof LivingEntity livingTarget && EntitiesUtil.isMonster(livingTarget)? 2.0f : 0.0f;
-    }
-
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
             , slice = @Slice(
             from = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/entity/attribute/EntityAttribute;)D", ordinal = 0),
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/registry/entry/RegistryEntry;)D", ordinal = 0),
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
     )
-    private float injectRavenBonusToDamage(float value){
-        return value + ravensArmorExtraDamage;
+    private float injectRavenBonusToDamage(float value, @Local(argsOnly = true) Entity target){
+        return value + (
+                EntitiesUtil.isWearingRavensArmor(THIS)
+                        && target instanceof LivingEntity livingTarget
+                        && EntitiesUtil.isMonster(livingTarget)? 2.0f : 0.0f);
     }
 
 
     //Moonblade
-    @Unique
-    private float moonbladeExtraDamage = 0.0f;
-
-    @Inject(method = "attack", at = @At("HEAD"))
-    private void getIsMonsterMoonblade(Entity target, CallbackInfo ci){
-        moonbladeExtraDamage = THIS.getMainHandStack().getItem() == TCOTS_Items.MOONBLADE && target instanceof LivingEntity livingTarget && EntitiesUtil.isMonster(livingTarget)? 1.5f : 1.0f;
-    }
-    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 0
-            , slice = @Slice(
-            from = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/entity/Entity;handleAttack(Lnet/minecraft/entity/Entity;)Z", ordinal = 0),
-            to = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/enchantment/EnchantmentHelper;getAttackDamage(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityGroup;)F", ordinal = 0))
-    )
-    private float injectMoonBladeDamage(float value){
-        return value*moonbladeExtraDamage;
-    }
-
-    //Moonblade
-    @Unique
-    private float wintersBladeExtraDamage = 0.0f;
-
-    @Inject(method = "attack", at = @At("HEAD"))
-    private void getIsFireMonster(Entity target, CallbackInfo ci){
-        wintersBladeExtraDamage = THIS.getMainHandStack().getItem() == TCOTS_Items.WINTERS_BLADE && target instanceof LivingEntity livingTarget && livingTarget.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)? 2.0f : 0.0f;
-    }
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
             , slice = @Slice(
             from = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/entity/attribute/EntityAttribute;)D", ordinal = 0),
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/registry/entry/RegistryEntry;)D", ordinal = 0),
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
     )
-    private float injectWintersBladeDamage(float value){
-        return value+wintersBladeExtraDamage;
+    private float injectMoonBladeDamage(float value, @Local(argsOnly = true) Entity target){
+        return value*(
+                THIS.getMainHandStack().getItem() == TCOTS_Items.MOONBLADE
+                        && target instanceof LivingEntity livingTarget
+                        && EntitiesUtil.isMonster(livingTarget)? 1.5f : 1.0f);
+    }
+
+    //Winter's Blade
+    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
+            , slice = @Slice(
+            from = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttributeValue(Lnet/minecraft/registry/entry/RegistryEntry;)D", ordinal = 0),
+            to = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
+    )
+    private float injectWintersBladeDamage(float value, @Local(argsOnly = true) Entity target){
+        return value + (
+                THIS.getMainHandStack().getItem() == TCOTS_Items.WINTERS_BLADE
+                && target instanceof LivingEntity livingTarget
+                && livingTarget.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)?
+                        2.0f
+                        : 0.0f);
     }
 
     //Witcher Eyes
@@ -676,11 +625,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     public void theConjunctionOfTheSpheres$setEyeShape(int shape){this.dataTracker.set(EYES_SHAPE, shape);}
 
     @Inject(method = "initDataTracker", at = @At("TAIL"))
-    private void injectWitcherEyesData(CallbackInfo ci){
-        this.dataTracker.startTracking(EYES_ACTIVATE,   false);
-        this.dataTracker.startTracking(EYES_POSITION,   new Vector3f(0,0,0));
-        this.dataTracker.startTracking(EYES_SEPARATION, 2);
-        this.dataTracker.startTracking(EYES_SHAPE,      0);
+    private void injectWitcherEyesData(DataTracker.Builder builder, CallbackInfo ci){
+        builder.add(EYES_ACTIVATE,   false);
+        builder.add(EYES_POSITION,   new Vector3f(0,0,0));
+        builder.add(EYES_SEPARATION, 2);
+        builder.add(EYES_SHAPE,      0);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
@@ -720,6 +669,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             return null;
         }
         return compound.getCompound(key);
+    }
+
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void testing(CallbackInfo ci){
+
     }
 
 }

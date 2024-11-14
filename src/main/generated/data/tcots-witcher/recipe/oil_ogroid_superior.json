@@ -1,0 +1,37 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:oil_ogroid_enhanced"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    2,
+    3,
+    2,
+    6,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alchemy_paste"
+    },
+    {
+      "item": "tcots-witcher:cave_troll_liver"
+    },
+    {
+      "item": "tcots-witcher:arenaria"
+    },
+    {
+      "item": "minecraft:fern"
+    },
+    {
+      "item": "tcots-witcher:aether"
+    }
+  ],
+  "order": 0.6399997,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:oil_ogroid_superior"
+  }
+}

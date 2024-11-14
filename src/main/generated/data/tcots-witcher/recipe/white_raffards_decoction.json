@@ -1,0 +1,25 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:dwarven_spirit"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    2,
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:oxeye_daisy"
+    },
+    {
+      "item": "tcots-witcher:nekker_heart"
+    }
+  ],
+  "order": 0.07999999,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:white_raffards_decoction"
+  }
+}

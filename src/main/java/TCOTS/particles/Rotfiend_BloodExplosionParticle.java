@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 
 @Environment(value= EnvType.CLIENT)
 public class Rotfiend_BloodExplosionParticle extends SpriteBillboardParticle {
@@ -45,7 +45,7 @@ public class Rotfiend_BloodExplosionParticle extends SpriteBillboardParticle {
     }
 
     @Environment(value=EnvType.CLIENT)
-    public static class Factory implements ParticleFactory<DefaultParticleType> {
+    public static class Factory implements ParticleFactory<SimpleParticleType> {
         private final SpriteProvider spriteProvider;
 
         public Factory(SpriteProvider spriteProvider) {
@@ -53,7 +53,7 @@ public class Rotfiend_BloodExplosionParticle extends SpriteBillboardParticle {
         }
 
         @Override
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             return new Rotfiend_BloodExplosionParticle(clientWorld, d, e, f, g, this.spriteProvider);
         }
     }

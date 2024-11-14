@@ -1,26 +1,21 @@
 package TCOTS.items.weapons;
 
 import TCOTS.entity.misc.AnchorProjectileEntity;
+import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ToolMaterials;
 import TCOTS.items.geo.renderer.GiantAnchorItemRenderer;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.GeoControllersUtil;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -30,43 +25,32 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
-import software.bernie.geckolib.animatable.client.RenderProvider;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.ContextAwareAnimatableManager;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.ContextAwareAnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class GiantAnchorItem extends ToolItem implements GeoItem {
     //xTODO: Add attacks to the anchor (2)
     //The anchor it's going to return to you with right-click
     //The anchor can be launched
     private final AnimatableInstanceCache cache   = GeckoLibUtil.createInstanceCache(this);
-    private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
     public boolean hidden = false;
-    private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
     public GiantAnchorItem(Settings settings) {
         super(TCOTS_ToolMaterials.ANCHOR,settings);
-
-        float attackDamage = TCOTS_ToolMaterials.ANCHOR.getAttackDamage();
-
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", attackDamage, EntityAttributeModifier.Operation.ADDITION));
-        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", -3.4f, EntityAttributeModifier.Operation.ADDITION));
-        this.attributeModifiers = builder.build();
-
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     @Override
-    public void createRenderer(@NotNull Consumer<Object> consumer) {
-        consumer.accept(new RenderProvider() {
+    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+        consumer.accept(new GeoRenderProvider() {
 
             private final GiantAnchorItemRenderer renderer = new GiantAnchorItemRenderer();
 
             @Override
-            public BuiltinModelItemRenderer getCustomRenderer() {
+            public @NotNull BuiltinModelItemRenderer getGeoItemRenderer() {
                 return this.renderer;
             }
         });
@@ -93,14 +77,14 @@ public class GiantAnchorItem extends ToolItem implements GeoItem {
                 GiantAnchorItem.retrieveAnchor(user);
             } else {
 
-                float pullProgress = BowItem.getPullProgress(this.getMaxUseTime(anchorStack) - remainingUseTicks);
+                float pullProgress = BowItem.getPullProgress(this.getMaxUseTime(anchorStack, user) - remainingUseTicks);
 
                 AnchorProjectileEntity anchorProjectile = new AnchorProjectileEntity(user, world);
                 anchorProjectile.setEnchanted(anchorStack.hasGlint());
                 anchorProjectile.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, pullProgress * 0.4f, 1.0f);
 
                 if (user instanceof PlayerEntity player) {
-                    anchorStack.damage(1, user, p -> p.sendToolBreakStatus(player.getActiveHand()));
+                    anchorStack.damage(1, player, EquipmentSlot.MAINHAND);
                     player.incrementStat(Stats.USED.getOrCreateStat(this));
                 }
 
@@ -118,10 +102,12 @@ public class GiantAnchorItem extends ToolItem implements GeoItem {
         user.setCurrentHand(hand);
         return TypedActionResult.consume(anchorStack);
     }
+
     @Override
-    public int getMaxUseTime(ItemStack stack) {
+    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
         return 72000;
     }
+
     @Override
     public UseAction getUseAction(@NotNull ItemStack stack) {
         if(wasLaunched(stack)){
@@ -130,36 +116,23 @@ public class GiantAnchorItem extends ToolItem implements GeoItem {
 
         return UseAction.SPEAR;
     }
-    @Override
-    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-        if (slot == EquipmentSlot.MAINHAND) {
-            return this.attributeModifiers;
-        }
-        return super.getAttributeModifiers(slot);
-    }
 
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity user) {
-        stack.damage(1, user, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-
         GiantAnchorItem.retrieveAnchor(user);
         return true;
     }
 
     @Override
-    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (state.getHardness(world, pos) != 0.0f) {
-            stack.damage(2, miner, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-        }
-
-        GiantAnchorItem.retrieveAnchor(miner);
-        return true;
+    public void postDamageEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.damage(1, attacker, EquipmentSlot.MAINHAND);
     }
 
     @Override
-    public Supplier<Object> getRenderProvider() {
-        return renderProvider;
+    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+        GiantAnchorItem.retrieveAnchor(miner);
+        return super.postMine(stack, world, state, pos, miner);
     }
 
 
@@ -170,17 +143,14 @@ public class GiantAnchorItem extends ToolItem implements GeoItem {
         }
 
         if(entity instanceof LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$getAnchor()!=null){
-            NbtCompound nbt = new NbtCompound();
-            nbt.putBoolean("nextRetrieve", true);
-            anchorStack.getOrCreateNbt().put("State", nbt);
+            anchorStack.set(TCOTS_Items.ANCHOR_RETRIEVE, true);
         } else if (entity instanceof LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$getAnchor()==null) {
-            anchorStack.removeSubNbt("State");
+            anchorStack.remove(TCOTS_Items.ANCHOR_RETRIEVE);
         }
     }
 
     public static boolean wasLaunched(ItemStack stack) {
-        NbtCompound nbtCompound = stack.getNbt();
-        return nbtCompound != null && nbtCompound.get("State")!=null;
+        return stack.contains(TCOTS_Items.ANCHOR_RETRIEVE);
     }
 
     @Override

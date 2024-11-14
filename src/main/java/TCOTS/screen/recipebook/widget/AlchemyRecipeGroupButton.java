@@ -23,9 +23,9 @@ public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
         super(0, 0, 39, 27, false);
 
         ButtonTextures BUTTON_TEXTURES = new ButtonTextures(
-                new Identifier(TCOTS_Main.MOD_ID, "buttons/button_group_highlighted"),
-                new Identifier(TCOTS_Main.MOD_ID,"buttons/button_group"),
-                new Identifier(TCOTS_Main.MOD_ID, "buttons/button_group_highlighted"));
+                Identifier.of(TCOTS_Main.MOD_ID, "buttons/button_group_highlighted"),
+                Identifier.of(TCOTS_Main.MOD_ID,"buttons/button_group"),
+                Identifier.of(TCOTS_Main.MOD_ID, "buttons/button_group_highlighted"));
 
         this.icon=icon;
         this.category = category;

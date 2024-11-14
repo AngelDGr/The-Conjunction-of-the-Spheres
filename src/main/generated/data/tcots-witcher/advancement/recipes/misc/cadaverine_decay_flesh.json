@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cadaverine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots-witcher:cadaverine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tcots-witcher:cadaverine_decay_flesh"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cadaverine"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tcots-witcher:cadaverine_decay_flesh"
+    ]
+  }
+}

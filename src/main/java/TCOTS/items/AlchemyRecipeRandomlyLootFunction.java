@@ -5,7 +5,7 @@ import TCOTS.items.concoctions.WitcherBombs_Base;
 import TCOTS.items.concoctions.WitcherMonsterOil_Base;
 import TCOTS.items.concoctions.WitcherPotions_Base;
 import TCOTS.utils.AlchemyFormulaUtil;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.condition.LootCondition;
@@ -25,8 +25,8 @@ public class AlchemyRecipeRandomlyLootFunction extends ConditionalLootFunction {
 
     public final int decoctions;
 
-    public static final Codec<AlchemyRecipeRandomlyLootFunction> CODEC = RecordCodecBuilder
-            .create(instance ->
+    public static final MapCodec<AlchemyRecipeRandomlyLootFunction> CODEC = RecordCodecBuilder
+            .mapCodec(instance ->
                     AlchemyRecipeRandomlyLootFunction.addConditionsField(instance)
                             .and(Codecs.NONNEGATIVE_INT.fieldOf("decoctions_only").orElse(0).forGetter(function -> function.decoctions))
                             .apply(instance, AlchemyRecipeRandomlyLootFunction::new));
@@ -86,7 +86,7 @@ public class AlchemyRecipeRandomlyLootFunction extends ConditionalLootFunction {
     }
 
     @Override
-    public LootFunctionType getType() {
+    public LootFunctionType<? extends ConditionalLootFunction> getType() {
         return TCOTS_Items.RANDOMIZE_FORMULA;
     }
 

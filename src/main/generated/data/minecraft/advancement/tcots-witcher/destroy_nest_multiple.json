@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:tcots-witcher/destroy_nest",
+  "criteria": {
+    "destroy_nest_multiple": {
+      "conditions": {
+        "quantity": 30
+      },
+      "trigger": "minecraft:tcots-witcher/destroy_multiple_monster_nest"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.destroy_nest_multiple.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "tcots-witcher:monster_nest"
+    },
+    "title": {
+      "translate": "advancements.witcher.destroy_nest_multiple.title"
+    }
+  },
+  "requirements": [
+    [
+      "destroy_nest_multiple"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  },
+  "sends_telemetry_event": true
+}

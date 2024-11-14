@@ -8,14 +8,6 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import org.joml.Vector3f;
 
 public class WitcherEyesModel extends PlayerEntityModel<AbstractClientPlayerEntity> {
-    private static final String EAR = "ear";
-    private static final String CLOAK = "cloak";
-    private static final String LEFT_SLEEVE = "left_sleeve";
-    private static final String RIGHT_SLEEVE = "right_sleeve";
-    private static final String LEFT_PANTS = "left_pants";
-    private static final String RIGHT_PANTS = "right_pants";
-
-
     public static final String EYES = "eyes";
 
     public final ModelPart eyes;
@@ -27,7 +19,6 @@ public class WitcherEyesModel extends PlayerEntityModel<AbstractClientPlayerEnti
 
     @Override
     public void setAngles(AbstractClientPlayerEntity playerEntity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        super.setAngles(playerEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 
         Vector3f Eyes_Pivot = playerEntity.theConjunctionOfTheSpheres$getEyesPivot();
 
@@ -35,46 +26,28 @@ public class WitcherEyesModel extends PlayerEntityModel<AbstractClientPlayerEnti
     }
 
     public static ModelData getModelData(Dilation dilation) {
-        float pivotOffsetY = 0f;
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
+        ModelData modelData = PlayerEntityModel.getTexturedModelData(dilation, false);
+        ModelPartData root = modelData.getRoot();
 
-        ModelPartData head =
-                modelPartData.addChild(EntityModelPartNames.HEAD,
-                                ModelPartBuilder.create().uv(32, 32)
-                                        .cuboid(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, dilation),
-                                ModelTransform.pivot(0.0f, 0.0f, 0.0f));
-
-        head.addChild(EYES,
-                ModelPartBuilder.create().uv(0, 0)
-                        .cuboid(-4.0f, -8.0f, -4.01f, 8.0f, 8.0f, 8.0f, dilation),
-                ModelTransform.pivot(0.0f, 0.0f, 0.0f));
-
-        modelPartData.addChild(EntityModelPartNames.HAT, ModelPartBuilder.create().uv(32, 0).cuboid(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, dilation.add(0.5f)), ModelTransform.pivot(0.0f, 0.0f + pivotOffsetY, 0.0f));
-        modelPartData.addChild(EntityModelPartNames.BODY, ModelPartBuilder.create().uv(16, 16).cuboid(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, dilation), ModelTransform.pivot(0.0f, 0.0f + pivotOffsetY, 0.0f));
-        modelPartData.addChild(EntityModelPartNames.RIGHT_ARM, ModelPartBuilder.create().uv(40, 16).cuboid(-3.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, dilation), ModelTransform.pivot(-5.0f, 2.0f + pivotOffsetY, 0.0f));
-        modelPartData.addChild(EntityModelPartNames.LEFT_ARM, ModelPartBuilder.create().uv(40, 16).mirrored().cuboid(-1.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, dilation), ModelTransform.pivot(5.0f, 2.0f + pivotOffsetY, 0.0f));
-        modelPartData.addChild(EntityModelPartNames.RIGHT_LEG, ModelPartBuilder.create().uv(0, 16).cuboid(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, dilation), ModelTransform.pivot(-1.9f, 12.0f + pivotOffsetY, 0.0f));
-        modelPartData.addChild(EntityModelPartNames.LEFT_LEG, ModelPartBuilder.create().uv(0, 16).mirrored().cuboid(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, dilation), ModelTransform.pivot(1.9f, 12.0f + pivotOffsetY, 0.0f));
-        modelPartData.addChild(EAR, ModelPartBuilder.create().uv(24, 0).cuboid(-3.0f, -6.0f, -1.0f, 6.0f, 6.0f, 1.0f, dilation), ModelTransform.NONE);
-        modelPartData.addChild(CLOAK, ModelPartBuilder.create().uv(0, 0).cuboid(-5.0f, 0.0f, -1.0f, 10.0f, 16.0f, 1.0f, dilation, 1.0f, 0.5f), ModelTransform.pivot(0.0f, 0.0f, 0.0f));
-        modelPartData.addChild(EntityModelPartNames.LEFT_ARM, ModelPartBuilder.create().uv(32, 48).cuboid(-1.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, dilation), ModelTransform.pivot(5.0f, 2.0f, 0.0f));
-        modelPartData.addChild(LEFT_SLEEVE, ModelPartBuilder.create().uv(48, 48).cuboid(-1.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, dilation.add(0.25f)), ModelTransform.pivot(5.0f, 2.0f, 0.0f));
-        modelPartData.addChild(RIGHT_SLEEVE, ModelPartBuilder.create().uv(40, 32).cuboid(-3.0f, -2.0f, -2.0f, 4.0f, 12.0f, 4.0f, dilation.add(0.25f)), ModelTransform.pivot(-5.0f, 2.0f, 0.0f));
-        modelPartData.addChild(EntityModelPartNames.LEFT_LEG, ModelPartBuilder.create().uv(16, 48).cuboid(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, dilation), ModelTransform.pivot(1.9f, 12.0f, 0.0f));
-        modelPartData.addChild(LEFT_PANTS, ModelPartBuilder.create().uv(0, 48).cuboid(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, dilation.add(0.25f)), ModelTransform.pivot(1.9f, 12.0f, 0.0f));
-        modelPartData.addChild(RIGHT_PANTS, ModelPartBuilder.create().uv(0, 32).cuboid(-2.0f, 0.0f, -2.0f, 4.0f, 12.0f, 4.0f, dilation.add(0.25f)), ModelTransform.pivot(-1.9f, 12.0f, 0.0f));
-        modelPartData.addChild(EntityModelPartNames.JACKET, ModelPartBuilder.create().uv(16, 32).cuboid(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0f, dilation.add(0.25f)), ModelTransform.NONE);
+        root.getChild(EntityModelPartNames.HEAD)
+                .addChild(EYES,
+                        ModelPartBuilder.create().uv(64, 0)
+                                .cuboid(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f,
+                                        new Dilation(0.001f)),
+                        ModelTransform.pivot(0.0f, 0.0f, 0.0f));
 
         return modelData;
     }
+
 
     public static EntityModelLayerRegistry.TexturedModelDataProvider createModelData(){
 
         return () -> TexturedModelData.of(
                 getModelData(new Dilation(0)),
-                64, 64);
+                96, 64);
     }
 
 
 }
+
+

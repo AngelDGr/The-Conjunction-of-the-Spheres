@@ -1,13 +1,14 @@
 package TCOTS.items.concoctions;
 
+import com.google.common.collect.Lists;
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -17,12 +18,10 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
-import org.jetbrains.annotations.Nullable;
 
-import com.google.common.collect.Lists;
 import java.util.List;
 
-public class WitcherAlcohol_Base extends WitcherPotions_Base{
+public class WitcherAlcohol_Base extends WitcherPotions_Base {
 
     private final int refillQuantity;
 
@@ -39,12 +38,13 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base{
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.translatable("tooltip."+Registries.ITEM.getId(this)).formatted(Formatting.GRAY));
         tooltip.add(ScreenTexts.EMPTY);
         tooltip.add(Text.translatable("tooltip.tcots-witcher.refill").formatted(Formatting.GRAY));
         tooltip.add(ScreenTexts.space().append(Text.translatable(this.refillQuantity >1? "tooltip.tcots-witcher.refill.slots": "tooltip.tcots-witcher.refill.slot" , this.refillQuantity).formatted(Formatting.BLUE)));
     }
+
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         PlayerEntity playerEntity = user instanceof PlayerEntity ? (PlayerEntity)user : null;
@@ -54,8 +54,8 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base{
 
         if (!world.isClient) {
             for(StatusEffectInstance effect : this.effects){
-                if(effect.getEffectType().isInstant()){
-                    effect.getEffectType().applyInstantEffect(playerEntity, playerEntity, user, effect.getAmplifier(), 1.0);
+                if(effect.getEffectType().value().isInstant()){
+                    effect.getEffectType().value().applyInstantEffect(playerEntity, playerEntity, user, effect.getAmplifier(), 1.0);
                 }
                 else{
                     user.addStatusEffect(new StatusEffectInstance(effect));

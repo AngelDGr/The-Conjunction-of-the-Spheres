@@ -43,72 +43,72 @@ public class TCOTS_VillageAdditions {
 //    turn_01       -> ^ 7  x5 ---> 1 [JIGSAW] 3 <---   // X
     public static void registerNewVillageStructures() {
         FabricStructurePoolRegistry.register(
-                new Identifier("minecraft:village/plains/houses"),
-                new Identifier(TCOTS_Main.MOD_ID, "village/plains/houses/herbalist_hut_1"),
+                Identifier.of("minecraft:village/plains/houses"),
+                Identifier.of(TCOTS_Main.MOD_ID, "village/plains/houses/herbalist_hut_1"),
                 1,
                 TCOTS_ProcessorList.RANDOM_HERBALIST_HERBS_PLAINS
         );
 
         FabricStructurePoolRegistry.register(
-                new Identifier("minecraft:village/plains/houses"),
-                new Identifier(TCOTS_Main.MOD_ID, "village/plains/houses/herbalist_hut_2"),
+                Identifier.of("minecraft:village/plains/houses"),
+                Identifier.of(TCOTS_Main.MOD_ID, "village/plains/houses/herbalist_hut_2"),
                 2,
                 TCOTS_ProcessorList.RANDOM_HERBALIST_HERBS_PLAINS
         );
 
         FabricStructurePoolRegistry.register(
-                new Identifier("minecraft:village/taiga/houses"),
-                new Identifier(TCOTS_Main.MOD_ID, "village/taiga/houses/herbalist_taiga_hut_1"),
+                Identifier.of("minecraft:village/taiga/houses"),
+                Identifier.of(TCOTS_Main.MOD_ID, "village/taiga/houses/herbalist_taiga_hut_1"),
                 1,
                 TCOTS_ProcessorList.RANDOM_HERBALIST_HERBS_TAIGA
         );
 
         FabricStructurePoolRegistry.register(
-                new Identifier("minecraft:village/taiga/houses"),
-                new Identifier(TCOTS_Main.MOD_ID, "village/taiga/houses/herbalist_taiga_hut_2"),
+                Identifier.of("minecraft:village/taiga/houses"),
+                Identifier.of(TCOTS_Main.MOD_ID, "village/taiga/houses/herbalist_taiga_hut_2"),
                 2,
                 TCOTS_ProcessorList.RANDOM_HERBALIST_HERBS_TAIGA
         );
 
         FabricStructurePoolRegistry.register(
-                new Identifier("minecraft:village/snowy/houses"),
-                new Identifier(TCOTS_Main.MOD_ID, "village/snowy/houses/herbalist_snowy_hut_1"),
+                Identifier.of("minecraft:village/snowy/houses"),
+                Identifier.of(TCOTS_Main.MOD_ID, "village/snowy/houses/herbalist_snowy_hut_1"),
                 1,
                 TCOTS_ProcessorList.RANDOM_HERBALIST_HERBS_SNOWY
         );
 
         FabricStructurePoolRegistry.register(
-                new Identifier("minecraft:village/snowy/houses"),
-                new Identifier(TCOTS_Main.MOD_ID, "village/snowy/houses/herbalist_snowy_hut_2"),
+                Identifier.of("minecraft:village/snowy/houses"),
+                Identifier.of(TCOTS_Main.MOD_ID, "village/snowy/houses/herbalist_snowy_hut_2"),
                 2,
                 TCOTS_ProcessorList.RANDOM_HERBALIST_HERBS_SNOWY
         );
 
 
         FabricStructurePoolRegistry.register(
-                new Identifier("minecraft:village/desert/houses"),
-                new Identifier(TCOTS_Main.MOD_ID, "village/desert/houses/herbalist_desert_hut_1"),
+                Identifier.of("minecraft:village/desert/houses"),
+                Identifier.of(TCOTS_Main.MOD_ID, "village/desert/houses/herbalist_desert_hut_1"),
                 1,
                 TCOTS_ProcessorList.RANDOM_HERBALIST_HERBS_DESERT
         );
 
         FabricStructurePoolRegistry.register(
-                new Identifier("minecraft:village/desert/houses"),
-                new Identifier(TCOTS_Main.MOD_ID, "village/desert/houses/herbalist_desert_hut_2"),
+                Identifier.of("minecraft:village/desert/houses"),
+                Identifier.of(TCOTS_Main.MOD_ID, "village/desert/houses/herbalist_desert_hut_2"),
                 2,
                 TCOTS_ProcessorList.RANDOM_HERBALIST_HERBS_DESERT
         );
 
         FabricStructurePoolRegistry.register(
-                new Identifier("minecraft:village/savanna/houses"),
-                new Identifier(TCOTS_Main.MOD_ID, "village/savanna/houses/herbalist_savanna_hut_1"),
+                Identifier.of("minecraft:village/savanna/houses"),
+                Identifier.of(TCOTS_Main.MOD_ID, "village/savanna/houses/herbalist_savanna_hut_1"),
                 1,
                 TCOTS_ProcessorList.RANDOM_HERBALIST_HERBS_SAVANNA
         );
 
         FabricStructurePoolRegistry.register(
-                new Identifier("minecraft:village/savanna/houses"),
-                new Identifier(TCOTS_Main.MOD_ID, "village/savanna/houses/herbalist_savanna_hut_2"),
+                Identifier.of("minecraft:village/savanna/houses"),
+                Identifier.of(TCOTS_Main.MOD_ID, "village/savanna/houses/herbalist_savanna_hut_2"),
                 2,
                 TCOTS_ProcessorList.RANDOM_HERBALIST_HERBS_SAVANNA
         );

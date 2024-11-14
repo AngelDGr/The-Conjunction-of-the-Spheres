@@ -14,6 +14,7 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.*;
@@ -44,7 +45,9 @@ import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -56,7 +59,7 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.animation.RawAnimation;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -81,19 +84,19 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
         super(entityType, world);
         this.setCanPickUpLoot(true);
         this.experiencePoints=8;
-        this.setStepHeight(1.0f);
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(RABID, Boolean.FALSE);
-        this.dataTracker.startTracking(EATING_TIME, -1);
-        this.dataTracker.startTracking(GUARDING_POS, BlockPos.ORIGIN);
-        this.dataTracker.startTracking(FOLLOWER_STATE, 0);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
 
-        this.dataTracker.startTracking(BLOCKING, Boolean.FALSE);
-        this.dataTracker.startTracking(TIME_BLOCKING, 0);
+        builder.add(RABID, Boolean.FALSE);
+        builder.add(EATING_TIME, -1);
+        builder.add(GUARDING_POS, BlockPos.ORIGIN);
+        builder.add(FOLLOWER_STATE, 0);
+
+        builder.add(BLOCKING, Boolean.FALSE);
+        builder.add(TIME_BLOCKING, 0);
     }
 
     protected static class MeleeAttackGoal_Troll extends MeleeAttackGoal_Animated {
@@ -550,7 +553,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
             }
 
             // Feed Troll
-            else if (isEdible(item)) {
+            else if (isEdible(itemStack)) {
                 this.setStackInHand(Hand.OFF_HAND, itemStack.copyWithCount(1));
                 this.setLastPlayer(player);
                 this.setEatingTime(0);
@@ -704,7 +707,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     protected void handleItemFromGround(@NotNull ItemEntity item) {
         boolean isBartering = item.getStack().getItem() == this.getBarteringItem();
 
-        if ((isBartering && this.isWandering()) || isEdible(item.getStack().getItem()) || isDrinkable(item.getStack().getItem())) {
+        if ((isBartering && this.isWandering()) || isEdible(item.getStack()) || isDrinkable(item.getStack().getItem())) {
             this.sendPickup(item, 1);
             ItemStack itemStack = EntitiesUtil.getItemFromStack(item);
             this.setStackInHand(Hand.OFF_HAND, itemStack);
@@ -911,7 +914,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
                             item ->
                                     !item.cannotPickup() && item.isAlive()
                                             && ((item.getStack().getItem() == troll.getBarteringItem() && troll.isWandering())
-                                            || troll.isEdible(item.getStack().getItem()) || troll.isAlcohol(item.getStack().getItem())));
+                                            || troll.isEdible(item.getStack()) || troll.isAlcohol(item.getStack().getItem())));
         }
     }
 
@@ -998,7 +1001,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
             return Collections.emptyList();
         }
 
-        LootTable lootTable = troll.getWorld().getServer().getLootManager().getLootTable(this.getTrollLootTable());
+        LootTable lootTable = troll.getWorld().getServer().getReloadableRegistries().getLootTable(this.getTrollLootTable());
         return lootTable.generateLoot(new LootContextParameterSet.Builder((ServerWorld)troll.getWorld()).add(LootContextParameters.THIS_ENTITY, troll).build(LootContextTypes.BARTER));
     }
 
@@ -1028,7 +1031,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
         return -75;
     }
 
-    abstract protected Identifier getTrollLootTable();
+    abstract protected RegistryKey<LootTable> getTrollLootTable();
 
     abstract protected Item getBarteringItem();
 
@@ -1147,7 +1150,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
         }
 
         private boolean canTeleportTo(BlockPos pos) {
-            PathNodeType pathNodeType = LandPathNodeMaker.getLandNodeType(this.world, pos.mutableCopy());
+            PathNodeType pathNodeType = LandPathNodeMaker.getLandNodeType(this.troll, pos.mutableCopy());
             if (pathNodeType != PathNodeType.WALKABLE) {
                 return false;
             }
@@ -1199,7 +1202,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
                             item ->
                                     !item.cannotPickup() && item.isAlive()
                                             && ((item.getStack().getItem() == troll.getBarteringItem() && troll.isWandering())
-                                            || troll.isEdible(item.getStack().getItem()) || troll.isAlcohol(item.getStack().getItem())));
+                                            || troll.isEdible(item.getStack()) || troll.isAlcohol(item.getStack().getItem())));
         }
 
         public void startMovingTo(EntityNavigation navigation, int x, int y, int z, double speed) {
@@ -1383,8 +1386,8 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
                     this.setPersistent();
                 }
 
-                if(foodStack.getFoodComponent()!=null){
-                    this.heal(foodStack.getFoodComponent().getHunger());
+                if(foodStack.contains(DataComponentTypes.FOOD)){
+                    this.heal(Objects.requireNonNull(foodStack.get(DataComponentTypes.FOOD)).nutrition());
                 }
 
                 this.dropStack(foodStack.getItem() == Items.RABBIT_STEW? new ItemStack(Items.BOWL): ItemStack.EMPTY);
@@ -1431,11 +1434,11 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
 
     protected boolean hasFoodOrAlcohol(){
-        return this.isEdible(this.getStackInHand(Hand.OFF_HAND).getItem()) || this.isDrinkable(this.getStackInHand(Hand.OFF_HAND).getItem());
+        return this.isEdible(this.getStackInHand(Hand.OFF_HAND)) || this.isDrinkable(this.getStackInHand(Hand.OFF_HAND).getItem());
     }
 
-    protected boolean isEdible(Item item){
-        return (item.isFood() && Objects.requireNonNull(item.getFoodComponent()).isMeat()) || item == Items.RABBIT_STEW;
+    protected boolean isEdible(ItemStack itemStack){
+        return (itemStack.contains(DataComponentTypes.FOOD) && itemStack.isIn(ItemTags.MEAT) || itemStack.isOf(Items.RABBIT_STEW));
     }
 
     protected boolean isDrinkable(Item item){

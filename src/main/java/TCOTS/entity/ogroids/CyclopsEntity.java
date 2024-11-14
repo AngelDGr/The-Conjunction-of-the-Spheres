@@ -32,11 +32,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class CyclopsEntity extends OgroidMonster implements GeoEntity {
@@ -56,7 +56,6 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public CyclopsEntity(EntityType<? extends CyclopsEntity> entityType, World world) {
         super(entityType, world);
-        this.setStepHeight(1.5f);
         this.experiencePoints=10;
     }
 
@@ -66,15 +65,18 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
     protected static final TrackedData<Boolean> FALLING = DataTracker.registerData(CyclopsEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Float> FALLING_DISTANCE = DataTracker.registerData(CyclopsEntity.class, TrackedDataHandlerRegistry.FLOAT);
 
+
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(FALLING, Boolean.FALSE);
-        this.dataTracker.startTracking(FALLING_DISTANCE, fallDistance);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(FALLING, Boolean.FALSE);
+        builder.add(FALLING_DISTANCE, fallDistance);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.5f)
+
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 45.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.22f)
@@ -248,7 +250,7 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
     }
 
     @Override
-    protected void jump() {
+    public void jump() {
         this.playSound(TCOTS_Sounds.CYCLOPS_ATTACK, 1.0f, 1.0f);
         super.jump();
     }

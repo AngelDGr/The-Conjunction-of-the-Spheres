@@ -4,8 +4,8 @@ import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.necrophages.BullvoreEntity;
 import TCOTS.entity.necrophages.NecrophageMonster;
 import TCOTS.entity.necrophages.RotfiendEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BiomeTags;
@@ -103,8 +103,8 @@ public class BullvoreSpawner implements SpecialSpawner {
     }
 
     private void spawnRotfiend(@NotNull ServerWorld world, BlockPos pos, Random random){
-
-        if (!SpawnHelper.canSpawn(SpawnRestriction.Location.ON_GROUND, world, pos, TCOTS_Entities.ROTFIEND)) {
+        BlockState blockState = world.getBlockState(pos);
+        if (!SpawnHelper.isClearForSpawn(world, pos, blockState, blockState.getFluidState(), TCOTS_Entities.ROTFIEND)) {
             return;
         }
         if (!NecrophageMonster.canSpawnInDarkW(TCOTS_Entities.ROTFIEND, world, SpawnReason.NATURAL, pos, random)) {
@@ -115,7 +115,7 @@ public class BullvoreSpawner implements SpecialSpawner {
         if (rotfiendEntity != null) {
             //Spawn the rotfiend
             rotfiendEntity.setPosition(pos.getX(), pos.getY(), pos.getZ());
-            rotfiendEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.NATURAL, null, null);
+            rotfiendEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.NATURAL, null);
             if(bullvoreEntity!=null) {
                 rotfiendEntity.setOwner(bullvoreEntity);
             }
@@ -176,8 +176,8 @@ public class BullvoreSpawner implements SpecialSpawner {
         ){
             return false;
         }
-
-        if (!SpawnHelper.canSpawn(SpawnRestriction.Location.ON_GROUND, world, pos, TCOTS_Entities.BULLVORE)) {
+        BlockState blockState = world.getBlockState(pos);
+        if (!SpawnHelper.isClearForSpawn(world, pos, blockState, blockState.getFluidState(), TCOTS_Entities.BULLVORE)) {
             return false;
         }
         if (!BullvoreEntity.canSpawnInDarkW(TCOTS_Entities.BULLVORE, world, SpawnReason.NATURAL, pos, random)) {
@@ -187,7 +187,7 @@ public class BullvoreSpawner implements SpecialSpawner {
         if (bullvoreEntity != null) {
             //Spawn the bullvore
             bullvoreEntity.setPosition(pos.getX(), pos.getY(), pos.getZ());
-            bullvoreEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.NATURAL, null, null);
+            bullvoreEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.NATURAL, null);
             world.spawnEntityAndPassengers(bullvoreEntity);
             return true;
         }

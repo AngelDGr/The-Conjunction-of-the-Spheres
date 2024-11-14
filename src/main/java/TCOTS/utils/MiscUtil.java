@@ -2,7 +2,12 @@ package TCOTS.utils;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -57,5 +62,22 @@ public class MiscUtil {
 
     public static int getTimeInTicks(int seconds){
         return seconds*20;
+    }
+
+    /**
+    Get the enchantment level from a specific enchantment
+     @param enchantment The Enchantment to check
+     @param stack The stack to check
+     */
+    public static int getEnchantmentLevel(RegistryKey<Enchantment> enchantment, ItemStack stack) {
+        int level = 0;
+        ItemEnchantmentsComponent itemEnchantmentsComponent = stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT);
+        for (RegistryEntry<Enchantment> entry : itemEnchantmentsComponent.getEnchantments()) {
+            if (entry.matchesKey(enchantment)) {
+                level = itemEnchantmentsComponent.getLevel(entry);
+            }
+        }
+
+        return level;
     }
 }

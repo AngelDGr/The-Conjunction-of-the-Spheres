@@ -1,0 +1,25 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:dwarven_spirit"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    4,
+    3
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:poppy"
+    },
+    {
+      "item": "tcots-witcher:nekker_eye"
+    }
+  ],
+  "order": 0.23000003,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:rook_potion"
+  }
+}

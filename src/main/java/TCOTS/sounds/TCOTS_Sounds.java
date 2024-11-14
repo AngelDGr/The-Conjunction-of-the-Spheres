@@ -3,6 +3,7 @@ package TCOTS.sounds;
 import TCOTS.TCOTS_Main;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
@@ -13,6 +14,7 @@ public class TCOTS_Sounds {
     public static SoundEvent GROUND_PUNCH = registerSoundEvent("ground_punch");
     public static SoundEvent BIG_IMPACT = registerSoundEvent("big_impact");
     public static SoundEvent MEDIUM_IMPACT = registerSoundEvent("medium_impact");
+
 
     //Drowner
     public static SoundEvent DROWNER_ATTACK = registerSoundEvent("drowner_attack");
@@ -31,7 +33,7 @@ public class TCOTS_Sounds {
     public static SoundEvent ROTFIEND_DEATH = registerSoundEvent("rotfiend_death");
     public static SoundEvent ROTFIEND_LUNGE = registerSoundEvent("rotfiend_lunge");
     public static SoundEvent ROTFIEND_EXPLODING = registerSoundEvent("rotfiend_exploding");
-    public static SoundEvent ROTFIEND_BLOOD_EXPLOSION = registerSoundEvent("rotfiend_blood_explosion");
+    public static RegistryEntry.Reference<SoundEvent> ROTFIEND_BLOOD_EXPLOSION = registerReference("rotfiend_blood_explosion");
 
 
     //Grave Hag
@@ -167,8 +169,12 @@ public class TCOTS_Sounds {
     public static SoundEvent BLACK_BLOOD_HIT = registerSoundEvent("black_blood_hit");
 
     private static SoundEvent registerSoundEvent(String name) {
-        Identifier id = new Identifier(TCOTS_Main.MOD_ID, name);
+        Identifier id = Identifier.of(TCOTS_Main.MOD_ID, name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
+    }
+
+    private static RegistryEntry.Reference<SoundEvent> registerReference(String id) {
+        return Registry.registerReference(Registries.SOUND_EVENT, Identifier.of(TCOTS_Main.MOD_ID, id), SoundEvent.of(Identifier.of(TCOTS_Main.MOD_ID, id)));
     }
 
     public static void registerSounds() {

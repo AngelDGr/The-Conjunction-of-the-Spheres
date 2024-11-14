@@ -16,7 +16,8 @@ public class BleedingBlackBloodEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         entity.damage(TCOTS_DamageTypes.bleedDamage(entity.getWorld()), amplifier+1);
+        return super.applyUpdateEffect(entity, amplifier);
     }
 }

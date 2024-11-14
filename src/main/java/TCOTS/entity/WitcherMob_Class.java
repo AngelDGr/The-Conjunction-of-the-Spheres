@@ -13,7 +13,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.animation.RawAnimation;
 
 
 @SuppressWarnings({"unused"})

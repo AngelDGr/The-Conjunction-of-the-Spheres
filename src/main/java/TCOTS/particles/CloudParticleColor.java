@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.MathHelper;
 
 public class CloudParticleColor extends SpriteBillboardParticle {
@@ -50,13 +50,13 @@ public class CloudParticleColor extends SpriteBillboardParticle {
     }
 
     @Environment(value= EnvType.CLIENT)
-    public static class GreenCloudFactory implements ParticleFactory<DefaultParticleType> {
+    public static class GreenCloudFactory implements ParticleFactory<SimpleParticleType> {
         private final SpriteProvider spriteProvider;
         public GreenCloudFactory(SpriteProvider spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
         @Override
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             CloudParticleColor particle = new CloudParticleColor(clientWorld, d, e, f, g, h, i, this.spriteProvider);
             particle.setColor(0.0f, 0.6f, 0.0f);
             particle.setAlpha(0.6f);
@@ -65,13 +65,13 @@ public class CloudParticleColor extends SpriteBillboardParticle {
     }
 
     @Environment(value= EnvType.CLIENT)
-    public static class YellowCloudFactory implements ParticleFactory<DefaultParticleType> {
+    public static class YellowCloudFactory implements ParticleFactory<SimpleParticleType> {
         private final SpriteProvider spriteProvider;
         public YellowCloudFactory(SpriteProvider spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
         @Override
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             CloudParticleColor particle = new CloudParticleColor(clientWorld, d, e, f, g, h, i, this.spriteProvider);
             particle.setColor(0.9f, 0.9f, 0.0f);
             particle.setAlpha(0.6f);

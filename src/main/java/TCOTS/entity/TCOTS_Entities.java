@@ -52,32 +52,32 @@ public class TCOTS_Entities {
     //xTODO: Troll (Forest)
 
 
-    public static final TagKey<EntityType<?>> IGNITING_ENTITIES = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"igniting_entities"));
-    public static final TagKey<EntityType<?>> DIMERITIUM_REMOVAL = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"dimeritium_removal"));
-    public static final TagKey<EntityType<?>> DIMERITIUM_DAMAGE = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID,"dimeritium_damage"));
-    public static final TagKey<EntityType<?>> BOSS_TAG = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("c", "bosses"));
+    public static final TagKey<EntityType<?>> IGNITING_ENTITIES = createTag("igniting_entities");
+    public static final TagKey<EntityType<?>> DIMERITIUM_REMOVAL = createTag("dimeritium_removal");
+    public static final TagKey<EntityType<?>> DIMERITIUM_DAMAGE = createTag("dimeritium_damage");
+    public static final TagKey<EntityType<?>> BOSS_TAG = TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of("c", "bosses"));
 
 
-    public static final WitcherGroup NECROPHAGES = new WitcherGroup("necrophages",0);
-    public static final WitcherGroup OGROIDS = new WitcherGroup("ogroids",1);
-    public static final WitcherGroup SPECTERS = new WitcherGroup("specters",2);
-    public static final WitcherGroup VAMPIRES = new WitcherGroup("vampires",3);
-    public static final WitcherGroup INSECTOIDS = new WitcherGroup("insectoids",4);
-    public static final WitcherGroup BEASTS = new WitcherGroup("beasts",5);
-    public static final WitcherGroup ELEMENTA = new WitcherGroup("elementa",6);
-    public static final WitcherGroup CURSED_ONES = new WitcherGroup("cursed_ones",7);
-    public static final WitcherGroup HYBRIDS = new WitcherGroup("hybrids",8);
-    public static final WitcherGroup DRACONIDS = new WitcherGroup("draconids",9);
-    public static final WitcherGroup RELICTS = new WitcherGroup("relicts",10);
 
+    public static final TagKey<EntityType<?>> NECROPHAGES = createTag("necrophages");
+    public static final TagKey<EntityType<?>> OGROIDS = createTag("ogroids");
+    public static final TagKey<EntityType<?>> SPECTERS = createTag("specters");
+    public static final TagKey<EntityType<?>> VAMPIRES = createTag("vampires");
+    public static final TagKey<EntityType<?>> INSECTOIDS = createTag("insectoid");
+    public static final TagKey<EntityType<?>> BEASTS = createTag("beasts");
+    public static final TagKey<EntityType<?>> ELEMENTA = createTag("elementa");
+    public static final TagKey<EntityType<?>> HYBRIDS = createTag("hybrids");
+    public static final TagKey<EntityType<?>> CURSED_ONES = createTag("cursed_ones");
+    public static final TagKey<EntityType<?>> DRACONIDS = createTag("draconids");
+    public static final TagKey<EntityType<?>> RELICTS = createTag("relicts");
     //Necrophages
     public static final EntityType<DrownerEntity> DROWNER = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "drowner"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "drowner"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DrownerEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
     public static final EntityType<DrownerPuddleEntity> DROWNER_PUDDLE = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "drowner_puddle"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "drowner_puddle"),
             FabricEntityTypeBuilder.<DrownerPuddleEntity>create(SpawnGroup.MISC, DrownerPuddleEntity::new
                     ).fireImmune()
                     // Hitbox
@@ -85,178 +85,187 @@ public class TCOTS_Entities {
 
 
     public static final EntityType<RotfiendEntity> ROTFIEND = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "rotfiend"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "rotfiend"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, RotfiendEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
 
     public static final EntityType<GraveHagEntity> GRAVE_HAG = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "grave_hag"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "grave_hag"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, GraveHagEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
     public static final EntityType<WaterHagEntity> WATER_HAG = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "water_hag"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "water_hag"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, WaterHagEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
     public static final EntityType<WaterHag_MudBallEntity> WATER_HAG_MUD_BALL = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "water_hag_mud_ball"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "water_hag_mud_ball"),
             FabricEntityTypeBuilder.<WaterHag_MudBallEntity>create(SpawnGroup.MISC, WaterHag_MudBallEntity::new
                     )
                     // Hitbox
                     .dimensions(EntityDimensions.changing(0.25f, 0.25f)).build());
 
     public static final EntityType<FogletEntity> FOGLET = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "foglet"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "foglet"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, FogletEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
     public static final EntityType<FoglingEntity> FOGLING = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "fogling"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "fogling"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, FoglingEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
 
 
     public static final EntityType<GhoulEntity> GHOUL = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "ghoul"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, GhoulEntity::new)
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "ghoul"),
+            EntityType.Builder.create(GhoulEntity::new, SpawnGroup.MONSTER)
                     //Hitbox
-                    .dimensions(EntityDimensions.changing(1.4f, 0.9f)).build());
+                    .dimensions(1.4f, 0.9f)
+                    .eyeHeight(0.62f)
+                    .build());
 
     public static final EntityType<AlghoulEntity> ALGHOUL = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "alghoul"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, AlghoulEntity::new)
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "alghoul"),
+            EntityType.Builder.create(AlghoulEntity::new, SpawnGroup.MONSTER)
                     //Hitbox
-                    .dimensions(EntityDimensions.changing(1.8f, 1.2f)).build());
+                    .dimensions(1.8f, 1.2f)
+                    .eyeHeight(0.62f)
+                    .build());
 
     public static final EntityType<ScurverEntity> SCURVER = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "scurver"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "scurver"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, ScurverEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.78f, 1.9f)).build());
     public static final EntityType<ScurverSpineEntity> SCURVER_SPINE =
-            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "scurver_spike"),
+            Registry.register(Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "scurver_spike"),
                     FabricEntityTypeBuilder.<ScurverSpineEntity>create(SpawnGroup.MISC, ScurverSpineEntity::new)
                             .dimensions(EntityDimensions.fixed(0.25f, 0.25f))
                             .trackRangeBlocks(4).trackedUpdateRate(20).build());
 
 
     public static final EntityType<DevourerEntity> DEVOURER = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "devourer"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "devourer"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DevourerEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.85f, 1.8f)).build());
 
     public static final EntityType<GraveirEntity> GRAVEIR = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "graveir"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "graveir"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, GraveirEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.4f, 2.65f)).build());
 
     public static final EntityType<BullvoreEntity> BULLVORE = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "bullvore"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, BullvoreEntity::new)
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "bullvore"),
+            EntityType.Builder.create(BullvoreEntity::new, SpawnGroup.MONSTER)
                     //Hitbox
-                    .dimensions(EntityDimensions.changing(1.9975f, 3.3f)).build());
+                    .dimensions(1.9975f, 3.3f)
+                    .build());
 
     //Ogroids
     public static final EntityType<NekkerEntity> NEKKER = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "nekker"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "nekker"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, NekkerEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.65f, 0.975f)).build());
 
     public static final EntityType<NekkerWarriorEntity> NEKKER_WARRIOR = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "nekker_warrior"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "nekker_warrior"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, NekkerWarriorEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(0.7f, 1.3f)).build());
 
     public static final EntityType<CyclopsEntity> CYCLOPS = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "cyclops"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "cyclops"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, CyclopsEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.9975f, 5.0f)).build());
 
     public static final EntityType<RockTrollEntity> ROCK_TROLL = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "rock_troll"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "rock_troll"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, RockTrollEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.8f, 2.7f)).build());
     public static final EntityType<Troll_RockProjectileEntity> TROLL_ROCK_PROJECTILE = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "troll_projectile"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "troll_projectile"),
             FabricEntityTypeBuilder.<Troll_RockProjectileEntity>create(SpawnGroup.MISC, Troll_RockProjectileEntity::new
                     )
                     // Hitbox
                     .dimensions(EntityDimensions.changing(0.5f, 0.5f)).build());
 
     public static final EntityType<IceTrollEntity> ICE_TROLL = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "ice_troll"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "ice_troll"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, IceTrollEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.8f, 2.7f)).build());
 
     public static final EntityType<ForestTrollEntity> FOREST_TROLL = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "forest_troll"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "forest_troll"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, ForestTrollEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.8f, 2.8f)).build());
 
 
     public static final EntityType<IceGiantEntity> ICE_GIANT = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "ice_giant"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "ice_giant"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, IceGiantEntity::new)
                     //Hitbox
                     .dimensions(EntityDimensions.changing(1.9975f, 4.4f)).build());
     public static final EntityType<AnchorProjectileEntity> ANCHOR_PROJECTILE =
-            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "anchor_projectile"),
-                    FabricEntityTypeBuilder.<AnchorProjectileEntity>create(SpawnGroup.MISC, AnchorProjectileEntity::new)
-                            .dimensions(EntityDimensions.fixed(1.25f, 1.8f))
-                            .trackRangeBlocks(8).trackedUpdateRate(20).fireImmune().build());
+            Registry.register(Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "anchor_projectile"),
+                    EntityType.Builder.<AnchorProjectileEntity>create(AnchorProjectileEntity::new, SpawnGroup.MISC)
+                            .dimensions(1.25f, 1.8f)
+                            .eyeHeight(0.13F)
+                            .maxTrackingRange(8)
+                            .trackingTickInterval(20)
+                            .makeFireImmune()
+                            .build());
 
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "witcher_bomb"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "witcher_bomb"),
             FabricEntityTypeBuilder.<WitcherBombEntity>create(SpawnGroup.MISC, WitcherBombEntity::new)
                     // Hitbox
                     .dimensions(EntityDimensions.changing(0.25f, 0.25f)).build());
 
     public static final EntityType<AreaEffectCloudEntity> AREA_EFFECT_CLOUD = Registry.register(
-            Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "dragons_dream_cloud"),
+            Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "dragons_dream_cloud"),
             FabricEntityTypeBuilder.<AreaEffectCloudEntity>create(SpawnGroup.MISC, DragonsDreamCloud::new).fireImmune()
                     .dimensions(EntityDimensions.changing(6.0f, 1.5f)).build()
             );
 
     public static final EntityType<BaseBoltProjectile> BASE_BOLT =
-            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "base_bolt"),
+            Registry.register(Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "base_bolt"),
                     FabricEntityTypeBuilder.<BaseBoltProjectile>create(SpawnGroup.MISC, BaseBoltProjectile::new)
                             .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
                             .trackRangeBlocks(4).trackedUpdateRate(20).build());
 
     public static final EntityType<BluntBoltProjectile> BLUNT_BOLT =
-            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "blunt_bolt"),
+            Registry.register(Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "blunt_bolt"),
                     FabricEntityTypeBuilder.<BluntBoltProjectile>create(SpawnGroup.MISC, BluntBoltProjectile::new)
                             .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
                             .trackRangeBlocks(4).trackedUpdateRate(20).build());
 
     public static final EntityType<PrecisionBoltProjectile> PRECISION_BOLT =
-            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "precision_bolt"),
+            Registry.register(Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "precision_bolt"),
                     FabricEntityTypeBuilder.<PrecisionBoltProjectile>create(SpawnGroup.MISC, PrecisionBoltProjectile::new)
                             .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
                             .trackRangeBlocks(4).trackedUpdateRate(20).build());
 
     public static final EntityType<ExplodingBoltProjectile> EXPLODING_BOLT =
-            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "exploding_bolt"),
+            Registry.register(Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "exploding_bolt"),
                     FabricEntityTypeBuilder.<ExplodingBoltProjectile>create(SpawnGroup.MISC, ExplodingBoltProjectile::new)
                             .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
                             .trackRangeBlocks(4).trackedUpdateRate(20).build());
 
     public static final EntityType<BroadheadBoltProjectile> BROADHEAD_BOLT =
-            Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "broadhead_bolt"),
+            Registry.register(Registries.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID, "broadhead_bolt"),
                     FabricEntityTypeBuilder.<BroadheadBoltProjectile>create(SpawnGroup.MISC, BroadheadBoltProjectile::new)
                             .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
                             .trackRangeBlocks(4).trackedUpdateRate(20).build());
@@ -266,7 +275,7 @@ public class TCOTS_Entities {
         {
             //Drowners
             {
-                SpawnRestriction.register(DROWNER, SpawnRestriction.Location.NO_RESTRICTIONS,
+                SpawnRestriction.register(DROWNER, SpawnLocationTypes.UNRESTRICTED,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DrownerEntity::canSpawnDrowner);
 
                 //In swamps
@@ -288,7 +297,7 @@ public class TCOTS_Entities {
 
             //Rotfiends
             {
-                SpawnRestriction.register(ROTFIEND, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(ROTFIEND, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RotfiendEntity::canSpawnInDarkW);
 
                 //In night
@@ -302,7 +311,7 @@ public class TCOTS_Entities {
 
             //Foglets
             {
-                SpawnRestriction.register(FOGLET, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(FOGLET, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, FogletEntity::canSpawnInDark_NotCaves);
 
                 //In swamps/rivers
@@ -325,7 +334,7 @@ public class TCOTS_Entities {
 
             //Water Hags
             {
-                SpawnRestriction.register(WATER_HAG, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(WATER_HAG, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DrownerEntity::canSpawnDrowner);
 
                 //In swamps
@@ -340,7 +349,7 @@ public class TCOTS_Entities {
 
             //Grave Hags
             {
-                SpawnRestriction.register(GRAVE_HAG, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(GRAVE_HAG, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GraveHagEntity::canSpawnInDarkNotBelowDeepslate);
 
                 //In night
@@ -354,7 +363,7 @@ public class TCOTS_Entities {
 
             //Ghouls & Alghouls
             {
-                SpawnRestriction.register(GHOUL, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(GHOUL, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GhoulEntity::canSpawnGhoul);
 
                 //In night
@@ -367,7 +376,7 @@ public class TCOTS_Entities {
 
             //Scurvers
             {
-                SpawnRestriction.register(SCURVER, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(SCURVER, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ScurverEntity::canSpawnInDarkW);
 
                 //In night
@@ -381,7 +390,7 @@ public class TCOTS_Entities {
 
             //Devourer
             {
-                SpawnRestriction.register(DEVOURER, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(DEVOURER, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DevourerEntity::canSpawnInDarkW);
 
                 //In night
@@ -394,7 +403,7 @@ public class TCOTS_Entities {
 
             //Graveir
             {
-                SpawnRestriction.register(GRAVEIR, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(GRAVEIR, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GraveirEntity::canSpawnGraveir);
 
                 //In Caves
@@ -407,7 +416,7 @@ public class TCOTS_Entities {
 
             //Bullvore
             {
-                SpawnRestriction.register(BULLVORE, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(BULLVORE, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BullvoreEntity::canSpawnInDarkW);
             }
         }
@@ -416,7 +425,7 @@ public class TCOTS_Entities {
         {
             //Nekkers
             {
-                SpawnRestriction.register(NEKKER, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(NEKKER, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NekkerEntity::canSpawnNekker);
 
                 //In night
@@ -430,7 +439,7 @@ public class TCOTS_Entities {
 
             //Cyclops
             {
-                SpawnRestriction.register(CYCLOPS, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(CYCLOPS, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CyclopsEntity::canCyclopsSpawn);
 
                 //In snowy plains/mountains/taigas
@@ -448,7 +457,7 @@ public class TCOTS_Entities {
 
             //Rock Troll
             {
-                SpawnRestriction.register(ROCK_TROLL, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(ROCK_TROLL, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RockTrollEntity::canSpawnInDarkNotBelowDeepslate);
 
                 //In mountains/taigas
@@ -464,7 +473,7 @@ public class TCOTS_Entities {
 
             //Ice Troll
             {
-                SpawnRestriction.register(ICE_TROLL, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(ICE_TROLL, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, IceTrollEntity::canSpawnInDarkNotBelowDeepslate);
                 //In snowy plains/mountains/taigas
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -478,7 +487,7 @@ public class TCOTS_Entities {
 
             //Forest Troll
             {
-                SpawnRestriction.register(FOREST_TROLL, SpawnRestriction.Location.ON_GROUND,
+                SpawnRestriction.register(FOREST_TROLL, SpawnLocationTypes.ON_GROUND,
                         Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ForestTrollEntity::canSpawnInDarkNotBelowDeepslate);
                 //In forests
                 BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
@@ -553,5 +562,9 @@ public class TCOTS_Entities {
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.ICE_GIANT, IceGiantEntity.setAttributes());
 
         }
+    }
+
+    public static TagKey<EntityType<?>> createTag(String name){
+        return TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID,name));
     }
 }

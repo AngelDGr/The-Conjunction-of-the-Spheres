@@ -4,9 +4,9 @@ import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
 import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.animatable.GeoAnimatable;
+import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
@@ -45,11 +45,11 @@ public abstract class BipedGeoModelBase<T extends GeoAnimatable> extends GeoMode
     @Override
     public void setCustomAnimations(T entity, long instanceId, AnimationState<T> animationState) {
         if(entity instanceof MobEntity mob){
-            CoreGeoBone head = hasNormalHead(entity)? getAnimationProcessor().getBone("head"): null;
-            CoreGeoBone left_leg =  getAnimationProcessor().getBone("left_leg_swing");
-            CoreGeoBone right_leg = getAnimationProcessor().getBone("right_leg_swing");
-            CoreGeoBone left_arm =  getAnimationProcessor().getBone("left_arm_swing");
-            CoreGeoBone right_arm = getAnimationProcessor().getBone("right_arm_swing");
+            GeoBone head = hasNormalHead(entity)? getAnimationProcessor().getBone("head"): null;
+            GeoBone left_leg =  getAnimationProcessor().getBone("left_leg_swing");
+            GeoBone right_leg = getAnimationProcessor().getBone("right_leg_swing");
+            GeoBone left_arm =  getAnimationProcessor().getBone("left_arm_swing");
+            GeoBone right_arm = getAnimationProcessor().getBone("right_arm_swing");
 
 
             if (head != null) {

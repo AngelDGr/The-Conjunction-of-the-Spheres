@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:tcots-witcher/craft_potion",
+  "criteria": {
+    "max_toxicity": {
+      "trigger": "minecraft:tcots-witcher/max_toxicity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.max_toxicity.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "tcots-witcher:nest_skull"
+    },
+    "title": {
+      "translate": "advancements.witcher.max_toxicity.title"
+    }
+  },
+  "requirements": [
+    [
+      "max_toxicity"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

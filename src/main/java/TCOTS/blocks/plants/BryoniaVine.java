@@ -14,6 +14,7 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -22,7 +23,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
-@SuppressWarnings("deprecation")
+
 public class BryoniaVine extends MultifaceGrowthBlock implements Fertilizable {
     public static final MapCodec<BryoniaVine> CODEC = BryoniaVine.createCodec(BryoniaVine::new);
     private final LichenGrower grower = new LichenGrower(this);
@@ -70,12 +71,17 @@ public class BryoniaVine extends MultifaceGrowthBlock implements Fertilizable {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        int age = state.get(AGE);
+    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        int i = state.get(AGE);
+        boolean bl = i == 3;
+        return !bl && stack.isOf(Items.BONE_MEAL)
+                ? ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION
+                : super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+    }
 
-        if (!(age == 3) && player.getStackInHand(hand).isOf(Items.BONE_MEAL)) {
-            return ActionResult.PASS;
-        }
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        int age = state.get(AGE);
         int j=0;
         if (age > 2) {
             for(Direction direction : DIRECTIONS){
@@ -93,7 +99,7 @@ public class BryoniaVine extends MultifaceGrowthBlock implements Fertilizable {
             world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(player, blockState));
             return ActionResult.success(world.isClient);
         }
-        return super.onUse(state, world, pos, player, hand, hit);
+        return super.onUse(state, world, pos, player, hit);
     }
 
     @Override

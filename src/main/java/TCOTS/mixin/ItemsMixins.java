@@ -10,13 +10,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,12 +42,10 @@ public class ItemsMixins {
 
     //Adds particles when using in the Nest Spawner
     @Mixin(SpawnEggItem.class)
-    public static class SpawnEggItemMixin {
+    public static abstract class SpawnEggItemMixin {
 
-        @Shadow
-        public EntityType<?> getEntityType(@Nullable NbtCompound nbt) {
-            return null;
-        }
+
+        @Shadow public abstract EntityType<?> getEntityType(ItemStack stack);
 
         @Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
         public void InjectInMonsterNest(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir){
@@ -60,7 +56,7 @@ public class ItemsMixins {
             ItemStack itemStack = context.getStack();
             if (blockState.isOf(TCOTS_Blocks.MONSTER_NEST) && (blockEntity = world.getBlockEntity(blockPos)) instanceof MonsterNestBlockEntity) {
                 MonsterNestBlockEntity mobSpawnerBlockEntity = (MonsterNestBlockEntity)blockEntity;
-                EntityType<?> entityType = this.getEntityType(itemStack.getNbt());
+                EntityType<?> entityType = this.getEntityType(itemStack);
                 mobSpawnerBlockEntity.setEntityType(entityType, world.getRandom());
                 blockEntity.markDirty();
                 world.updateListeners(blockPos, blockState, blockState, Block.NOTIFY_ALL);

@@ -11,11 +11,11 @@ public class TrollDecoctionEffect extends DecoctionEffectBase{
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier){
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier){
         if (entity.getHealth() < entity.getMaxHealth()) {
             entity.heal(0.05F * (float) (amplifier + 1));
         }
 
-        super.applyUpdateEffect(entity, amplifier);
+       return super.applyUpdateEffect(entity, amplifier);
     }
 }

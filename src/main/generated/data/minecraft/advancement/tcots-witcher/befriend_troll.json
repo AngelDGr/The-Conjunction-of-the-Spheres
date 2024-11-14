@@ -1,0 +1,67 @@
+{
+  "parent": "minecraft:tcots-witcher/hunting",
+  "criteria": {
+    "befriend_forest": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots-witcher:forest_troll"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tcots-witcher/get_troll_follower"
+    },
+    "befriend_ice": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots-witcher:ice_troll"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tcots-witcher/get_troll_follower"
+    },
+    "befriend_rock": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots-witcher:rock_troll"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tcots-witcher/get_troll_follower"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.befriend_troll.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "tcots-witcher:village_herbal"
+    },
+    "title": {
+      "translate": "advancements.witcher.befriend_troll.title"
+    }
+  },
+  "requirements": [
+    [
+      "befriend_rock",
+      "befriend_ice",
+      "befriend_forest"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

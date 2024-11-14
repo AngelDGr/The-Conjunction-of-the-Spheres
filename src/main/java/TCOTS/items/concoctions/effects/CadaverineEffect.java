@@ -1,12 +1,13 @@
 package TCOTS.items.concoctions.effects;
 
+import TCOTS.utils.EntitiesUtil;
 import TCOTS.world.TCOTS_DamageTypes;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 public class CadaverineEffect extends StatusEffect {
     public CadaverineEffect(StatusEffectCategory category, int color) {
@@ -14,14 +15,19 @@ public class CadaverineEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        super.applyUpdateEffect(entity, amplifier);
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         float damageAmount = entity instanceof IronGolemEntity ? 3f: entity instanceof ZombieEntity? 2f: 1f;
 
         boolean damage = entity.damage(TCOTS_DamageTypes.cadaverineDamage(entity.getWorld()), damageAmount);
         if (damage)
-            entity.getArmorItems().forEach(armor -> armor.damage(3, entity.getRandom(), entity instanceof ServerPlayerEntity player? player: null));
+            EntitiesUtil.damageEquipment(entity, TCOTS_DamageTypes.cadaverineDamage(entity.getWorld()), 1,
+                    EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD,
+                    EquipmentSlot.BODY);
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
+
+
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {

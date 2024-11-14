@@ -1,0 +1,21 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "minecraft:gunpowder"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    2
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "order": 0.40999988,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:dancing_star"
+  }
+}

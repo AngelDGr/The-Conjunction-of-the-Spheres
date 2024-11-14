@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:tcots-witcher/craft_bomb",
+  "criteria": {
+    "dragons_dream_burning": {
+      "trigger": "minecraft:tcots-witcher/dragons_dream_burning"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.dragons_dream_burning.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "tcots-witcher:dragons_dream_superior"
+    },
+    "title": {
+      "translate": "advancements.witcher.dragons_dream_burning.title"
+    }
+  },
+  "requirements": [
+    [
+      "dragons_dream_burning"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  },
+  "sends_telemetry_event": true
+}

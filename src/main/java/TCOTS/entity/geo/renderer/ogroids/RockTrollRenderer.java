@@ -20,6 +20,7 @@ import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.layer.BlockAndItemGeoLayer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
+import software.bernie.geckolib.util.Color;
 
 
 public class RockTrollRenderer extends GeoEntityRenderer<RockTrollEntity> {
@@ -33,7 +34,7 @@ public class RockTrollRenderer extends GeoEntityRenderer<RockTrollEntity> {
 
         //Rabid eyes
         addRenderLayer(new GeoRenderLayer<>(this) {
-            private static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID, "textures/entity/ogroids/troll/rock_rabid_eyes.png");
+            private static final Identifier TEXTURE = Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/ogroids/troll/rock_rabid_eyes.png");
 
             @Override
             public void render(MatrixStack poseStack, RockTrollEntity animatable, BakedGeoModel bakedModel, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
@@ -42,7 +43,7 @@ public class RockTrollRenderer extends GeoEntityRenderer<RockTrollEntity> {
 
                     getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, armorRenderType,
                             bufferSource.getBuffer(armorRenderType), partialTick, packedLight, OverlayTexture.DEFAULT_UV,
-                            1, 1, 1, 1f);
+                            Color.ofARGB(1,1,1,1).argbInt());
                 }
             }
         });
@@ -97,8 +98,8 @@ public class RockTrollRenderer extends GeoEntityRenderer<RockTrollEntity> {
     }
 
     @Override
-    public void preRender(MatrixStack poseStack, RockTrollEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+    public void preRender(MatrixStack poseStack, RockTrollEntity animatable, BakedGeoModel model, @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
 
         this.mainHandItem = animatable.getMainHandStack();
         this.offhandItem = animatable.getOffHandStack();

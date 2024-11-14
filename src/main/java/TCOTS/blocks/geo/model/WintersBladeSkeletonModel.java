@@ -6,29 +6,30 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SkullBlock;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationPropertyHelper;
-import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.model.GeoModel;
 
 public class WintersBladeSkeletonModel extends GeoModel<WintersBladeSkeletonBlockEntity> {
     @Override
     public Identifier getModelResource(WintersBladeSkeletonBlockEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/block/winters_blade_skeleton.geo.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "geo/block/winters_blade_skeleton.geo.json");
     }
+
 
     @Override
     public Identifier getTextureResource(WintersBladeSkeletonBlockEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/block/winters_blade_skeleton.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/block/winters_blade_skeleton.png");
     }
 
     @Override
     public Identifier getAnimationResource(WintersBladeSkeletonBlockEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 
     @Override
     public void setCustomAnimations(WintersBladeSkeletonBlockEntity animatable, long instanceId, AnimationState<WintersBladeSkeletonBlockEntity> animationState) {
-        CoreGeoBone block = getAnimationProcessor().getBone("block");
+        GeoBone block = getAnimationProcessor().getBone("block");
 
         BlockState blockState = animatable.getCachedState();
 

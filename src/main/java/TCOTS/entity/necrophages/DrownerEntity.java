@@ -47,9 +47,9 @@ import net.minecraft.world.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
@@ -556,24 +556,21 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(SWIM, Boolean.FALSE);
-        this.dataTracker.startTracking(LUGGING, Boolean.FALSE);
-        this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
-        this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
-        this.dataTracker.startTracking(SPAWNED_PUDDLE, Boolean.FALSE);
-        this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(SWIM, Boolean.FALSE);
+        builder.add(LUGGING, Boolean.FALSE);
+        builder.add(InGROUND, Boolean.FALSE);
+        builder.add(EMERGING, Boolean.FALSE);
+        builder.add(SPAWNED_PUDDLE, Boolean.FALSE);
+        builder.add(INVISIBLE, Boolean.FALSE);
     }
 
     @Override
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        if(this.getInGround()){
-            return 0.1f;
-        } else {
-            return super.getActiveEyeHeight(pose, dimensions);
-        }
+    protected EntityDimensions getBaseDimensions(EntityPose pose) {
+        return this.getInGround()? this.getType().getDimensions().withEyeHeight(0.1f): super.getBaseDimensions(pose);
     }
+
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);

@@ -1,0 +1,21 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:swallow_potion"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+  "order": 0.04,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:swallow_splash"
+  }
+}

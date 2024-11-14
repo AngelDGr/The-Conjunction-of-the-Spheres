@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "tcots-witcher:base_bolt"
+    },
+    "L": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "minecraft:gold_block"
+    },
+    "T": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "pattern": [
+    "  P",
+    "L# ",
+    "TL "
+  ],
+  "result": {
+    "count": 2,
+    "id": "tcots-witcher:blunt_bolt"
+  }
+}

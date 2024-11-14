@@ -7,24 +7,24 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.model.data.EntityModelData;
 
 public class FogletModel extends BipedGeoModelBase<FogletEntity> {
     @Override
     public Identifier getModelResource(FogletEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/necrophages/foglet.geo.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "geo/necrophages/foglet.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(FogletEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/foglet/foglet.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/foglet/foglet.png");
     }
 
     @Override
     public Identifier getAnimationResource(FogletEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/necrophages/foglet.animation.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "animations/necrophages/foglet.animation.json");
     }
 
     @Override
@@ -51,7 +51,7 @@ public class FogletModel extends BipedGeoModelBase<FogletEntity> {
     public void setCustomAnimations(FogletEntity entity, long instanceId, AnimationState<FogletEntity> animationState) {
         super.setCustomAnimations(entity,instanceId,animationState);
 
-        CoreGeoBone head = getAnimationProcessor().getBone("head");
+        GeoBone head = getAnimationProcessor().getBone("head");
         if (head != null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
             if(animationState.isMoving()){

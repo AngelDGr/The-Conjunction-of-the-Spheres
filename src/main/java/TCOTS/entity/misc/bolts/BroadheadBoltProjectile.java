@@ -9,16 +9,22 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class BroadheadBoltProjectile extends WitcherBolt {
     private static final ItemStack DEFAULT_STACK = new ItemStack(TCOTS_Items.BROADHEAD_BOLT);
     public BroadheadBoltProjectile(EntityType<? extends BroadheadBoltProjectile> entityType, World world) {
-        super(entityType, world, DEFAULT_STACK);
+        super(entityType, world);
     }
 
-    public BroadheadBoltProjectile(World world, LivingEntity owner, ItemStack stack) {
-        super(TCOTS_Entities.BROADHEAD_BOLT, owner, world, stack);
+    public BroadheadBoltProjectile(World world, LivingEntity owner, ItemStack stack, @Nullable ItemStack weapon) {
+        super(TCOTS_Entities.BROADHEAD_BOLT, owner, world, stack, weapon);
         setDamage(2.8);
+    }
+
+    @Override
+    protected ItemStack getDefaultItemStack() {
+        return DEFAULT_STACK;
     }
 
     @Override

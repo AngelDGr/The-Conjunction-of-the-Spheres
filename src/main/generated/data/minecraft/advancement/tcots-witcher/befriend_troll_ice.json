@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:tcots-witcher/befriend_troll",
+  "criteria": {
+    "befriend_troll_ice": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots-witcher:ice_troll"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tcots-witcher/get_troll_follower"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.befriend_troll_ice.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:packed_ice"
+    },
+    "title": {
+      "translate": "advancements.witcher.befriend_troll_ice.title"
+    }
+  },
+  "requirements": [
+    [
+      "befriend_troll_ice"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

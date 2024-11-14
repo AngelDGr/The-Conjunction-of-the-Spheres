@@ -13,22 +13,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
-import software.bernie.geckolib.animatable.client.RenderProvider;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class NestSkullItem extends BlockItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
-    private final Supplier<Object> renderProvider= GeoItem.makeRenderer(this);
 
     protected final Block wallBlock;
     private final Direction verticalAttachmentDirection;
@@ -40,24 +38,17 @@ public class NestSkullItem extends BlockItem implements GeoItem {
     }
 
     @Override
-    public void createRenderer(Consumer<Object> consumer) {
-        consumer.accept(new RenderProvider() {
+    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+        consumer.accept(new GeoRenderProvider() {
 
             private final NestSkullItemRenderer renderer = new NestSkullItemRenderer();
 
             @Override
-            public BuiltinModelItemRenderer getCustomRenderer() {
+            public @NotNull BuiltinModelItemRenderer getGeoItemRenderer() {
                 return this.renderer;
             }
         });
     }
-
-
-    @Override
-    public Supplier<Object> getRenderProvider() {
-        return renderProvider;
-    }
-
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {

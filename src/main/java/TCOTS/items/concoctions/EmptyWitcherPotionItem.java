@@ -1,15 +1,13 @@
 package TCOTS.items.concoctions;
 
-import net.minecraft.client.item.TooltipContext;
+import TCOTS.items.TCOTS_Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -23,23 +21,25 @@ public class EmptyWitcherPotionItem extends Item {
     @SuppressWarnings("all")
     @Override
     public Text getName(ItemStack stack) {
-        NbtCompound nbtCompound = stack.getNbt();
+        if(!stack.contains(TCOTS_Items.REFILL_RECIPE)){
+            return Text.translatable("item.tcots-witcher.empty_witcher_potion", "Missigno");
+        }
+        String potionToRefill = stack.get(TCOTS_Items.REFILL_RECIPE);
 
-        if(nbtCompound != null && nbtCompound.contains("Potion")){
-            Item potion = Registries.ITEM.get(new Identifier(nbtCompound.getString("Potion")));
-
+        if(potionToRefill != null){
+            Item potion = Registries.ITEM.get(Identifier.of(potionToRefill));
             if(potion!=null){
                 return Text.translatable("item.tcots-witcher.empty_witcher_potion", potion.getName().getString());}
-            else{return Text.translatable("item.tcots-witcher.empty_witcher_potion", "Missigno");}
+            else{
+                return Text.translatable("item.tcots-witcher.empty_witcher_potion", "Missigno");}
         }
         else{
             return Text.translatable("item.tcots-witcher.empty_witcher_potion", "Missigno");}
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.translatable("tooltip.tcots-witcher.empty_witcher_bottle_1").formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("tooltip.tcots-witcher.empty_witcher_bottle_2").formatted(Formatting.GRAY));
     }
-
 }

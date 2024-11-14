@@ -25,8 +25,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.loot.LootTable;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LocalDifficulty;
@@ -35,10 +37,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.util.GeckoLibUtil;
-
-import java.util.UUID;
 
 public class IceTrollEntity extends RockTrollEntity {
     //xTODO: Add drops
@@ -52,6 +52,8 @@ public class IceTrollEntity extends RockTrollEntity {
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0)
+
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 50.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.22f)
@@ -115,9 +117,8 @@ public class IceTrollEntity extends RockTrollEntity {
         this.targetSelector.add(9, new TrollUniversalAngerGoal<>(this, true));
     }
 
-    @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public @Nullable EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
         if(spawnReason == SpawnReason.NATURAL){
             //1/2 probability to be a rabid troll if it's a natural spawn
             if(random.nextInt()%2==0){
@@ -131,7 +132,7 @@ public class IceTrollEntity extends RockTrollEntity {
             }
         }
 
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.initialize(world, difficulty, spawnReason, entityData);
     }
 
     @Override
@@ -207,8 +208,8 @@ public class IceTrollEntity extends RockTrollEntity {
 
     //xTODO: Modify this Loot Table
     @Override
-    protected Identifier getTrollLootTable() {
-        return new Identifier(TCOTS_Main.MOD_ID,"gameplay/ice_troll_bartering");
+    protected RegistryKey<LootTable> getTrollLootTable() {
+        return RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of(TCOTS_Main.MOD_ID,"gameplay/ice_troll_bartering"));
     }
 
     @Override
@@ -300,9 +301,10 @@ public class IceTrollEntity extends RockTrollEntity {
             }
         }
     }
-
-    private static final UUID BLIZZARD_STRENGTH_BOOST_ID = UUID.fromString("6120c998-43c2-4e54-a337-8b4a95ce81de");
-    private static final EntityAttributeModifier BLIZZARD_STRENGTH_BOOST = new EntityAttributeModifier(BLIZZARD_STRENGTH_BOOST_ID, "Blizzard strength boost", 4.0f, EntityAttributeModifier.Operation.ADDITION);
+    private static final EntityAttributeModifier BLIZZARD_STRENGTH_BOOST = new EntityAttributeModifier(
+            Identifier.of(TCOTS_Main.MOD_ID,"troll_blizzard_strength_boost"),
+            4.0f,
+            EntityAttributeModifier.Operation.ADD_VALUE);
 
     @Override
     protected void mobTick() {
@@ -312,12 +314,12 @@ public class IceTrollEntity extends RockTrollEntity {
         if(this.isSnowing()){
             EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
             if(entityAttributeInstance!=null) {
-                entityAttributeInstance.removeModifier(BLIZZARD_STRENGTH_BOOST.getId());
+                entityAttributeInstance.removeModifier(BLIZZARD_STRENGTH_BOOST.id());
                 entityAttributeInstance.addTemporaryModifier(BLIZZARD_STRENGTH_BOOST);
             }
         } else {
             EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-            if(entityAttributeInstance!=null) entityAttributeInstance.removeModifier(BLIZZARD_STRENGTH_BOOST.getId());
+            if(entityAttributeInstance!=null) entityAttributeInstance.removeModifier(BLIZZARD_STRENGTH_BOOST.id());
         }
     }
     private boolean isSnowing(){

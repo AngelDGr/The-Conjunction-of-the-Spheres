@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
@@ -41,7 +41,7 @@ public class SkeletonBlock extends BlockWithEntity {
         super(settings);
     }
     public SkeletonBlock() {
-        this(FabricBlockSettings.create().strength(2.0f).sounds(BlockSoundGroup.BONE).instrument(Instrument.XYLOPHONE).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque());
+        this(FabricBlockSettings.create().strength(2.0f).sounds(BlockSoundGroup.BONE).instrument(NoteBlockInstrument.XYLOPHONE).pistonBehavior(PistonBehavior.DESTROY).noCollision().nonOpaque());
         this.setDefaultState(this.getDefaultState().with(HAS_ARMOR, false)
                 .with(ROTATION, RotationPropertyHelper.fromDirection(Direction.NORTH))
                 .with(SHAPE, 0)
@@ -100,11 +100,11 @@ public class SkeletonBlock extends BlockWithEntity {
     }
 
     @Override
-    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         if (type == NavigationType.AIR && !this.collidable) {
             return true;
         }
-        return super.canPathfindThrough(state, world, pos, type);
+        return super.canPathfindThrough(state, type);
     }
 
     @Nullable

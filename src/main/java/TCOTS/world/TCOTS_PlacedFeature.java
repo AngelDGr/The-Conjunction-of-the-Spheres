@@ -182,6 +182,6 @@ public class TCOTS_PlacedFeature {
     }
 
     public static RegistryKey<PlacedFeature> registerKey(String name) {
-        return RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(TCOTS_Main.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of(TCOTS_Main.MOD_ID, name));
     }
 }

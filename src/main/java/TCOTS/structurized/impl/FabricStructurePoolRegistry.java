@@ -59,7 +59,7 @@ public class FabricStructurePoolRegistry {
     }
 
     public static void registerList(Identifier poolId, int weight, ListPoolElement listPoolElement){
-        register(poolId,new Identifier("minecraft:air"),weight,StructureProcessorLists.EMPTY, StructurePool.Projection.RIGID,StructurePoolElementType.LIST_POOL_ELEMENT);
+        register(poolId,Identifier.of("minecraft:air"),weight,StructureProcessorLists.EMPTY, StructurePool.Projection.RIGID,StructurePoolElementType.LIST_POOL_ELEMENT);
         list_structures.put(poolId.toString(), listPoolElement);
     }
 
@@ -88,7 +88,7 @@ public class FabricStructurePoolRegistry {
 
     private static void addToPool(FabricStructurePool structurePool, Quintuple<String,String,RegistryKey<StructureProcessorList>,String, Integer> quint, String key, RegistryEntryLookup<StructureProcessorList> registryEntryLookup){
         List<StructurePoolElement> spe = new LinkedList<>();
-        StructurePoolElementType<?> type = Registries.STRUCTURE_POOL_ELEMENT.get(new Identifier(quint.b));
+        StructurePoolElementType<?> type = Registries.STRUCTURE_POOL_ELEMENT.get(Identifier.of(quint.b));
         if (Objects.equals(type, StructurePoolElementType.SINGLE_POOL_ELEMENT)){
             RegistryEntry<StructureProcessorList> entry = registryEntryLookup.getOrThrow(quint.c);
             spe.add(StructurePoolElement.ofProcessedSingle(quint.a,entry).apply(StructurePool.Projection.getById(quint.d)));

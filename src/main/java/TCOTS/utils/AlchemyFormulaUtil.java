@@ -1,6 +1,9 @@
 package TCOTS.utils;
 
 import TCOTS.items.TCOTS_Items;
+import TCOTS.items.components.RecipeTeacherComponent;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -12,7 +15,7 @@ public class AlchemyFormulaUtil {
     @param id ID of the recipe to apply
      */
     public static ItemStack setFormula(Identifier id) {
-        return setFormula( id, false);
+        return setFormula(id, false);
     }
 
     /**
@@ -23,8 +26,8 @@ public class AlchemyFormulaUtil {
     public static ItemStack setFormula(Identifier id, boolean decoction) {
         ItemStack stack = new ItemStack(TCOTS_Items.ALCHEMY_FORMULA);
 
-        stack.getOrCreateNbt().putString("FormulaID", id.toString());
-        stack.getOrCreateNbt().putBoolean("Decoction", decoction);
+        RecipeTeacherComponent.set(stack, id.toString(), decoction);
+
         return stack;
     }
 

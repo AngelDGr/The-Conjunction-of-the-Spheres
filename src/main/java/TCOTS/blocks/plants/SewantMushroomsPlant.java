@@ -30,7 +30,6 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 
 import java.util.function.BiFunction;
 
-@SuppressWarnings("deprecation")
 public class SewantMushroomsPlant extends MushroomPlantBlock {
 
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;

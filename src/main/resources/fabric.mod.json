@@ -36,9 +36,9 @@
 	],
 	"accessWidener" : "tcots-witcher.accesswidener",
 	"depends": {
-		"fabricloader": ">=0.15.0",
-		"minecraft": "~1.20.1",
-		"java": ">=17",
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21",
+		"java": ">=21",
 		"fabric-api": "*",
 		"geckolib": ">=4.2",
 		"owo": "*",
@@ -55,8 +55,7 @@
 		},
 		"loom:injected_interfaces": {
 			"net/minecraft/class_1309": 		 	  ["TCOTS/interfaces/LivingEntityMixinInterface"],
-			"net/minecraft/class_1657": 		 	  ["TCOTS/interfaces/PlayerEntityMixinInterface"],
-			"net/minecraft/class_20":   			  ["TCOTS/interfaces/MapIconMixinInterface"]
+			"net/minecraft/class_1657": 		 	  ["TCOTS/interfaces/PlayerEntityMixinInterface"]
 		}
 	}
 }

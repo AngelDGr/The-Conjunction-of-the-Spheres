@@ -22,7 +22,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
+
 public class NestSkullBlock extends BlockWithEntity implements Equipment {
 
     public static final MapCodec<NestSkullBlock> CODEC = NestSkullBlock.createCodec(NestSkullBlock::new);
@@ -91,9 +91,8 @@ public class NestSkullBlock extends BlockWithEntity implements Equipment {
         return super.calcBlockBreakingDelta(state, player, world, pos);
     }
 
-
     @Override
-    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         return false;
     }
 

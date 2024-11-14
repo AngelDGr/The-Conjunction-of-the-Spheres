@@ -3,16 +3,21 @@ package TCOTS.items;
 import TCOTS.entity.misc.WaterHag_MudBallEntity;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ProjectileItem;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
-public class WaterHag_MudBallItem extends Item {
-    public WaterHag_MudBallItem(Settings settings) {
+public class WaterHag_MudBallItem extends Item implements ProjectileItem {
+    public WaterHag_MudBallItem(Item.Settings settings) {
         super(settings);
     }
 
@@ -31,5 +36,10 @@ public class WaterHag_MudBallItem extends Item {
             itemStack.decrement(1);
         }
         return TypedActionResult.success(itemStack, world.isClient());
+    }
+
+    @Override
+    public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
+        return Util.make(new WaterHag_MudBallEntity(world, pos.getX(), pos.getY(), pos.getZ()), entity -> entity.setItem(stack));
     }
 }

@@ -5,9 +5,10 @@ import TCOTS.items.concoctions.effects.WitcherPotionEffect;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.AttributeModifierCreator;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffect;
@@ -17,7 +18,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.PotionItem;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
@@ -27,11 +30,9 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class WitcherPotions_Base extends PotionItem {
@@ -56,15 +57,6 @@ public class WitcherPotions_Base extends PotionItem {
         }
     }
 
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        return switch (effectInstance.getAmplifier()) {
-            case 0 -> Rarity.COMMON;
-            case 1, 2 -> Rarity.UNCOMMON;
-            default -> super.getRarity(stack);
-        };
-    }
-
     public StatusEffectInstance getStatusEffect(){
         return effectInstance;
     }
@@ -76,7 +68,7 @@ public class WitcherPotions_Base extends PotionItem {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        PlayerEntity playerEntity = user instanceof PlayerEntity ? (PlayerEntity) user : null;
+        PlayerEntity playerEntity = user instanceof PlayerEntity ? (PlayerEntity)user : null;
         if (playerEntity instanceof ServerPlayerEntity) {
             //Add toxicity
             playerEntity.theConjunctionOfTheSpheres$addToxicity(getToxicity(),decoction);
@@ -85,22 +77,24 @@ public class WitcherPotions_Base extends PotionItem {
         }
 
         if (!world.isClient) {
-            if(getStatusEffect().getEffectType().isInstant()){
-                this.getStatusEffect().getEffectType().applyInstantEffect(user, user, user, this.getStatusEffect().getAmplifier(), 1.0);}
-            else{user.addStatusEffect(new StatusEffectInstance(getStatusEffect()));}
+            for(StatusEffectInstance effect : this.getPotionEffects()) {
+                if(effect.getEffectType().value().isInstant()){
+                    effect.getEffectType().value().applyInstantEffect(playerEntity, playerEntity, user, effect.getAmplifier(), 1.0);
+                }
+                else{
+                    user.addStatusEffect(new StatusEffectInstance(effect));
+                }
+            }
         }
 
         if (playerEntity != null) {
             playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
-            if (!playerEntity.getAbilities().creativeMode) {
-                stack.decrement(1);
-            }
+            stack.decrementUnlessCreative(1, playerEntity);
         }
+
         user.emitGameEvent(GameEvent.DRINK);
 
         ItemStack stack_Empty = getStackEmptyBottle(this);
-
-
 
         if (stack.isEmpty()) {
             return stack_Empty;
@@ -119,18 +113,16 @@ public class WitcherPotions_Base extends PotionItem {
 
     @NotNull
     public static ItemStack getStackEmptyBottle(WitcherPotions_Base item) {
-        ItemStack stack_Empty;
+        ItemStack stack_Empty=new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION);
 
         if(!item.decoction){
-            stack_Empty = switch (item.getMaxCount()) {
-                default -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_2);
-                case 3 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_3);
-                case 4 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_4);
-                case 5 -> new ItemStack(TCOTS_Items.EMPTY_WITCHER_POTION_5);
-            };
+            stack_Empty.set(DataComponentTypes.MAX_STACK_SIZE, item.getMaxCount());
         }
-        else {stack_Empty = new ItemStack(TCOTS_Items.EMPTY_MONSTER_DECOCTION);}
-        stack_Empty.getOrCreateNbt().putString("Potion", Registries.ITEM.getId(item).toString());
+        else {
+            stack_Empty = new ItemStack(TCOTS_Items.EMPTY_MONSTER_DECOCTION);
+        }
+
+        stack_Empty.set(TCOTS_Items.REFILL_RECIPE, Registries.ITEM.getId(item).toString());
 
         return stack_Empty;
     }
@@ -177,73 +169,93 @@ public class WitcherPotions_Base extends PotionItem {
     }
 
     private void buildMainTooltip(List<Text> tooltip, float tickRate) {
-        ArrayList<Pair<EntityAttribute, EntityAttributeModifier>> tooltipAttributes = Lists.newArrayList();
-            for (StatusEffectInstance statusEffectInstance : getPotionEffects()) {
-                MutableText mutableText = Text.translatable(statusEffectInstance.getTranslationKey());
-                StatusEffect statusEffect = statusEffectInstance.getEffectType();
-
-                Map<EntityAttribute, AttributeModifierCreator> map = statusEffect.getAttributeModifiers();
-                if (!map.isEmpty()) {
-                    for (Map.Entry<EntityAttribute, AttributeModifierCreator> entry : map.entrySet()) {
-                        tooltipAttributes.add(new Pair<>(entry.getKey(), entry.getValue().createAttributeModifier(statusEffectInstance.getAmplifier())));
-                    }
-                }
-
-                if (statusEffectInstance.getAmplifier() > 0) {
-                    mutableText = Text.translatable("potion.withAmplifier", mutableText, Text.translatable("potion.potency." + statusEffectInstance.getAmplifier()));
-                }
-                if (!statusEffectInstance.isDurationBelow(20)) {
-                    mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(statusEffectInstance, (float) 1.0, tickRate));
-                }
-                tooltip.add(mutableText.formatted(statusEffect.getCategory().getFormatting()));
+        ArrayList<Pair<RegistryEntry<EntityAttribute>, EntityAttributeModifier>> tooltipAttributes = Lists.newArrayList();
+        for (StatusEffectInstance statusEffectInstance : getPotionEffects()) {
+            MutableText mutableText = Text.translatable(statusEffectInstance.getTranslationKey());
+            RegistryEntry<StatusEffect> registryEntry = statusEffectInstance.getEffectType();
+            registryEntry.value().forEachAttributeModifier(statusEffectInstance.getAmplifier(), (attribute, modifier) ->
+                    tooltipAttributes.add(new Pair<>(attribute, modifier)));
+            if (statusEffectInstance.getAmplifier() > 0) {
+                mutableText = Text.translatable("potion.withAmplifier", mutableText, Text.translatable("potion.potency." + statusEffectInstance.getAmplifier()));
             }
+
+            if (!statusEffectInstance.isDurationBelow(20)) {
+                mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(statusEffectInstance, 1, tickRate));
+            }
+
+
+            tooltip.add(mutableText.formatted(registryEntry.value().getCategory().getFormatting()));
+        }
 
 
         tooltip.add(Text.translatable("tcots-witcher.tooltip.toxicity", getToxicity()).formatted(Formatting.DARK_GREEN));
 
-        if(effectInstance.getEffectType() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasExtraInfo()){
+        if(effectInstance.getEffectType().value() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasExtraInfo()){
             int n = this.getStatusEffect().getAmplifier() == 0? 0: 1;
-            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first." +n).formatted(Formatting.GRAY));
-            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second."+n).formatted(Formatting.GRAY));
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().value().getTranslationKey()+".first." +n).formatted(Formatting.GRAY));
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().value().getTranslationKey()+".second."+n).formatted(Formatting.GRAY));
         } else{
-            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".first").formatted(Formatting.GRAY));
-            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".second").formatted(Formatting.GRAY));
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().value().getTranslationKey()+".first").formatted(Formatting.GRAY));
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().value().getTranslationKey()+".second").formatted(Formatting.GRAY));
         }
 
-        if(effectInstance.getEffectType() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasExtraLine(effectInstance.getAmplifier())){
-            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().getTranslationKey()+".extra").formatted(Formatting.GRAY));
+        if(effectInstance.getEffectType().value() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasExtraLine(effectInstance.getAmplifier())){
+            tooltip.add(Text.translatable("tooltip."+this.getStatusEffect().getEffectType().value().getTranslationKey()+".extra").formatted(Formatting.GRAY));
         }
 
 
         //Attributes tooltip
         if (!tooltipAttributes.isEmpty()) {
             tooltip.add(ScreenTexts.EMPTY);
-            if(((WitcherPotionEffect) effectInstance.getEffectType()).hasCustomApplyTooltip()){
-                    tooltip.add(Text.translatable("tooltip." + effectInstance.getEffectType().getTranslationKey() +".applied").formatted(Formatting.DARK_PURPLE));
+            if(((WitcherPotionEffect)(effectInstance.getEffectType().value())).hasCustomApplyTooltip()){
+                    tooltip.add(Text.translatable("tooltip." + effectInstance.getEffectType().value().getTranslationKey() +".applied").formatted(Formatting.DARK_PURPLE));
             }
             else {tooltip.add(Text.translatable("potion.whenDrank").formatted(Formatting.DARK_PURPLE));}
 
-            for (Pair<?,?> pair : tooltipAttributes) {
-                EntityAttributeModifier entityAttributeModifier = (EntityAttributeModifier)pair.getSecond();
-                double d = entityAttributeModifier.getValue();
-                double e = entityAttributeModifier.getOperation() == EntityAttributeModifier.Operation.MULTIPLY_BASE || entityAttributeModifier.getOperation() == EntityAttributeModifier.Operation.MULTIPLY_TOTAL ? entityAttributeModifier.getValue() * 100.0 : entityAttributeModifier.getValue();
-                if (d > 0.0) {
-                    tooltip.add(Text.translatable("attribute.modifier.plus." + entityAttributeModifier.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(e), Text.translatable(((EntityAttribute)pair.getFirst()).getTranslationKey())).formatted(Formatting.BLUE));
-                    continue;
+            for (Pair<RegistryEntry<EntityAttribute>, EntityAttributeModifier> pair : tooltipAttributes) {
+                EntityAttributeModifier entityAttributeModifier = pair.getSecond();
+                double d = entityAttributeModifier.value();
+                double e;
+                if (entityAttributeModifier.operation() != EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                        && entityAttributeModifier.operation() != EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
+                    e = entityAttributeModifier.value();
+                } else {
+                    e = entityAttributeModifier.value() * 100.0;
                 }
-                if (!(d < 0.0)) continue;
-                tooltip.add(Text.translatable("attribute.modifier.take." + entityAttributeModifier.getOperation().getId(), ItemStack.MODIFIER_FORMAT.format(e * -1.0), Text.translatable(((EntityAttribute)pair.getFirst()).getTranslationKey())).formatted(Formatting.RED));
+
+                if (d > 0.0) {
+                    tooltip.add(
+                            Text.translatable(
+                                            "attribute.modifier.plus." + entityAttributeModifier.operation().getId(),
+                                            AttributeModifiersComponent.DECIMAL_FORMAT.format(e),
+                                            Text.translatable(pair.getFirst().value().getTranslationKey())
+                                    )
+                                    .formatted(Formatting.BLUE)
+                    );
+                } else if (d < 0.0) {
+                    e *= -1.0;
+                    tooltip.add(
+                            Text.translatable(
+                                            "attribute.modifier.take." + entityAttributeModifier.operation().getId(),
+                                            AttributeModifiersComponent.DECIMAL_FORMAT.format(e),
+                                            Text.translatable(pair.getFirst().value().getTranslationKey())
+                                    )
+                                    .formatted(Formatting.RED)
+                    );
+                }
             }
 
             //Special attribute (To mix special and normal attributes)
-            if(effectInstance.getEffectType() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasSpecialAttributes()){
+            if(effectInstance.getEffectType().value() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasSpecialAttributes()){
                 tooltip.add(Text.translatable("special.attribute."+witcherPotionEffect.getTranslationKey(),witcherPotionEffect.getSpecialAttributesValue(effectInstance.getAmplifier())).formatted(Formatting.BLUE));
             }
         }
+
+
         //Special Tooltip
-        else if(effectInstance.getEffectType() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasSpecialAttributes()){
+        else if(effectInstance.getEffectType().value() instanceof WitcherPotionEffect witcherPotionEffect && witcherPotionEffect.hasSpecialAttributes()){
             tooltip.add(ScreenTexts.EMPTY);
-            if(((WitcherPotionEffect) effectInstance.getEffectType()).hasCustomApplyTooltip()){
+            if(((WitcherPotionEffect) effectInstance.getEffectType().value()).hasCustomApplyTooltip()){
                 tooltip.add(Text.translatable("tooltip." + witcherPotionEffect.getTranslationKey() +".applied").formatted(Formatting.DARK_PURPLE));
             }
             else {tooltip.add(Text.translatable("potion.whenDrank").formatted(Formatting.DARK_PURPLE));}
@@ -254,8 +266,8 @@ public class WitcherPotions_Base extends PotionItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        buildMainTooltip(tooltip, world == null ? 20.0f : world.getTickManager().getTickRate());
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        buildMainTooltip(tooltip, context.getUpdateTickRate());
     }
 
     public int getToxicity(){

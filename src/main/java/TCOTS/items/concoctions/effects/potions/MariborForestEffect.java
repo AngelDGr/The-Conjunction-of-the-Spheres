@@ -16,12 +16,14 @@ public class MariborForestEffect extends WitcherPotionEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         if(!entity.getWorld().isClient){
             if(entity instanceof PlayerEntity playerEntity && entity.age%60==0){
                 playerEntity.getHungerManager().add(1, 0.2f+(0.3f*amplifier));
             }
         }
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
 }

@@ -4,7 +4,6 @@ import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.MiscUtil;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -12,12 +11,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -25,15 +23,15 @@ public class SwordWithTooltip extends SwordItem {
     private final List<MutableText> tooltip;
     private final MutableText littleDescription;
 
-    public SwordWithTooltip(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings, MutableText littleDescription, List<MutableText> tooltip) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public SwordWithTooltip(ToolMaterial toolMaterial, Settings settings, MutableText littleDescription, List<MutableText> tooltip) {
+        super(toolMaterial, settings);
         this.tooltip=tooltip;
 
         this.littleDescription=littleDescription;
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(this.littleDescription);
 
         MiscUtil.setSpecialTooltip(Text.translatable("tooltip.tcots-witcher.generic_tooltip.special_abilities"), stack, tooltip, this.tooltip);

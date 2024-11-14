@@ -17,7 +17,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
+
 public class GiantAnchorBlock extends BlockWithEntity {
     public static final MapCodec<GiantAnchorBlock> CODEC = GiantAnchorBlock.createCodec(GiantAnchorBlock::new);
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
@@ -89,7 +89,7 @@ public class GiantAnchorBlock extends BlockWithEntity {
     }
 
     @Override
-    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         return false;
     }
 

@@ -2,8 +2,9 @@ package TCOTS.mixin;
 
 import TCOTS.entity.goals.FleeWithSilverSplinters;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
-import net.minecraft.client.render.entity.feature.SkinOverlayOwner;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SkinOverlayOwner;
+import net.minecraft.entity.ai.goal.CreeperIgniteGoal;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,10 +19,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@SuppressWarnings("unused")
 public class MoonDustTransformingBlock {
 
-    @Mixin(targets = "net.minecraft.entity.mob.AbstractPiglinEntity")
+    @Mixin(AbstractPiglinEntity.class)
     public abstract static class BlockPiglinTransformation{
         @Unique
         AbstractPiglinEntity THIS = (AbstractPiglinEntity)(Object)this;
@@ -32,7 +32,7 @@ public class MoonDustTransformingBlock {
 
     }
 
-    @Mixin(targets = "net.minecraft.entity.mob.HoglinEntity")
+    @Mixin(HoglinEntity.class)
     public abstract static class BlockHoglinTransformation{
         @Unique
         HoglinEntity THIS = (HoglinEntity)(Object)this;
@@ -43,7 +43,7 @@ public class MoonDustTransformingBlock {
 
     }
 
-    @Mixin(targets = "net.minecraft.entity.mob.ZombieEntity")
+    @Mixin(ZombieEntity.class)
     public abstract static class BlockZombieTransformation{
         @Unique
         ZombieEntity THIS = (ZombieEntity)(Object)this;
@@ -54,7 +54,7 @@ public class MoonDustTransformingBlock {
 
     }
 
-    @Mixin(targets = "net.minecraft.entity.mob.HuskEntity")
+    @Mixin(HuskEntity.class)
     public abstract static class BlockHuskTransformation{
         @Unique
         HuskEntity THIS = (HuskEntity)(Object)this;
@@ -65,7 +65,7 @@ public class MoonDustTransformingBlock {
 
     }
 
-    @Mixin(targets = "net.minecraft.entity.mob.SkeletonEntity")
+    @Mixin(SkeletonEntity.class)
     public abstract static class BlockSkeletonTransformation{
         @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/SkeletonEntity;isAlive()Z"))
         private boolean injectNoMoonDust(SkeletonEntity instance){
@@ -78,7 +78,7 @@ public class MoonDustTransformingBlock {
     }
 
     //Creeper
-    @Mixin(targets = "net.minecraft.entity.ai.goal.CreeperIgniteGoal")
+    @Mixin(CreeperIgniteGoal.class)
     public abstract static class BlockCreeperExplosion{
         @Shadow @Final private CreeperEntity creeper;
         @Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
@@ -88,7 +88,7 @@ public class MoonDustTransformingBlock {
         }
     }
 
-    @Mixin(targets = "net.minecraft.entity.mob.CreeperEntity")
+    @Mixin(CreeperEntity.class)
     public abstract static class BlockCreeperEntityExplosion extends HostileEntity implements SkinOverlayOwner {
         protected BlockCreeperEntityExplosion(EntityType<? extends HostileEntity> entityType, World world) {
             super(entityType, world);

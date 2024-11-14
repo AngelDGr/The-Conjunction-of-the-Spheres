@@ -18,7 +18,7 @@ public class HerbalTableScreen extends HandledScreen<HerbalTableScreenHandler> {
     }
 
     public static final Identifier SCREEN_BACKGROUND =
-            new Identifier(TCOTS_Main.MOD_ID, "textures/gui/herbal_table.png");
+            Identifier.of(TCOTS_Main.MOD_ID, "textures/gui/herbal_table.png");
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
@@ -29,8 +29,6 @@ public class HerbalTableScreen extends HandledScreen<HerbalTableScreenHandler> {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
-        renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
         drawMouseoverTooltip(context, mouseX, mouseY);
     }

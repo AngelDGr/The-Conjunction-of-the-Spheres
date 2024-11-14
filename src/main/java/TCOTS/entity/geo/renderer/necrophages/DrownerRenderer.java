@@ -16,9 +16,7 @@ public class DrownerRenderer extends GeoEntityRenderer<DrownerEntity> {
 
     @Override
     public Identifier getTextureLocation(DrownerEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner.png");
     }
-
-
 
 }

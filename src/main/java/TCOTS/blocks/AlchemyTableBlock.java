@@ -11,13 +11,12 @@ import TCOTS.utils.EntitiesUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -38,7 +37,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-@SuppressWarnings("deprecation")
+
 public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityProvider {
     public static final MapCodec<AlchemyTableBlock> CODEC = AlchemyTableBlock.createCodec(AlchemyTableBlock::new);
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
@@ -72,10 +71,10 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-        super.appendTooltip(stack, world, tooltip, options);
-            tooltip.add(Text.translatable("block.tcots-witcher.alchemy_table.tooltip").formatted(Formatting.GRAY));
-            tooltip.add(Text.translatable("block.tcots-witcher.alchemy_table.tooltip_book").formatted(Formatting.GRAY));
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
+        super.appendTooltip(stack, context, tooltip, options);
+        tooltip.add(Text.translatable("block.tcots-witcher.alchemy_table.tooltip").formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable("block.tcots-witcher.alchemy_table.tooltip_book").formatted(Formatting.GRAY));
     }
 
     @Override
@@ -130,7 +129,7 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 
         if (!world.isClient) {
             //If the player have an alcohol in the hand refill the potion
@@ -141,14 +140,13 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
 
                 //Makes a loop across all the inventory
                 for(int i=0; i<player.getInventory().size(); i++){
-                    //If found an Empty Potion with NBT
-                    if(player.getInventory().getStack(i).getItem() instanceof EmptyWitcherPotionItem && player.getInventory().getStack(i).hasNbt()){
-                        NbtCompound nbtCompoundI= player.getInventory().getStack(i).getNbt();
-                        //Checks if the NBT contains the "Potion" string
-                        assert nbtCompoundI != null;
-                        if(nbtCompoundI.contains("Potion")){
+                    //If found an Empty Potion with a component
+                    if(player.getInventory().getStack(i).getItem() instanceof EmptyWitcherPotionItem && player.getInventory().getStack(i).contains(TCOTS_Items.REFILL_RECIPE)){
+                        String refillItem= player.getInventory().getStack(i).get(TCOTS_Items.REFILL_RECIPE);
+                        if(refillItem!=null){
                             //Save the potion type
-                            Item PotionI = Registries.ITEM.get(new Identifier(nbtCompoundI.getString("Potion")));
+                            Item PotionI = Registries.ITEM.get(Identifier.of(refillItem));
+
                             //Saves the count of empty bottles
                             int countI = player.getInventory().getStack(i).getCount();
 

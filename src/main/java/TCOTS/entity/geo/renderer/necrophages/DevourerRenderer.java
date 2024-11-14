@@ -19,7 +19,7 @@ public class DevourerRenderer extends GeoEntityRenderer<DevourerEntity> {
     }
     @Override
     public Identifier getTextureLocation(DevourerEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/devourer.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/devourer.png");
     }
 
 }

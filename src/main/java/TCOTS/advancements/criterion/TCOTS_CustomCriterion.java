@@ -8,7 +8,6 @@ import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.dynamic.Codecs;
 
 import java.util.Optional;
 
@@ -28,7 +27,7 @@ public class TCOTS_CustomCriterion extends AbstractCriterion<TCOTS_CustomCriteri
         public static final Codec<TCOTS_CustomCriterion.Conditions> CODEC =
                 RecordCodecBuilder.create(instance ->
                         instance.group(
-                                Codecs.createStrictOptionalFieldCodec(EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC, "player")
+                                        EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
                                         .forGetter(TCOTS_CustomCriterion.Conditions::player))
                                 .apply(instance, TCOTS_CustomCriterion.Conditions::new));
 

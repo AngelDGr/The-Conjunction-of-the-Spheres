@@ -9,8 +9,10 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.util.Color;
 
 public class FogletRenderer extends GeoEntityRenderer<FogletEntity> {
     public FogletRenderer(EntityRendererFactory.Context renderManager) {
@@ -19,17 +21,20 @@ public class FogletRenderer extends GeoEntityRenderer<FogletEntity> {
     }
     @Override
     public Identifier getTextureLocation(FogletEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/foglet/foglet.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/foglet/foglet.png");
     }
 
     @Override
     public float getMotionAnimThreshold(FogletEntity animatable) {
         return 0.005f;
     }
+
     @Override
-    public void actuallyRender(MatrixStack poseStack, FogletEntity animatable, BakedGeoModel model, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, animatable.getAlphaValue());
+    public void actuallyRender(MatrixStack poseStack, FogletEntity animatable, BakedGeoModel model, @Nullable RenderLayer renderType, VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+        Color holdColor = new Color(colour);
+
+        int newColor =  Color.ofARGB(animatable.getAlphaValue(), holdColor.getRedFloat(), holdColor.getGreenFloat(), holdColor.getBlueFloat()).argbInt();
+
+        super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, newColor);
     }
-
-
 }

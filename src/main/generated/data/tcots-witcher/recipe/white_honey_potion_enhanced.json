@@ -1,0 +1,29 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:white_honey_potion"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    2,
+    2
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alcohest"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    },
+    {
+      "item": "minecraft:lily_of_the_valley"
+    }
+  ],
+  "order": 0.27,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:white_honey_potion_enhanced"
+  }
+}

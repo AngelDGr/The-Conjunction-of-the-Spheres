@@ -1,0 +1,37 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:dragons_dream_enhanced"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    1,
+    4,
+    2,
+    2,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alchemists_powder"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "tcots-witcher:bryonia"
+    },
+    {
+      "item": "tcots-witcher:aether"
+    }
+  ],
+  "order": 0.4899998,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:dragons_dream_superior"
+  }
+}

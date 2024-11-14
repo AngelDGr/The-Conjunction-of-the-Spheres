@@ -1,0 +1,14 @@
+{
+  "type": "tcots-witcher:herbal_table",
+  "amplifier": 0,
+  "base_potion": 0,
+  "effects": [
+    "minecraft:invisibility",
+    "minecraft:blindness"
+  ],
+  "herb": {
+    "count": 1,
+    "id": "minecraft:azure_bluet"
+  },
+  "time": 80
+}

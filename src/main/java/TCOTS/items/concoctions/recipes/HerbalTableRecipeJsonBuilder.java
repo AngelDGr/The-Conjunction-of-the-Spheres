@@ -60,6 +60,6 @@ public class HerbalTableRecipeJsonBuilder {
 
         String recipeID = Registries.ITEM.getId(herb.getItem()) +"_herbal";
 
-        exporter.accept(new Identifier(recipeID), herbalTableRecipe, null);
+        exporter.accept(Identifier.of(recipeID), herbalTableRecipe, null);
     }
 }

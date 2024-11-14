@@ -30,11 +30,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
@@ -255,7 +255,7 @@ public class GraveHagEntity extends NecrophageMonster implements GeoEntity {
                         if (!(livingEntity instanceof NecrophageMonster)) {
                             livingEntity.damage(graveHag.getDamageSources().mobAttack(graveHag), damageWithTongue);
                             if(livingEntity.isBlocking() && livingEntity instanceof PlayerEntity player){
-                                player.disableShield(true);
+                                player.disableShield();
                             }
                         }
                         this.knockBack(livingEntity);
@@ -334,10 +334,10 @@ public class GraveHagEntity extends NecrophageMonster implements GeoEntity {
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(TONGUE_ATTACK, Boolean.FALSE);
-        this.dataTracker.startTracking(RUNNING, Boolean.FALSE);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(TONGUE_ATTACK, Boolean.FALSE);
+        builder.add(RUNNING, Boolean.FALSE);
     }
 
     public final boolean getTongueAttack() {

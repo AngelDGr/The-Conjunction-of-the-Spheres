@@ -7,8 +7,8 @@ import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
@@ -62,7 +62,7 @@ public class BloodParticle extends SpriteBillboardParticle {
     }
 
     @SuppressWarnings("unused")
-    public static SpriteBillboardParticle createFallingBlood(DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+    public static SpriteBillboardParticle createFallingBlood(SimpleParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         ContinuousFalling blockLeakParticle = new ContinuousFalling(world, x, y, z, TCOTS_Particles.LANDING_BLOOD_PARTICLE);
         blockLeakParticle.gravityStrength = 0.01f;
         blockLeakParticle.setColor(0.4274509f, 0, 0);
@@ -70,7 +70,7 @@ public class BloodParticle extends SpriteBillboardParticle {
     }
 
     @SuppressWarnings("unused")
-    public static SpriteBillboardParticle createLandingBlood(DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+    public static SpriteBillboardParticle createLandingBlood(SimpleParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         Landing blockLeakParticle = new Landing(world, x, y, z);
         blockLeakParticle.maxAge = (int)(28.0 / (Math.random() * 0.8 + 0.2));
         blockLeakParticle.setColor(0.4274509f, 0, 0);
@@ -78,7 +78,7 @@ public class BloodParticle extends SpriteBillboardParticle {
     }
 
     @SuppressWarnings("unused")
-    public static SpriteBillboardParticle createFallingBlackBlood(DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+    public static SpriteBillboardParticle createFallingBlackBlood(SimpleParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         ContinuousFalling blockLeakParticle = new ContinuousFalling(world, x, y, z, TCOTS_Particles.LANDING_BLACK_BLOOD_PARTICLE);
         blockLeakParticle.gravityStrength = 0.01f;
         blockLeakParticle.setColor(0.04705823f, 0.04705823f, 0.04705823f);
@@ -86,7 +86,7 @@ public class BloodParticle extends SpriteBillboardParticle {
     }
 
     @SuppressWarnings("unused")
-    public static SpriteBillboardParticle createLandingBlackBlood(DefaultParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+    public static SpriteBillboardParticle createLandingBlackBlood(SimpleParticleType type, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
         Landing blockLeakParticle = new Landing(world, x, y, z);
         blockLeakParticle.maxAge = (int)(28.0 / (Math.random() * 0.8 + 0.2));
         blockLeakParticle.setColor(0.04705823f, 0.04705823f, 0.04705823f);

@@ -25,7 +25,9 @@ import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.loot.LootTable;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -34,11 +36,11 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class RockTrollEntity extends AbstractTrollEntity implements RangedAttackMob {
@@ -226,6 +228,8 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0)
+
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.22f)
@@ -238,7 +242,7 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
 
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
         if(spawnReason == SpawnReason.NATURAL){
             //1/5 probability to be a rabid troll if it's a natural spawn
             if(random.nextInt()%5==0){
@@ -252,7 +256,7 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
             }
         }
 
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.initialize(world, difficulty, spawnReason, entityData);
     }
 
     //Reputation System
@@ -373,8 +377,8 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
     }
 
     @Override
-    protected Identifier getTrollLootTable(){
-        return new Identifier(TCOTS_Main.MOD_ID,"gameplay/rock_troll_bartering");
+    protected RegistryKey<LootTable> getTrollLootTable(){
+        return RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of(TCOTS_Main.MOD_ID,"gameplay/rock_troll_bartering"));
     }
 
 

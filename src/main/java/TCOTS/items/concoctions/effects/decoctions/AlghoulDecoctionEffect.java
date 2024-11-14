@@ -12,9 +12,7 @@ public class AlghoulDecoctionEffect extends DecoctionEffectBase {
     private int cooldownAttacks=0;
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        super.applyUpdateEffect(entity, amplifier);
-
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         if(!entity.getWorld().isClient) {
             if (entity instanceof PlayerEntity playerEntity){
                 if (entity.age < (entity.getLastAttackTime() + 300)
@@ -32,6 +30,8 @@ public class AlghoulDecoctionEffect extends DecoctionEffectBase {
                 --cooldownAttacks;
             }
         }
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
 }

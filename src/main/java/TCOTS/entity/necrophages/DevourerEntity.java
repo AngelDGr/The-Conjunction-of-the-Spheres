@@ -35,11 +35,11 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
@@ -164,7 +164,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected void jump() {
+    public void jump() {
         this.playSound(TCOTS_Sounds.DEVOURER_JUMP, 1.0f, 1.0f);
         super.jump();
     }
@@ -215,13 +215,13 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
-        this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
-        this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
-        this.dataTracker.startTracking(FALLING, Boolean.FALSE);
-        this.dataTracker.startTracking(FALLING_DISTANCE, fallDistance);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(InGROUND, Boolean.FALSE);
+        builder.add(EMERGING, Boolean.FALSE);
+        builder.add(INVISIBLE, Boolean.FALSE);
+        builder.add(FALLING, Boolean.FALSE);
+        builder.add(FALLING_DISTANCE, fallDistance);
     }
 
     @Override
@@ -425,15 +425,11 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
         this.dataTracker.set(INVISIBLE, isInvisible);
     }
 
-
     @Override
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        if(this.getInGround()){
-            return 0.1f;
-        } else {
-            return super.getActiveEyeHeight(pose, dimensions);
-        }
+    protected EntityDimensions getBaseDimensions(EntityPose pose) {
+        return this.getInGround()? this.getType().getDimensions().withEyeHeight(0.1f): super.getBaseDimensions(pose);
     }
+
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);

@@ -1,5 +1,6 @@
 package TCOTS.entity.ogroids;
 
+import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.goals.MeleeAttackGoal_Animated;
 import TCOTS.entity.goals.ReturnToNestGoal;
@@ -16,6 +17,8 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
@@ -46,6 +49,7 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.GameEventTags;
 import net.minecraft.registry.tag.TagKey;
@@ -55,11 +59,11 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.LocalDifficulty;
@@ -74,17 +78,15 @@ import net.minecraft.world.event.listener.EntityGameEventHandler;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
@@ -115,13 +117,11 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
 
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        Random random = world.getRandom();
-        Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.GENERIC_FOLLOW_RANGE)).addPersistentModifier(new EntityAttributeModifier("Random spawn bonus", random.nextTriangular(0.0, 0.11485000000000001), EntityAttributeModifier.Operation.MULTIPLY_BASE));
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
         if(spawnReason!=SpawnReason.NATURAL && spawnReason!=SpawnReason.SPAWN_EGG){
             this.setNestPos(this.getBlockPos());
         }
-        return entityData;
+        return super.initialize(world, difficulty, spawnReason, entityData);
     }
 
     public static final RawAnimation WAKE_UP = RawAnimation.begin().thenPlayAndHold("sleeping.wake_up");
@@ -137,7 +137,6 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public IceGiantEntity(EntityType<? extends OgroidMonster> entityType, World world) {
         super(entityType, world);
-        this.setStepHeight(1.5f);
         this.experiencePoints=25;
 
         this.vibrationCallback = new VibrationCallback(this);
@@ -147,6 +146,8 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.5f)
+
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 150.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 12.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.23f)
@@ -159,18 +160,18 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
 
-        this.dataTracker.startTracking(CHARGING, Boolean.FALSE);
-        this.dataTracker.startTracking(SLEEPING, Boolean.FALSE);
-        this.dataTracker.startTracking(WAKING_UP, Boolean.FALSE);
-        this.dataTracker.startTracking(ANCHOR_POS, BlockPos.ORIGIN);
+        builder.add(CHARGING, Boolean.FALSE);
+        builder.add(SLEEPING, Boolean.FALSE);
+        builder.add(WAKING_UP, Boolean.FALSE);
+        builder.add(ANCHOR_POS, BlockPos.ORIGIN);
 
-        this.dataTracker.startTracking(FALLING, Boolean.FALSE);
-        this.dataTracker.startTracking(FALLING_DISTANCE, fallDistance);
+        builder.add(FALLING, Boolean.FALSE);
+        builder.add(FALLING_DISTANCE, fallDistance);
 
-        this.dataTracker.startTracking(NEST_POS, BlockPos.ORIGIN);
+        builder.add(NEST_POS, BlockPos.ORIGIN);
     }
 
     private final float healthToReachSecondPhase=this.getMaxHealth()*0.6f;
@@ -329,7 +330,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
         }
 
         @Override
-        public boolean accepts(ServerWorld world, BlockPos pos, GameEvent event, GameEvent.Emitter emitter) {
+        public boolean accepts(ServerWorld world, BlockPos pos, RegistryEntry<GameEvent> event, GameEvent.Emitter emitter) {
             if (giant.isAiDisabled() || !giant.isGiantSleeping() || giant.isDead() || giant.isGiantWakingUp()) {
                 return false;
             }
@@ -339,7 +340,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
         }
 
         @Override
-        public void accept(ServerWorld world, BlockPos pos, GameEvent event, @Nullable Entity sourceEntity, @Nullable Entity entity, float distance) {
+        public void accept(ServerWorld world, BlockPos pos, RegistryEntry<GameEvent> event, @Nullable Entity sourceEntity, @Nullable Entity entity, float distance) {
             if (giant.isDead()) {
                 return;
             }
@@ -636,7 +637,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
 
             NbtCompound nbt = new NbtCompound();
             nbt.putBoolean("nextRetrieve", true);
-            stack.getOrCreateNbt().put("State", nbt);
+            NbtComponent.set(DataComponentTypes.CUSTOM_DATA, stack, nbtCompound -> nbtCompound.put("State", nbt));
 
             this.anchorLaunchCooldownTimer=MiscUtil.getTimeInTicks(10);
             this.anchorLaunchCooldown=true;
@@ -654,7 +655,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
             anchorProjectile.discard();
 
             ItemStack stack = this.getMainHandStack();
-            stack.removeSubNbt("State");
+            stack.remove(DataComponentTypes.CUSTOM_DATA);
         }
     }
 
@@ -972,12 +973,8 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     }
 
     @Override
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        if(this.isGiantSleeping()){
-            return 1.6f;
-        } else {
-            return super.getActiveEyeHeight(pose, dimensions);
-        }
+    protected EntityDimensions getBaseDimensions(EntityPose pose) {
+        return this.isGiantSleeping()? this.getType().getDimensions().withEyeHeight(1.6f) : super.getBaseDimensions(pose);
     }
 
     private Box sleepingBox(){
@@ -1120,29 +1117,32 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
         if(this.isSnowing()){
             EntityAttributeInstance entityAttributeInstance_attack = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
             if(entityAttributeInstance_attack!=null) {
-                entityAttributeInstance_attack.removeModifier(BLIZZARD_STRENGTH_BOOST.getId());
+                entityAttributeInstance_attack.removeModifier(BLIZZARD_STRENGTH_BOOST.id());
                 entityAttributeInstance_attack.addTemporaryModifier(BLIZZARD_STRENGTH_BOOST);
             }
 
             EntityAttributeInstance entityAttributeInstance_speed = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
             if(entityAttributeInstance_speed!=null) {
-                entityAttributeInstance_speed.removeModifier(BLIZZARD_SPEED_BOOST.getId());
+                entityAttributeInstance_speed.removeModifier(BLIZZARD_SPEED_BOOST.id());
                 entityAttributeInstance_speed.addTemporaryModifier(BLIZZARD_SPEED_BOOST);
             }
         } else {
             EntityAttributeInstance entityAttributeInstance_attack = this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
-            if(entityAttributeInstance_attack!=null) entityAttributeInstance_attack.removeModifier(BLIZZARD_STRENGTH_BOOST.getId());
+            if(entityAttributeInstance_attack!=null) entityAttributeInstance_attack.removeModifier(BLIZZARD_STRENGTH_BOOST.id());
 
             EntityAttributeInstance entityAttributeInstance_speed = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-            if(entityAttributeInstance_speed!=null) entityAttributeInstance_speed.removeModifier(BLIZZARD_SPEED_BOOST.getId());
+            if(entityAttributeInstance_speed!=null) entityAttributeInstance_speed.removeModifier(BLIZZARD_SPEED_BOOST.id());
         }
     }
 
-    private static final EntityAttributeModifier BLIZZARD_STRENGTH_BOOST = new EntityAttributeModifier(UUID.fromString("5c470b47-3ac4-46d9-a010-efacfdf41fea"),
-            "Blizzard strength boost", 4.0f,
-            EntityAttributeModifier.Operation.ADDITION);
-    private static final EntityAttributeModifier BLIZZARD_SPEED_BOOST = new EntityAttributeModifier(UUID.fromString("40feeb3e-2964-453a-874e-e297121de288"),
-            "Blizzard speed boost", 0.1f, EntityAttributeModifier.Operation.MULTIPLY_BASE);
+    private static final EntityAttributeModifier BLIZZARD_STRENGTH_BOOST = new EntityAttributeModifier(
+            Identifier.of(TCOTS_Main.MOD_ID, "giant_blizzard_strength_boost"),
+            4.0f,
+            EntityAttributeModifier.Operation.ADD_VALUE);
+    private static final EntityAttributeModifier BLIZZARD_SPEED_BOOST = new EntityAttributeModifier(
+            Identifier.of(TCOTS_Main.MOD_ID, "giant_blizzard_speed_boost"),
+            0.1f,
+            EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
     private boolean isSnowing(){
         Biome biome = this.getWorld().getBiome(this.getBlockPos()).value();
@@ -1287,7 +1287,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     }
 
     @Override
-    protected void jump() {
+    public void jump() {
         this.playSound(TCOTS_Sounds.ICE_GIANT_PUNCH, 1.0f, 1.0f);
         super.jump();
     }

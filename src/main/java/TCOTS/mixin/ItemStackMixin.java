@@ -1,21 +1,22 @@
 package TCOTS.mixin;
 
 import TCOTS.interfaces.MaxToxicityIncreaser;
+import TCOTS.items.TCOTS_Items;
+import TCOTS.items.concoctions.AlchemyFormulaItem;
 import TCOTS.utils.EntitiesUtil;
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.component.ComponentType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.MutableText;
+import net.minecraft.item.tooltip.TooltipAppender;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
+import net.minecraft.util.Rarity;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -25,94 +26,31 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
     @Shadow public abstract Item getItem();
 
-    //TODO: Add specific colors to each oil tooltip, update when add more oils
+    @Shadow protected abstract <T extends TooltipAppender> void appendTooltip(ComponentType<T> componentType, Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type);
+
     @Unique
     ItemStack THIS = (ItemStack) (Object) this;
+
     //Oil tooltip in weapons
-    @SuppressWarnings("all")
-    @ModifyVariable(method = "getTooltip", at = @At(
+    @Inject(method = "getTooltip", at = @At(
             value = "INVOKE"
-            ,target = "Lnet/minecraft/nbt/NbtCompound;contains(Ljava/lang/String;I)Z", ordinal = 0))
-    private List<Text> monsterOilTooltipInWeapons(List<Text> value){
-
-        ItemStack thisObject = (ItemStack)(Object)this;
-        if(thisObject.hasNbt()){
-            NbtCompound nbt = thisObject.getNbt();
-            assert nbt != null;
-            if(nbt.contains("Monster Oil")){
-                NbtCompound monsterOil = thisObject.getSubNbt("Monster Oil");
-                assert monsterOil != null;
-                if(monsterOil.contains("Id")){
-                    switch (monsterOil.getInt("Id")){
-                        case 0:
-                            OilNamer(monsterOil, value, 0xb71520);
-                            return value;
-                        case 1:
-                            OilNamer(monsterOil, value, 0xcc341d);
-                            return value;
-                        case 2:
-                            OilNamer(monsterOil, value, 0xffffff);
-                            return value;
-                        case 3:
-                            OilNamer(monsterOil, value, 0xffffff);
-                            return value;
-                        case 4:
-                            OilNamer(monsterOil, value, 0xffffff);
-                            return value;
-                        case 5:
-                            OilNamer(monsterOil, value, 0x411106);
-                            return value;
-                        case 6:
-                            OilNamer(monsterOil, value, 0xffffff);
-                            return value;
-                        case 7:
-                            OilNamer(monsterOil, value, 0xffffff);
-                            return value;
-                        case 8:
-                            OilNamer(monsterOil, value, 0xffffff);
-                            return value;
-                        case 9:
-                            OilNamer(monsterOil, value, 0xffffff);
-                            return value;
-                        case 10:
-                            OilNamer(monsterOil, value, 0xffffff);
-                            return value;
-                        case 11:
-                            OilNamer(monsterOil, value, 0x00752b);
-                            return value;
-                        default:
-                            return value;
-                    }
-                }
-            }
-        }
-
-        return value;
-    }
-
-    @Unique
-    private void OilNamer(NbtCompound monsterOil, List<Text> value, int color){
-        value.add(ScreenTexts.EMPTY);
-        MutableText OilName = (MutableText) Registries.ITEM.get(new Identifier(monsterOil.getString("Item"))).getName();
-        OilName.styled(
-                style -> style.withColor(color)
-        );
-
-        value.add(OilName);
-        value.add(ScreenTexts.space().append(Text.translatable("tooltip.item.tcots-witcher.oils.uses", monsterOil.getInt("Uses")).formatted(Formatting.BLUE)));
-
+            ,target = "Lnet/minecraft/item/ItemStack;appendTooltip(Lnet/minecraft/component/ComponentType;Lnet/minecraft/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/item/tooltip/TooltipType;)V",
+            ordinal = 4))
+    private void monsterOilTooltipInWeapons(Item.TooltipContext context, @Nullable PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local Consumer<Text> consumer){
+        this.appendTooltip(TCOTS_Items.MONSTER_OIL_COMPONENT, context, consumer, type);
     }
 
 
     //Manticore Armor
     @ModifyVariable(method = "getTooltip", at = @At(
             value = "INVOKE"
-            ,target = "Lcom/google/common/collect/Multimap;entries()Ljava/util/Collection;",
+            ,target = "Lnet/minecraft/item/ItemStack;appendAttributeModifiersTooltip(Ljava/util/function/Consumer;Lnet/minecraft/entity/player/PlayerEntity;)V",
             ordinal = 0))
     private List<Text> manticoreToxicityTooltip(List<Text> value){
         if(THIS.getItem() instanceof MaxToxicityIncreaser item){
@@ -122,18 +60,30 @@ public abstract class ItemStackMixin {
         return value;
     }
 
-    @Unique
-    private PlayerEntity player;
-
-    @Inject(method = "use", at = @At("HEAD"))
-    private void getPlayer(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir){
-        this.player=user;
+    @Inject(method = "getMaxUseTime", at = @At("RETURN"), cancellable = true)
+    private void reduceDrinkingTime(LivingEntity user, CallbackInfoReturnable<Integer> cir){
+        if(EntitiesUtil.isWearingManticoreArmor(user) && this.getItem() instanceof PotionItem){
+            cir.setReturnValue(this.getItem().getMaxUseTime(THIS,user)/2);
+        }
     }
 
-    @Inject(method = "getMaxUseTime", at = @At("RETURN"), cancellable = true)
-    private void reduceDrinkingTime(CallbackInfoReturnable<Integer> cir){
-        if(player!=null && EntitiesUtil.isWearingManticoreArmor(player) && this.getItem() instanceof PotionItem){
-            cir.setReturnValue(this.getItem().getMaxUseTime(THIS)/2);
+
+
+    //Alchemy Formula
+    @Inject(method = "getTooltip", at = @At(
+            value = "INVOKE"
+            ,target = "Lnet/minecraft/item/ItemStack;appendTooltip(Lnet/minecraft/component/ComponentType;Lnet/minecraft/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/item/tooltip/TooltipType;)V",
+            ordinal = 4))
+    private void customTooltipFormula(Item.TooltipContext context, @Nullable PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local Consumer<Text> consumer){
+        if(player!=null){
+            AlchemyFormulaItem.appendTooltip(THIS, player.getWorld(), consumer);
+        }
+    }
+
+    @Inject(method = "getRarity", at = @At("HEAD"), cancellable = true)
+    private void injectFormulaRarity(CallbackInfoReturnable<Rarity> cir){
+        if(THIS.isOf(TCOTS_Items.ALCHEMY_FORMULA) && AlchemyFormulaItem.isDecoctionRecipe(THIS)){
+            cir.setReturnValue(Rarity.RARE);
         }
     }
 

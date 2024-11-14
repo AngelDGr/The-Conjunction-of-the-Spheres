@@ -1,0 +1,37 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:white_gull"
+  },
+  "category": "misc",
+  "ingredient_counters": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:verbena"
+    },
+    {
+      "item": "tcots-witcher:ergot_seeds"
+    },
+    {
+      "item": "tcots-witcher:han_fiber"
+    },
+    {
+      "item": "minecraft:poppy"
+    },
+    {
+      "item": "tcots-witcher:bryonia"
+    }
+  ],
+  "order": 0.8099995,
+  "result": {
+    "count": 2,
+    "id": "tcots-witcher:vermilion"
+  }
+}

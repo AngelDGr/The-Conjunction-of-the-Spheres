@@ -21,11 +21,12 @@ public class DecoctionEffectBase extends WitcherPotionEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (this.entity == null) {
             this.entity = entity;
         }
-        super.applyUpdateEffect(entity, amplifier);
+
+        return super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

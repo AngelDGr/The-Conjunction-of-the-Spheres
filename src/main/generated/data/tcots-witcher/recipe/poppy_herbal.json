@@ -1,0 +1,14 @@
+{
+  "type": "tcots-witcher:herbal_table",
+  "amplifier": 0,
+  "base_potion": 0,
+  "effects": [
+    "minecraft:night_vision",
+    "minecraft:mining_fatigue"
+  ],
+  "herb": {
+    "count": 1,
+    "id": "minecraft:poppy"
+  },
+  "time": 20
+}

@@ -16,22 +16,20 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.Animation;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Optional;
@@ -85,70 +83,100 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
 
         @Override
         public void serverTick(ServerWorld world, BlockPos pos) {
-            if (!this.isPlayerInRange(world, pos)) {
-                return;
-            }
-            if (this.spawnDelay == -1) {
-                this.updateSpawns(world, pos);
-            }
-            if (this.spawnDelay > 0) {
-                --this.spawnDelay;
-                return;
-            }
-            boolean bl = false;
-            Random random = world.getRandom();
-            MobSpawnerEntry mobSpawnerEntry = this.getSpawnEntry(world, random, pos);
-            for (int i = 0; i < this.spawnCount; ++i) {
-                MobSpawnerEntry.CustomSpawnRules customSpawnRules;
-                double f;
-                NbtCompound nbtCompound = mobSpawnerEntry.getNbt();
-                Optional<EntityType<?>> optional = EntityType.fromNbt(nbtCompound);
-                if (optional.isEmpty()) {
+            if (this.isPlayerInRange(world, pos)) {
+                if (this.spawnDelay == -1) {
                     this.updateSpawns(world, pos);
-                    return;
                 }
-                NbtList nbtList = nbtCompound.getList("Pos", NbtElement.DOUBLE_TYPE);
-                int j = nbtList.size();
-                double d = j >= 1 ? nbtList.getDouble(0) : (double)pos.getX() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
-                double e = j >= 2 ? nbtList.getDouble(1) : (double)(pos.getY() + random.nextInt(3) - 1);
-                double d2 = f = j >= 3 ? nbtList.getDouble(2) : (double)pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
-                if (!world.isSpaceEmpty(optional.get().createSimpleBoundingBox(d, e, f))) continue;
-                BlockPos blockPos = BlockPos.ofFloored(d, e, f);
-                if (mobSpawnerEntry.getCustomSpawnRules().isEmpty() ? !SpawnRestriction.canSpawn(optional.get(), world, SpawnReason.SPAWNER, blockPos, world.getRandom()) : !optional.get().getSpawnGroup().isPeaceful() && world.getDifficulty() == Difficulty.PEACEFUL || !(customSpawnRules = mobSpawnerEntry.getCustomSpawnRules().get()).blockLightLimit().contains(world.getLightLevel(LightType.BLOCK, blockPos)) || !customSpawnRules.skyLightLimit().contains(world.getLightLevel(LightType.SKY, blockPos))) continue;
-                Entity entity2 = EntityType.loadEntityWithPassengers(nbtCompound, world, entity -> {
-                    entity.refreshPositionAndAngles(d, e, f, entity.getYaw(), entity.getPitch());
-                    return entity;
-                });
-                if (entity2 == null) {
-                    this.updateSpawns(world, pos);
-                    return;
-                }
-                int k = world.getNonSpectatingEntities(entity2.getClass(), new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).expand(15)).size();
-                if (k >= this.maxNearbyEntities) {
-                    this.updateSpawns(world, pos);
-                    return;
-                }
-                entity2.refreshPositionAndAngles(entity2.getX(), entity2.getY(), entity2.getZ(), random.nextFloat() * 360.0f, 0.0f);
-                if (entity2 instanceof MobEntity mobEntity) {
-                    if (mobSpawnerEntry.getCustomSpawnRules().isEmpty() && !mobEntity.canSpawn(world, SpawnReason.SPAWNER) || !mobEntity.canSpawn(world)) continue;
-                    if (mobSpawnerEntry.getNbt().getSize() == 1 && mobSpawnerEntry.getNbt().contains("id", NbtElement.STRING_TYPE)) {
-                        ((MobEntity)entity2).initialize(world, world.getLocalDifficulty(entity2.getBlockPos()), SpawnReason.SPAWNER, null, null);
+
+                if (this.spawnDelay > 0) {
+                    this.spawnDelay--;
+                } else {
+                    boolean bl = false;
+                    Random random = world.getRandom();
+                    MobSpawnerEntry mobSpawnerEntry = this.getSpawnEntry(world, random, pos);
+
+                    for (int i = 0; i < this.spawnCount; i++) {
+                        NbtCompound nbtCompound = mobSpawnerEntry.getNbt();
+                        Optional<EntityType<?>> optional = EntityType.fromNbt(nbtCompound);
+                        if (optional.isEmpty()) {
+                            this.updateSpawns(world, pos);
+                            return;
+                        }
+
+                        NbtList nbtList = nbtCompound.getList("Pos", NbtElement.DOUBLE_TYPE);
+                        int j = nbtList.size();
+                        double d = j >= 1 ? nbtList.getDouble(0) : (double)pos.getX() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
+                        double e = j >= 2 ? nbtList.getDouble(1) : (double)(pos.getY() + random.nextInt(3) - 1);
+                        double f = j >= 3 ? nbtList.getDouble(2) : (double)pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
+                        if (world.isSpaceEmpty(optional.get().getSpawnBox(d, e, f))) {
+                            BlockPos blockPos = BlockPos.ofFloored(d, e, f);
+                            if (mobSpawnerEntry.getCustomSpawnRules().isPresent()) {
+                                if (!optional.get().getSpawnGroup().isPeaceful() && world.getDifficulty() == Difficulty.PEACEFUL) {
+                                    continue;
+                                }
+
+                                MobSpawnerEntry.CustomSpawnRules customSpawnRules = mobSpawnerEntry.getCustomSpawnRules().get();
+                                if (!customSpawnRules.canSpawn(blockPos, world)) {
+                                    continue;
+                                }
+                            } else if (!SpawnRestriction.canSpawn((EntityType<?>)optional.get(), world, SpawnReason.SPAWNER, blockPos, world.getRandom())) {
+                                continue;
+                            }
+
+                            Entity entity = EntityType.loadEntityWithPassengers(nbtCompound, world, entityX -> {
+                                entityX.refreshPositionAndAngles(d, e, f, entityX.getYaw(), entityX.getPitch());
+                                return entityX;
+                            });
+                            if (entity == null) {
+                                this.updateSpawns(world, pos);
+                                return;
+                            }
+
+                            int k = world.getEntitiesByType(
+                                            TypeFilter.equals(entity.getClass()),
+                                            new Box(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1)
+                                                    .expand(this.spawnRange),
+                                            EntityPredicates.EXCEPT_SPECTATOR
+                                    )
+                                    .size();
+                            if (k >= this.maxNearbyEntities) {
+                                this.updateSpawns(world, pos);
+                                return;
+                            }
+
+                            entity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), random.nextFloat() * 360.0F, 0.0F);
+                            if (entity instanceof MobEntity mobEntity) {
+                                if (mobSpawnerEntry.getCustomSpawnRules().isEmpty() && !mobEntity.canSpawn(world, SpawnReason.SPAWNER) || !mobEntity.canSpawn(world)) {
+                                    continue;
+                                }
+
+                                boolean bl2 = mobSpawnerEntry.getNbt().getSize() == 1 && mobSpawnerEntry.getNbt().contains("id", NbtElement.STRING_TYPE);
+                                if (bl2) {
+                                    ((MobEntity)entity).initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.SPAWNER, null);
+                                }
+
+                                mobSpawnerEntry.getEquipment().ifPresent(mobEntity::setEquipmentFromTable);
+                            }
+
+                            if (!world.spawnNewEntityAndPassengers(entity)) {
+                                this.updateSpawns(world, pos);
+                                return;
+                            }
+
+                            world.syncWorldEvent(8642097, pos, 0);
+                            world.emitGameEvent(entity, GameEvent.ENTITY_PLACE, blockPos);
+                            if (entity instanceof MobEntity) {
+                                ((MobEntity)entity).playSpawnEffects();
+                            }
+
+                            bl = true;
+                        }
+                    }
+
+                    if (bl) {
+                        this.updateSpawns(world, pos);
                     }
                 }
-                if (!world.spawnNewEntityAndPassengers(entity2)) {
-                    this.updateSpawns(world, pos);
-                    return;
-                }
-                //8642097 it's the event id for the particles, numbers completely random
-                world.syncWorldEvent(8642097, pos, 0);
-                world.emitGameEvent(entity2, GameEvent.ENTITY_PLACE, blockPos);
-                if (entity2 instanceof MobEntity) {
-                    ((MobEntity)entity2).playSpawnEffects();
-                }
-                bl = true;
-            }
-            if (bl) {
-                this.updateSpawns(world, pos);
             }
         }
 
@@ -168,14 +196,14 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
         this.logic.readNbt(this.world, this.pos, nbt);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
         this.logic.writeNbt(nbt);
     }
 
@@ -188,9 +216,8 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-
-        NbtCompound nbtCompound = this.createNbt();
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+        NbtCompound nbtCompound = this.createComponentlessNbt(registryLookup);
         nbtCompound.remove("SpawnPotentials");
         return nbtCompound;
     }
@@ -213,7 +240,6 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
         this.logic.setEntityId(type, this.world, random, this.pos);
         this.markDirty();
     }
-
 
 
     public MobSpawnerLogic getLogic() {

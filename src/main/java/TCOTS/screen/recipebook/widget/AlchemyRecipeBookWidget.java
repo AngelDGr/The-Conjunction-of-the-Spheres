@@ -35,7 +35,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         Selectable,
         RecipeDisplayListener {
 
-    public static final Identifier RECIPE_GUI_TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/alchemy_recipe_book.png");
+    public static final Identifier RECIPE_GUI_TEXTURE = Identifier.of(TCOTS_Main.MOD_ID,"textures/gui/alchemy_recipe_book.png");
 
     private ClientRecipeBook recipeBook;
     private final List<RecipeEntry<AlchemyTableRecipe>> listRecipes = new ArrayList<>();
@@ -303,7 +303,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
     }
 
     @Override
-    public void acceptAlignedInput(Iterator<Ingredient> inputs, int slot, int amount, int gridX, int gridY) {
+    public void acceptAlignedInput(Ingredient input, int slot, int amount, int gridX, int gridY) {
 
     }
 

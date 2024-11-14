@@ -17,7 +17,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
@@ -76,7 +76,7 @@ public class NekkerWarriorEntity extends NekkerEntity implements GeoEntity {
     public boolean tryAttack(Entity target) {
         boolean bl = super.tryAttack(target);
         if(target instanceof PlayerEntity player && player.isBlocking() && this.getRandom().nextInt()%10==0){
-            player.disableShield(true);
+            player.disableShield();
         }
         return bl;
     }

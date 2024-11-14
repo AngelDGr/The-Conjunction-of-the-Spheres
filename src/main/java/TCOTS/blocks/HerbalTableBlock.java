@@ -5,10 +5,11 @@ import TCOTS.screen.HerbalTableScreenHandler;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
@@ -26,7 +27,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-@SuppressWarnings("deprecation")
 public class HerbalTableBlock extends BlockWithEntity implements BlockEntityProvider {
 
     public static final MapCodec<HerbalTableBlock> CODEC = HerbalTableBlock.createCodec(HerbalTableBlock::new);
@@ -51,7 +51,7 @@ public class HerbalTableBlock extends BlockWithEntity implements BlockEntityProv
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         }
@@ -70,8 +70,8 @@ public class HerbalTableBlock extends BlockWithEntity implements BlockEntityProv
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-        super.appendTooltip(stack, world, tooltip, options);
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
+        super.appendTooltip(stack, context, tooltip, options);
         tooltip.add(Text.translatable("block.tcots-witcher.herbal_table.tooltip").formatted(Formatting.GRAY));
     }
 

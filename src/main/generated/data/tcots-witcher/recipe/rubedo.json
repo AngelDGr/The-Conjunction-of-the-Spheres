@@ -1,0 +1,37 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:white_gull"
+  },
+  "category": "misc",
+  "ingredient_counters": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:crows_eye"
+    },
+    {
+      "item": "tcots-witcher:han_fiber"
+    },
+    {
+      "item": "minecraft:oxeye_daisy"
+    },
+    {
+      "item": "tcots-witcher:puffball"
+    },
+    {
+      "item": "minecraft:moss_block"
+    }
+  ],
+  "order": 0.79999954,
+  "result": {
+    "count": 2,
+    "id": "tcots-witcher:rubedo"
+  }
+}

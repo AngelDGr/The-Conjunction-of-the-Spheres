@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:tcots-witcher/kill_bullvore",
+  "criteria": {
+    "get_gvalchir": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots-witcher:gvalchir"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.get_gvalchir.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "tcots-witcher:gvalchir"
+    },
+    "title": {
+      "translate": "advancements.witcher.get_gvalchir.title"
+    }
+  },
+  "requirements": [
+    [
+      "get_gvalchir"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

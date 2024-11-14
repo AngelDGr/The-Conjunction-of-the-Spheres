@@ -1,0 +1,37 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots-witcher:oil_ogroid"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    2,
+    2,
+    2,
+    3,
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:monster_fat"
+    },
+    {
+      "item": "tcots-witcher:cave_troll_liver"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    },
+    {
+      "item": "minecraft:fern"
+    },
+    {
+      "item": "minecraft:cornflower"
+    }
+  ],
+  "order": 0.6299997,
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:oil_ogroid_enhanced"
+  }
+}

@@ -6,12 +6,12 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.MathHelper;
 
 public class DimeritiumFlash {
     @Environment(value= EnvType.CLIENT)
-    public static class FlashFactory implements ParticleFactory<DefaultParticleType> {
+    public static class FlashFactory implements ParticleFactory<SimpleParticleType> {
         private final SpriteProvider spriteProvider;
 
         public FlashFactory(SpriteProvider spriteProvider) {
@@ -19,7 +19,7 @@ public class DimeritiumFlash {
         }
 
         @Override
-        public Particle createParticle(DefaultParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(SimpleParticleType defaultParticleType, ClientWorld clientWorld, double d, double e, double f, double g, double h, double i) {
             DimeritiumFlash.Flash flash = new DimeritiumFlash.Flash(clientWorld, d, e, f);
             flash.setSprite(this.spriteProvider);
             return flash;

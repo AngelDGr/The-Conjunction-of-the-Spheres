@@ -1,43 +1,53 @@
 package TCOTS.items;
 
-import net.fabricmc.yarn.constants.MiningLevels;
+import com.google.common.base.Suppliers;
+import net.minecraft.block.Block;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
 
 import java.util.function.Supplier;
 
 public enum TCOTS_ToolMaterials implements ToolMaterial {
 
-    GVALCHIR(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(TCOTS_Items.BULLVORE_HORN_FRAGMENT)),
+    GVALCHIR(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(TCOTS_Items.BULLVORE_HORN_FRAGMENT)),
 
-    MOONBLADE(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.GOLD_INGOT)),
+    MOONBLADE(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.GOLD_INGOT)),
 
-    DYAEBL(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.IRON_INGOT)),
+    DYAEBL(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.IRON_INGOT)),
 
-    WINTERS_BLADE(MiningLevels.NETHERITE, 2031, 9.0f, 4.0f, 30, () -> Ingredient.ofItems(Items.NETHERITE_INGOT)),
+    WINTERS_BLADE(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2031, 9.0f, 4.0f, 30, () -> Ingredient.ofItems(Items.NETHERITE_INGOT)),
 
-    ARDAENYE(MiningLevels.NETHERITE, 1400, 9.0f, 4.0f, 20, () -> Ingredient.ofItems(Items.DIAMOND)),
+    ARDAENYE(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 1400, 9.0f, 4.0f, 20, () -> Ingredient.ofItems(Items.DIAMOND)),
 
-    ANCHOR(MiningLevels.NETHERITE, 100, 9.0f, 9.0f, 5, () -> Ingredient.ofItems(Items.IRON_BLOCK))
+    ANCHOR(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 100, 9.0f, 8.0f, 5, () -> Ingredient.ofItems(Items.IRON_BLOCK))
 
     ;
 
 
-    private final int miningLevel;
+    private final TagKey<Block> inverseTag;
     private final int itemDurability;
     private final float miningSpeed;
     private final float attackDamage;
     private final int enchantability;
     private final Supplier<Ingredient> repairIngredient;
 
-    TCOTS_ToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
-        this.miningLevel = miningLevel;
+    TCOTS_ToolMaterials(
+            final TagKey<Block> inverseTag,
+            final int itemDurability,
+            final float miningSpeed,
+            final float attackDamage,
+            final int enchantability,
+            final Supplier<Ingredient> repairIngredient
+    ) {
+        this.inverseTag = inverseTag;
         this.itemDurability = itemDurability;
         this.miningSpeed = miningSpeed;
         this.attackDamage = attackDamage;
         this.enchantability = enchantability;
-        this.repairIngredient = repairIngredient;
+        this.repairIngredient = Suppliers.memoize(repairIngredient::get);
     }
 
     @Override
@@ -56,8 +66,8 @@ public enum TCOTS_ToolMaterials implements ToolMaterial {
     }
 
     @Override
-    public int getMiningLevel() {
-        return this.miningLevel;
+    public TagKey<Block> getInverseTag() {
+        return this.inverseTag;
     }
 
     @Override

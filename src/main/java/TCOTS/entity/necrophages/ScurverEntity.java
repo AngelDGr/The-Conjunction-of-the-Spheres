@@ -1,6 +1,5 @@
 package TCOTS.entity.necrophages;
 
-import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.misc.ScurverSpineEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.particles.TCOTS_Particles;
@@ -42,7 +41,7 @@ public class ScurverEntity extends RotfiendEntity{
 
             for (int i = 0; i <= 90; i += 18) { // Vertical spread from 0 to 90 degrees (half-sphere)
                 for (int j = 0; j < 360; j += 30) { // Full horizontal spread
-                    ProjectileEntity projectileEntity = new ScurverSpineEntity(TCOTS_Entities.SCURVER_SPINE, this, this.getWorld(), new ItemStack(TCOTS_Items.SCURVER_SPINE));
+                    ProjectileEntity projectileEntity = new ScurverSpineEntity(this, this.getWorld(), new ItemStack(TCOTS_Items.SCURVER_SPINE), null);
 
                     // Calculate the direction vector for the current angles
                     double radianI = Math.toRadians(i+this.getRandom().nextBetween(0,20));

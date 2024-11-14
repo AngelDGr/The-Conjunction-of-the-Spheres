@@ -1,0 +1,89 @@
+{
+  "parent": "minecraft:tcots-witcher/craft_potion",
+  "criteria": {
+    "tcots-witcher:alghoul_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots-witcher:alghoul_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:foglet_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots-witcher:foglet_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:grave_hag_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots-witcher:grave_hag_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:nekker_warrior_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots-witcher:nekker_warrior_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:troll_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots-witcher:troll_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:water_hag_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots-witcher:water_hag_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.craft_decoction.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "tcots-witcher:grave_hag_decoction"
+    },
+    "title": {
+      "translate": "advancements.witcher.craft_decoction.title"
+    }
+  },
+  "requirements": [
+    [
+      "tcots-witcher:alghoul_decoction",
+      "tcots-witcher:grave_hag_decoction",
+      "tcots-witcher:water_hag_decoction",
+      "tcots-witcher:foglet_decoction",
+      "tcots-witcher:troll_decoction",
+      "tcots-witcher:nekker_warrior_decoction"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

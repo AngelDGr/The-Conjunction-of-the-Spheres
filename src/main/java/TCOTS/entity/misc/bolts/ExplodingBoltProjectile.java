@@ -13,15 +13,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
+import org.jetbrains.annotations.Nullable;
 
 public class ExplodingBoltProjectile extends WitcherBolt {
     private static final ItemStack DEFAULT_STACK = new ItemStack(TCOTS_Items.EXPLODING_BOLT);
     public ExplodingBoltProjectile(EntityType<? extends ExplodingBoltProjectile> entityType, World world) {
-        super(entityType, world, DEFAULT_STACK);
+        super(entityType, world);
     }
 
-    public ExplodingBoltProjectile(World world, LivingEntity owner, ItemStack stack) {
-        super(TCOTS_Entities.EXPLODING_BOLT, owner, world, stack);
+    public ExplodingBoltProjectile(World world, LivingEntity owner, ItemStack stack, @Nullable ItemStack weapon) {
+        super(TCOTS_Entities.EXPLODING_BOLT, owner, world, stack, weapon);
+    }
+
+    @Override
+    protected ItemStack getDefaultItemStack() {
+        return DEFAULT_STACK;
     }
 
     private final float explosionPower = 1.8f;

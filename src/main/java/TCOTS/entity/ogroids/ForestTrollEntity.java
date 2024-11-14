@@ -34,7 +34,10 @@ import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootTable;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
@@ -47,10 +50,10 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
@@ -121,22 +124,24 @@ public class ForestTrollEntity extends AbstractTrollEntity {
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
 
-        this.dataTracker.startTracking(BAND_RIGHT_UP, Boolean.FALSE);
-        this.dataTracker.startTracking(BAND_LEFT_UP, Boolean.FALSE);
-        this.dataTracker.startTracking(CROWN, Boolean.FALSE);
-        this.dataTracker.startTracking(BARREL, Boolean.FALSE);
-        this.dataTracker.startTracking(NECK_BONE, Boolean.FALSE);
+        builder.add(BAND_RIGHT_UP, Boolean.FALSE);
+        builder.add(BAND_LEFT_UP, Boolean.FALSE);
+        builder.add(CROWN, Boolean.FALSE);
+        builder.add(BARREL, Boolean.FALSE);
+        builder.add(NECK_BONE, Boolean.FALSE);
 
-        this.dataTracker.startTracking(CHARGING, Boolean.FALSE);
+        builder.add(CHARGING, Boolean.FALSE);
 
-        this.dataTracker.startTracking(HOME_POS, BlockPos.ORIGIN);
+        builder.add(HOME_POS, BlockPos.ORIGIN);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_STEP_HEIGHT, 1.0)
+
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 25.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.24f)
@@ -149,7 +154,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
 
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
         if (spawnReason == SpawnReason.NATURAL) {
             //1/20 probability to be a rabid troll if it's a natural spawn
             if (random.nextInt() % 20 == 0) {
@@ -179,7 +184,8 @@ public class ForestTrollEntity extends AbstractTrollEntity {
         //1/8 that doesn't appear with the Neck Bone
         this.setClothing(!(random.nextBetween(0, 8) == 0), 4);
 
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+
+        return super.initialize(world, difficulty, spawnReason, entityData);
     }
 
     @Override
@@ -284,7 +290,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
                             item ->
                                     !item.cannotPickup() && item.isAlive()
                                             && ((item.getStack().getItem() == troll.getBarteringItem() && troll.isWandering())
-                                            || troll.isEdible(item.getStack().getItem()) || troll.isAlcohol(item.getStack().getItem())));
+                                            || troll.isEdible(item.getStack()) || troll.isAlcohol(item.getStack().getItem())));
         }
 
         public void startMovingTo(EntityNavigation navigation, int x, int y, int z, double speed) {
@@ -660,8 +666,8 @@ public class ForestTrollEntity extends AbstractTrollEntity {
     }
 
     @Override
-    protected Identifier getTrollLootTable() {
-        return new Identifier(TCOTS_Main.MOD_ID,"gameplay/forest_troll_bartering");
+    protected RegistryKey<LootTable> getTrollLootTable() {
+        return RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of(TCOTS_Main.MOD_ID,"gameplay/forest_troll_bartering"));
     }
 
     @Override

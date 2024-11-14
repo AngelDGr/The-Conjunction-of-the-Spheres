@@ -4,8 +4,6 @@ import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.config.TCOTS_Config;
 import TCOTS.entity.TCOTS_Entities;
-import TCOTS.entity.misc.ScurverSpineEntity;
-import TCOTS.entity.misc.WaterHag_MudBallEntity;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
 import TCOTS.items.concoctions.TCOTS_Effects;
@@ -13,6 +11,7 @@ import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
 import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.mixin.ServerWorldAccessor;
 import TCOTS.particles.TCOTS_Particles;
+import TCOTS.screen.ToxicityHudOverlay;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.world.TCOTS_Features;
 import TCOTS.world.TCOTS_PlacedFeature;
@@ -23,22 +22,15 @@ import TCOTS.world.village.VillagerCustomTrades;
 import com.mojang.logging.LogUtils;
 import io.wispforest.owo.network.OwoNetChannel;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.Position;
-import net.minecraft.world.World;
 import net.minecraft.world.spawner.SpecialSpawner;
 import org.slf4j.Logger;
-import software.bernie.geckolib.GeckoLib;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +39,7 @@ public class TCOTS_Main implements ModInitializer {
 	public static final Logger LOGGER = LogUtils.getLogger();
 	public static String MOD_ID = "tcots-witcher";
 	public static final TCOTS_Config CONFIG = TCOTS_Config.createAndLoad();
-	public static final OwoNetChannel PACKETS_CHANNEL = OwoNetChannel.create(new Identifier(TCOTS_Main.MOD_ID, "main"));
+	public static final OwoNetChannel PACKETS_CHANNEL = OwoNetChannel.create(Identifier.of(TCOTS_Main.MOD_ID, "main"));
 
 
 	public record WitcherEyesFullPacket(Boolean activate, int shape, int separation, float eyePosX, float eyePosY) {}
@@ -59,7 +51,6 @@ public class TCOTS_Main implements ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-		GeckoLib.initialize();
 		TCOTS_Blocks.registerBlocks();
 		TCOTS_Effects.registerEffects();
 		TCOTS_Items.registerAlchemyIngredients();
@@ -137,25 +128,12 @@ public class TCOTS_Main implements ModInitializer {
 		//Dispense Behaviors
 		{
 			//Dispenser with splash potions
-			DispenserBlock.registerBehavior(TCOTS_Items.KILLER_WHALE_SPLASH, TCOTS_Items.getSplashBehavior());
-			DispenserBlock.registerBehavior(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH, TCOTS_Items.getSplashBehavior());
-			DispenserBlock.registerBehavior(TCOTS_Items.SWALLOW_SPLASH, TCOTS_Items.getSplashBehavior());
+			DispenserBlock.registerProjectileBehavior(TCOTS_Items.KILLER_WHALE_SPLASH);
+			DispenserBlock.registerProjectileBehavior(TCOTS_Items.WHITE_RAFFARDS_DECOCTION_SPLASH);
+			DispenserBlock.registerProjectileBehavior(TCOTS_Items.SWALLOW_SPLASH);
+			DispenserBlock.registerProjectileBehavior(TCOTS_Items.WATER_HAG_MUD_BALL);
 
-			DispenserBlock.registerBehavior(TCOTS_Items.WATER_HAG_MUD_BALL, new ProjectileDispenserBehavior() {
-				@Override
-				protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
-					return Util.make(new WaterHag_MudBallEntity(world, position.getX(), position.getY(), position.getZ()), entity -> entity.setItem(stack));
-				}
-			});
-
-			DispenserBlock.registerBehavior(TCOTS_Items.SCURVER_SPINE, new ProjectileDispenserBehavior() {
-				@Override
-				protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
-					ScurverSpineEntity scurverSpine = new ScurverSpineEntity(world, position.getX(), position.getY(), position.getZ(), stack.copyWithCount(1));
-					scurverSpine.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
-					return scurverSpine;
-				}
-			});
+			DispenserBlock.registerProjectileBehavior(TCOTS_Items.SCURVER_SPINE);
 		}
 
 

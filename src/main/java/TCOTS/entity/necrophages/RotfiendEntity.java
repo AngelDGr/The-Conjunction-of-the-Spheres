@@ -36,11 +36,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.EnumSet;
@@ -245,15 +245,16 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(EXPLODING, Boolean.FALSE);
-        this.dataTracker.startTracking(TRIGGER_EXPLOSION, Boolean.FALSE);
-        this.dataTracker.startTracking(InGROUND, Boolean.FALSE);
-        this.dataTracker.startTracking(EMERGING, Boolean.FALSE);
-        this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
 
-        this.dataTracker.startTracking(BULLVORE_GROUP, Boolean.FALSE);
+        builder.add(EXPLODING, Boolean.FALSE);
+        builder.add(TRIGGER_EXPLOSION, Boolean.FALSE);
+        builder.add(InGROUND, Boolean.FALSE);
+        builder.add(EMERGING, Boolean.FALSE);
+        builder.add(INVISIBLE, Boolean.FALSE);
+
+        builder.add(BULLVORE_GROUP, Boolean.FALSE);
     }
 
     public final boolean getIsExploding() {
@@ -292,12 +293,8 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
         this.dataTracker.set(INVISIBLE, isInvisible);
     }
     @Override
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        if(this.getInGround()){
-            return 0.1f;
-        } else {
-            return super.getActiveEyeHeight(pose, dimensions);
-        }
+    protected EntityDimensions getBaseDimensions(EntityPose pose) {
+        return this.getInGround()? this.getType().getDimensions().withEyeHeight(0.1f): super.getBaseDimensions(pose);
     }
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {

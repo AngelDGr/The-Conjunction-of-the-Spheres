@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "bonemeal",
+  "ingredients": [
+    {
+      "item": "tcots-witcher:graveir_bone"
+    }
+  ],
+  "result": {
+    "count": 16,
+    "id": "minecraft:bone_meal"
+  }
+}

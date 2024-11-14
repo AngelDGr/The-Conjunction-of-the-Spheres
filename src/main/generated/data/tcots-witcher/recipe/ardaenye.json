@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:blaze_powder"
+    },
+    "C": {
+      "item": "tcots-witcher:cadaverine"
+    },
+    "D": {
+      "item": "tcots-witcher:devourer_teeth"
+    },
+    "S": {
+      "item": "minecraft:diamond_sword"
+    }
+  },
+  "pattern": [
+    "BDC",
+    "DSD",
+    "CDB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "tcots-witcher:ardaenye"
+  }
+}

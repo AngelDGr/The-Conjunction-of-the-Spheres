@@ -40,3 +40,5 @@ accessible field net/minecraft/client/render/WorldRenderer bufferBuilders Lnet/m
 
 accessible field net/minecraft/structure/processor/StructureProcessorLists EMPTY Lnet/minecraft/registry/RegistryKey;
 mutable    field    net/minecraft/structure/pool/StructurePool    elementCounts    Ljava/util/List;
+
+accessible method net/minecraft/entity/projectile/PersistentProjectileEntity setPierceLevel (B)V

@@ -37,7 +37,7 @@ public class NorthernWindBomb {
 
     public static void explosionLogic(WitcherBombEntity bomb){
 
-        bomb.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1,1);
+        bomb.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE.value(), 1,1);
 
         bomb.getWorld().sendEntityStatus(bomb, NORTHERN_WIND_EXPLODES);
 

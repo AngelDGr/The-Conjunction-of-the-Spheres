@@ -6,8 +6,8 @@ import TCOTS.entity.necrophages.DrownerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.model.data.EntityModelData;
 
 
@@ -16,17 +16,17 @@ public class DrownerModel extends BipedGeoModelBase<DrownerEntity> {
 
     @Override
     public Identifier getModelResource(DrownerEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/necrophages/drowner.geo.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "geo/necrophages/drowner.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(DrownerEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner.png");
     }
 
     @Override
     public Identifier getAnimationResource(DrownerEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/necrophages/drowner.animation.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "animations/necrophages/drowner.animation.json");
     }
 
     @Override
@@ -37,8 +37,8 @@ public class DrownerModel extends BipedGeoModelBase<DrownerEntity> {
     @Override
     public void setCustomAnimations(DrownerEntity entity, long instanceId, AnimationState<DrownerEntity> animationState) {
 
-        CoreGeoBone head = getAnimationProcessor().getBone("head");
-        CoreGeoBone wholeBody = getAnimationProcessor().getBone("wholeBody");
+        GeoBone head = getAnimationProcessor().getBone("head");
+        GeoBone wholeBody = getAnimationProcessor().getBone("wholeBody");
         EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         if(head!=null) {
             //Swimming
@@ -53,7 +53,7 @@ public class DrownerModel extends BipedGeoModelBase<DrownerEntity> {
 
                 if(wholeBody.getRotY()!=0){wholeBody.setRotY(0);}
 
-                CoreGeoBone Thingy =  getAnimationProcessor().getBone("Thingy");
+                GeoBone Thingy =  getAnimationProcessor().getBone("Thingy");
 
                 if(Thingy!=null){
                     Thingy.setRotX((float)-(Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));

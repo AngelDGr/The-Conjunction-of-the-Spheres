@@ -9,17 +9,17 @@ public class BullvoreModel extends BipedGeoModelBase<BullvoreEntity> {
 
     @Override
     public Identifier getModelResource(BullvoreEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "geo/necrophages/bullvore.geo.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "geo/necrophages/bullvore.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(BullvoreEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "textures/entity/necrophages/bullvore.png");
+        return Identifier.of(TCOTS_Main.MOD_ID, "textures/entity/necrophages/bullvore.png");
     }
 
     @Override
     public Identifier getAnimationResource(BullvoreEntity animatable) {
-        return new Identifier(TCOTS_Main.MOD_ID, "animations/necrophages/bullvore.animation.json");
+        return Identifier.of(TCOTS_Main.MOD_ID, "animations/necrophages/bullvore.animation.json");
     }
 
     @Override

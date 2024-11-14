@@ -2,23 +2,26 @@ package TCOTS.items.armor;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.utils.MiscUtil;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.HorseArmorItem;
+import net.minecraft.item.AnimalArmorItem;
+import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class WitcherHorseArmorItem extends HorseArmorItem {
+@SuppressWarnings("all")
+public class WitcherHorseArmorItem extends AnimalArmorItem {
     private final List<MutableText> tooltip;
     private final String armorTexture;
     private final String outerTexture;
-    public WitcherHorseArmorItem(int bonus, String name, Settings settings, List<MutableText> tooltip) {
-        super(bonus, name, settings);
+    public WitcherHorseArmorItem(RegistryEntry<ArmorMaterial> material, String name, Item.Settings settings, List<MutableText> tooltip) {
+        super(material, AnimalArmorItem.Type.EQUESTRIAN, false, settings);
+
 
         this.armorTexture="textures/models/horse_armor/horse_armor_" + name + ".png";
         this.outerTexture="textures/models/horse_armor/horse_armor_" + name + "_outer.png";
@@ -26,18 +29,19 @@ public class WitcherHorseArmorItem extends HorseArmorItem {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         if(!this.tooltip.isEmpty())
             MiscUtil.setSpecialTooltip(Text.translatable("tooltip.tcots-witcher.generic_tooltip.special_abilities"), stack, tooltip, this.tooltip);
     }
 
     @Override
     public Identifier getEntityTexture() {
-        return new Identifier(TCOTS_Main.MOD_ID,this.armorTexture);
+        return Identifier.of(TCOTS_Main.MOD_ID,this.armorTexture);
     }
 
     public Identifier getOuterTexture(){
-        return new Identifier(TCOTS_Main.MOD_ID, this.outerTexture);
+        return Identifier.of(TCOTS_Main.MOD_ID, this.outerTexture);
     }
+
 
 }

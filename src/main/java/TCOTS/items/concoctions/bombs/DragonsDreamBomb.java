@@ -17,7 +17,7 @@ public class DragonsDreamBomb {
 
     public static void explosionLogic(WitcherBombEntity bomb){
 
-        bomb.getWorld().playSound(null, bomb.getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, bomb.getSoundCategory());
+        bomb.getWorld().playSound(null, bomb.getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE.value(), bomb.getSoundCategory());
 
         bomb.getWorld().sendEntityStatus(bomb, DRAGONS_DREAM_EXPLODES);
 
