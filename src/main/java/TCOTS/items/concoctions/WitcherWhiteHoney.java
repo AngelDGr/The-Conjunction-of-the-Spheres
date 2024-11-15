@@ -1,8 +1,6 @@
 package TCOTS.items.concoctions;
 
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -11,7 +9,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
@@ -52,8 +49,6 @@ public class WitcherWhiteHoney extends WitcherPotions_Base{
         }
 
         ItemStack stack_Empty = WitcherPotions_Base.getStackEmptyBottle(this);
-
-        NbtComponent.set(DataComponentTypes.CUSTOM_DATA, stack_Empty, nbtCompound -> nbtCompound.putString("Potion", Registries.ITEM.getId(this).toString()));
 
         if (playerEntity == null || !playerEntity.getAbilities().creativeMode) {
             if (playerEntity != null) {

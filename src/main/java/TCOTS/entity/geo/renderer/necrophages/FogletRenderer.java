@@ -33,7 +33,12 @@ public class FogletRenderer extends GeoEntityRenderer<FogletEntity> {
     public void actuallyRender(MatrixStack poseStack, FogletEntity animatable, BakedGeoModel model, @Nullable RenderLayer renderType, VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
         Color holdColor = new Color(colour);
 
-        int newColor =  Color.ofARGB(animatable.getAlphaValue(), holdColor.getRedFloat(), holdColor.getGreenFloat(), holdColor.getBlueFloat()).argbInt();
+        int newColor =  Color.ofRGBA(
+                holdColor.getRedFloat(),
+                holdColor.getGreenFloat(),
+                holdColor.getBlueFloat(),
+                animatable.getAlphaValue())
+                .argbInt();
 
         super.actuallyRender(poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, newColor);
     }

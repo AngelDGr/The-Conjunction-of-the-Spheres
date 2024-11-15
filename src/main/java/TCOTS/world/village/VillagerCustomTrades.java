@@ -21,7 +21,6 @@ import net.minecraft.village.VillagerProfession;
 
 import java.util.Optional;
 
-//TODO: See what the fuck happens
 public class VillagerCustomTrades {
 
     @SuppressWarnings("all")
@@ -37,32 +36,34 @@ public class VillagerCustomTrades {
                     factories -> {
                         //Sell
                         {
-                            new TradeOffers.SellItemFactory(
-                                    //Gives
-                                    TCOTS_Items.ALCHEMY_BOOK,
-                                    6,
-                                    1,
-                                    3,
-                                    10
-                                    );
+                           factories.add(new TradeOffers.SellItemFactory(
+                                   //Gives
+                                   TCOTS_Items.ALCHEMY_BOOK,
+                                   6,
+                                   1,
+                                   3,
+                                   10
+                           ));
 
 
-                            new TradeOffers.SellItemFactory(
+                            factories.add(new TradeOffers.SellItemFactory(
                                     //Gives
                                     TCOTS_Items.ICY_SPIRIT,
                                     4,
                                     1,
                                     16,
-                                    1);
+                                    1)
+                            );
                         }
 
                         //Buys
                         {
-                            new TradeOffers.BuyItemFactory(
+                            factories.add(new TradeOffers.BuyItemFactory(
                                     Items.DANDELION,
                                     12,
                                     16,
-                                    2);
+                                    2)
+                            );
                         }
                     });
 
@@ -70,7 +71,8 @@ public class VillagerCustomTrades {
                     factories -> {
                         //Sell
                         {
-                            factories.add((entity, random) -> new TradeOffer(
+                            factories.add((entity, random) ->
+                                    new TradeOffer(
                                     //Wants
                                     new TradedItem(Items.EMERALD, 16+ random.nextBetween(0,32)),
                                     //Gives
@@ -79,18 +81,19 @@ public class VillagerCustomTrades {
                                     60,
                                     0.2f));
 
-                            new TradeOffers.SellItemFactory(
+                            factories.add(new TradeOffers.SellItemFactory(
                                     TCOTS_Items.ALLSPICE,
                                     6,
                                     1,
-                                    5);
+                                    5)
+                            );
 
-                            new TradeOffers.SellItemFactory(
-                                    //Gives
+                            factories.add(new TradeOffers.SellItemFactory(
                                     Items.HONEYCOMB,
                                     8,
                                     1,
-                                    5);
+                                    5)
+                            );
 
                         }
 

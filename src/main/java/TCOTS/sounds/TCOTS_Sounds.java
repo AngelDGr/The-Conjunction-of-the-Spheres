@@ -167,6 +167,7 @@ public class TCOTS_Sounds {
     public static SoundEvent OIL_RAN_OUT = registerSoundEvent("oil_ran_out");
     public static SoundEvent INGREDIENT_POPS = registerSoundEvent("ingredient_pops");
     public static SoundEvent BLACK_BLOOD_HIT = registerSoundEvent("black_blood_hit");
+    public static SoundEvent HERBALIST_WORKS = registerSoundEvent("work_herbalist");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = Identifier.of(TCOTS_Main.MOD_ID, name);

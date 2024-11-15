@@ -37,7 +37,7 @@ public class TCOTS_OwOConfig {
     @Sync(Option.SyncMode.INFORM_SERVER)
     public static class NestedHudConfig {
         @Sync(Option.SyncMode.INFORM_SERVER)
-        public ANCHORS anchor = ANCHORS.LEFT_UP;
+        public ANCHORS anchor = ANCHORS.LEFT_DOWN;
         @Sync(Option.SyncMode.INFORM_SERVER)
         public int Hud_Y=0;
         @Sync(Option.SyncMode.INFORM_SERVER)

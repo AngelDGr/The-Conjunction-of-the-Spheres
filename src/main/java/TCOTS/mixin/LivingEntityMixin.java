@@ -5,8 +5,8 @@ import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.misc.AnchorProjectileEntity;
 import TCOTS.entity.ogroids.AbstractTrollEntity;
 import TCOTS.interfaces.LivingEntityMixinInterface;
-import TCOTS.interfaces.MaxToxicityIncreaser;
 import TCOTS.items.TCOTS_Items;
+import TCOTS.items.components.MonsterOilComponent;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
 import TCOTS.items.concoctions.bombs.NorthernWindBomb;
@@ -17,10 +17,7 @@ import TCOTS.utils.EntitiesUtil;
 import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -47,7 +44,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -62,9 +58,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements Attackable, LivingEntityMixinInterface {
@@ -473,102 +467,27 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @Inject(method = "onDeath", at = @At("TAIL"))
     private void injectTriggerAdvancement(DamageSource damageSource, CallbackInfo ci){
         if(EntitiesUtil.isHumanoid(THIS) && getAttacker() instanceof PlayerEntity player){
-            if(player.getMainHandStack().contains(DataComponentTypes.CUSTOM_DATA)){
-                NbtCompound nbt = player.getMainHandStack().get(DataComponentTypes.CUSTOM_DATA).copyNbt();
+            if(player.getMainHandStack().contains(TCOTS_Items.MONSTER_OIL_COMPONENT) && player.getMainHandStack().get(TCOTS_Items.MONSTER_OIL_COMPONENT)!=null){
+                MonsterOilComponent monsterOil = player.getMainHandStack().get(TCOTS_Items.MONSTER_OIL_COMPONENT);
 
-                if(nbt!=null && nbt.contains("Monster Oil")){
-                    NbtCompound monsterOil = nbt.getCompound("Monster Oil");
-                    assert monsterOil != null;
-                    if(monsterOil.getInt("Id")==11)
-                    {
-                        if(player instanceof ServerPlayerEntity serverPlayer){
-                            TCOTS_Criteria.KILL_WITH_HANGED.trigger(serverPlayer);
-                        }
+                if(monsterOil!=null && monsterOil.groupId()==11)
+                {
+                    if(player instanceof ServerPlayerEntity serverPlayer){
+                        TCOTS_Criteria.KILL_WITH_HANGED.trigger(serverPlayer);
                     }
                 }
             }
         }
     }
 
-    @Shadow
-    private ItemStack getSyncedHandStack(EquipmentSlot slot){return null;}
-
-    @Shadow
-    private ItemStack getSyncedArmorStack(EquipmentSlot slot){return null;}
 
     @Shadow public abstract ItemStack getMainHandStack();
-
-    @Shadow public abstract @Nullable EntityAttributeInstance getAttributeInstance(RegistryEntry<EntityAttribute> attribute);
 
     @Shadow public abstract boolean hasStatusEffect(RegistryEntry<StatusEffect> effect);
 
     @Shadow public abstract @Nullable StatusEffectInstance getStatusEffect(RegistryEntry<StatusEffect> effect);
 
     @Shadow public abstract boolean removeStatusEffect(RegistryEntry<StatusEffect> effect);
-
-    @Shadow private ItemStack syncedBodyArmorStack;
-
-    @Inject(method = "getEquipmentChanges", at = @At("TAIL"))
-    private void injectExtraToxicity(CallbackInfoReturnable<Map<EquipmentSlot, ItemStack>> cir){
-        if(THIS instanceof PlayerEntity player) {
-            for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-                ItemStack unequippedStack =
-                        switch (equipmentSlot.getType()) {
-                            case HAND -> this.getSyncedHandStack(equipmentSlot);
-                            case HUMANOID_ARMOR -> this.getSyncedArmorStack(equipmentSlot);
-                            case ANIMAL_ARMOR -> this.syncedBodyArmorStack;
-                        };
-
-                //To check if it has already the extra toxicity
-                Iterable<ItemStack> equippedItems=  THIS.getEquippedItems();
-                int maxToxicity=100;
-                for(ItemStack stack: equippedItems){
-                    if(stack.getItem() instanceof MaxToxicityIncreaser toxicityIncreaser) maxToxicity=maxToxicity+toxicityIncreaser.getExtraToxicity();
-                }
-                if(maxToxicity==player.theConjunctionOfTheSpheres$getMaxToxicity()) break;
-
-
-                ItemStack equippedStack = THIS.getEquippedStack(equipmentSlot);
-                if (!THIS.areItemsDifferent(unequippedStack, equippedStack)) continue;
-                //On un-equip
-                if (unequippedStack!=null && !unequippedStack.isEmpty() && unequippedStack.getItem() instanceof MaxToxicityIncreaser toxicityIncreaser) {
-                    float oldMaxToxicity=player.theConjunctionOfTheSpheres$getMaxToxicity();
-                    player.theConjunctionOfTheSpheres$decreaseMaxToxicity(toxicityIncreaser.getExtraToxicity());
-                    float newMaxToxicity=player.theConjunctionOfTheSpheres$getMaxToxicity();
-
-                    if(player.theConjunctionOfTheSpheres$getNormalToxicity() > 0){
-                        float currentToxicity = player.theConjunctionOfTheSpheres$getNormalToxicity();
-                        int newToxicity=(int) ((newMaxToxicity/oldMaxToxicity) *currentToxicity);
-
-                        player.theConjunctionOfTheSpheres$setToxicity(MathHelper.clamp(newToxicity,0, player.theConjunctionOfTheSpheres$getMaxToxicity() - player.theConjunctionOfTheSpheres$getDecoctionToxicity()));
-                    }
-                }
-
-                if (equippedStack.isEmpty()) continue;
-
-                //On equip
-                if(equippedStack.getItem() instanceof MaxToxicityIncreaser toxicityIncreaser) {
-                    // CurrentToxicity ->  OldMaxToxicity
-                    //      X          ->  NewMaxToxicity
-
-                    //(NewMaxToxicity/OldMaxToxicity) * CurrentToxicity = NewCurrentToxicity
-
-                    float oldMaxToxicity=player.theConjunctionOfTheSpheres$getMaxToxicity();
-                    player.theConjunctionOfTheSpheres$addMaxToxicity(toxicityIncreaser.getExtraToxicity());
-                    float newMaxToxicity=player.theConjunctionOfTheSpheres$getMaxToxicity();
-
-                    if(player.theConjunctionOfTheSpheres$getNormalToxicity() > 0){
-                        float currentToxicity = player.theConjunctionOfTheSpheres$getNormalToxicity();
-                        int newToxicity=(int) ((newMaxToxicity/oldMaxToxicity) *currentToxicity);
-
-                        player.theConjunctionOfTheSpheres$setToxicity(MathHelper.clamp(newToxicity,0, player.theConjunctionOfTheSpheres$getMaxToxicity() - player.theConjunctionOfTheSpheres$getDecoctionToxicity()));
-                    }
-                }
-
-            }
-        }
-
-    }
 
     
     @Inject(method ="modifyAppliedDamage", at = @At("RETURN"), cancellable = true)
@@ -589,8 +508,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
 
     //Raven Armor Set Bonus
-    @Unique
-    private static final UUID RAVEN_SPEED_BONUS_ID = UUID.fromString("a1f7779d-f64f-4a12-b69f-1a8f4ac13419");
     @Unique
     private static final EntityAttributeModifier RAVEN_SPEED_BONUS = new EntityAttributeModifier(
             Identifier.of(TCOTS_Main.MOD_ID, "raven_speed_boost"),

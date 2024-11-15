@@ -3,6 +3,7 @@ package TCOTS.items;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_EntityAttributes;
 import TCOTS.items.armor.ManticoreArmorItem;
 import TCOTS.items.armor.RavensArmorItem;
 import TCOTS.items.armor.WarriorsLeatherArmorItem;
@@ -21,9 +22,12 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.CropBlock;
 import net.minecraft.component.ComponentType;
-import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -1076,19 +1080,25 @@ public class TCOTS_Items {
                     TCOTS_ArmorMaterials.MANTICORE,
                     ArmorItem.Type.CHESTPLATE,
                     new Item.Settings().rarity(Rarity.UNCOMMON)
-                            .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(20))));
+                            .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(20))
+                            .attributeModifiers(addArmorWithToxicity(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.CHESTPLATE, 10)))
+            );
 
             MANTICORE_TROUSERS = registerItem("manticore_trousers", new ManticoreArmorItem(
                             TCOTS_ArmorMaterials.MANTICORE,
                             ArmorItem.Type.LEGGINGS,
                             new Item.Settings().rarity(Rarity.UNCOMMON)
-                                    .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(20))));
+                                    .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(20))
+                                    .attributeModifiers(addArmorWithToxicity(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.LEGGINGS, 10)))
+            );
 
             MANTICORE_BOOTS = registerItem("manticore_boots", new ManticoreArmorItem(
                     TCOTS_ArmorMaterials.MANTICORE,
                     ArmorItem.Type.BOOTS,
                     new Item.Settings().rarity(Rarity.UNCOMMON)
-                            .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(20))));
+                            .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(20))
+                            .attributeModifiers(addArmorWithToxicity(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.BOOTS, 10)))
+            );
 
             WARRIORS_LEATHER_JACKET = registerItem("warriors_leather_jacket", new WarriorsLeatherArmorItem(
                     TCOTS_ArmorMaterials.WARRIORS_LEATHER,
@@ -1149,8 +1159,57 @@ public class TCOTS_Items {
         }
     }
 
-    //xTODO: Add buy mechanic to alcohol
+    public static AttributeModifiersComponent addExtraToxicity(double toxicity, AttributeModifierSlot slot, String id){
+       return AttributeModifiersComponent.builder()
+                .add(
+                        TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY,
+                        new EntityAttributeModifier(
+                                Identifier.of(TCOTS_Main.MOD_ID, id),
+                                toxicity,
+                                EntityAttributeModifier.Operation.ADD_VALUE
+                        ),
+                        slot
+                )
+                .build();
+    }
 
+    public static AttributeModifiersComponent addArmorWithToxicity(RegistryEntry<ArmorMaterial> material, ArmorItem.Type type, int toxicity){
+        int i = material.value().getProtection(type);
+        float f = material.value().toughness();
+        AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
+        AttributeModifierSlot attributeModifierSlot = AttributeModifierSlot.forEquipmentSlot(type.getEquipmentSlot());
+        Identifier identifier = Identifier.ofVanilla("armor." + type.getName());
+
+        builder.add(
+                TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY,
+                new EntityAttributeModifier(
+                        Identifier.of(TCOTS_Main.MOD_ID, "armor."+ type.getName()),
+                        toxicity,
+                        EntityAttributeModifier.Operation.ADD_VALUE
+                ),
+                attributeModifierSlot
+        );
+        builder.add(
+                EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(identifier, i, EntityAttributeModifier.Operation.ADD_VALUE), attributeModifierSlot
+        );
+        builder.add(
+                EntityAttributes.GENERIC_ARMOR_TOUGHNESS,
+                new EntityAttributeModifier(identifier, f, EntityAttributeModifier.Operation.ADD_VALUE),
+                attributeModifierSlot
+        );
+        float g = material.value().knockbackResistance();
+        if (g > 0.0F) {
+            builder.add(
+                    EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
+                    new EntityAttributeModifier(identifier, g, EntityAttributeModifier.Operation.ADD_VALUE),
+                    attributeModifierSlot
+            );
+        }
+
+        return builder.build();
+    }
+
+    //xTODO: Add buy mechanic to alcohol
     //Alcohol
     public static WitcherAlcohol_Base ICY_SPIRIT;
     public static WitcherAlcohol_Base DWARVEN_SPIRIT;

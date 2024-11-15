@@ -1,18 +1,21 @@
 package TCOTS.mixin;
 
-import TCOTS.interfaces.MaxToxicityIncreaser;
+import TCOTS.entity.TCOTS_EntityAttributes;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.AlchemyFormulaItem;
 import TCOTS.utils.EntitiesUtil;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
 import net.minecraft.item.tooltip.TooltipAppender;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Rarity;
@@ -22,7 +25,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
@@ -48,16 +51,16 @@ public abstract class ItemStackMixin {
 
 
     //Manticore Armor
-    @ModifyVariable(method = "getTooltip", at = @At(
+    @Redirect(method = "appendAttributeModifierTooltip", at = @At(
             value = "INVOKE"
-            ,target = "Lnet/minecraft/item/ItemStack;appendAttributeModifiersTooltip(Ljava/util/function/Consumer;Lnet/minecraft/entity/player/PlayerEntity;)V",
-            ordinal = 0))
-    private List<Text> manticoreToxicityTooltip(List<Text> value){
-        if(THIS.getItem() instanceof MaxToxicityIncreaser item){
-            value.add(Text.translatable("tooltip.tcots-witcher.manticore_armor.toxicity", item.getExtraToxicity()).formatted(Formatting.DARK_GREEN));
+            ,target = "Lnet/minecraft/text/MutableText;formatted(Lnet/minecraft/util/Formatting;)Lnet/minecraft/text/MutableText;",
+            ordinal = 1))
+    private MutableText manticoreAttributeMaxToxicityColor(MutableText instance, Formatting formatting, @Local(argsOnly = true) RegistryEntry<EntityAttribute> attribute){
+        if(attribute == TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY){
+            return instance.formatted(Formatting.DARK_GREEN);
         }
 
-        return value;
+        return instance.formatted(formatting);
     }
 
     @Inject(method = "getMaxUseTime", at = @At("RETURN"), cancellable = true)
@@ -66,8 +69,6 @@ public abstract class ItemStackMixin {
             cir.setReturnValue(this.getItem().getMaxUseTime(THIS,user)/2);
         }
     }
-
-
 
     //Alchemy Formula
     @Inject(method = "getTooltip", at = @At(

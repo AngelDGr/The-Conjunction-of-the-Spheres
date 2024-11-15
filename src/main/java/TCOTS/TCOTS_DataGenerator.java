@@ -1631,6 +1631,32 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup arg) {
+            this.getOrCreateTagBuilder(TCOTS_Entities.NECROPHAGES)
+                    .add(
+                            TCOTS_Entities.DEVOURER,
+                            TCOTS_Entities.GRAVE_HAG,
+                            TCOTS_Entities.DROWNER,
+                            TCOTS_Entities.GHOUL,
+                            TCOTS_Entities.ALGHOUL,
+                            TCOTS_Entities.FOGLET,
+                            TCOTS_Entities.BULLVORE,
+                            TCOTS_Entities.WATER_HAG,
+                            TCOTS_Entities.GRAVEIR,
+                            TCOTS_Entities.ROTFIEND,
+                            TCOTS_Entities.SCURVER);
+
+            this.getOrCreateTagBuilder(TCOTS_Entities.OGROIDS)
+                    .add(
+                            TCOTS_Entities.ICE_GIANT,
+                            TCOTS_Entities.NEKKER,
+                            TCOTS_Entities.NEKKER_WARRIOR,
+                            TCOTS_Entities.CYCLOPS,
+                            TCOTS_Entities.ROCK_TROLL,
+                            TCOTS_Entities.ICE_TROLL,
+                            TCOTS_Entities.FOREST_TROLL);
+
+
+
             this.getOrCreateTagBuilder(TCOTS_Entities.IGNITING_ENTITIES)
                     .add(EntityType.BLAZE)
                     .add(EntityType.FIREBALL)
@@ -1658,29 +1684,11 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .add(TCOTS_Entities.ICE_GIANT);
 
 
-            this.getOrCreateTagBuilder(TCOTS_Entities.NECROPHAGES)
-                    .add(
-                            TCOTS_Entities.DEVOURER,
-                            TCOTS_Entities.GRAVE_HAG,
-                            TCOTS_Entities.DROWNER,
-                            TCOTS_Entities.GHOUL,
-                            TCOTS_Entities.ALGHOUL,
-                            TCOTS_Entities.FOGLET,
-                            TCOTS_Entities.BULLVORE,
-                            TCOTS_Entities.WATER_HAG,
-                            TCOTS_Entities.GRAVEIR,
-                            TCOTS_Entities.ROTFIEND,
-                            TCOTS_Entities.SCURVER);
+            this.getOrCreateTagBuilder(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
+                    .add(TCOTS_Entities.DROWNER);
 
-            this.getOrCreateTagBuilder(TCOTS_Entities.OGROIDS)
-                    .add(
-                            TCOTS_Entities.ICE_GIANT,
-                            TCOTS_Entities.NEKKER,
-                            TCOTS_Entities.NEKKER_WARRIOR,
-                            TCOTS_Entities.CYCLOPS,
-                            TCOTS_Entities.ROCK_TROLL,
-                            TCOTS_Entities.ICE_TROLL,
-                            TCOTS_Entities.FOREST_TROLL);
+            this.getOrCreateTagBuilder(EntityTypeTags.SENSITIVE_TO_IMPALING)
+                    .add(TCOTS_Entities.DROWNER);
         }
     }
     private static class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
@@ -1737,6 +1745,13 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
             this.getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE)
                     .add(TCOTS_Items.GIANT_ANCHOR);
+
+            this.getOrCreateTagBuilder(ItemTags.FLOWERS)
+                    .add(TCOTS_Items.ARENARIA)
+                    .add(TCOTS_Items.CELANDINE)
+                    .add(TCOTS_Items.BRYONIA)
+                    .add(TCOTS_Items.VERBENA)
+                    .add(TCOTS_Items.HAN_FIBER);
         }
     }
 

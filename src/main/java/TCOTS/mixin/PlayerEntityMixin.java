@@ -1,6 +1,7 @@
 package TCOTS.mixin;
 
 import TCOTS.advancements.TCOTS_Criteria;
+import TCOTS.entity.TCOTS_EntityAttributes;
 import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.components.MonsterOilComponent;
@@ -17,7 +18,7 @@ import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -35,6 +36,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -57,6 +59,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
+
+    @Inject(method = "createPlayerAttributes", at = @At("RETURN"), cancellable = true)
+    private static void injectToxicity(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir){
+        cir.setReturnValue(cir.getReturnValue().add(TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY));
+    }
+
     @Final
     @Shadow
     PlayerInventory inventory;
@@ -358,8 +366,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Unique
     private static final TrackedData<Integer> DECOCTION_TOXICITY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
     @Unique
-    private static final TrackedData<Integer> MAX_TOXICITY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
-    @Unique
     private static final TrackedData<Boolean> HUD_ACTIVE = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     @Unique
     private static final TrackedData<Float> HUD_TRANSPARENCY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.FLOAT);
@@ -369,7 +375,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private void injectToxicityDataTracker(DataTracker.Builder builder, CallbackInfo ci){
         builder.add(TOXICITY, 0);
         builder.add(DECOCTION_TOXICITY, 0);
-        builder.add(MAX_TOXICITY,100);
         builder.add(HUD_ACTIVE, false);
         builder.add(HUD_TRANSPARENCY, 0.0f);
     }
@@ -386,12 +391,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Override
     public int theConjunctionOfTheSpheres$getMaxToxicity(){
-        return this.dataTracker.get(MAX_TOXICITY);
-    }
-
-    @Override
-    public void theConjunctionOfTheSpheres$setMaxToxicity(int MaxToxicity) {
-        this.dataTracker.set(MAX_TOXICITY,MaxToxicity);
+        return (int) THIS.getAttributeValue(TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY);
     }
 
     @Override
@@ -402,16 +402,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Override
     public void theConjunctionOfTheSpheres$setDecoctionToxicity(int DecoctionToxicity) {
         this.dataTracker.set(DECOCTION_TOXICITY,DecoctionToxicity);
-    }
-
-    @Override
-    public void theConjunctionOfTheSpheres$addMaxToxicity(int MaxToxicity){
-        this.dataTracker.set(MAX_TOXICITY,theConjunctionOfTheSpheres$getMaxToxicity()+MaxToxicity);
-    }
-
-    @Override
-    public void theConjunctionOfTheSpheres$decreaseMaxToxicity(int MaxToxicity){
-        this.dataTracker.set(MAX_TOXICITY,theConjunctionOfTheSpheres$getMaxToxicity()-MaxToxicity);
     }
 
     @Override
@@ -449,20 +439,23 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private void injectReadNBTToxicity(NbtCompound nbt, CallbackInfo ci){
         theConjunctionOfTheSpheres$setToxicity(nbt.getInt("Toxicity"));
         theConjunctionOfTheSpheres$setDecoctionToxicity(nbt.getInt("DecoctionToxicity"));
-
-        theConjunctionOfTheSpheres$setMaxToxicity(nbt.getInt("MaxToxicity"));
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void injectWriteNBTToxicity(NbtCompound nbt, CallbackInfo ci){
         nbt.putInt("Toxicity", theConjunctionOfTheSpheres$getNormalToxicity());
         nbt.putInt("DecoctionToxicity",theConjunctionOfTheSpheres$getDecoctionToxicity());
-
-        nbt.putInt("MaxToxicity",theConjunctionOfTheSpheres$getMaxToxicity());
     }
 
-
-
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void injectInTickDecreaseToxicityIfOverMaximum(CallbackInfo ci){
+      if(this.theConjunctionOfTheSpheres$getAllToxicity() > this.theConjunctionOfTheSpheres$getMaxToxicity()){
+          THIS.theConjunctionOfTheSpheres$setToxicity(MathHelper.clamp(
+                  THIS.theConjunctionOfTheSpheres$getNormalToxicity(),
+                  0,
+                  THIS.theConjunctionOfTheSpheres$getMaxToxicity() - THIS.theConjunctionOfTheSpheres$getDecoctionToxicity()));
+      }
+    }
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void injectInTickDecreaseToxicity(CallbackInfo ci){

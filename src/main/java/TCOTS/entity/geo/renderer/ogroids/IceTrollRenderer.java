@@ -42,7 +42,7 @@ public class IceTrollRenderer extends GeoEntityRenderer<IceTrollEntity> {
 
                     getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, armorRenderType,
                             bufferSource.getBuffer(armorRenderType), partialTick, packedLight, OverlayTexture.DEFAULT_UV,
-                            Color.ofARGB(1,1,1,1).argbInt());
+                            Color.ofARGB(1f,1f,1f,1f).argbInt());
                 }
             }
         });

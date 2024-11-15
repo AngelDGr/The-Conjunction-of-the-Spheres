@@ -2,8 +2,6 @@ package TCOTS.utils;
 
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.components.RecipeTeacherComponent;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;

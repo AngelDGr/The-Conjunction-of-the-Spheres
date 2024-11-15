@@ -78,13 +78,12 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, Ownable {
         return null;
     }
 
+    public static final byte DEATH_FOGLING_EFFECTS = 43;
     @Override
     public boolean damage(DamageSource source, float amount) {
         if(amount>0){
-            if(this.getWorld().isClient){
-                vanishParticles();
-            }
             if(!this.getWorld().isClient) {
+                this.getWorld().sendEntityStatus(this, DEATH_FOGLING_EFFECTS);
                 this.playSound(TCOTS_Sounds.FOGLET_FOGLING_DISAPPEAR, 1.0f, 1.0f);
                 this.dead = true;
                 this.remove(Entity.RemovalReason.KILLED);
@@ -92,6 +91,16 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, Ownable {
         }
 
         return super.damage(source, amount);
+    }
+
+    @Override
+    public void handleStatus(byte status) {
+        if(status == DEATH_FOGLING_EFFECTS){
+            this.vanishParticles();
+        }
+        else {
+            super.handleStatus(status);
+        }
     }
 
     private void vanishParticles(){
@@ -102,7 +111,6 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, Ownable {
             this.getWorld().addParticle(ParticleTypes.CLOUD, d,e,f,0,0,0);
         }
     }
-
 
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {

@@ -290,6 +290,7 @@
 
 
     "entity.minecraft.villager.herbalist_witcher": "Herbalist",
+    "tcots-witcher.sounds.work_herbalist": "Herbalist works",
 
 
     "tcots-witcher.sounds.ingredient_pops": "Ingredients pop",
@@ -671,10 +672,11 @@
     "tooltip.tcots-witcher.generic_tooltip.see_more": "Pulse shift to see...",
     "tooltip.tcots-witcher.generic_tooltip.special_abilities": "Special Abilities:",
 
+
+    "attribute.name.generic.max_witcher_toxicity": "Max Toxicity",
     "item.tcots-witcher.manticore_armor": "Manticore Armor",
     "item.tcots-witcher.manticore_trousers": "Manticore Trousers",
     "item.tcots-witcher.manticore_boots": "Manticore Boots",
-    "tooltip.tcots-witcher.manticore_armor.toxicity": "+%s Maximum Toxicity",
     "tooltip.tcots-witcher.manticore_armor.full_set1": "+75% Bombs cooldown reduction",
     "tooltip.tcots-witcher.manticore_armor.full_set2": "+50% Potion drinking time reduction",
     "tooltip.tcots-witcher.manticore_armor.full_set3": "+2 Refilling slots when using alcohol",
@@ -795,6 +797,7 @@
     "filled_map.giant_cave": "Giant Cave Explorer Map",
 
     "gui.jei.tcots-witcher.requires_recipe": "Requires unlock recipe",
+    "gui.jei.tcots-witcher.for_herb": "+%ss for each extra herb",
     "tag.item.tcots-witcher.monster_blood": "Monster Blood",
     "tag.item.tcots-witcher.decaying_flesh": "Decaying Flesh",
 

@@ -4,7 +4,6 @@ import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 
 public class DrownerPuddleModel extends GeoModel<DrownerPuddleEntity> {
@@ -26,10 +25,5 @@ public class DrownerPuddleModel extends GeoModel<DrownerPuddleEntity> {
     @Override
     public RenderLayer getRenderType(DrownerPuddleEntity animatable, Identifier texture) {
         return RenderLayer.getEntityTranslucent(texture);
-    }
-
-    @Override
-    public void setCustomAnimations(DrownerPuddleEntity animatable, long instanceId, AnimationState<DrownerPuddleEntity> animationState) {
-        super.setCustomAnimations(animatable, instanceId, animationState);
     }
 }

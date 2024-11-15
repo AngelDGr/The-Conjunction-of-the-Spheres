@@ -249,7 +249,6 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         }
     }
 
-    //Herbal Table
     private static class HerbalTableRecipeCategory implements IRecipeCategory<RecipeEntry<HerbalTableRecipe>> {
         private final IDrawable background;
         private final IDrawable icon;
@@ -260,6 +259,7 @@ public class TCOTS_JEIPlugin implements IModPlugin {
                             0,0,
                             157, 32)
                     .setTextureSize(157,32)
+                    .addPadding(10, 0, 0 ,0)
                     .build();
 
             icon = guiHelper.createDrawableItemStack(new ItemStack(TCOTS_Blocks.HERBAL_TABLE));
@@ -272,7 +272,7 @@ public class TCOTS_JEIPlugin implements IModPlugin {
 
         @Override
         public int getHeight() {
-            return 32;
+            return 42;
         }
 
         @Override
@@ -293,15 +293,9 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         @Override
         public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeEntry<HerbalTableRecipe> recipeEntry, @NotNull IFocusGroup focuses) {
             HerbalTableRecipe recipe = recipeEntry.value();
+
             //Herb
-            List<ItemStack> herbList = new ArrayList<>();
-            {
-                herbList.add(new ItemStack(recipe.getHerb().getItem(), 1));
-                herbList.add(new ItemStack(recipe.getHerb().getItem(), 2));
-                herbList.add(new ItemStack(recipe.getHerb().getItem(), 3));
-                herbList.add(new ItemStack(recipe.getHerb().getItem(), 4));
-                herbList.add(new ItemStack(recipe.getHerb().getItem(), 5));
-            }
+            ItemStack herb = new ItemStack(recipe.getHerb().getItem(), 1);
 
             //Bottle
             ItemStack bottle =
@@ -311,81 +305,41 @@ public class TCOTS_JEIPlugin implements IModPlugin {
                                     PotionContentsComponent.createStack(Items.POTION, Potions.WATER);
 
             //Result
-            List<ItemStack> resultList = new ArrayList<>();
+            List<StatusEffectInstance> totalEffectsFirst = new ArrayList<>();
+            recipe.getEffects().forEach(effect -> {
+                if (!effect.value().isBeneficial()) {
+                    totalEffectsFirst.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:recipe.getTickEffectTime(), recipe.getBadAmplifier()));
+                } else {
+                    totalEffectsFirst.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:recipe.getTickEffectTime()));
+                }
+            });
+            ItemStack result = recipe.getResult(null);
 
+            result = HerbalMixture.writeEffects(result.copy(), totalEffectsFirst);
 
-            {
-                ItemStack result = recipe.getResult(null);
-                List<StatusEffectInstance> totalEffectsFirst = new ArrayList<>();
-                List<StatusEffectInstance> totalEffectsSecond = new ArrayList<>();
-                List<StatusEffectInstance> totalEffectsThird = new ArrayList<>();
-                List<StatusEffectInstance> totalEffectsFourth = new ArrayList<>();
-                List<StatusEffectInstance> totalEffectsFifth = new ArrayList<>();
-
-                recipe.getEffects().forEach(effect -> {
-                    if (!effect.value().isBeneficial()) {
-                        totalEffectsFirst.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:recipe.getTickEffectTime(), recipe.getBadAmplifier()));
-                    } else {
-                        totalEffectsFirst.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:recipe.getTickEffectTime()));
-                    }
-                });
-
-                recipe.getEffects().forEach(effect -> {
-                    if (!effect.value().isBeneficial()) {
-                        totalEffectsSecond.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:2*recipe.getTickEffectTime(), recipe.getBadAmplifier()));
-                    } else {
-                        totalEffectsSecond.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:2*recipe.getTickEffectTime()));
-                    }
-                });
-
-                recipe.getEffects().forEach(effect -> {
-                    if (!effect.value().isBeneficial()) {
-                        totalEffectsThird.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:3*recipe.getTickEffectTime(), recipe.getBadAmplifier()));
-                    } else {
-                        totalEffectsThird.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:3*recipe.getTickEffectTime()));
-                    }
-                });
-
-                recipe.getEffects().forEach(effect -> {
-                    if (!effect.value().isBeneficial()) {
-                        totalEffectsFourth.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:4*recipe.getTickEffectTime(), recipe.getBadAmplifier()));
-                    } else {
-                        totalEffectsFourth.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:4*recipe.getTickEffectTime()));
-                    }
-                });
-
-                recipe.getEffects().forEach(effect -> {
-                    if (!effect.value().isBeneficial()) {
-                        totalEffectsFifth.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:5*recipe.getTickEffectTime(), recipe.getBadAmplifier()));
-                    } else {
-                        totalEffectsFifth.add(new StatusEffectInstance(effect, effect.value().isInstant()? 1:5*recipe.getTickEffectTime()));
-                    }
-                });
-
-                resultList.add(HerbalMixture.writeEffects(result.copy(), totalEffectsFirst));
-                resultList.add(HerbalMixture.writeEffects(result.copy(), totalEffectsSecond));
-                resultList.add(HerbalMixture.writeEffects(result.copy(), totalEffectsThird));
-                resultList.add(HerbalMixture.writeEffects(result.copy(), totalEffectsFourth));
-                resultList.add(HerbalMixture.writeEffects(result.copy(), totalEffectsFifth));
-            }
 
             //Put the herb
-            builder.addSlot(RecipeIngredientRole.INPUT, 17, 8)
-                    .addItemStacks(herbList);
+            builder.addSlot(RecipeIngredientRole.INPUT, 17, 18)
+                    .addItemStack(herb);
 
             //Put the bottle
-            builder.addSlot(RecipeIngredientRole.INPUT, 66, 8)
+            builder.addSlot(RecipeIngredientRole.INPUT, 66, 18)
                     .addItemStack(bottle);
 
             //Put the result
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 124, 8)
-                    .addItemStacks(resultList);
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 124, 18)
+                    .addItemStack(result);
 
         }
 
         @Override
         public void draw(@NotNull RecipeEntry<HerbalTableRecipe> recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull DrawContext guiGraphics, double mouseX, double mouseY) {
             IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
+            MinecraftClient minecraft = MinecraftClient.getInstance();
+            String text = Translator.translateToLocalFormatted("gui.jei.tcots-witcher.for_herb", recipe.value().getTickEffectTime()/20);
+
+            TextRenderer font = minecraft.textRenderer;
+            guiGraphics.drawText(font, text, 0, 2, 43520, true);
 
             this.background.draw(guiGraphics);
         }

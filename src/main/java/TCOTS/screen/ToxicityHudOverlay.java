@@ -76,7 +76,7 @@ public class ToxicityHudOverlay {
 
                 if(activeHud) {
                     int allToxicity=player.theConjunctionOfTheSpheres$getAllToxicity();
-                    int maxToxicity=player.theConjunctionOfTheSpheres$getMaxToxicity();
+                    int maxToxicity= player.theConjunctionOfTheSpheres$getMaxToxicity();
                     RenderSystem.enableBlend();
 
                     context.setShaderColor(1,1,1, transparency);

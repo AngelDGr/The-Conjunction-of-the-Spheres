@@ -9,9 +9,9 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 public class TCOTS_EntityAttributes {
-    public static final RegistryEntry<EntityAttribute> GENERIC_WITCHER_TOXICITY = register(
+    public static final RegistryEntry<EntityAttribute> GENERIC_WITCHER_MAX_TOXICITY = register(
             "generic.witcher_toxicity",
-            new ClampedEntityAttribute("attribute.name.generic.witcher_toxicity", 100.0, 10.0, 1000.0).setTracked(true)
+            new ClampedEntityAttribute("attribute.name.generic.max_witcher_toxicity", 100.0, 10.0, 1000.0).setTracked(true)
     );
 
     @SuppressWarnings("all")

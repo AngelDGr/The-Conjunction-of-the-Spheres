@@ -1,6 +1,5 @@
 package TCOTS.items.armor;
 
-import TCOTS.interfaces.MaxToxicityIncreaser;
 import TCOTS.items.geo.renderer.ManticoreArmorRenderer;
 import TCOTS.utils.GeoControllersUtil;
 import TCOTS.utils.MiscUtil;
@@ -23,7 +22,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ManticoreArmorItem extends ArmorItem implements GeoItem, MaxToxicityIncreaser {
+public class ManticoreArmorItem extends ArmorItem implements GeoItem {
     //xTODO: Add items sprites
     //xTODO: Add functionality about toxicity
     //Faster drinking
@@ -33,21 +32,8 @@ public class ManticoreArmorItem extends ArmorItem implements GeoItem, MaxToxicit
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    private final int extraToxicity;
-
     public ManticoreArmorItem(RegistryEntry<ArmorMaterial> material, Type type, Settings settings) {
-        this(material, type, settings, 10);
-    }
-
-    public ManticoreArmorItem(RegistryEntry<ArmorMaterial> material, Type type, Settings settings, int extraToxicity) {
         super(material, type, settings);
-        this.extraToxicity=extraToxicity;
-    }
-
-
-    @Override
-    public int getExtraToxicity() {
-        return extraToxicity;
     }
 
     @Override

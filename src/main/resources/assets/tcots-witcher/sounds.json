@@ -1013,6 +1013,13 @@
       "tcots-witcher:entity/common/big_impact1",
       "tcots-witcher:entity/common/big_impact2"
     ]
+  },
+  "work_herbalist": {
+    "subtitle": "tcots-witcher.sounds.work_herbalist",
+    "sounds": [
+      "minecraft:block/brewing_stand/brew1",
+      "minecraft:block/brewing_stand/brew2"
+    ]
   }
 
 }

@@ -17,8 +17,6 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
@@ -182,7 +180,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
 
         this.goalSelector.add(1, new SwimGoal(this));
 
-        this.goalSelector.add(2, new GoForAnchor(this, 1.2D));
+        this.goalSelector.add(2, new GoForAnchor(this, 1.4D));
 
         this.goalSelector.add(3, new GoToSleepGoal(this));
 
@@ -635,9 +633,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
                     1.0f, 1.0f);
             this.playSound(this.getAttackSound(), 1.0F, 1.0F);
 
-            NbtCompound nbt = new NbtCompound();
-            nbt.putBoolean("nextRetrieve", true);
-            NbtComponent.set(DataComponentTypes.CUSTOM_DATA, stack, nbtCompound -> nbtCompound.put("State", nbt));
+            stack.set(TCOTS_Items.ANCHOR_RETRIEVE, true);
 
             this.anchorLaunchCooldownTimer=MiscUtil.getTimeInTicks(10);
             this.anchorLaunchCooldown=true;
@@ -655,7 +651,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
             anchorProjectile.discard();
 
             ItemStack stack = this.getMainHandStack();
-            stack.remove(DataComponentTypes.CUSTOM_DATA);
+            stack.remove(TCOTS_Items.ANCHOR_RETRIEVE);
         }
     }
 
