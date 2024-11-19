@@ -49,7 +49,7 @@ public class ToxicityHudOverlay {
     public static void onHudRender(DrawContext context, float tickDelta) {
         MinecraftClient client = MinecraftClient.getInstance();
 
-        if (client != null) {
+        if (client != null && !client.options.hudHidden) {
             int scaledWidth = context.getScaledWindowWidth();
             int scaledHeight = context.getScaledWindowHeight();
 

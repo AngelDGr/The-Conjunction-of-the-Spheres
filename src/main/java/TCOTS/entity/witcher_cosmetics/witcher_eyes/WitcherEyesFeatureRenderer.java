@@ -1,7 +1,9 @@
-package TCOTS.entity.witcher_eyes;
+package TCOTS.entity.witcher_cosmetics.witcher_eyes;
 
 import TCOTS.TCOTS_Client;
 import TCOTS.TCOTS_Main;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -14,11 +16,14 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
+@Environment(value= EnvType.CLIENT)
 public class WitcherEyesFeatureRenderer extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
     private final WitcherEyesModel eyesModel;
 
-    public WitcherEyesFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureContext, EntityRendererFactory.Context rendererContext) {
+    public WitcherEyesFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity,
+                                      PlayerEntityModel<AbstractClientPlayerEntity>> featureContext,
+                                      EntityRendererFactory.Context rendererContext) {
         super(featureContext);
        this.eyesModel = new WitcherEyesModel(rendererContext.getPart(TCOTS_Client.WITCHER_EYES_LAYER));
     }

@@ -11,7 +11,6 @@ import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
 import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.mixin.ServerWorldAccessor;
 import TCOTS.particles.TCOTS_Particles;
-import TCOTS.screen.ToxicityHudOverlay;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.world.TCOTS_Features;
 import TCOTS.world.TCOTS_PlacedFeature;
@@ -22,7 +21,6 @@ import TCOTS.world.village.VillagerCustomTrades;
 import com.mojang.logging.LogUtils;
 import io.wispforest.owo.network.OwoNetChannel;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -42,9 +40,12 @@ public class TCOTS_Main implements ModInitializer {
 	public static final OwoNetChannel PACKETS_CHANNEL = OwoNetChannel.create(Identifier.of(TCOTS_Main.MOD_ID, "main"));
 
 
+
 	public record WitcherEyesFullPacket(Boolean activate, int shape, int separation, float eyePosX, float eyePosY) {}
 
 	public record RetrieveAnchorPacket() {}
+
+	public record ToxicityFacePacket(Boolean activate){}
 
 	@Override
 	public void onInitialize() {
@@ -79,7 +80,7 @@ public class TCOTS_Main implements ModInitializer {
 		{
 			//Witcher Eyes
 			{
-				//Receive the packet from the client <-
+				//Receive the packet from the client
 				TCOTS_Main.PACKETS_CHANNEL.registerServerbound(WitcherEyesFullPacket.class, ((message, access) ->
 				{
 					ServerPlayerEntity player = access.player();
@@ -101,7 +102,7 @@ public class TCOTS_Main implements ModInitializer {
 
 
 				//Receive the packet from the server
-				TCOTS_Main.PACKETS_CHANNEL.registerClientbound(TCOTS_Main.WitcherEyesFullPacket.class, ((message, access) ->
+				TCOTS_Main.PACKETS_CHANNEL.registerClientbound(WitcherEyesFullPacket.class, ((message, access) ->
 				{
 					ClientPlayerEntity player = access.player();
 
@@ -114,6 +115,32 @@ public class TCOTS_Main implements ModInitializer {
 					player.theConjunctionOfTheSpheres$getEyesPivot().setComponent(0, message.eyePosX);
 
 					player.theConjunctionOfTheSpheres$getEyesPivot().setComponent(1, -1*message.eyePosY);
+
+				}));
+			}
+
+			//Toxicity Face
+			{
+
+				//Receive the packet from the client
+				TCOTS_Main.PACKETS_CHANNEL.registerServerbound(ToxicityFacePacket.class, ((message, access) ->
+				{
+					ServerPlayerEntity player = access.player();
+
+					player.theConjunctionOfTheSpheres$setToxicityActivated(message.activate);
+
+
+					//Send another packet to the client, for full sync ->
+					TCOTS_Main.PACKETS_CHANNEL.serverHandle(player).send(new ToxicityFacePacket(message.activate));
+				}));
+
+
+				//Receive the packet from the server
+				TCOTS_Main.PACKETS_CHANNEL.registerClientbound(ToxicityFacePacket.class, ((message, access) ->
+				{
+					ClientPlayerEntity player = access.player();
+
+					player.theConjunctionOfTheSpheres$setToxicityActivated(message.activate);
 
 				}));
 			}

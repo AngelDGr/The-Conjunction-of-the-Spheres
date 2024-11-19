@@ -45,11 +45,8 @@ public class AlghoulRenderer extends GeoEntityRenderer<AlghoulEntity> {
 
                     getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, armorRenderType,
                             bufferSource.getBuffer(armorRenderType), partialTick, packedLight, OverlayTexture.DEFAULT_UV,
-                    1
-//                            1,
-//                            1,
-//                            1, 0.5f
-                            );
+                            Color.ofRGBA(1, 1f, 1f, 0.5f).argbInt()
+                    );
                 }
             }
 
@@ -69,7 +66,7 @@ public class AlghoulRenderer extends GeoEntityRenderer<AlghoulEntity> {
 
                     getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, armorRenderType,
                             bufferSource.getBuffer(armorRenderType), partialTick, packedLight, OverlayTexture.DEFAULT_UV,
-                            Color.ofARGB(1f, 1f, 1f, 0.5f).argbInt()
+                            Color.ofRGB(1f, 1f, 1f).argbInt()
                     );
                 }
             }

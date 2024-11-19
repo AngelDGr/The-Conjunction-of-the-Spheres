@@ -597,10 +597,20 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private static final TrackedData<Integer> EYES_SHAPE = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
 
+    @Unique
+    private static final TrackedData<Boolean> TOXICITY_ACTIVATE = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+
     @Override
     public boolean theConjunctionOfTheSpheres$getWitcherEyesActivated(){return this.dataTracker.get(EYES_ACTIVATE);}
     @Override
     public void theConjunctionOfTheSpheres$setWitcherEyesActivated(boolean activate){this.dataTracker.set(EYES_ACTIVATE, activate);}
+
+    @Override
+    public boolean theConjunctionOfTheSpheres$getToxicityActivated() {return this.dataTracker.get(TOXICITY_ACTIVATE);}
+
+    @Override
+    public void theConjunctionOfTheSpheres$setToxicityActivated(boolean activate) {this.dataTracker.set(TOXICITY_ACTIVATE, activate);}
 
     @Override
     public Vector3f theConjunctionOfTheSpheres$getEyesPivot(){return this.dataTracker.get(EYES_POSITION);}
@@ -623,6 +633,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         builder.add(EYES_POSITION,   new Vector3f(0,0,0));
         builder.add(EYES_SEPARATION, 2);
         builder.add(EYES_SHAPE,      0);
+        builder.add(TOXICITY_ACTIVATE, false);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
@@ -636,6 +647,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             this.theConjunctionOfTheSpheres$setEyeSeparation(nbtEyes.getInt("EyesSeparation"));
 
             this.theConjunctionOfTheSpheres$setEyeShape(nbtEyes.getInt("EyesShape"));
+        }
+
+        NbtCompound nbtToxicity = getSubNbt("ToxicityFace", nbt);
+
+        if(nbtToxicity!=null){
+            this.theConjunctionOfTheSpheres$setToxicityActivated(nbtToxicity.getBoolean("Activated"));
         }
     }
 
@@ -652,6 +669,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         nbtEyes.putInt("EyesShape", this.theConjunctionOfTheSpheres$getEyeShape());
 
         nbt.put("WitcherEyes", nbtEyes);
+
+        NbtCompound nbtToxicity = new NbtCompound();
+
+        nbtToxicity.putBoolean("Activated", this.theConjunctionOfTheSpheres$getToxicityActivated());
+
+        nbt.put("ToxicityFace", nbtToxicity);
     }
 
     @SuppressWarnings("all")

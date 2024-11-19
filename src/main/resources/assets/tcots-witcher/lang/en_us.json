@@ -849,9 +849,11 @@
     "text.config.tcots_config.enum.aNCHORS.right_up": "RIGHT UP",
     "text.config.tcots_config.enum.aNCHORS.right_down": "RIGHT DOWN",
 
-    "text.config.tcots_config.category.witcher_eyes": "Witcher Eyes",
-    "text.config.tcots_config.category.witcher_eyes.tooltip": "Options to add Witcher Eyes\nto the player",
-    "text.config.tcots_config.option.witcher_eyes.activate": "Activate Witcher Eyes",
+    "text.config.tcots_config.category.witcher_eyes": "Witcher Cosmetics",
+    "text.config.tcots_config.category.witcher_eyes.tooltip": "Options to add Witcher Eyes\nand Toxicity face to the player ",
+    "text.config.tcots_config.option.witcher_eyes.activateEyes": "Activate Witcher Eyes",
+    "text.config.tcots_config.option.witcher_eyes.activateToxicity": "Activate Toxicity Face",
+
 
     "text.config.tcots_config.option.witcher_eyes.eyeShape": "Eye Shape",
     "text.config.tcots_config.option.witcher_eyes.eyeShape.tooltip": "Select the shape that better\nfit your skin's pupils",

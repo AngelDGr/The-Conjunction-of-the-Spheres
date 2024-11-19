@@ -1,6 +1,7 @@
 package TCOTS.mixin;
 
-import TCOTS.entity.witcher_eyes.WitcherEyesFeatureRenderer;
+import TCOTS.entity.witcher_cosmetics.toxicity_face.ToxicityFaceFeatureRenderer;
+import TCOTS.entity.witcher_cosmetics.witcher_eyes.WitcherEyesFeatureRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -20,5 +21,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
     @Inject(method = "<init>", at = @At("TAIL"))
     private void injectInConstructor(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
         this.addFeature(new WitcherEyesFeatureRenderer(this, ctx));
+
+        this.addFeature(new ToxicityFaceFeatureRenderer(this, ctx));
     }
 }
