@@ -479,8 +479,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 damageableTicks = (int) (10 * ((float) theConjunctionOfTheSpheres$getMaxToxicity() / (float) theConjunctionOfTheSpheres$getAllToxicity()));
             }
 
+            //With 20hp makes 1hp damage
             if(this.age%(damageableTicks)==0){
-            this.damage(TCOTS_DamageTypes.toxicityDamage(getWorld()),1);
+            this.damage(TCOTS_DamageTypes.toxicityDamage(getWorld()),THIS.getMaxHealth()*0.05f);
             }
         }
     }

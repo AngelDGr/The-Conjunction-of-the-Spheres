@@ -28,11 +28,13 @@ public class ToxicityFaceFeatureRenderer extends FeatureRenderer<AbstractClientP
         this.toxicityFaceModel = new ToxicityFaceModel(rendererContext.getPart(TCOTS_Client.TOXICITY_FACE_LAYER));
     }
 
+    float transparency=0;
+
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-        boolean isUnder50= player.theConjunctionOfTheSpheres$getAllToxicity() < player.theConjunctionOfTheSpheres$getMaxToxicity()*0.5f;
+        boolean isOver50= player.theConjunctionOfTheSpheres$getAllToxicity() > player.theConjunctionOfTheSpheres$getMaxToxicity()*0.5f;
 
-        if(!player.theConjunctionOfTheSpheres$getToxicityActivated() || player.isInvisible() || isUnder50){
+        if(!player.theConjunctionOfTheSpheres$getToxicityActivated() || player.isInvisible()){
             return;
         }
 
@@ -42,22 +44,21 @@ public class ToxicityFaceFeatureRenderer extends FeatureRenderer<AbstractClientP
 
         toxicityFaceModel.setAngles(player, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 
-        // MaxToxicity*0.5 -> 0.0
-        // MaxToxicity*0.9 -> 1.0
-        // Actual Toxicity -> X
-        float transparency=
-                MathHelper.clamp(
-                        ((float) player.theConjunctionOfTheSpheres$getAllToxicity()-(player.theConjunctionOfTheSpheres$getMaxToxicity()*0.45f))
-                                /
-                        ((float) player.theConjunctionOfTheSpheres$getMaxToxicity()*0.9f),
-                        0.0f, 1.0f)*2;
+        if(isOver50){
+            transparency=        MathHelper.clamp(
+                    ((float) player.theConjunctionOfTheSpheres$getAllToxicity()-(player.theConjunctionOfTheSpheres$getMaxToxicity()*0.45f))
+                            / ((float) player.theConjunctionOfTheSpheres$getMaxToxicity()*0.9f),
+                    0.0f, 1.0f)*2;
+        } else {
+            transparency=transparency-0.02f;
+        }
 
         transparency = MathHelper.clamp(transparency, 0f, 1.0f);
 
         toxicityFaceModel.render(matrices, buffer,
                 light,
-                OverlayTexture.DEFAULT_UV
-                ,Color.ofRGBA(1f, 1f, 1f, transparency).argbInt()
+                OverlayTexture.DEFAULT_UV,
+                Color.ofRGBA(1f, 1f, 1f, transparency).argbInt()
         );
     }
 
