@@ -170,7 +170,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
 
         @Override
         protected boolean canStartRegen() {
-            return !(mob.getIsRegenerating()) && (mob.getHealth() < (mob.getMaxHealth() * healthPercentage)) && mob.isOnGround() && !(mob.hasCooldownForRegen()) && !MoonDustBomb.checkEffect(mob);
+            return !(mob.getIsRegenerating()) && (mob.getHealth() < (mob.getMaxHealth() * healthPercentage)) && mob.isOnGround() && !(mob.hasCooldownForRegen()) && !MoonDustBomb.checkEffectAndSplinters(mob);
         }
     }
 
@@ -189,13 +189,13 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
         public boolean canStart() {
             List<GhoulEntity> listGhouls = generateGhoulList();
 
-            return (alghoul.getIsSpiked() || alghoul.isAttacking()) && !listGhouls.isEmpty() && !alghoul.hasCooldownForScream() && alghoul.isOnGround() && !MoonDustBomb.checkEffect(alghoul);
+            return (alghoul.getIsSpiked() || alghoul.isAttacking()) && !listGhouls.isEmpty() && !alghoul.hasCooldownForScream() && alghoul.isOnGround() && !MoonDustBomb.checkEffectAndSplinters(alghoul);
         }
 
         @Override
         public boolean shouldContinue() {
             List<GhoulEntity> listGhouls = generateGhoulList();
-            return !listGhouls.isEmpty() && !alghoul.hasCooldownForScream() && !MoonDustBomb.checkEffect(alghoul);
+            return !listGhouls.isEmpty() && !alghoul.hasCooldownForScream() && !MoonDustBomb.checkEffectAndSplinters(alghoul);
         }
 
         @Override
@@ -237,7 +237,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
 
             for(GhoulEntity ghoul: listGhouls){
                 ghoul.setTimeForRegen(200);
-                ghoul.setIsRegenerating(!MoonDustBomb.checkEffect(ghoul));
+                ghoul.setIsRegenerating(!MoonDustBomb.checkEffectAndSplinters(ghoul));
                 if (!ghoul.isSilent()) {
                     this.alghoul.getWorld().sendEntityStatus(ghoul, GHOUL_REGENERATING);
                 }
@@ -355,7 +355,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
     int counter;
     @Override
     public void tick() {
-        if(getIsSpiked() && MoonDustBomb.checkEffect(this)){
+        if(getIsSpiked() && MoonDustBomb.checkEffectAndSplinters(this)){
             setIsSpiked(false);
         }
 

@@ -29,7 +29,7 @@ public class ItemsMixins {
     //Remove toxicity
     @Mixin(MilkBucketItem.class)
     public static class MilkBucketItemMixin {
-        @Inject(method = "finishUsing", at = @At("TAIL"))
+        @Inject(method = "finishUsing", at = @At("RETURN"))
         private void injectInTickDecreaseToxicity(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
             if(!world.isClient){
                 if(user instanceof PlayerEntity player){

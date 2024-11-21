@@ -30,6 +30,8 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
+import net.minecraft.entity.mob.GuardianEntity;
+import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -39,6 +41,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
@@ -165,7 +168,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
                 if(killCount < 20){
                     livingEntity.theConjunctionOfTheSpheres$incrementKillCount();
-                    livingEntity.theConjunctionOfTheSpheres$setKillCountdown(400);
+                    livingEntity.theConjunctionOfTheSpheres$setKillCountdown(420);
                 }
 
             }
@@ -257,6 +260,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         }
     }
 
+    @Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
+    private void injectImmunityToStun(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir){
+        if(((THIS instanceof WardenEntity) || (THIS instanceof GuardianEntity)) && (effect.getEffectType()==TCOTS_Effects.SAMUM_EFFECT))
+            cir.setReturnValue(false);
+    }
+
     //NorthernWind
     @Unique
     private static final TrackedData<Boolean> IS_FROZEN = DataTracker.registerData(LivingEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -320,6 +329,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         if(!THIS.getWorld().isClient) {
             setIsFrozen(NorthernWindBomb.checkEffect(THIS));
         }
+    }
+
+    @Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
+    private void injectImmunityToFreeze(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir){
+        if(THIS.getType().isIn(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES) && (effect.getEffectType()==TCOTS_Effects.NORTHERN_WIND_EFFECT))
+            cir.setReturnValue(false);
     }
 
     //Moon Dust

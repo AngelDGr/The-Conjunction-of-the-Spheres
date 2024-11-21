@@ -25,7 +25,8 @@ public abstract class GameRendererMixin {
     @Shadow
     @Nullable PostEffectProcessor postProcessor;
 
-    @Shadow abstract void loadPostProcessor(Identifier id);
+    @Shadow
+    protected abstract void loadPostProcessor(Identifier id);
 
     @Shadow @Final MinecraftClient client;
 

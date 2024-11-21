@@ -638,12 +638,55 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Celandine
                 {
-                    this.addDrop(TCOTS_Blocks.CELANDINE_PLANT, this.plantCropLootTable(impl, TCOTS_Items.CELANDINE, TCOTS_Blocks.CELANDINE_PLANT, 5, 3));
+                    this.addDrop(TCOTS_Blocks.CELANDINE_PLANT, LootTable.builder()
+
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.CELANDINE)
+                                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE),
+                                                    0.5714286f, 2))
+                                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.CELANDINE_PLANT)
+                                                    .properties(StatePredicate.Builder.create()
+                                                            .exactMatch(CropBlock.AGE, 2)))
+                                    )
+                            )
+
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.CELANDINE)
+                                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(impl.getOrThrow(Enchantments.FORTUNE),
+                                                    0.5714286f, 5))
+                                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.CELANDINE_PLANT)
+                                                    .properties(StatePredicate.Builder.create()
+                                                            .exactMatch(CropBlock.AGE, 3)))
+                                    )
+                            )
+
+
+                            .apply(ExplosionDecayLootFunction.builder()));
                 }
 
                 //Crows Eye
                 {
                     this.addDrop(TCOTS_Blocks.CROWS_EYE_FERN, LootTable.builder()
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.CROWS_EYE)
+                                            .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                            .apply(ApplyBonusLootFunction.uniformBonusCount(impl.getOrThrow(Enchantments.FORTUNE)))
+                                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.CROWS_EYE_FERN)
+                                                    .properties(StatePredicate.Builder.create()
+                                                            .exactMatch(CropBlock.AGE, 2)))
+                                    )
+                            )
+
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.CROWS_EYE)
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
+                                            .apply(ApplyBonusLootFunction.uniformBonusCount(impl.getOrThrow(Enchantments.FORTUNE)))
+                                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.CROWS_EYE_FERN)
+                                                    .properties(StatePredicate.Builder.create()
+                                                            .exactMatch(CropBlock.AGE, 3)))
+                                    )
+                            )
+
                             .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
                                     .with(ItemEntry.builder(TCOTS_Items.CROWS_EYE)
                                             .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))

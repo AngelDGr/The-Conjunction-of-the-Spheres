@@ -79,8 +79,8 @@ and Flower Forests.</tooltip-text>
                                         tcots-witcher:allspice
                                     </stack>
 <tooltip-text>Allspice:
-Bought from herbalist
-villagers.</tooltip-text>
+Bought from herbalist villagers 
+or from Sniffers.</tooltip-text>
                                 </item>
                             </children>
                             <padding>

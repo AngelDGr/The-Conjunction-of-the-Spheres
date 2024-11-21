@@ -802,6 +802,9 @@
     "tag.item.tcots-witcher.decaying_flesh": "Decaying Flesh",
 
 
+    "modmenu.nameTranslation.tcots-witcher": "The Conjunction of the Spheres",
+    "modmenu.descriptionTranslation.tcots-witcher": "New monsters, armors, weapons, potions and challenges from the Witcher Universe, beware, The Conjunction of the Spheres!",
+
     "text.config.tcots_config.title": "TCOTS Config",
 
     "text.config.tcots_config.category.monsters": "Monsters - Add a monster in a monster category",

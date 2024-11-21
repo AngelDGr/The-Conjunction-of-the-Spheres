@@ -1159,6 +1159,7 @@ public class TCOTS_Items {
         }
     }
 
+    @SuppressWarnings("unused")
     public static AttributeModifiersComponent addExtraToxicity(double toxicity, AttributeModifierSlot slot, String id){
        return AttributeModifiersComponent.builder()
                 .add(
@@ -1447,7 +1448,7 @@ public class TCOTS_Items {
                 tableBuilder.pool(monsterFat.build());
             }
 
-            //Formulae - Alcohol
+            //Formulae/Alcohol
             {
                 if (LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) && source.isBuiltin()) {
 
@@ -1845,6 +1846,18 @@ public class TCOTS_Items {
 
             }
 
+            //Sniffer Digging
+            {
+                if (LootTables.SNIFFER_DIGGING_GAMEPLAY.equals(id) && source.isBuiltin()) {
+
+                    LootPool.Builder allspice = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .with(ItemEntry.builder(TCOTS_Items.ALLSPICE))
+                            .conditionally(RandomChanceLootCondition.builder(0.4f));
+
+                    tableBuilder.pool(allspice.build());
+                }
+            }
         });
     }
 

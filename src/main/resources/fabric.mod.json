@@ -3,7 +3,7 @@
 	"id": "tcots-witcher",
 	"version": "1.0.0",
 	"name": "The Conjunction of the Spheres",
-	"description": "A mod that adds a lot of enemies from the Witcher saga!",
+	"description": "New monsters, armors, weapons, potions and challenges from the Witcher Universe, beware, The Conjunction of the Spheres!",
 	"authors": [
 		"Tenebris Mors"
 	],
@@ -50,7 +50,9 @@
 	"custom": {
 		"modmenu": {
 			"links": {
-				"modmenu.curseforge": "https://legacy.curseforge.com/members/tenebris_mors/projects"
+				"modmenu.modrinth": "https://modrinth.com/user/Tenebris_Mors",
+				"modmenu.curseforge": "https://legacy.curseforge.com/members/tenebris_mors/projects",
+				"modmenu.kofi": "https://ko-fi.com/tenebris_mors"
 			}
 		},
 		"loom:injected_interfaces": {
