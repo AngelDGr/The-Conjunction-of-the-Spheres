@@ -21,7 +21,6 @@ public class GraveHagDecoctionEffect extends DecoctionEffectBase {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        super.applyUpdateEffect(entity, amplifier);
 
         //When killed a mob
         if((killCounterIn != entity.theConjunctionOfTheSpheres$getKillCount()) && killCounterIn < 20){
@@ -38,6 +37,8 @@ public class GraveHagDecoctionEffect extends DecoctionEffectBase {
                 entity.heal(0.005f*killCounterIn);
             }
         }
+
+        super.applyUpdateEffect(entity, amplifier);
     }
 
     @Override

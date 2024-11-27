@@ -14,7 +14,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
@@ -39,7 +38,7 @@ public class DimeritiumBomb {
         List<Entity> list = bomb.getWorld().getEntitiesByClass(Entity.class, bomb.getBoundingBox().expand(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
                 entity ->
                         ((entity instanceof LivingEntity) || entity.getType().isIn(TCOTS_Entities.DIMERITIUM_DAMAGE) || entity.getType().isIn(TCOTS_Entities.DIMERITIUM_REMOVAL))
-                        && !(entity instanceof WardenEntity) && !(entity instanceof ArmorStandEntity)
+                        && !(entity instanceof ArmorStandEntity)
                         && entity.isAlive()
                         && entity != bomb.getOwner());
 
@@ -59,7 +58,7 @@ public class DimeritiumBomb {
 
             //Applies dimeritium effect to entity
             if(entity instanceof LivingEntity livingEntity) {
-                livingEntity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.DIMERITIUM_BOMB_EFFECT, bomb.getLevel() < 1 ? 300 : 600, bomb.getLevel()), entityCause);
+                livingEntity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.DIMERITIUM_BOMB_EFFECT, bomb.getLevel() < 2 ? 100 : 200, bomb.getLevel()), entityCause);
             }
 
         }

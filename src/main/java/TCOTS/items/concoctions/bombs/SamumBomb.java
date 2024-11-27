@@ -13,8 +13,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.GuardianEntity;
-import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundEvents;
@@ -47,7 +45,7 @@ public class SamumBomb {
                 );
 
         List<LivingEntity> list = bomb.getWorld().getEntitiesByClass(LivingEntity.class, bomb.getBoundingBox().expand(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
-                livingEntity -> !(livingEntity instanceof WardenEntity) && !(livingEntity instanceof ArmorStandEntity) && !(livingEntity instanceof GuardianEntity)
+                livingEntity -> !(livingEntity instanceof ArmorStandEntity)
                         && livingEntity != bomb.getOwner());
 
         Entity entityCause = bomb.getEffectCause();

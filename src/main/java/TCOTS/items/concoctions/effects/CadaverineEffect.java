@@ -23,6 +23,8 @@ public class CadaverineEffect extends StatusEffect {
             entity.getArmorItems().forEach(armor -> armor.damage(3, entity.getRandom(), entity instanceof ServerPlayerEntity player? player: null));
     }
 
+
+
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
         int i = 15 >> amplifier;

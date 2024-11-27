@@ -16,5 +16,7 @@ public class SamumEffect extends BombEffectBase {
             mob.setTarget(null);
             mob.getLookControl().lookAt(entity.getX(), entity.getY()-5, entity.getZ());
         }
+
+
     }
 }

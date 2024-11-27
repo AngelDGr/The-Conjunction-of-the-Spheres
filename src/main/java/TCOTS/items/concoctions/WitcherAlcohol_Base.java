@@ -45,6 +45,7 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base{
         tooltip.add(Text.translatable("tooltip.tcots-witcher.refill").formatted(Formatting.GRAY));
         tooltip.add(ScreenTexts.space().append(Text.translatable(this.refillQuantity >1? "tooltip.tcots-witcher.refill.slots": "tooltip.tcots-witcher.refill.slot" , this.refillQuantity).formatted(Formatting.BLUE)));
     }
+
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         PlayerEntity playerEntity = user instanceof PlayerEntity ? (PlayerEntity)user : null;

@@ -25,6 +25,7 @@ public class DecoctionEffectBase extends WitcherPotionEffect {
         if (this.entity == null) {
             this.entity = entity;
         }
+
         super.applyUpdateEffect(entity, amplifier);
     }
 

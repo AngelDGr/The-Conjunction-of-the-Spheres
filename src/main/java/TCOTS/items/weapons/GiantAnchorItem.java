@@ -118,10 +118,12 @@ public class GiantAnchorItem extends ToolItem implements GeoItem {
         user.setCurrentHand(hand);
         return TypedActionResult.consume(anchorStack);
     }
+
     @Override
     public int getMaxUseTime(ItemStack stack) {
         return 72000;
     }
+
     @Override
     public UseAction getUseAction(@NotNull ItemStack stack) {
         if(wasLaunched(stack)){

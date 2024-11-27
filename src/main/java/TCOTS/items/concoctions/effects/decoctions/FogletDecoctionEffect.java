@@ -21,10 +21,10 @@ public class FogletDecoctionEffect extends DecoctionEffectBase {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        super.applyUpdateEffect(entity, amplifier);
-
         if(entity.getWorld().isThundering() || entity.getWorld().isRaining()){
             spawnFogParticlesItself(entity);
         }
+
+        super.applyUpdateEffect(entity, amplifier);
     }
 }

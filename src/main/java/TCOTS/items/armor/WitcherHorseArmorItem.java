@@ -33,11 +33,12 @@ public class WitcherHorseArmorItem extends HorseArmorItem {
 
     @Override
     public Identifier getEntityTexture() {
-        return new Identifier(TCOTS_Main.MOD_ID,this.armorTexture);
+        return Identifier.of(TCOTS_Main.MOD_ID,this.armorTexture);
     }
 
     public Identifier getOuterTexture(){
-        return new Identifier(TCOTS_Main.MOD_ID, this.outerTexture);
+        return Identifier.of(TCOTS_Main.MOD_ID, this.outerTexture);
     }
+
 
 }

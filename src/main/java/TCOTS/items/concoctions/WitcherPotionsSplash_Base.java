@@ -17,6 +17,7 @@ public class WitcherPotionsSplash_Base extends WitcherPotions_Base {
         super(settings, effect, toxicity, false);
     }
 
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
 
@@ -31,6 +32,14 @@ public class WitcherPotionsSplash_Base extends WitcherPotions_Base {
         user.incrementStat(Stats.USED.getOrCreateStat(this));
         if (!user.getAbilities().creativeMode) {
             itemStack.decrement(1);
+
+            ItemStack stack_Empty = getStackEmptyBottle(this);
+                if (!user.getAbilities().creativeMode) {
+                    if (!user.getInventory().insertStack(stack_Empty)) {
+                        user.dropItem(stack_Empty, false);
+                    }
+                }
+
         }
 
         return TypedActionResult.success(itemStack, world.isClient());
