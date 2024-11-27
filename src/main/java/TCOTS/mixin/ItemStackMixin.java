@@ -1,7 +1,10 @@
 package TCOTS.mixin;
 
-import TCOTS.interfaces.MaxToxicityIncreaser;
+import TCOTS.entity.TCOTS_EntityAttributes;
 import TCOTS.utils.EntitiesUtil;
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+import java.util.Map;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
@@ -112,14 +116,14 @@ public abstract class ItemStackMixin {
     //Manticore Armor
     @ModifyVariable(method = "getTooltip", at = @At(
             value = "INVOKE"
-            ,target = "Lcom/google/common/collect/Multimap;entries()Ljava/util/Collection;",
-            ordinal = 0))
-    private List<Text> manticoreToxicityTooltip(List<Text> value){
-        if(THIS.getItem() instanceof MaxToxicityIncreaser item){
-            value.add(Text.translatable("tooltip.tcots-witcher.manticore_armor.toxicity", item.getExtraToxicity()).formatted(Formatting.DARK_GREEN));
+            ,target = "Lnet/minecraft/text/MutableText;formatted(Lnet/minecraft/util/Formatting;)Lnet/minecraft/text/MutableText;",
+            ordinal = 4))
+    private MutableText manticoreAttributeMaxToxicityColor(MutableText instance, @Local Map.Entry<EntityAttribute, EntityAttributeModifier> entry){
+        if(entry.getKey() == TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY){
+            return instance.formatted(Formatting.DARK_GREEN);
         }
 
-        return value;
+        return instance.formatted(formatting);
     }
 
     @Unique
