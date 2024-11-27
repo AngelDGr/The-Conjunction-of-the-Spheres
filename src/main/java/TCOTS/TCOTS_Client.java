@@ -235,7 +235,7 @@ public class TCOTS_Client implements ClientModInitializer {
         EntityRendererRegistry.register(TCOTS_Entities.ICE_GIANT, IceGiantRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.ANCHOR_PROJECTILE, AnchorProjectileRenderer::new);
 
-        ModelPredicateProviderRegistry.register(TCOTS_Items.GIANT_ANCHOR, Identifier.of(TCOTS_Main.MOD_ID, "invisible"), (stack, world, entity, seed) ->
+        ModelPredicateProviderRegistry.register(TCOTS_Items.GIANT_ANCHOR, new Identifier("invisible"), (stack, world, entity, seed) ->
                 GiantAnchorItem.wasLaunched(stack)? 1.0f : 0.0f);
 
         //Bomb

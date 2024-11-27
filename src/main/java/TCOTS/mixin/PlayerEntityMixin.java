@@ -58,9 +58,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         super(entityType, world);
     }
 
-    @Inject(method = "createPlayerAttributes", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "createPlayerAttributes", at = @At("TAIL"))
     private static void injectToxicity(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir){
-        cir.setReturnValue(cir.getReturnValue().add(TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY));
+        cir.getReturnValue().add(TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY);
     }
 
     @Final
