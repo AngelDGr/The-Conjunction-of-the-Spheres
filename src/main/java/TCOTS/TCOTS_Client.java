@@ -7,6 +7,7 @@ import TCOTS.entity.geo.renderer.AnchorProjectileRenderer;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.*;
 import TCOTS.entity.misc.renderers.*;
+import TCOTS.entity.witcher_cosmetics.toxicity_face.ToxicityFaceModel;
 import TCOTS.entity.witcher_cosmetics.witcher_eyes.WitcherEyesModel;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
@@ -17,6 +18,7 @@ import TCOTS.particles.*;
 import TCOTS.particles.bombEmitters.*;
 import TCOTS.screen.AlchemyTableScreen;
 import TCOTS.screen.HerbalTableScreen;
+import TCOTS.screen.ToxicityHudOverlay;
 import io.wispforest.lavender.client.LavenderBookScreen;
 import io.wispforest.lavender.md.compiler.BookCompiler;
 import io.wispforest.lavender.md.features.RecipeFeature;
@@ -32,6 +34,7 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
@@ -52,16 +55,22 @@ import org.jetbrains.annotations.NotNull;
 
 @Environment(value= EnvType.CLIENT)
 public class TCOTS_Client implements ClientModInitializer {
-    public static EntityModelLayer WITCHER_EYES_LAYER = new EntityModelLayer(new Identifier(TCOTS_Main.MOD_ID, "witcher_eyes"), "witcher_eyes");
+    public static EntityModelLayer WITCHER_EYES_LAYER = new EntityModelLayer(Identifier.of(TCOTS_Main.MOD_ID, "witcher_eyes"), "witcher_eyes");
+    public static EntityModelLayer TOXICITY_FACE_LAYER = new EntityModelLayer(Identifier.of(TCOTS_Main.MOD_ID, "toxicity_face"), "toxicity_face");
+
 
     @Override
     public void onInitializeClient() {
+
+        //HUD
+        HudRenderCallback.EVENT.register((ToxicityHudOverlay::onHudRender));
+
 
         //Send data when join
         {
             ClientPlayConnectionEvents.JOIN.register((handler, sender, client) ->
                     TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(new TCOTS_Main.WitcherEyesFullPacket(
-                            TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                            TCOTS_Main.CONFIG.witcher_eyes.activateEyes(),
                             TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                             TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                             TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
@@ -74,7 +83,7 @@ public class TCOTS_Client implements ClientModInitializer {
 
         //Send client-packets to server
         {
-            TCOTS_Main.CONFIG.witcher_eyes.subscribeToActivate(activate ->
+            TCOTS_Main.CONFIG.witcher_eyes.subscribeToActivateEyes(activate ->
             {
                 if (MinecraftClient.getInstance().getNetworkHandler() == null) return;
                 TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
@@ -91,7 +100,7 @@ public class TCOTS_Client implements ClientModInitializer {
                 if (MinecraftClient.getInstance().getNetworkHandler() == null) return;
                 TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
                         new TCOTS_Main.WitcherEyesFullPacket(
-                                TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                                TCOTS_Main.CONFIG.witcher_eyes.activateEyes(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                 eye_separation.ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
@@ -103,7 +112,7 @@ public class TCOTS_Client implements ClientModInitializer {
                 if(MinecraftClient.getInstance().getNetworkHandler()==null)return;
                 TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
                         new TCOTS_Main.WitcherEyesFullPacket(
-                                TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                                TCOTS_Main.CONFIG.witcher_eyes.activateEyes(),
                                 eye_shape.ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
@@ -115,7 +124,7 @@ public class TCOTS_Client implements ClientModInitializer {
                 if(MinecraftClient.getInstance().getNetworkHandler()==null)return;
                 TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
                         new TCOTS_Main.WitcherEyesFullPacket(
-                                TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                                TCOTS_Main.CONFIG.witcher_eyes.activateEyes(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                 xEyePos,
@@ -127,11 +136,18 @@ public class TCOTS_Client implements ClientModInitializer {
                 if(MinecraftClient.getInstance().getNetworkHandler()==null)return;
                 TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
                         new TCOTS_Main.WitcherEyesFullPacket(
-                                TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                                TCOTS_Main.CONFIG.witcher_eyes.activateEyes(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
                                 yEyePos));
+            });
+
+            TCOTS_Main.CONFIG.witcher_eyes.subscribeToActivateToxicity(activateToxicity ->
+            {
+                if(MinecraftClient.getInstance().getNetworkHandler()==null)return;
+                TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
+                        new TCOTS_Main.ToxicityFacePacket(activateToxicity));
             });
         }
 
@@ -147,6 +163,7 @@ public class TCOTS_Client implements ClientModInitializer {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
             if (world == null || pos == null) {
                 return FoliageColors.getDefaultColor();
+
             }
             return BiomeColors.getGrassColor(world, pos);},
                 TCOTS_Blocks.BRYONIA_VINE);
@@ -218,7 +235,7 @@ public class TCOTS_Client implements ClientModInitializer {
         EntityRendererRegistry.register(TCOTS_Entities.ICE_GIANT, IceGiantRenderer::new);
         EntityRendererRegistry.register(TCOTS_Entities.ANCHOR_PROJECTILE, AnchorProjectileRenderer::new);
 
-        ModelPredicateProviderRegistry.register(TCOTS_Items.GIANT_ANCHOR, new Identifier("invisible"), (stack, world, entity, seed) ->
+        ModelPredicateProviderRegistry.register(TCOTS_Items.GIANT_ANCHOR, Identifier.of(TCOTS_Main.MOD_ID, "invisible"), (stack, world, entity, seed) ->
                 GiantAnchorItem.wasLaunched(stack)? 1.0f : 0.0f);
 
         //Bomb
@@ -263,7 +280,8 @@ public class TCOTS_Client implements ClientModInitializer {
 
 
         //Particles
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION, Rotfiend_BloodExplosionParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION.getType(), Rotfiend_BloodExplosionParticle.Factory::new);
+
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, new Rotfiend_BloodEmitterParticle.Factory());
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.GRAVE_HAG_GREEN_SALIVA, GraveHag_GreenSaliva.Factory::new);
         ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.FOGLET_FOG, Foglet_FogParticle.FogFactory::new);
@@ -314,17 +332,19 @@ public class TCOTS_Client implements ClientModInitializer {
         HandledScreens.register(ScreenHandlersAndRecipesRegister.HERBAL_TABLE_SCREEN_HANDLER, HerbalTableScreen::new);
 
         //Register Recipe Previews
-        LavenderBookScreen.registerRecipePreviewBuilder(new Identifier(TCOTS_Main.MOD_ID, "alchemy_book"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
+        LavenderBookScreen.registerRecipePreviewBuilder(Identifier.of(TCOTS_Main.MOD_ID, "alchemy_book"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
 
-        LavenderBookScreen.registerRecipePreviewBuilder(new Identifier(TCOTS_Main.MOD_ID, "witcher_bestiary"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
+        LavenderBookScreen.registerRecipePreviewBuilder(Identifier.of(TCOTS_Main.MOD_ID, "witcher_bestiary"), AlchemyTableRecipe.Type.INSTANCE, (alchemyTable_RecipePreviewBuilder));
 
         EntityModelLayerRegistry.registerModelLayer(WITCHER_EYES_LAYER, WitcherEyesModel.createModelData());
+
+        EntityModelLayerRegistry.registerModelLayer(TOXICITY_FACE_LAYER, ToxicityFaceModel.createModelData());
     }
 
     private static final RecipeFeature.RecipePreviewBuilder<AlchemyTableRecipe> alchemyTable_RecipePreviewBuilder = new RecipeFeature.RecipePreviewBuilder<>() {
         @Override
         public @NotNull Component buildRecipePreview(BookCompiler.ComponentSource componentSource, @NotNull RecipeEntry<AlchemyTableRecipe> recipeEntry) {
-            Identifier TEXTURE_ID = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/alchemy_book_gui.png");
+            Identifier TEXTURE_ID = Identifier.of(TCOTS_Main.MOD_ID, "textures/gui/alchemy_book_gui.png");
 
             //Get the recipe
             var recipe = recipeEntry.value();

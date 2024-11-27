@@ -16,7 +16,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,7 +30,7 @@ public class ItemsMixins {
     //Remove toxicity
     @Mixin(MilkBucketItem.class)
     public static class MilkBucketItemMixin {
-        @Inject(method = "finishUsing", at = @At("TAIL"))
+        @Inject(method = "finishUsing", at = @At("RETURN"))
         private void injectInTickDecreaseToxicity(ItemStack stack, World world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
             if(!world.isClient){
                 if(user instanceof PlayerEntity player){
@@ -44,10 +43,10 @@ public class ItemsMixins {
 
     //Adds particles when using in the Nest Spawner
     @Mixin(SpawnEggItem.class)
-    public static class SpawnEggItemMixin {
+    public static abstract class SpawnEggItemMixin {
 
         @Shadow
-        public EntityType<?> getEntityType(@Nullable NbtCompound nbt) {
+        public EntityType<?> getEntityType(NbtCompound nbt) {
             return null;
         }
 

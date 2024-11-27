@@ -4,7 +4,6 @@ import TCOTS.entity.misc.ScurverSpineEntity;
 import TCOTS.entity.misc.bolts.WitcherBolt;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.weapons.BoltItem;
-import TCOTS.items.weapons.KnightCrossbow;
 import TCOTS.items.weapons.WitcherBaseCrossbow;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -65,9 +64,9 @@ public class CrossbowMixins {
     @Mixin(CrossbowItem.class)
     public static class CrossbowItemMixin {
         @Inject(method = "getPullTime", at = @At("HEAD"), cancellable = true)
-        private static void getPullTimeCorrectly(ItemStack stack, CallbackInfoReturnable<Integer> cir){
-            if(stack.isOf(TCOTS_Items.KNIGHT_CROSSBOW)){
-                cir.setReturnValue(KnightCrossbow.getPullTime(stack));
+        private static void getPullTimeCorrectlyForAnimation(ItemStack stack, CallbackInfoReturnable<Integer> cir){
+            if(stack.getItem() instanceof WitcherBaseCrossbow crossbow){
+                cir.setReturnValue(crossbow.getCrossbowPullTime(stack));
             }
         }
 

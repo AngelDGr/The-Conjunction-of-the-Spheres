@@ -91,7 +91,7 @@ public class WitcherBaseCrossbow extends CrossbowItem {
         return 3.15f;
     }
 
-    protected int getCrossbowPullTime(ItemStack stack) {
+    public int getCrossbowPullTime(ItemStack stack) {
         int i = EnchantmentHelper.getLevel(Enchantments.QUICK_CHARGE, stack);
         return i == 0 ? 25 : 25 - 5 * i;
     }

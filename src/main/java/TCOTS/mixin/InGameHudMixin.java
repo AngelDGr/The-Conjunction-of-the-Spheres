@@ -3,7 +3,6 @@ package TCOTS.mixin;
 import TCOTS.TCOTS_Main;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.screen.TCOTS_HeartTypes;
-import TCOTS.screen.ToxicityHudOverlay;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -68,13 +67,13 @@ public abstract class InGameHudMixin {
 
     //MudballOverlay
     @Unique
-    private static final Identifier MUD_BALL_OVERLAY_1 = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/mudball_overlay1.png");
+    private static final Identifier MUD_BALL_OVERLAY_1 = Identifier.of(TCOTS_Main.MOD_ID,"textures/gui/mudball_overlay1.png");
     @Unique
-    private static final Identifier MUD_BALL_OVERLAY_2 = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/mudball_overlay2.png");
+    private static final Identifier MUD_BALL_OVERLAY_2 = Identifier.of(TCOTS_Main.MOD_ID,"textures/gui/mudball_overlay2.png");
     @Unique
-    private static final Identifier MUD_BALL_OVERLAY_3 = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/mudball_overlay3.png");
+    private static final Identifier MUD_BALL_OVERLAY_3 = Identifier.of(TCOTS_Main.MOD_ID,"textures/gui/mudball_overlay3.png");
     @Unique
-    private static final Identifier MUD_BALL_OVERLAY_4 = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/mudball_overlay4.png");
+    private static final Identifier MUD_BALL_OVERLAY_4 = Identifier.of(TCOTS_Main.MOD_ID,"textures/gui/mudball_overlay4.png");
     @Unique
     boolean changeOverlay=true;
     @Unique
@@ -121,12 +120,6 @@ public abstract class InGameHudMixin {
         }
     }
 
-    //ToxicityHudRender
-    @Inject(method = "render", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;getCurrentGameMode()Lnet/minecraft/world/GameMode;", ordinal = 1))
-    public void renderToxicityHud(DrawContext drawContext, float tickDelta, CallbackInfo callbackInfo) {
-        ToxicityHudOverlay.onHudRender(drawContext,tickDelta);
-    }
 
     @Redirect(method = "renderHealthBar", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/gui/hud/InGameHud;drawHeart(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/gui/hud/InGameHud$HeartType;IIZZZ)V",

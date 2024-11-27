@@ -45,6 +45,10 @@ public interface PlayerEntityMixinInterface {
     default boolean theConjunctionOfTheSpheres$getWitcherEyesActivated(){return false;}
     default void theConjunctionOfTheSpheres$setWitcherEyesActivated(boolean activate){}
 
+    default boolean theConjunctionOfTheSpheres$getToxicityActivated(){return false;}
+    default void theConjunctionOfTheSpheres$setToxicityActivated(boolean activate){}
+
+
     default Vector3f theConjunctionOfTheSpheres$getEyesPivot(){return new Vector3f();}
     default void theConjunctionOfTheSpheres$setEyesPivot(Vector3f vector3f){}
 

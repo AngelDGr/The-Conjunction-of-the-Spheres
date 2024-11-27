@@ -46,13 +46,18 @@ public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonNetworkH
     @Inject(method = "onPlayerRespawn", at = @At("TAIL"))
     private void injectChangesInEyesRespawn(PlayerRespawnS2CPacket packet, CallbackInfo ci){
         TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(new TCOTS_Main.WitcherEyesFullPacket(
-                TCOTS_Main.CONFIG.witcher_eyes.activate(),
+                TCOTS_Main.CONFIG.witcher_eyes.activateEyes(),
                 TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                 TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                 TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
                 TCOTS_Main.CONFIG.witcher_eyes.YEyePos()
                 )
         );
+
+        TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(new TCOTS_Main.ToxicityFacePacket(
+                        TCOTS_Main.CONFIG.witcher_eyes.activateToxicity())
+        );
+
     }
 
 

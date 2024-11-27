@@ -140,7 +140,7 @@ public abstract class DimeritiumMagicBlock {
         }
     }
 
-    @Mixin(targets = "net.minecraft.entity.mob.EvokerEntity$WololoGoal")
+    @Mixin(net.minecraft.entity.mob.EvokerEntity.WololoGoal.class)
     public abstract static class BlockWololoGoal {
         @Final
         @Shadow EvokerEntity field_7268;

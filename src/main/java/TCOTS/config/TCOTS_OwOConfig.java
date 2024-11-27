@@ -37,7 +37,7 @@ public class TCOTS_OwOConfig {
     @Sync(Option.SyncMode.INFORM_SERVER)
     public static class NestedHudConfig {
         @Sync(Option.SyncMode.INFORM_SERVER)
-        public ANCHORS anchor = ANCHORS.LEFT_UP;
+        public ANCHORS anchor = ANCHORS.LEFT_DOWN;
         @Sync(Option.SyncMode.INFORM_SERVER)
         public int Hud_Y=0;
         @Sync(Option.SyncMode.INFORM_SERVER)
@@ -52,7 +52,11 @@ public class TCOTS_OwOConfig {
 
         @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
-        public boolean activate=false;
+        public boolean activateEyes =false;
+
+        @Sync(Option.SyncMode.INFORM_SERVER)
+        @Hook
+        public boolean activateToxicity=false;
 
         @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
@@ -68,6 +72,8 @@ public class TCOTS_OwOConfig {
         @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
         public int YEyePos=0;
+
+
     }
 
     public enum ANCHORS {
