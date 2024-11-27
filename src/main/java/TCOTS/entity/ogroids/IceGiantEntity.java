@@ -181,7 +181,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
 
         this.goalSelector.add(1, new SwimGoal(this));
 
-        this.goalSelector.add(2, new GoForAnchor(this, 1.2D));
+        this.goalSelector.add(2, new GoForAnchor(this, 1.4D));
 
         this.goalSelector.add(3, new GoToSleepGoal(this));
 
@@ -973,11 +973,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
 
     @Override
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        if(this.isGiantSleeping()){
-            return 1.6f;
-        } else {
-            return super.getActiveEyeHeight(pose, dimensions);
-        }
+        return this.isGiantSleeping()? 1.6f: super.getActiveEyeHeight(pose, dimensions);
     }
 
     private Box sleepingBox(){
@@ -1287,7 +1283,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
     }
 
     @Override
-    protected void jump() {
+    public void jump() {
         this.playSound(TCOTS_Sounds.ICE_GIANT_PUNCH, 1.0f, 1.0f);
         super.jump();
     }

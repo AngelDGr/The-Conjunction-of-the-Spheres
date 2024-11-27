@@ -43,6 +43,8 @@ public class ScurverSpineEntity extends PersistentProjectileEntity {
         target.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.BLEEDING, 200, 0, false, false, true), entity);
     }
 
+
+
     protected void age() {
         if(!(this.getOwner() instanceof PlayerEntity)){
             ++this.life;

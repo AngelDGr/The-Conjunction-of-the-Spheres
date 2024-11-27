@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
@@ -29,7 +28,7 @@ public class MoonDustBomb {
 
         List<LivingEntity> list = bomb.getWorld().getEntitiesByClass(LivingEntity.class, bomb.getBoundingBox().expand(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
                 entity ->
-                        !(entity instanceof WardenEntity) && !(entity instanceof ArmorStandEntity)
+                        !(entity instanceof ArmorStandEntity)
                                 && entity.isAlive()
                                 && entity != bomb.getOwner());
 
@@ -40,7 +39,7 @@ public class MoonDustBomb {
             if(BombsUtil.getExposure(entity.getPos(), bomb) == 0) continue;
 
             //Applies moon dust effect to entity
-            entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.MOON_DUST_EFFECT, bomb.getLevel() < 1 ? 400 : 800, bomb.getLevel()), entityCause);
+            entity.addStatusEffect(new StatusEffectInstance(TCOTS_Effects.MOON_DUST_EFFECT, bomb.getLevel() < 2 ? 200 : 400, bomb.getLevel()), entityCause);
             //Gives you the advancement
             if(entity.getType() == EntityType.CREEPER && bomb.getLevel()>1 && bomb.getEffectCause() instanceof PlayerEntity player){
                 if(player instanceof ServerPlayerEntity serverPlayer){
@@ -56,7 +55,7 @@ public class MoonDustBomb {
         }
     }
 
-    public static boolean checkEffect(LivingEntity entity){
+    public static boolean checkEffectAndSplinters(LivingEntity entity){
         return MoonDustBomb.checkOnlyEffect(entity) || entity.theConjunctionOfTheSpheres$hasSilverSplinters();
     }
 
@@ -68,9 +67,11 @@ public class MoonDustBomb {
         return entity.theConjunctionOfTheSpheres$hasSilverSplinters();
     }
 
-    public static void checkEffectMixin(LivingEntity entity, CallbackInfoReturnable<Boolean> cir){
-        if(MoonDustBomb.checkEffect(entity))
+
+    public static void checkEffectAndSplintersMixin(LivingEntity entity, CallbackInfoReturnable<Boolean> cir){
+        if(MoonDustBomb.checkEffectAndSplinters(entity))
             cir.setReturnValue(false);
     }
+
 
 }

@@ -4,7 +4,6 @@ import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.misc.AnchorProjectileEntity;
 import TCOTS.entity.ogroids.AbstractTrollEntity;
 import TCOTS.interfaces.LivingEntityMixinInterface;
-import TCOTS.interfaces.MaxToxicityIncreaser;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
@@ -30,6 +29,8 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
+import net.minecraft.entity.mob.GuardianEntity;
+import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -38,6 +39,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
@@ -57,7 +59,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -177,7 +178,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
                 if(killCount < 20){
                     livingEntity.theConjunctionOfTheSpheres$incrementKillCount();
-                    livingEntity.theConjunctionOfTheSpheres$setKillCountdown(400);
+                    livingEntity.theConjunctionOfTheSpheres$setKillCountdown(420);
                 }
 
             }
@@ -269,6 +270,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         }
     }
 
+    @Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
+    private void injectImmunityToStun(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir){
+        if(((THIS instanceof WardenEntity) || (THIS instanceof GuardianEntity)) && (effect.getEffectType()==TCOTS_Effects.SAMUM_EFFECT))
+            cir.setReturnValue(false);
+    }
+
     //NorthernWind
     @Unique
     private static final TrackedData<Boolean> IS_FROZEN = DataTracker.registerData(LivingEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -332,6 +339,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         if(!THIS.getWorld().isClient) {
             setIsFrozen(NorthernWindBomb.checkEffect(THIS));
         }
+    }
+
+    @Inject(method = "canHaveStatusEffect", at = @At("HEAD"), cancellable = true)
+    private void injectImmunityToFreeze(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir){
+        if(THIS.getType().isIn(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES) && (effect.getEffectType()==TCOTS_Effects.NORTHERN_WIND_EFFECT))
+            cir.setReturnValue(false);
     }
 
     //Moon Dust
@@ -494,84 +507,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
         }
     }
 
-    @Shadow
-    private ItemStack getSyncedHandStack(EquipmentSlot slot){return null;}
-
-    @Shadow
-    private ItemStack getSyncedArmorStack(EquipmentSlot slot){return null;}
-
     @Shadow public abstract ItemStack getMainHandStack();
-
-    @Inject(method = "getEquipmentChanges", at = @At("TAIL"))
-    private void injectExtraToxicity(CallbackInfoReturnable<Map<EquipmentSlot, ItemStack>> cir){
-        if(THIS instanceof PlayerEntity player) {
-            for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-                ItemStack unequippedStack;
-                switch (equipmentSlot.getType()) {
-                    case HAND: {
-                        unequippedStack = this.getSyncedHandStack(equipmentSlot);
-                        break;
-                    }
-                    case ARMOR: {
-                        unequippedStack = this.getSyncedArmorStack(equipmentSlot);
-                        break;
-                    }
-                    default: {
-                        continue;
-                    }
-                }
-
-                //To check if it has already the extra toxicity
-                Iterable<ItemStack> equippedItems=  THIS.getItemsEquipped();
-                int maxToxicity=100;
-                for(ItemStack stack: equippedItems){
-                    if(stack.getItem() instanceof MaxToxicityIncreaser toxicityIncreaser) maxToxicity=maxToxicity+toxicityIncreaser.getExtraToxicity();
-                }
-                if(maxToxicity==player.theConjunctionOfTheSpheres$getMaxToxicity()) break;
-
-
-                ItemStack equippedStack = THIS.getEquippedStack(equipmentSlot);
-                if (!THIS.areItemsDifferent(unequippedStack, equippedStack)) continue;
-                //On un-equip
-                if (unequippedStack!=null && !unequippedStack.isEmpty() && unequippedStack.getItem() instanceof MaxToxicityIncreaser toxicityIncreaser) {
-                    float oldMaxToxicity=player.theConjunctionOfTheSpheres$getMaxToxicity();
-                    player.theConjunctionOfTheSpheres$decreaseMaxToxicity(toxicityIncreaser.getExtraToxicity());
-                    float newMaxToxicity=player.theConjunctionOfTheSpheres$getMaxToxicity();
-
-                    if(player.theConjunctionOfTheSpheres$getNormalToxicity() > 0){
-                        float currentToxicity = player.theConjunctionOfTheSpheres$getNormalToxicity();
-                        int newToxicity=(int) ((newMaxToxicity/oldMaxToxicity) *currentToxicity);
-
-                        player.theConjunctionOfTheSpheres$setToxicity(MathHelper.clamp(newToxicity,0, player.theConjunctionOfTheSpheres$getMaxToxicity() - player.theConjunctionOfTheSpheres$getDecoctionToxicity()));
-                    }
-                }
-
-                if (equippedStack.isEmpty()) continue;
-
-                //On equip
-                if(equippedStack.getItem() instanceof MaxToxicityIncreaser toxicityIncreaser) {
-                    // CurrentToxicity ->  OldMaxToxicity
-                    //      X          ->  NewMaxToxicity
-
-                    //(NewMaxToxicity/OldMaxToxicity) * CurrentToxicity = NewCurrentToxicity
-
-                    float oldMaxToxicity=player.theConjunctionOfTheSpheres$getMaxToxicity();
-                    player.theConjunctionOfTheSpheres$addMaxToxicity(toxicityIncreaser.getExtraToxicity());
-                    float newMaxToxicity=player.theConjunctionOfTheSpheres$getMaxToxicity();
-
-                    if(player.theConjunctionOfTheSpheres$getNormalToxicity() > 0){
-                        float currentToxicity = player.theConjunctionOfTheSpheres$getNormalToxicity();
-                        int newToxicity=(int) ((newMaxToxicity/oldMaxToxicity) *currentToxicity);
-
-                        player.theConjunctionOfTheSpheres$setToxicity(MathHelper.clamp(newToxicity,0, player.theConjunctionOfTheSpheres$getMaxToxicity() - player.theConjunctionOfTheSpheres$getDecoctionToxicity()));
-                    }
-                }
-
-            }
-        }
-
-    }
-
     
     @Inject(method ="modifyAppliedDamage", at = @At("RETURN"), cancellable = true)
     private void injectArmorExtraMonsterResistance(DamageSource source, float amount, CallbackInfoReturnable<Float> cir){

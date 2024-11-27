@@ -436,7 +436,7 @@ public class VillagerCustomTrades {
                 factories -> factories.add(
                         new TCOTS_SellMapFactory(
                                 16,
-                                TagKey.of(RegistryKeys.STRUCTURE, new Identifier(TCOTS_Main.MOD_ID, "on_ice_giant_maps")),
+                                TagKey.of(RegistryKeys.STRUCTURE, Identifier.of(TCOTS_Main.MOD_ID, "on_ice_giant_maps")),
                                 "filled_map.giant_cave",
                                 TCOTS_MapIcons.Type.GIANT_CAVE,
                                 12,
@@ -444,6 +444,8 @@ public class VillagerCustomTrades {
             );
         }
     }
+
+
 
     private static TradeOffer upgradeRecipeTrade(Item recipeToUpgrade, int Cost, Item upgradedRecipe){
         return new TradeOffer(

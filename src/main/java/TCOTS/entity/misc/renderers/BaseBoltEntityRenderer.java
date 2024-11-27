@@ -6,7 +6,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
 
 public class BaseBoltEntityRenderer extends BoltEntityRenderer<BaseBoltProjectile> {
-    public static final Identifier TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/entity/base_bolt.png");
+    public static final Identifier TEXTURE = Identifier.of(TCOTS_Main.MOD_ID,"textures/entity/base_bolt.png");
     public BaseBoltEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
     }

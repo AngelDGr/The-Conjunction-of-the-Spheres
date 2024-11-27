@@ -19,7 +19,7 @@ public class TCOTS_Features {
 
 
     private static <C extends FeatureConfig, F extends Feature<C>> F registerFeature(String name, F feature) {
-        return Registry.register(Registries.FEATURE, new Identifier(TCOTS_Main.MOD_ID, name) , feature);
+        return Registry.register(Registries.FEATURE, Identifier.of(TCOTS_Main.MOD_ID, name) , feature);
     }
 
     public static void registerFeatures(){

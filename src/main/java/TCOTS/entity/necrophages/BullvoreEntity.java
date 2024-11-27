@@ -79,6 +79,7 @@ public class BullvoreEntity extends NecrophageMonster implements GeoEntity {
 
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 24);
     }
+
     @Override
     protected void initDataTracker() {
         super.initDataTracker();

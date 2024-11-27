@@ -87,6 +87,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
+
         this.dataTracker.startTracking(RABID, Boolean.FALSE);
         this.dataTracker.startTracking(EATING_TIME, -1);
         this.dataTracker.startTracking(GUARDING_POS, BlockPos.ORIGIN);

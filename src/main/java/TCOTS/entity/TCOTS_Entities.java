@@ -216,7 +216,9 @@ public class TCOTS_Entities {
             Registry.register(Registries.ENTITY_TYPE, new Identifier(TCOTS_Main.MOD_ID, "anchor_projectile"),
                     FabricEntityTypeBuilder.<AnchorProjectileEntity>create(SpawnGroup.MISC, AnchorProjectileEntity::new)
                             .dimensions(EntityDimensions.fixed(1.25f, 1.8f))
-                            .trackRangeBlocks(8).trackedUpdateRate(20).fireImmune().build());
+                            .trackRangeBlocks(8)
+                            .trackedUpdateRate(20)
+                            .fireImmune().build());
 
     //Misc
     public static final EntityType<WitcherBombEntity> WITCHER_BOMB = Registry.register(
@@ -553,5 +555,9 @@ public class TCOTS_Entities {
             FabricDefaultAttributeRegistry.register(TCOTS_Entities.ICE_GIANT, IceGiantEntity.setAttributes());
 
         }
+    }
+
+    public static TagKey<EntityType<?>> createTag(String name){
+        return TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(TCOTS_Main.MOD_ID,name));
     }
 }

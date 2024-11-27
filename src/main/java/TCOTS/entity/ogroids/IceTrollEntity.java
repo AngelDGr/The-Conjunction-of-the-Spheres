@@ -52,6 +52,8 @@ public class IceTrollEntity extends RockTrollEntity {
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return MobEntity.createMobAttributes()
+
+
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 50.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.22f)

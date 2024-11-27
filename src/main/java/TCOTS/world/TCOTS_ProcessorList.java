@@ -35,7 +35,7 @@ public class TCOTS_ProcessorList {
     public static final RegistryKey<StructureProcessorList> RANDOM_HERBALIST_HERBS_DESERT = registerKey("random_herbalist_herbs_desert");
 
     public static RegistryKey<StructureProcessorList> registerKey(String name) {
-        return RegistryKey.of(RegistryKeys.PROCESSOR_LIST, new Identifier(TCOTS_Main.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.PROCESSOR_LIST, Identifier.of(TCOTS_Main.MOD_ID, name));
     }
 
     public static void boostrap(Registerable<StructureProcessorList> processorListRegisterable) {

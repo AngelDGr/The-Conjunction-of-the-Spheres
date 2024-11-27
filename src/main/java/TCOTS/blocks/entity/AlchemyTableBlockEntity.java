@@ -60,4 +60,7 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         return new AlchemyTableScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(this.getWorld(), pos), this);
     }
+
+
+
 }

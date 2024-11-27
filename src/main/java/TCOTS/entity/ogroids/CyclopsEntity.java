@@ -66,6 +66,7 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
     protected static final TrackedData<Boolean> FALLING = DataTracker.registerData(CyclopsEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Float> FALLING_DISTANCE = DataTracker.registerData(CyclopsEntity.class, TrackedDataHandlerRegistry.FLOAT);
 
+
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
@@ -75,6 +76,7 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
+
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 45.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.22f)
@@ -248,7 +250,7 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
     }
 
     @Override
-    protected void jump() {
+    public void jump() {
         this.playSound(TCOTS_Sounds.CYCLOPS_ATTACK, 1.0f, 1.0f);
         super.jump();
     }

@@ -27,7 +27,7 @@ public class TCOTS_DamageTypes {
         damageTypeRegisterable.register(ANCHOR, new DamageType("anchor", 0.1f));
     }
     public static RegistryKey<DamageType> registerKey(String name) {
-        return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(TCOTS_Main.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(TCOTS_Main.MOD_ID, name));
     }
 
     public static DamageSource of(World world, RegistryKey<DamageType> key) {

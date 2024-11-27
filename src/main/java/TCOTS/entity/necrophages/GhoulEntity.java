@@ -210,12 +210,12 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
 
         @Override
         public boolean canStart() {
-            return canStartRegen() && !MoonDustBomb.checkEffect(mob);
+            return canStartRegen() && !MoonDustBomb.checkEffectAndSplinters(mob);
         }
 
         @Override
         public boolean shouldContinue() {
-            return !mob.getIsRegenerating() && !MoonDustBomb.checkEffect(mob);
+            return !mob.getIsRegenerating() && !MoonDustBomb.checkEffectAndSplinters(mob);
         }
 
         private int StoppedTicks;
@@ -230,7 +230,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
 
         @Override
         public void stop() {
-            this.mob.setIsRegenerating(!MoonDustBomb.checkEffect(mob));
+            this.mob.setIsRegenerating(!MoonDustBomb.checkEffectAndSplinters(mob));
             mob.setTimeForRegen(TimeForRegen);
             if (!this.mob.isSilent()) {
                 this.mob.getWorld().sendEntityStatus(this.mob, GHOUL_REGENERATING);
@@ -529,7 +529,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
 
     @Override
     public void tick() {
-        if(getIsRegenerating() && MoonDustBomb.checkEffect(this)){
+        if(getIsRegenerating() && MoonDustBomb.checkEffectAndSplinters(this)){
             setIsRegenerating(false);
         }
 

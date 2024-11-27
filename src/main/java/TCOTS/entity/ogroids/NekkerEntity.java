@@ -145,6 +145,7 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         this.targetSelector.add(5, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
     }
 
+
     @Nullable
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
@@ -164,6 +165,7 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
         if(spawnReason==SpawnReason.SPAWNER || spawnReason==SpawnReason.STRUCTURE){
             this.setCanHaveNest(true);
         }
+
 
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
@@ -248,12 +250,9 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
 
     @Override
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        if(this.getInGround()){
-            return 0.1f;
-        } else {
-            return super.getActiveEyeHeight(pose, dimensions);
-        }
+        return this.getInGround()? 0.1f: super.getActiveEyeHeight(pose, dimensions);
     }
+
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);

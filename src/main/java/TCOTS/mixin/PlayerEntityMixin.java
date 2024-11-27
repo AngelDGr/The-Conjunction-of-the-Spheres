@@ -1,6 +1,7 @@
 package TCOTS.mixin;
 
 import TCOTS.advancements.TCOTS_Criteria;
+import TCOTS.entity.TCOTS_EntityAttributes;
 import TCOTS.interfaces.PlayerEntityMixinInterface;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.EmptyWitcherPotionItem;
@@ -10,9 +11,11 @@ import TCOTS.items.concoctions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.world.TCOTS_DamageTypes;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -31,6 +34,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -53,6 +57,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
+
+    @Inject(method = "createPlayerAttributes", at = @At("RETURN"), cancellable = true)
+    private static void injectToxicity(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir){
+        cir.setReturnValue(cir.getReturnValue().add(TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY));
+    }
+
     @Final
     @Shadow
     private PlayerInventory inventory;
@@ -106,8 +116,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void injectWriteNBTMud(NbtCompound nbt, CallbackInfo ci){
         nbt.putInt("MudTicks", theConjunctionOfTheSpheres$getMudInFace());
-
-
     }
 
     //Oils
@@ -388,8 +396,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Unique
     private static final TrackedData<Integer> DECOCTION_TOXICITY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
     @Unique
-    private static final TrackedData<Integer> MAX_TOXICITY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
-    @Unique
     private static final TrackedData<Boolean> HUD_ACTIVE = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     @Unique
     private static final TrackedData<Float> HUD_TRANSPARENCY = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.FLOAT);
@@ -399,7 +405,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private void injectToxicityDataTracker(CallbackInfo ci){
         this.dataTracker.startTracking(TOXICITY, 0);
         this.dataTracker.startTracking(DECOCTION_TOXICITY, 0);
-        this.dataTracker.startTracking(MAX_TOXICITY,100);
         this.dataTracker.startTracking(HUD_ACTIVE, false);
         this.dataTracker.startTracking(HUD_TRANSPARENCY, 0.0f);
     }
@@ -416,12 +421,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Override
     public int theConjunctionOfTheSpheres$getMaxToxicity(){
-        return this.dataTracker.get(MAX_TOXICITY);
-    }
-
-    @Override
-    public void theConjunctionOfTheSpheres$setMaxToxicity(int MaxToxicity) {
-        this.dataTracker.set(MAX_TOXICITY,MaxToxicity);
+        return (int) THIS.getAttributeValue(TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY);
     }
 
     @Override
@@ -432,16 +432,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Override
     public void theConjunctionOfTheSpheres$setDecoctionToxicity(int DecoctionToxicity) {
         this.dataTracker.set(DECOCTION_TOXICITY,DecoctionToxicity);
-    }
-
-    @Override
-    public void theConjunctionOfTheSpheres$addMaxToxicity(int MaxToxicity){
-        this.dataTracker.set(MAX_TOXICITY,theConjunctionOfTheSpheres$getMaxToxicity()+MaxToxicity);
-    }
-
-    @Override
-    public void theConjunctionOfTheSpheres$decreaseMaxToxicity(int MaxToxicity){
-        this.dataTracker.set(MAX_TOXICITY,theConjunctionOfTheSpheres$getMaxToxicity()-MaxToxicity);
     }
 
     @Override
@@ -487,12 +477,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private void injectWriteNBTToxicity(NbtCompound nbt, CallbackInfo ci){
         nbt.putInt("Toxicity", theConjunctionOfTheSpheres$getNormalToxicity());
         nbt.putInt("DecoctionToxicity",theConjunctionOfTheSpheres$getDecoctionToxicity());
-
-        nbt.putInt("MaxToxicity",theConjunctionOfTheSpheres$getMaxToxicity());
     }
 
-
-
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void injectInTickDecreaseToxicityIfOverMaximum(CallbackInfo ci){
+      if(this.theConjunctionOfTheSpheres$getAllToxicity() > this.theConjunctionOfTheSpheres$getMaxToxicity()){
+          THIS.theConjunctionOfTheSpheres$setToxicity(MathHelper.clamp(
+                  THIS.theConjunctionOfTheSpheres$getNormalToxicity(),
+                  0,
+                  THIS.theConjunctionOfTheSpheres$getMaxToxicity() - THIS.theConjunctionOfTheSpheres$getDecoctionToxicity()));
+      }
+    }
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void injectInTickDecreaseToxicity(CallbackInfo ci){
@@ -516,24 +511,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 damageableTicks = (int) (10 * ((float) theConjunctionOfTheSpheres$getMaxToxicity() / (float) theConjunctionOfTheSpheres$getAllToxicity()));
             }
 
+            //With 20hp makes 1hp damage
             if(this.age%(damageableTicks)==0){
-            this.damage(TCOTS_DamageTypes.toxicityDamage(getWorld()),1);
+            this.damage(TCOTS_DamageTypes.toxicityDamage(getWorld()),THIS.getMaxHealth()*0.05f);
             }
         }
     }
 
 
     //SamumEffect
-    @Unique
-    private Entity target;
-
-    @Inject(method = "attack", at = @At("HEAD"))
-    private void getTarget(Entity target, CallbackInfo ci){
-        this.target=target;
-    }
-
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 2)
-    private boolean injectCriticalWithSamum(boolean value){
+    private boolean injectCriticalWithSamum(boolean value, @Local(argsOnly = true) Entity target){
         if(target instanceof LivingEntity entity){
             if(SamumBomb.checkSamumEffect(entity)){
                 StatusEffectInstance instance = entity.getStatusEffect(TCOTS_Effects.SAMUM_EFFECT);
@@ -543,8 +531,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 return value || amplifier > 1;
             }
         }
-
-
 
         return value;
     }
@@ -586,14 +572,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
 
     //Raven Armor
-    @Unique
-    private float ravensArmorExtraDamage = 0;
-
-    @Inject(method = "attack", at = @At("HEAD"))
-    private void getIsMonsterForRavenBonus(Entity target, CallbackInfo ci){
-        ravensArmorExtraDamage = EntitiesUtil.isWearingRavensArmor(THIS) && target instanceof LivingEntity livingTarget && EntitiesUtil.isMonster(livingTarget)? 2.0f : 0.0f;
-    }
-
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
             , slice = @Slice(
             from = @At(value = "INVOKE",
@@ -601,19 +579,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
     )
-    private float injectRavenBonusToDamage(float value){
-        return value + ravensArmorExtraDamage;
+    private float injectRavenBonusToDamage(float value, @Local(argsOnly = true) Entity target){
+        return value + (
+                EntitiesUtil.isWearingRavensArmor(THIS)
+                        && target instanceof LivingEntity livingTarget
+                        && EntitiesUtil.isMonster(livingTarget)? 2.0f : 0.0f);
     }
 
 
     //Moonblade
-    @Unique
-    private float moonbladeExtraDamage = 0.0f;
-
-    @Inject(method = "attack", at = @At("HEAD"))
-    private void getIsMonsterMoonblade(Entity target, CallbackInfo ci){
-        moonbladeExtraDamage = THIS.getMainHandStack().getItem() == TCOTS_Items.MOONBLADE && target instanceof LivingEntity livingTarget && EntitiesUtil.isMonster(livingTarget)? 1.5f : 1.0f;
-    }
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 0
             , slice = @Slice(
             from = @At(value = "INVOKE",
@@ -621,18 +595,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/enchantment/EnchantmentHelper;getAttackDamage(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityGroup;)F", ordinal = 0))
     )
-    private float injectMoonBladeDamage(float value){
-        return value*moonbladeExtraDamage;
+    private float injectMoonBladeDamage(float value, @Local(argsOnly = true) Entity target){
+        return value*(
+                THIS.getMainHandStack().getItem() == TCOTS_Items.MOONBLADE
+                        && target instanceof LivingEntity livingTarget
+                        && EntitiesUtil.isMonster(livingTarget)? 1.5f : 1.0f);
     }
 
-    //Moonblade
-    @Unique
-    private float wintersBladeExtraDamage = 0.0f;
-
-    @Inject(method = "attack", at = @At("HEAD"))
-    private void getIsFireMonster(Entity target, CallbackInfo ci){
-        wintersBladeExtraDamage = THIS.getMainHandStack().getItem() == TCOTS_Items.WINTERS_BLADE && target instanceof LivingEntity livingTarget && livingTarget.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)? 2.0f : 0.0f;
-    }
+    //Winter's Blade
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
             , slice = @Slice(
             from = @At(value = "INVOKE",
@@ -640,8 +610,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/entity/player/PlayerEntity;getAttackCooldownProgress(F)F", ordinal = 0))
     )
-    private float injectWintersBladeDamage(float value){
-        return value+wintersBladeExtraDamage;
+    private float injectWintersBladeDamage(float value, @Local(argsOnly = true) Entity target){
+        return value + (
+                THIS.getMainHandStack().getItem() == TCOTS_Items.WINTERS_BLADE
+                && target instanceof LivingEntity livingTarget
+                && livingTarget.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)?
+                        2.0f
+                        : 0.0f);
     }
 
     //Witcher Eyes
@@ -655,10 +630,20 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private static final TrackedData<Integer> EYES_SHAPE = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
 
+    @Unique
+    private static final TrackedData<Boolean> TOXICITY_ACTIVATE = DataTracker.registerData(PlayerEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+
     @Override
     public boolean theConjunctionOfTheSpheres$getWitcherEyesActivated(){return this.dataTracker.get(EYES_ACTIVATE);}
     @Override
     public void theConjunctionOfTheSpheres$setWitcherEyesActivated(boolean activate){this.dataTracker.set(EYES_ACTIVATE, activate);}
+
+    @Override
+    public boolean theConjunctionOfTheSpheres$getToxicityActivated() {return this.dataTracker.get(TOXICITY_ACTIVATE);}
+
+    @Override
+    public void theConjunctionOfTheSpheres$setToxicityActivated(boolean activate) {this.dataTracker.set(TOXICITY_ACTIVATE, activate);}
 
     @Override
     public Vector3f theConjunctionOfTheSpheres$getEyesPivot(){return this.dataTracker.get(EYES_POSITION);}
@@ -681,6 +666,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         this.dataTracker.startTracking(EYES_POSITION,   new Vector3f(0,0,0));
         this.dataTracker.startTracking(EYES_SEPARATION, 2);
         this.dataTracker.startTracking(EYES_SHAPE,      0);
+        this.dataTracker.startTracking(TOXICITY_ACTIVATE, false);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
@@ -694,6 +680,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             this.theConjunctionOfTheSpheres$setEyeSeparation(nbtEyes.getInt("EyesSeparation"));
 
             this.theConjunctionOfTheSpheres$setEyeShape(nbtEyes.getInt("EyesShape"));
+        }
+
+        NbtCompound nbtToxicity = getSubNbt("ToxicityFace", nbt);
+
+        if(nbtToxicity!=null){
+            this.theConjunctionOfTheSpheres$setToxicityActivated(nbtToxicity.getBoolean("Activated"));
         }
     }
 
@@ -710,6 +702,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         nbtEyes.putInt("EyesShape", this.theConjunctionOfTheSpheres$getEyeShape());
 
         nbt.put("WitcherEyes", nbtEyes);
+
+        NbtCompound nbtToxicity = new NbtCompound();
+
+        nbtToxicity.putBoolean("Activated", this.theConjunctionOfTheSpheres$getToxicityActivated());
+
+        nbt.put("ToxicityFace", nbtToxicity);
     }
 
     @SuppressWarnings("all")
@@ -720,6 +718,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             return null;
         }
         return compound.getCompound(key);
+    }
+
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void testing(CallbackInfo ci){
+
     }
 
 }

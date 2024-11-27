@@ -164,7 +164,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected void jump() {
+    public void jump() {
         this.playSound(TCOTS_Sounds.DEVOURER_JUMP, 1.0f, 1.0f);
         super.jump();
     }
@@ -428,12 +428,9 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
 
     @Override
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        if(this.getInGround()){
-            return 0.1f;
-        } else {
-            return super.getActiveEyeHeight(pose, dimensions);
-        }
+        return this.getInGround()? 0.1f: super.getActiveEyeHeight(pose, dimensions);
     }
+
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);

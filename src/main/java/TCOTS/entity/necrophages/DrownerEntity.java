@@ -568,12 +568,9 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
 
     @Override
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        if(this.getInGround()){
-            return 0.1f;
-        } else {
-            return super.getActiveEyeHeight(pose, dimensions);
-        }
+        return this.getInGround()? 0.1f: super.getActiveEyeHeight(pose, dimensions);
     }
+
     @Override
     public void onTrackedDataSet(TrackedData<?> data) {
         super.onTrackedDataSet(data);

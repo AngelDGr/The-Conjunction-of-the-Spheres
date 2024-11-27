@@ -234,11 +234,11 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
                 }
             }
 
-            if(!MoonDustBomb.checkEffect(actor)){
+            if(!MoonDustBomb.checkEffectAndSplinters(actor)){
                 generatesFog(livingEntity);
             }
 
-            if(((this.actor.isInvisible() || attack) && tickBeforeFog <= -1) || MoonDustBomb.checkEffect(actor)) {
+            if(((this.actor.isInvisible() || attack) && tickBeforeFog <= -1) || MoonDustBomb.checkEffectAndSplinters(actor)) {
                 meleeAttack(livingEntity);
             }
 
@@ -474,7 +474,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
             spawnFogParticlesItself();
         }
 
-        if(this.getIsFog() && MoonDustBomb.checkEffect(this)){
+        if(this.getIsFog() && MoonDustBomb.checkEffectAndSplinters(this)){
             this.setIsFog(false);
         }
 
@@ -484,7 +484,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
             this.getFogletLeader();
             this.getFoglings();
 
-            if(!this.getWorld().isClient && MoonDustBomb.checkEffect(this)){
+            if(!this.getWorld().isClient && MoonDustBomb.checkEffectAndSplinters(this)){
                 break NoParticles;
             }
 
@@ -540,6 +540,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
     public void setAlphaValue(float AlphaValue) {
         this.dataTracker.set(ALPHA_VALUE, AlphaValue);
     }
+
 
     @Override
     protected void initDataTracker() {

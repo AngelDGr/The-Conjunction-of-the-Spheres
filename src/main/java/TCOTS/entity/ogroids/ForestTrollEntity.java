@@ -137,6 +137,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return MobEntity.createMobAttributes()
+
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 25.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0f) //Amount of health that hurts you
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.24f)
@@ -178,6 +179,7 @@ public class ForestTrollEntity extends AbstractTrollEntity {
 
         //1/8 that doesn't appear with the Neck Bone
         this.setClothing(!(random.nextBetween(0, 8) == 0), 4);
+
 
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
