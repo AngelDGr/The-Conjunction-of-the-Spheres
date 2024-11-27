@@ -5,6 +5,8 @@ import TCOTS.entity.ogroids.ForestTrollEntity;
 import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import TCOTS.items.concoctions.bombs.SamumBomb;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.CampfireBlock;
+import net.minecraft.block.CropBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
@@ -82,7 +84,7 @@ public class MobEntityMixin {
         return value || NorthernWindBomb.checkEffect(THIS);
     }
 
-    @Mixin(targets = "net.minecraft.block.CropBlock")
+    @Mixin(CropBlock.class)
     public abstract static class BullvoreDestroyCrops{
 
         @Inject(method = "onEntityCollision", at = @At("HEAD"))
@@ -94,7 +96,7 @@ public class MobEntityMixin {
 
     }
 
-    @Mixin(targets = "net.minecraft.block.CampfireBlock")
+    @Mixin(CampfireBlock.class)
     public abstract static class ForestTrollNotGetCampfireDamage{
 
         @Inject(method = "onEntityCollision", at = @At("HEAD"), cancellable = true)

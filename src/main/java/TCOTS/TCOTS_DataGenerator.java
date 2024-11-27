@@ -4,13 +4,17 @@ import TCOTS.advancements.criterion.DestroyMultipleMonsterNestsCriterion;
 import TCOTS.advancements.criterion.GetTrollFollowerCriterion;
 import TCOTS.advancements.criterion.TCOTS_CustomCriterion;
 import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.blocks.plants.SewantMushroomsPlant;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.items.AlchemyRecipeRandomlyLootFunction;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeCategory;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeJsonBuilder;
 import TCOTS.items.concoctions.recipes.HerbalTableRecipeJsonBuilder;
-import TCOTS.world.*;
+import TCOTS.world.TCOTS_ConfiguredFeatures;
+import TCOTS.world.TCOTS_DamageTypes;
+import TCOTS.world.TCOTS_PlacedFeature;
+import TCOTS.world.TCOTS_ProcessorList;
 import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -18,13 +22,17 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.advancement.*;
 import net.minecraft.advancement.criterion.*;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CropBlock;
+import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.data.server.tag.TagProvider;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.effect.StatusEffects;
@@ -34,20 +42,29 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
+import net.minecraft.loot.condition.*;
 import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.loot.entry.AlternativeEntry;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LeafEntry;
-import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.function.*;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.NumberRange;
+import net.minecraft.predicate.StatePredicate;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.TypeSpecificPredicate;
+import net.minecraft.predicate.item.EnchantmentPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.*;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryBuilder;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.poi.PointOfInterestType;
 
 import java.util.Arrays;
@@ -56,6 +73,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 @SuppressWarnings({"unused", "deprecated"})
 public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
@@ -66,6 +84,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         main.addProvider(ModWorldGenerator::new);
         main.addProvider(LootTablesChestsGenerator::new);
+        main.addProvider(LootTablesEntitiesGenerator::new);
+        main.addProvider(LootTablesBlocksGenerator::new);
         main.addProvider(POIProvider::new);
         main.addProvider(DamageTypeTagsGenerator::new);
         main.addProvider(BlockTagsGenerator::new);
@@ -98,6 +118,821 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         @Override
         public String getName() {
             return "World Gen";
+        }
+    }
+
+    private static class LootTablesEntitiesGenerator extends SimpleFabricLootTableProvider{
+        private final CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup;
+        public LootTablesEntitiesGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(output, LootContextTypes.ENTITY);
+
+            this.registryLookup=registryLookup;
+        }
+
+        @Override
+        public void accept(BiConsumer<Identifier, LootTable.Builder> exporter) {
+            generate(registryLookup.join(), (type, builder) ->
+                    exporter.accept(new Identifier(TCOTS_Main.MOD_ID, "entities/"+type), builder));
+        }
+
+
+        @SuppressWarnings("all")
+        protected LootPool.Builder cadaverinePool(int min, int max, float baseProbability, float lootingProbability){
+            return LootPool.builder().rolls(UniformLootNumberProvider.create(0,1))
+                    .with(ItemEntry.builder(TCOTS_Items.CADAVERINE)
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,2)))
+                            .apply(LootingEnchantLootFunction.builder(UniformLootNumberProvider.create(0,1)))
+                            .conditionally(RandomChanceWithLootingLootCondition.builder(baseProbability, lootingProbability))
+                    );
+        }
+
+        protected LootPool.Builder mutagenPool(Item mutagen, float lootingProbability){
+            return LootPool.builder().rolls(UniformLootNumberProvider.create(1, 0))
+                    .with(ItemEntry.builder(mutagen)
+                            .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                            .conditionally(KilledByPlayerLootCondition.builder())
+                            .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                    0.0f, lootingProbability))
+                    );
+        }
+
+        protected LootPool.Builder mutagenPool(Item mutagen){
+            return mutagenPool( mutagen, 0.1f);
+        }
+
+        protected Identifier getRandomSequence(String id){
+            return Identifier.of(TCOTS_Main.MOD_ID, "entities/"+id);
+        }
+
+        protected void generate(RegistryWrapper.WrapperLookup registryLookup, BiConsumer<String, LootTable.Builder> exporter) {
+
+            //Necrophages
+            {
+                //Drowner
+                {
+                    exporter.accept("drowner",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.DROWNER_TONGUE)
+                                                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                                    .apply(LootingEnchantLootFunction.builder(UniformLootNumberProvider.create(0.0F, 1.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.75f, 0.1f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.DROWNER_BRAIN)
+                                                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.3f, 0.2f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.WATER_ESSENCE)
+                                                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.1f, 0.05f))
+                                            )
+                                    )
+                                    .pool(cadaverinePool( 1, 4, 0.3f, 0.1f))
+                                    .randomSequenceId(getRandomSequence("drowner"))
+                    );
+                }
+
+                //Ghoul
+                {
+                    exporter.accept("ghoul",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.GHOUL_BLOOD)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 1.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.3f, 0.2f))
+                                            )
+                                    )
+                                    .pool(cadaverinePool( 1, 3, 0.6f, 0.1f))
+                                    .randomSequenceId(getRandomSequence("ghoul"))
+                    );
+                }
+
+                //Alghoul
+                {
+                    exporter.accept("alghoul",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.ALGHOUL_BONE_MARROW)
+                                                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                                    .conditionally(KilledByPlayerLootCondition.builder())
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.1f, 0.1f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.GHOUL_BLOOD)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.4f, 0.2f))
+                                            )
+                                    )
+                                    .pool(cadaverinePool( 1, 2, 0.4f, 0.1f))
+                                    .randomSequenceId(getRandomSequence("alghoul"))
+                    );
+                }
+
+                //Rotfiend
+                {
+                    exporter.accept("rotfiend",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.ROTFIEND_BLOOD)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 2.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.4f, 0.2f))
+                                            )
+                                    )
+                                    .pool(cadaverinePool( 1, 4, 0.5f, 0.1f))
+                                    .randomSequenceId(getRandomSequence("rotfiend"))
+                    );
+                }
+
+                //Foglet
+                {
+                    exporter.accept("foglet",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.FOGLET_TEETH)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 2.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.7f, 0.1f))
+                                            )
+                                    )
+                                    .pool(mutagenPool( TCOTS_Items.FOGLET_MUTAGEN))
+                                    .pool(cadaverinePool( 1, 2, 0.4f, 0.1f))
+                                    .randomSequenceId(getRandomSequence("foglet"))
+                    );
+                }
+
+                //Water Hag
+                {
+                    exporter.accept("water_hag",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.WATER_HAG_MUD_BALL)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 2.0F)))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.WATER_ESSENCE)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 1.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.4f, 0.1f))
+                                            )
+                                    )
+                                    .pool(mutagenPool( TCOTS_Items.WATER_HAG_MUTAGEN))
+                                    .randomSequenceId(getRandomSequence("water_hag"))
+                    );
+                }
+
+                //Grave Hag
+                {
+                    exporter.accept("grave_hag",
+                            LootTable.builder()
+                                    .pool(mutagenPool( TCOTS_Items.GRAVE_HAG_MUTAGEN))
+                                    .randomSequenceId(getRandomSequence("grave_hag"))
+                    );
+                }
+
+                //Scurver
+                {
+                    exporter.accept("scurver",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.SCURVER_SPINE)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 4.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.6f, 0.1f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.ROTFIEND_BLOOD)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 2.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.4f, 0.2f))
+                                            )
+                                    )
+                                    .pool(cadaverinePool( 1, 4, 0.5f, 0.1f))
+                                    .randomSequenceId(getRandomSequence("scurver"))
+                    );
+                }
+
+                //Devourer
+                {
+                    exporter.accept("devourer",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.DEVOURER_TEETH)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.3f, 0.1f))
+                                            )
+                                    )
+                                    .pool(cadaverinePool( 1, 4, 0.6f, 0.1f))
+                                    .randomSequenceId(getRandomSequence("devourer"))
+                    );
+                }
+
+                //Graveir
+                {
+                    exporter.accept("graveir",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.GRAVEIR_BONE)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 1.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.6f, 0.15f))
+                                            )
+                                    )
+                                    .pool(cadaverinePool( 1, 6, 0.8f, 0.1f))
+                                    .randomSequenceId(getRandomSequence("graveir"))
+                    );
+                }
+
+                //Bullvore
+                {
+                    exporter.accept("bullvore",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.BULLVORE_HORN_FRAGMENT)
+                                                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                                    .conditionally(KilledByPlayerLootCondition.builder())
+                                            )
+                                    )
+                                    .pool(cadaverinePool( 1, 5, 0.4f, 0.1f))
+                                    .randomSequenceId(getRandomSequence("bullvore"))
+                    );
+                }
+
+            }
+
+            //Ogroids
+            {
+                //Nekker
+                {
+                    exporter.accept("nekker",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(
+                                                    ItemEntry.builder(TCOTS_Items.NEKKER_EYE)
+                                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
+                                                            .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                                    0.7f, 0.2f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(
+                                                    ItemEntry.builder(TCOTS_Items.NEKKER_HEART)
+                                                            .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                                            .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                                    0.3f, 0.1f))
+                                            )
+                                    )
+                                    .randomSequenceId(getRandomSequence("nekker"))
+                    );
+                }
+
+                //Nekker Warrior
+                {
+                    exporter.accept("nekker_warrior",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(
+                                                    ItemEntry.builder(TCOTS_Items.NEKKER_EYE)
+                                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
+                                                            .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                                    0.7f, 0.2f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(
+                                                    ItemEntry.builder(TCOTS_Items.NEKKER_HEART)
+                                                            .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                                            .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                                    0.4f, 0.1f))
+                                            )
+                                    )
+                                    .pool(mutagenPool( TCOTS_Items.NEKKER_WARRIOR_MUTAGEN))
+                                    .randomSequenceId(getRandomSequence("nekker_warrior"))
+                    );
+                }
+
+                //Cyclops
+                {
+                    exporter.accept("cyclops",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(
+                                                    ItemEntry.builder(Items.LEATHER)
+                                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
+                                                            .conditionally(RandomChanceLootCondition.builder(0.4f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(
+                                                    ItemEntry.builder(Items.RABBIT_HIDE)
+                                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))
+                                                            .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                                    0.3f, 0.15f))
+                                            )
+                                    )
+                                    .randomSequenceId(getRandomSequence("cyclops"))
+                    );
+                }
+
+                //Rock Troll
+                {
+                    exporter.accept("rock_troll",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(Items.COBBLESTONE)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0,5)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 4.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.7f, 0.1f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(TCOTS_Items.CAVE_TROLL_LIVER)
+                                                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.7f, 0.1f))
+                                            )
+                                    )
+                                    .pool(mutagenPool( TCOTS_Items.TROLL_MUTAGEN, 0.05f))
+                                    .randomSequenceId(getRandomSequence("rock_troll"))
+                    );
+                }
+
+                //Ice Troll
+                {
+                    exporter.accept("ice_troll",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(Items.BLUE_ICE)
+                                                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.2f, 0.1f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(Items.PACKED_ICE)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,3)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 2.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.4f, 0.1f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(Items.ICE)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,6)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 3.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.7f, 0.1f))
+                                            )
+                                    )
+                                    .pool(mutagenPool( TCOTS_Items.TROLL_MUTAGEN, 0.05f))
+                                    .randomSequenceId(getRandomSequence("ice_troll"))
+                    );
+                }
+
+                //Forest Troll
+                {
+                    exporter.accept("forest_troll",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(Items.LEATHER)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 6)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 3.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.6f, 0.15f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(Items.BONE)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 2.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.4f, 0.15f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(Items.STRING)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))
+                                                    .apply(LootingEnchantLootFunction.builder(
+                                                            UniformLootNumberProvider.create(0.0F, 3.0F)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.3f, 0.2f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(ItemEntry.builder(Items.WHITE_WOOL)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
+                                                    .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                            0.2f, 0.1f))
+                                            )
+                                    )
+                                    .pool(mutagenPool( TCOTS_Items.TROLL_MUTAGEN, 0.05f))
+                                    .randomSequenceId(getRandomSequence("forest_troll"))
+                    );
+                }
+
+                //Ice Giant
+                {
+                    exporter.accept("ice_giant",
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(
+                                                    ItemEntry.builder(Items.LEATHER)
+                                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 8)))
+                                                            .apply(LootingEnchantLootFunction.builder(
+                                                                    UniformLootNumberProvider.create(0.0F, 1.0F)))
+                                                            .conditionally(RandomChanceLootCondition.builder(0.6f))
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                            .with(
+                                                    ItemEntry.builder(Items.BONE)
+                                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(4, 12)))
+                                                            .conditionally(RandomChanceWithLootingLootCondition.builder(
+                                                                    0.5f, 0.15f))
+                                            )
+                                    )
+                                    .randomSequenceId(getRandomSequence("ice_giant"))
+                    );
+                }
+
+            }
+
+        }
+
+
+
+    }
+
+    private static class LootTablesBlocksGenerator extends FabricBlockLootTableProvider {
+
+        protected LootTablesBlocksGenerator(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(dataOutput);
+        }
+
+        @Override
+        public void generate() {
+            this.addDrop(TCOTS_Blocks.ALCHEMY_TABLE);
+            this.addDrop(TCOTS_Blocks.HERBAL_TABLE);
+
+
+            //Plants
+            {
+                //Arenaria Bush
+                {
+                    this.addDrop(TCOTS_Blocks.ARENARIA_BUSH, LootTable.builder()
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.ARENARIA)
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3)))
+                                            .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE))
+                                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.ARENARIA_BUSH)
+                                                    .properties(StatePredicate.Builder.create()
+                                                            .exactMatch(CropBlock.AGE, 2)))
+                                    )
+                            )
+                            .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+
+                //Bryonia
+                {
+                    this.addDrop(TCOTS_Blocks.BRYONIA_VINE, LootTable.builder()
+                            .pool(bryoniaPool(Direction.NORTH))
+                            .pool(bryoniaPool(Direction.SOUTH))
+                            .pool(bryoniaPool(Direction.EAST))
+                            .pool(bryoniaPool(Direction.WEST))
+                            .pool(bryoniaPool(Direction.DOWN))
+                            .pool(bryoniaPool(Direction.UP))
+                            .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+
+                //Celandine
+                {
+                    this.addDrop(TCOTS_Blocks.CELANDINE_PLANT, LootTable.builder()
+
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.CELANDINE)
+                                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE,
+                                                    0.5714286f, 2))
+                                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.CELANDINE_PLANT)
+                                                    .properties(StatePredicate.Builder.create()
+                                                            .exactMatch(CropBlock.AGE, 2)))
+                                    )
+                            )
+
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.CELANDINE)
+                                            .apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE,
+                                                    0.5714286f, 5))
+                                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.CELANDINE_PLANT)
+                                                    .properties(StatePredicate.Builder.create()
+                                                            .exactMatch(CropBlock.AGE, 3)))
+                                    )
+                            )
+
+
+                            .apply(ExplosionDecayLootFunction.builder()));
+                }
+
+                //Crows Eye
+                {
+                    this.addDrop(TCOTS_Blocks.CROWS_EYE_FERN, LootTable.builder()
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.CROWS_EYE)
+                                            .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                            .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE))
+                                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.CROWS_EYE_FERN)
+                                                    .properties(StatePredicate.Builder.create()
+                                                            .exactMatch(CropBlock.AGE, 2)))
+                                    )
+                            )
+
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.CROWS_EYE)
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
+                                            .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE))
+                                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.CROWS_EYE_FERN)
+                                                    .properties(StatePredicate.Builder.create()
+                                                            .exactMatch(CropBlock.AGE, 3)))
+                                    )
+                            )
+
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.CROWS_EYE)
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))
+                                            .apply(ApplyBonusLootFunction.uniformBonusCount(Enchantments.FORTUNE))
+                                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.CROWS_EYE_FERN)
+                                                    .properties(StatePredicate.Builder.create()
+                                                            .exactMatch(CropBlock.AGE, 4)))
+                                    )
+                            )
+                            .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+
+                //Han Fiber
+                {
+                    this.addDrop(TCOTS_Blocks.HAN_FIBER_PLANT, plantCropLootTable(TCOTS_Items.HAN_FIBER, TCOTS_Blocks.HAN_FIBER_PLANT, 2, 3));
+                }
+
+                //Puffball Mushroom
+                {
+                    this.addDrop(TCOTS_Blocks.PUFFBALL_MUSHROOM);
+                }
+
+                //Puffball Mushroom Block
+                {
+                    this.addDrop(TCOTS_Blocks.PUFFBALL_MUSHROOM_BLOCK,
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                            .with(AlternativeEntry.builder(
+                                                            ItemEntry.builder(TCOTS_Blocks.PUFFBALL_MUSHROOM_BLOCK)
+                                                                    .conditionally(MatchToolLootCondition.builder(
+                                                                            ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH,
+                                                                                    NumberRange.IntRange.atLeast(1)))
+                                                                    )),
+                                                            ItemEntry.builder(TCOTS_Items.PUFFBALL)
+                                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,3)))
+                                                    )
+                                            )
+                                    )
+                                    .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+
+                //Sewant Mushroom Block
+                {
+                    this.addDrop(TCOTS_Blocks.SEWANT_MUSHROOM_BLOCK,
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                            .with(AlternativeEntry.builder(
+                                                            ItemEntry.builder(TCOTS_Blocks.SEWANT_MUSHROOM_BLOCK)
+                                                                    .conditionally(MatchToolLootCondition.builder(
+                                                                            ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH,
+                                                                                    NumberRange.IntRange.atLeast(1)))
+                                                                    )),
+                                                            ItemEntry.builder(TCOTS_Items.SEWANT_MUSHROOMS)
+                                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,8)))
+                                                    )
+                                            )
+                                    )
+                                    .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+
+                //Sewant Mushroom Stem
+                {
+                    this.addDropWithSilkTouch(TCOTS_Blocks.SEWANT_MUSHROOM_STEM);
+                }
+
+                //Sewant Mushrooms
+                {
+                    this.addDrop(TCOTS_Blocks.SEWANT_MUSHROOMS_PLANT,
+                            LootTable.builder()
+                                    .pool(
+                                            LootPool.builder()
+                                                    .rolls(ConstantLootNumberProvider.create(1.0F))
+                                                    .with(
+                                                            this.applyExplosionDecay(
+                                                                    TCOTS_Blocks.SEWANT_MUSHROOMS_PLANT,
+                                                                    ItemEntry.builder(TCOTS_Items.SEWANT_MUSHROOMS)
+                                                                            .apply(
+                                                                                    IntStream.rangeClosed(1, 4).boxed().toList(),
+                                                                                    mushroomAmount -> SetCountLootFunction.builder(ConstantLootNumberProvider.create((float) mushroomAmount))
+                                                                                            .conditionally(
+                                                                                                    BlockStatePropertyLootCondition.builder(TCOTS_Blocks.SEWANT_MUSHROOMS_PLANT)
+                                                                                                            .properties(StatePredicate.Builder.create().exactMatch(SewantMushroomsPlant.MUSHROOM_AMOUNT, mushroomAmount))
+                                                                                            )
+                                                                            )
+                                                            )
+                                                    )
+                                    )
+                    );
+                }
+
+                //Verbena Flower
+                {
+                    this.addDrop(TCOTS_Blocks.VERBENA_FLOWER, this.plantCropLootTable(TCOTS_Items.VERBENA, TCOTS_Blocks.VERBENA_FLOWER,1, 3));
+                }
+            }
+
+            //Giant/Nests
+            {
+                //Giant Anchor
+                {
+                    this.addDrop(TCOTS_Blocks.GIANT_ANCHOR,
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1)).with(ItemEntry.builder(Items.OAK_STAIRS)))
+                                    .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                            .with(AlternativeEntry.builder(
+                                                            ItemEntry.builder(TCOTS_Items.GIANT_ANCHOR)
+                                                                    .conditionally(RandomChanceLootCondition.builder(0.25f)),
+                                                            ItemEntry.builder(Items.IRON_INGOT)
+                                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,6)))
+                                                    )
+                                            )
+                                    )
+                                    .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0,1))
+                                            .with(ItemEntry.builder(Items.CHAIN)
+                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
+                                            )
+                                    )
+                                    .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+
+                //Nest Slab
+                {
+                    this.addDrop(TCOTS_Blocks.NEST_SLAB, LootTable.builder()
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(Items.BONE)
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4)))
+                                    )
+                            )
+                            .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+
+                //Monster Nest
+                {
+                    this.addDrop(TCOTS_Blocks.MONSTER_NEST, LootTable.builder()
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(Items.BONE)
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 12)))
+                                    )
+                            )
+                            .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(0,2))
+                                    .with(ItemEntry.builder(Items.BOOK)
+                                            .apply(EnchantRandomlyLootFunction.builder())
+                                    )
+                            )
+                            .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+
+                //Nest Skull
+                {
+                    this.addDrop(TCOTS_Blocks.NEST_SKULL,
+                            LootTable.builder()
+                                    .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                            .with(AlternativeEntry.builder(
+                                                            ItemEntry.builder(TCOTS_Blocks.NEST_SKULL)
+                                                                    .conditionally(MatchToolLootCondition.builder(
+                                                                            ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH,
+                                                                                    NumberRange.IntRange.atLeast(1)))
+                                                                    )),
+                                                            ItemEntry.builder(Items.BONE_MEAL)
+                                                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,3)))
+                                                    )
+                                            )
+                                    )
+                                    .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+
+                //Skeleton Block
+                {
+                    this.addDrop(TCOTS_Blocks.SKELETON_BLOCK, LootTable.builder()
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(Items.BONE_MEAL)
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 5)))
+                                    )
+                            )
+                            .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+
+                //Winters Blade Skeleton
+                {
+                    this.addDrop(TCOTS_Blocks.WINTERS_BLADE_SKELETON, LootTable.builder()
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(Items.BONE_MEAL)
+                                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 5)))
+                                    )
+                            )
+                            .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                                    .with(ItemEntry.builder(TCOTS_Items.WINTERS_BLADE)
+                                            .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                                    )
+                            )
+                            .apply(ExplosionDecayLootFunction.builder())
+                    );
+                }
+            }
+
+            //Potted plants
+            {
+                this.addPottedPlantDrops(TCOTS_Blocks.POTTED_SEWANT_MUSHROOMS);
+                this.addPottedPlantDrops(TCOTS_Blocks.POTTED_HAN_FIBER);
+                this.addPottedPlantDrops(TCOTS_Blocks.POTTED_BRYONIA_FLOWER);
+                this.addPottedPlantDrops(TCOTS_Blocks.POTTED_CELANDINE_FLOWER);
+                this.addPottedPlantDrops(TCOTS_Blocks.POTTED_VERBENA_FLOWER);
+                this.addPottedPlantDrops(TCOTS_Blocks.POTTED_PUFFBALL_MUSHROOM);
+            }
+        }
+
+        protected LootPool.Builder bryoniaPool(Direction direction){
+            return LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                    .with(ItemEntry.builder(TCOTS_Items.BRYONIA)
+                            .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1)))
+                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.BRYONIA_VINE)
+                                    .properties(StatePredicate.Builder.create()
+                                            .exactMatch(CropBlock.AGE, 3)))
+                            .conditionally(BlockStatePropertyLootCondition.builder(TCOTS_Blocks.BRYONIA_VINE)
+                                    .properties(StatePredicate.Builder.create()
+                                            .exactMatch(MultifaceGrowthBlock.getProperty(direction), true)))
+                    );
+        }
+
+        @SuppressWarnings("all")
+        protected LootTable.Builder plantCropLootTable(Item drop, Block block, int extra, int age){
+            return LootTable.builder()
+                    .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
+                            .with(ItemEntry.builder(drop)
+                                    .apply(ApplyBonusLootFunction.binomialWithBonusCount(Enchantments.FORTUNE,
+                                            0.5714286f, extra))
+                                    .conditionally(BlockStatePropertyLootCondition.builder(block)
+                                            .properties(StatePredicate.Builder.create()
+                                                    .exactMatch(CropBlock.AGE, age)))
+                            )
+                    )
+                    .apply(ExplosionDecayLootFunction.builder());
         }
     }
 

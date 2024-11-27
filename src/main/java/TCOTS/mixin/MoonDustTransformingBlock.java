@@ -32,7 +32,7 @@ public class MoonDustTransformingBlock {
 
     }
 
-    @Mixin(targets = "net.minecraft.entity.mob.HoglinEntity")
+    @Mixin(HoglinEntity.class)
     public abstract static class BlockHoglinTransformation{
         @Unique
         HoglinEntity THIS = (HoglinEntity)(Object)this;
@@ -88,7 +88,7 @@ public class MoonDustTransformingBlock {
         }
     }
 
-    @Mixin(targets = "net.minecraft.entity.mob.CreeperEntity")
+    @Mixin(CreeperEntity.class)
     public abstract static class BlockCreeperEntityExplosion extends HostileEntity implements SkinOverlayOwner {
         protected BlockCreeperEntityExplosion(EntityType<? extends HostileEntity> entityType, World world) {
             super(entityType, world);

@@ -1077,12 +1077,12 @@
 			"bones": {
 				"UpperBody_head": {
 					"rotation": {
-						"vector": [22.5, 0, 0]
+						"vector": [15, 0, 0]
 					}
 				},
 				"head": {
 					"rotation": {
-						"vector": [-12.5, 10, 0]
+						"vector": [0, 10, 0]
 					}
 				},
 				"BottomMouth": {
