@@ -117,13 +117,13 @@ public abstract class ItemStackMixin {
     @ModifyVariable(method = "getTooltip", at = @At(
             value = "INVOKE"
             ,target = "Lnet/minecraft/text/MutableText;formatted(Lnet/minecraft/util/Formatting;)Lnet/minecraft/text/MutableText;",
-            ordinal = 4))
+            ordinal = 5))
     private MutableText manticoreAttributeMaxToxicityColor(MutableText instance, @Local Map.Entry<EntityAttribute, EntityAttributeModifier> entry){
         if(entry.getKey() == TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY){
             return instance.formatted(Formatting.DARK_GREEN);
         }
 
-        return instance.formatted(formatting);
+        return instance;
     }
 
     @Unique
