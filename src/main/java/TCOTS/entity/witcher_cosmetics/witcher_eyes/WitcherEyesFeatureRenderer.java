@@ -1,4 +1,4 @@
-package TCOTS.entity.witcher_eyes;
+package TCOTS.entity.witcher_cosmetics.witcher_eyes;
 
 import TCOTS.TCOTS_Client;
 import TCOTS.TCOTS_Main;

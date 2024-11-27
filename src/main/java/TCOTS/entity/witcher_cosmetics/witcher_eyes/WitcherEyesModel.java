@@ -1,4 +1,4 @@
-package TCOTS.entity.witcher_eyes;
+package TCOTS.entity.witcher_cosmetics.witcher_eyes;
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.model.*;

@@ -7,7 +7,7 @@ import TCOTS.entity.geo.renderer.AnchorProjectileRenderer;
 import TCOTS.entity.geo.renderer.necrophages.*;
 import TCOTS.entity.geo.renderer.ogroids.*;
 import TCOTS.entity.misc.renderers.*;
-import TCOTS.entity.witcher_eyes.WitcherEyesModel;
+import TCOTS.entity.witcher_cosmetics.witcher_eyes.WitcherEyesModel;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipe;
 import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;

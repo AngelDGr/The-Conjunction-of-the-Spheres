@@ -1,6 +1,6 @@
 package TCOTS.mixin;
 
-import TCOTS.entity.witcher_eyes.WitcherEyesFeatureRenderer;
+import TCOTS.entity.witcher_cosmetics.witcher_eyes.WitcherEyesFeatureRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
