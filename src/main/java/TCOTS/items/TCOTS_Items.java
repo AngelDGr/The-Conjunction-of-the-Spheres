@@ -160,8 +160,8 @@ public class TCOTS_Items {
         //xTODO: Nekker Hearth usable for the White Raffard's Decoction
             //xTODO: Add the White Raffard's Decoction, works similar to the instant health, but works with percentage
 
-    public static final TagKey<Item> DECAYING_FLESH = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "decaying_flesh"));
-    public static final TagKey<Item> MONSTER_BLOOD = TagKey.of(RegistryKeys.ITEM, new Identifier(TCOTS_Main.MOD_ID, "monster_blood"));
+    public static final TagKey<Item> DECAYING_FLESH = TagKey.of(RegistryKeys.ITEM, Identifier.of(TCOTS_Main.MOD_ID, "decaying_flesh"));
+    public static final TagKey<Item> MONSTER_BLOOD = TagKey.of(RegistryKeys.ITEM, Identifier.of(TCOTS_Main.MOD_ID, "monster_blood"));
 
 
     //TODO: Fix the achievement to mobs works with Monster Hunter?? Probably impossible
@@ -880,43 +880,79 @@ public class TCOTS_Items {
             );
 
             NECROPHAGE_OIL = registerItem("oil_necrophage",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON), TCOTS_Entities.NECROPHAGES, 20, 1)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1).rarity(Rarity.UNCOMMON),
+                            TCOTS_Entities.NECROPHAGES,
+                            20,
+                            1)
             );
             ENHANCED_NECROPHAGE_OIL = registerItem("oil_necrophage_enhanced",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 40, 2)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            TCOTS_Entities.NECROPHAGES,
+                            40,
+                            2)
             );
             SUPERIOR_NECROPHAGE_OIL = registerItem("oil_necrophage_superior",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.NECROPHAGES, 60, 3)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            TCOTS_Entities.NECROPHAGES,
+                            60,
+                            3)
             );
 
             OGROID_OIL = registerItem("oil_ogroid",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 20, 1)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            TCOTS_Entities.OGROIDS,
+                            20,
+                            1)
             );
             ENHANCED_OGROID_OIL = registerItem("oil_ogroid_enhanced",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 40, 2)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            TCOTS_Entities.OGROIDS,
+                            40,
+                            2)
             );
             SUPERIOR_OGROID_OIL = registerItem("oil_ogroid_superior",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.OGROIDS, 60, 3)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            TCOTS_Entities.OGROIDS,
+                            60,
+                            3)
             );
 
             BEAST_OIL = registerItem("oil_beast",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 20, 1)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            TCOTS_Entities.BEASTS,
+                            20,
+                            1)
             );
             ENHANCED_BEAST_OIL = registerItem("oil_beast_enhanced",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 40, 2)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            TCOTS_Entities.BEASTS,
+                            40,
+                            2)
             );
             SUPERIOR_BEAST_OIL = registerItem("oil_beast_superior",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), TCOTS_Entities.BEASTS, 60, 3)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            TCOTS_Entities.BEASTS,
+                            60,
+                            3)
             );
 
             HANGED_OIL = registerItem("oil_hanged",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 20, 1)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            EntityGroup.ILLAGER,
+                            20,
+                            1)
             );
             ENHANCED_HANGED_OIL = registerItem("oil_hanged_enhanced",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 40, 2)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            EntityGroup.ILLAGER,
+                            40,
+                            2)
             );
             SUPERIOR_HANGED_OIL = registerItem("oil_hanged_superior",
-                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1), EntityGroup.ILLAGER, 60, 3)
+                    new WitcherMonsterOil_Base(new FabricItemSettings().maxCount(1),
+                            EntityGroup.ILLAGER,
+                            60,
+                            3)
             );
         }
 
@@ -1291,7 +1327,7 @@ public class TCOTS_Items {
                 tableBuilder.pool(monsterFat.build());
             }
 
-            //Formulae - Alcohol
+            //Formulae/Alcohol
             {
                 if (LootTables.ABANDONED_MINESHAFT_CHEST.equals(id) && source.isBuiltin()) {
 
@@ -1689,6 +1725,18 @@ public class TCOTS_Items {
 
             }
 
+            //Sniffer Digging
+            {
+                if (LootTables.SNIFFER_DIGGING_GAMEPLAY.equals(id) && source.isBuiltin()) {
+
+                    LootPool.Builder allspice = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .with(ItemEntry.builder(TCOTS_Items.ALLSPICE))
+                            .conditionally(RandomChanceLootCondition.builder(0.4f));
+
+                    tableBuilder.pool(allspice.build());
+                }
+            }
         });
     }
 

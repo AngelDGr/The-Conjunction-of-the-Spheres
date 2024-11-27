@@ -123,7 +123,7 @@ public abstract class ItemStackMixin {
             return instance.formatted(Formatting.DARK_GREEN);
         }
 
-        return instance;
+        return instance.formatted(Formatting.DARK_GREEN);
     }
 
     @Unique

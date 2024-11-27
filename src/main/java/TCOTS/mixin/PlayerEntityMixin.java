@@ -469,8 +469,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private void injectReadNBTToxicity(NbtCompound nbt, CallbackInfo ci){
         theConjunctionOfTheSpheres$setToxicity(nbt.getInt("Toxicity"));
         theConjunctionOfTheSpheres$setDecoctionToxicity(nbt.getInt("DecoctionToxicity"));
-
-        theConjunctionOfTheSpheres$setMaxToxicity(nbt.getInt("MaxToxicity"));
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))

@@ -16,8 +16,6 @@ public class WaterHagDecoctionEffect extends DecoctionEffectBase {
         super.applyUpdateEffect(entity, amplifier);
 
         this.removeAndApplyAttributes(entity, amplifier, entity.getHealth() == entity.getMaxHealth());
-
-
     }
 
     @Override
