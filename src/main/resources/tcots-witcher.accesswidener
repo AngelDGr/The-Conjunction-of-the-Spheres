@@ -18,10 +18,10 @@ accessible field net/minecraft/block/spawner/MobSpawnerLogic renderedEntity Lnet
 accessible method net/minecraft/block/spawner/MobSpawnerLogic updateSpawns (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V
 
 accessible method net/minecraft/util/collection/DataPool <init> (Ljava/util/List;)V
-accessible method net/minecraft/recipe/Ingredient ofEntries (Ljava/util/stream/Stream;)Lnet/minecraft/recipe/Ingredient;
-accessible class net/minecraft/recipe/Ingredient$Entry
-accessible class net/minecraft/recipe/Ingredient$StackEntry
-accessible class net/minecraft/recipe/Ingredient$TagEntry
+#accessible method net/minecraft/recipe/Ingredient ofEntries (Ljava/util/stream/Stream;)Lnet/minecraft/recipe/Ingredient;
+#accessible class net/minecraft/recipe/Ingredient$Entry
+#accessible class net/minecraft/recipe/Ingredient$StackEntry
+#accessible class net/minecraft/recipe/Ingredient$TagEntry
 accessible method net/minecraft/client/gui/screen/recipebook/RecipeBookResults forEachButton (Ljava/util/function/Consumer;)V
 accessible field net/minecraft/entity/ai/goal/MeleeAttackGoal speed D
 accessible class net/minecraft/entity/ai/goal/FollowMobGoal

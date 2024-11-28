@@ -11,7 +11,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
@@ -32,7 +32,7 @@ import java.util.function.BiFunction;
 
 public class SewantMushroomsPlant extends MushroomPlantBlock {
 
-    public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = Properties.HORIZONTAL_FACING;
     public static final IntProperty MUSHROOM_AMOUNT = IntProperty.of("mushroom_amount", 1, 4);
     private static final BiFunction<Direction, Integer, VoxelShape> FACING_AND_AMOUNT_TO_SHAPE = Util.memoize((facing, flowerAmount) -> {
         VoxelShape[] voxelShapes = new VoxelShape[]{

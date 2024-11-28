@@ -72,7 +72,7 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
     }
 
     @Override
-    public AbstractRecipeScreenHandler<AlchemyTableRecipe.AlchemyTableInventory, AlchemyTableRecipe> createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractRecipeScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         return new AlchemyTableScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(this.getWorld(), pos), this);
     }
 

@@ -7,7 +7,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class GiantAnchorBlock extends BlockWithEntity {
     public static final MapCodec<GiantAnchorBlock> CODEC = GiantAnchorBlock.createCodec(GiantAnchorBlock::new);
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
     protected static final VoxelShape BOTTOM_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0);
     protected static final VoxelShape TOP_NORTH = Block.createCuboidShape(0.0, 8.0, 8.0, 16.0, 16.0, 16.0);
     protected static final VoxelShape TOP_SOUTH = Block.createCuboidShape(0.0, 8.0, 0.0, 16.0, 16.0, 8.0);

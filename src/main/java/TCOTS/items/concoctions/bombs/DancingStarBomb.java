@@ -11,6 +11,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -123,7 +124,9 @@ public class DancingStarBomb {
             //Destroy nest blocks
             if(bomb.destroyableBlocks(state)) {
                 if(state.isOf(TCOTS_Blocks.MONSTER_NEST)){
-                    state.onExploded(bomb.getWorld(), blockPos2, explosion, null);
+                    if(bomb.getWorld() instanceof ServerWorld serverWorld){
+                        state.onExploded(serverWorld, blockPos2, explosion, null);
+                    }
                 } else {
                     bomb.getWorld().breakBlock(blockPos2, true, bomb);
                 }

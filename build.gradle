@@ -32,13 +32,13 @@ repositories {
 		name = 'Lavender'
 		url 'https://maven.wispforest.io' }
 
-	maven {
-		name = "Modrinth"
-		url = "https://api.modrinth.com/maven"
-		content {
-			includeGroup "maven.modrinth"
-		}
-	}
+//	maven {
+//		name = "Modrinth"
+//		url = "https://api.modrinth.com/maven"
+//		content {
+//			includeGroup "maven.modrinth"
+//		}
+//	}
 
 	maven {
 		name = "CurseForge"
@@ -46,6 +46,17 @@ repositories {
 		content {
 			includeGroup "curse.maven"
 		}
+	}
+
+	maven {
+		// location of the maven that hosts JEI files since January 2023
+		name = "Jared's maven"
+		url = "https://maven.blamejared.com/"
+	}
+	maven {
+		// location of a maven mirror for JEI files, as a fallback
+		name = "ModMaven"
+		url = "https://modmaven.dev"
 	}
 }
 
@@ -109,7 +120,9 @@ dependencies {
 	//OwO Sentinel
 	include "io.wispforest:owo-sentinel:${project.owo_version}"
 
-	modCompileOnlyApi "maven.modrinth:jei:${jei_version}"
+//	modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
+//	// at runtime, use the full JEI jar for Fabric
+//	modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 }
 
 processResources {

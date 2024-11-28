@@ -15,6 +15,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -111,7 +112,9 @@ public class SamumBomb {
             //Destroy nest blocks
             if(bomb.destroyableBlocks(state)) {
                 if(state.isOf(TCOTS_Blocks.MONSTER_NEST)){
-                    state.onExploded(bomb.getWorld(), blockPos, explosion, null);
+                    if(bomb.getWorld() instanceof ServerWorld serverWorld){
+                        state.onExploded(serverWorld, blockPos, explosion, null);
+                    }
                 } else {
                     bomb.getWorld().breakBlock(blockPos, true, bomb);
                 }

@@ -21,7 +21,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -62,7 +62,7 @@ public class MonsterNestBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onExploded(BlockState state, World world, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> stackMerger) {
+    public void onExploded(BlockState state, ServerWorld world, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> stackMerger) {
         if(explosion.getEntity()!=null && explosion.getEntity() instanceof WitcherBombEntity bomb && bomb.getOwner() instanceof PlayerEntity player){
             if(player instanceof ServerPlayerEntity serverPlayer){
                 TCOTS_Criteria.DESTROY_MONSTER_NEST.trigger(serverPlayer);
@@ -120,7 +120,7 @@ public class MonsterNestBlock extends BlockWithEntity {
         }
     }
 
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());

@@ -14,7 +14,7 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
@@ -30,7 +30,7 @@ import java.util.List;
 public class HerbalTableBlock extends BlockWithEntity implements BlockEntityProvider {
 
     public static final MapCodec<HerbalTableBlock> CODEC = HerbalTableBlock.createCodec(HerbalTableBlock::new);
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 9.0, 16.0);
     private static final Text TITLE = Text.translatable("tcots-witcher.gui.herbal_table.title");
 

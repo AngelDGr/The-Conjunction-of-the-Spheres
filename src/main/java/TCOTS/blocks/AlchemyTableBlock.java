@@ -24,7 +24,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
@@ -41,7 +41,7 @@ import java.util.List;
 public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityProvider {
     public static final MapCodec<AlchemyTableBlock> CODEC = AlchemyTableBlock.createCodec(AlchemyTableBlock::new);
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
     public static final BooleanProperty HAS_ALCHEMY_BOOK = BooleanProperty.of("has_alchemy_book");
 
     public MapCodec<AlchemyTableBlock> getCodec() {
@@ -99,7 +99,6 @@ public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityPro
 
 
     //Crafting stuff
-
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
