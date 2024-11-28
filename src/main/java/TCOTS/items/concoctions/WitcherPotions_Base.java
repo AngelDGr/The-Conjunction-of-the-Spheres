@@ -7,7 +7,6 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.AttributeModifierCreator;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffect;
@@ -22,6 +21,7 @@ import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
@@ -49,7 +49,7 @@ public class WitcherPotions_Base extends PotionItem {
     @Override
     public Text getName(ItemStack stack) {
         if(this.isDecoction()){
-         return Text.translatable(this.getTranslationKey()).withColor(0x41d331);
+         return Text.translatable(this.getTranslationKey()).setStyle(Style.EMPTY.withColor(0x41d331));
         }
         else {
             return super.getName(stack);
@@ -176,25 +176,32 @@ public class WitcherPotions_Base extends PotionItem {
         return list;
     }
 
-    private void buildMainTooltip(List<Text> tooltip, float tickRate) {
+    private void buildMainTooltip(List<Text> tooltip) {
         ArrayList<Pair<EntityAttribute, EntityAttributeModifier>> tooltipAttributes = Lists.newArrayList();
             for (StatusEffectInstance statusEffectInstance : getPotionEffects()) {
                 MutableText mutableText = Text.translatable(statusEffectInstance.getTranslationKey());
                 StatusEffect statusEffect = statusEffectInstance.getEffectType();
-
-                Map<EntityAttribute, AttributeModifierCreator> map = statusEffect.getAttributeModifiers();
+                Map<EntityAttribute, EntityAttributeModifier> map = statusEffect.getAttributeModifiers();
                 if (!map.isEmpty()) {
-                    for (Map.Entry<EntityAttribute, AttributeModifierCreator> entry : map.entrySet()) {
-                        tooltipAttributes.add(new Pair<>(entry.getKey(), entry.getValue().createAttributeModifier(statusEffectInstance.getAmplifier())));
+                    for (Map.Entry<EntityAttribute, EntityAttributeModifier> entry : map.entrySet()) {
+                        EntityAttributeModifier entityAttributeModifier = entry.getValue();
+                        EntityAttributeModifier entityAttributeModifier2 = new EntityAttributeModifier(
+                                entityAttributeModifier.getName(),
+                                statusEffect.adjustModifierAmount(statusEffectInstance.getAmplifier(), entityAttributeModifier),
+                                entityAttributeModifier.getOperation()
+                        );
+                        tooltipAttributes.add(new Pair<>(entry.getKey(), entityAttributeModifier2));
                     }
                 }
 
                 if (statusEffectInstance.getAmplifier() > 0) {
                     mutableText = Text.translatable("potion.withAmplifier", mutableText, Text.translatable("potion.potency." + statusEffectInstance.getAmplifier()));
                 }
+
                 if (!statusEffectInstance.isDurationBelow(20)) {
-                    mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(statusEffectInstance, (float) 1.0, tickRate));
+                    mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(statusEffectInstance, 1));
                 }
+
                 tooltip.add(mutableText.formatted(statusEffect.getCategory().getFormatting()));
             }
 
@@ -255,7 +262,7 @@ public class WitcherPotions_Base extends PotionItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        buildMainTooltip(tooltip, world == null ? 20.0f : world.getTickManager().getTickRate());
+        buildMainTooltip(tooltip);
     }
 
     public int getToxicity(){

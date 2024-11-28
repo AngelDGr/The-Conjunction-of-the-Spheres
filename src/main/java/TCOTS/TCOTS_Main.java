@@ -36,7 +36,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
-import net.minecraft.world.spawner.SpecialSpawner;
+import net.minecraft.world.spawner.Spawner;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 
@@ -201,8 +201,8 @@ public class TCOTS_Main implements ModInitializer {
 	}
 
 	public static class ServerWorldSpawnersUtil {
-		public static void register(ServerWorld world, SpecialSpawner spawner) {
-			List<SpecialSpawner> spawnerList = new ArrayList<>(((ServerWorldAccessor) world).getSpawners());
+		public static void register(ServerWorld world, Spawner spawner) {
+			List<Spawner> spawnerList = new ArrayList<>(((ServerWorldAccessor) world).getSpawners());
 			spawnerList.add(spawner);
 			((ServerWorldAccessor) world).setSpawners(spawnerList);
 		}

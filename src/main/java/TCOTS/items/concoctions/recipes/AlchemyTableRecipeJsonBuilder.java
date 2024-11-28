@@ -3,7 +3,7 @@ package TCOTS.items.concoctions.recipes;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.WitcherBombs_Base;
 import TCOTS.items.concoctions.WitcherMonsterOil_Base;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class AlchemyTableRecipeJsonBuilder {
     private final AlchemyTableRecipeCategory category;
@@ -170,14 +171,14 @@ public class AlchemyTableRecipeJsonBuilder {
         return create(order, output, AlchemyTableRecipeCategory.POTIONS, List.of(new ItemStack(Items.GUNPOWDER)), base);
     }
 
-    @SuppressWarnings("unused")
-    public void offerTo(RecipeExporter exporter, Identifier recipeId) {
+
+    public void offerTo(Consumer<RecipeJsonProvider> exporter, Identifier recipeId) {
         AlchemyTableRecipe alchemyTableRecipe = new AlchemyTableRecipe(this.order, this.category, this.ingredients, this.ingredientCount, this.base, this.output);
 
         exporter.accept(recipeId, alchemyTableRecipe, null);
     }
 
-    public void offerTo(RecipeExporter exporter) {
+    public void offerTo(Consumer<RecipeJsonProvider> exporter) {
         AlchemyTableRecipe alchemyTableRecipe = new AlchemyTableRecipe(this.order, this.category, this.ingredients, this.ingredientCount, this.base, this.output);
 
         exporter.accept(Registries.ITEM.getId(output.getItem()), alchemyTableRecipe, null);

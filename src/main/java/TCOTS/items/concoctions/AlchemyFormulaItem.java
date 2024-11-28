@@ -6,15 +6,17 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,8 +65,15 @@ public class AlchemyFormulaItem extends Item {
             serverPlayer.incrementStat(Stats.USED.getOrCreateStat(this));
             Criteria.CONSUME_ITEM.trigger(serverPlayer, itemStack);
 
+
+
             serverPlayer.getWorld().playSoundFromEntity(null, serverPlayer, SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, serverPlayer.getSoundCategory(), 1.0f, 1.0f);
-            serverPlayer.unlockRecipes(List.of(recipeIdentifier));
+            List<Recipe<?>> list = new ArrayList<>();
+
+            if(world.getRecipeManager().get(recipeIdentifier).isPresent())
+                list.add(world.getRecipeManager().get(recipeIdentifier).get());
+
+            serverPlayer.unlockRecipes(list);
 
             return TypedActionResult.consume(itemStack);
         }
@@ -77,12 +86,12 @@ public class AlchemyFormulaItem extends Item {
         NbtCompound nbtCompound = stack.getNbt();
         if(world != null && nbtCompound != null && nbtCompound.contains("FormulaID")){
             if(world.getRecipeManager().get(new Identifier(nbtCompound.getString("FormulaID"))).isPresent()){
-                Optional<RecipeEntry<?>> recipe = world.getRecipeManager().get(new Identifier(nbtCompound.getString("FormulaID")));
+                Optional<? extends Recipe<?>> recipe = world.getRecipeManager().get(new Identifier(nbtCompound.getString("FormulaID")));
                 if (recipe.isEmpty()){
                     return;
                 }
 
-                Item output = recipe.get().value().getResult(null).getItem();
+                Item output = recipe.get().getOutput(null).getItem();
 
                 if(output instanceof WitcherPotions_Base potion){
                     nbtCompound.putBoolean("Decoction", potion.isDecoction());
@@ -90,8 +99,11 @@ public class AlchemyFormulaItem extends Item {
 
                 Text text = Text.translatable("item.tcots-witcher.alchemy_formula.tooltip", output.getName()).formatted(Formatting.BLUE);
 
+//                0x41d331
                 if(isDecoction(stack)){
-                    text = Text.translatable("item.tcots-witcher.alchemy_formula.tooltip", output.getName()).withColor(0x41d331);
+                    text = Text.translatable("item.tcots-witcher.alchemy_formula.tooltip", output.getName()).setStyle(Style.EMPTY.withColor(0x41d331));
+
+
                 }
 
                 tooltip.add(text);

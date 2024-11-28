@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.AttributeModifierCreator;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffect;
@@ -73,7 +72,7 @@ public class HerbalMixture extends PotionItem {
         }
     }
 
-    public static void buildTooltip(List<StatusEffectInstance> statusEffects, List<Text> list, float durationMultiplier, float tickRate) {
+    public static void buildTooltip(List<StatusEffectInstance> statusEffects, List<Text> list, float durationMultiplier) {
         ArrayList<Pair<EntityAttribute, EntityAttributeModifier>> list2 = Lists.newArrayList();
         if (statusEffects.isEmpty()) {
             list.add(NONE_TEXT);
@@ -81,18 +80,27 @@ public class HerbalMixture extends PotionItem {
             for (StatusEffectInstance statusEffectInstance : statusEffects) {
                 MutableText mutableText = Text.translatable(statusEffectInstance.getTranslationKey());
                 StatusEffect statusEffect = statusEffectInstance.getEffectType();
-                Map<EntityAttribute, AttributeModifierCreator> map = statusEffect.getAttributeModifiers();
+                Map<EntityAttribute, EntityAttributeModifier> map = statusEffect.getAttributeModifiers();
                 if (!map.isEmpty()) {
-                    for (Map.Entry<EntityAttribute, AttributeModifierCreator> entry : map.entrySet()) {
-                        list2.add(new Pair<>(entry.getKey(), entry.getValue().createAttributeModifier(statusEffectInstance.getAmplifier())));
+                    for (Map.Entry<EntityAttribute, EntityAttributeModifier> entry : map.entrySet()) {
+                        EntityAttributeModifier entityAttributeModifier = entry.getValue();
+                        EntityAttributeModifier entityAttributeModifier2 = new EntityAttributeModifier(
+                                entityAttributeModifier.getName(),
+                                statusEffect.adjustModifierAmount(statusEffectInstance.getAmplifier(), entityAttributeModifier),
+                                entityAttributeModifier.getOperation()
+                        );
+                        list2.add(new Pair<>(entry.getKey(), entityAttributeModifier2));
                     }
                 }
+
                 if (statusEffectInstance.getAmplifier() > 0) {
                     mutableText = Text.translatable("potion.withAmplifier", mutableText, Text.translatable("potion.potency." + statusEffectInstance.getAmplifier()));
                 }
+
                 if (!statusEffectInstance.isDurationBelow(20)) {
-                    mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(statusEffectInstance, durationMultiplier, tickRate));
+                    mutableText = Text.translatable("potion.withDuration", mutableText, StatusEffectUtil.getDurationText(statusEffectInstance, durationMultiplier));
                 }
+
                 list.add(mutableText.formatted(statusEffect.getCategory().getFormatting()));
             }
         }
@@ -164,7 +172,7 @@ public class HerbalMixture extends PotionItem {
 
         HerbalMixture.getEffects(stack.getNbt(), list);
 
-        HerbalMixture.buildTooltip(list, tooltip, 1.0f, world == null ? 20.0f : world.getTickManager().getTickRate());
+        HerbalMixture.buildTooltip(list, tooltip, 1.0f);
     }
 
     @Override

@@ -3,18 +3,21 @@ package TCOTS.blocks;
 import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.blocks.entity.MonsterNestBlockEntity;
 import TCOTS.entity.misc.WitcherBombEntity;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.Spawner;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.Registries;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
@@ -23,6 +26,8 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -32,14 +37,10 @@ import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.function.BiConsumer;
+import java.util.Optional;
 
 @SuppressWarnings("deprecation")
 public class MonsterNestBlock extends BlockWithEntity {
-    public static final MapCodec<MonsterNestBlock> CODEC = MonsterNestBlock.createCodec(MonsterNestBlock::new);
-    public MapCodec<MonsterNestBlock> getCodec() {
-        return CODEC;
-    }
 
     protected MonsterNestBlock(Settings settings) {
         super(settings);
@@ -61,7 +62,7 @@ public class MonsterNestBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onExploded(BlockState state, World world, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> stackMerger) {
+    public void onDestroyedByExplosion(World world, BlockPos pos, Explosion explosion) {
         if(explosion.getEntity()!=null && explosion.getEntity() instanceof WitcherBombEntity bomb && bomb.getOwner() instanceof PlayerEntity player){
             if(player instanceof ServerPlayerEntity serverPlayer){
                 TCOTS_Criteria.DESTROY_MONSTER_NEST.trigger(serverPlayer);
@@ -78,7 +79,9 @@ public class MonsterNestBlock extends BlockWithEntity {
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return MonsterNestBlock.validateTicker(type, TCOTS_Blocks.MONSTER_NEST_ENTITY, world.isClient ? MonsterNestBlockEntity::clientTick : MonsterNestBlockEntity::serverTick);
+        return checkType(type, TCOTS_Blocks.MONSTER_NEST_ENTITY, MonsterNestBlockEntity::serverTick);
+
+//                MonsterNestBlock.validateTicker(type, TCOTS_Blocks.MONSTER_NEST_ENTITY, world.isClient ? MonsterNestBlockEntity::clientTick : MonsterNestBlockEntity::serverTick);
     }
 
     @Override
@@ -104,10 +107,30 @@ public class MonsterNestBlock extends BlockWithEntity {
         }
     }
 
+    private Optional<Text> getEntityNameForTooltip(ItemStack stack) {
+        NbtCompound nbtCompound = BlockItem.getBlockEntityNbt(stack);
+        if (nbtCompound != null && nbtCompound.contains("SpawnData", NbtElement.COMPOUND_TYPE)) {
+            String string = nbtCompound.getCompound("SpawnData").getCompound("entity").getString("id");
+            Identifier identifier = Identifier.tryParse(string);
+            if (identifier != null) {
+                return Registries.ENTITY_TYPE.getOrEmpty(identifier).map(entityType -> Text.translatable(entityType.getTranslationKey()).formatted(Formatting.GRAY));
+            }
+        }
+
+        return Optional.empty();
+    }
+
     @Override
     public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
         super.appendTooltip(stack, world, tooltip, options);
-        Spawner.appendSpawnDataToTooltip(stack, tooltip, "SpawnData");
+        Optional<Text> optional = this.getEntityNameForTooltip(stack);
+        if (optional.isPresent()) {
+            tooltip.add(optional.get());
+        } else {
+            tooltip.add(ScreenTexts.EMPTY);
+            tooltip.add(Text.translatable("block.minecraft.spawner.desc1").formatted(Formatting.GRAY));
+            tooltip.add(ScreenTexts.space().append(Text.translatable("block.minecraft.spawner.desc2").formatted(Formatting.BLUE)));
+        }
     }
 
 

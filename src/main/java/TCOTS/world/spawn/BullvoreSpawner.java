@@ -17,10 +17,10 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.SpawnHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
-import net.minecraft.world.spawner.SpecialSpawner;
+import net.minecraft.world.spawner.Spawner;
 import org.jetbrains.annotations.NotNull;
 
-public class BullvoreSpawner implements SpecialSpawner {
+public class BullvoreSpawner implements Spawner {
     private int cooldown;
     private BullvoreEntity bullvoreEntity;
     @Override

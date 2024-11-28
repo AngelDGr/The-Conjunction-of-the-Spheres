@@ -1,7 +1,7 @@
 package TCOTS.mixin;
 
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.spawner.SpecialSpawner;
+import net.minecraft.world.spawner.Spawner;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -13,10 +13,10 @@ import java.util.List;
 public interface ServerWorldAccessor
 {
     @Accessor("spawners")
-    List<SpecialSpawner> getSpawners();
+    List<Spawner> getSpawners();
 
     @Accessor("spawners")
     @Final
     @Mutable
-    void setSpawners(List<SpecialSpawner> spawners);
+    void setSpawners(List<Spawner> spawners);
 }

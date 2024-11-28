@@ -1,6 +1,6 @@
 package TCOTS.items.concoctions.recipes;
 
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class HerbalTableRecipeJsonBuilder {
 
@@ -49,13 +50,13 @@ public class HerbalTableRecipeJsonBuilder {
     }
 
     @SuppressWarnings("unused")
-    public void offerTo(RecipeExporter exporter, Identifier recipeId) {
+    public void offerTo(Consumer<RecipeJsonProvider> exporter, Identifier recipeId) {
         HerbalTableRecipe herbalTableRecipe = new HerbalTableRecipe(this.herb, this.effectsID, this.basePotion, this.tickEffectTime, this.badAmplifier);
 
         exporter.accept(recipeId, herbalTableRecipe, null);
     }
 
-    public void offerTo(RecipeExporter exporter) {
+    public void offerTo(Consumer<RecipeJsonProvider>  exporter) {
         HerbalTableRecipe herbalTableRecipe = new HerbalTableRecipe(this.herb, this.effectsID, this.basePotion, this.tickEffectTime, this.badAmplifier);
 
         String recipeID = Registries.ITEM.getId(herb.getItem()) +"_herbal";

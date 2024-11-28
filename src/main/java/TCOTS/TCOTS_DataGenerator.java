@@ -15,20 +15,25 @@ import TCOTS.world.TCOTS_ConfiguredFeatures;
 import TCOTS.world.TCOTS_DamageTypes;
 import TCOTS.world.TCOTS_PlacedFeature;
 import TCOTS.world.TCOTS_ProcessorList;
-import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
-import net.minecraft.advancement.*;
-import net.minecraft.advancement.criterion.*;
+import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.advancement.AdvancementRewards;
+import net.minecraft.advancement.CriterionMerger;
+import net.minecraft.advancement.criterion.ConsumeItemCriterion;
+import net.minecraft.advancement.criterion.InventoryChangedCriterion;
+import net.minecraft.advancement.criterion.OnKilledCriterion;
+import net.minecraft.advancement.criterion.RecipeCraftedCriterion;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.data.server.tag.TagProvider;
@@ -41,7 +46,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.*;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.entry.AlternativeEntry;
@@ -53,7 +57,6 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.NumberRange;
 import net.minecraft.predicate.StatePredicate;
 import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.entity.TypeSpecificPredicate;
 import net.minecraft.predicate.item.EnchantmentPredicate;
 import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.book.RecipeCategory;
@@ -69,7 +72,6 @@ import net.minecraft.world.poi.PointOfInterestType;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -1241,7 +1243,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                                     .with(ItemEntry.builder(TCOTS_Items.BRYONIA).weight(3))
 
-                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.SHORT_GRASS).weight(5))
+                                    .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.GRASS).weight(5))
                                             .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f))))
 
                                     .with(((LeafEntry.Builder<?>) ItemEntry.builder(Items.MOSS_CARPET).weight(3))
@@ -1581,11 +1583,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             this.getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR).add(TCOTS_DamageTypes.POTION_TOXICITY).add(TCOTS_DamageTypes.BLEEDING).add(TCOTS_DamageTypes.CADAVERINE);
 
-            this.getOrCreateTagBuilder(DamageTypeTags.ALWAYS_KILLS_ARMOR_STANDS).add(TCOTS_DamageTypes.ANCHOR);
-
             this.getOrCreateTagBuilder(DamageTypeTags.IS_PROJECTILE).add(TCOTS_DamageTypes.ANCHOR);
-
-            this.getOrCreateTagBuilder(DamageTypeTags.BREEZE_IMMUNE_TO).add(TCOTS_DamageTypes.ANCHOR);
         }
 
     }
@@ -1694,7 +1692,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         }
 
         @Override
-        public void generate(RecipeExporter exporter) {
+        public void generate(Consumer<RecipeJsonProvider> exporter) {
             //Crafting Table
             {
                 //Alchemy Table
@@ -3134,10 +3132,10 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             super(output);
         }
 
-        private void generateBasicRecipeAdvancement(String id, Consumer<AdvancementEntry> consumer){
+        private void generateBasicRecipeAdvancement(String id, Consumer<Advancement> consumer){
             Advancement.Builder.createUntelemetered()
                     .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_TABLE_ITEM), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_TABLE_ITEM))
-                    .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
+                    .criteriaMerger(CriterionMerger.OR)
                     .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_BOOK), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_BOOK))
                     .rewards(AdvancementRewards.Builder.recipe(new Identifier(TCOTS_Main.MOD_ID,id)))
                     .parent(CraftingRecipeJsonBuilder.ROOT)
@@ -3146,7 +3144,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         }
 
         @Override
-        public void generateAdvancement(Consumer<AdvancementEntry> consumer) {
+        public void generateAdvancement(Consumer<Advancement> consumer) {
             //Start recipes
             this.generateBasicRecipeAdvancement("swallow_potion", consumer);
             this.generateBasicRecipeAdvancement("cat_potion", consumer);
@@ -3161,7 +3159,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             this.generateBasicRecipeAdvancement("alcohest", consumer);
 
 
-            AdvancementEntry rootAdvancementWitcher = Advancement.Builder.create()
+            Advancement rootAdvancementWitcher = Advancement.Builder.create()
                     .display(
                             TCOTS_Items.WITCHER_BESTIARY, // The display icon
                             Text.translatable("advancements.witcher.main.title"), // The title
@@ -3178,7 +3176,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
             //Hunting Branch
             {
-                AdvancementEntry rootHunting =
+                Advancement rootHunting =
                         requireListedMobsKilled(Advancement.Builder.create(), MONSTERS)
                                 .parent(rootAdvancementWitcher)
                                 .display(TCOTS_Items.GRAVEIR_BONE, // The display icon
@@ -3211,7 +3209,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Bullvore branch
                 {
-                    AdvancementEntry killBullvore =
+                    Advancement killBullvore =
                             Advancement.Builder.create()
                                     .parent(rootHunting)
                                     .display(
@@ -3276,7 +3274,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Troll branch
                 {
-                    AdvancementEntry befriendTroll =Advancement.Builder.create()
+                    Advancement befriendTroll =Advancement.Builder.create()
                             .parent(rootHunting)
                             .display(
                                     TCOTS_Items.VILLAGE_HERBAL, // The display icon
@@ -3289,13 +3287,13 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     false // Hidden in the advancement tab
                             )
                             .criterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ROCK_TROLL)))
-                            .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
+                            .criteriaMerger(CriterionMerger.OR)
                             .criterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL)))
-                            .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
+                            .criteriaMerger(CriterionMerger.OR)
                             .criterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.FOREST_TROLL)))
                             .build(consumer, TCOTS_Main.MOD_ID + "/befriend_troll");
 
-                    AdvancementEntry befriendIceTroll = Advancement.Builder.create()
+                    Advancement befriendIceTroll = Advancement.Builder.create()
                             .parent(befriendTroll)
                             .display(
                                     Blocks.PACKED_ICE, // The display icon
@@ -3323,9 +3321,9 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     false // Hidden in the advancement tab
                             )
                             .criterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ROCK_TROLL)))
-                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criteriaMerger(CriterionMerger.AND)
                             .criterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL)))
-                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criteriaMerger(CriterionMerger.AND)
                             .criterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.FOREST_TROLL)))
                             .build(consumer, TCOTS_Main.MOD_ID + "/befriend_all_troll");
                 }
@@ -3350,7 +3348,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
             //Alchemy Branch
             {
-                AdvancementEntry rootAlchemy =
+                Advancement rootAlchemy =
                         Advancement.Builder.create()
                                 .parent(rootAdvancementWitcher)
                                 .display(
@@ -3368,7 +3366,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Potions branch
                 {
-                    AdvancementEntry craftPotion = setHasItemCriteriaOR(Advancement.Builder.create(), POTIONS)
+                    Advancement craftPotion = setHasItemCriteriaOR(Advancement.Builder.create(), POTIONS)
                             .parent(rootAlchemy)
                             .display(
                                     TCOTS_Items.SWALLOW_POTION, // The display icon
@@ -3431,7 +3429,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Oils branch
                 {
-                    AdvancementEntry craftOil = setHasItemCriteriaOR(Advancement.Builder.create(), OILS)
+                    Advancement craftOil = setHasItemCriteriaOR(Advancement.Builder.create(), OILS)
                             .parent(rootAlchemy)
                             .display(
                                     TCOTS_Items.NECROPHAGE_OIL, // The display icon
@@ -3479,7 +3477,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Bombs branch
                 {
-                    AdvancementEntry craftBomb = setHasItemCriteriaOR(Advancement.Builder.create(), BOMBS)
+                    Advancement craftBomb = setHasItemCriteriaOR(Advancement.Builder.create(), BOMBS)
                             .parent(rootAlchemy)
                             .display(
                                     TCOTS_Items.GRAPESHOT, // The display icon
@@ -3493,7 +3491,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             )
                             .build(consumer, TCOTS_Main.MOD_ID + "/craft_bomb");
 
-                    AdvancementEntry craftBombLV3 = setHasItemCriteriaOR(Advancement.Builder.create(), BOMBS_LV3)
+                    Advancement craftBombLV3 = setHasItemCriteriaOR(Advancement.Builder.create(), BOMBS_LV3)
                             .parent(craftBomb)
                             .display(
                                     TCOTS_Items.GRAPESHOT_SUPERIOR, // The display icon
@@ -3523,19 +3521,19 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .criterion(
                                     "craft_grapeshot",
                                     RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.GRAPESHOT)))
-                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criteriaMerger(CriterionMerger.AND)
                             .criterion(
                                     "craft_samum",
                                     RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.SAMUM)))
-                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criteriaMerger(CriterionMerger.AND)
                             .criterion(
                                     "craft_dancing",
                                     RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.DANCING_STAR)))
-                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criteriaMerger(CriterionMerger.AND)
                             .criterion(
                                     "craft_puffball",
                                     RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.DEVILS_PUFFBALL)))
-                            .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
+                            .criteriaMerger(CriterionMerger.AND)
                             .criterion(
                                     "craft_dragons",
                                     RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.DRAGONS_DREAM)))
@@ -3550,7 +3548,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     RecipeCraftedCriterion.Conditions.create(Registries.ITEM.getId(TCOTS_Items.MOON_DUST)))
                             .build(consumer, TCOTS_Main.MOD_ID + "/craft_all_bomb");
 
-                    AdvancementEntry explodeNest = Advancement.Builder.create()
+                    Advancement explodeNest = Advancement.Builder.create()
                             .parent(craftBomb)
                             .display(
                                     TCOTS_Blocks.MONSTER_NEST, // The display icon
@@ -3622,7 +3620,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                             .build(consumer, TCOTS_Main.MOD_ID + "/stop_creeper");
                 }
 
-                AdvancementEntry useAlchemyFormula = Advancement.Builder.create()
+                Advancement useAlchemyFormula = Advancement.Builder.create()
                         .parent(rootAlchemy)
                         .display(
                                 TCOTS_Items.ALCHEMY_FORMULA, // The display icon
@@ -3656,15 +3654,6 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                 TCOTS_CustomCriterion.Conditions.createRefillConcoctionCriterion())
                         .build(consumer, TCOTS_Main.MOD_ID + "/refill_concoction");
             }
-        }
-
-        private static Advancement.Builder requireAllFrogsOnLeads(Advancement.Builder builder) {
-            Registries.FROG_VARIANT.streamEntries().forEach(variant ->
-                    builder.criterion(variant.registryKey().getValue().toString(),
-                            PlayerInteractedWithEntityCriterion.Conditions.create(ItemPredicate.Builder.create().items(Items.LEAD),
-                                    Optional.of(EntityPredicate.contextPredicateFromEntityPredicate(EntityPredicate.Builder.create()
-                                            .type(EntityType.FROG).typeSpecific(TypeSpecificPredicate.frog(variant.value())))))));
-            return builder;
         }
 
         protected static final List<Item> MUTAGEN = Arrays.asList(
@@ -3845,7 +3834,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             entityTypes.forEach(type -> builder.criterion(
                     Registries.ENTITY_TYPE.getId(type).toString(),
                     OnKilledCriterion.Conditions.createPlayerKilledEntity(EntityPredicate.Builder.create().type(type)))
-                    .criteriaMerger(AdvancementRequirements.CriterionMerger.OR));
+                    .criteriaMerger(CriterionMerger.OR));
             return builder;
         }
 
@@ -3853,25 +3842,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             entityTypes.forEach(item -> builder.criterion(
                             Registries.ITEM.getId(item).toString(),
                             InventoryChangedCriterion.Conditions.items(item))
-                    .criteriaMerger(AdvancementRequirements.CriterionMerger.OR));
-            return builder;
-        }
-
-        private static Advancement.Builder requireMultipleNests(Advancement.Builder builder) {
-            List<Pair<String, AdvancementCriterion<PlayerGeneratesContainerLootCriterion.Conditions>>> list =
-
-                    List.of(Pair.of("desert_pyramid", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.DESERT_PYRAMID_ARCHAEOLOGY)),
-                            Pair.of("desert_well", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.DESERT_WELL_ARCHAEOLOGY)),
-                            Pair.of("ocean_ruin_cold", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY)),
-                            Pair.of("ocean_ruin_warm", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY)),
-                            Pair.of("trail_ruins_rare", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.TRAIL_RUINS_RARE_ARCHAEOLOGY)),
-                            Pair.of("trail_ruins_common", PlayerGeneratesContainerLootCriterion.Conditions.create(LootTables.TRAIL_RUINS_COMMON_ARCHAEOLOGY)));
-
-            list.forEach(pair -> builder.criterion(pair.getFirst(), pair.getSecond()));
-            String string = "has_sherd";
-            builder.criterion("has_sherd", InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(ItemTags.DECORATED_POT_SHERDS)));
-
-            builder.requirements(new AdvancementRequirements(List.of(list.stream().map(Pair::getFirst).toList(), List.of("has_sherd"))));
+                    .criteriaMerger(CriterionMerger.OR));
             return builder;
         }
     }
