@@ -99,11 +99,8 @@ public class AlchemyFormulaItem extends Item {
 
                 Text text = Text.translatable("item.tcots-witcher.alchemy_formula.tooltip", output.getName()).formatted(Formatting.BLUE);
 
-//                0x41d331
                 if(isDecoction(stack)){
                     text = Text.translatable("item.tcots-witcher.alchemy_formula.tooltip", output.getName()).setStyle(Style.EMPTY.withColor(0x41d331));
-
-
                 }
 
                 tooltip.add(text);

@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Nekker",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/nekker",
+  "icon": "tcots-witcher:nekker_eye",
   "category": "tcots-witcher:ogroids",
   "associated_items": [
     "tcots-witcher:nekker_heart",
@@ -73,6 +73,9 @@ Avoid being overwhelmed with the quantity of these tiny creatures, and you can m
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                          <horizontal-alignment>center</horizontal-alignment>
+                          <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -87,6 +90,9 @@ Avoid being overwhelmed with the quantity of these tiny creatures, and you can m
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                          <horizontal-alignment>center</horizontal-alignment>
+                          <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>

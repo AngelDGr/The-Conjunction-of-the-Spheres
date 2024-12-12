@@ -22,5 +22,6 @@
   ],
   "result": {
     "item": "tcots-witcher:ardaenye"
-  }
+  },
+  "show_notification": true
 }

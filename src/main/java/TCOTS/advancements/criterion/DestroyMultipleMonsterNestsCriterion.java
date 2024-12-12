@@ -1,64 +1,53 @@
 package TCOTS.advancements.criterion;
 
-import TCOTS.TCOTS_Main;
-import TCOTS.advancements.TCOTS_Criteria;
 import com.google.gson.JsonObject;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
+import net.minecraft.predicate.NumberRange;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
-import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.dynamic.Codecs;
-
-import java.util.Optional;
 
 public class DestroyMultipleMonsterNestsCriterion extends AbstractCriterion<DestroyMultipleMonsterNestsCriterion.Conditions> {
 
+    @Override
+    protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
+		NumberRange.IntRange quantity = NumberRange.IntRange.fromJson(obj.get("quantity"));
+
+        return new DestroyMultipleMonsterNestsCriterion.Conditions(playerPredicate, quantity);
+    }
+
     public void trigger(ServerPlayerEntity player, int stat) {
-        this.trigger(player, conditions -> conditions.quantity.filter(integer -> stat >= integer).isPresent()
+        this.trigger(player, conditions -> conditions.quantity.test(stat)
         );
     }
 
     @Override
-    protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-        return null;
-    }
-
-    @Override
     public Identifier getId() {
-        return new Identifier(TCOTS_Main.MOD_ID, "destroy_nests");
+        return new Identifier("tcots-witcher/destroy_multiple_monster_nest");
     }
 
 
-    public static class Conditions(Optional<LootContextPredicate> player, Optional<Integer> quantity) extends AbstractCriterionConditions {
+    public static class Conditions extends AbstractCriterionConditions {
+        private final NumberRange.IntRange quantity;
 
-        public static final Codec<DestroyMultipleMonsterNestsCriterion.Conditions> CODEC =
-                RecordCodecBuilder.create(instance ->
-                        instance.group(
-                                        Codecs.createStrictOptionalFieldCodec(EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC, "player")
-                                                .forGetter(DestroyMultipleMonsterNestsCriterion.Conditions::player),
-                                        Codecs.createStrictOptionalFieldCodec(Codec.INT ,"quantity")
-                                                .forGetter(DestroyMultipleMonsterNestsCriterion.Conditions::quantity)
-                                )
-                                .apply(instance, DestroyMultipleMonsterNestsCriterion.Conditions::new));
-
-        public Conditions(Identifier id, LootContextPredicate entity) {
-            super(id, entity);
+        public Conditions(LootContextPredicate entity, NumberRange.IntRange quantity) {
+            super(new Identifier("tcots-witcher/destroy_multiple_monster_nest"), entity);
+            this.quantity=quantity;
         }
 
-
-        public static AdvancementCriterion<DestroyMultipleMonsterNestsCriterion.Conditions> createMultipleDestroyNestCriterion(int quantity) {
-            return TCOTS_Criteria.DESTROY_MULTIPLE_MONSTER_NEST.create(
-                    new Conditions(
-                            Optional.empty(),
-                            Optional.of(quantity)));
+        public static DestroyMultipleMonsterNestsCriterion.Conditions createMultipleDestroyNestCriterion(int quantity) {
+            return new DestroyMultipleMonsterNestsCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.IntRange.atLeast(quantity));
         }
 
+        @Override
+        public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
+            JsonObject jsonObject = super.toJson(predicateSerializer);
+            jsonObject.add("quantity", this.quantity.toJson());
+            return jsonObject;
+        }
     }
 
 }

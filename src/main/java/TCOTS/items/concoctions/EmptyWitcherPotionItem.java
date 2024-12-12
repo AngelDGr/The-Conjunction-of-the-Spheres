@@ -41,5 +41,4 @@ public class EmptyWitcherPotionItem extends Item {
         tooltip.add(Text.translatable("tooltip.tcots-witcher.empty_witcher_bottle_1").formatted(Formatting.GRAY));
         tooltip.add(Text.translatable("tooltip.tcots-witcher.empty_witcher_bottle_2").formatted(Formatting.GRAY));
     }
-
 }

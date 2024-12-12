@@ -7,7 +7,6 @@
     "minecraft:slowness"
   ],
   "herb": {
-    "Count": 1,
     "id": "minecraft:cornflower"
   },
   "time": 40

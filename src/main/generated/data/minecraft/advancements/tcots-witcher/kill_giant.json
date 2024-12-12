@@ -17,14 +17,17 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.kill_giant.description"
     },
     "frame": "challenge",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:winters_blade",
       "nbt": "{Damage:0}"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.kill_giant.title"
     }

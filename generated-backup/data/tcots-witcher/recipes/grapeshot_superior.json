@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:grapeshot_enhanced"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    1,
+    4,
+    2,
+    2,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alchemists_powder"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    },
+    {
+      "item": "tcots-witcher:nigredo"
+    }
+  ],
+  "order": 0.36999992,
+  "result": {
+    "item": "tcots-witcher:grapeshot_superior"
+  }
+}

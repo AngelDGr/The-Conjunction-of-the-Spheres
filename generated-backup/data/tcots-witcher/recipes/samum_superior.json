@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:samum_enhanced"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    1,
+    4,
+    4,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alchemists_powder"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "tcots-witcher:foglet_teeth"
+    },
+    {
+      "item": "tcots-witcher:celandine"
+    },
+    {
+      "item": "tcots-witcher:aether"
+    }
+  ],
+  "order": 0.3999999,
+  "result": {
+    "item": "tcots-witcher:samum_superior"
+  }
+}

@@ -3,19 +3,24 @@
   "criteria": {
     "destroy_nest_multiple": {
       "conditions": {
-        "quantity": 30
+        "quantity": {
+          "min": 30
+        }
       },
       "trigger": "minecraft:tcots-witcher/destroy_multiple_monster_nest"
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.destroy_nest_multiple.description"
     },
     "frame": "challenge",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:monster_nest"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.destroy_nest_multiple.title"
     }

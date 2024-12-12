@@ -1,0 +1,36 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:white_gull"
+  },
+  "category": "misc",
+  "ingredient_counters": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:verbena"
+    },
+    {
+      "item": "tcots-witcher:ergot_seeds"
+    },
+    {
+      "item": "tcots-witcher:han_fiber"
+    },
+    {
+      "item": "tcots-witcher:puffball"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    }
+  ],
+  "order": 0.7499996,
+  "result": {
+    "count": 2,
+    "item": "tcots-witcher:aether"
+  }
+}

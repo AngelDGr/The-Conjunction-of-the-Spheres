@@ -150,7 +150,7 @@ public class CyclopsEntity extends OgroidMonster implements GeoEntity {
                 //So 7.5/1.5=5
                 return !this.cyclops.cooldownBetweenJumps
                         && this.cyclops.isAttacking()
-                        && !this.cyclops.isInFluid()
+                        && !(this.cyclops.isInLava() || this.cyclops.isSubmergedInWater())
                         && !this.cyclops.hasVehicle()
                         && !this.cyclops.getWorld().getBlockState(this.cyclops.getBlockPos()).isOf(Blocks.HONEY_BLOCK)
                         && !this.cyclops.getWorld().getBlockState(this.cyclops.getBlockPos()).isOf(Blocks.COBWEB)

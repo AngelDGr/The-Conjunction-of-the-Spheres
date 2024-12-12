@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Rotfiend",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/rotfiend",
+  "icon": "tcots-witcher:rotfiend_blood",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:rotfiend_blood"
@@ -69,6 +69,9 @@ The only way to prevent this explosion is {#0A880E}killing it when the creature 
                         <padding>
                           <all>5</all>
                         </padding>
+
+                        <horizontal-alignment>center</horizontal-alignment>
+                        <vertical-alignment>center</vertical-alignment>
                       </stack-layout>
                       
                         <stack-layout>
@@ -83,6 +86,9 @@ The only way to prevent this explosion is {#0A880E}killing it when the creature 
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                          <horizontal-alignment>center</horizontal-alignment>
+                          <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                                                

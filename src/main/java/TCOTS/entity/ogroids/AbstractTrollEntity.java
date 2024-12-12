@@ -986,7 +986,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     public void give(@NotNull LivingEntity entity, ItemStack stack, @NotNull Vec3d targetLocation, @NotNull Vec3d velocityFactor, float yOffset) {
         double d = entity.getEyeY() - (double)yOffset;
         ItemEntity itemEntity = new ItemEntity(entity.getWorld(), entity.getX(), d, entity.getZ(), stack);
-        itemEntity.setThrower(entity);
+        itemEntity.setThrower(entity.getUuid());
         Vec3d vec3d = targetLocation.subtract(entity.getPos());
         vec3d = vec3d.normalize().multiply(velocityFactor.x, velocityFactor.y, velocityFactor.z);
         itemEntity.setVelocity(vec3d);
@@ -1384,8 +1384,8 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
                     this.setPersistent();
                 }
 
-                if(foodStack.getFoodComponent()!=null){
-                    this.heal(foodStack.getFoodComponent().getHunger());
+                if(foodStack.getItem().getFoodComponent()!=null){
+                    this.heal(foodStack.getItem().getFoodComponent().getHunger());
                 }
 
                 this.dropStack(foodStack.getItem() == Items.RABBIT_STEW? new ItemStack(Items.BOWL): ItemStack.EMPTY);

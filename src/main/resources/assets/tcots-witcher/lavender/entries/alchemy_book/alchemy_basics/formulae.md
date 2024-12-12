@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Formulae",
-  "icon_sprite": "tcots-witcher:alchemy_almanac/category/formulae",
+  "icon": "tcots-witcher:alchemy_formula",
   "ordinal": 9,
   "associated_items": [
     "tcots-witcher:alchemy_formula"

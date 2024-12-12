@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Potions",
-  "icon_sprite": "tcots-witcher:alchemy_almanac/category/potions",
+  "icon": "tcots-witcher:swallow_potion",
   "ordinal": 4,
   "associated_items": [
     "tcots-witcher:swallow_potion",

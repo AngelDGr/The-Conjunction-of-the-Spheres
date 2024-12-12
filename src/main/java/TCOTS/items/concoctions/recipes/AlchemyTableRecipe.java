@@ -1,10 +1,11 @@
 package TCOTS.items.concoctions.recipes;
 
+import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import com.google.common.collect.Lists;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,8 +15,10 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -57,6 +60,11 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
         }
 
         return list;
+    }
+
+    @Override
+    public Identifier getId() {
+        return new Identifier(TCOTS_Main.MOD_ID, Registries.ITEM.getId(this.output.getItem()).getPath());
     }
 
     @Override
@@ -196,7 +204,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
 
     @Override
     public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) {
-        return this.getResult(registryManager).copy();
+        return this.getOutput(registryManager).copy();
     }
 
     @Override
@@ -205,7 +213,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
     }
 
     @Override
-    public ItemStack getResult(DynamicRegistryManager registryManager) {
+    public ItemStack getOutput(DynamicRegistryManager registryManager) {
         return output;
     }
 
@@ -239,56 +247,110 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
     }
 
     public static class Serializer implements RecipeSerializer<AlchemyTableRecipe>{
-
-        //Json Reader
-        public static final Codec<AlchemyTableRecipe> CODEC = RecordCodecBuilder.create(
-                instance -> instance.group(
-                        //Order Reader
-                        Codecs.POSITIVE_FLOAT.fieldOf("order").orElse(99f)
-                                .forGetter(recipe -> recipe.order),
-
-                        //Category reader
-                        AlchemyTableRecipeCategory.CODEC.fieldOf("category").orElse(AlchemyTableRecipeCategory.MISC)
-                                .forGetter(recipe -> recipe.category),
-
-                        //Ingredients List reader
-                        Ingredient.ALLOW_EMPTY_CODEC.listOf().fieldOf("ingredients")
-                                .flatXmap(ingredients -> {
-                                    Ingredient[] ingredients2 = ingredients.stream().filter(ingredient -> !ingredient.isEmpty()).toArray(Ingredient[]::new);
-                                    if (ingredients2.length == 0) {
-                                        return DataResult.error(() -> "No ingredients for witcher potion recipe");
-                                    }
-                                    if (ingredients2.length > 5) {
-                                        return DataResult.error(() -> "Too many ingredients for witcher potion recipe");
-                                    }
-                                    return DataResult.success(DefaultedList.copyOf(Ingredient.EMPTY, ingredients2));
-                                }, DataResult::success)
-                                .forGetter(AlchemyTableRecipe::getIngredients),
-
-                        //Ingredients quantity reader
-                        Codecs.POSITIVE_INT.listOf().fieldOf("ingredient_counters")
-
-                                .forGetter(recipe -> recipe.recipeCounts),
-
-                        //Base reader
-                        ItemStack.RECIPE_RESULT_CODEC.fieldOf("base")
-                                .forGetter(recipe -> recipe.base),
-
-                        //Result reader
-                        ItemStack.RECIPE_RESULT_CODEC.fieldOf("result")
-                                .forGetter(recipe -> recipe.output)
-
-                        ).apply(instance, AlchemyTableRecipe::new));
-
-
         public static final Serializer INSTANCE = new Serializer();
         public static final String ID = "alchemy_table";
 
+
+        //Json Reader
         @Override
-        public Codec<AlchemyTableRecipe> codec() {
-            return CODEC;
+        public AlchemyTableRecipe read(Identifier id, JsonObject json) {
+            //Order Reader
+            float order = JsonHelper.getFloat(json, "order", 99);
+
+            //Category reader
+            AlchemyTableRecipeCategory category = AlchemyTableRecipeCategory.CODEC.byId(
+                    JsonHelper.getString(json, "category", AlchemyTableRecipeCategory.MISC.asString()));
+
+            //Ingredients List reader
+            DefaultedList<Ingredient> ingredients = getIngredients(JsonHelper.getArray(json, "ingredients"));
+
+            if (ingredients.isEmpty()) {
+                throw new JsonParseException("No ingredients for witcher potion recipe");
+            } else if (ingredients.size() > 5) {
+                throw new JsonParseException("Too many ingredients for witcher potion recipe");
+            }
+
+            //Ingredients quantity reader
+            DefaultedList<Integer> ingredientsCount = getIngredientsCounts(JsonHelper.getArray(json, "ingredient_counters"));
+
+            //Base reader
+            JsonObject baseStack = JsonHelper.getObject(json, "base");
+            Identifier idBase = new Identifier(JsonHelper.getString(baseStack, "item"));
+            ItemStack base = new ItemStack(
+                    Registries.ITEM.getOrEmpty(idBase).orElseThrow(() -> new IllegalStateException("Item: " + idBase + " does not exist")),
+                     baseStack.has("count")? JsonHelper.getInt(baseStack, "count"): 1
+            );
+
+
+            //Result reader
+            JsonObject resultStack = JsonHelper.getObject(json, "result");
+            Identifier idOutput = new Identifier(JsonHelper.getString(resultStack, "item"));
+            ItemStack output = new ItemStack(
+                    Registries.ITEM.getOrEmpty(idOutput).orElseThrow(() -> new IllegalStateException("Item: " + idOutput + " does not exist")),
+                    resultStack.has("count")? JsonHelper.getInt(resultStack, "count"): 1
+            );
+
+            return new AlchemyTableRecipe(order, category, ingredients, ingredientsCount, base, output);
         }
 
+        private static DefaultedList<Ingredient> getIngredients(JsonArray json) {
+            DefaultedList<Ingredient> defaultedList = DefaultedList.of();
+
+            for (int i = 0; i < json.size(); i++) {
+                Ingredient ingredient = Ingredient.fromJson(json.get(i), false);
+                if (!ingredient.isEmpty()) {
+                    defaultedList.add(ingredient);
+                }
+            }
+
+            return defaultedList;
+        }
+
+        private static DefaultedList<Integer> getIngredientsCounts(JsonArray json) {
+            DefaultedList<Integer> defaultedList = DefaultedList.copyOf(1,1,1,1,1,1);
+
+            for (int i = 0; i < json.size(); i++) {
+                defaultedList.set(i, json.get(i).getAsInt());
+            }
+
+            return defaultedList;
+        }
+
+//        public static Integer fromJson(@Nullable JsonElement json, boolean allowAir) {
+//            if (json == null || json.isJsonNull()) {
+//                throw new JsonSyntaxException("Item cannot be null");
+//            } else if (json.isJsonObject()) {
+//                return ofEntries(Stream.of(entryFromJson(json.getAsJsonObject())));
+//            } else if (json.isJsonArray()) {
+//                JsonArray jsonArray = json.getAsJsonArray();
+//                if (jsonArray.size() == 0 && !allowAir) {
+//                    throw new JsonSyntaxException("Item array cannot be empty, at least one item must be defined");
+//                } else {
+//                    return ofEntries(StreamSupport.stream(jsonArray.spliterator(), false).map(jsonElement -> entryFromJson(JsonHelper.asObject(jsonElement, "item"))));
+//                }
+//            } else {
+//                throw new JsonSyntaxException("Expected item to be object or array of objects");
+//            }
+//        }
+//        private static Ingredient.Entry entryFromJson(JsonObject json) {
+//            if (json.has("item") && json.has("tag")) {
+//                throw new JsonParseException("An ingredient entry is either a tag or an item, not both");
+//            } else if (json.has("item")) {
+//                Item item = ShapedRecipe.getItem(json);
+//                return new Ingredient.StackEntry(new ItemStack(item));
+//            } else if (json.has("tag")) {
+//                Identifier identifier = new Identifier(JsonHelper.getString(json, "tag"));
+//                TagKey<Item> tagKey = TagKey.of(RegistryKeys.ITEM, identifier);
+//                return new Ingredient.TagEntry(tagKey);
+//            } else {
+//                throw new JsonParseException("An ingredient entry needs either a tag or an item");
+//            }
+//        }
+//        public static final Ingredient EMPTY = new Ingredient(Stream.empty());
+//        public static Ingredient ofEntries(Stream<? extends Ingredient.Entry> entries) {
+//            Ingredient ingredient = new Ingredient(entries);
+//            return ingredient.isEmpty() ? EMPTY : ingredient;
+//        }
 
         // Turns Recipe into PacketByteBuf
         @Override
@@ -308,15 +370,15 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
             buf.writeInt(recipe.getIngredientsCounts().get(4));
 
             buf.writeItemStack(recipe.getBaseItem());
-            buf.writeItemStack(recipe.getResult(null));
+            buf.writeItemStack(recipe.getOutput(null));
             buf.writeEnumConstant((recipe).getCategory());
         }
 
         // Turns PacketByteBuf into Recipe(InGame)
         @Override
-        public AlchemyTableRecipe read(PacketByteBuf buf) {
+        public AlchemyTableRecipe read(Identifier id, PacketByteBuf buf) {
             // Make sure the read in the same order you have written!
-            float count = buf.readFloat();
+            float order = buf.readFloat();
 
             List<Ingredient> ingredientList = Lists.newArrayList();
             Ingredient I1 = Ingredient.fromPacket(buf);
@@ -346,7 +408,7 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
             ItemStack output = buf.readItemStack();
             AlchemyTableRecipeCategory alchemyTableRecipeCategory = buf.readEnumConstant(AlchemyTableRecipeCategory.class);
 
-            return new AlchemyTableRecipe(count, alchemyTableRecipeCategory, ingredientList, ingredientCountList, base, output);
+            return new AlchemyTableRecipe(order, alchemyTableRecipeCategory, ingredientList, ingredientCountList, base, output);
         }
     }
 }

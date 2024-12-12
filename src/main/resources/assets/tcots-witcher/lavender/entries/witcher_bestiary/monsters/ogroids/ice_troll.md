@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Ice Troll",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/ice_troll",
+  "icon": "minecraft:packed_ice",
   "category": "tcots-witcher:ogroids",
   "associated_items": [
   ],
@@ -65,6 +65,9 @@ Lastly, never think of attacking them during a blizzard. At such times they draw
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -79,6 +82,9 @@ Lastly, never think of attacking them during a blizzard. At such times they draw
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -93,6 +99,9 @@ Lastly, never think of attacking them during a blizzard. At such times they draw
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>
@@ -129,6 +138,9 @@ Lastly, never think of attacking them during a blizzard. At such times they draw
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                     </children>
                     <sizing>

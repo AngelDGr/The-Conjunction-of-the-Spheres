@@ -15,12 +15,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.start_alchemy.description"
     },
+    "frame": "task",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:alchemy_table"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.start_alchemy.title"
     }

@@ -7,14 +7,12 @@ import TCOTS.screen.AlchemyTableScreenHandler;
 import com.google.common.collect.Lists;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.screen.recipebook.RecipeAlternativesWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ToggleButtonWidget;
 import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeMatcher;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
@@ -26,24 +24,21 @@ import java.util.function.Consumer;
 
 public class AlchemyRecipeBookResults {
     private final List<AlchemyRecipeResultButton> resultButtons = Lists.newArrayListWithCapacity(5);
-    private final List<RecipeEntry<AlchemyTableRecipe>> listFittingRecipes = new ArrayList<>();
-    private final List<RecipeEntry<AlchemyTableRecipe>> listRecipesPotions = new ArrayList<>();
-    private final List<RecipeEntry<AlchemyTableRecipe>> listRecipesBombs = new ArrayList<>();
-    private final List<RecipeEntry<AlchemyTableRecipe>> listRecipesDecoctions = new ArrayList<>();
-    private final List<RecipeEntry<AlchemyTableRecipe>> listRecipesMisc = new ArrayList<>();
-    private final List<RecipeEntry<AlchemyTableRecipe>> Active_listRecipes = new ArrayList<>();
+    private final List<AlchemyTableRecipe> listFittingRecipes = new ArrayList<>();
+    private final List<AlchemyTableRecipe> listRecipesPotions = new ArrayList<>();
+    private final List<AlchemyTableRecipe> listRecipesBombs = new ArrayList<>();
+    private final List<AlchemyTableRecipe> listRecipesDecoctions = new ArrayList<>();
+    private final List<AlchemyTableRecipe> listRecipesMisc = new ArrayList<>();
+    private final List<AlchemyTableRecipe> Active_listRecipes = new ArrayList<>();
     private final RecipeMatcher recipeFinder = new RecipeMatcher();
     private final RecipeAlternativesWidget alternatesWidget = new RecipeAlternativesWidget();
 
     private MinecraftClient client;
     private ToggleButtonWidget nextPageButton;
-    public static final ButtonTextures TEXTURES_RIGHT_PAGE = new ButtonTextures(
-            new Identifier(TCOTS_Main.MOD_ID, "buttons/page_right"),
-            new Identifier(TCOTS_Main.MOD_ID, "buttons/page_right_highlighted"));
 
-    public static final ButtonTextures TEXTURES_LEFT_PAGE = new ButtonTextures(
-            new Identifier(TCOTS_Main.MOD_ID, "buttons/page_left"),
-            new Identifier(TCOTS_Main.MOD_ID, "buttons/page_left_highlighted"));
+    public static final Identifier TEXTURE_LEFT_PAGE = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/buttons/page_left_old.png");
+
+    public static final Identifier TEXTURE_RIGHT_PAGE = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/buttons/page_right_old.png");
 
     private ToggleButtonWidget prevPageButton;
     private int pageCount;
@@ -67,7 +62,7 @@ public class AlchemyRecipeBookResults {
 
         assert this.client.player != null;
         PlayerInventoryItems = this.client.player.getInventory().main;
-        AlchemyTableInventoryItems = craftingScreenHandler.inputInventory.getHeldStacks();
+        AlchemyTableInventoryItems = craftingScreenHandler.inputInventory.stacks;
 
         TotalInventoryItems.addAll(PlayerInventoryItems);
         TotalInventoryItems.addAll(AlchemyTableInventoryItems);
@@ -79,11 +74,12 @@ public class AlchemyRecipeBookResults {
         for (int i = 0; i < this.resultButtons.size(); ++i) {
                 this.resultButtons.get(i).setPosition(parentI + 14, (parentJ + 26) + (i * 23 ));
         }
-        this.nextPageButton = new AlchemyRecipeBookButtonPage(parentI + 100, parentJ + 166, 18, 10, false);
 
-        this.nextPageButton.setTextures(TEXTURES_RIGHT_PAGE);
+        this.nextPageButton = new AlchemyRecipeBookButtonPage(parentI + 100, parentJ + 166, 18, 10, false);
+        this.nextPageButton.setTextureUV(0, 0, 0, 10, TEXTURE_RIGHT_PAGE);
+
         this.prevPageButton = new AlchemyRecipeBookButtonPage(parentI + 30, parentJ + 166, 18, 10, true);
-        this.prevPageButton.setTextures(TEXTURES_LEFT_PAGE);
+        this.prevPageButton.setTextureUV(0, 0, 0, 10, TEXTURE_LEFT_PAGE);
     }
 
 
@@ -100,7 +96,7 @@ public class AlchemyRecipeBookResults {
 
         assert this.client.player != null;
 
-        AlchemyTableInventoryItems = craftingScreenHandler.inputInventory.getHeldStacks();
+        AlchemyTableInventoryItems = craftingScreenHandler.inputInventory.stacks;
         PlayerInventoryItems = this.client.player.getInventory().main;
 
         TotalInventoryItems.clear();
@@ -158,7 +154,7 @@ public class AlchemyRecipeBookResults {
 
     private ClientRecipeBook recipeBook;
     //Receive the Recipes list
-    public void receiveRecipesList(List<RecipeEntry<AlchemyTableRecipe>> listRecipes, ClientRecipeBook recipeBook){
+    public void receiveRecipesList(List<AlchemyTableRecipe> listRecipes, ClientRecipeBook recipeBook){
         if(this.listFittingRecipes.isEmpty()) {
 
             this.recipeBook=recipeBook;
@@ -171,26 +167,26 @@ public class AlchemyRecipeBookResults {
 
             this.listFittingRecipes.forEach(
                     recipe -> {
-                        if(recipe.value().getCategory() == AlchemyTableRecipeCategory.POTIONS){
+                        if(recipe.getCategory() == AlchemyTableRecipeCategory.POTIONS){
                             listRecipesPotions.add(recipe);
                         }
 
-                        if(recipe.value().getCategory() == AlchemyTableRecipeCategory.DECOCTIONS){
+                        if(recipe.getCategory() == AlchemyTableRecipeCategory.DECOCTIONS){
                             listRecipesDecoctions.add(recipe);
                         }
 
-                        if(recipe.value().getCategory() == AlchemyTableRecipeCategory.BOMBS_OILS){
+                        if(recipe.getCategory() == AlchemyTableRecipeCategory.BOMBS_OILS){
                             listRecipesBombs.add(recipe);
                         }
 
-                        if(recipe.value().getCategory() == AlchemyTableRecipeCategory.MISC){
+                        if(recipe.getCategory() == AlchemyTableRecipeCategory.MISC){
                             listRecipesMisc.add(recipe);
                         }
                     }
             );
             Active_listRecipes.clear();
             Active_listRecipes.addAll(listRecipesPotions);
-            Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
+            Active_listRecipes.sort(Comparator.comparing(AlchemyTableRecipe::getOrder));
             this.resetPageCount(false);
 
         }
@@ -230,7 +226,7 @@ public class AlchemyRecipeBookResults {
                     if(b==6){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesPotions);
-                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
+                        Active_listRecipes.sort(Comparator.comparing(AlchemyTableRecipe::getOrder));
                         break;
                     }
 
@@ -239,14 +235,14 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesPotions);
-                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
+                Active_listRecipes.sort(Comparator.comparing(AlchemyTableRecipe::getOrder));
                 break;
             case DECOCTIONS:
                 for (int j = 6 * this.currentPage; j < listRecipesDecoctions.size(); ++j) {
                     if(b==6){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesDecoctions);
-                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
+                        Active_listRecipes.sort(Comparator.comparing(AlchemyTableRecipe::getOrder));
                         break;
                     }
 
@@ -255,7 +251,7 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesDecoctions);
-                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
+                Active_listRecipes.sort(Comparator.comparing(AlchemyTableRecipe::getOrder));
                 break;
 
             case BOMBS_OILS:
@@ -263,7 +259,7 @@ public class AlchemyRecipeBookResults {
                     if(b==6){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesBombs);
-                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
+                        Active_listRecipes.sort(Comparator.comparing(AlchemyTableRecipe::getOrder));
                         break;
                     }
 
@@ -272,7 +268,7 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesBombs);
-                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
+                Active_listRecipes.sort(Comparator.comparing(AlchemyTableRecipe::getOrder));
                 break;
 
             case MISC:
@@ -280,7 +276,7 @@ public class AlchemyRecipeBookResults {
                     if(b==6){
                         Active_listRecipes.clear();
                         Active_listRecipes.addAll(listRecipesMisc);
-                        Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
+                        Active_listRecipes.sort(Comparator.comparing(AlchemyTableRecipe::getOrder));
                         break;
                     }
 
@@ -289,7 +285,7 @@ public class AlchemyRecipeBookResults {
                 }
                 Active_listRecipes.clear();
                 Active_listRecipes.addAll(listRecipesMisc);
-                Active_listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
+                Active_listRecipes.sort(Comparator.comparing(AlchemyTableRecipe::getOrder));
                 break;
         }
 
@@ -303,7 +299,7 @@ public class AlchemyRecipeBookResults {
         this.prevPageButton.visible = this.pageCount > 1 && this.currentPage > 0;
     }
 
-    RecipeEntry<AlchemyTableRecipe> recipe;
+    AlchemyTableRecipe recipe;
     public boolean mouseClicked(double mouseX, double mouseY, int button, AlchemyTableRecipeCategory category) {
 
         if (this.nextPageButton.mouseClicked(mouseX, mouseY, button)) {

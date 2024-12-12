@@ -25,14 +25,17 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.get_ravens_armor.description"
     },
     "frame": "challenge",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:ravens_armor",
       "nbt": "{Damage:0}"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.get_ravens_armor.title"
     }

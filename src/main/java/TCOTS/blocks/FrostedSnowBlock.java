@@ -1,6 +1,5 @@
 package TCOTS.blocks;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -13,11 +12,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
 
 @SuppressWarnings("deprecation")
 public class FrostedSnowBlock extends MultifaceGrowthBlock {
-    public static final MapCodec<FrostedSnowBlock> CODEC = FrostedSnowBlock.createCodec(FrostedSnowBlock::new);
 
     public static final IntProperty AGE = Properties.AGE_3;
     private final FrostedSnowGrower grower = new FrostedSnowGrower(this);
@@ -25,11 +22,6 @@ public class FrostedSnowBlock extends MultifaceGrowthBlock {
     public FrostedSnowBlock(Settings settings) {
         super(settings);
         this.setDefaultState(MultifaceGrowthBlock.withAllDirections(this.stateManager).with(AGE,0));
-    }
-
-    @Override
-    protected MapCodec<? extends MultifaceGrowthBlock> getCodec() {
-        return CODEC;
     }
 
     @Override
@@ -44,7 +36,7 @@ public class FrostedSnowBlock extends MultifaceGrowthBlock {
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return ItemStack.EMPTY;
     }
 

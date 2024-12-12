@@ -79,7 +79,11 @@ public class MonsterNestBlock extends BlockWithEntity {
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, TCOTS_Blocks.MONSTER_NEST_ENTITY, MonsterNestBlockEntity::serverTick);
+        return checkType(type,
+                TCOTS_Blocks.MONSTER_NEST_ENTITY,
+                world.isClient ?
+                MonsterNestBlockEntity::clientTick :
+                        MonsterNestBlockEntity::serverTick);
 
 //                MonsterNestBlock.validateTicker(type, TCOTS_Blocks.MONSTER_NEST_ENTITY, world.isClient ? MonsterNestBlockEntity::clientTick : MonsterNestBlockEntity::serverTick);
     }

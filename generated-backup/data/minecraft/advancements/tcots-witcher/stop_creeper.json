@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:tcots-witcher/craft_bomb_superior",
+  "criteria": {
+    "stop_creeper": {
+      "trigger": "minecraft:tcots-witcher/stop_creeper"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.stop_creeper.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "item": "tcots-witcher:moon_dust_superior"
+    },
+    "title": {
+      "translate": "advancements.witcher.stop_creeper.title"
+    }
+  },
+  "requirements": [
+    [
+      "stop_creeper"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  },
+  "sends_telemetry_event": true
+}

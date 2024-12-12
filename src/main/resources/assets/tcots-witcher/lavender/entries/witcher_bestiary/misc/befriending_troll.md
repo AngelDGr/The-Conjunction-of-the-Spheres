@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Befriending a Troll",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/misc/befriending_troll",
+  "icon": "minecraft:amethyst_shard",
   "category": "tcots-witcher:misc",
   "associated_items": [
   ],

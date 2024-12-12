@@ -16,7 +16,8 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.vehicle.VehicleEntity;
+import net.minecraft.entity.vehicle.BoatEntity;
+import net.minecraft.entity.vehicle.MinecartEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -63,7 +64,9 @@ public class EntitiesUtil {
                 livingEntity.takeKnockback(knockbackStrength, d, e);
                 //Push the player
                 if (entity instanceof ServerPlayerEntity && !((ServerPlayerEntity) entity).isCreative()) {
-                    ((ServerPlayerEntity) entity).networkHandler.send(new EntityVelocityUpdateS2CPacket(entity), null);
+                    ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity), null);
+
+
                 }
                 //Removes the shield
                 if (livingEntity.isBlocking() && entity instanceof PlayerEntity) {
@@ -75,7 +78,7 @@ public class EntitiesUtil {
                 }
 
                 //Destroys other no-living entities
-            } else if(entity instanceof VehicleEntity || entity instanceof EndCrystalEntity || entity instanceof AbstractDecorationEntity) {
+            } else if(entity instanceof BoatEntity || entity instanceof MinecartEntity || entity instanceof EndCrystalEntity || entity instanceof AbstractDecorationEntity) {
                 entity.damage(damageSource, 50.0f);
             } else {
                 return;
@@ -260,7 +263,6 @@ public class EntitiesUtil {
                 entity instanceof AllayEntity  ||
                 entity instanceof GolemEntity  ||
                 entity instanceof BlazeEntity  ||
-                entity instanceof BreezeEntity ||
                 entity instanceof SlimeEntity  ||
                 entity instanceof VexEntity ||
                 TCOTS_Main.CONFIG.monsters.Elementa().contains(Registries.ENTITY_TYPE.getId(entity.getType()).toString());

@@ -7,7 +7,6 @@ import TCOTS.screen.recipebook.widget.AlchemyRecipeBookWidget;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
@@ -18,24 +17,16 @@ import java.util.Objects;
 @Environment(EnvType.CLIENT)
 public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler> {
 
-    public static final ButtonTextures BUTTON_TEXTURES =
-            new ButtonTextures(
-                    //Enabled
-                    new Identifier(TCOTS_Main.MOD_ID, "buttons/recipe_book_button"),
-                    //Disabled
-                    new Identifier(TCOTS_Main.MOD_ID, "buttons/recipe_book_disabled"),
-                    //EnabledFocus
-                    new Identifier(TCOTS_Main.MOD_ID, "buttons/recipe_book_button_highlighted"),
-                    //DisableFocus
-                    new Identifier(TCOTS_Main.MOD_ID, "buttons/recipe_book_disabled")
+    public static final Identifier recipeBookIcon = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/buttons/recipe_book_button_old.png");
+    public static final Identifier recipeBookIconDisabled = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/buttons/recipe_book_disabled.png");
 
-            );
     public static final Identifier SCREEN_BACKGROUND =
             new Identifier(TCOTS_Main.MOD_ID, "textures/gui/alchemy_table.png");
 
     private final AlchemyRecipeBookWidget recipeBook = new AlchemyRecipeBookWidget();
 
-    private AlchemyRecipeBookButtonTextured buttonWidget;
+    private AlchemyRecipeBookButtonTextured buttonWidgetActive;
+    private AlchemyRecipeBookButtonTextured buttonWidgetDisabled;
 
     public AlchemyTableScreen(AlchemyTableScreenHandler handler,  PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -50,11 +41,15 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
 
 
         this.x = this.recipeBook.findLeftEdge(this.width, this.backgroundWidth);
-        this.buttonWidget =
+        this.buttonWidgetActive =
                 new AlchemyRecipeBookButtonTextured(
                         this.x + 5, this.height / 2 - 39,
                         20, 18,
-                        BUTTON_TEXTURES,
+                        0,0,
+                        18,
+                        recipeBookIcon,
+
+                        20,36,
 
                         //Action when press
                         button -> {
@@ -63,7 +58,25 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
                             button.setPosition(this.x + 5, this.height / 2 - 39);
                         });
 
-        addDrawableChild(buttonWidget);
+        this.buttonWidgetDisabled =
+                new AlchemyRecipeBookButtonTextured(
+                        this.x + 5, this.height / 2 - 39,
+                        20, 18,
+                        0,0,
+                        0,
+                        recipeBookIconDisabled,
+
+                        20,18,
+
+                        //Action when press
+                        button -> {
+
+                        }
+                );
+
+        addDrawableChild(buttonWidgetActive);
+        addDrawableChild(buttonWidgetDisabled);
+
         recipeBook.init(this.height,this.width, this.textRenderer, this.client, this.handler);
 
 
@@ -91,16 +104,25 @@ public class AlchemyTableScreen extends HandledScreen<AlchemyTableScreenHandler>
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         if(conditionForBook()){
-        buttonWidget.active = true;
+        buttonWidgetActive.active = true;
+
+        buttonWidgetActive.visible=true;
+        buttonWidgetDisabled.visible=false;
         } else {
             if(recipeBook.isOpen()){
                 this.x = recipeBook.findLeftEdge(this.width, this.backgroundWidth);
-                buttonWidget.setPosition(this.x + 5, this.height / 2 - 39);
+                buttonWidgetActive.setPosition(this.x + 5, this.height / 2 - 39);
             }
-            buttonWidget.active = false;
+
+            buttonWidgetActive.active = false;
+
+            buttonWidgetActive.visible=false;
+            buttonWidgetDisabled.visible=true;
         }
 
-        renderBackground(context, mouseX, mouseY, delta);
+        buttonWidgetDisabled.active=false;
+
+        renderBackground(context);
         super.render(context, mouseX, mouseY, delta);
         drawMouseoverTooltip(context, mouseX, mouseY);
     }

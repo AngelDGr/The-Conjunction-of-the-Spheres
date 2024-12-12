@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "tcots-witcher:giant_anchor",
+    "tcots-witcher:alchemy_table",
+    "tcots-witcher:herbal_table",
+    "tcots-witcher:sewant_mushroom_block",
+    "tcots-witcher:sewant_mushroom_stem",
+    "tcots-witcher:puffball_mushroom_block"
+  ]
+}

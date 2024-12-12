@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "tcots-witcher:manticore_armor"
-  }
+  },
+  "show_notification": true
 }

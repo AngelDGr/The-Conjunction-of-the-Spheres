@@ -2,7 +2,6 @@ package TCOTS.blocks.plants;
 
 import TCOTS.items.TCOTS_Items;
 import TCOTS.sounds.TCOTS_Sounds;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,16 +24,12 @@ import net.minecraft.world.event.GameEvent;
 
 @SuppressWarnings("deprecation")
 public class ArenariaBush extends PlantBlock implements Fertilizable {
-    public static final MapCodec<ArenariaBush> CODEC = ArenariaBush.createCodec(ArenariaBush::new);
     public static final IntProperty AGE = Properties.AGE_2;
 
     private static final VoxelShape SMALL_SHAPE = Block.createCuboidShape(3.0, 0.0, 3.0, 13.0, 8.0, 13.0);
     private static final VoxelShape LARGE_SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
 
-    @Override
-    protected MapCodec<? extends PlantBlock> getCodec() {
-        return CODEC;
-    }
+
 
     public ArenariaBush(Settings settings) {
         super(settings);
@@ -42,7 +37,7 @@ public class ArenariaBush extends PlantBlock implements Fertilizable {
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return new ItemStack(TCOTS_Items.ARENARIA);
     }
 
@@ -100,7 +95,7 @@ public class ArenariaBush extends PlantBlock implements Fertilizable {
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
         return state.get(AGE) < 2;
     }
 

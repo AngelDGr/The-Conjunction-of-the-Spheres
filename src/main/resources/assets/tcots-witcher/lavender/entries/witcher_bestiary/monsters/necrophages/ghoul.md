@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Ghoul",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/ghoul",
+  "icon": "tcots-witcher:ghoul_blood",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:ghoul_blood"
@@ -69,6 +69,9 @@ or just hit it rapidly.{}
                         <padding>
                           <all>5</all>
                         </padding>
+
+                        <horizontal-alignment>center</horizontal-alignment>
+                        <vertical-alignment>center</vertical-alignment>
                       </stack-layout>
                       
                         <stack-layout>
@@ -83,6 +86,9 @@ or just hit it rapidly.{}
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                          <horizontal-alignment>center</horizontal-alignment>
+                          <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                       
                     </children>

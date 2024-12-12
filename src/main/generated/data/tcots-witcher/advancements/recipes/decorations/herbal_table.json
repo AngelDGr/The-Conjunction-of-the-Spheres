@@ -46,15 +46,16 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
       "has_dandelion",
       "has_poppy",
-      "has_cornflower"
+      "has_cornflower",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:herbal_table"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

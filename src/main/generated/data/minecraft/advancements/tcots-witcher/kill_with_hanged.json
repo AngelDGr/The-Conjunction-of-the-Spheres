@@ -2,18 +2,22 @@
   "parent": "minecraft:tcots-witcher/craft_oil",
   "criteria": {
     "kill_with_hanged": {
+      "conditions": {},
       "trigger": "minecraft:tcots-witcher/kill_with_hanged"
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.kill_with_hanged.description"
     },
     "frame": "goal",
+    "hidden": false,
     "icon": {
       "item": "minecraft:iron_sword",
       "nbt": "{Damage:0}"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.kill_with_hanged.title"
     }

@@ -1,0 +1,14 @@
+{
+  "type": "tcots-witcher:herbal_table",
+  "amplifier": 3,
+  "base_potion": 0,
+  "effects": [
+    "minecraft:jump_boost",
+    "minecraft:slowness"
+  ],
+  "herb": {
+    "Count": 1,
+    "id": "minecraft:cornflower"
+  },
+  "time": 40
+}

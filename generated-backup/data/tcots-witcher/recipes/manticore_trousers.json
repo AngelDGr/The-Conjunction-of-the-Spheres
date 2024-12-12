@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "tag": "tcots-witcher:monster_blood"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "tcots-witcher:cured_monster_leather"
+    }
+  },
+  "pattern": [
+    "LIL",
+    "B B",
+    "L L"
+  ],
+  "result": {
+    "item": "tcots-witcher:manticore_trousers"
+  }
+}

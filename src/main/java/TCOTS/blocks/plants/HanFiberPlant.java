@@ -1,23 +1,16 @@
 package TCOTS.blocks.plants;
 
 import TCOTS.items.TCOTS_Items;
-import com.mojang.serialization.MapCodec;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldView;
 
 public class HanFiberPlant extends VerbenaFlower {
-
-    public static final MapCodec<VerbenaFlower> CODEC = VerbenaFlower.createCodec(VerbenaFlower::new);
-
-    @Override
-    protected MapCodec<? extends PlantBlock> getCodec() {
-        return CODEC;
-    }
 
     private static final VoxelShape[] AGE_TO_SHAPE = new VoxelShape[]{
             Block.createCuboidShape(5.0, 0.0, 5.0, 12, 4.0, 12),
@@ -36,7 +29,7 @@ public class HanFiberPlant extends VerbenaFlower {
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return new ItemStack(TCOTS_Items.HAN_FIBER);
     }
 

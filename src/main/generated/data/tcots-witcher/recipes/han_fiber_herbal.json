@@ -7,7 +7,6 @@
     "minecraft:blindness"
   ],
   "herb": {
-    "Count": 1,
     "id": "tcots-witcher:han_fiber"
   },
   "time": 40

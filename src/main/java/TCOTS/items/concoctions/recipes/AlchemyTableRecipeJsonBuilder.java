@@ -1,15 +1,20 @@
 package TCOTS.items.concoctions.recipes;
 
+import TCOTS.TCOTS_Main;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.WitcherBombs_Base;
 import TCOTS.items.concoctions.WitcherMonsterOil_Base;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,16 +176,128 @@ public class AlchemyTableRecipeJsonBuilder {
         return create(order, output, AlchemyTableRecipeCategory.POTIONS, List.of(new ItemStack(Items.GUNPOWDER)), base);
     }
 
-
-    public void offerTo(Consumer<RecipeJsonProvider> exporter, Identifier recipeId) {
-        AlchemyTableRecipe alchemyTableRecipe = new AlchemyTableRecipe(this.order, this.category, this.ingredients, this.ingredientCount, this.base, this.output);
-
-        exporter.accept(recipeId, alchemyTableRecipe, null);
-    }
-
     public void offerTo(Consumer<RecipeJsonProvider> exporter) {
-        AlchemyTableRecipe alchemyTableRecipe = new AlchemyTableRecipe(this.order, this.category, this.ingredients, this.ingredientCount, this.base, this.output);
 
-        exporter.accept(Registries.ITEM.getId(output.getItem()), alchemyTableRecipe, null);
+        Identifier recipeID=new Identifier(TCOTS_Main.MOD_ID, Registries.ITEM.getId(this.output.getItem()).getPath());
+
+
+        AlchemyTableRecipeJsonProvider alchemyTableRecipe = new AlchemyTableRecipeJsonProvider(
+                recipeID,
+                this.order,
+                this.category.asString(),
+                this.ingredients,
+                this.ingredientCount,
+                this.base.getItem(),
+                this.base.getCount(),
+                this.output.getItem(),
+                this.output.getCount());
+
+        exporter.accept(alchemyTableRecipe);
     }
+
+    public static class AlchemyTableRecipeJsonProvider implements RecipeJsonProvider {
+        private final float order;
+        private final List<Ingredient> ingredients;
+        private final List<Integer> ingredientCount;
+        private final Item base;
+        private final int baseCount;
+        private final Identifier recipeId;
+        private final String category;
+        private final Item output;
+        private final int count;
+
+        public AlchemyTableRecipeJsonProvider(
+                Identifier recipeId,
+
+                float order,
+                String category,
+                List<Ingredient> ingredients,
+                List<Integer> ingredientCount,
+                Item base,
+                int baseCount,
+                Item output,
+                int outputCount
+        ) {
+            this.recipeId = recipeId;
+
+            this.order=order;
+            this.category = category;
+            this.ingredients=ingredients;
+            this.ingredientCount=ingredientCount;
+            this.base=base;
+            this.baseCount=baseCount;
+
+            this.output = output;
+            this.count = outputCount;
+        }
+
+        @Override
+        public void serialize(JsonObject json) {
+            //Order
+            if (this.order!=0) {
+                json.addProperty("order", this.order);
+            } else {
+                json.addProperty("order", 99);
+            }
+
+            //Category
+            if (!this.category.isEmpty()) {
+                json.addProperty("category", this.category);
+            }
+
+            //Ingredients
+            JsonArray jsonArrayIngredients = new JsonArray();
+            for (Ingredient ingredient : this.ingredients) {
+                jsonArrayIngredients.add(ingredient.toJson());
+            }
+            json.add("ingredients", jsonArrayIngredients);
+
+
+            //Ingredients count
+            JsonArray jsonArrayIngredientsCount = new JsonArray();
+            for (int count : this.ingredientCount) {
+                jsonArrayIngredientsCount.add(count);
+            }
+            json.add("ingredient_counters", jsonArrayIngredientsCount);
+
+            //Base
+            JsonObject jsonObjectBase = new JsonObject();
+            jsonObjectBase.addProperty("item", Registries.ITEM.getId(this.base).toString());
+            if (this.baseCount > 1) {
+                jsonObjectBase.addProperty("count", this.baseCount);
+            }
+            json.add("base", jsonObjectBase);
+
+            //Output
+            JsonObject jsonObjectOutput = new JsonObject();
+            jsonObjectOutput.addProperty("item", Registries.ITEM.getId(this.output).toString());
+            if (this.count > 1) {
+                jsonObjectOutput.addProperty("count", this.count);
+            }
+            json.add("result", jsonObjectOutput);
+        }
+
+        @Override
+        public Identifier getRecipeId() {
+            return this.recipeId;
+        }
+
+        @Override
+        public RecipeSerializer<?> getSerializer() {
+            return AlchemyTableRecipe.Serializer.INSTANCE;
+        }
+
+        @Nullable
+        @Override
+        public JsonObject toAdvancementJson() {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public Identifier getAdvancementId() {
+            return null;
+        }
+    }
+
 }

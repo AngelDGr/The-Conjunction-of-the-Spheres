@@ -24,7 +24,6 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
@@ -311,18 +310,8 @@ public class AnchorProjectileEntity extends ProjectileEntity implements GeoEntit
                 }
                 this.onHit();
             }
-        } else if (entity.getType().isIn(EntityTypeTags.DEFLECTS_TRIDENTS)) {
-            this.deflect();
-            return;
         }
         this.playSound(TCOTS_Sounds.ANCHOR_IMPACT, 1.0f, 1.0f);
-    }
-
-    public void deflect() {
-        float f = this.random.nextFloat() * 360.0f;
-        this.setVelocity(this.getVelocity().rotateY(f * ((float)Math.PI / 180)).multiply(0.5));
-        this.setYaw(this.getYaw() + f);
-        this.prevYaw += f;
     }
 
 

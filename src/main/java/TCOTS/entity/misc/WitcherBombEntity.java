@@ -109,6 +109,7 @@ public class WitcherBombEntity extends ThrownItemEntity implements FlyingItemEnt
     @Override
     public void handleStatus(byte status) {
         super.handleStatus(status);
+        GrapeshotBomb.handleStatus(this,status);
         DancingStarBomb.handleStatus(this,status);
         DevilsPuffballBomb.handleStatus(this,status);
         SamumBomb.handleStatus(this,status);

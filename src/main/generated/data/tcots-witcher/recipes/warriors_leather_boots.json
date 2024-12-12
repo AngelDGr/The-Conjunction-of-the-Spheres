@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "tcots-witcher:warriors_leather_boots"
-  }
+  },
+  "show_notification": true
 }

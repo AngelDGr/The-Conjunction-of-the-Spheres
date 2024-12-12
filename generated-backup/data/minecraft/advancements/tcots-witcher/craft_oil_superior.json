@@ -1,0 +1,73 @@
+{
+  "parent": "minecraft:tcots-witcher/craft_oil",
+  "criteria": {
+    "tcots-witcher:oil_beast_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:oil_beast_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:oil_hanged_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:oil_hanged_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:oil_necrophage_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:oil_necrophage_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots-witcher:oil_ogroid_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:oil_ogroid_superior"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.craft_oil_superior.description"
+    },
+    "icon": {
+      "item": "tcots-witcher:oil_necrophage_superior"
+    },
+    "title": {
+      "translate": "advancements.witcher.craft_oil_superior.title"
+    }
+  },
+  "requirements": [
+    [
+      "tcots-witcher:oil_necrophage_superior",
+      "tcots-witcher:oil_ogroid_superior",
+      "tcots-witcher:oil_beast_superior",
+      "tcots-witcher:oil_hanged_superior"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

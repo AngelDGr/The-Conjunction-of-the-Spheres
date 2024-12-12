@@ -1,0 +1,20 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "count": 5,
+    "item": "minecraft:gunpowder"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    2
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_shard"
+    }
+  ],
+  "order": 0.5299998,
+  "result": {
+    "item": "tcots-witcher:dimeritium_bomb"
+  }
+}

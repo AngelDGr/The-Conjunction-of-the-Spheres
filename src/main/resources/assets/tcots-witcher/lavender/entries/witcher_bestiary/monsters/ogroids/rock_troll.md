@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Rock Troll",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/rock_troll",
+  "icon": "minecraft:cobblestone",
   "category": "tcots-witcher:ogroids",
   "associated_items": [
     "tcots-witcher:cave_troll_liver",
@@ -67,6 +67,9 @@ However, a particular breed known as __rabid trolls__ is purely hostile, easily 
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -81,6 +84,9 @@ However, a particular breed known as __rabid trolls__ is purely hostile, easily 
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>
@@ -117,6 +123,9 @@ However, a particular breed known as __rabid trolls__ is purely hostile, easily 
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                     </children>
                     <sizing>

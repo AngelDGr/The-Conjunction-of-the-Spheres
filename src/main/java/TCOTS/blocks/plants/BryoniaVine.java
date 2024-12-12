@@ -2,7 +2,6 @@ package TCOTS.blocks.plants;
 
 import TCOTS.items.TCOTS_Items;
 import TCOTS.sounds.TCOTS_Sounds;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -18,20 +17,16 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
 @SuppressWarnings("deprecation")
 public class BryoniaVine extends MultifaceGrowthBlock implements Fertilizable {
-    public static final MapCodec<BryoniaVine> CODEC = BryoniaVine.createCodec(BryoniaVine::new);
     private final LichenGrower grower = new LichenGrower(this);
     public static final IntProperty AGE = Properties.AGE_3;
 
-    @Override
-    protected MapCodec<? extends MultifaceGrowthBlock> getCodec() {
-        return CODEC;
-    }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
@@ -40,7 +35,7 @@ public class BryoniaVine extends MultifaceGrowthBlock implements Fertilizable {
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return new ItemStack(TCOTS_Items.BRYONIA);
     }
 
@@ -97,7 +92,7 @@ public class BryoniaVine extends MultifaceGrowthBlock implements Fertilizable {
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean IsClient) {
         return state.get(AGE) < 3;
     }
 

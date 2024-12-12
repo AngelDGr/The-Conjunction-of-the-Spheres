@@ -1,0 +1,28 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "minecraft:glass_bottle"
+  },
+  "category": "misc",
+  "ingredient_counters": [
+    2,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "tcots-witcher:cherry_cordial"
+    },
+    {
+      "item": "tcots-witcher:mandrake_cordial"
+    }
+  ],
+  "order": 0.7199996,
+  "result": {
+    "count": 2,
+    "item": "tcots-witcher:alcohest"
+  }
+}

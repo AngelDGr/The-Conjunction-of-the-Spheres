@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:oil_beast_enhanced"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    2,
+    2,
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alchemy_paste"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "tcots-witcher:celandine"
+    },
+    {
+      "item": "tcots-witcher:puffball"
+    },
+    {
+      "item": "tcots-witcher:rubedo"
+    }
+  ],
+  "order": 0.66999966,
+  "result": {
+    "item": "tcots-witcher:oil_beast_superior"
+  }
+}

@@ -5,8 +5,9 @@ import TCOTS.items.concoctions.WitcherBombs_Base;
 import TCOTS.items.concoctions.WitcherMonsterOil_Base;
 import TCOTS.items.concoctions.WitcherPotions_Base;
 import TCOTS.utils.AlchemyFormulaUtil;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.context.LootContext;
@@ -15,7 +16,7 @@ import net.minecraft.loot.function.LootFunction;
 import net.minecraft.loot.function.LootFunctionType;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.random.Random;
 
 import java.util.ArrayList;
@@ -25,14 +26,8 @@ public class AlchemyRecipeRandomlyLootFunction extends ConditionalLootFunction {
 
     public final int decoctions;
 
-    public static final Codec<AlchemyRecipeRandomlyLootFunction> CODEC = RecordCodecBuilder
-            .create(instance ->
-                    AlchemyRecipeRandomlyLootFunction.addConditionsField(instance)
-                            .and(Codecs.NONNEGATIVE_INT.fieldOf("decoctions_only").orElse(0).forGetter(function -> function.decoctions))
-                            .apply(instance, AlchemyRecipeRandomlyLootFunction::new));
 
-
-    protected AlchemyRecipeRandomlyLootFunction(List<LootCondition> conditions, int decoctions) {
+    protected AlchemyRecipeRandomlyLootFunction(LootCondition[] conditions, int decoctions) {
         super(conditions);
         this.decoctions=decoctions;
     }
@@ -117,4 +112,15 @@ public class AlchemyRecipeRandomlyLootFunction extends ConditionalLootFunction {
             return new AlchemyRecipeRandomlyLootFunction(this.getConditions(), this.decoction);
         }
     }
-}
+
+    public static class Serializer extends ConditionalLootFunction.Serializer<AlchemyRecipeRandomlyLootFunction> {
+        @Override
+        public void toJson(JsonObject jsonObject, AlchemyRecipeRandomlyLootFunction referenceLootFunction, JsonSerializationContext jsonSerializationContext) {
+            jsonObject.addProperty("decoctions_only", referenceLootFunction.decoctions);
+        }
+
+        public AlchemyRecipeRandomlyLootFunction fromJson(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext, LootCondition[] lootConditions) {
+
+            return new AlchemyRecipeRandomlyLootFunction(lootConditions, JsonHelper.getInt(jsonObject, "decoctions_only"));
+        }
+    }}

@@ -2,17 +2,21 @@
   "parent": "minecraft:tcots-witcher/craft_bomb_superior",
   "criteria": {
     "stop_creeper": {
+      "conditions": {},
       "trigger": "minecraft:tcots-witcher/stop_creeper"
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.stop_creeper.description"
     },
     "frame": "challenge",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:moon_dust_superior"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.stop_creeper.title"
     }

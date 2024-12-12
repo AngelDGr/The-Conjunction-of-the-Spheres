@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Refilling",
-  "icon_sprite": "tcots-witcher:alchemy_almanac/category/refilling",
+  "icon": "tcots-witcher:empty_witcher_potion2",
   "ordinal": 8,
   "associated_items": [
     "tcots-witcher:dwarven_spirit",

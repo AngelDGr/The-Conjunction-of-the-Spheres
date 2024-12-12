@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_cadaverine"
+      "has_cadaverine",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:cadaverine_decay_head"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

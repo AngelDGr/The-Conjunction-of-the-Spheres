@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:tcots-witcher/hunting",
+  "criteria": {
+    "kill_rotfiend": {
+      "trigger": "minecraft:tcots-witcher/kill_rotfiend"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.kill_rotfiend.description"
+    },
+    "icon": {
+      "item": "tcots-witcher:rotfiend_blood"
+    },
+    "title": {
+      "translate": "advancements.witcher.kill_rotfiend.title"
+    }
+  },
+  "requirements": [
+    [
+      "kill_rotfiend"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

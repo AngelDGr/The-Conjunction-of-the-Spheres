@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Scurver",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/scurver",
+  "icon": "tcots-witcher:scurver_spine",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:scurver_spine"
@@ -69,6 +69,9 @@ If you manage {#0A880E}kill the creature when it's in flames, you could retrieve
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -83,6 +86,9 @@ If you manage {#0A880E}kill the creature when it's in flames, you could retrieve
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -97,6 +103,9 @@ If you manage {#0A880E}kill the creature when it's in flames, you could retrieve
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                                                
                     </children>

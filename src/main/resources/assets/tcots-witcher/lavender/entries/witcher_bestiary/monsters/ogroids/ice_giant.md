@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Ice Giant",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/ice_giant",
+  "icon": "tcots-witcher:giant_anchor",
   "category": "tcots-witcher:ogroids",
   "associated_items": [
     "tcots-witcher:giant_anchor"
@@ -66,6 +66,9 @@ that might still lie hidden within the monster’s lair.
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -80,6 +83,9 @@ that might still lie hidden within the monster’s lair.
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         

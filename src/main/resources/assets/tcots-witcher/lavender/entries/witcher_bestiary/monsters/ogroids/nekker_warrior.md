@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Nekker Warrior",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/nekker_warrior",
+  "icon": "tcots-witcher:nekker_heart",
   "category": "tcots-witcher:ogroids",
   "associated_items": [
     "tcots-witcher:nekker_warrior_mutagen"
@@ -66,6 +66,9 @@ Try to focus on it when fighting a Nekker swarm; without a leader, the Nekkers l
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                          <horizontal-alignment>center</horizontal-alignment>
+                          <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -80,6 +83,9 @@ Try to focus on it when fighting a Nekker swarm; without a leader, the Nekkers l
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                          <horizontal-alignment>center</horizontal-alignment>
+                          <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>
@@ -116,6 +122,9 @@ Try to focus on it when fighting a Nekker swarm; without a leader, the Nekkers l
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                          <horizontal-alignment>center</horizontal-alignment>
+                          <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                     </children>
                     <sizing>

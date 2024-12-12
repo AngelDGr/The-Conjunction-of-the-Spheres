@@ -248,7 +248,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
             if (target != null) {
                 return !this.giant.cooldownBetweenJumps
                         && this.giant.isAttacking()
-                        && !this.giant.isInFluid()
+                        && !(this.giant.isInLava() || this.giant.isSubmergedInWater())
                         && !this.giant.hasVehicle()
                         && !this.giant.getWorld().getBlockState(this.giant.getBlockPos()).isOf(Blocks.HONEY_BLOCK)
                         && !this.giant.getWorld().getBlockState(this.giant.getBlockPos()).isOf(Blocks.COBWEB)
@@ -957,7 +957,7 @@ public class IceGiantEntity extends OgroidMonster implements GeoEntity, Vibratio
         if (this.isInSwimmingPose()) {
             return this.getLerpedPos(delta).add(new Vec3d(d, 0.2, -0.15).rotateX(-f).rotateY(-g));
         }
-        double l = this.getBoundingBox().getLengthY() - 2.6;
+        double l = this.getBoundingBox().getYLength() - 2.6;
         double e = this.isInSneakingPose() ? -0.2 : 0.07;
         return this.getLerpedPos(delta).add(new Vec3d(d, l, e).rotateY(-g));
     }

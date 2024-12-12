@@ -17,13 +17,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.befriend_troll_ice.description"
     },
     "frame": "goal",
+    "hidden": false,
     "icon": {
       "item": "minecraft:packed_ice"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.befriend_troll_ice.title"
     }

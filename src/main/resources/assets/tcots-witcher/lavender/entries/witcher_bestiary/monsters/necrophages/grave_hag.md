@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Grave Hag",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/grave_hag",
+  "icon": "tcots-witcher:nest_skull",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:grave_hag_mutagen"
@@ -67,6 +67,9 @@ and damaging a lot any shield that you could use.
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                     </children>
                     <sizing>

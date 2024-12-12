@@ -38,10 +38,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -295,21 +292,24 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         public boolean canStart() {
             List<ItemEntity> list = searchFleshList();
 
-            return !list.isEmpty() && ghoul.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem());
+            return !list.isEmpty() && ghoul.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem())
+                    && ghoul.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING);
         }
 
         @Override
         public boolean shouldContinue() {
             List<ItemEntity> list = searchFleshList();
 
-            return !list.isEmpty() && ghoul.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem());
+            return !list.isEmpty() && ghoul.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem())
+                    && ghoul.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING);
         }
 
         @Override
         public void start() {
             List<ItemEntity> list = searchFleshList();
 
-            if (!list.isEmpty() && ghoul.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem())) {
+            if (!list.isEmpty() && ghoul.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem())
+                    && ghoul.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                 this.startMovingTo(ghoul.getNavigation(), list.get(0), speed);
             }
         }
@@ -354,10 +354,9 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         this.setEatingTime(getEatingTime()+1);
     }
 
-
     @Override
     public boolean canGather(ItemStack stack) {
-        return isEdibleMeat(stack) && this.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem());
+        return this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && isEdibleMeat(stack) && this.getStackInHand(Hand.MAIN_HAND).isOf(ItemStack.EMPTY.getItem());
     }
 
     private static boolean isEdibleMeat(ItemStack stack){
@@ -398,8 +397,8 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
     private void handleEndsFeed(ItemStack foodStack) {
         if(!this.getWorld().isClient) {
 
-            if(foodStack.getFoodComponent()!=null){
-                this.heal((float) foodStack.getFoodComponent().getHunger() /2);
+            if(foodStack.getItem().getFoodComponent()!=null){
+                this.heal((float) foodStack.getItem().getFoodComponent().getHunger() /2);
             }
             this.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
 

@@ -19,6 +19,8 @@
     "description": {
       "translate": "advancements.witcher.main.description"
     },
+    "frame": "task",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:witcher_bestiary"
     },

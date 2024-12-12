@@ -1,0 +1,19 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "minecraft:honeycomb"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:cornflower"
+    }
+  ],
+  "order": 0.6199997,
+  "result": {
+    "item": "tcots-witcher:oil_ogroid"
+  }
+}

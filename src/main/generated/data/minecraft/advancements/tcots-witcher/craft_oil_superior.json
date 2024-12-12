@@ -51,12 +51,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.craft_oil_superior.description"
     },
+    "frame": "task",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:oil_necrophage_superior"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.craft_oil_superior.title"
     }

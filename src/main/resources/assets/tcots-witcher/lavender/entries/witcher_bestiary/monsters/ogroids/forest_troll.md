@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Forest Troll",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/forest_troll",
+  "icon": "minecraft:oak_leaves",
   "category": "tcots-witcher:ogroids",
   "associated_items": [
   ],
@@ -66,6 +66,9 @@ engage in combat.
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -80,6 +83,9 @@ engage in combat.
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -94,6 +100,9 @@ engage in combat.
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -108,6 +117,9 @@ engage in combat.
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>
@@ -144,6 +156,9 @@ engage in combat.
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                     </children>
                     <sizing>

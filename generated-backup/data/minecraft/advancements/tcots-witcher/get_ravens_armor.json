@@ -1,0 +1,49 @@
+{
+  "parent": "minecraft:tcots-witcher/hunting",
+  "criteria": {
+    "get_ravens_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "tcots-witcher:ravens_armor"
+            ]
+          },
+          {
+            "items": [
+              "tcots-witcher:ravens_trousers"
+            ]
+          },
+          {
+            "items": [
+              "tcots-witcher:ravens_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.get_ravens_armor.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "item": "tcots-witcher:ravens_armor",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.witcher.get_ravens_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "get_ravens_armor"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

@@ -255,12 +255,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.start_killing.description"
     },
+    "frame": "task",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:graveir_bone"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.start_killing.title"
     }

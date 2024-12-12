@@ -131,7 +131,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
 
                 return !this.devourer.cooldownBetweenJumps
                         && this.devourer.isAttacking()
-                        && !this.devourer.isInFluid()
+                        && !(this.devourer.isInLava() || this.devourer.isSubmergedInWater())
                         && !this.devourer.hasVehicle()
                         && !this.devourer.getWorld().getBlockState(this.devourer.getBlockPos()).isOf(Blocks.HONEY_BLOCK)
                         && !this.devourer.getWorld().getBlockState(this.devourer.getBlockPos()).isOf(Blocks.COBWEB)

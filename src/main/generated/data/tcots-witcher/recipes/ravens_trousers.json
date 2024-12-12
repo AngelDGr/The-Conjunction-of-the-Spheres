@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "tcots-witcher:ravens_trousers"
-  }
+  },
+  "show_notification": true
 }

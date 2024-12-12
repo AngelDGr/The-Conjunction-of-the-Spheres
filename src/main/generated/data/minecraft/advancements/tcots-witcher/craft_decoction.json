@@ -75,13 +75,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.craft_decoction.description"
     },
     "frame": "goal",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:grave_hag_decoction"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.craft_decoction.title"
     }

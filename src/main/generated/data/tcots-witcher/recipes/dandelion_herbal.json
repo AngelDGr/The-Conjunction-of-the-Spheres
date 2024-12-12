@@ -7,7 +7,6 @@
     "minecraft:nausea"
   ],
   "herb": {
-    "Count": 1,
     "id": "minecraft:dandelion"
   },
   "time": 80

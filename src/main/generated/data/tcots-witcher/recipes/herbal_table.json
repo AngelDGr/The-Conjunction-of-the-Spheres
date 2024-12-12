@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "tcots-witcher:herbal_table"
-  }
+  },
+  "show_notification": true
 }

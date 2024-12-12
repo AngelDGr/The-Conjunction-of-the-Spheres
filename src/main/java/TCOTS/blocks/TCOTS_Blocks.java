@@ -157,11 +157,11 @@ public class TCOTS_Blocks {
         WINTERS_BLADE_SKELETON_ENTITY = Registry.register(
                 Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(TCOTS_Main.MOD_ID, "winters_blade_skeleton"),
-                BlockEntityType.Builder.create(WintersBladeSkeletonBlockEntity::new, WINTERS_BLADE_SKELETON).build());
+                FabricBlockEntityTypeBuilder.create(WintersBladeSkeletonBlockEntity::new, WINTERS_BLADE_SKELETON).build());
 
         SKELETON_BLOCK_ENTITY = Registry.register(
                 Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(TCOTS_Main.MOD_ID, "skeleton_block"),
-                BlockEntityType.Builder.create(SkeletonBlockEntity::new, SKELETON_BLOCK).build());
+                FabricBlockEntityTypeBuilder.create(SkeletonBlockEntity::new, SKELETON_BLOCK).build());
     }
 }

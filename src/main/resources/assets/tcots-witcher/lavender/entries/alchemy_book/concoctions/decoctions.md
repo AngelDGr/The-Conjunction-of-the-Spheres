@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Decoctions",
-  "icon_sprite": "tcots-witcher:alchemy_almanac/category/decoctions",
+  "icon": "tcots-witcher:grave_hag_decoction",
   "ordinal": 5,
   "associated_items": [
     "tcots-witcher:grave_hag_decoction",

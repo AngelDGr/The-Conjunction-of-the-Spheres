@@ -1,0 +1,14 @@
+{
+  "type": "tcots-witcher:herbal_table",
+  "amplifier": 2,
+  "base_potion": 0,
+  "effects": [
+    "minecraft:regeneration",
+    "minecraft:weakness"
+  ],
+  "herb": {
+    "Count": 1,
+    "id": "minecraft:oxeye_daisy"
+  },
+  "time": 40
+}

@@ -46,15 +46,16 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
       "has_iron_block",
       "has_leather",
-      "has_tripwire_hook"
+      "has_tripwire_hook",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:knight_crossbow"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

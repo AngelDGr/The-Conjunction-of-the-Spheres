@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_leather"
+      "has_leather",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:warriors_leather_trousers"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

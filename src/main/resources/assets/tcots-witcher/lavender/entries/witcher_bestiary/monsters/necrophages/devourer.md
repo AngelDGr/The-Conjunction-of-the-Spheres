@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Devourer",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/devourer",
+  "icon": "tcots-witcher:devourer_teeth",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:devourer_teeth"
@@ -66,6 +66,9 @@ Take in account that this attack mechanism has a major flaw; {#0A880E}it needs t
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -80,6 +83,9 @@ Take in account that this attack mechanism has a major flaw; {#0A880E}it needs t
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                                                
                     </children>

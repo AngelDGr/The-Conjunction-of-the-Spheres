@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 @SuppressWarnings("unused")
 public class ToxicityHudOverlay {
-    private static final Identifier TOXICITY_BAR_EMPTY = new Identifier(TCOTS_Main.MOD_ID, "hud/toxicity_bar");
+    private static final Identifier TOXICITY_BAR_EMPTY = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/hud/toxicity_bar.png");
     private static final Identifier TOXICITY_BAR_FULL = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/hud/toxicity_bar_filled.png");
     private static final Identifier TOXICITY_BAR_FULL_DECOCTION = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/hud/toxicity_bar_filled_decoction.png");
     private static final Identifier TOXICITY_OVERLAY = new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/hud/toxicity_overlay.png");
@@ -78,7 +78,11 @@ public class ToxicityHudOverlay {
 
                     context.setShaderColor(1,1,1, transparency);
                     //EmptyBar
-                    context.drawGuiTexture(TOXICITY_BAR_EMPTY, x, y, 116, 10);
+                    context.drawTexture(TOXICITY_BAR_EMPTY, x, y,
+                            0,0,
+                            116, 10,
+                            116,10);
+
                     //Normal Toxicity Bar
                     context.drawTexture(TOXICITY_BAR_FULL, x +10, y,
                             10.0f, 0.0f,

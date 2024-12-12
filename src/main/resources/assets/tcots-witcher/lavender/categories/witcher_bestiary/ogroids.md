@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Ogroids",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/ogroids",
+  "icon": "minecraft:stone",
   "ordinal": 2
 }
 ```

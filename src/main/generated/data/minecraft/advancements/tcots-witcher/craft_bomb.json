@@ -291,12 +291,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.craft_bomb.description"
     },
+    "frame": "task",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:grapeshot"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.craft_bomb.title"
     }

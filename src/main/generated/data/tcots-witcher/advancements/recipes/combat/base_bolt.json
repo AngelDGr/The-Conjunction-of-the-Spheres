@@ -34,14 +34,15 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
       "has_iron_ingot",
-      "has_feather"
+      "has_feather",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:base_bolt"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

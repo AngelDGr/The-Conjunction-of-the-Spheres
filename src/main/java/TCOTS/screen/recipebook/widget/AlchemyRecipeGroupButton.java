@@ -4,33 +4,39 @@ import TCOTS.TCOTS_Main;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeCategory;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-
-import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.widget.ToggleButtonWidget;
-
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 
+import java.util.List;
+
 
 public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
     private final AlchemyTableRecipeCategory category;
     ItemStack icon;
 
+    private final List<Identifier> BUTTON_TEXTURES = List.of(
+            new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/buttons/button_group_highlighted.png"),
+            new Identifier(TCOTS_Main.MOD_ID,"textures/gui/sprites/buttons/button_group.png"),
+            new Identifier(TCOTS_Main.MOD_ID, "textures/gui/sprites/buttons/button_group_highlighted.png"));
+
     public AlchemyRecipeGroupButton(ItemStack icon, AlchemyTableRecipeCategory category) {
         super(0, 0, 39, 27, false);
-
-        ButtonTextures BUTTON_TEXTURES = new ButtonTextures(
-                new Identifier(TCOTS_Main.MOD_ID, "buttons/button_group_highlighted"),
-                new Identifier(TCOTS_Main.MOD_ID,"buttons/button_group"),
-                new Identifier(TCOTS_Main.MOD_ID, "buttons/button_group_highlighted"));
 
         this.icon=icon;
         this.category = category;
 
-        this.setTextures(BUTTON_TEXTURES);
+        this.setTextureUV(
+                0,
+                0,
+                0,
+                0,
+                new Identifier(
+                TCOTS_Main.MOD_ID,
+                "textures/gui/sprites/buttons/button_group_old.png"));
     }
 
     public void checkForNewRecipes(MinecraftClient client) {
@@ -43,18 +49,22 @@ public class AlchemyRecipeGroupButton extends ToggleButtonWidget {
     }
 
     @Override
-    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
 
         context.getMatrices().push();
         context.getMatrices().translate(0,0,500);
         this.renderIcons(context);
         context.getMatrices().pop();
 
-        if (this.textures == null) {
-            return;
-        }
-
-        context.drawGuiTexture(this.textures.get(this.toggled, this.isSelected()), this.getX(), this.getY(), this.width, this.height);
+        context.drawTexture(
+                this.toggled?
+                        BUTTON_TEXTURES.get(0)
+                        : BUTTON_TEXTURES.get(1),
+                this.getX(), this.getY(),
+                0 ,
+                0,
+                this.width, this.height,
+                39,27);
     }
 
     private void renderIcons(DrawContext context) {

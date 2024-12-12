@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "tcots-witcher:alchemy_table"
-  }
+  },
+  "show_notification": true
 }

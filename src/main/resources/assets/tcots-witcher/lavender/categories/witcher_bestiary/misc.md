@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Extra Info",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/misc",
+  "icon": "minecraft:paper",
   "ordinal": 99
 }
 ```

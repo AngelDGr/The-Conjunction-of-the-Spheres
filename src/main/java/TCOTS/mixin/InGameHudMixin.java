@@ -39,8 +39,7 @@ public abstract class InGameHudMixin {
     private int ticks;
     @Shadow
     private int renderHealthValue;
-    @Shadow
-    public abstract void drawHeart(DrawContext context, InGameHud.HeartType type, int x, int y, boolean hardcore, boolean blinking, boolean half);
+    @Shadow public abstract void drawHeart(DrawContext context, InGameHud.HeartType type, int x, int y, int v, boolean blinking, boolean halfHeart);
 
     //Moving hearts for swallow
     @ModifyArg(method = "renderStatusBars", at = @At(value = "INVOKE", target =
@@ -122,19 +121,23 @@ public abstract class InGameHudMixin {
 
 
     @Redirect(method = "renderHealthBar", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/hud/InGameHud;drawHeart(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/gui/hud/InGameHud$HeartType;IIZZZ)V",
+            target = "Lnet/minecraft/client/gui/hud/InGameHud;drawHeart(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/gui/hud/InGameHud$HeartType;IIIZZ)V",
             ordinal = 3))
-    private void injectEffectsHearts(InGameHud instance, DrawContext context, InGameHud.HeartType type, int x, int y, boolean hardcore, boolean blinking, boolean half){
+    private void injectEffectsHearts(InGameHud instance, DrawContext context, InGameHud.HeartType type, int x, int y, int v, boolean blinking, boolean halfHeart){
         PlayerEntity player = this.getCameraPlayer();
         if(player!=null) {
 
             if (player.theConjunctionOfTheSpheres$toxicityOverThreshold() && !player.hasStatusEffect(StatusEffects.WITHER)) {
-                context.drawGuiTexture(TCOTS_HeartTypes.TOXIC.getTexture(hardcore,half,blinking), x, y, 9, 9);
+                context.drawTexture(
+                        TCOTS_HeartTypes.TOXIC.getTexture(player.getWorld().getLevelProperties().isHardcore(), halfHeart, blinking),
+                        x, y, 0, 0, 9, 9, 9,9);
             } else if (player.hasStatusEffect(TCOTS_Effects.CADAVERINE) && !player.hasStatusEffect(StatusEffects.WITHER)){
-                context.drawGuiTexture(TCOTS_HeartTypes.CADAVERINE.getTexture(hardcore,half,blinking), x, y, 9, 9);
+                context.drawTexture(
+                        TCOTS_HeartTypes.CADAVERINE.getTexture(player.getWorld().getLevelProperties().isHardcore(), halfHeart, blinking),
+                        x, y, 0, 0, 9, 9, 9,9);
             }
             else {
-                drawHeart(context, type, x, y, hardcore, blinking, half);
+                drawHeart(context, type, x, y, v, blinking, halfHeart);
             }
         }
     }

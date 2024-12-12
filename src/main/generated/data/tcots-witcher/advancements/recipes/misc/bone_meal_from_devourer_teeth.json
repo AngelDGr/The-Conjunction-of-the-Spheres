@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_devourer_teeth"
+      "has_devourer_teeth",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:bone_meal_from_devourer_teeth"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

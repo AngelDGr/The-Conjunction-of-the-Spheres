@@ -11,7 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
-import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
@@ -105,7 +104,7 @@ public class HerbalTableScreenHandler extends ScreenHandler {
 
             //If it's the result slot
             if (slotIndex == 2) {
-                this.context.run((world, pos) -> stackInSlot.getItem().onCraftByPlayer(stackInSlot, world, player));
+                this.context.run((world, pos) -> stackInSlot.getItem().onCraft(stackInSlot, world, player));
 
                 if (!this.insertItem(stackInSlot, 3, 39, true)) {
                     return ItemStack.EMPTY;
@@ -165,11 +164,10 @@ public class HerbalTableScreenHandler extends ScreenHandler {
         if (world.getServer() == null) return;
 
         //Crafting
-        Optional<RecipeEntry<HerbalTableRecipe>> optional = world.getServer().getRecipeManager().getFirstMatch(ScreenHandlersAndRecipesRegister.HERBAL_TABLE, craftingInventory, world);
+        Optional<HerbalTableRecipe> optional = world.getServer().getRecipeManager().getFirstMatch(ScreenHandlersAndRecipesRegister.HERBAL_TABLE, craftingInventory, world);
         if (optional.isPresent()) {
             ItemStack itemStack2;
-            RecipeEntry<HerbalTableRecipe> recipeEntry = optional.get();
-            HerbalTableRecipe craftingRecipe = recipeEntry.value();
+            HerbalTableRecipe craftingRecipe = optional.get();
             if(player instanceof ServerPlayerEntity){
                 if ((itemStack2 = craftingRecipe.craft(craftingInventory, world.getRegistryManager())).isItemEnabled(world.getEnabledFeatures())) {
                     outputItem = itemStack2;
@@ -230,7 +228,7 @@ public class HerbalTableScreenHandler extends ScreenHandler {
         @Override
         protected void onCrafted(ItemStack stack) {
             if (this.amount > 0) {
-                stack.onCraftByPlayer(this.player.getWorld(), this.player, this.amount);
+                stack.onCraft(this.player.getWorld(), this.player, this.amount);
             }
             this.amount = 0;
         }

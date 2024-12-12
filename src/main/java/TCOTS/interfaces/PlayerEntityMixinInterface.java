@@ -23,10 +23,6 @@ public interface PlayerEntityMixinInterface {
 
     default int theConjunctionOfTheSpheres$getMaxToxicity(){return 0;}
 
-    default void theConjunctionOfTheSpheres$addMaxToxicity(int MaxToxicity){}
-
-    default void theConjunctionOfTheSpheres$decreaseMaxToxicity(int MaxToxicity){}
-
     default void theConjunctionOfTheSpheres$setMaxToxicity(int MaxToxicity){}
 
     default void theConjunctionOfTheSpheres$setDecoctionToxicity(int DecoctionToxicity){}

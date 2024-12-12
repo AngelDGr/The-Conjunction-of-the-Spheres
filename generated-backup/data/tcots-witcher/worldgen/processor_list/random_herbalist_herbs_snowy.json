@@ -1,0 +1,493 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": {
+            "block": "minecraft:flower_pot",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:potted_bryonia_flower"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:flower_pot",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:potted_brown_mushroom"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:flower_pot",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:potted_red_mushroom"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:flower_pot",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:potted_spruce_sapling"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:flower_pot",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:potted_puffball_mushroom"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:flower_pot",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:potted_verbena_flower"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:flower_pot",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:potted_azure_bluet"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:flower_pot",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:potted_oxeye_daisy"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:arenaria_bush",
+            "Properties": {
+              "age": "2"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:fern"
+            },
+            "predicate_type": "minecraft:random_blockstate_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:crows_eye_fern",
+            "Properties": {
+              "age": "2",
+              "half": "lower"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:sweet_berry_bush",
+            "Properties": {
+              "age": "2"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:brown_mushroom"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:puffball_mushroom"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:azure_bluet"
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:verbena_flower",
+            "Properties": {
+              "age": "3"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:dandelion"
+          }
+        },
+        {
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:vine",
+              "Properties": {
+                "east": "false",
+                "north": "true",
+                "south": "false",
+                "up": "false",
+                "west": "false"
+              }
+            },
+            "predicate_type": "minecraft:random_blockstate_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:bryonia_vine",
+            "Properties": {
+              "age": "3",
+              "down": "false",
+              "east": "false",
+              "north": "true",
+              "south": "false",
+              "up": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:vine",
+              "Properties": {
+                "east": "false",
+                "north": "false",
+                "south": "true",
+                "up": "false",
+                "west": "false"
+              }
+            },
+            "predicate_type": "minecraft:random_blockstate_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:bryonia_vine",
+            "Properties": {
+              "age": "3",
+              "down": "false",
+              "east": "false",
+              "north": "false",
+              "south": "true",
+              "up": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:vine",
+              "Properties": {
+                "east": "false",
+                "north": "false",
+                "south": "false",
+                "up": "false",
+                "west": "true"
+              }
+            },
+            "predicate_type": "minecraft:random_blockstate_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:bryonia_vine",
+            "Properties": {
+              "age": "3",
+              "down": "false",
+              "east": "false",
+              "north": "false",
+              "south": "false",
+              "up": "false",
+              "west": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:vine",
+              "Properties": {
+                "east": "true",
+                "north": "false",
+                "south": "false",
+                "up": "false",
+                "west": "false"
+              }
+            },
+            "predicate_type": "minecraft:random_blockstate_match",
+            "probability": 0.3
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "tcots-witcher:bryonia_vine",
+            "Properties": {
+              "age": "3",
+              "down": "false",
+              "east": "true",
+              "north": "false",
+              "south": "false",
+              "up": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:vine",
+              "Properties": {
+                "east": "false",
+                "north": "true",
+                "south": "false",
+                "up": "false",
+                "west": "false"
+              }
+            },
+            "predicate_type": "minecraft:random_blockstate_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:glow_lichen",
+            "Properties": {
+              "down": "false",
+              "east": "false",
+              "north": "true",
+              "south": "false",
+              "up": "false",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:vine",
+              "Properties": {
+                "east": "false",
+                "north": "false",
+                "south": "true",
+                "up": "false",
+                "west": "false"
+              }
+            },
+            "predicate_type": "minecraft:random_blockstate_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:glow_lichen",
+            "Properties": {
+              "down": "false",
+              "east": "false",
+              "north": "false",
+              "south": "true",
+              "up": "false",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:vine",
+              "Properties": {
+                "east": "true",
+                "north": "false",
+                "south": "false",
+                "up": "false",
+                "west": "false"
+              }
+            },
+            "predicate_type": "minecraft:random_blockstate_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:glow_lichen",
+            "Properties": {
+              "down": "false",
+              "east": "true",
+              "north": "false",
+              "south": "false",
+              "up": "false",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:vine",
+              "Properties": {
+                "east": "false",
+                "north": "false",
+                "south": "false",
+                "up": "false",
+                "west": "true"
+              }
+            },
+            "predicate_type": "minecraft:random_blockstate_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:glow_lichen",
+            "Properties": {
+              "down": "false",
+              "east": "false",
+              "north": "false",
+              "south": "false",
+              "up": "false",
+              "waterlogged": "false",
+              "west": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:cobblestone",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:mossy_cobblestone"
+          }
+        }
+      ]
+    }
+  ]
+}

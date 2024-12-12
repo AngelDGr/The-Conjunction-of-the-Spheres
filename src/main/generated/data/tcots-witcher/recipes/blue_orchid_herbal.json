@@ -7,7 +7,6 @@
     "minecraft:nausea"
   ],
   "herb": {
-    "Count": 1,
     "id": "minecraft:blue_orchid"
   },
   "time": 80

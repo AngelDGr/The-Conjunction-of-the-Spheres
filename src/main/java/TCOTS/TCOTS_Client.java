@@ -49,7 +49,6 @@ import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -343,11 +342,8 @@ public class TCOTS_Client implements ClientModInitializer {
 
     private static final RecipeFeature.RecipePreviewBuilder<AlchemyTableRecipe> alchemyTable_RecipePreviewBuilder = new RecipeFeature.RecipePreviewBuilder<>() {
         @Override
-        public @NotNull Component buildRecipePreview(BookCompiler.ComponentSource componentSource, @NotNull RecipeEntry<AlchemyTableRecipe> recipeEntry) {
+        public @NotNull Component buildRecipePreview(BookCompiler.ComponentSource componentSource, @NotNull AlchemyTableRecipe recipeEntry) {
             Identifier TEXTURE_ID = Identifier.of(TCOTS_Main.MOD_ID, "textures/gui/alchemy_book_gui.png");
-
-            //Get the recipe
-            var recipe = recipeEntry.value();
 
             //Makes how it's going to flow the content in root
             //Size horizontal       and      vertical
@@ -367,7 +363,7 @@ public class TCOTS_Client implements ClientModInitializer {
                         //Makes a container of Item Stack
                         Containers.stack(Sizing.fixed(22), Sizing.fixed(22))
                                 //Add as child the result
-                                .child(Components.item(recipe.getResult(null)).showOverlay(true).setTooltipFromStack(true))
+                                .child(Components.item(recipeEntry.getOutput(null)).showOverlay(true).setTooltipFromStack(true))
                                 //Add as child the texture
                                 .child(Components.texture(TEXTURE_ID,
                                         435, 144,
@@ -389,11 +385,11 @@ public class TCOTS_Client implements ClientModInitializer {
                                 .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER));
 
                 //Loop to assign each ingredient to a container
-                for (int i = 0; i < recipe.getIngredients().size(); i++) {
+                for (int i = 0; i < recipeEntry.getIngredients().size(); i++) {
                     //Get the ingredient stack
-                    ItemStack stack = recipe.getIngredients().get(i).getMatchingStacks()[0];
+                    ItemStack stack = recipeEntry.getIngredients().get(i).getMatchingStacks()[0];
                     //Get the quantity
-                    int count = recipe.getIngredientsCounts().get(i);
+                    int count = recipeEntry.getIngredientsCounts().get(i);
                     //Creates the stack with the correct quantity
                     ItemStack ingredientStack = new ItemStack(stack.getItem(), count);
                     switch (i) {
@@ -449,7 +445,7 @@ public class TCOTS_Client implements ClientModInitializer {
                 //Base container
                 resultContainer.child(
                         Containers.stack(Sizing.content(), Sizing.fixed(16))
-                                .child(Components.item(recipe.getBaseItem()).showOverlay(true).setTooltipFromStack(true))
+                                .child(Components.item(recipeEntry.getBaseItem()).showOverlay(true).setTooltipFromStack(true))
                                 .positioning(Positioning.absolute(95, 24))
                                 .horizontalAlignment(HorizontalAlignment.CENTER).verticalAlignment(VerticalAlignment.CENTER)
                 );
@@ -482,7 +478,7 @@ public class TCOTS_Client implements ClientModInitializer {
             return root;
         }
 
-        private boolean hasRecipe(@NotNull RecipeEntry<AlchemyTableRecipe> recipeEntry){
+        private boolean hasRecipe(@NotNull AlchemyTableRecipe recipeEntry){
             return MinecraftClient.getInstance().player != null && MinecraftClient.getInstance().player.getRecipeBook().contains(recipeEntry);
         }
     };

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "G": {
+      "item": "tcots-witcher:graveir_bone"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "tcots-witcher:cured_monster_leather"
+    }
+  },
+  "pattern": [
+    "D D",
+    "LDL",
+    "GIG"
+  ],
+  "result": {
+    "item": "tcots-witcher:ravens_armor"
+  }
+}

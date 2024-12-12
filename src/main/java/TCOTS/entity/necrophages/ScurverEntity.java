@@ -2,8 +2,6 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.misc.ScurverSpineEntity;
-import TCOTS.items.TCOTS_Items;
-import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -11,7 +9,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
 import org.joml.Vector3f;
@@ -34,15 +31,14 @@ public class ScurverEntity extends RotfiendEntity{
     protected void explode() {
         if (!this.getWorld().isClient) {
             this.dead = true;
-            this.getWorld().createExplosion(this, null, null,
-                    this.getX(), this.getY(), this.getZ(), (float)2.6, false, World.ExplosionSourceType.MOB,
-                    TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Sounds.ROTFIEND_BLOOD_EXPLOSION);
+            this.getWorld().createExplosion(this,
+                    this.getX(), this.getY(), this.getZ(), 2.601234f, World.ExplosionSourceType.MOB);
             this.discard();
 
 
             for (int i = 0; i <= 90; i += 18) { // Vertical spread from 0 to 90 degrees (half-sphere)
                 for (int j = 0; j < 360; j += 30) { // Full horizontal spread
-                    ProjectileEntity projectileEntity = new ScurverSpineEntity(TCOTS_Entities.SCURVER_SPINE, this, this.getWorld(), new ItemStack(TCOTS_Items.SCURVER_SPINE));
+                    ProjectileEntity projectileEntity = new ScurverSpineEntity(TCOTS_Entities.SCURVER_SPINE, this, this.getWorld());
 
                     // Calculate the direction vector for the current angles
                     double radianI = Math.toRadians(i+this.getRandom().nextBetween(0,20));

@@ -1,0 +1,36 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:white_gull"
+  },
+  "category": "misc",
+  "ingredient_counters": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:crows_eye"
+    },
+    {
+      "item": "tcots-witcher:han_fiber"
+    },
+    {
+      "item": "minecraft:allium"
+    },
+    {
+      "item": "minecraft:glow_lichen"
+    },
+    {
+      "item": "minecraft:sweet_berries"
+    }
+  ],
+  "order": 0.76999956,
+  "result": {
+    "count": 2,
+    "item": "tcots-witcher:nigredo"
+  }
+}

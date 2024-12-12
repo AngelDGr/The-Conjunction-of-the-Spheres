@@ -34,14 +34,15 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
       "has_graveir_bone",
-      "has_golden_sword"
+      "has_golden_sword",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:moonblade"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_iron_horse_armor"
+      "has_iron_horse_armor",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:knight_errants_horse_armor"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -1,7 +1,6 @@
 package TCOTS.blocks.plants;
 
 import TCOTS.items.TCOTS_Items;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -19,8 +18,6 @@ import net.minecraft.world.event.GameEvent;
 @SuppressWarnings("deprecation")
 public class CelandinePlant extends PlantBlock implements Fertilizable {
 
-    public static final MapCodec<CelandinePlant> CODEC = CelandinePlant.createCodec(CelandinePlant::new);
-
     private static final VoxelShape[] AGE_TO_SHAPE = new VoxelShape[]{Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0), Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0), Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0), Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0)};
 
     public static final IntProperty AGE = Properties.AGE_3;
@@ -33,18 +30,13 @@ public class CelandinePlant extends PlantBlock implements Fertilizable {
         return state.get(this.getAgeProperty());
     }
 
-    @Override
-    protected MapCodec<? extends PlantBlock> getCodec() {
-        return CODEC;
-    }
-
     public CelandinePlant(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0));
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return new ItemStack(TCOTS_Items.CELANDINE);
     }
 
@@ -73,7 +65,7 @@ public class CelandinePlant extends PlantBlock implements Fertilizable {
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean IsClient) {
         return state.get(AGE) < 3;
     }
 

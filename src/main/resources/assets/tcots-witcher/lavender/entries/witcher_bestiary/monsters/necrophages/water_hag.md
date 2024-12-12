@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Water Hag",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/water_hag",
+  "icon": "tcots-witcher:water_essence",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:water_hag_mutagen",
@@ -69,6 +69,9 @@ The mud in your eyes it's going to wash off after a little time, and it's going 
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         <stack-layout>
                             <children>
@@ -82,6 +85,9 @@ The mud in your eyes it's going to wash off after a little time, and it's going 
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                     </children>
@@ -118,6 +124,9 @@ The mud in your eyes it's going to wash off after a little time, and it's going 
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>

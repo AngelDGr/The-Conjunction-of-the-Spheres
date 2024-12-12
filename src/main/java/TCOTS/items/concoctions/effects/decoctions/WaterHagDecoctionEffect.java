@@ -9,8 +9,6 @@ public class WaterHagDecoctionEffect extends DecoctionEffectBase {
         super(category, color,50);
     }
 
-
-    //It's called every tick
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         super.applyUpdateEffect(entity, amplifier);

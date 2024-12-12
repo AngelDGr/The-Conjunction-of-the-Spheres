@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "tcots-witcher:bullvore_horn_fragment"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "L": {
+      "item": "tcots-witcher:cured_monster_leather"
+    }
+  },
+  "pattern": [
+    "BLB",
+    "D D",
+    "L L"
+  ],
+  "result": {
+    "item": "tcots-witcher:ravens_trousers"
+  }
+}

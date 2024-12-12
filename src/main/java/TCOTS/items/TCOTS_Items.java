@@ -10,7 +10,6 @@ import TCOTS.items.armor.WitcherHorseArmorItem;
 import TCOTS.items.blocks.*;
 import TCOTS.items.concoctions.*;
 import TCOTS.items.weapons.*;
-import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
@@ -45,11 +44,9 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.Util;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
@@ -1044,10 +1041,10 @@ public class TCOTS_Items {
                     new SwordWithTooltip(TCOTS_ToolMaterials.WINTERS_BLADE, 4, -2.4f, new FabricItemSettings().rarity(Rarity.RARE),
                             Text.translatable("tooltip.tcots-witcher.winters_blade").formatted(Formatting.GRAY, Formatting.ITALIC),
                             List.of(
-                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra").withColor(0x007b77),
-                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra2").withColor(0x007b77),
-                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra3").withColor(0x007b77))
-                    ));
+                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra").setStyle(Style.EMPTY.withColor(0x007b77)),
+                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra2").setStyle(Style.EMPTY.withColor(0x007b77)),
+                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra3").setStyle(Style.EMPTY.withColor(0x007b77))
+                    )));
 
             ARDAENYE = registerItem("ardaenye",
                     new SwordItem(TCOTS_ToolMaterials.ARDAENYE, 4, -2.6f, new FabricItemSettings()));
@@ -1788,11 +1785,11 @@ public class TCOTS_Items {
         ALCHEMY_BOOK = AlchemyBookItem.registerForBook(new Identifier(TCOTS_Main.MOD_ID, "alchemy_book"), new FabricItemSettings().maxCount(1));
     }
 
-    public static final LootFunctionType RANDOMIZE_FORMULA = register("randomize_formula", AlchemyRecipeRandomlyLootFunction.CODEC);
+    public static final LootFunctionType RANDOMIZE_FORMULA = register("randomize_formula", new AlchemyRecipeRandomlyLootFunction.Serializer());
 
     @SuppressWarnings("all")
-    private static LootFunctionType register(String id, Codec<? extends LootFunction> codec) {
-        return Registry.register(Registries.LOOT_FUNCTION_TYPE, new Identifier(TCOTS_Main.MOD_ID,id), new LootFunctionType(codec));
+    private static LootFunctionType register(String id, JsonSerializer<? extends LootFunction> jsonSerializer) {
+        return Registry.register(Registries.LOOT_FUNCTION_TYPE, new Identifier(TCOTS_Main.MOD_ID,id), new LootFunctionType(jsonSerializer));
     }
 
     @SuppressWarnings("unused")

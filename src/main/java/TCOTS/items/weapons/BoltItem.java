@@ -33,11 +33,11 @@ public class BoltItem extends ArrowItem {
     @Override
     public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
         return switch (id) {
-            default               -> new BaseBoltProjectile     (world, shooter, stack.copyWithCount(1));
-            case "blunt_bolt"     -> new BluntBoltProjectile    (world, shooter, stack.copyWithCount(1));
-            case "precision_bolt" -> new PrecisionBoltProjectile(world, shooter, stack.copyWithCount(1));
-            case "exploding_bolt" -> new ExplodingBoltProjectile(world, shooter, stack.copyWithCount(1));
-            case "broadhead_bolt" -> new BroadheadBoltProjectile(world, shooter, stack.copyWithCount(1));
+            default               -> new BaseBoltProjectile     (world, shooter);
+            case "blunt_bolt"     -> new BluntBoltProjectile    (world, shooter);
+            case "precision_bolt" -> new PrecisionBoltProjectile(world, shooter);
+            case "exploding_bolt" -> new ExplodingBoltProjectile(world, shooter);
+            case "broadhead_bolt" -> new BroadheadBoltProjectile(world, shooter);
         };
     }
 }

@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_graveir_bone"
+      "has_graveir_bone",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:bone_meal_from_graveir_bone"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

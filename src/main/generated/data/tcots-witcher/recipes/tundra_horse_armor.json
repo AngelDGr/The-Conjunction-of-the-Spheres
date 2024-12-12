@@ -22,5 +22,6 @@
   ],
   "result": {
     "item": "tcots-witcher:tundra_horse_armor"
-  }
+  },
+  "show_notification": true
 }

@@ -163,7 +163,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
                 double e = mob.getZ() - entity.getZ();
                 entity.takeKnockback(knockbackStrength,d,e);
                 if(entity instanceof ServerPlayerEntity && !((ServerPlayerEntity) entity).isCreative()){
-                    ((ServerPlayerEntity) entity).networkHandler.send(new EntityVelocityUpdateS2CPacket(entity), null);
+                    ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity), null);
                 }
             }
         }
@@ -255,7 +255,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
                 double e = alghoul.getZ() - entity.getZ();
                 entity.takeKnockback(0.5,d,e);
                 if(entity instanceof ServerPlayerEntity && !((ServerPlayerEntity) entity).isCreative()){
-                    ((ServerPlayerEntity) entity).networkHandler.send(new EntityVelocityUpdateS2CPacket(entity), null);
+                    ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity), null);
                 }
             }
         }
@@ -399,7 +399,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
             double d = this.random.nextGaussian() * 0.2;
             double e = this.random.nextGaussian() * 0.2;
             double f = this.random.nextGaussian() * 0.2;
-            this.getWorld().addParticle(ParticleTypes.WHITE_SMOKE, vec3d.x, vec3d.y, vec3d.z, d, e, f);
+            this.getWorld().addParticle(ParticleTypes.SMOKE, vec3d.x, vec3d.y, vec3d.z, d, e, f);
             ++counter;
         }
     }

@@ -7,7 +7,6 @@
     "minecraft:wither"
   ],
   "herb": {
-    "Count": 1,
     "id": "tcots-witcher:arenaria"
   },
   "time": 20

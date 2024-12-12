@@ -22,5 +22,6 @@
   ],
   "result": {
     "item": "tcots-witcher:ravens_armor"
-  }
+  },
+  "show_notification": true
 }

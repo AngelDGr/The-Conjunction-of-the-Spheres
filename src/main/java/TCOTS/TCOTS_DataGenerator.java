@@ -597,8 +597,6 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         }
 
-
-
     }
 
     private static class LootTablesBlocksGenerator extends FabricBlockLootTableProvider {
@@ -1548,6 +1546,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             }
 
         }
+
+
     }
 
     private static class POIProvider extends TagProvider<PointOfInterestType>{
@@ -1581,9 +1581,23 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
-            this.getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR).add(TCOTS_DamageTypes.POTION_TOXICITY).add(TCOTS_DamageTypes.BLEEDING).add(TCOTS_DamageTypes.CADAVERINE);
+            this.getOrCreateTagBuilder(DamageTypeTags.BYPASSES_ARMOR)
+                    .add(TCOTS_DamageTypes.POTION_TOXICITY)
+                    .add(TCOTS_DamageTypes.BLEEDING)
+                    .add(TCOTS_DamageTypes.CADAVERINE);
 
-            this.getOrCreateTagBuilder(DamageTypeTags.IS_PROJECTILE).add(TCOTS_DamageTypes.ANCHOR);
+            this.getOrCreateTagBuilder(DamageTypeTags.IS_PROJECTILE)
+                    .add(TCOTS_DamageTypes.ANCHOR);
+
+            this.getOrCreateTagBuilder(DamageTypeTags.AVOIDS_GUARDIAN_THORNS)
+                    .add(TCOTS_DamageTypes.POTION_TOXICITY)
+                    .add(TCOTS_DamageTypes.BLEEDING)
+                    .add(TCOTS_DamageTypes.CADAVERINE);
+
+            this.getOrCreateTagBuilder(DamageTypeTags.ALWAYS_TRIGGERS_SILVERFISH)
+                    .add(TCOTS_DamageTypes.POTION_TOXICITY)
+                    .add(TCOTS_DamageTypes.BLEEDING)
+                    .add(TCOTS_DamageTypes.CADAVERINE);
         }
 
     }
@@ -1617,6 +1631,33 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .addOptionalTag(BlockTags.WOOL)
                     .addOptionalTag(BlockTags.LEAVES)
                     .addOptionalTag(BlockTags.WART_BLOCKS);
+
+            this.getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
+                    .add(TCOTS_Blocks.GIANT_ANCHOR)
+                    .add(TCOTS_Blocks.ALCHEMY_TABLE)
+                    .add(TCOTS_Blocks.HERBAL_TABLE)
+                    .add(TCOTS_Blocks.SEWANT_MUSHROOM_BLOCK)
+                    .add(TCOTS_Blocks.SEWANT_MUSHROOM_STEM)
+                    .add(TCOTS_Blocks.PUFFBALL_MUSHROOM_BLOCK);
+
+            this.getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE)
+                    .add(TCOTS_Blocks.NEST_SLAB)
+                    .add(TCOTS_Blocks.MONSTER_NEST);
+
+            this.getOrCreateTagBuilder(BlockTags.BEE_GROWABLES)
+                    .add(TCOTS_Blocks.ARENARIA_BUSH)
+                    .add(TCOTS_Blocks.CELANDINE_PLANT)
+                    .add(TCOTS_Blocks.BRYONIA_VINE)
+                    .add(TCOTS_Blocks.VERBENA_FLOWER)
+                    .add(TCOTS_Blocks.HAN_FIBER_PLANT)
+                    .add(TCOTS_Blocks.CROWS_EYE_FERN);
+
+            this.getOrCreateTagBuilder(BlockTags.FLOWERS)
+                    .add(TCOTS_Blocks.ARENARIA_BUSH)
+                    .add(TCOTS_Blocks.CELANDINE_PLANT)
+                    .add(TCOTS_Blocks.BRYONIA_VINE)
+                    .add(TCOTS_Blocks.VERBENA_FLOWER)
+                    .add(TCOTS_Blocks.HAN_FIBER_PLANT);
         }
     }
     private static class EntityTagGenerator extends FabricTagProvider.EntityTypeTagProvider {
@@ -1681,6 +1722,20 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                     .add(TCOTS_Items.RAVENS_BOOTS,TCOTS_Items.RAVENS_TROUSERS,TCOTS_Items.RAVENS_ARMOR)
 
                     .add(TCOTS_Items.TUNDRA_HORSE_ARMOR);
+
+            this.getOrCreateTagBuilder(ItemTags.SWORDS)
+                    .add(TCOTS_Items.GVALCHIR)
+                    .add(TCOTS_Items.MOONBLADE)
+                    .add(TCOTS_Items.DYAEBL)
+                    .add(TCOTS_Items.WINTERS_BLADE)
+                    .add(TCOTS_Items.ARDAENYE);
+
+            this.getOrCreateTagBuilder(ItemTags.FLOWERS)
+                    .add(TCOTS_Items.ARENARIA)
+                    .add(TCOTS_Items.CELANDINE)
+                    .add(TCOTS_Items.BRYONIA)
+                    .add(TCOTS_Items.VERBENA)
+                    .add(TCOTS_Items.HAN_FIBER);
         }
     }
 
@@ -2480,7 +2535,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                         order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
                                 order, TCOTS_Items.SAMUM,
-                                ingredientsList(TCOTS_Items.CELANDINE,2)).offerTo(exporter);
+                                ingredientsList(TCOTS_Items.CELANDINE,2))
+                                .offerTo(exporter);
 
                         order=order+0.01f;
                         AlchemyTableRecipeJsonBuilder.createBomb(
@@ -3127,20 +3183,18 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         //  > Craft a horse armor
         //  > Get Aerondight (Embodiment of the Five Virtues)
 
-
         protected AdvancementsGenerator(FabricDataOutput output) {
             super(output);
         }
 
         private void generateBasicRecipeAdvancement(String id, Consumer<Advancement> consumer){
             Advancement.Builder.createUntelemetered()
+                    .parent(CraftingRecipeJsonBuilder.ROOT)
                     .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_TABLE_ITEM), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_TABLE_ITEM))
                     .criteriaMerger(CriterionMerger.OR)
                     .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_BOOK), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_BOOK))
                     .rewards(AdvancementRewards.Builder.recipe(new Identifier(TCOTS_Main.MOD_ID,id)))
-                    .parent(CraftingRecipeJsonBuilder.ROOT)
-                    .build(consumer, new Identifier(TCOTS_Main.MOD_ID,"recipes/alchemy")+"/"+id);
-
+                    .toJson();
         }
 
         @Override
@@ -3286,11 +3340,11 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     true, // Announce to chat
                                     false // Hidden in the advancement tab
                             )
-                            .criterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ROCK_TROLL)))
+                            .criterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ROCK_TROLL).build()))
                             .criteriaMerger(CriterionMerger.OR)
-                            .criterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL)))
+                            .criterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL).build()))
                             .criteriaMerger(CriterionMerger.OR)
-                            .criterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.FOREST_TROLL)))
+                            .criterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.FOREST_TROLL).build()))
                             .build(consumer, TCOTS_Main.MOD_ID + "/befriend_troll");
 
                     Advancement befriendIceTroll = Advancement.Builder.create()
@@ -3305,7 +3359,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     true, // Announce to chat
                                     false // Hidden in the advancement tab
                             )
-                            .criterion("befriend_troll_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL)))
+                            .criterion("befriend_troll_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL).build()))
                             .build(consumer, TCOTS_Main.MOD_ID + "/befriend_troll_ice");
 
                     Advancement.Builder.create()
@@ -3320,11 +3374,11 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     true, // Announce to chat
                                     false // Hidden in the advancement tab
                             )
-                            .criterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ROCK_TROLL)))
+                            .criterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ROCK_TROLL).build()))
                             .criteriaMerger(CriterionMerger.AND)
-                            .criterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL)))
+                            .criterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.ICE_TROLL).build()))
                             .criteriaMerger(CriterionMerger.AND)
-                            .criterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.FOREST_TROLL)))
+                            .criterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.create().type(TCOTS_Entities.FOREST_TROLL).build()))
                             .build(consumer, TCOTS_Main.MOD_ID + "/befriend_all_troll");
                 }
 

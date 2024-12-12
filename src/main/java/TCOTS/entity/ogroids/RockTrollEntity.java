@@ -151,7 +151,7 @@ public class RockTrollEntity extends AbstractTrollEntity implements RangedAttack
     }
 
     @Override
-    public void shootAt(@NotNull LivingEntity target, float pullProgress) {
+    public void attack(@NotNull LivingEntity target, float pullProgress) {
         this.getNavigation().stop();
         Troll_RockProjectileEntity rockProjectileEntity = new Troll_RockProjectileEntity(this.getWorld(), this, 8);
         double d = target.getEyeY() - (double)1.1f;

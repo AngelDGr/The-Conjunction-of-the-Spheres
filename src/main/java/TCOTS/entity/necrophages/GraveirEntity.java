@@ -112,7 +112,6 @@ public class GraveirEntity extends NecrophageMonster implements GeoEntity, Excav
         this.dataTracker.startTracking(INVISIBLE, Boolean.FALSE);
     }
 
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         //Walk/Idle Controller

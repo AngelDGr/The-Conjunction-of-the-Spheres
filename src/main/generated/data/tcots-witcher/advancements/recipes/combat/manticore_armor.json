@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_cured_monster_leather"
+      "has_cured_monster_leather",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:manticore_armor"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

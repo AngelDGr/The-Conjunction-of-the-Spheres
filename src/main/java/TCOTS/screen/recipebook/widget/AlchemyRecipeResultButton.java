@@ -9,10 +9,10 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.book.RecipeBook;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +26,7 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
     private AlchemyTableRecipe recipe;
 
     @Nullable
-    private RecipeEntry<AlchemyTableRecipe> recipeEntry;
+    private AlchemyTableRecipe recipeEntry;
 
     private TextRenderer textRenderer;
     private boolean craftable;
@@ -38,16 +38,12 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
     int j = 193;
 
-    public void receiveRecipe(RecipeEntry<AlchemyTableRecipe> recipe, RecipeBook recipeBook){
+    public void receiveRecipe(AlchemyTableRecipe recipe, RecipeBook recipeBook){
 
         this.playerHasRecipe = recipeBook.contains(recipe);
 
         this.recipeEntry=recipe;
-        if(recipe != null){
-        this.recipe=recipe.value();}
-        else {
-            this.recipe=null;
-        }
+        this.recipe= recipe;
     }
 
     public void receiveTextRenderer(TextRenderer renderer){
@@ -66,7 +62,7 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
         return this.recipe;
     }
 
-    public @Nullable RecipeEntry<AlchemyTableRecipe> getRecipeEntry(){
+    public @Nullable AlchemyTableRecipe getRecipeEntry(){
         return this.recipeEntry;
     }
 
@@ -117,7 +113,7 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
     }
 
     @Override
-    protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+    protected void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
         if(recipeEntry == null || recipe == null){
             return;
         }
@@ -131,10 +127,10 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
             Formatting textColor;
 
-            if(this.recipe.getResult(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getResult(null).getItem() instanceof WitcherAlcohol_Base) && !(this.recipe.getResult(null).getItem() instanceof WitcherWhiteHoney)){
+            if(this.recipe.getOutput(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getOutput(null).getItem() instanceof WitcherAlcohol_Base) && !(this.recipe.getOutput(null).getItem() instanceof WitcherWhiteHoney)){
                 List<Text> list= new ArrayList<>();
 
-                if(((WitcherPotions_Base) this.recipe.getResult(null).getItem()).getStatusEffect().getAmplifier() > 0){
+                if(((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).getStatusEffect().getAmplifier() > 0){
                     textColor = Formatting.YELLOW;
                 } else {
                     textColor = Formatting.WHITE;
@@ -142,30 +138,30 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
                 int tooltipY;
                 //Name
-                if((((WitcherPotions_Base) this.recipe.getResult(null).getItem()).isDecoction())){
+                if((((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).isDecoction())){
                     tooltipY=12;
-                    list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()).withColor(0x41d331));
+                    list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()).setStyle(Style.EMPTY.withColor(0x41d331)));
                 }else {
                     tooltipY=22;
-                    list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()).formatted(textColor));
+                    list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()).formatted(textColor));
                 }
 
                 //Toxicity
-                int tox = ((WitcherPotions_Base) this.recipe.getResult(null).getItem()).getToxicity();
+                int tox = ((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).getToxicity();
                 list.add(Text.translatable("tcots-witcher.tooltip.toxicity", tox).formatted(Formatting.DARK_GREEN));
 
                 //Stack
-                int maxCount = this.recipe.getResult(null).getMaxCount();
-                if(!(((WitcherPotions_Base) this.recipe.getResult(null).getItem()).isDecoction())){
+                int maxCount = this.recipe.getOutput(null).getMaxCount();
+                if(!(((WitcherPotions_Base) this.recipe.getOutput(null).getItem()).isDecoction())){
                     list.add(Text.translatable("tcots-witcher.tooltip.max_stack", maxCount).formatted(Formatting.DARK_BLUE));
                 }
 
 
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-tooltipY);
 
-            } else if (this.recipe.getResult(null).getItem() instanceof WitcherMonsterOil_Base) {
+            } else if (this.recipe.getOutput(null).getItem() instanceof WitcherMonsterOil_Base) {
 
-                if(((WitcherMonsterOil_Base) this.recipe.getResult(null).getItem()).getLevel() > 1){
+                if(((WitcherMonsterOil_Base) this.recipe.getOutput(null).getItem()).getLevel() > 1){
                     textColor = Formatting.YELLOW;
                 } else {
                     textColor = Formatting.WHITE;
@@ -173,29 +169,29 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
                 List<Text> list= new ArrayList<>();
                 //Name
-                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()).formatted(textColor));
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()).formatted(textColor));
 
                 //Damage
-                int damage = ((WitcherMonsterOil_Base) this.recipe.getResult(null).getItem()).getLevel() * 2;
+                int damage = ((WitcherMonsterOil_Base) this.recipe.getOutput(null).getItem()).getLevel() * 2;
                 list.add(Text.translatable("tcots-witcher.tooltip.gui.oil_damage", damage).formatted(Formatting.RED));
 
                 //Uses
-                int uses = ((WitcherMonsterOil_Base) this.recipe.getResult(null).getItem()).getUses();
+                int uses = ((WitcherMonsterOil_Base) this.recipe.getOutput(null).getItem()).getUses();
                 list.add(Text.translatable("tcots-witcher.tooltip.gui.oil_uses", uses).formatted(Formatting.DARK_BLUE));
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-22);
-            } else if (this.recipe.getResult(null).getItem() instanceof WitcherWhiteHoney) {
+            } else if (this.recipe.getOutput(null).getItem() instanceof WitcherWhiteHoney) {
 
                 List<Text> list= new ArrayList<>();
-                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()));
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()));
                 //Stack
-                int maxCount = this.recipe.getResult(null).getMaxCount();
+                int maxCount = this.recipe.getOutput(null).getMaxCount();
 
                 list.add(Text.translatable("tcots-witcher.tooltip.max_stack", maxCount).formatted(Formatting.DARK_BLUE));
 
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-12);
 
-            } else if (this.recipe.getResult(null).getItem() instanceof WitcherBombs_Base) {
-                if(((WitcherBombs_Base) this.recipe.getResult(null).getItem()).getLevel() > 0){
+            } else if (this.recipe.getOutput(null).getItem() instanceof WitcherBombs_Base) {
+                if(((WitcherBombs_Base) this.recipe.getOutput(null).getItem()).getLevel() > 0){
                     textColor = Formatting.YELLOW;
                 } else {
                     textColor = Formatting.WHITE;
@@ -203,17 +199,17 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
                 List<Text> list= new ArrayList<>();
                 //Name
-                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()).formatted(textColor));
+                list.add(Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()).formatted(textColor));
 
                 //Stack
-                int maxCount = this.recipe.getResult(null).getMaxCount();
+                int maxCount = this.recipe.getOutput(null).getMaxCount();
 
                 list.add(Text.translatable("tcots-witcher.tooltip.max_stack", maxCount).formatted(Formatting.DARK_BLUE));
 
                 context.drawTooltip(textRenderer, list, this.getX()-20, this.getY()-12);
 
             } else {
-                context.drawTooltip(textRenderer, Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getResult(null).getName().getString()), this.getX()-20, this.getY());
+                context.drawTooltip(textRenderer, Text.translatable("tcots-witcher.tooltip.gui.formula", recipe.getOutput(null).getName().getString()), this.getX()-20, this.getY());
             }
         }
         else{
@@ -244,11 +240,11 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
             }
 
             //DrawOutput
-            context.drawItemWithoutEntity(recipe.getResult(null),
+            context.drawItemWithoutEntity(recipe.getOutput(null),
                     this.getX() + 3,
                     this.getY() + 3);
 
-            int resultCount = recipe.getResult(null).getCount();
+            int resultCount = recipe.getOutput(null).getCount();
 
             //Draw result count
             if (resultCount > 1) {

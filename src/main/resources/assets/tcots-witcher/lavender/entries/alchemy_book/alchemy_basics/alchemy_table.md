@@ -1,7 +1,7 @@
 ```json
 {
   "title": "The Alchemy Table",
-  "icon_sprite": "tcots-witcher:alchemy_almanac/category/alchemy_table",
+  "icon": "tcots-witcher:alchemy_table",
   "associated_items": [
     "tcots-witcher:alchemy_table"
   ],

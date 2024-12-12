@@ -1,10 +1,10 @@
 ```json
 {
   "title": "Bullvore",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/bullvore",
+  "icon": "tcots-witcher:bullvore_horn_fragment",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
-    
+    "tcots-witcher:bullvore_horn_fragment"
   ],
   "ordinal": 11
 }
@@ -66,6 +66,9 @@ Additionally, once it starts its charge, it won’t change direction until it re
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -80,6 +83,9 @@ Additionally, once it starts its charge, it won’t change direction until it re
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
 

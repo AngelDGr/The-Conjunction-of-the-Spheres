@@ -375,12 +375,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.craft_potion.description"
     },
+    "frame": "task",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:swallow_potion"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.craft_potion.title"
     }

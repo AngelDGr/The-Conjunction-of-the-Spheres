@@ -4,7 +4,6 @@ import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
-import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.block.BlockState;
@@ -381,9 +380,8 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     protected void explode() {
         if (!this.getWorld().isClient) {
             this.dead = true;
-            this.getWorld().createExplosion(this, null, null,
-                    this.getX(), this.getY(), this.getZ(), (float)3, false, World.ExplosionSourceType.MOB,
-                    TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Sounds.ROTFIEND_BLOOD_EXPLOSION);
+            this.getWorld().createExplosion(this,
+                    this.getX(), this.getY(), this.getZ(), 3.001234f, World.ExplosionSourceType.MOB);
             this.discard();
         }
     }

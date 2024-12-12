@@ -15,7 +15,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
@@ -38,11 +37,10 @@ public class SamumBomb {
                         bomb.getZ(),
                         0.2f,
                         false,
-                        World.ExplosionSourceType.BLOCK,
-                        TCOTS_Particles.SAMUM_EXPLOSION_EMITTER,
-                        TCOTS_Particles.SAMUM_EXPLOSION_EMITTER,
-                        SoundEvents.ENTITY_GENERIC_EXPLODE
+                        World.ExplosionSourceType.BLOCK
                 );
+
+        bomb.getWorld().sendEntityStatus(bomb, SAMUM_EXPLODES);
 
         List<LivingEntity> list = bomb.getWorld().getEntitiesByClass(LivingEntity.class, bomb.getBoundingBox().expand(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
                 livingEntity -> !(livingEntity instanceof ArmorStandEntity)
@@ -111,7 +109,7 @@ public class SamumBomb {
             //Destroy nest blocks
             if(bomb.destroyableBlocks(state)) {
                 if(state.isOf(TCOTS_Blocks.MONSTER_NEST)){
-                    state.onExploded(bomb.getWorld(), blockPos, explosion, null);
+                    state.getBlock().onDestroyedByExplosion(bomb.getWorld(), blockPos, explosion);
                 } else {
                     bomb.getWorld().breakBlock(blockPos, true, bomb);
                 }

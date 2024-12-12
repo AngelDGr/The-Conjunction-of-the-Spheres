@@ -16,7 +16,7 @@ public class DecoctionEffectBase extends WitcherPotionEffect {
     }
 
     @Override
-    public void onApplied(LivingEntity entity, int amplifier) {
+    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         this.entity=entity;
     }
 
@@ -30,13 +30,13 @@ public class DecoctionEffectBase extends WitcherPotionEffect {
     }
 
     @Override
-    public void onRemoved(AttributeContainer attributeContainer) {
+    public void onRemoved(LivingEntity entity, AttributeContainer attributeContainer, int amplifier) {
         if(!entity.getWorld().isClient){
-            if(entity!=null && entity instanceof PlayerEntity player){
+            if(entity instanceof PlayerEntity player){
                 player.theConjunctionOfTheSpheres$decreaseToxicity(this.decoctionToxicity,true);
             }
         }
-        super.onRemoved(attributeContainer);
+        super.onRemoved(entity, attributeContainer, amplifier);
     }
 
 }

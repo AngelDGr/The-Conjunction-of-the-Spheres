@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Recipes Compendium",
-  "icon_sprite": "tcots-witcher:alchemy_almanac/category/recipes",
+  "icon": "minecraft:paper",
   "ordinal": 10
 }
 ```

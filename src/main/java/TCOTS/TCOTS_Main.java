@@ -180,7 +180,7 @@ public class TCOTS_Main implements ModInitializer {
 			DispenserBlock.registerBehavior(TCOTS_Items.SCURVER_SPINE, new ProjectileDispenserBehavior() {
 				@Override
 				protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
-					ScurverSpineEntity scurverSpine = new ScurverSpineEntity(world, position.getX(), position.getY(), position.getZ(), stack.copyWithCount(1));
+					ScurverSpineEntity scurverSpine = new ScurverSpineEntity(world, position.getX(), position.getY(), position.getZ());
 					scurverSpine.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
 					return scurverSpine;
 				}

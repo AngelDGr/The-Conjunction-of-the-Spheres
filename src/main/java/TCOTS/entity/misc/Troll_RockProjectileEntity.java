@@ -86,7 +86,7 @@ public class Troll_RockProjectileEntity extends ThrownItemEntity {
             livingEntity.takeKnockback(this.getOwner()!=null && this.getOwner().getType()==TCOTS_Entities.ICE_TROLL? 0.5: 2.0, d, e);
             //Push the player
             if (entity instanceof ServerPlayerEntity && !((ServerPlayerEntity) entity).isCreative()) {
-                ((ServerPlayerEntity) entity).networkHandler.send(new EntityVelocityUpdateS2CPacket(entity), null);
+                ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity), null);
             }
         }
 

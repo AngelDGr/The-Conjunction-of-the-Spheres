@@ -346,7 +346,7 @@ public class TCOTS_ProcessorList {
                                         //Replace Plants
 
                                         addFlowerReplaceable(TCOTS_Blocks.HAN_FIBER_PLANT.getDefaultState().with(HanFiberPlant.AGE, 3), 0.2f),
-                                        addFlowerReplaceable(Blocks.SHORT_GRASS, 0.3f),
+                                        addFlowerReplaceable(Blocks.GRASS, 0.3f),
                                         addFlowerReplaceable(Blocks.DANDELION, 0.3f),
                                         addFlowerReplaceable(Blocks.ACACIA_SAPLING, 0.3f),
                                         addFlowerReplaceable(Blocks.MOSS_CARPET, 0.2f),

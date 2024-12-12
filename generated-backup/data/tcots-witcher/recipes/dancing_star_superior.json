@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:dancing_star_enhanced"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    1,
+    4,
+    2,
+    2,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:alchemists_powder"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "tcots-witcher:sewant_mushrooms"
+    },
+    {
+      "item": "tcots-witcher:nigredo"
+    }
+  ],
+  "order": 0.42999986,
+  "result": {
+    "item": "tcots-witcher:dancing_star_superior"
+  }
+}

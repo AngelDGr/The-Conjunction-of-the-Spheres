@@ -7,7 +7,6 @@
     "minecraft:weakness"
   ],
   "herb": {
-    "Count": 1,
     "id": "minecraft:white_tulip"
   },
   "time": 40

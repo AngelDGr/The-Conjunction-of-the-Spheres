@@ -1,0 +1,28 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "minecraft:blaze_powder"
+  },
+  "category": "misc",
+  "ingredient_counters": [
+    8,
+    4,
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "order": 0.7399996,
+  "result": {
+    "count": 2,
+    "item": "tcots-witcher:stammelfords_dust"
+  }
+}

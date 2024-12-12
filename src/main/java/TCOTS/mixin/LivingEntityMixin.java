@@ -655,14 +655,14 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
         for(int i=0; i<10; i++){
             double d = entity.getX() + (double) MathHelper.nextBetween(entity.getRandom(),
-                    (float)-entity.getBoundingBox().getLengthX()/2,
-                    (float) entity.getBoundingBox().getLengthX()/2);
+                    (float)-entity.getBoundingBox().getXLength()/2,
+                    (float) entity.getBoundingBox().getXLength()/2);
             double e =  (entity.getEyeY())+ (double) MathHelper.nextBetween(entity.getRandom(),
                     -0.5f,
                     0.25f);
             double f = entity.getZ() + (double) MathHelper.nextBetween(entity.getRandom(),
-                    (float)-entity.getBoundingBox().getLengthZ()/2,
-                    (float) entity.getBoundingBox().getLengthZ()/2);
+                    (float)-entity.getBoundingBox().getZLength()/2,
+                    (float) entity.getBoundingBox().getZLength()/2);
             entity.getWorld().addParticle(particle, d,e,f,0,0,0);
         }
 

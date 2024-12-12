@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:maribor_forest_potion_enhanced"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    4,
+    4,
+    6,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:white_gull"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "tcots-witcher:crows_eye"
+    },
+    {
+      "item": "minecraft:allium"
+    },
+    {
+      "item": "tcots-witcher:vermilion"
+    }
+  ],
+  "order": 0.19000001,
+  "result": {
+    "item": "tcots-witcher:maribor_forest_potion_superior"
+  }
+}

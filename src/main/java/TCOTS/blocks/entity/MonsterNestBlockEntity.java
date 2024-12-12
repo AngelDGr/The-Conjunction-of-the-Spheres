@@ -4,9 +4,8 @@ import TCOTS.blocks.TCOTS_Blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.Spawner;
-import net.minecraft.block.spawner.MobSpawnerEntry;
-import net.minecraft.block.spawner.MobSpawnerLogic;
+import net.minecraft.world.MobSpawnerLogic;
+import net.minecraft.world.MobSpawnerEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -37,7 +36,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.Optional;
 
 @SuppressWarnings("unused")
-public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntity, Spawner {
+public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public MonsterNestBlockEntity(BlockPos pos, BlockState state) {
         super(TCOTS_Blocks.MONSTER_NEST_ENTITY, pos, state);
@@ -208,16 +207,13 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
         return true;
     }
 
-    @Override
-    public void setEntityType(EntityType<?> type, Random random) {
-        this.logic.setEntityId(type, this.world, random, this.pos);
-        this.markDirty();
-    }
-
-
 
     public MobSpawnerLogic getLogic() {
         return this.logic;
     }
 
+
+    public void setEntityType(EntityType<?> entityType, Random random) {
+        this.logic.setEntityId(entityType, this.world, random, this.pos);
+    }
 }

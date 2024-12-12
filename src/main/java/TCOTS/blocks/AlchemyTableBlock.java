@@ -8,7 +8,6 @@ import TCOTS.items.concoctions.EmptyWitcherPotionItem;
 import TCOTS.items.concoctions.WitcherAlcohol_Base;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
@@ -40,14 +39,9 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class AlchemyTableBlock extends BlockWithEntity implements BlockEntityProvider {
-    public static final MapCodec<AlchemyTableBlock> CODEC = AlchemyTableBlock.createCodec(AlchemyTableBlock::new);
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final BooleanProperty HAS_ALCHEMY_BOOK = BooleanProperty.of("has_alchemy_book");
-
-    public MapCodec<AlchemyTableBlock> getCodec() {
-        return CODEC;
-    }
 
     protected AlchemyTableBlock(Settings settings) {
         super(settings);

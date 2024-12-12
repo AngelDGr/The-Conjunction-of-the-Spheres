@@ -15,6 +15,7 @@
     "DimeritiumMagicBlock$BlockShulkerBullet",
     "DimeritiumMagicBlock$BlockWololoGoal",
     "DimeritiumMagicBlock$MakeEndermanArrowDamageable",
+    "ExplosionMixin",
     "IronGolemMixin",
     "ItemsMixins$ItemMixin",
     "ItemsMixins$MilkBucketItemMixin",

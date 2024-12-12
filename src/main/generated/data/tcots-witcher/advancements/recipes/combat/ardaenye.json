@@ -34,14 +34,15 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
       "has_cadaverine",
-      "has_diamond_sword"
+      "has_diamond_sword",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:ardaenye"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

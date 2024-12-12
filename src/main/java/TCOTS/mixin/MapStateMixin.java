@@ -92,7 +92,7 @@ public abstract class MapStateMixin {
                         c,
                         d,
                         null)).equals(mapIcon2 = this.icons.put(key, mapIcon))) {
-                    if (mapIcon2 != null && mapIcon2.type().shouldUseIconCountLimit()) {
+                    if (mapIcon2 != null && mapIcon2.getType().shouldUseIconCountLimit()) {
                         --this.iconCount;
                     }
                     if (type.shouldUseIconCountLimit()) {
@@ -107,7 +107,7 @@ public abstract class MapStateMixin {
     }
 
 
-
+    @SuppressWarnings("unused")
     @Mixin(targets = "net.minecraft.client.render.MapRenderer$MapTexture")
     public abstract static class MapTextureMixin {
         @Shadow private MapState state;
@@ -175,8 +175,8 @@ public abstract class MapStateMixin {
                     int k = 2;
 
                     matrices.push();
-                    matrices.translate(0.0f + (float)mapIcon.x() / 2.0f + 64.0f, 0.0f + (float)mapIcon.z() / 2.0f + 64.0f, -0.02f);
-                    matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((float)(mapIcon.rotation() * 360) / 16.0f));
+                    matrices.translate(0.0f + (float)mapIcon.getX() / 2.0f + 64.0f, 0.0f + (float)mapIcon.getZ() / 2.0f + 64.0f, -0.02f);
+                    matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees((float)(mapIcon.getRotation() * 360) / 16.0f));
                     matrices.scale(4.0f, 4.0f, 3.0f);
                     matrices.translate(-0.125f, 0.125f, 0.0f);
 
@@ -208,6 +208,7 @@ public abstract class MapStateMixin {
         }
     }
 
+    @SuppressWarnings("unused")
     @Mixin(MapIcon.class)
     public abstract static class MapIconMixin implements MapIconMixinInterface {
         @Unique

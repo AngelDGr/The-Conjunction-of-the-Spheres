@@ -51,13 +51,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.craft_all_bomb.description"
     },
     "frame": "goal",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:dimeritium_bomb"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.craft_all_bomb.title"
     }

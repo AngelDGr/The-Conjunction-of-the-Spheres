@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Foglet",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/foglet",
+  "icon": "tcots-witcher:foglet_teeth",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:foglet_mutagen",
@@ -69,6 +69,9 @@ visible and vulnerable again, take this moment to {#0A880E}kill it rapidly befor
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -83,6 +86,9 @@ visible and vulnerable again, take this moment to {#0A880E}kill it rapidly befor
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>
@@ -119,6 +125,9 @@ visible and vulnerable again, take this moment to {#0A880E}kill it rapidly befor
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>

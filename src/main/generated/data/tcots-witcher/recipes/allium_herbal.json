@@ -7,7 +7,6 @@
     "minecraft:hunger"
   ],
   "herb": {
-    "Count": 1,
     "id": "minecraft:allium"
   },
   "time": 40

@@ -1,7 +1,6 @@
 package TCOTS.blocks.plants;
 
 import TCOTS.items.TCOTS_Items;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -21,8 +20,6 @@ import net.minecraft.world.event.GameEvent;
 public class VerbenaFlower extends PlantBlock implements Fertilizable {
 
     public static final IntProperty AGE = Properties.AGE_3;
-
-    public static final MapCodec<VerbenaFlower> CODEC = VerbenaFlower.createCodec(VerbenaFlower::new);
 
     private static final VoxelShape[] AGE_TO_SHAPE = new VoxelShape[]{
             Block.createCuboidShape(5.0, 0.0, 5.0, 12, 4.0, 12),
@@ -44,11 +41,6 @@ public class VerbenaFlower extends PlantBlock implements Fertilizable {
         return AGE;
     }
 
-    @Override
-    protected MapCodec<? extends PlantBlock> getCodec() {
-        return CODEC;
-    }
-
     public VerbenaFlower(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0));
@@ -60,7 +52,7 @@ public class VerbenaFlower extends PlantBlock implements Fertilizable {
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return new ItemStack(TCOTS_Items.VERBENA);
     }
 
@@ -80,7 +72,7 @@ public class VerbenaFlower extends PlantBlock implements Fertilizable {
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
         return state.get(AGE) < 3;
     }
 

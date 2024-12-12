@@ -2,16 +2,21 @@
   "parent": "minecraft:tcots-witcher/craft_bomb",
   "criteria": {
     "destroy_nest": {
+      "conditions": {},
       "trigger": "minecraft:tcots-witcher/destroy_monster_nest"
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.destroy_nest.description"
     },
+    "frame": "task",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:monster_nest"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.destroy_nest.title"
     }

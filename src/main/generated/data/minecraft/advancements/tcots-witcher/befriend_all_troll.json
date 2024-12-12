@@ -45,13 +45,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.befriend_all_troll.description"
     },
     "frame": "challenge",
+    "hidden": false,
     "icon": {
       "item": "minecraft:oak_sapling"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.befriend_all_troll.title"
     }

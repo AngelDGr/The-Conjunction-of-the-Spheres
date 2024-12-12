@@ -20,7 +20,7 @@ public class NekkerWarriorDecoctionEffect extends DecoctionEffectBase{
     }
 
     @Override
-    public void onApplied(AttributeContainer attributeContainer, int amplifier) {
+    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
 
     }
 

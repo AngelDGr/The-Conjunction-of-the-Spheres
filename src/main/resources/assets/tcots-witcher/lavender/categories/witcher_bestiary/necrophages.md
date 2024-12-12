@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Necrophages",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/necrophages",
+  "icon": "minecraft:skeleton_skull",
   "ordinal": 1
 }
 ```

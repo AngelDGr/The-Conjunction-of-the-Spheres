@@ -1,10 +1,11 @@
 package TCOTS.items.concoctions.recipes;
 
+import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.items.HerbalMixture;
 import TCOTS.items.TCOTS_Items;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.inventory.SimpleInventory;
@@ -18,7 +19,8 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.util.JsonHelper;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -42,6 +44,12 @@ public class HerbalTableRecipe implements Recipe<SimpleInventory> {
         this.tickEffectTime = tickEffectTime;
         this.badAmplifier=badAmplifier;
     }
+
+    @Override
+    public Identifier getId() {
+        return new Identifier(TCOTS_Main.MOD_ID, Registries.ITEM.getId(this.herb.getItem()).getPath()+"_herbal");
+    }
+
     @Override
     public boolean matches(SimpleInventory inventory, World world) {
         if(world.isClient()) {
@@ -109,11 +117,11 @@ public class HerbalTableRecipe implements Recipe<SimpleInventory> {
             }
         });
 
-        return HerbalMixture.writeEffects(this.getResult(registryManager).copy(),  totalEffects);
+        return HerbalMixture.writeEffects(this.getOutput(registryManager).copy(),  totalEffects);
     }
 
     @Override
-    public ItemStack getResult(DynamicRegistryManager registryManager) {
+    public ItemStack getOutput(DynamicRegistryManager registryManager) {
         return new ItemStack(TCOTS_Items.HERBAL_MIXTURE);
     }
 
@@ -148,44 +156,41 @@ public class HerbalTableRecipe implements Recipe<SimpleInventory> {
     }
 
     public static class Serializer implements RecipeSerializer<HerbalTableRecipe>{
-
-        //Json Reader
-        public static final Codec<HerbalTableRecipe> CODEC = RecordCodecBuilder.create(
-                instance -> instance.group(
-                        //Read the herb necessary
-                        ItemStack.CODEC.fieldOf("herb")
-                                        .forGetter(recipe -> recipe.herb),
-
-                        //Read the effects
-                        Codecs.NON_EMPTY_STRING.listOf().fieldOf("effects")
-                                        .forGetter(recipe ->
-                                        {
-                                            List<String> listStrings = new ArrayList<>();
-
-                                            recipe.EffectID.forEach(id -> listStrings.add(id.toString()));
-
-                                            return listStrings;
-                                        }),
-
-                        //Base potion (0=Water Bottle; 1=Mundane Potion; 2=Tick Potion;)
-                        Codecs.NONNEGATIVE_INT.fieldOf("base_potion").orElse(0)
-                                .forGetter(recipe -> recipe.basePotion),
-
-                        Codecs.POSITIVE_INT.fieldOf("time").orElse(40)
-                                .forGetter(recipe -> recipe.tickEffectTime),
-
-                        Codecs.NONNEGATIVE_INT.fieldOf("amplifier").orElse(0)
-                                .forGetter(recipe -> recipe.badAmplifier)
-
-                ).apply(instance, HerbalTableRecipe::new));
-
         public static final HerbalTableRecipe.Serializer INSTANCE = new HerbalTableRecipe.Serializer();
 
+        //Json Reader
         @Override
-        public Codec<HerbalTableRecipe> codec() {
-            return CODEC;
+        public HerbalTableRecipe read(Identifier id, JsonObject json) {
+            //Read the herb necessary
+            JsonObject herbStack = JsonHelper.getObject(json, "herb");
+            Identifier idHerb = new Identifier(JsonHelper.getString(herbStack, "id"));
+            ItemStack herb = new ItemStack(
+                    Registries.ITEM.getOrEmpty(idHerb).orElseThrow(() -> new IllegalStateException("Herb: " + idHerb + " does not exist")),
+                    herbStack.has("count")? JsonHelper.getInt(herbStack,"count") : 1
+            );
+
+            //Read the effects
+            List<String> effects = getEffects(JsonHelper.getArray(json, "effects"));
+
+            //Base potion (0=Water Bottle; 1=Mundane Potion; 2=Tick Potion;)
+            int basePotion = JsonHelper.getInt(json, "base_potion", 0);
+
+            int tickEffectTime = JsonHelper.getInt(json, "time", 40);
+
+            int badAmplifier = JsonHelper.getInt(json, "amplifier", 0);
+
+            return new HerbalTableRecipe(herb, effects, basePotion, tickEffectTime, badAmplifier);
         }
 
+        private static DefaultedList<String> getEffects(JsonArray json) {
+            DefaultedList<String> defaultedList = DefaultedList.of();
+
+            for (int i = 0; i < json.size(); i++) {
+                defaultedList.add(json.get(i).getAsString());
+            }
+
+            return defaultedList;
+        }
 
         // Turns Recipe into PacketByteBuf
         @Override
@@ -204,7 +209,7 @@ public class HerbalTableRecipe implements Recipe<SimpleInventory> {
 
         // Turns PacketByteBuf into Recipe(InGame)
         @Override
-        public HerbalTableRecipe read(PacketByteBuf buf) {
+        public HerbalTableRecipe read(Identifier id,PacketByteBuf buf) {
             // Make sure the read in the same order you have written!
             List<String> effects = buf.readList(PacketByteBuf::readString);
 

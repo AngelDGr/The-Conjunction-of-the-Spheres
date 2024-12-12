@@ -1,0 +1,19 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "minecraft:gunpowder"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    12
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "order": 0.34999993,
+  "result": {
+    "item": "tcots-witcher:grapeshot"
+  }
+}

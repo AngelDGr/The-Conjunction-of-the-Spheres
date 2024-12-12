@@ -1,7 +1,6 @@
 package TCOTS.items.maps;
 
 import TCOTS.TCOTS_Main;
-import com.mojang.serialization.Codec;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.map.MapIcon;
 import net.minecraft.nbt.NbtCompound;
@@ -35,8 +34,6 @@ public record TCOTS_MapIcons(Type type, byte x, byte z, byte rotation, @Nullable
     public enum Type implements StringIdentifiable
     {
         GIANT_CAVE("giant_cave", true, 9615870, false, true);
-
-        public static final Codec<Type> CODEC;
         private final String name;
         private final byte id;
         private final boolean alwaysRender;
@@ -94,9 +91,7 @@ public record TCOTS_MapIcons(Type type, byte x, byte z, byte rotation, @Nullable
             return this.name;
         }
 
-        static {
-            CODEC = StringIdentifiable.createCodec(Type::values);
-        }
+
     }
 
     public static void addCustomStructureIconsNbt(@NotNull ItemStack stack, BlockPos pos, String id, TCOTS_MapIcons.Type customType){

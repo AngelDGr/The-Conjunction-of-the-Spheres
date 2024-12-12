@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_glass_bottle"
+      "has_glass_bottle",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:alchemy_table"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

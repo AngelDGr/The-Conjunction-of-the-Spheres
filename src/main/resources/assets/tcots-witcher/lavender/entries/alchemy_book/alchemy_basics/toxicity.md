@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Toxicity",
-  "icon_sprite": "tcots-witcher:alchemy_almanac/category/toxicity",
+  "icon": "minecraft:wither_skull",
   "ordinal": 3
 }
 ```

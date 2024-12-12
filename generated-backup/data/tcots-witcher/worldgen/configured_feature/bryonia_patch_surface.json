@@ -1,0 +1,12 @@
+{
+  "type": "tcots-witcher:bryonia_patch",
+  "config": {
+    "block": "tcots-witcher:bryonia_vine",
+    "can_place_on_ceiling": false,
+    "can_place_on_floor": false,
+    "can_place_on_wall": true,
+    "search_range": 20,
+    "y_max": 200.0,
+    "y_min": 50.0
+  }
+}

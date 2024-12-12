@@ -22,5 +22,6 @@
   ],
   "result": {
     "item": "tcots-witcher:moonblade"
-  }
+  },
+  "show_notification": true
 }

@@ -10,12 +10,16 @@ import net.minecraft.world.World;
 public class PrecisionBoltProjectile extends WitcherBolt{
     private static final ItemStack DEFAULT_STACK = new ItemStack(TCOTS_Items.PRECISION_BOLT);
     public PrecisionBoltProjectile(EntityType<? extends PrecisionBoltProjectile> type, World world) {
-        super(type, world, DEFAULT_STACK);
+        super(type, world);
     }
 
-    public PrecisionBoltProjectile(World world, LivingEntity owner, ItemStack stack) {
-        super(TCOTS_Entities.PRECISION_BOLT, owner, world, stack);
+    public PrecisionBoltProjectile(World world, LivingEntity owner) {
+        super(TCOTS_Entities.PRECISION_BOLT, owner, world);
         setDamage(2.5);
     }
 
+    @Override
+    protected ItemStack asItemStack() {
+        return DEFAULT_STACK.copy();
+    }
 }

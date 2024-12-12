@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "tcots-witcher:dyaebl"
-  }
+  },
+  "show_notification": true
 }

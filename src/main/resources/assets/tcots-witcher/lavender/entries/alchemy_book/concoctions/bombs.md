@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Bombs",
-  "icon_sprite": "tcots-witcher:alchemy_almanac/category/bombs",
+  "icon": "tcots-witcher:grapeshot",
   "ordinal": 7,
   "associated_items": [
     "tcots-witcher:grapeshot",

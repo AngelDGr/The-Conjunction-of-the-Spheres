@@ -1,7 +1,6 @@
 package TCOTS.blocks;
 
 import TCOTS.blocks.entity.SkeletonBlockEntity;
-import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -25,7 +24,6 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class SkeletonBlock extends BlockWithEntity {
-    public static final MapCodec<SkeletonBlock> CODEC = SkeletonBlock.createCodec(SkeletonBlock::new);
     protected static VoxelShape LITTLE_CUBE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 14.0, 15.0);
     protected static VoxelShape LEGS = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 5.0, 15.0);
     protected static VoxelShape HALF_BODY = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0);
@@ -87,11 +85,6 @@ public class SkeletonBlock extends BlockWithEntity {
     @Override
     public boolean hasSidedTransparency(BlockState state) {
         return true;
-    }
-
-    @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return CODEC;
     }
 
     @Override

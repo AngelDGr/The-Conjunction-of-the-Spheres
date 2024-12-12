@@ -63,13 +63,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.get_mutagen.description"
     },
     "frame": "goal",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:foglet_mutagen"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.get_mutagen.title"
     }

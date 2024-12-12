@@ -7,7 +7,6 @@
     "minecraft:poison"
   ],
   "herb": {
-    "Count": 1,
     "id": "tcots-witcher:crows_eye"
   },
   "time": 40

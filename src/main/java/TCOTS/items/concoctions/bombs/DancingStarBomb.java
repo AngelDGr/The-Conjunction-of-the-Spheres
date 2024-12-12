@@ -10,8 +10,6 @@ import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
@@ -38,10 +36,7 @@ public class DancingStarBomb {
                 //Level 2 -> 1.25
                 1.25f,
                 true,
-                World.ExplosionSourceType.BLOCK,
-                ParticleTypes.SMOKE,
-                ParticleTypes.SMOKE,
-                SoundEvents.ENTITY_GENERIC_EXPLODE
+                World.ExplosionSourceType.BLOCK
         );
 
         //For emitters with different size
@@ -123,7 +118,7 @@ public class DancingStarBomb {
             //Destroy nest blocks
             if(bomb.destroyableBlocks(state)) {
                 if(state.isOf(TCOTS_Blocks.MONSTER_NEST)){
-                    state.onExploded(bomb.getWorld(), blockPos2, explosion, null);
+                    state.getBlock().onDestroyedByExplosion(bomb.getWorld(), blockPos2, explosion);
                 } else {
                     bomb.getWorld().breakBlock(blockPos2, true, bomb);
                 }

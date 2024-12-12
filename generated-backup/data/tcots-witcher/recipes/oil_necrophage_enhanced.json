@@ -1,0 +1,35 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:oil_necrophage"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    4,
+    4,
+    4,
+    4,
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:monster_fat"
+    },
+    {
+      "item": "tcots-witcher:rotfiend_blood"
+    },
+    {
+      "item": "minecraft:dandelion"
+    },
+    {
+      "item": "tcots-witcher:arenaria"
+    },
+    {
+      "item": "minecraft:flowering_azalea"
+    }
+  ],
+  "order": 0.5999997,
+  "result": {
+    "item": "tcots-witcher:oil_necrophage_enhanced"
+  }
+}

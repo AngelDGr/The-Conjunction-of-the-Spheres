@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Ingredients",
-  "icon_sprite": "tcots-witcher:alchemy_almanac/category/basic_ingredients",
+  "icon": "tcots-witcher:aether",
   "ordinal": 2
 }
 ```
@@ -38,6 +38,9 @@ and Meadows.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -54,6 +57,9 @@ and Groves.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -70,6 +76,9 @@ and Flower Forests.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -86,6 +95,9 @@ or from Sniffers.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                     </children>
@@ -114,6 +126,9 @@ grows at surface level.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -130,6 +145,9 @@ similar to a poisonous potato.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -146,6 +164,9 @@ Forests and Meadows.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -162,6 +183,9 @@ and Savannas.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                     </children>
@@ -191,6 +215,9 @@ and caves.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -207,6 +234,9 @@ and caves.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                     </children>
@@ -252,6 +282,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -267,6 +300,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -282,6 +318,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -297,6 +336,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                     </children>
@@ -324,6 +366,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -339,6 +384,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
 
@@ -355,6 +403,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -370,6 +421,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>
@@ -399,6 +453,9 @@ Brutes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -415,6 +472,9 @@ villagers.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -430,6 +490,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -446,6 +509,9 @@ villagers.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                     </children>
@@ -492,6 +558,9 @@ villagers.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -507,6 +576,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -522,6 +594,9 @@ Crafted, see recipes.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -538,6 +613,9 @@ villagers.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                     </children>
@@ -566,6 +644,9 @@ villagers.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -582,6 +663,9 @@ villagers.</tooltip-text>
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>

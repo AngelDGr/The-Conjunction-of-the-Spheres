@@ -2,17 +2,21 @@
   "parent": "minecraft:tcots-witcher/craft_bomb",
   "criteria": {
     "dragons_dream_burning": {
+      "conditions": {},
       "trigger": "minecraft:tcots-witcher/dragons_dream_burning"
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.dragons_dream_burning.description"
     },
     "frame": "challenge",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:dragons_dream_superior"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.dragons_dream_burning.title"
     }

@@ -26,6 +26,7 @@ public class SwallowEffect extends WitcherPotionEffect {
             }
         }
 
+
         super.applyUpdateEffect(entity, amplifier);
     }
 

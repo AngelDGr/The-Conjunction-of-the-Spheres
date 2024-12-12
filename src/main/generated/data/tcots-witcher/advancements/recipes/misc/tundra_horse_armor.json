@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_leather_horse_armor"
+      "has_leather_horse_armor",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:tundra_horse_armor"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

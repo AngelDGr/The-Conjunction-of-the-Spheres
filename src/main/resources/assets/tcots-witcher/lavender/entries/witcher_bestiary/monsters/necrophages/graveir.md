@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Graveir",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/graveir",
+  "icon": "tcots-witcher:graveir_bone",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:graveir_bone"
@@ -70,6 +70,9 @@ for skilled fighters to gain the upper hand and ultimately overcome this formida
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -84,6 +87,9 @@ for skilled fighters to gain the upper hand and ultimately overcome this formida
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
 

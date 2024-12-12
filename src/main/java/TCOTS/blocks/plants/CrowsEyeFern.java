@@ -3,7 +3,6 @@ package TCOTS.blocks.plants;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.sounds.TCOTS_Sounds;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.Entity;
@@ -32,7 +31,6 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("deprecation")
 public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
 
-    public static final MapCodec<CrowsEyeFern> CODEC = CrowsEyeFern.createCodec(CrowsEyeFern::new);
     public static final IntProperty AGE = Properties.AGE_4;
 
     private static final VoxelShape GROWN_UPPER_OUTLINE_SHAPE = Block.createCuboidShape(3.0, 0.0, 3.0, 13.0, 10.0, 13.0);
@@ -48,18 +46,13 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
             GROWN_LOWER_OUTLINE_SHAPE,
             GROWN_LOWER_OUTLINE_SHAPE};
 
-
-    public MapCodec<CrowsEyeFern> getCodec() {
-        return CODEC;
-    }
-
     public CrowsEyeFern(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return new ItemStack(TCOTS_Items.CROWS_EYE);
     }
 
@@ -155,7 +148,7 @@ public class CrowsEyeFern extends TallPlantBlock implements Fertilizable {
     }
 
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean IsClient) {
         LowerHalfContext lowerHalfContext = this.getLowerHalfContext(world, pos, state);
         if (lowerHalfContext == null) {
             return false;

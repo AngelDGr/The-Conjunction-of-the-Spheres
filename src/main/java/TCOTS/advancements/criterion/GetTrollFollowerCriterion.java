@@ -1,50 +1,57 @@
 package TCOTS.advancements.criterion;
 
-import TCOTS.advancements.TCOTS_Criteria;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancement.AdvancementCriterion;
+import com.google.gson.JsonObject;
 import net.minecraft.advancement.criterion.AbstractCriterion;
+import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
+import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.dynamic.Codecs;
-
-import java.util.Optional;
+import net.minecraft.util.Identifier;
 
 public class GetTrollFollowerCriterion extends AbstractCriterion<GetTrollFollowerCriterion.Conditions> {
-
-    @Override
-    public Codec<GetTrollFollowerCriterion.Conditions> getConditionsCodec() {
-        return GetTrollFollowerCriterion.Conditions.CODEC;
-    }
 
     public void trigger(ServerPlayerEntity player, PathAwareEntity entity) {
         LootContext lootContext = EntityPredicate.createAdvancementEntityLootContext(player, entity);
         this.trigger(player, conditions ->
-                conditions.entity.map(lootContextPredicate -> lootContextPredicate.test(lootContext))
-                .orElse(false));
+                conditions.test(lootContext));
     }
 
-    public record Conditions(Optional<LootContextPredicate> player, Optional<LootContextPredicate> entity) implements AbstractCriterion.Conditions {
+    @Override
+    protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
+        LootContextPredicate lootContextPredicate2 = EntityPredicate.contextPredicateFromJson(obj, "entity", predicateDeserializer);
+        return new GetTrollFollowerCriterion.Conditions(playerPredicate, lootContextPredicate2);
+    }
 
-        public static final Codec<GetTrollFollowerCriterion.Conditions> CODEC =
-                RecordCodecBuilder.create(instance ->
-                        instance.group(
-                                        Codecs.createStrictOptionalFieldCodec(EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC, "player")
-                                                .forGetter(GetTrollFollowerCriterion.Conditions::player),
-                                        Codecs.createStrictOptionalFieldCodec(EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC, "entity")
-                                                .forGetter(GetTrollFollowerCriterion.Conditions::entity))
-                                .apply(instance, GetTrollFollowerCriterion.Conditions::new));
+    @Override
+    public Identifier getId() {
+        return new Identifier("tcots-witcher/get_troll_follower");
+    }
 
-        public static AdvancementCriterion<GetTrollFollowerCriterion.Conditions> create(EntityPredicate.Builder entity) {
-            return TCOTS_Criteria.GET_TROLL_FOLLOWER.create(
-                    new GetTrollFollowerCriterion.Conditions(
-                            Optional.empty(),
-                            Optional.of(EntityPredicate.contextPredicateFromEntityPredicate(entity))));
+    public static class Conditions extends AbstractCriterionConditions {
+        private final LootContextPredicate entity;
+
+        public Conditions(LootContextPredicate player, LootContextPredicate entity) {
+            super(new Identifier("tcots-witcher/get_troll_follower"), player);
+            this.entity = entity;
         }
 
+        public boolean test(LootContext killedEntityContext) {
+            return this.entity.test(killedEntityContext);
+        }
+
+        public static GetTrollFollowerCriterion.Conditions create(EntityPredicate entity) {
+            return new GetTrollFollowerCriterion.Conditions(LootContextPredicate.EMPTY, EntityPredicate.asLootContextPredicate(entity));
+        }
+
+        @Override
+        public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
+            JsonObject jsonObject = super.toJson(predicateSerializer);
+            jsonObject.add("entity", this.entity.toJson(predicateSerializer));
+            return jsonObject;
+        }
     }
 }

@@ -27,7 +27,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 
-@SuppressWarnings({"unused","unchecked"})
+@SuppressWarnings({"unused"})
 @Environment(value= EnvType.CLIENT)
 public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         Drawable,
@@ -38,7 +38,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
     public static final Identifier RECIPE_GUI_TEXTURE = new Identifier(TCOTS_Main.MOD_ID,"textures/gui/alchemy_recipe_book.png");
 
     private ClientRecipeBook recipeBook;
-    private final List<RecipeEntry<AlchemyTableRecipe>> listRecipes = new ArrayList<>();
+    private final List<AlchemyTableRecipe> listRecipes = new ArrayList<>();
     private boolean open=false;
     private boolean narrow;
     private int leftOffset;
@@ -93,9 +93,9 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
             List<RecipeResultCollection> list= recipeBook.getResultsForGroup(RecipeBookGroup.UNKNOWN);
 
             for (RecipeResultCollection resultCollection: list){
-                if(resultCollection.getAllRecipes().get(0).value() instanceof AlchemyTableRecipe recipe){
+                if(resultCollection.getAllRecipes().get(0) instanceof AlchemyTableRecipe recipe){
 
-                    listRecipes.add((RecipeEntry<AlchemyTableRecipe>) resultCollection.getAllRecipes().get(0));
+                    listRecipes.add((AlchemyTableRecipe) resultCollection.getAllRecipes().get(0));
 
                 }
             }
@@ -196,7 +196,7 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
 
         this.recipesArea.initialize(this.client, i, j, craftingScreenHandler);
 
-        listRecipes.sort(Comparator.comparing(recipeEntry -> recipeEntry.value().getOrder()));
+        listRecipes.sort(Comparator.comparing(AlchemyTableRecipe::getOrder));
 
         this.recipesArea.receiveRecipesList(listRecipes, this.recipeBook);
 
@@ -348,8 +348,9 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
         return Element.super.charTyped(chr, modifiers);
     }
 
+
     @Override
-    public void onRecipesDisplayed(List<RecipeEntry<?>> recipes) {
+    public void onRecipesDisplayed(List<Recipe<?>> recipes) {
 
     }
 }

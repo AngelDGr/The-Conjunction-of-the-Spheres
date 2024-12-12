@@ -2,7 +2,6 @@ package TCOTS.blocks;
 
 import TCOTS.blocks.entity.HerbalTableBlockEntity;
 import TCOTS.screen.HerbalTableScreenHandler;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
@@ -28,16 +27,10 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class HerbalTableBlock extends BlockWithEntity implements BlockEntityProvider {
-
-    public static final MapCodec<HerbalTableBlock> CODEC = HerbalTableBlock.createCodec(HerbalTableBlock::new);
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 9.0, 16.0);
     private static final Text TITLE = Text.translatable("tcots-witcher.gui.herbal_table.title");
 
-    @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return CODEC;
-    }
 
     protected HerbalTableBlock(Settings settings) {
         super(settings);

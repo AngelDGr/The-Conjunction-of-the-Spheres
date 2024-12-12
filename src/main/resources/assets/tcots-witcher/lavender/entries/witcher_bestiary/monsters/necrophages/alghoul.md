@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Alghoul",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/alghoul",
+  "icon": "tcots_witcher:alghoul_bone_arrow",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:alghoul_bone_marrow"
@@ -67,6 +67,9 @@ so {#0A880E}it's better focus on killing it before the other ghouls.{}
                         <padding>
                           <all>5</all>
                         </padding>
+
+                        <horizontal-alignment>center</horizontal-alignment>
+                        <vertical-alignment>center</vertical-alignment>
                       </stack-layout>
                       
                         <stack-layout>
@@ -81,6 +84,9 @@ so {#0A880E}it's better focus on killing it before the other ghouls.{}
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                          <horizontal-alignment>center</horizontal-alignment>
+                          <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                       <stack-layout>
@@ -95,6 +101,9 @@ so {#0A880E}it's better focus on killing it before the other ghouls.{}
                         <padding>
                           <all>5</all>
                         </padding>
+
+                        <horizontal-alignment>center</horizontal-alignment>
+                        <vertical-alignment>center</vertical-alignment>
                       </stack-layout>
                       
                     </children>

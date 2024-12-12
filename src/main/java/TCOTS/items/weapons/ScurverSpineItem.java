@@ -2,9 +2,7 @@ package TCOTS.items.weapons;
 
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.misc.ScurverSpineEntity;
-import TCOTS.items.TCOTS_Items;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -24,7 +22,7 @@ public class ScurverSpineItem extends Item {
         ItemStack itemStack = user.getStackInHand(hand);
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
         if (!world.isClient) {
-            ProjectileEntity scurverSpine = new ScurverSpineEntity(TCOTS_Entities.SCURVER_SPINE, user, world, new ItemStack(TCOTS_Items.SCURVER_SPINE));
+            ScurverSpineEntity scurverSpine = new ScurverSpineEntity(TCOTS_Entities.SCURVER_SPINE, user, world);
             user.getItemCooldownManager().set(this, 20);
             scurverSpine.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 1.0f, 1.0f);
             world.spawnEntity(scurverSpine);
@@ -35,6 +33,4 @@ public class ScurverSpineItem extends Item {
         }
         return TypedActionResult.success(itemStack, world.isClient());
     }
-
-
 }

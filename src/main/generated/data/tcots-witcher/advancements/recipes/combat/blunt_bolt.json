@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_base_bolt"
+      "has_base_bolt",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "tcots-witcher:blunt_bolt"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

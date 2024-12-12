@@ -7,7 +7,6 @@
     "minecraft:poison"
   ],
   "herb": {
-    "Count": 1,
     "id": "minecraft:lily_of_the_valley"
   },
   "time": 80

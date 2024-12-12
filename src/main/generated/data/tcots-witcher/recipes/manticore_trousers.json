@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "tcots-witcher:manticore_trousers"
-  }
+  },
+  "show_notification": true
 }

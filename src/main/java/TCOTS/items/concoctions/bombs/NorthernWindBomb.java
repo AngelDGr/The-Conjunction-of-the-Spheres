@@ -154,9 +154,9 @@ public class NorthernWindBomb {
         Box boundingBox = livingEntity.getBoundingBox();
         BlockPos blockPos = BlockPos.ofFloored(livingEntity.getX(), boundingBox.minY, livingEntity.getZ());
         matrixStack.scale(
-                blockSize * (float)boundingBox.getLengthX(),
-                blockSize * (float)boundingBox.getLengthY(),
-                blockSize * (float)boundingBox.getLengthZ()
+                blockSize * (float)boundingBox.getXLength(),
+                blockSize * (float)boundingBox.getYLength(),
+                blockSize * (float)boundingBox.getZLength()
         );
         matrixStack.translate(-0.5, -0.3, -0.5);
 

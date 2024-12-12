@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Drowner",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/drowner",
+  "icon": "tcots-witcher:drowner_brain",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:drowner_tongue",
@@ -71,6 +71,9 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -85,6 +88,9 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                         <stack-layout>
@@ -99,6 +105,9 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -113,6 +122,9 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                     </children>
                     <sizing>

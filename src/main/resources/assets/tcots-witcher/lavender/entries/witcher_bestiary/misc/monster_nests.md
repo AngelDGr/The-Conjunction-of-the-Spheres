@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Monster Nests",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/misc/monster_nests",
+  "icon": "tcots-witcher:monster_nest",
   "category": "tcots-witcher:misc",
   "associated_items": [
   ],

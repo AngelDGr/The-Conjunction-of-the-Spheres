@@ -1,0 +1,23 @@
+{
+  "type": "tcots-witcher:alchemy_table",
+  "base": {
+    "item": "tcots-witcher:dwarven_spirit"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    5,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots-witcher:celandine"
+    },
+    {
+      "item": "tcots-witcher:drowner_brain"
+    }
+  ],
+  "order": 0.01,
+  "result": {
+    "item": "tcots-witcher:swallow_potion"
+  }
+}

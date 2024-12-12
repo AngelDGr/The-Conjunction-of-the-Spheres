@@ -42,9 +42,9 @@ public class GraveHagDecoctionEffect extends DecoctionEffectBase {
     }
 
     @Override
-    public void onRemoved(AttributeContainer attributes) {
+    public void onRemoved(LivingEntity entity, AttributeContainer attributeContainer, int amplifier) {
         killCounterIn=0;
-        super.onRemoved(attributes);
+        super.onRemoved(entity, attributeContainer, amplifier);
     }
 
     @Override

@@ -45,12 +45,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.befriend_troll.description"
     },
+    "frame": "task",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:village_herbal"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.befriend_troll.title"
     }

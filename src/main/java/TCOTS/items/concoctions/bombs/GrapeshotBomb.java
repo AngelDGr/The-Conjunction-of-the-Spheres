@@ -9,7 +9,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
@@ -19,6 +18,8 @@ import java.util.HashSet;
 import java.util.Optional;
 
 public class GrapeshotBomb {
+
+    private static final byte GRAPESHOT_BOMB_EXPLODES = 49;
 
     public static void explosionLogic(WitcherBombEntity bomb, @Nullable Entity entity){
         Explosion explosion =
@@ -32,13 +33,12 @@ public class GrapeshotBomb {
                 //Level 0 -> 1.25
                 //Level 1 -> 1.50
                 //Level 2 -> 1.75
-                1.25f+(bomb.getLevel()*0.25f),
+                (1.25f+(bomb.getLevel()*0.25f)),
                 false,
-                World.ExplosionSourceType.BLOCK,
-                TCOTS_Particles.GRAPESHOT_EXPLOSION_EMITTER,
-                TCOTS_Particles.GRAPESHOT_EXPLOSION_EMITTER,
-                SoundEvents.ENTITY_GENERIC_EXPLODE
+                World.ExplosionSourceType.BLOCK
         );
+
+        bomb.getWorld().sendEntityStatus(bomb, GRAPESHOT_BOMB_EXPLODES);
 
         GrapeshotBomb.destroyNests(bomb, explosion);
 
@@ -98,11 +98,18 @@ public class GrapeshotBomb {
             //Destroy nest blocks
             if(bomb.destroyableBlocks(state)) {
                 if(state.isOf(TCOTS_Blocks.MONSTER_NEST)){
-                    state.onExploded(bomb.getWorld(), blockPos, explosion, null);
+                    state.getBlock().onDestroyedByExplosion(bomb.getWorld(), blockPos, explosion);
                 } else {
                     bomb.getWorld().breakBlock(blockPos, true, bomb);
                 }
             }
+        }
+    }
+
+
+    public static void handleStatus(WitcherBombEntity bomb, byte status) {
+        if(status== GRAPESHOT_BOMB_EXPLODES){
+            bomb.getWorld().addParticle(TCOTS_Particles.GRAPESHOT_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
         }
     }
 

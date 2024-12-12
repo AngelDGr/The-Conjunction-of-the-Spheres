@@ -11,24 +11,30 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 public class ScurverSpineEntity extends PersistentProjectileEntity {
     private static final ItemStack DEFAULT_STACK = new ItemStack(TCOTS_Items.SCURVER_SPINE);
 
+    @Override
+    protected ItemStack asItemStack() {
+        return DEFAULT_STACK.copy();
+    }
+
     public ScurverSpineEntity(EntityType<? extends ScurverSpineEntity> entityType, World world) {
-        super(entityType, world, DEFAULT_STACK);
+        super(entityType, world);
     }
 
-    public ScurverSpineEntity(World world, double x, double y, double z, ItemStack stack) {
-        super(TCOTS_Entities.SCURVER_SPINE, x, y, z, world, stack);
+    public ScurverSpineEntity(World world, double x, double y, double z) {
+        super(TCOTS_Entities.SCURVER_SPINE, x, y, z, world);
     }
 
-    protected ScurverSpineEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world, ItemStack stack) {
-        super(type, x, y, z, world, stack);
+    protected ScurverSpineEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world) {
+        super(type, x, y, z, world);
     }
 
-    public ScurverSpineEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack) {
-        this(type, owner.getX(), owner.getEyeY() - (double)0.1f, owner.getZ(), world, stack);
+    public ScurverSpineEntity(EntityType<? extends PersistentProjectileEntity> type, @NotNull LivingEntity owner, World world) {
+        this(type, owner.getX(), owner.getEyeY() - (double)0.1f, owner.getZ(), world);
         this.setOwner(owner);
         if (owner instanceof PlayerEntity) {
             this.pickupType = PickupPermission.ALLOWED;

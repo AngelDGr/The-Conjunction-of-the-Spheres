@@ -10,7 +10,7 @@ public enum AlchemyTableRecipeCategory implements StringIdentifiable
     DECOCTIONS("decoctions"),
     MISC("misc");
 
-    public static final StringIdentifiable.EnumCodec<AlchemyTableRecipeCategory> CODEC;
+    public static final StringIdentifiable.Codec<AlchemyTableRecipeCategory> CODEC = StringIdentifiable.createCodec(AlchemyTableRecipeCategory::values);
 
     private final String id;
 
@@ -21,9 +21,5 @@ public enum AlchemyTableRecipeCategory implements StringIdentifiable
     @Override
     public String asString() {
         return this.id;
-    }
-
-    static {
-        CODEC = StringIdentifiable.createCodec(AlchemyTableRecipeCategory::values);
     }
 }

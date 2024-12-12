@@ -34,12 +34,9 @@ public class WitcherPotionsSplash_Base extends WitcherPotions_Base {
             itemStack.decrement(1);
 
             ItemStack stack_Empty = getStackEmptyBottle(this);
-                if (!user.getAbilities().creativeMode) {
-                    if (!user.getInventory().insertStack(stack_Empty)) {
-                        user.dropItem(stack_Empty, false);
-                    }
-                }
-
+            if (!user.getInventory().insertStack(stack_Empty)) {
+                user.dropItem(stack_Empty, false);
+            }
         }
 
         return TypedActionResult.success(itemStack, world.isClient());

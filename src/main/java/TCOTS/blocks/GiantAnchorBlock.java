@@ -1,7 +1,6 @@
 package TCOTS.blocks;
 
 import TCOTS.blocks.entity.GiantAnchorBlockEntity;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
@@ -19,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class GiantAnchorBlock extends BlockWithEntity {
-    public static final MapCodec<GiantAnchorBlock> CODEC = GiantAnchorBlock.createCodec(GiantAnchorBlock::new);
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     protected static final VoxelShape BOTTOM_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0);
     protected static final VoxelShape TOP_NORTH = Block.createCuboidShape(0.0, 8.0, 8.0, 16.0, 16.0, 16.0);
@@ -76,11 +74,6 @@ public class GiantAnchorBlock extends BlockWithEntity {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING);
-    }
-
-    @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return CODEC;
     }
 
     @Override

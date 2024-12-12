@@ -7,7 +7,6 @@
     "minecraft:instant_damage"
   ],
   "herb": {
-    "Count": 1,
     "id": "tcots-witcher:bryonia"
   },
   "time": 40

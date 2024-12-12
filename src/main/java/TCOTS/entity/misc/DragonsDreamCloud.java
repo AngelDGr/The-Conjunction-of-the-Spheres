@@ -7,9 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -83,10 +81,7 @@ public class DragonsDreamCloud extends AreaEffectCloudEntity {
                 //Level 2 -> 1.75
                 2f+(getLevel()*0.5f),
                 true,
-                World.ExplosionSourceType.BLOCK,
-                ParticleTypes.EXPLOSION_EMITTER,
-                ParticleTypes.EXPLOSION_EMITTER,
-                SoundEvents.ENTITY_GENERIC_EXPLODE
+                World.ExplosionSourceType.BLOCK
         );
         this.discard();
     }

@@ -13,12 +13,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.use_formula.description"
     },
+    "frame": "task",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:alchemy_formula"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.use_formula.title"
     }

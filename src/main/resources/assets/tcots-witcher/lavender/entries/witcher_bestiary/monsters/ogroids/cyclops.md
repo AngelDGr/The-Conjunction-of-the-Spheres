@@ -1,7 +1,7 @@
 ```json
 {
 "title": "Cyclops",
-"icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/cyclops",
+"icon": "minecraft:leather",
 "category": "tcots-witcher:ogroids",
 "associated_items": [
 
@@ -65,6 +65,9 @@ When battling a Cyclops, maintain a medium distance. If it starts to jump, eithe
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
 
                         <stack-layout>
@@ -79,6 +82,9 @@ When battling a Cyclops, maintain a medium distance. If it starts to jump, eithe
                             <padding>
                                 <all>5</all>
                             </padding>
+
+                            <horizontal-alignment>center</horizontal-alignment>
+                            <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
                     </children>

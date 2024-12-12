@@ -17,13 +17,16 @@
     }
   },
   "display": {
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.witcher.kill_bullvore.description"
     },
     "frame": "goal",
+    "hidden": false,
     "icon": {
       "item": "tcots-witcher:bullvore_horn_fragment"
     },
+    "show_toast": true,
     "title": {
       "translate": "advancements.witcher.kill_bullvore.title"
     }
