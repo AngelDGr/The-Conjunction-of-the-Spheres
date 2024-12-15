@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Toxicity",
-  "icon": "minecraft:wither_skull",
+  "icon": "minecraft:wither_skeleton_skull",
   "ordinal": 3
 }
 ```

@@ -1,7 +1,7 @@
 ```json
 {
   "title": "Alghoul",
-  "icon": "tcots_witcher:alghoul_bone_arrow",
+  "icon": "tcots-witcher:alghoul_bone_marrow",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
     "tcots-witcher:alghoul_bone_marrow"
