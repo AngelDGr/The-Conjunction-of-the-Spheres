@@ -2,6 +2,7 @@
   "required": true,
   "package": "TCOTS.mixin",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "TCOTS.mixin.TCOTSMixinConfigPlugin",
   "mixins": [
     "CrossbowMixins$CrossbowItemMixin",
     "CrossbowMixins$PersistentProjectileEntityMixin",
@@ -14,6 +15,7 @@
     "DimeritiumMagicBlock$BlockShulkerBullet",
     "DimeritiumMagicBlock$BlockWololoGoal",
     "DimeritiumMagicBlock$MakeEndermanArrowDamageable",
+    "DynamicRecipes",
     "IronGolemMixin",
     "ItemsMixins$ItemMixin",
     "ItemsMixins$MilkBucketItemMixin",
@@ -44,7 +46,8 @@
     "samum.LookAtEntityGoalMixin",
     "structurized.PoolStructurePieceMixin",
     "structurized.RegistryLoaderMixin",
-    "structurized.StructurePoolAccessor"
+    "structurized.StructurePoolAccessor",
+    "trinket.ChangeTrinketTooltipColorMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -62,6 +65,8 @@
     "LightmapTextureManagerMixin",
     "MinecraftClientMixin",
     "PlayerEntityRendererMixin",
+    "WitcherRPGChangeModels$ItemRenderMixin",
+    "WitcherRPGChangeModels$ModelLoaderMixin",
     "WorldRendererMixin",
     "northern_wind.BlazeEntityMixin",
     "northern_wind.LivingEntityRendererMixin",

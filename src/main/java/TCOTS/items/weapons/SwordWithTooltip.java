@@ -4,6 +4,7 @@ import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.MiscUtil;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -16,6 +17,7 @@ import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.List;
 
@@ -30,8 +32,15 @@ public class SwordWithTooltip extends SwordItem {
         this.littleDescription=littleDescription;
     }
 
+    @SuppressWarnings("all")
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        if(FabricLoader.getInstance().isModLoaded("witcher_rpg")){
+            if(stack.isOf(TCOTS_Items.WINTERS_BLADE)){
+                tooltip.add(Text.translatable("item.witcher_rpg.relic_witcher_swords.description_1").formatted(Formatting.RED));
+            }
+        }
+
         tooltip.add(this.littleDescription);
 
         MiscUtil.setSpecialTooltip(Text.translatable("tooltip.tcots-witcher.generic_tooltip.special_abilities"), stack, tooltip, this.tooltip);
@@ -67,4 +76,6 @@ public class SwordWithTooltip extends SwordItem {
 
         return result;
     }
+
+
 }

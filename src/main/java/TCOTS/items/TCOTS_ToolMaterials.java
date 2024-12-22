@@ -1,12 +1,15 @@
 package TCOTS.items;
 
 import com.google.common.base.Suppliers;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 
 import java.util.function.Supplier;
 
@@ -14,13 +17,30 @@ public enum TCOTS_ToolMaterials implements ToolMaterial {
 
     GVALCHIR(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(TCOTS_Items.BULLVORE_HORN_FRAGMENT)),
 
-    MOONBLADE(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.GOLD_INGOT)),
+    MOONBLADE(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 800, 9.0f, 3.0f, 20, () ->
+            Ingredient.ofItems(
+                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                            Registries.ITEM.get(Identifier.of("witcher_rpg", "silver_ingot")) :
+                    Items.GOLD_INGOT
+            )),
 
-    DYAEBL(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.IRON_INGOT)),
+    DYAEBL(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 800, 9.0f, 3.0f, 20, () ->
+            Ingredient.ofItems(
+                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                            Registries.ITEM.get(Identifier.of("witcher_rpg", "steel_ingot")) :
+                    Items.IRON_INGOT)),
 
-    WINTERS_BLADE(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2031, 9.0f, 4.0f, 30, () -> Ingredient.ofItems(Items.NETHERITE_INGOT)),
+    WINTERS_BLADE(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2031, 9.0f, 4.0f, 30, () ->
+            Ingredient.ofItems(
+                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                            Registries.ITEM.get(Identifier.of("witcher_rpg", "dark_steel_ingot")) :
+                    Items.NETHERITE_INGOT)),
 
-    ARDAENYE(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 1400, 9.0f, 4.0f, 20, () -> Ingredient.ofItems(Items.DIAMOND)),
+    ARDAENYE(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 1400, 9.0f, 4.0f, 20, () ->
+            Ingredient.ofItems(
+                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                            Registries.ITEM.get(Identifier.of("witcher_rpg", "dark_steel_ingot")) :
+                    Items.DIAMOND)),
 
     ANCHOR(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 100, 9.0f, 8.0f, 5, () -> Ingredient.ofItems(Items.IRON_BLOCK))
 

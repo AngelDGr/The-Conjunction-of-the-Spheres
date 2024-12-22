@@ -17,6 +17,7 @@ import TCOTS.items.weapons.*;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
@@ -33,11 +34,13 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.loot.condition.KilledByPlayerLootCondition;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.condition.RandomChanceWithEnchantedBonusLootCondition;
+import net.minecraft.loot.entry.EmptyEntry;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.*;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
@@ -1033,7 +1036,7 @@ public class TCOTS_Items {
             GVALCHIR = registerItem("gvalchir",
                     new SwordWithTooltip(TCOTS_ToolMaterials.GVALCHIR, new Item.Settings().rarity(Rarity.UNCOMMON)
                             .attributeModifiers(
-                                    SwordItem.createAttributeModifiers(TCOTS_ToolMaterials.GVALCHIR, 3, -2.2f)),
+                                    SwordsAttributes.createGvalchirAttributeModifiers()),
                             Text.translatable("tooltip.tcots-witcher.gvalchir").formatted(Formatting.GRAY, Formatting.ITALIC),
                             List.of(
                                     Text.translatable("tooltip.tcots-witcher.gvalchir.extra").formatted(Formatting.DARK_GREEN))
@@ -1042,7 +1045,7 @@ public class TCOTS_Items {
             MOONBLADE = registerItem("moonblade",
                     new SwordWithTooltip(TCOTS_ToolMaterials.MOONBLADE, new Item.Settings().rarity(Rarity.UNCOMMON)
                             .attributeModifiers(
-                                    SwordItem.createAttributeModifiers(TCOTS_ToolMaterials.MOONBLADE, 3, -2.2f)),
+                                    SwordsAttributes.createMoonbladeAttributeModifiers()),
                             Text.translatable("tooltip.tcots-witcher.moonblade").formatted(Formatting.GRAY, Formatting.ITALIC),
                             List.of(
                                     Text.translatable("tooltip.tcots-witcher.moonblade.extra").formatted(Formatting.DARK_GREEN))
@@ -1051,7 +1054,7 @@ public class TCOTS_Items {
             DYAEBL = registerItem("dyaebl",
                     new SwordWithTooltip(TCOTS_ToolMaterials.DYAEBL, new Item.Settings().rarity(Rarity.UNCOMMON)
                             .attributeModifiers(
-                                    SwordItem.createAttributeModifiers(TCOTS_ToolMaterials.DYAEBL,  3, -2.4f)),
+                                    SwordsAttributes.createDyaeblAttributeModifiers()),
                             Text.translatable("tooltip.tcots-witcher.dyaebl").formatted(Formatting.GRAY, Formatting.ITALIC),
                             List.of(
                                     Text.translatable("tooltip.tcots-witcher.dyaebl.extra").formatted(Formatting.DARK_RED))
@@ -1060,7 +1063,7 @@ public class TCOTS_Items {
             WINTERS_BLADE = registerItem("winters_blade",
                     new SwordWithTooltip(TCOTS_ToolMaterials.WINTERS_BLADE, new Item.Settings().rarity(Rarity.RARE)
                             .attributeModifiers(
-                                    SwordItem.createAttributeModifiers(TCOTS_ToolMaterials.WINTERS_BLADE, 4, -2.4f)),
+                                    SwordsAttributes.createWintersBladeAttributeModifiers()),
                             Text.translatable("tooltip.tcots-witcher.winters_blade").formatted(Formatting.GRAY, Formatting.ITALIC),
                             List.of(
                                     Text.translatable("tooltip.tcots-witcher.winters_blade.extra").withColor(0x007b77),
@@ -1071,7 +1074,7 @@ public class TCOTS_Items {
             ARDAENYE = registerItem("ardaenye",
                     new SwordItem(TCOTS_ToolMaterials.ARDAENYE, new Item.Settings()
                             .attributeModifiers(
-                                    SwordItem.createAttributeModifiers(TCOTS_ToolMaterials.ARDAENYE, 4, -2.6f))));
+                                    SwordsAttributes.createArdaenyeAttributeModifiers())));
         }
 
         //Armor
@@ -1081,7 +1084,7 @@ public class TCOTS_Items {
                     ArmorItem.Type.CHESTPLATE,
                     new Item.Settings().rarity(Rarity.UNCOMMON)
                             .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(20))
-                            .attributeModifiers(addArmorWithToxicity(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.CHESTPLATE, 10)))
+                            .attributeModifiers(addManticoreArmorAttributes(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.CHESTPLATE, 10, 0.075)))
             );
 
             MANTICORE_TROUSERS = registerItem("manticore_trousers", new ManticoreArmorItem(
@@ -1089,7 +1092,7 @@ public class TCOTS_Items {
                             ArmorItem.Type.LEGGINGS,
                             new Item.Settings().rarity(Rarity.UNCOMMON)
                                     .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(20))
-                                    .attributeModifiers(addArmorWithToxicity(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.LEGGINGS, 10)))
+                                    .attributeModifiers(addManticoreArmorAttributes(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.LEGGINGS, 10, 0.075)))
             );
 
             MANTICORE_BOOTS = registerItem("manticore_boots", new ManticoreArmorItem(
@@ -1097,40 +1100,46 @@ public class TCOTS_Items {
                     ArmorItem.Type.BOOTS,
                     new Item.Settings().rarity(Rarity.UNCOMMON)
                             .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(20))
-                            .attributeModifiers(addArmorWithToxicity(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.BOOTS, 10)))
+                            .attributeModifiers(addManticoreArmorAttributes(TCOTS_ArmorMaterials.MANTICORE, ArmorItem.Type.BOOTS, 10, 0.075)))
             );
 
             WARRIORS_LEATHER_JACKET = registerItem("warriors_leather_jacket", new WarriorsLeatherArmorItem(
                     TCOTS_ArmorMaterials.WARRIORS_LEATHER,
                     ArmorItem.Type.CHESTPLATE,
                     new Item.Settings()
-                            .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(15))));
+                            .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(15))
+                            .attributeModifiers(addArmorWithAdrenalineAttributes(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.CHESTPLATE, 0.02))));
             WARRIORS_LEATHER_TROUSERS = registerItem("warriors_leather_trousers", new WarriorsLeatherArmorItem(
                     TCOTS_ArmorMaterials.WARRIORS_LEATHER,
                     ArmorItem.Type.LEGGINGS,
                     new Item.Settings()
-                            .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(15))));
+                            .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(15))
+                            .attributeModifiers(addArmorWithAdrenalineAttributes(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.LEGGINGS, 0.02))));
             WARRIORS_LEATHER_BOOTS = registerItem("warriors_leather_boots", new WarriorsLeatherArmorItem(
                     TCOTS_ArmorMaterials.WARRIORS_LEATHER,
                     ArmorItem.Type.BOOTS,
                     new Item.Settings()
-                            .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(15))));
+                            .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(15))
+                            .attributeModifiers(addArmorWithAdrenalineAttributes(TCOTS_ArmorMaterials.WARRIORS_LEATHER, ArmorItem.Type.BOOTS, 0.02))));
 
             RAVENS_ARMOR = registerItem("ravens_armor", new RavensArmorItem(
                     TCOTS_ArmorMaterials.RAVEN,
                     ArmorItem.Type.CHESTPLATE,
                     new Item.Settings().rarity(Rarity.UNCOMMON)
-                            .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(30))));
+                            .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(30))
+                            .attributeModifiers(addArmorWithAdrenalineAttributes(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.BODY, 0.10))));
             RAVENS_TROUSERS = registerItem("ravens_trousers", new RavensArmorItem(
                     TCOTS_ArmorMaterials.RAVEN,
                     ArmorItem.Type.LEGGINGS,
                     new Item.Settings().rarity(Rarity.UNCOMMON)
-                            .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(30))));
+                            .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(30))
+                            .attributeModifiers(addArmorWithAdrenalineAttributes(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.LEGGINGS, 0.10))));
             RAVENS_BOOTS = registerItem("ravens_boots", new RavensArmorItem(
                     TCOTS_ArmorMaterials.RAVEN,
                     ArmorItem.Type.BOOTS,
                     new Item.Settings().rarity(Rarity.UNCOMMON)
-                            .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(30))));
+                            .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(30))
+                            .attributeModifiers(addArmorWithAdrenalineAttributes(TCOTS_ArmorMaterials.RAVEN, ArmorItem.Type.BOOTS, 0.10))));
         }
 
         //Horse Armor
@@ -1174,22 +1183,13 @@ public class TCOTS_Items {
                 .build();
     }
 
-    public static AttributeModifiersComponent addArmorWithToxicity(RegistryEntry<ArmorMaterial> material, ArmorItem.Type type, int toxicity){
+    public static AttributeModifiersComponent addArmorWithAdrenalineAttributes(RegistryEntry<ArmorMaterial> material, ArmorItem.Type type, double adrenaline){
         int i = material.value().getProtection(type);
         float f = material.value().toughness();
         AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
         AttributeModifierSlot attributeModifierSlot = AttributeModifierSlot.forEquipmentSlot(type.getEquipmentSlot());
         Identifier identifier = Identifier.ofVanilla("armor." + type.getName());
 
-        builder.add(
-                TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY,
-                new EntityAttributeModifier(
-                        Identifier.of(TCOTS_Main.MOD_ID, "armor."+ type.getName()),
-                        toxicity,
-                        EntityAttributeModifier.Operation.ADD_VALUE
-                ),
-                attributeModifierSlot
-        );
         builder.add(
                 EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(identifier, i, EntityAttributeModifier.Operation.ADD_VALUE), attributeModifierSlot
         );
@@ -1203,6 +1203,67 @@ public class TCOTS_Items {
             builder.add(
                     EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
                     new EntityAttributeModifier(identifier, g, EntityAttributeModifier.Operation.ADD_VALUE),
+                    attributeModifierSlot
+            );
+        }
+
+        if(FabricLoader.getInstance().isModLoaded("witcher_rpg")){
+            builder.add(
+                    TCOTS_EntityAttributes.ADRENALINE_GAIN,
+                    new EntityAttributeModifier(
+                            Identifier.of(TCOTS_Main.MOD_ID, "armor."+ type.getName()),
+                            adrenaline,
+                            EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                    ),
+                    attributeModifierSlot
+            );
+        }
+
+        return builder.build();
+    }
+
+
+    public static AttributeModifiersComponent addManticoreArmorAttributes(RegistryEntry<ArmorMaterial> material, ArmorItem.Type type, int toxicity, double adrenaline){
+        int i = material.value().getProtection(type);
+        float f = material.value().toughness();
+        AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
+        AttributeModifierSlot attributeModifierSlot = AttributeModifierSlot.forEquipmentSlot(type.getEquipmentSlot());
+        Identifier identifier = Identifier.ofVanilla("armor." + type.getName());
+
+        builder.add(
+                EntityAttributes.GENERIC_ARMOR, new EntityAttributeModifier(identifier, i, EntityAttributeModifier.Operation.ADD_VALUE), attributeModifierSlot
+        );
+        builder.add(
+                EntityAttributes.GENERIC_ARMOR_TOUGHNESS,
+                new EntityAttributeModifier(identifier, f, EntityAttributeModifier.Operation.ADD_VALUE),
+                attributeModifierSlot
+        );
+        float g = material.value().knockbackResistance();
+        if (g > 0.0F) {
+            builder.add(
+                    EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
+                    new EntityAttributeModifier(identifier, g, EntityAttributeModifier.Operation.ADD_VALUE),
+                    attributeModifierSlot
+            );
+        }
+        builder.add(
+                TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY,
+                new EntityAttributeModifier(
+                        Identifier.of(TCOTS_Main.MOD_ID, "armor."+ type.getName()),
+                        toxicity,
+                        EntityAttributeModifier.Operation.ADD_VALUE
+                ),
+                attributeModifierSlot
+        );
+
+        if(FabricLoader.getInstance().isModLoaded("witcher_rpg")){
+            builder.add(
+                    TCOTS_EntityAttributes.ADRENALINE_GAIN,
+                    new EntityAttributeModifier(
+                            Identifier.of(TCOTS_Main.MOD_ID, "armor."+ type.getName()),
+                            adrenaline,
+                            EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                    ),
                     attributeModifierSlot
             );
         }
@@ -1392,7 +1453,8 @@ public class TCOTS_Items {
     public static void modifyLootTables(){
 
 
-        LootTableEvents.MODIFY.register( (id, tableBuilder, source, wrapperLookup) ->{
+        LootTableEvents.MODIFY.register( (id, tableBuilder, source, wrapperLookup) -> {
+
             if(Blocks.WHEAT.getLootTableKey().equals(id) && source.isBuiltin()){
                 LootPool.Builder ergotSeeds = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
@@ -1859,6 +1921,177 @@ public class TCOTS_Items {
                 }
             }
         });
+
+
+        LootTableEvents.REPLACE.register((id, lootTable, source, wrapperLookup) -> {
+
+            //Witcher Grave - Disable Winters Blade
+            {
+                if(id.getValue().equals(Identifier.of("witcher_rpg","chests/witcher_grave"))){
+
+                    LootTable.Builder newLootTable = new LootTable.Builder();
+
+                    LootPool.Builder ingredientsPool = LootPool.builder().rolls(UniformLootNumberProvider.create(3,5))
+                            .bonusRolls(ConstantLootNumberProvider.create(1))
+                            .with(ItemEntry.builder(Items.LEATHER)
+                                    .weight(10)
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,5)))
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("more_rpg_classes", "hardened_leather")))
+                                    .weight(7)
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,2)))
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "meteorite_ingot")))
+                                    .weight(5)
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,3)))
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "dark_iron_ingot")))
+                                    .weight(5)
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,3)))
+                            )
+                            .with(ItemEntry.builder(TCOTS_Items.CURED_MONSTER_LEATHER)
+                                    .weight(2)
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,2)))
+                            )
+                            .with(ItemEntry.builder(TCOTS_Items.DWARVEN_SPIRIT)
+                                    .weight(1)
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4)))
+                            )
+                            .with(ItemEntry.builder(TCOTS_Items.ALCOHEST)
+                                    .weight(1)
+                                    .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1,4)))
+                            );
+
+                    LootPool.Builder diagramsPool = LootPool.builder().rolls(UniformLootNumberProvider.create(1,1))
+                            .bonusRolls(ConstantLootNumberProvider.create(1))
+                            .with(EmptyEntry.builder()
+                                    .weight(5)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "enhanced_feline_diagram")))
+                                    .weight(5)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "enhanced_griffin_diagram")))
+                                    .weight(5)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "enhanced_ursine_diagram")))
+                                    .weight(5)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "enhanced_wolven_diagram")))
+                                    .weight(5)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "superior_feline_diagram")))
+                                    .weight(1)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "superior_griffin_diagram")))
+                                    .weight(1)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "superior_ursine_diagram")))
+                                    .weight(1)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "superior_wolven_diagram")))
+                                    .weight(1)
+                            );
+
+                    LootPool.Builder weaponsPool = LootPool.builder().rolls(UniformLootNumberProvider.create(1,1))
+                            .bonusRolls(ConstantLootNumberProvider.create(1))
+                            .with(EmptyEntry.builder()
+                                    .weight(10)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "silver_witcher_sword")))
+                                    .weight(10)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "iron_witcher_sword")))
+                                    .weight(10)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "steel_witcher_sword")))
+                                    .weight(10)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "diamond_witcher_sword")))
+                                    .weight(5)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "meteorite_witcher_sword")))
+                                    .weight(5)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "dark_iron_witcher_sword")))
+                                    .weight(5)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "ultimatum_sword")))
+                                    .weight(3)
+                            )
+                            .with(ItemEntry.builder(TCOTS_Items.DYAEBL)
+                                    .weight(3)
+                            )
+                            .with(ItemEntry.builder(TCOTS_Items.ARDAENYE)
+                                    .weight(1)
+                            )
+                            .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher_rpg", "aerondight_sword")))
+                                    .weight(1)
+                            );
+
+
+                    LootPool.Builder alchemy_formulae = LootPool.builder()
+                            .rolls(UniformLootNumberProvider.create(0, 2))
+                            .with(ItemEntry.builder(TCOTS_Items.ALCHEMY_FORMULA))
+                            .apply(AlchemyRecipeRandomlyLootFunction.builder())
+                            .conditionally(RandomChanceLootCondition.builder(0.45f));
+
+
+                    newLootTable.pool(ingredientsPool);
+                    newLootTable.pool(diagramsPool);
+                    newLootTable.pool(weaponsPool);
+                    newLootTable.pool(alchemy_formulae);
+
+                    if(FabricLoader.getInstance().isModLoaded("witcher-medallions")){
+                        LootPool.Builder medallionsPool = LootPool.builder().rolls(UniformLootNumberProvider.create(0, 1))
+                                .with(EmptyEntry.builder()
+                                        .weight(8)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "wolf-medallion-off")))
+                                        .weight(5)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "cat-medallion-off")))
+                                        .weight(5)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "bear-medallion-off")))
+                                        .weight(5)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "griffin-medallion-off")))
+                                        .weight(5)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "viper-medallion-off")))
+                                        .weight(5)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "manticore-medallion-off")))
+                                        .weight(5)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "wolf-medallion")))
+                                        .weight(1)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "cat-medallion")))
+                                        .weight(1)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "bear-medallion")))
+                                        .weight(1)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "griffin-medallion")))
+                                        .weight(1)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "viper-medallion")))
+                                        .weight(1)
+                                )
+                                .with(ItemEntry.builder(Registries.ITEM.get(Identifier.of("witcher-medallions", "manticore-medallion")))
+                                        .weight(1)
+                                );
+
+                        newLootTable.pool(medallionsPool);
+                    }
+
+                    return newLootTable.build();
+                }
+            }
+
+            return lootTable;
+        });
     }
 
     public static Item NEST_SLAB_ITEM;
@@ -1948,8 +2181,6 @@ public class TCOTS_Items {
 
     private static Item registerBlockItem(String name, Block block){
         return Registry.register(Registries.ITEM, Identifier.of(TCOTS_Main.MOD_ID, name), new BlockItem(block, new Item.Settings()));
-        
-//        return Registry.register(Registries.ITEM, RegistryKey.of(Registries.ITEM.getKey(), Identifier.of(TCOTS_Main.MOD_ID, name)), item);
     }
 
     private static Item registerItem(String name, Item item) {

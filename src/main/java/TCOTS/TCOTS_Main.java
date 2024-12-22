@@ -4,6 +4,7 @@ import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.config.TCOTS_Config;
 import TCOTS.entity.TCOTS_Entities;
+import TCOTS.items.TCOTS_DynamicRecipes;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
 import TCOTS.items.concoctions.TCOTS_Effects;
@@ -47,6 +48,7 @@ public class TCOTS_Main implements ModInitializer {
 
 	public record ToxicityFacePacket(Boolean activate){}
 
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -62,6 +64,7 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_ItemsGroups.registerGroupItems();
 		TCOTS_Items.modifyLootTables();
 		TCOTS_Items.registerCompostableItems();
+		TCOTS_DynamicRecipes.registerDynamicRecipes();
 		ScreenHandlersAndRecipesRegister.registerScreenHandlersAndRecipes();
 		TCOTS_Sounds.registerSounds();
 		TCOTS_Entities.addSpawns();

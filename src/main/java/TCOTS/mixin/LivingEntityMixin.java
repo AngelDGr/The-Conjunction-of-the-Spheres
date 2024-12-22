@@ -412,11 +412,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @ModifyArgs(method = "applyArmorToDamage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/DamageUtil;getDamageLeft(Lnet/minecraft/entity/LivingEntity;FLnet/minecraft/entity/damage/DamageSource;FF)F"))
     private void injectArmorPenetration(Args args){
         if(attackerHasGvalchir){
-            float armor = args.get(1);
-            float armorToughness = args.get(2);
+            float armor = args.get(3);
+            float armorToughness = args.get(4);
 
-            args.set(1, armor*0.25f);
-            args.set(2, armorToughness*0.50f);
+            args.set(3, armor*0.25f);
+            args.set(4, armorToughness*0.50f);
         }
     }
 
