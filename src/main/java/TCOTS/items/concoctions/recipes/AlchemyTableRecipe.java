@@ -316,58 +316,20 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
             return defaultedList;
         }
 
-//        public static Integer fromJson(@Nullable JsonElement json, boolean allowAir) {
-//            if (json == null || json.isJsonNull()) {
-//                throw new JsonSyntaxException("Item cannot be null");
-//            } else if (json.isJsonObject()) {
-//                return ofEntries(Stream.of(entryFromJson(json.getAsJsonObject())));
-//            } else if (json.isJsonArray()) {
-//                JsonArray jsonArray = json.getAsJsonArray();
-//                if (jsonArray.size() == 0 && !allowAir) {
-//                    throw new JsonSyntaxException("Item array cannot be empty, at least one item must be defined");
-//                } else {
-//                    return ofEntries(StreamSupport.stream(jsonArray.spliterator(), false).map(jsonElement -> entryFromJson(JsonHelper.asObject(jsonElement, "item"))));
-//                }
-//            } else {
-//                throw new JsonSyntaxException("Expected item to be object or array of objects");
-//            }
-//        }
-//        private static Ingredient.Entry entryFromJson(JsonObject json) {
-//            if (json.has("item") && json.has("tag")) {
-//                throw new JsonParseException("An ingredient entry is either a tag or an item, not both");
-//            } else if (json.has("item")) {
-//                Item item = ShapedRecipe.getItem(json);
-//                return new Ingredient.StackEntry(new ItemStack(item));
-//            } else if (json.has("tag")) {
-//                Identifier identifier = new Identifier(JsonHelper.getString(json, "tag"));
-//                TagKey<Item> tagKey = TagKey.of(RegistryKeys.ITEM, identifier);
-//                return new Ingredient.TagEntry(tagKey);
-//            } else {
-//                throw new JsonParseException("An ingredient entry needs either a tag or an item");
-//            }
-//        }
-//        public static final Ingredient EMPTY = new Ingredient(Stream.empty());
-//        public static Ingredient ofEntries(Stream<? extends Ingredient.Entry> entries) {
-//            Ingredient ingredient = new Ingredient(entries);
-//            return ingredient.isEmpty() ? EMPTY : ingredient;
-//        }
-
         // Turns Recipe into PacketByteBuf
         @Override
         public void write(PacketByteBuf buf, AlchemyTableRecipe recipe) {
             buf.writeFloat(recipe.getOrder());
 
-            recipe.getIngredients().get(0).write(buf);
-            recipe.getIngredients().get(1).write(buf);
-            recipe.getIngredients().get(2).write(buf);
-            recipe.getIngredients().get(3).write(buf);
-            recipe.getIngredients().get(4).write(buf);
+            buf.writeInt(recipe.getIngredients().size());
 
-            buf.writeInt(recipe.getIngredientsCounts().get(0));
-            buf.writeInt(recipe.getIngredientsCounts().get(1));
-            buf.writeInt(recipe.getIngredientsCounts().get(2));
-            buf.writeInt(recipe.getIngredientsCounts().get(3));
-            buf.writeInt(recipe.getIngredientsCounts().get(4));
+            for(int i=0; i<recipe.getIngredients().size(); i++){
+                recipe.getIngredients().get(i).write(buf);
+            }
+
+            for(int i=0; i<recipe.getIngredients().size(); i++){
+                buf.writeInt(recipe.getIngredientsCounts().get(i));
+            }
 
             buf.writeItemStack(recipe.getBaseItem());
             buf.writeItemStack(recipe.getOutput(null));
@@ -377,32 +339,19 @@ public class AlchemyTableRecipe implements Recipe<SimpleInventory>, Comparable<A
         // Turns PacketByteBuf into Recipe(InGame)
         @Override
         public AlchemyTableRecipe read(Identifier id, PacketByteBuf buf) {
-            // Make sure the read in the same order you have written!
             float order = buf.readFloat();
 
+            int ingredientsAmount=buf.readInt();
+
             List<Ingredient> ingredientList = Lists.newArrayList();
-            Ingredient I1 = Ingredient.fromPacket(buf);
-            Ingredient I2 = Ingredient.fromPacket(buf);
-            Ingredient I3 = Ingredient.fromPacket(buf);
-            Ingredient I4 = Ingredient.fromPacket(buf);
-            Ingredient I5 = Ingredient.fromPacket(buf);
-            ingredientList.add(I1);
-            ingredientList.add(I2);
-            ingredientList.add(I3);
-            ingredientList.add(I4);
-            ingredientList.add(I5);
+            for(int i=0; i<ingredientsAmount; i++){
+                ingredientList.add(Ingredient.fromPacket(buf));
+            }
 
             List<Integer> ingredientCountList = Lists.newArrayList();
-            int C1 = buf.readInt();
-            int C2 = buf.readInt();
-            int C3 = buf.readInt();
-            int C4 = buf.readInt();
-            int C5 = buf.readInt();
-            ingredientCountList.add(C1);
-            ingredientCountList.add(C2);
-            ingredientCountList.add(C3);
-            ingredientCountList.add(C4);
-            ingredientCountList.add(C5);
+            for(int i=0; i<ingredientsAmount; i++){
+                ingredientCountList.add(buf.readInt());
+            }
 
             ItemStack base = buf.readItemStack();
             ItemStack output = buf.readItemStack();

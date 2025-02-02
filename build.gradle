@@ -58,6 +58,8 @@ repositories {
 		name = "ModMaven"
 		url = "https://modmaven.dev"
 	}
+
+	maven { url = "https://maven.bawnorton.com/releases" }
 }
 
 loom {
@@ -122,10 +124,8 @@ dependencies {
 
 	modCompileOnlyApi "maven.modrinth:jei:${jei_version}"
 
-	// compile against the JEI API but do not include it at runtime
-//	modImplementation("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
-//	// at runtime, use the full JEI jar for Fabric
-//	modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
+	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.2.0")))
+
 }
 
 processResources {
