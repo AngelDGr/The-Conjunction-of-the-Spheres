@@ -835,6 +835,11 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
     }
 
     @Override
+    public boolean canBreatheInWater() {
+        return true;
+    }
+
+    @Override
     public void checkDespawn() {
         if (this.getWorld().getDifficulty() == Difficulty.PEACEFUL && this.isDisallowedInPeaceful()) {
             if(DrownerEntity.this.puddle!=null){
