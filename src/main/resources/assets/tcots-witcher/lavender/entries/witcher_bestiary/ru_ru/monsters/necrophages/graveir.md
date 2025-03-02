@@ -1,6 +1,6 @@
 ```json
 {
-  "title": "Graveir",
+  "title": "Грайвер",
   "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/graveir",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
@@ -10,48 +10,47 @@
 }
 ```
 
-Graveirs are depraved, lecherous and treacherous bastards. 
-They are one of the most massive necrophages, 
-they have some bony combs on their head and short but cruel, 
-thick claws.
+Грайверы - развратные, вероломные и коварные ублюдки.
+Они одни из самых крупных падальщиков, 
+у них есть несколько костяных гребней на голове и короткие, и тупые когти.
 
 
-Their teeth and thin tongue allow them to eat marrow — and the more rotten and rancid the marrow, 
-the more it is to their liking.
+Их зубы и тонкий язык позволяют им есть костный мозг - чем костный мозг более гнилой и прогорьклый, 
+тем больше он им нравится.
 
 
 ;;;;;
 
-The vile graveirs have cadaverine in their teeth, so anyone who engages one in battle beware
+У мерзких Грайверов в зубах содержится трупный яд. Так что, если вы встретитесь с ними в бою, остерегайтесь их клыков.
 
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_main.png,fit)
 
 ;;;;;
 
-{dark_green}**Habitat**{}
-- Underground
-- Dark Caves
+{dark_green}**Среда обитания**{}
+- Под землёй
+- В тёмных пещерах
 
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_toxic.png,fit)
 
 ;;;;;
 
-{red}**Behavior**{}
+{red}**Поведение**{}
 
-The Graveir is a formidable foe, capable of defeating seasoned warriors with powerful strikes that deliver significant knockback.
+Грайвер - грозный противник, способный победить опытных воинов мощными ударами, наносящими значительный урон.
 
-Thanks to the cadaverine stored in its teeth, it can apply this acid to its target, rapidly decaying both health and armor.
+Они могут наносить трупный яд как кислоту на свою цель, быстро растворяя их броню и отравляя. 
 
 
-Its thick, resilient skin provides armor and high resistance to explosions, making it even tougher to defeat.
+Его толстая кожа обеспечивает броню и высокую устойчивость к взрывам, что делает его более непобедимым.
 
 ;;;;;
 
-Despite its immense strength, the Graveir's {#0A880E}slow speed can be exploited in combat, providing opportunities 
-for skilled fighters to gain the upper hand and ultimately overcome this formidable adversary.{}
+Несмотря на огромную силу, {#0A880E}они медленно передвигаются, что даёт приемущество опытным бойцам 
+в победе над этим грозным противником.{}
 
 
-{blue}**Loot**{}
+{blue}**Добыча**{}
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -108,5 +107,5 @@ for skilled fighters to gain the upper hand and ultimately overcome this formida
 
 
 
-![Graveir](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_full.png,fit)
+![Грайвер](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_full.png,fit)
 

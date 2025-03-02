@@ -1,53 +1,56 @@
 ```json
 {
-  "title": "Nekker Warrior",
-  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/nekker_warrior",
-  "category": "tcots-witcher:ogroids",
+  "title": "Туманник",
+  "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/foglet",
+  "category": "tcots-witcher:necrophages",
   "associated_items": [
-    "tcots-witcher:nekker_warrior_mutagen"
+    "tcots-witcher:foglet_mutagen",
+    "tcots-witcher:foglet_teeth"
   ],
-  "ordinal": 2
+  "ordinal": 4
 }
 ```
 
+Туманники могут появиться везде, где может возникнуть туман: если тумана нет, они вызовут его сами.
+Быстро сгущающийся безветренный воздух безошибочно сигнализирует о присутствии туманника и подготовке к атаке.
 
-Nekker Warriors are a particularly dangerous subspecies of the common Nekker.
-
-These creatures' increased strength and resilience are what set them apart from their lesser kin.
-Standing slightly taller and adorned with more pronounced spines and claws, 
-Nekker Warriors lead their packs with a ferocity that makes them formidable adversaries.
-
-;;;;;
-
-Encounters with Nekker Warriors are never solitary affairs, as these are always surrounded by other Nekkers.
-
-![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_main.png,fit)
+У этих существ мощные руки и когти,
+но что делает их по-настоящему опасными, так это мастерство обмана, 
+запутывания и дезориентации.
 
 ;;;;;
 
-{dark_green}**Habitat**{}
-- Forests
-- Plains
-- [Nekker nests](^tcots-witcher:misc/monster_nests), found in plains or forests
-  ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_command.png,fit)
+Говорят, что туманники также обладают способностью создавать сложные иллюзии из
+чистого тумана.
+
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_main.png,fit)
 
 ;;;;;
 
-{red}**Behavior**{}
+{dark_green}**Среда обитания**{}
+- Болота (ночью)
+- Леса (ночью, особенно тёмный лес)
+- Горы (ночью)
 
-Just like the common Nekker, the Nekker Warrior digs a burrow to stay 
-hidden when it doesn't have a target, jumping the moment it finds a prey.
-
-
-Their increased strength makes them tougher opponents, sometimes able to break through a warrior's shield. 
-As leaders, Nekker Warriors also boost the effectiveness of the Nekkers they command, making their packs more formidable.
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_fog.png,fit)
 
 ;;;;;
 
-Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the Nekkers lose much of their strength.{}
+{red}**Поведение**{}
+
+Туманник - опасный монстр-иллюзионист, при приближении к которому он начнёт
+создавать вокруг себя густой туман, становясь невидимым и неуязвимым, сливаясь с туманом воедино.
 
 
-{blue}**Loot**{}
+В момент превращения он создаёт две иллюзии, 
+не бойтесь этих иллюзий, так как их можно развеить одним точным ударом.
+
+;;;;;
+
+Туманник и две иллюзии будут атаковать вас и только когда они нанесут вам урон - станут видимыми и
+снова уязвимыми, Воспользуйтесь моментом, чтобы {#0A880E}быстро убить туманника, пока он снова не растворился в тумане.{}
+
+{blue}**Добыча**{}
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -58,7 +61,7 @@ Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the 
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:nekker_eye
+                                        tcots-witcher:cadaverine
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -72,7 +75,7 @@ Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the 
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:nekker_heart
+                                        tcots-witcher:foglet_teeth
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -97,7 +100,7 @@ Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the 
         </flow-layout>
 ```
 
-{dark_blue}**Mutagen**{}
+{dark_blue}**Мутаген**{}
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -108,7 +111,7 @@ Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the 
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:nekker_warrior_mutagen
+                                        tcots-witcher:foglet_mutagen
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -117,6 +120,7 @@ Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the 
                                 <all>5</all>
                             </padding>
                         </stack-layout>
+                        
                     </children>
                     <sizing>
                         <horizontal method="content">1</horizontal>
@@ -137,4 +141,4 @@ Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the 
 
 
 
-![Nekker Warrior](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_full.png,fit)
+![Туманник](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_full.png,fit)

@@ -45,8 +45,7 @@ so your toxicity capacity limits how many of these potions you can drink at once
 
 {red}Levels{}
 
-Nearly each potion has three levels; *Normal*, *Enhanced* and *Superior*. Each one
- is stronger than the last.
+Nearly each potion has three levels; *Normal*, *Enhanced* and *Superior*. Each one being stronger than the last.
 
 Each level not only increases the intensity of the effect but also
 the quantity you can carry in a single space.

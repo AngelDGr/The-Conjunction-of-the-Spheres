@@ -19,6 +19,7 @@
 Bombs are thrown projectiles that you can use to supplement your combat. 
 When thrown, Bombs produce a variety of effects, including dealing with damage in an area, 
 hindering the abilities of monsters or inflicting crowd control effects on targets.
+
 Similar to [potions](^tcots-witcher:concoctions/potions), each type of bomb has three
 levels;  *Normal*, *Enhanced* and *Superior*.
 

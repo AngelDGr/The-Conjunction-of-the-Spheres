@@ -1,6 +1,6 @@
 ```json
 {
-  "title": "Nekker Warrior",
+  "title": "Наккер Воин",
   "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/nekker_warrior",
   "category": "tcots-witcher:ogroids",
   "associated_items": [
@@ -11,43 +11,43 @@
 ```
 
 
-Nekker Warriors are a particularly dangerous subspecies of the common Nekker.
+Наккер Воин - особенно опасный подвид Наккера обыкновенного.
 
-These creatures' increased strength and resilience are what set them apart from their lesser kin.
-Standing slightly taller and adorned with more pronounced spines and claws, 
-Nekker Warriors lead their packs with a ferocity that makes them formidable adversaries.
+Повышенная сила и живучесть этих существ отличает их от своих меньших сородичей.
+Они немного выше ростом и украшены более выраженными шипами и когтями. 
+Наккеры Воины возглавляют свои стаи со свирепостью, которая делает их грозными противниками.
 
 ;;;;;
 
-Encounters with Nekker Warriors are never solitary affairs, as these are always surrounded by other Nekkers.
+Встречи с Наккерами Воинами никогда не бывают одиночными, так как они всегда окружены другими Наккерами.
 
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_main.png,fit)
 
 ;;;;;
 
-{dark_green}**Habitat**{}
-- Forests
-- Plains
-- [Nekker nests](^tcots-witcher:misc/monster_nests), found in plains or forests
+{dark_green}**Среда обитания**{}
+- Леса
+- Равнины
+- [Гнёзда чудовищ](^tcots-witcher:misc/monster_nests), могут быть найдены на равнинах и в лесах.
   ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_command.png,fit)
 
 ;;;;;
 
-{red}**Behavior**{}
+{red}**Поведение**{}
 
-Just like the common Nekker, the Nekker Warrior digs a burrow to stay 
-hidden when it doesn't have a target, jumping the moment it finds a prey.
+Как и Наккер обыкновенный, Наккер Воин роет нору, чтобы оставаться 
+незамеченным, когда у него нет цели, и выпрыгивает, как только находит добычу.
 
 
-Their increased strength makes them tougher opponents, sometimes able to break through a warrior's shield. 
-As leaders, Nekker Warriors also boost the effectiveness of the Nekkers they command, making their packs more formidable.
+Их возросшая сила делает их более выносливыми противникаи, иногда способными пробить щит своего врага.
+Как лидеры, Наккеры Воины так же агрессивно управляют своими стаями, делая их более грозными.
 
 ;;;;;
 
-Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the Nekkers lose much of their strength.{}
+Старайтесь сосредоточиться на этом, сражаясь с роем Наккеров; {#0A880E}без лидера Наккеры теряют большую часть своей силы.{}
 
 
-{blue}**Loot**{}
+{blue}**Добыча**{}
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -97,7 +97,7 @@ Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the 
         </flow-layout>
 ```
 
-{dark_blue}**Mutagen**{}
+{dark_blue}**Мутаген**{}
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -137,4 +137,4 @@ Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the 
 
 
 
-![Nekker Warrior](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_full.png,fit)
+![Наккер Воин](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_full.png,fit)

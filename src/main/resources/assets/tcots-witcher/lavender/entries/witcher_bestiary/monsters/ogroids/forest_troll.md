@@ -47,6 +47,7 @@ Even the __rabid__ breed it's also present in the subspecies, it's rare to find 
 The best strategy against these monster it's try to [befriend](^tcots-witcher:misc/befriending_troll) them if possible instead of 
 engage in combat.
 
+
 {blue}**Loot**{}
 ```xml owo-ui
         <flow-layout direction="vertical">

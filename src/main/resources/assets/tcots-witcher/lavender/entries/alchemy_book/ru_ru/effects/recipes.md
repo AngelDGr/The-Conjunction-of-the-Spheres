@@ -1,6 +1,6 @@
 ```json
 {
-  "title": "Recipes Compendium",
+  "title": "Сборник рецептов",
   "icon_sprite": "tcots-witcher:alchemy_almanac/category/recipes",
   "ordinal": 10
 }

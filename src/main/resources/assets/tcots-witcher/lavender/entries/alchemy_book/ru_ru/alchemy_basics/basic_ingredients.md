@@ -1,23 +1,23 @@
 ```json
 {
-  "title": "Ingredients",
+  "title": "Ингредиенты",
   "icon_sprite": "tcots-witcher:alchemy_almanac/category/basic_ingredients",
   "ordinal": 2
 }
 ```
 
-While pre-Conjunction plants (before the Conjunction of the Spheres) used in various recipes are well-known, 
-this section will describe where to find any post-Conjunction ingredient that may be unfamiliar. 
+Если растения, использовавшиеся в различных рецептах до Сопряжения Сфер прекрасно известны,
+то в этом разделе мы расскажем, где найти любые **неизвестные** ингредиенты, используемые после Сопряжения Сфер.
 
-This book only covers plants ingredients, to further info in monster ingredients, buy a Bestiary at your local librarian.
+В этой книге описаны только растения. Для получения информации про ингредиенты из чудовищ купите бестиарий у местного библеотекаря.
 
 ;;;;;
 
 ---
 
-**{dark_green}Basic Ingredients{}**
+**{dark_green}Основные ингредиенты{}**
 
-*Post-conjunction plants*
+*Растения, появившиеся после сопряжения сфер.*
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -30,9 +30,9 @@ This book only covers plants ingredients, to further info in monster ingredients
                                     <stack>
                                         tcots-witcher:celandine
                                     </stack>
-<tooltip-text >Celandine
-Grows in Plains, Forests,
-and Meadows.</tooltip-text>
+<tooltip-text>Ласточкина трава:
+Растёт на равнинах, в Лесах,
+и Лугах.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -46,9 +46,9 @@ and Meadows.</tooltip-text>
                                     <stack>
                                         tcots-witcher:crows_eye
                                     </stack>
-<tooltip-text>Crow's Eye: 
-Grows in Taigas, Snowy Taigas
-and Groves.</tooltip-text>
+<tooltip-text>Вороний глаз: 
+Растёт в тайге, снежной тайге
+и рощах.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -62,9 +62,9 @@ and Groves.</tooltip-text>
                                     <stack>
                                         tcots-witcher:arenaria
                                     </stack>
-<tooltip-text>Arenaria:
-Grows in Taigas, Snowy Taigas
-and Flower Forests.</tooltip-text>                                    
+<tooltip-text>Аренария:
+Растёт в тайге, снежной тайге
+и цветочных лесах.</tooltip-text>                                    
                                 </item>
                             </children>
                             <padding>
@@ -78,9 +78,9 @@ and Flower Forests.</tooltip-text>
                                     <stack>
                                         tcots-witcher:allspice
                                     </stack>
-<tooltip-text>Allspice:
-Bought from herbalist villagers 
-or from Sniffers.</tooltip-text>
+<tooltip-text>Пряность:
+Покупается у деревенских травников 
+или знахарей.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -106,9 +106,9 @@ or from Sniffers.</tooltip-text>
                                     <stack>
                                         tcots-witcher:bryonia
                                     </stack>
-<tooltip-text>Bryonia:
-Grows in caves, sometimes
-grows at surface level.</tooltip-text>
+<tooltip-text>Бриония:
+Растёт в пещерах, иногда
+проростает на поверхности.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -122,9 +122,9 @@ grows at surface level.</tooltip-text>
                                     <stack>
                                         tcots-witcher:ergot_seeds
                                     </stack>
-<tooltip-text>Ergot Seeds:
-Harvested from wheat,
-similar to a poisonous potato.</tooltip-text>
+<tooltip-text>Семена спорыньи:
+Собираются с пшеницы,
+похожи на ядовитый картофель.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -138,9 +138,9 @@ similar to a poisonous potato.</tooltip-text>
                                     <stack>
                                         tcots-witcher:verbena
                                     </stack>
-<tooltip-text>Verbena:
-Grows in Plains, Flower Forests, 
-Forests and Meadows.</tooltip-text>
+<tooltip-text>Вербена:
+Растёт на равнинах, в цветочных лесах, 
+обычных лесах и лугах.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -154,9 +154,9 @@ Forests and Meadows.</tooltip-text>
                                     <stack>
                                         tcots-witcher:han_fiber
                                     </stack>
-<tooltip-text>Han Fiber:
-Grows in Swamps, Jungles 
-and Savannas.</tooltip-text>
+<tooltip-text>Волокна хань:
+Растёт на балотах, в джунглях 
+и саванне.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -183,9 +183,9 @@ and Savannas.</tooltip-text>
                                     <stack>
                                         tcots-witcher:puffball
                                     </stack>
-<tooltip-text>Puffball:
-Grows in Taiga, Swamps 
-and caves.</tooltip-text>
+<tooltip-text>Гриб Пухляк:
+Растёт в тайге, на болотах
+и в пещерах.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -199,9 +199,9 @@ and caves.</tooltip-text>
                                     <stack>
                                         tcots-witcher:sewant_mushrooms
                                     </stack>
-<tooltip-text>Sewant Mushrooms:
-Grows in Taigas, Dark Forests 
-and caves.</tooltip-text>
+<tooltip-text>Гриб Севант:
+Растёт в тайге, Тёмных лесах 
+и пещерах.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -230,9 +230,9 @@ and caves.</tooltip-text>
 
 ---
 
-**{dark_green}Advanced Ingredients{}**
+**{dark_green}Ингредиенты для опытных{}**
 
-*Post-conjunction substances*
+*Ингредиенты, появившиеся после сопряжения сфер.*
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -245,8 +245,8 @@ and caves.</tooltip-text>
                                     <stack>
                                         tcots-witcher:aether
                                     </stack>
-<tooltip-text>Aether:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Эфир:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -260,8 +260,8 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:vitriol
                                     </stack>
-<tooltip-text>Vitriol:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Витриол:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -275,8 +275,8 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:vermilion
                                     </stack>
-<tooltip-text>Vermilion:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Вермилион:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -290,8 +290,8 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:hydragenum
                                     </stack>
-<tooltip-text>Hydragenum:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Гидрагенум:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -317,8 +317,8 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:rubedo
                                     </stack>
-<tooltip-text>Rubedo:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Рубедо:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -332,8 +332,8 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:quebrith
                                     </stack>
-<tooltip-text>Quebrith:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Квебрит:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -348,8 +348,8 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:rebis
                                     </stack>
-<tooltip-text>Rebis:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Ребис:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -363,8 +363,8 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:nigredo
                                     </stack>
-<tooltip-text>Nigredo:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Нигредо:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -390,10 +390,10 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:monster_fat
                                     </stack>
-<tooltip-text>Monster Fat:
-Obtained from Ravagers, Hoglins,
-Zoglins, Polar Bears and Piglins
-Brutes.</tooltip-text>
+<tooltip-text>Жир чудовища:
+Собирается с Разорителей, Хоглинов,
+Зоглинов, Полярных медведей и брутальных
+Пиглинов.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -407,9 +407,9 @@ Brutes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:alchemy_paste
                                     </stack>
-<tooltip-text>Alchemy Paste:
-Bought from herbalist
-villagers.</tooltip-text>
+<tooltip-text>Алхимическая паста:
+Покупается у деревенских
+травников.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -423,8 +423,8 @@ villagers.</tooltip-text>
                                     <stack>
                                         tcots-witcher:stammelfords_dust
                                     </stack>
-<tooltip-text>Stammelford's Dust:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Пыль Стаммельфорда:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -438,9 +438,9 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:alchemists_powder
                                     </stack>
-<tooltip-text>Alchemists' Powder:
-Bought from herbalist
-villagers.</tooltip-text>
+<tooltip-text>Алхимическая паста:
+Покупается у деревенских
+травников.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -469,9 +469,9 @@ villagers.</tooltip-text>
 
 ---
 
-**{dark_green}Advanced Ingredients{}**
+**{dark_green}Ингредиенты для опытных{}**
 
-*Alcohol*
+*Алкоголь*
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -484,9 +484,9 @@ villagers.</tooltip-text>
                                     <stack>
                                         tcots-witcher:icy_spirit
                                     </stack>
-<tooltip-text>Icy Spirit:
-Bought from herbalist 
-villagers.</tooltip-text>
+<tooltip-text>Махакамский спирт:
+Покупается у деревенских
+травников.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -500,8 +500,8 @@ villagers.</tooltip-text>
                                     <stack>
                                         tcots-witcher:dwarven_spirit
                                     </stack>
-<tooltip-text>Dwarven Spirit:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Краснолюдский спирт:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -515,8 +515,8 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:alcohest
                                     </stack>
-<tooltip-text>Alcohest:
-Crafted, see recipes.</tooltip-text>
+<tooltip-text>Алкагест:
+Изготавливается, смотреть рецепты.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -530,9 +530,9 @@ Crafted, see recipes.</tooltip-text>
                                     <stack>
                                         tcots-witcher:village_herbal
                                     </stack>
-<tooltip-text>Village Herbal:
-Bought from farmer
-villagers.</tooltip-text>
+<tooltip-text>Деревенская настойка:
+Покупается у деревенских
+фермеров.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -558,9 +558,9 @@ villagers.</tooltip-text>
                                     <stack>
                                         tcots-witcher:mandrake_cordial
                                     </stack>
-<tooltip-text>Mandrake Cordial:
-Bought from herbalist
-villagers.</tooltip-text>
+<tooltip-text>Наливка из мандрагоры:
+Покупается у деревенских
+травников.</tooltip-text>
                                 </item>
                             </children>
                             <padding>
@@ -574,9 +574,9 @@ villagers.</tooltip-text>
                                     <stack>
                                         tcots-witcher:cherry_cordial
                                     </stack>
-<tooltip-text>Cherry Cordial:
-Bought from herbalist
-villagers.</tooltip-text>
+<tooltip-text>Вишнёвая наливка на спиру:
+Покупается у деревенских
+травников.</tooltip-text>
                                 </item>
                             </children>
                             <padding>

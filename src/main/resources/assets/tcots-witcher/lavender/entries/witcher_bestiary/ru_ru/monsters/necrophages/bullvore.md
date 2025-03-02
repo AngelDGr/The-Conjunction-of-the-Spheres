@@ -1,6 +1,6 @@
 ```json
 {
-  "title": "Bullvore",
+  "title": "Утковол",
   "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/necrophages/bullvore",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
@@ -10,44 +10,44 @@
 }
 ```
 
-The bullvore can be compared to a heap of muscles constrained by a sack of hard, elastic skin. 
-Its head is that of a bovine's, yet its mouth is filled with sharp teeth adapted to rending flesh.
+Утковола можно сравнить с грудой мышц, сдерживаемых мешком из жёсткой и эластичной кожи.
+Его голова похожа на голову крупного быка, а во рту острые, как лезвия, зубы для раздирания плоти.
 
-The visible mark of Chaos are the horns and vestigial hands the creature barely moves, growing all over its body.
+Признаками Хаоса, бросающимися в глаза, являются рога и маленькие отростки рук, растуще по всему его телу, которыми существо едва шевелит.
 
 ;;;;;
 
-This monster does not like the company of its own kind, but 
-it is at times accompanied by smaller, weaker beasts, especially rotfiends.
+Это чудовище не любит компанию себе подобных, но 
+иногда ему составляют компанию более мелкие и слабые твари, в особенности гнильцы.
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_main.png,fit)
 
 ;;;;;
 
-{dark_green}**Habitat**{}
-- Underground
-- Dark Caves
+{dark_green}**Среда обитания**{}
+- Подземелья
+- Тёмные пещеры
 
-*It's always surrounded by lesser necrophages
+*Он всегда окружён меньшими по размеру трупоедами*
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_special.png,fit)
 
 ;;;;;
 
-{red}**Behavior**{}
+{red}**Поведение**{}
 
-The Bullvore is the largest and most powerful necrophage known. It poses a severe challenge, even to an Iron Golem. 
-With long, razor-sharp claws, it delivers powerful strikes that pierce any shield.
+Утковол - самый крупный и мощный из известных трупоедов. Он - огромная проблема даже для железного голема. 
+С его длинными, острыми, как бритва, когтями он наносит мощные удары, пробивающие любой щит.
 
 
-Its most distinctive attack is its charge. 
-Using its massive horns, the Bullvore charges through anything in its path, destroying leaves and small obstacles effortlessly. 
+Самая характерная атака это его таран.
+Используя свои огромные рога, утковол пробивает всё на своём пути, без особого труда уничтожая листья и небольшие препятствия. 
 
 ;;;;;
 
-Despite its power, the Bullvore’s slow speed can be exploited in combat. 
-Additionally, {#0A880E}once it starts its charge, it won’t change direction until it reaches the end.{}
+Несмотря на всю его мощь, медлительность утковола может быть использована против него. 
+Кроме того, {#0A880E}начав таранить, он не изменит направление, пока не дойдёт до конца.{}
 
 
-{blue}**Loot**{}
+{blue}**Добыча**{}
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -104,4 +104,4 @@ Additionally, {#0A880E}once it starts its charge, it won’t change direction un
 
 
 
-![Bullvore](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_full.png,fit)
+![Утковол](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_full.png,fit)

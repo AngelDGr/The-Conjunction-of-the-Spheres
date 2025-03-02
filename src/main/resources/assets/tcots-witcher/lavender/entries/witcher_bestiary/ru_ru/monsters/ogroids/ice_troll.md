@@ -1,6 +1,6 @@
 ```json
 {
-  "title": "Ice Troll",
+  "title": "Ледяной Тролль",
   "icon_sprite": "tcots-witcher:witcher_bestiary/category/monsters/ogroids/ice_troll",
   "category": "tcots-witcher:ogroids",
   "associated_items": [
@@ -9,45 +9,48 @@
 }
 ```
 
-Climbing to the top of snow-covered peaks is never a safe endeavor. 
-One can slip and fall into a ravine, be buried in an avalanche – or stumble across ice trolls.
-
-
-Unlike the rock trolls found at lower altitudes,
-these permafrost-dwelling monsters treat nearly every man they encounter as a possible ingredient for a tasty meal.
+Восхождение на вершины заснеженных пиков никогда не было безопасным занятием. 
+Можно поскользнуться и упасть в овраг, быть погребённым под лавиной, ну, или наткнуться на ледяного тролля.
 
 ;;;;;
 
-Luckily ice trolls live atop high mountain ridges so inaccessible they rarely encounter any sentient being.
 
+
+
+В отличие от скальных троллей, обитающих на более низких высотах, эти, обитающие в вечной мерзлоте монстры, рассматривают почти каждого встречного путника как возможный ингредиент для вкусного блюда.
+
+;;;;;
+
+К счастью, ледяные тролли живут на вершинах высоких горных хребтов, настолько недоступных, что ни одно разумное существо туда не пойдёт по своей воле.
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_main.png,fit)
 
 ;;;;;
 
-{dark_green}**Habitat**{}
-- Snowy mountains
-- Snowy biomes
+{dark_green}**Среда обитания**{}
+- Заснеженные горы
+- Снежные биомы
 
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_special.png,fit)
 
 ;;;;;
 
-{red}**Behavior**{}
+{red}**Поведение**{}
 
-Ice trolls are crueler than their rocky kin. 
-Though they use similar tactics in battle, they are heartier and stronger than rock trolls and thus more dangerous. 
+Ледяные тролли более жестоки, чем их скалистые сородичи. 
+Хотя они и используют схожую тактику в бою, они живучей и сильнее горных троллей и, следовательно, более опасны. 
 
-Like rock trolls, their backs are covered in thick protective armor, meaning one should never strike them from the rear.
-
-
-Even though, there are a few reports that indicate some humans have been able to [befriend](^tcots-witcher:misc/befriending_troll) these monsters.
+Как и у скальных троллей, их спины покрыты толстой защитной бронёй, а это значит, что напасть на них с зади даже и пытаться не стоит.
 
 ;;;;;
 
-Lastly, never think of attacking them during a blizzard. At such times they draw power from the surrounding cold and fight with increased strength.
+Несмотря на то, что есть несколько случаев, указывающих на то, что некоторым людям удалось [подружиться](^tcots-witcher:misc/befriending_troll) с этими чудовищами.
 
 
-{blue}**Loot**{}
+И, наконец, никогда не вздумайте нападать на них во время снежной бури. В эти моменты они черпают энергию из окружающего их холода и сражаются с удвоенной силой.
+
+;;;;;
+
+{blue}**Добыча**{}
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -111,7 +114,7 @@ Lastly, never think of attacking them during a blizzard. At such times they draw
         </flow-layout>
 ```
 
-{dark_blue}**Mutagen**{}
+{dark_blue}**Мутаген**{}
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -151,4 +154,4 @@ Lastly, never think of attacking them during a blizzard. At such times they draw
 
 
 
-![Ice Troll](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_full.png,fit)
+![Ледяной Тролль](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_full.png,fit)
