@@ -186,8 +186,6 @@ public class TCOTS_DynamicRecipes {
         jsonobject.addProperty("count", 1);
         mainJson.add("result", jsonobject);
 
-        System.out.println(mainJson);
-
         return mainJson;
     }
 

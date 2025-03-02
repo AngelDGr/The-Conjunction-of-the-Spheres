@@ -1017,29 +1017,33 @@ public class TCOTS_Items {
         //Swords
         {
             GVALCHIR = registerItem("gvalchir",
-                    new SwordWithTooltip(TCOTS_ToolMaterials.GVALCHIR, 3, -2.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON),
+                    new SwordWithTooltip(TCOTS_ToolMaterials.GVALCHIR, new FabricItemSettings().rarity(Rarity.UNCOMMON),
                             Text.translatable("tooltip.tcots-witcher.gvalchir").formatted(Formatting.GRAY, Formatting.ITALIC),
+                            SwordsAttributes.createGvalchirAttributeModifiers(),
                             List.of(
                                     Text.translatable("tooltip.tcots-witcher.gvalchir.extra").formatted(Formatting.DARK_GREEN))
                     ));
 
             MOONBLADE = registerItem("moonblade",
-                    new SwordWithTooltip(TCOTS_ToolMaterials.MOONBLADE, 3, -2.2f, new FabricItemSettings().rarity(Rarity.UNCOMMON),
+                    new SwordWithTooltip(TCOTS_ToolMaterials.MOONBLADE, new FabricItemSettings().rarity(Rarity.UNCOMMON),
                             Text.translatable("tooltip.tcots-witcher.moonblade").formatted(Formatting.GRAY, Formatting.ITALIC),
+                            SwordsAttributes.createMoonbladeAttributeModifiers(),
                             List.of(
                                     Text.translatable("tooltip.tcots-witcher.moonblade.extra").formatted(Formatting.DARK_GREEN))
                     ));
 
             DYAEBL = registerItem("dyaebl",
-                    new SwordWithTooltip(TCOTS_ToolMaterials.DYAEBL, 3, -2.4f, new FabricItemSettings().rarity(Rarity.UNCOMMON),
+                    new SwordWithTooltip(TCOTS_ToolMaterials.DYAEBL, new FabricItemSettings().rarity(Rarity.UNCOMMON),
                             Text.translatable("tooltip.tcots-witcher.dyaebl").formatted(Formatting.GRAY, Formatting.ITALIC),
+                            SwordsAttributes.createDyaeblAttributeModifiers(),
                             List.of(
                                     Text.translatable("tooltip.tcots-witcher.dyaebl.extra").formatted(Formatting.DARK_RED))
                     ));
 
             WINTERS_BLADE = registerItem("winters_blade",
-                    new SwordWithTooltip(TCOTS_ToolMaterials.WINTERS_BLADE, 4, -2.4f, new FabricItemSettings().rarity(Rarity.RARE),
+                    new SwordWithTooltip(TCOTS_ToolMaterials.WINTERS_BLADE, new FabricItemSettings().rarity(Rarity.RARE),
                             Text.translatable("tooltip.tcots-witcher.winters_blade").formatted(Formatting.GRAY, Formatting.ITALIC),
+                            SwordsAttributes.createWintersBladeAttributeModifiers(),
                             List.of(
                                     Text.translatable("tooltip.tcots-witcher.winters_blade.extra").setStyle(Style.EMPTY.withColor(0x007b77)),
                                     Text.translatable("tooltip.tcots-witcher.winters_blade.extra2").setStyle(Style.EMPTY.withColor(0x007b77)),
@@ -1047,7 +1051,7 @@ public class TCOTS_Items {
                     )));
 
             ARDAENYE = registerItem("ardaenye",
-                    new SwordItem(TCOTS_ToolMaterials.ARDAENYE, 4, -2.6f, new FabricItemSettings()));
+                    new WitcherSwordBase(TCOTS_ToolMaterials.ARDAENYE, new FabricItemSettings(), SwordsAttributes.createArdaenyeAttributeModifiers()));
 
 
         }

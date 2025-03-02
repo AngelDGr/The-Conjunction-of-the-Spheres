@@ -4,13 +4,15 @@ import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.MiscUtil;
+import com.google.common.collect.ImmutableMultimap;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.sound.SoundEvents;
@@ -21,12 +23,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SwordWithTooltip extends SwordItem {
+public class SwordWithTooltip extends WitcherSwordBase {
     private final List<MutableText> tooltip;
     private final MutableText littleDescription;
 
-    public SwordWithTooltip(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings, MutableText littleDescription, List<MutableText> tooltip) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
+    public SwordWithTooltip(ToolMaterial toolMaterial, Settings settings, MutableText littleDescription, ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder, List<MutableText> tooltip) {
+        super(toolMaterial, settings, builder);
         this.tooltip=tooltip;
 
         this.littleDescription=littleDescription;
@@ -69,4 +71,6 @@ public class SwordWithTooltip extends SwordItem {
 
         return result;
     }
+
+
 }
