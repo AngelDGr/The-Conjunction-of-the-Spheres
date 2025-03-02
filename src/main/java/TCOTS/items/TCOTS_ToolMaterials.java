@@ -1,9 +1,12 @@
 package TCOTS.items;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 
 import java.util.function.Supplier;
 
@@ -11,13 +14,30 @@ public enum TCOTS_ToolMaterials implements ToolMaterial {
 
     GVALCHIR(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(TCOTS_Items.BULLVORE_HORN_FRAGMENT)),
 
-    MOONBLADE(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.GOLD_INGOT)),
+    MOONBLADE(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () ->
+            Ingredient.ofItems(
+                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                            Registries.ITEM.get(Identifier.of("witcher_rpg", "silver_ingot")) :
+                    Items.GOLD_INGOT
+            )),
 
-    DYAEBL(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () -> Ingredient.ofItems(Items.IRON_INGOT)),
+    DYAEBL(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () ->
+            Ingredient.ofItems(
+                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                            Registries.ITEM.get(Identifier.of("witcher_rpg", "steel_ingot")) :
+                    Items.IRON_INGOT)),
 
-    WINTERS_BLADE(MiningLevels.NETHERITE, 2031, 9.0f, 4.0f, 30, () -> Ingredient.ofItems(Items.NETHERITE_INGOT)),
+    WINTERS_BLADE(MiningLevels.NETHERITE, 2031, 9.0f, 4.0f, 30, () ->
+            Ingredient.ofItems(
+                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                            Registries.ITEM.get(Identifier.of("witcher_rpg", "dark_steel_ingot")) :
+                    Items.NETHERITE_INGOT)),
 
-    ARDAENYE(MiningLevels.NETHERITE, 1400, 9.0f, 4.0f, 20, () -> Ingredient.ofItems(Items.DIAMOND)),
+    ARDAENYE(MiningLevels.NETHERITE, 1400, 9.0f, 4.0f, 20, () ->
+            Ingredient.ofItems(
+                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                            Registries.ITEM.get(Identifier.of("witcher_rpg", "dark_steel_ingot")) :
+                    Items.DIAMOND)),
 
     ANCHOR(MiningLevels.NETHERITE, 100, 9.0f, 9.0f, 5, () -> Ingredient.ofItems(Items.IRON_BLOCK))
 

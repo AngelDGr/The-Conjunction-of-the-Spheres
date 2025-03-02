@@ -1270,6 +1270,8 @@ public class TCOTS_Items {
 
 
     public static void modifyLootTables(){
+
+
         LootTableEvents.MODIFY.register( (resourceManager, lootManager, id, tableBuilder, source) ->{
             if(Blocks.WHEAT.getLootTableId().equals(id) && source.isBuiltin()){
                 LootPool.Builder ergotSeeds = LootPool.builder()
