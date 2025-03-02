@@ -21,6 +21,7 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.client.recipebook.RecipeBookGroup;
 import net.minecraft.recipe.*;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
@@ -137,16 +138,16 @@ public class AlchemyRecipeBookWidget implements RecipeGridAligner<Ingredient>,
 
         switch (Objects.requireNonNull(currentTab).getCategory()){
             case POTIONS:
-                context.drawText(this.parenttextRenderer, "Potions", i+18,j+15, color,false);
+                context.drawText(this.parenttextRenderer, Text.translatable("gui.recipe-book.category.potions"), i+18,j+15, color,false);
                 break;
             case DECOCTIONS:
-                context.drawText(this.parenttextRenderer, "Decoctions", i+18,j+15, color,false);
+                context.drawText(this.parenttextRenderer, Text.translatable("gui.recipe-book.category.decoctions"), i+18,j+15, color,false);
                 break;
             case BOMBS_OILS:
-                context.drawText(this.parenttextRenderer, "Bombs & Oils", i+18,j+15, color,false);
+                context.drawText(this.parenttextRenderer, Text.translatable("gui.recipe-book.category.bombs_oils"), i+18,j+15, color,false);
                 break;
             case MISC:
-                context.drawText(this.parenttextRenderer, "Ingredients", i+18,j+15, color,false);
+                context.drawText(this.parenttextRenderer, Text.translatable("gui.recipe-book.category.misc"), i+18,j+15, color,false);
                 break;
 
             default:

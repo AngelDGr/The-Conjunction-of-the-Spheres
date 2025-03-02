@@ -1,6 +1,6 @@
 ```json
 {
-  "title": "Recipes Compendium",
+  "title": "Сборник рецептов",
   "icon": "minecraft:paper",
   "ordinal": 10
 }

@@ -6,6 +6,7 @@ import TCOTS.config.TCOTS_Config;
 import TCOTS.entity.TCOTS_Entities;
 import TCOTS.entity.misc.ScurverSpineEntity;
 import TCOTS.entity.misc.WaterHag_MudBallEntity;
+import TCOTS.items.TCOTS_DynamicRecipes;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.TCOTS_ItemsGroups;
 import TCOTS.items.concoctions.TCOTS_Effects;
@@ -73,6 +74,7 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_ItemsGroups.registerGroupItems();
 		TCOTS_Items.modifyLootTables();
 		TCOTS_Items.registerCompostableItems();
+		TCOTS_DynamicRecipes.registerDynamicRecipes();
 		ScreenHandlersAndRecipesRegister.registerScreenHandlersAndRecipes();
 		TCOTS_Sounds.registerSounds();
 		TCOTS_Entities.addSpawns();

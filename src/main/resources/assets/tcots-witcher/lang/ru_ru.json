@@ -1,0 +1,926 @@
+{
+    "itemGroup.tcots-witcher.main": "Сопряжение Сфер",
+    "itemGroup.tcots-witcher.main.tab.combat":   "TCOTS - Бой",
+    "itemGroup.tcots-witcher.main.tab.alchemy":  "TCOTS - Алхимия",
+    "itemGroup.tcots-witcher.main.tab.formulae": "TCOTS - Формулы",
+    "itemGroup.tcots-witcher.main.button.github": "GitHub",
+    "itemGroup.tcots-witcher.main.button.curseforge": "CurseForge",
+    "itemGroup.tcots-witcher.main.button.modrinth": "Modrinth",
+
+    "text.lavender.entry_hud.sneak_to_view": {"text": "Прокрасться, чтобы посмотреть", "color": "gray"},
+    "text.lavender.entry_hud.click_to_view": {"text": "Нажмите, чтобы просмотреть", "color": "gray"},
+
+    "text.lavender.categories": "Разделы",
+    "text.lavender.index": "Содержание",
+    "text.lavender.index_category": "Все записи",
+    "text.lavender.index_category.title": "Записи",
+    "text.lavender.entry_tooltip": [
+        {"text": "Нажмите ", "color": "dark_gray"},
+        {"text": "Alt ", "color": "gold"}
+    ],
+    "text.lavender.book.click_to_open": {"text": "Нажмите, чтобы открыть: ", "color": "dark_gray"},
+
+    "text.lavender.entry.multiple_unread": "Непрочитанные записи",
+    "text.lavender.entry.unread": "Непрочитанная запись",
+
+    "text.lavender.book.next": [
+        "Следующая страница\n",
+        {"text": "↑ Прокрутка вверх", "color": "gray"}
+    ],
+    "text.lavender.book.back": [
+        "Назад\n",
+        {"text": "Нажмите, чтобы вернуться на главную", "color": "gray"}
+    ],
+    "text.lavender.book.previous": [
+        "Предыдущая страница\n",
+        {"text": "↓ Прокрутка вниз", "color": "gray"}
+    ],
+
+    "text.lavender.book.reload": "Перезагрузить",
+    "text.lavender.book.bookmark.add": "Добавить закладку",
+    "text.lavender.book.bookmark.remove_hint": {"text": "Нажмите, чтобы удалить", "color": "dark_gray"},
+
+    "attribute.name.witcher_rpg.adrenaline_modifier": "Прирост адреналина",
+    "attribute.name.witcher_rpg.sign_intensity": "Сила знаков",
+    "attribute.name.witcher_rpg.aard_intensity": "Сила знака Аард",
+    "attribute.name.witcher_rpg.axii_intensity": "Axii Sign Intensity",
+    "attribute.name.witcher_rpg.igni_intensity": "Igni Sign Intensity",
+    "attribute.name.witcher_rpg.quen_intensity": "Quen Sign Intensity",
+    "attribute.name.witcher_rpg.yrden_intensity": "Yrden Sign Intensity",
+
+    "item.tcots-witcher.witcher_bestiary": "Бестиарий Чудовищ",
+    "tooltip.tcots-witcher.witcher_bestiary": "Изучите опасности этого нового мира",
+
+    "item.tcots-witcher.alchemy_book": "Алхимический альманах",
+    "tooltip.tcots-witcher.alchemy_book": "Информация о травах и алхимии",
+    "lavender.alchemy_book.recipes": "Сборник рецептов элексиров, отваров, масел против чудовищ, бомб и алхимических ингредиентов.",
+
+    "tcots-witcher.sounds.monster_emerging": "Монстр появляется из-под земли",
+    "tcots-witcher.sounds.monster_digging": "Монстр возвращается в землю",
+    "tcots-witcher.sounds.ground_punch": "Монстр бьет по земле",
+
+    "entity.tcots-witcher.group.necrophages": "Трупоеды",
+    "entity.tcots-witcher.group.ogroids": "Огры",
+    "entity.tcots-witcher.group.specters": "Духи и Призраки",
+    "entity.tcots-witcher.group.vampires": "Вампиры",
+    "entity.tcots-witcher.group.insectoids": "Инсектоиды",
+    "entity.tcots-witcher.group.beasts": "Животные",
+    "entity.tcots-witcher.group.elementa": "Духи Стихий",
+    "entity.tcots-witcher.group.cursed_ones": "Проклятые",
+    "entity.tcots-witcher.group.hybrids": "Гибриды",
+    "entity.tcots-witcher.group.draconids": "Дракониды",
+    "entity.tcots-witcher.group.relicts": "Реликты",
+    "entity.tcots-witcher.group.humanoids": "Разбойники и Жители",
+
+    "item.tcots-witcher.drowner_spawn_egg": "Яйцо призыва Утопца",
+    "entity.tcots-witcher.drowner": "Утопец",
+    "tcots-witcher.sounds.drowner_footstep": "Шаги",
+    "tcots-witcher.sounds.drowner_attack": "Утопец атакует",
+    "tcots-witcher.sounds.drowner_hurt": "Утопцу больно",
+    "tcots-witcher.sounds.drowner_idle": "Утопец стонет",
+    "tcots-witcher.sounds.drowner_death": "Утопец умирает",
+    "tcots-witcher.sounds.drowner_lunge": "Выпады утопца",
+    "tcots-witcher.sounds.drowner_emerging": "Монстр появляется из-под земли",
+    "tcots-witcher.sounds.drowner_digging": "Монстр возвращается в землю",
+    "tcots-witcher.sounds.drowner_scream": "Крики утопца",
+
+    "item.tcots-witcher.drowner_brain": "Мозг утопца",
+    "item.tcots-witcher.drowner_tongue": "Язык утопца",
+
+    "item.tcots-witcher.rotfiend_spawn_egg": "Яйцо призыва Гнильца",
+    "entity.tcots-witcher.rotfiend": "Гнилец",
+    "tcots-witcher.sounds.rotfiend_attack": "Гнилец атакует",
+    "tcots-witcher.sounds.rotfiend_hurt": "Гнильцу больно",
+    "tcots-witcher.sounds.rotfiend_idle": "Гнилец стонет",
+    "tcots-witcher.sounds.rotfiend_death": "Гнилец умирает",
+    "tcots-witcher.sounds.rotfiend_lunge": "Выпады Гнильца",
+    "tcots-witcher.sounds.rotfiend_exploding": "Гнилец взрывается",
+    "tcots-witcher.sounds.rotfiend_blood_explosion": "Кровавый взрыв",
+
+    "item.tcots-witcher.rotfiend_blood": "Кровь гнильца",
+
+    "item.tcots-witcher.grave_hag_spawn_egg": "Яйцо призыва Кладбищенской бабы",
+    "entity.tcots-witcher.grave_hag": "Кладбищенская баба",
+    "tcots-witcher.sounds.grave_hag_attack": "Кладбищенская баба атакует",
+    "tcots-witcher.sounds.grave_hag_hurt": "Кладбищенской бабе больно",
+    "tcots-witcher.sounds.grave_hag_idle": "Кладбищенская баба стонет",
+    "tcots-witcher.sounds.grave_hag_death": "Кладбищенская баба умирает",
+    "tcots-witcher.sounds.grave_hag_tongue_attack": "Кладбищенская баба атакует языком",
+    "tcots-witcher.sounds.grave_hag_run": "Кладбищенская баба кричит",
+
+    "item.tcots-witcher.grave_hag_mutagen": "Мутаген Кладбищенской бабы",
+
+    "item.tcots-witcher.water_hag_spawn_egg": "Яйцо призыва Водной бабы",
+    "entity.tcots-witcher.water_hag": "Водная баба",
+    "tcots-witcher.sounds.water_hag_attack": "Водная баба атакует",
+    "tcots-witcher.sounds.water_hag_hurt": "Водной бабе больно",
+    "tcots-witcher.sounds.water_hag_idle": "Водная баба стонет",
+    "tcots-witcher.sounds.water_hag_death": "Водная баба умирает",
+    "tcots-witcher.sounds.water_hag_emerging": "Монстр появляется из-под земли",
+    "tcots-witcher.sounds.water_hag_digging": "Монстр возвращается в землю",
+
+    "entity.tcots-witcher.water_hag_mud_ball": "Грязевой шар Водной бабы",
+    "item.tcots-witcher.water_hag_mud_ball": "Грязевой шар Водной бабы",
+    "tcots-witcher.sounds.water_hag_mud_ball_hit": "Грязевой шар попадает",
+
+    "tcots-witcher.sounds.water_hag_mud_ball_launch": "Грязевой шар летит",
+
+    "item.tcots-witcher.water_essence": "Водная эссенция",
+    "item.tcots-witcher.water_hag_mutagen": "Мутаген Водной бабы",
+
+    "item.tcots-witcher.foglet_spawn_egg": "Яйцо призыва Туманника",
+    "entity.tcots-witcher.foglet": "Туманник",
+    "tcots-witcher.sounds.foglet_attack": "Туманник атакует",
+    "tcots-witcher.sounds.foglet_hurt": "Туманнику больно",
+    "tcots-witcher.sounds.foglet_idle": "Туманник стонет",
+    "tcots-witcher.sounds.foglet_death": "Туманник умирает",
+    "tcots-witcher.sounds.foglet_fog": "Туманник создаёт туман",
+    "entity.tcots-witcher.fogling": "Туманник",
+    "tcots-witcher.sounds.fogling_disappear": "Туманник иллюзия исчезновения",
+
+    "item.tcots-witcher.foglet_teeth": "Зуб Туманника",
+    "item.tcots-witcher.foglet_mutagen": "Мутаген Туманника",
+
+    "item.tcots-witcher.ghoul_spawn_egg": "Яйцо призыва Гуля",
+    "entity.tcots-witcher.ghoul": "Гуль",
+    "tcots-witcher.sounds.ghoul_attack": "Гуль атакует",
+    "tcots-witcher.sounds.ghoul_hurt": "Гулью больно",
+    "tcots-witcher.sounds.ghoul_idle": "Гуль стонет",
+    "tcots-witcher.sounds.ghoul_death": "Гуль умирает",
+    "tcots-witcher.sounds.ghoul_lunge": "Выпады Гуля",
+    "tcots-witcher.sounds.ghoul_scream": "Гуль кричит",
+    "tcots-witcher.sounds.ghoul_regen": "Гуль регенерирует",
+
+    "item.tcots-witcher.ghoul_blood": "Кровь Гуля",
+
+    "item.tcots-witcher.alghoul_spawn_egg": "Яйцо призыва Альгуля",
+    "entity.tcots-witcher.alghoul": "Альгуль",
+    "tcots-witcher.sounds.alghoul_attack": "Альгуль атакует",
+    "tcots-witcher.sounds.alghoul_hurt": "Альгулю больно",
+    "tcots-witcher.sounds.alghoul_idle": "Альгуль стонет",
+    "tcots-witcher.sounds.alghoul_death": "Альгуль умирает",
+    "tcots-witcher.sounds.alghoul_lunge": "Выпады Альгуля",
+    "tcots-witcher.sounds.alghoul_scream": "Альгуль кричит",
+    "tcots-witcher.sounds.alghoul_regen": "Альгуль регенерирует",
+    "tcots-witcher.sounds.alghoul_spikes": "Шипы Альгуля",
+
+    "item.tcots-witcher.alghoul_bone_marrow": "Костный мозг Альгуля",
+
+    "item.tcots-witcher.scurver_spawn_egg": "Яйцо призыва Болотника",
+    "entity.tcots-witcher.scurver": "Болотник",
+    "entity.tcots-witcher.scurver_spike": "Шипы Болотника",
+    "tcots-witcher.sounds.scurver_attack": "Болотник атакует",
+    "tcots-witcher.sounds.scurver_hurt": "Болотнику больно",
+    "tcots-witcher.sounds.scurver_idle": "Болотник стонет",
+    "tcots-witcher.sounds.scurver_death": "Болотник умирает",
+    "tcots-witcher.sounds.scurver_lunge": "Выпады Болотника",
+    "tcots-witcher.sounds.scurver_exploding": "Болотник взрывается",
+
+    "item.tcots-witcher.scurver_spine": "Шипы Болотника",
+
+
+    "item.tcots-witcher.devourer_spawn_egg": "Яйцо призыва Яги",
+    "entity.tcots-witcher.devourer": "Яга",
+    "tcots-witcher.sounds.devourer_attack": "Яга атакует",
+    "tcots-witcher.sounds.devourer_hurt": "Яге больно",
+    "tcots-witcher.sounds.devourer_idle": "Яга стонет",
+    "tcots-witcher.sounds.devourer_death": "Яга умирает",
+    "tcots-witcher.sounds.devourer_jump": "Яга прыгает",
+
+    "item.tcots-witcher.devourer_teeth": "Зуб Яги",
+
+
+    "item.tcots-witcher.graveir_spawn_egg": "Яйцо призыва Грайвера",
+    "entity.tcots-witcher.graveir": "Грайвер",
+    "tcots-witcher.sounds.graveir_attack": "Грайвер атакует",
+    "tcots-witcher.sounds.graveir_hurt": "Грайверу больно",
+    "tcots-witcher.sounds.graveir_idle": "Грайвер стонет",
+    "tcots-witcher.sounds.graveir_death": "Грайвер умирает",
+    "tcots-witcher.sounds.graveir_ground_punch": "Грайвер заряжает атаку",
+
+    "item.tcots-witcher.cadaverine": "Трупный яд",
+    "item.tcots-witcher.graveir_bone": "Кость Грайвера",
+
+    "effect.tcots-witcher.cadaverine": "Распад трупного яда",
+    "death.attack.cadaverine": "%1$s плоть была растворена трупным ядом",
+    "death.attack.cadaverine.player": "%1$s плоть была растворена трупным ядом во время битвы %2$s",
+
+
+    "item.tcots-witcher.bullvore_spawn_egg": "Яйцо призыва Утковола",
+    "entity.tcots-witcher.bullvore": "Утковол",
+    "tcots-witcher.sounds.bullvore_attack": "Утковол атакует",
+    "tcots-witcher.sounds.bullvore_hurt": "Утковолу больно",
+    "tcots-witcher.sounds.bullvore_idle": "Рёв Утковола",
+    "tcots-witcher.sounds.bullvore_death": "Утковол умирает",
+    "tcots-witcher.sounds.bullvore_charge": "Утковол заряжает",
+    "item.tcots-witcher.bullvore_horn_fragment": "Фрагмент рога Утковола",
+
+
+    "item.tcots-witcher.nekker_spawn_egg": "Яйцо призыва Наккера",
+    "entity.tcots-witcher.nekker": "Nekker",
+    "tcots-witcher.sounds.nekker_attack": "Наккер атакует",
+    "tcots-witcher.sounds.nekker_hurt": "Наккеру больно",
+    "tcots-witcher.sounds.nekker_idle": "Наккер стонет",
+    "tcots-witcher.sounds.nekker_death": "Наккер умирает",
+    "tcots-witcher.sounds.nekker_lunge": "Выпады Наккера",
+
+    "item.tcots-witcher.nekker_eye": "Глаз Наккера",
+    "item.tcots-witcher.nekker_heart": "Сердце Наккера",
+
+    "item.tcots-witcher.nekker_warrior_spawn_egg": "Яйцо призыва Наккера воина",
+    "entity.tcots-witcher.nekker_warrior": "Наккер воин",
+    "tcots-witcher.sounds.nekker_warrior_attack": "Наккер воин атакует",
+    "tcots-witcher.sounds.nekker_warrior_hurt": "Наккеру воину больно",
+    "tcots-witcher.sounds.nekker_warrior_idle": "Наккер воин стонет",
+    "tcots-witcher.sounds.nekker_warrior_death": "Наккер воин умирает",
+    "tcots-witcher.sounds.nekker_warrior_lunge": "Выпады Наккера воина",
+
+    "item.tcots-witcher.nekker_warrior_mutagen": "Мутаген Наккера воина",
+
+
+    "item.tcots-witcher.cyclops_spawn_egg": "Яйцо призыва Циклопа",
+    "entity.tcots-witcher.cyclops": "Циклоп",
+    "tcots-witcher.sounds.cyclops_attack": "Циклоп атакует",
+    "tcots-witcher.sounds.cyclops_hurt": "Циклопу больно",
+    "tcots-witcher.sounds.cyclops_idle": "Циклоп стонет",
+    "tcots-witcher.sounds.cyclops_death": "Циклоп умирает",
+    "tcots-witcher.sounds.cyclops_punch": "Циклоп бьёт",
+
+    "item.tcots-witcher.rock_troll_spawn_egg": "Яйцо призыва Горного тролля",
+    "entity.tcots-witcher.rock_troll": "Горный тролль",
+    "entity.tcots-witcher.rock_troll_rabid": "Бешенный Горный тролль",
+    "tcots-witcher.sounds.troll_attack": "Тролль атакует",
+    "tcots-witcher.sounds.troll_hurt": "Троллю больно",
+    "tcots-witcher.sounds.troll_idle": "Тролль стонет",
+    "tcots-witcher.sounds.troll_death": "Тролль умирает",
+    "tcots-witcher.sounds.troll_block_impact": "Тролль защищается",
+    "tcots-witcher.sounds.troll_block_impact_break": "Тролль разрушает блоки",
+
+    "entity.tcots-witcher.troll_projectile": "Снаряд тролля",
+    "tcots-witcher.sounds.rock_projectile_impact": "Воздействие камня",
+    "tcots-witcher.sounds.rock_projectile_throws": "Каменный снаряд летит",
+
+    "item.tcots-witcher.ice_troll_spawn_egg": "Яйцо призыва Ледяного Тролля",
+    "entity.tcots-witcher.ice_troll": "Ледяной Тролль",
+    "entity.tcots-witcher.ice_troll_rabid": "Бешеный ледяной тролль",
+
+    "item.tcots-witcher.forest_troll_spawn_egg": "Яйцо призыва Лесного Тролля",
+    "entity.tcots-witcher.forest_troll": "Лесной Тролль",
+    "entity.tcots-witcher.forest_troll_rabid": "Бешенный Лесной Тролль",
+
+    "item.tcots-witcher.cave_troll_liver": "Внутренности пещерного тролля",
+    "item.tcots-witcher.troll_mutagen": "Мутаген Тролля",
+
+    "tcots-witcher.gui.troll_follows": "%1$s следует за тобой",
+    "tcots-witcher.gui.troll_waits": "%1$s будет ждать вас, охраняя эту позицию.",
+    "tcots-witcher.gui.troll_wandering": "%1$s больше не следует за вами",
+    "tcots-witcher.sounds.troll_agrees": "Тролль соглашается",
+    "tcots-witcher.sounds.troll_whines": "Тролль ноет",
+    "tcots-witcher.sounds.troll_grunts": "Тролль ворчит",
+    "tcots-witcher.sounds.troll_laugh":  "Тролль смеется",
+
+
+    "item.tcots-witcher.ice_giant_spawn_egg": "Яйцо призыва Ледяного Гиганта",
+    "entity.tcots-witcher.ice_giant": "Ледяной Гигант",
+    "tcots-witcher.sounds.ice_giant_attack": "Ледяной Гигант атакует",
+    "tcots-witcher.sounds.ice_giant_hurt": "Ледяному Гиганту больно",
+    "tcots-witcher.sounds.ice_giant_idle": "Ледяной Гигант стонет",
+    "tcots-witcher.sounds.ice_giant_death": "Ледяной Гигант умирает",
+    "tcots-witcher.sounds.ice_giant_punch": "Ледяной Гигант бьёт",
+    "tcots-witcher.sounds.ice_giant_charge": "Ледяной Гигант заряжает атаку",
+    "tcots-witcher.sounds.ice_giant_snore": "Ледяной гигант храпит",
+    "tcots-witcher.sounds.ice_giant_wake_up": "Ледяной гигант просыпается",
+
+    "item.tcots-witcher.giant_anchor": "Гигантский якорь",
+    "block.tcots-witcher.giant_anchor": "Якорь ледяного гиганта",
+    "entity.tcots-witcher.anchor_projectile": "Якорь",
+    "tcots-witcher.sounds.anchor_throw": "Якорь брошен",
+    "tcots-witcher.sounds.anchor_chain": "Якорь возвращается",
+    "tcots-witcher.sounds.anchor_impact": "Воздействие якоря",
+    "death.attack.anchor": "%1$s убило якорем...",
+    "death.attack.anchor.item": "%1$s был убит %2$s с помощью якоря",
+    "tcots-witcher.sounds.medium_impact": "Что-то воздействует",
+    "tcots-witcher.sounds.big_impact": "Что-то сильно воздействует",
+
+    "item.tcots-witcher.winters_blade_skeleton": "Скелет воина",
+    "block.tcots-witcher.winters_blade_skeleton": "Скелет воина",
+
+    "item.tcots-witcher.skeleton_block":    "Старый скелет",
+    "block.tcots-witcher.skeleton_block":   "Старый скелет",
+    "tooltip.tcots-witcher.skeleton_block1": "Только творческий режим",
+    "tooltip.tcots-witcher.skeleton_block2": "Изменение состояния с помощью палки для отладки",
+
+
+    "block.tcots-witcher.nest_slab": "Плита гнезда чудовищ",
+    "block.tcots-witcher.nest_skull": "Череп из гнезда чудовищ",
+    "block.tcots-witcher.monster_nest": "Гнездо чудовищ",
+
+    "block.tcots-witcher.alchemy_table": "Алхимический стол",
+    "block.tcots-witcher.alchemy_table.tooltip": "Стол для изготовления ведьмачих элексиров",
+    "block.tcots-witcher.alchemy_table.tooltip_book": "Положи на него Алхимический альманах",
+    "gui.recipe-book.tooltip.alchemy_table": "Книга рецептов",
+    "gui.recipe-book.category.potions": "Элексиры",
+    "gui.recipe-book.category.decoctions": "Отвары",
+    "gui.recipe-book.category.bombs_oils": "Бомбы и Масла",
+    "gui.recipe-book.category.misc": "Ингредиенты",
+
+    "block.tcots-witcher.herbal_table": "Стол травника",
+    "block.tcots-witcher.herbal_table.tooltip": "Разместите органическую материю",
+    "item.tcots-witcher.herbal_mixture": "Смесь трав",
+    "tcots-witcher.gui.herbal_table.title": "Создание травяных настоек",
+
+
+    "entity.minecraft.villager.herbalist_witcher": "Травник",
+    "tcots-witcher.sounds.work_herbalist": "Травник работает",
+
+
+    "tcots-witcher.sounds.ingredient_pops": "Размещение ингредиента",
+    "item.tcots-witcher.allspice": "Пряность",
+
+    "item.tcots-witcher.arenaria": "Аренария",
+    "block.tcots-witcher.arenaria_bush": "Куст аренарии",
+
+    "item.tcots-witcher.celandine": "Ласточкина трава",
+    "block.tcots-witcher.celandine_plant": "Цветущий Ласточкина трава",
+    "block.tcots-witcher.potted_celandine_flower": "Ласточкина трава в горшке",
+
+    "item.tcots-witcher.han_fiber": "Волокна хань",
+    "block.tcots-witcher.han_fiber_plant": "Цветок хань",
+    "block.tcots-witcher.potted_han_fiber": "Хань в горшке",
+
+
+    "item.tcots-witcher.crows_eye": "Вороний глаз",
+    "block.tcots-witcher.crows_eye_fern": "Вороний глаз",
+
+    "item.tcots-witcher.bryonia": "Бриония",
+    "block.tcots-witcher.bryonia_vine": "Лоза брионии",
+    "block.tcots-witcher.potted_bryonia_flower": "Бриония в горшке",
+
+
+    "item.tcots-witcher.verbena": "Вербена",
+    "block.tcots-witcher.verbena_flower": "Цветок вербены",
+    "block.tcots-witcher.potted_verbena_flower": "Вербена в горшке",
+
+    "item.tcots-witcher.puffball": "Гриб Пухляк",
+    "block.tcots-witcher.puffball_mushroom": "Гриб пухляк",
+    "block.tcots-witcher.potted_puffball_mushroom": "Гриб пухляк в горшке",
+    "block.tcots-witcher.puffball_mushroom_block": "Блок Гриба пухляка",
+
+    "item.tcots-witcher.sewant_mushrooms": "Гриб Севант",
+    "block.tcots-witcher.sewant_mushrooms_plant": "Гриб Севант",
+    "block.tcots-witcher.potted_sewant_mushrooms": "Гриб Севант в горшке",
+    "block.tcots-witcher.sewant_mushroom_block": "Блок гриба севант",
+    "block.tcots-witcher.sewant_mushroom_stem": "Стебель гриба севант",
+
+
+
+    "item.tcots-witcher.ergot_seeds": "Семена спорыньи",
+
+    "item.tcots-witcher.aether": "Эфир",
+    "item.tcots-witcher.vitriol": "Витриол",
+    "item.tcots-witcher.vermilion": "Вермилион",
+    "item.tcots-witcher.hydragenum": "Гидрагенум",
+    "item.tcots-witcher.quebrith": "Квебрит",
+    "item.tcots-witcher.rubedo": "Рубедо",
+    "item.tcots-witcher.rebis": "Ребис",
+    "item.tcots-witcher.nigredo": "Нигредо",
+    "item.tcots-witcher.alchemy_paste": "Алхимическая паста",
+    "item.tcots-witcher.monster_fat": "Жир чудовища",
+
+    "item.tcots-witcher.stammelfords_dust": "Пыль Стаммельфорда",
+    "item.tcots-witcher.alchemists_powder": "Алхимический порошок",
+
+    "item.tcots-witcher.alchemy_formula": "Алхимическая формула",
+    "item.tcots-witcher.alchemy_formula.tooltip": "Формула: %s",
+    "item.tcots-witcher.alchemy_formula.tooltip_n": "Отсутствует",
+    "item.tcots-witcher.alchemy_formula.already_know": "Ты уже изучил этот рецепт!",
+
+
+
+
+    "item.tcots-witcher.icy_spirit": "Махакамский спирт",
+    "tooltip.tcots-witcher:icy_spirit": "Используется для создания Краснолюдского спирта",
+    "item.tcots-witcher.dwarven_spirit": "Краснолюдский спирт",
+    "tooltip.tcots-witcher:dwarven_spirit": "Основа для приготовления большинства зелий",
+    "item.tcots-witcher.alcohest": "Алкагест",
+    "tooltip.tcots-witcher:alcohest":       "Используется для создания улучшеных зелий",
+    "item.tcots-witcher.white_gull": "Белая чайка",
+    "tooltip.tcots-witcher:white_gull":     "Используется для приготовления Отличных зелий",
+
+    "item.tcots-witcher.village_herbal": "Деревенская настойка",
+    "tooltip.tcots-witcher:village_herbal": "Деревенская травяная настойка",
+    "item.tcots-witcher.cherry_cordial": "Вишнёвая наливка на спиру",
+    "tooltip.tcots-witcher:cherry_cordial": "Вдохновляющий и сладкий напиток",
+    "item.tcots-witcher.mandrake_cordial": "Наливка из мандрагоры",
+    "tooltip.tcots-witcher:mandrake_cordial": "Крепкий напиток",
+
+
+    "tooltip.tcots-witcher.refill": "Пополняет:",
+    "tooltip.tcots-witcher.refill.slot":   "%s флакон",
+    "tooltip.tcots-witcher.refill.slots":  "%s флакона",
+    "tooltip.tcots-witcher.refill.slots2": "%s флаконов",
+
+
+    "tcots-witcher.gui.toxicity_warning": "Ты не можешь это выпить! Слишком токсично...",
+    "tcots-witcher.gui.toxicity_danger": "ОСТОРОЖНО! ОПАСНОСТЬ ИНТОКСИКАЦИИ!",
+    "tcots-witcher.tooltip.toxicity": "Интоксикация: %s",
+    "tcots-witcher.tooltip.gui.formula": "%s Формула",
+    "tcots-witcher.tooltip.max_stack": "Максимальное количество: %s",
+    "tcots-witcher.tooltip.gui.oil_damage": "Урон: %s",
+    "tcots-witcher.tooltip.gui.oil_uses": "Используется: %s",
+
+    "tooltip.tcots-witcher.empty_witcher_bottle_1": "Пополняется через алхимический стол или",
+    "tooltip.tcots-witcher.empty_witcher_bottle_2": "во время сна, нужен алкоголь",
+    "tooltip.tcots-witcher.oils": "Против %s:",
+    "tooltip.tcots-witcher.oils.attack": "+%s Урона",
+    "tooltip.tcots-witcher.oils.duration": "Длительность:",
+    "tooltip.tcots-witcher.oils.uses": "%s Ударов",
+
+    "tooltip.item.tcots-witcher.oils.uses": "Испольует: %s",
+
+
+    "tcots-witcher.sounds.potion_refill": "Зелье пополнено",
+    "tcots-witcher.sounds.oil_applied": "Нанесено масло против чудовищ",
+    "tcots-witcher.sounds.oil_ran_out": "Масло против чудовищ закончилось ",
+
+    "item.tcots-witcher.empty_witcher_potion": "%s пустой флакон",
+
+    "item.tcots-witcher.grave_hag_decoction": "Отвар из Кладбищенской бабы",
+    "tooltip.effect.tcots-witcher.grave_hag_decoction.first":  "Повышает регенерацию за каждого",
+    "tooltip.effect.tcots-witcher.grave_hag_decoction.second": "убитого в битве врага",
+
+    "item.tcots-witcher.water_hag_decoction": "Отвар из Водной бабы",
+    "tooltip.effect.tcots-witcher.water_hag_decoction.applied": "При полном здоровье:",
+    "tooltip.effect.tcots-witcher.water_hag_decoction.first":  "Повышает отаку при",
+    "tooltip.effect.tcots-witcher.water_hag_decoction.second": "полном здоровье",
+
+    "item.tcots-witcher.alghoul_decoction": "Отвар из Альгуля",
+    "tooltip.effect.tcots-witcher.alghoul_decoction.first":  "Восстанавливает голод в бою пока",
+    "tooltip.effect.tcots-witcher.alghoul_decoction.second": "враг не будет повержен",
+
+    "item.tcots-witcher.foglet_decoction": "Отвар из Туманника",
+    "tooltip.effect.tcots-witcher.foglet_decoction.first":  "Во время дождя уменьшает урон",
+    "tooltip.effect.tcots-witcher.foglet_decoction.second": "на половину",
+
+    "item.tcots-witcher.nekker_warrior_decoction": "Отвар из Наккера воина",
+    "tooltip.effect.tcots-witcher.nekker_warrior_decoction.applied": "При использовании:",
+    "tooltip.effect.tcots-witcher.nekker_warrior_decoction.first":  "Повышает урон и скорость",
+    "tooltip.effect.tcots-witcher.nekker_warrior_decoction.second": "при использовании",
+    "special.attribute.effect.tcots-witcher.nekker_warrior_decoction": "+%s%% к скорости передвижения",
+
+    "item.tcots-witcher.troll_decoction": "Отвар из Тролля",
+    "tooltip.effect.tcots-witcher.troll_decoction.first":  "Повышает регенерацию во время",
+    "tooltip.effect.tcots-witcher.troll_decoction.second": "и вне боя",
+
+    "item.tcots-witcher.oil_necrophage": "Масло против трупоедов",
+    "item.tcots-witcher.oil_necrophage_enhanced": "Улучшенное масло против трупоедов",
+    "item.tcots-witcher.oil_necrophage_superior": "Отличное масло против трупоедов",
+
+    "item.tcots-witcher.oil_ogroid": "Масло против огров",
+    "item.tcots-witcher.oil_ogroid_enhanced": "Улучшенное масло против огров",
+    "item.tcots-witcher.oil_ogroid_superior": "Отличное масло против огров",
+
+    "item.tcots-witcher.oil_beast": "Масло против зверей",
+    "item.tcots-witcher.oil_beast_enhanced": "Улучшенное масло против зверей",
+    "item.tcots-witcher.oil_beast_superior": "Отличное масло против зверей",
+
+    "item.tcots-witcher.oil_hanged": "Яд повешенного",
+    "item.tcots-witcher.oil_hanged_enhanced": "Улучшенный Яд повешенного",
+    "item.tcots-witcher.oil_hanged_superior": "Отличный Яд повешенного",
+
+
+    "item.tcots-witcher.wolf_potion": "Волк",
+    "item.tcots-witcher.wolf_potion_enhanced": "Улучшенный Волк",
+    "item.tcots-witcher.wolf_potion_superior": "Отличный Волк",
+    "tooltip.effect.tcots-witcher.wolf_effect.first":  "Улучшает фокусировку, нанося",
+    "tooltip.effect.tcots-witcher.wolf_effect.second": "урон при критических попаданиях",
+    "special.attribute.effect.tcots-witcher.wolf_effect": "+%s%% критического урона",
+
+
+    "item.tcots-witcher.rook_potion": "Грач",
+    "item.tcots-witcher.rook_potion_enhanced": "Улучшенный Грач",
+    "item.tcots-witcher.rook_potion_superior": "Отличный Грач",
+    "tooltip.effect.tcots-witcher.rook_effect.first":  "Повышает ловкость, увеличивая",
+    "tooltip.effect.tcots-witcher.rook_effect.second": "урон, наносимый мечами",
+    "tooltip.effect.tcots-witcher.rook_effect.applied": "При использовании меча:",
+    "special.attribute.effect.tcots-witcher.rook_effect": "+%s урона",
+
+
+    "item.tcots-witcher.swallow_potion": "Ласточка",
+    "item.tcots-witcher.swallow_potion_enhanced": "Улучшенная Ласточка",
+    "item.tcots-witcher.swallow_potion_superior": "Отличная Ласточка",
+    "tooltip.effect.tcots-witcher.swallow.first":  "Ускоряет регенерацию здоровья",
+    "tooltip.effect.tcots-witcher.swallow.second": "но потребляет много энергии",
+    "item.tcots-witcher.swallow_splash": "Взрывное зелье Ласточки",
+
+    "item.tcots-witcher.killer_whale_potion": "Косатка",
+    "tooltip.effect.tcots-witcher.killer_whale.applied": "В воде:",
+    "tooltip.effect.tcots-witcher.killer_whale.first":  "Увеличивает запас воздуха",
+    "tooltip.effect.tcots-witcher.killer_whale.second": "и урон под водой",
+    "item.tcots-witcher.killer_whale_splash": "Взрывное зелье Косатки",
+
+    "item.tcots-witcher.white_raffards_decoction": "Зелье Раффара Белого",
+    "item.tcots-witcher.white_raffards_decoction_enhanced": "Улучшенное Зелье Раффара Белого",
+    "item.tcots-witcher.white_raffards_decoction_superior": "Отличное Зелье Раффара Белого",
+    "tooltip.effect.tcots-witcher.white_raffards.first":  "Мгновенно востанавливает большое",
+    "tooltip.effect.tcots-witcher.white_raffards.second": "количество здоровья",
+    "special.attribute.effect.tcots-witcher.white_raffards": "Восстанавливает %s%% здоровья",
+
+    "item.tcots-witcher.white_raffards_splash": "Взрывное зелье Раффара Белого",
+
+    "item.tcots-witcher.cat_potion": "Кошка",
+    "item.tcots-witcher.cat_potion_enhanced": "Улучшенная Кошка",
+    "item.tcots-witcher.cat_potion_superior": "Отличная Кошка",
+    "tooltip.effect.tcots-witcher.cat_effect.first":  "Даёт зрение в полной темноте,",
+    "tooltip.effect.tcots-witcher.cat_effect.second": "позволяя видеть врагов",
+
+    "item.tcots-witcher.black_blood_potion": "Чёрная кровь",
+    "item.tcots-witcher.black_blood_potion_enhanced": "Улучшенная Чёрная кровь",
+    "item.tcots-witcher.black_blood_potion_superior": "Отличная Чёрная кровь",
+
+    "tooltip.effect.tcots-witcher.black_blood.first.0":  "Вампиры и трупоеды получают отравление",
+    "tooltip.effect.tcots-witcher.black_blood.second.0": "когда ранят вас",
+    "tooltip.effect.tcots-witcher.black_blood.first.1":  "Вампиры и трупоеды получают отравление, и кроме того их отбрасывает назад заставля врагов истекать кровью",
+    "tooltip.effect.tcots-witcher.black_blood.second.1": "когда они ранят вас",
+    "tooltip.effect.tcots-witcher.black_blood.extra":    "",
+
+    "tooltip.effect.tcots-witcher.black_blood.applied": "В ближнем бою с чудовищами:",
+    "special.attribute.effect.tcots-witcher.black_blood": "%s%% отражено урона",
+
+    "tcots-witcher.sounds.black_blood_hit": "Кровопролитие",
+
+    "item.tcots-witcher.maribor_forest_potion": "Лес Марибора",
+    "item.tcots-witcher.maribor_forest_potion_enhanced": "Улучшенный Лес Марибора",
+    "item.tcots-witcher.maribor_forest_potion_superior": "Отличный Лес Марибора",
+    "tooltip.effect.tcots-witcher.maribor_forest.first":  "Восстанавливает голод во время",
+    "tooltip.effect.tcots-witcher.maribor_forest.second": "действия элексира, улучшает еду",
+
+    "item.tcots-witcher.white_honey_potion": "Белый мёд",
+    "item.tcots-witcher.white_honey_potion_enhanced": "Улучшенный Белый мёд",
+    "item.tcots-witcher.white_honey_potion_superior": "Отличный Белый мёд",
+    "tooltip.effect.tcots-witcher.white_honey.first":  "Снижает интоксикаю до нуля",
+    "tooltip.effect.tcots-witcher.white_honey.second": "Отменяет действие элексиров",
+
+
+    "effect.tcots-witcher.wolf_effect": "Волк",
+
+    "effect.tcots-witcher.rook_effect": "Грач",
+
+
+    "effect.tcots-witcher.swallow": "Ласточка",
+    "effect.tcots-witcher.killer_whale": "Косатка",
+    "effect.tcots-witcher.white_raffards": "Зелье Раффара Белого",
+    "effect.tcots-witcher.cat_effect": "Кошка",
+    "effect.tcots-witcher.black_blood": "Чёрная кровь",
+    "effect.tcots-witcher.bleeding_black_blood": "Кровоточащая Чёрная кровь",
+    "effect.tcots-witcher.maribor_forest": "Лес Марибора",
+
+
+    "effect.tcots-witcher.grave_hag_decoction": "Живучесть Кладбищенской бабы",
+    "effect.tcots-witcher.gui.grave_hag_decoction": "Живучесть Кладбищенской бабы (%s kills)",
+
+    "effect.tcots-witcher.water_hag_decoction": "Свирепость Водной бабы",
+    "effect.tcots-witcher.alghoul_decoction": "Голод Альгуля",
+    "effect.tcots-witcher.foglet_decoction": "Сопротивление туману Туманника",
+    "effect.tcots-witcher.nekker_warrior_decoction": "Воинственность Наккера Воина",
+    "effect.tcots-witcher.troll_decoction": "Регенерация Тролля",
+
+
+    "death.attack.potionToxicity": "%1$s умер от интоксикации крови элексирами",
+    "death.attack.potionToxicity.player": "%1$s умер от интоксикации во время боя с %2$s",
+
+
+    "item.tcots-witcher.bomb_powder": "Чёрный порох",
+    "item.tcots-witcher.bomb_powder_tooltip": "(%s)",
+    "tooltip.tcots-witcher.bomb_powder_1": "Создаётся через алхимический стол или",
+    "tooltip.tcots-witcher.bomb_powder_2": "во время сна, нужен сильный алкоголь",
+
+
+    "item.tcots-witcher.grapeshot": "Картечь",
+    "item.tcots-witcher.grapeshot_enhanced": "Улучшенная Картечь",
+    "item.tcots-witcher.grapeshot_superior": "Отличная Картечь",
+    "tooltip.grapeshot.first": "Создаёт маленький взрыв, который поджигает цель.",
+    "tooltip.grapeshot.second": "",
+    "tooltip.bomb.monster_nest.first": "Может уничтожить гнездо чудовищ",
+    "tooltip.bomb.monster_nest.second": "и спавнеры.",
+
+    "item.tcots-witcher.dancing_star": "Танцующая звезда",
+    "item.tcots-witcher.dancing_star_enhanced": "Улучшенная Танцующая звезда",
+    "item.tcots-witcher.dancing_star_superior": "Отличная Танцующая звезда",
+    "tooltip.dancing_star.first":  "Создаёт взрыв, поджигая противников.",
+    "tooltip.dancing_star.second": "",
+
+    "item.tcots-witcher.devils_puffball": "Чёртов гриб",
+    "item.tcots-witcher.devils_puffball_enhanced": "Улучшенный Чёртов гриб",
+    "item.tcots-witcher.devils_puffball_superior": "Отличный Чертов гриб",
+    "tooltip.devils_puffball.first":  "При взрыве создаёт",
+    "tooltip.devils_puffball.second": "ядовитое облако.",
+
+    "item.tcots-witcher.samum": "Самум",
+    "item.tcots-witcher.samum_enhanced": "Улучшенный Самум",
+    "item.tcots-witcher.samum_superior": "Отличный Самум",
+    "tooltip.samum.first":  "Оглушает противников в радиусе взрыва.",
+    "tooltip.samum.second": "",
+    "tooltip.samum.extra":  "Первый урон будет критическим.",
+    "effect.tcots-witcher.samum": "Оглушение",
+
+    "item.tcots-witcher.northern_wind": "Северный ветер",
+    "item.tcots-witcher.northern_wind_enhanced": "Улучшеный Северный ветер",
+    "item.tcots-witcher.northern_wind_superior": "Отличный Северный ветер",
+    "tooltip.northern_wind.first":  "Замораживает противников. Удары, нанесённые замороженным",
+    "tooltip.northern_wind.second": "противникам наносят дополнительный урон.",
+    "tooltip.northern_wind.extra":  "Шанс убить врага на месте.",
+    "block.tcots-witcher.frosted_snow": "Замороженный снег",
+    "effect.tcots-witcher.northern_wind": "Ледяной северный ветер",
+
+    "item.tcots-witcher.dragons_dream": "Сон дракона",
+    "item.tcots-witcher.dragons_dream_enhanced": "Улучшенный Сон дракона",
+    "item.tcots-witcher.dragons_dream_superior": "Отличный Сон дракона",
+    "tooltip.dragons_dream.first":  "Выбрасывает облако газа,",
+    "tooltip.dragons_dream.second": "взрывающегося при поджиге.",
+    "entity.tcots-witcher.dragons_dream_cloud": "Облако сна дракона",
+
+    "item.tcots-witcher.dimeritium_bomb": "Двимеритовая бомба",
+    "item.tcots-witcher.dimeritium_bomb_enhanced": "Улучшенная Двимеритовая бомба",
+    "item.tcots-witcher.dimeritium_bomb_superior": "Отличная Двимеритовая бомба",
+    "tooltip.dimeritium_bomb.first":  "Выпускает облако двимерита с",
+    "tooltip.dimeritium_bomb.second": "осколками, блокирующее магию.",
+    "effect.tcots-witcher.dimeritium_bomb": "Магическая блокировка Двимеритом",
+
+    "item.tcots-witcher.moon_dust": "Лунная пыль",
+    "item.tcots-witcher.moon_dust_enhanced": "Улучшенная Лунная пыль",
+    "item.tcots-witcher.moon_dust_superior": "Отличная Лунная пыль",
+    "tooltip.moon_dust.first":  "Временно блокирует трансформацию",
+    "tooltip.moon_dust.second": ", а так же блокирует регенерацию чудовищ",
+    "tooltip.moon_dust.extra2":  "Чудовища больше не могут обращаться",
+    "tooltip.moon_dust.extra":   "Запретите криперам взрываться.",
+    "effect.tcots-witcher.moon_dust": "Осколки лунной пыли",
+
+
+
+    "item.tcots-witcher.cured_monster_leather": "Укреплённая кожа чудовища",
+
+
+    "item.tcots-witcher.knight_crossbow": "Рыцарский арбалет",
+    "tooltip.knight_crossbow.dyeable": "Окрашиваемый",
+    "tooltip.tcots-witcher.knight_crossbow": "Очень мощный, с медленной перезарядкой",
+
+    "item.tcots-witcher.base_bolt": "Арбалетный болт",
+    "tooltip.tcots-witcher.base_bolt": "Опасней, чем стрела",
+    "entity.tcots-witcher.base_bolt": "Арбалетный болт",
+
+    "item.tcots-witcher.blunt_bolt": "Болт с затупленным наконечником",
+    "tooltip.tcots-witcher.blunt_bolt": "Опасней обычного болта.",
+    "entity.tcots-witcher.blunt_bolt": "Болт с затупленным наконечником",
+
+    "item.tcots-witcher.precision_bolt": "Высокоточный болт",
+    "tooltip.tcots-witcher.precision_bolt": "Повышенная пробиваемость.",
+    "entity.tcots-witcher.precision_bolt": "Высокоточный болт",
+
+    "item.tcots-witcher.exploding_bolt": "Взрывной болт",
+    "tooltip.tcots-witcher.exploding_bolt": "Взрывается при попадании.",
+    "entity.tcots-witcher.exploding_bolt": "Взрывной болт",
+
+    "item.tcots-witcher.broadhead_bolt": "Болт с широким наконечником",
+    "tooltip.tcots-witcher.broadhead_bolt": "Вызывает кровотечение.",
+    "entity.tcots-witcher.broadhead_bolt": "Болт с широким наконечником",
+    "effect.tcots-witcher.bleeding": "Кровотечение",
+    "death.attack.bleeding": "%1$s истёк кровью до смерти",
+    "death.attack.bleeding.player": "%1$s до смерти истёк кровью во время битвы %2$s",
+
+
+    "item.tcots-witcher.gvalchir": "Махакамский рунный сигиль",
+    "tooltip.tcots-witcher.gvalchir": "Сильный рунический меч",
+    "tooltip.tcots-witcher.gvalchir.extra": "+75% Пробитие брони",
+
+    "item.tcots-witcher.moonblade": "Лунный клинок",
+    "tooltip.tcots-witcher.moonblade": "Смертоносный священный меч",
+    "tooltip.tcots-witcher.moonblade.extra": "+50% Урона против чудовищ",
+
+    "item.tcots-witcher.dyaebl": "Д’Иабль",
+    "tooltip.tcots-witcher.dyaebl": "Покрыт кровью Чудовищ",
+    "tooltip.tcots-witcher.dyaebl.extra": " 20% Шанс вызвать кровотечение",
+
+    "item.tcots-witcher.winters_blade": "Клинок зимы",
+    "tooltip.tcots-witcher.winters_blade": "В нём заключена сила зимы",
+    "tooltip.tcots-witcher.winters_blade.extra":  "+2 урона огненным врагам",
+    "tooltip.tcots-witcher.winters_blade.extra2": " 20% Шанс заморозить врага",
+    "tooltip.tcots-witcher.winters_blade.extra3": " Гасит пламя если вы горите",
+
+    "item.tcots-witcher.ardaenye": "Ард'энье",
+
+
+    "tooltip.tcots-witcher.generic_tooltip.full_set_bonus": "Полный список бонусов:",
+    "tooltip.tcots-witcher.generic_tooltip.see_more": "Зажмите Shift, чтобы увидеть...",
+    "tooltip.tcots-witcher.generic_tooltip.special_abilities": "Специальные способности:",
+
+
+    "attribute.name.generic.max_witcher_toxicity": "Максимальная интоксикация",
+    "item.tcots-witcher.manticore_armor": "Нагрудник Школы Мантикоры",
+    "item.tcots-witcher.manticore_trousers": "Поножи Школы Мантикоры",
+    "item.tcots-witcher.manticore_boots": "Ботинки Школы Мантикоры",
+    "tooltip.tcots-witcher.manticore_armor.full_set1": "+75% Уменьшение отката бомб",
+    "tooltip.tcots-witcher.manticore_armor.full_set2": "+50% Уменьшение отката элексиров",
+    "tooltip.tcots-witcher.manticore_armor.full_set3": "+2 Восстановление слотов при употреблении алкоголя",
+
+    "item.tcots-witcher.warriors_leather_jacket": "Кожаный нагрудник воина",
+    "item.tcots-witcher.warriors_leather_trousers": "Кожаные поножи воина",
+    "item.tcots-witcher.warriors_leather_boots": "Кожаные ботинки воина",
+    "tooltip.tcots-witcher.warriors_leather_armor.full_set1": "+25% Сопротивления к урону от Чудовищ",
+
+    "item.tcots-witcher.ravens_armor": "Нагрудник Ворона",
+    "item.tcots-witcher.ravens_trousers": "Поножи Ворона",
+    "item.tcots-witcher.ravens_boots": "Ботинки Ворона",
+    "tooltip.tcots-witcher.ravens_armor.full_set1": "+10% Скорость передвижения",
+    "tooltip.tcots-witcher.ravens_armor.full_set2": "+50% Сопротивления к урону от Чудовищ",
+    "tooltip.tcots-witcher.ravens_armor.full_set3": "+2 Урона по Чудовищам",
+
+
+    "item.tcots-witcher.tundra_horse_armor": "Лошадиная броня Тундры",
+    "tooltip.tcots-witcher.tundra_horse_armor":  "+20% Скорость передвижения по льду и снегу",
+    "tooltip.tcots-witcher.tundra_horse_armor2": " Можно скакать по вязкому снегу",
+
+    "item.tcots-witcher.knight_errants_horse_armor": "Лошадиная броня Странствующих рыцарей",
+    "tooltip.tcots-witcher.knight_errants_horse_armor":  "+40% Сопротивления к урону от снарядов",
+    "tooltip.tcots-witcher.knight_errants_horse_armor2": "+20% Сопротивления к урону от взрывов",
+
+
+
+
+
+    "advancements.witcher.main.title": "Сопряжение сфер",
+    "advancements.witcher.main.description": "Исследуйте этот новый мир, попробуйте купить у библиотекаря Бестиарий Чудовищ, чтобы получить больше информации!",
+
+        "advancements.witcher.start_alchemy.title": "Мать всех наук",
+        "advancements.witcher.start_alchemy.description": "Начните путь алхимика, создав алхимический стол, попробуйте также купить у травника алхимический альманах!",
+
+            "advancements.witcher.use_formula.title": "Во все тяжкие",
+            "advancements.witcher.use_formula.description": "Изучите новый алхимический рецепт",
+
+            "advancements.witcher.craft_potion.title": "Крепкие напитки",
+            "advancements.witcher.craft_potion.description": "Получите свой первый элексир после Сопряжения сфер",
+
+                "advancements.witcher.craft_decoction.title": "Монструозный вкус",
+                "advancements.witcher.craft_decoction.description": "Приготовьте отвар",
+
+                "advancements.witcher.craft_potion_superior.title": "Практика в продвинутой алхимии",
+                "advancements.witcher.craft_potion_superior.description": "Приготовьте отвар Отличного качества",
+
+                "advancements.witcher.max_toxicity.title": "Брошу, когда захочу",
+                "advancements.witcher.max_toxicity.description": "Достигните высокого уровня интоксикации",
+
+            "advancements.witcher.craft_oil.title": "Лезвие заточено",
+            "advancements.witcher.craft_oil.description": "Получите своё первое масло против Чудовищ",
+
+                "advancements.witcher.craft_oil_superior.title": "Толстый слой масла",
+                "advancements.witcher.craft_oil_superior.description": "Получите Отличное масло против Чудовищ",
+
+                "advancements.witcher.kill_with_hanged.title": "...Сталь для людей",
+                "advancements.witcher.kill_with_hanged.description": "Убейте человека, используя яд повешенного",
+
+            "advancements.witcher.craft_bomb.title": "Ка-Буум!",
+            "advancements.witcher.craft_bomb.description": "Получите свою первую бомбу",
+
+                "advancements.witcher.craft_bomb_superior.title": "Бомбический",
+                "advancements.witcher.craft_bomb_superior.description": "Получите бомбу Отличного качества",
+
+                "advancements.witcher.destroy_nest.title": "Сейчас рванет!",
+                "advancements.witcher.destroy_nest.description": "Уничтожить логово Чудовищ использую бомбу",
+
+                    "advancements.witcher.destroy_nest_multiple.title": "Крысолов",
+                    "advancements.witcher.destroy_nest_multiple.description": "Уничтожить гнёзда чудовищ 30 раз",
+
+                "advancements.witcher.craft_all_bomb.title": "Бомбардир",
+                "advancements.witcher.craft_all_bomb.description": "Создайте все виды бомб",
+
+                "advancements.witcher.dragons_dream_burning.title": "Живой запал",
+                "advancements.witcher.dragons_dream_burning.description": "Поджечь газ из бомбы Сон Дракона с помощью горящего противника.",
+
+                "advancements.witcher.stop_creeper.title": "Успешный подрывник",
+                "advancements.witcher.stop_creeper.description": "Используйте Лунную Пыль на крипере, чтобы предотвратить его взрыв. Навечно...",
+
+            "advancements.witcher.refill_concoction.title": "Глубокая медитация",
+            "advancements.witcher.refill_concoction.description": "Пополните запасы используя алкоголь на алхимическом столе или во время сна",
+
+
+
+    "advancements.witcher.start_killing.title": "Серебро для Чудовищ...",
+    "advancements.witcher.start_killing.description": "Убейте Чудовища сопряжения сфер",
+
+        "advancements.witcher.kill_giant.title": "Властелин льда",
+        "advancements.witcher.kill_giant.description": "Найдите и убейте ледяного гиганта, время вырвать клинок зимы из его лап!",
+
+        "advancements.witcher.kill_bullvore.title": "Уууу-бийца",
+        "advancements.witcher.kill_bullvore.description": "Убейте сильного Утковола",
+
+            "advancements.witcher.get_gvalchir.title": "Ни капельки не больно",
+            "advancements.witcher.get_gvalchir.description": "Получите Махакамский рунный сигиль",
+
+        "advancements.witcher.kill_rotfiend.title": "Обезвреживание бомбы",
+        "advancements.witcher.kill_rotfiend.description": "Убейте Гнильца или Болотника до того как они взорвутся",
+
+        "advancements.witcher.get_mutagen.title": "Мутант",
+        "advancements.witcher.get_mutagen.description": "Получить мутаген чудовища",
+
+        "advancements.witcher.befriend_troll.title": "Друг троллей",
+        "advancements.witcher.befriend_troll.description": "Заведите дружбу с Троллем и получите его в качестве своего напарника",
+
+            "advancements.witcher.befriend_troll_ice.title": "Много есть, Много пить",
+            "advancements.witcher.befriend_troll_ice.description": "Заведите дружбу с Ледяным Троллем и получите его в качестве своего напарника",
+
+                "advancements.witcher.befriend_all_troll.title": "Неприятности с троллями",
+                "advancements.witcher.befriend_all_troll.description": "Получите каждый тип троллей в качестве своего последователя",
+
+        "advancements.witcher.get_ravens_armor.title": "Тиен'саэль",
+        "advancements.witcher.get_ravens_armor.description": "Соберите полный сет брони ворона",
+
+
+
+    "filled_map.giant_cave": "Карта исследователя Гигантской пещеры",
+
+    "gui.jei.tcots-witcher.requires_recipe": "Требуется открыть рецепт",
+    "gui.jei.tcots-witcher.for_herb": "+%ss за каждую дополнительную траву",
+    "tag.item.tcots-witcher.monster_blood": "Кровь Чудовища",
+    "tag.item.tcots-witcher.decaying_flesh": "Разлагающаяся плоть",
+
+
+    "modmenu.nameTranslation.tcots-witcher": "Сопряжение сфер",
+    "modmenu.descriptionTranslation.tcots-witcher": "Новые чудовища, броня, оружие, зелья и испытания из вселенной ведьмака, остерегайтесь Сопряжения Сфер!",
+
+    "text.config.tcots_config.title": "Настройка TCOTS",
+
+    "text.config.tcots_config.category.monsters": "Чудовища - Добавьте чудовище в категорию чудовищ",
+    "text.config.tcots_config.category.monsters.tooltip": "Добавьте мобов, чтобы с ними работали \nмасла для Чудовищ и сопротивление/урон",
+    "text.config.tcots_config.option.monsters.Necrophages": "Трупоеды",
+    "text.config.tcots_config.option.monsters.Ogroids": "Огры",
+    "text.config.tcots_config.option.monsters.Beasts": "Животные",
+    "text.config.tcots_config.option.monsters.Humanoids": "Гуманоиды",
+
+
+
+    "text.config.tcots_config.option.monsters.Specters": "Духи и Призраки",
+    "text.config.tcots_config.option.monsters.Specters.tooltip": "В разработке\nсейчас в него входят Гасты",
+
+    "text.config.tcots_config.option.monsters.Vampires": "Вампиры",
+    "text.config.tcots_config.option.monsters.Vampires.tooltip": "В разработке",
+
+    "text.config.tcots_config.option.monsters.Insectoids": "Инсектоиды",
+    "text.config.tcots_config.option.monsters.Insectoids.tooltip": "В разработке\nсейчас в него входят Арахниды",
+
+    "text.config.tcots_config.option.monsters.Elementa": "Элементали",
+    "text.config.tcots_config.option.monsters.Elementa.tooltip": "В разработке\nсейчас в него входят големы, Ифрито-подобные, Эллее-подобные и Слаймо-подобные",
+
+    "text.config.tcots_config.option.monsters.Hybrids": "Гибриды",
+    "text.config.tcots_config.option.monsters.Hybrids.tooltip": "В разработке",
+
+    "text.config.tcots_config.option.monsters.Cursed_Ones": "Проклятые",
+    "text.config.tcots_config.option.monsters.Cursed_Ones.tooltip": "В разработке\nсейчас в него входят Криперы и Разорители",
+
+    "text.config.tcots_config.option.monsters.Draconids": "Дракониды",
+    "text.config.tcots_config.option.monsters.Draconids.tooltip": "В разработке\nСейчас в него входит Дракон энда (Да...)",
+
+    "text.config.tcots_config.option.monsters.Relicts": "Реликты",
+    "text.config.tcots_config.option.monsters.Relicts.tooltip": "В разработке\nСейчас в него входят Эндермены, Стражники и Хранитель",
+
+    "text.config.tcots_config.category.hud": "Интоксикация - Настройки интерфейса",
+    "text.config.tcots_config.category.hud.tooltip": "Настрой позицию интерфеса интоксикации",
+    "text.config.tcots_config.option.hud.Hud_Y": "Смещение по Y",
+    "text.config.tcots_config.option.hud.Hud_X": "Смещение по X",
+    "text.config.tcots_config.option.hud.anchor": "Якорь",
+    "text.config.tcots_config.enum.aNCHORS.center_down": "По центру снизу",
+    "text.config.tcots_config.enum.aNCHORS.center_up": "По центру сверху",
+    "text.config.tcots_config.enum.aNCHORS.left_up": "Левый верхний угол",
+    "text.config.tcots_config.enum.aNCHORS.left_down": "Левый нижний угол",
+    "text.config.tcots_config.enum.aNCHORS.right_up": "Правый верхний угол",
+    "text.config.tcots_config.enum.aNCHORS.right_down": "Правый нижний угол",
+
+    "text.config.tcots_config.category.witcher_eyes": "Косметические элементы скина",
+    "text.config.tcots_config.category.witcher_eyes.tooltip": "Опция добавления Ведьмачих глаз\nи отображения Интоксикации на лице игрока ",
+    "text.config.tcots_config.option.witcher_eyes.activateEyes": "Активировать ведьмачьи глаза",
+    "text.config.tcots_config.option.witcher_eyes.activateToxicity": "Активировать Интоксикацию на лице",
+
+
+    "text.config.tcots_config.option.witcher_eyes.eyeShape": "Слой глаз",
+    "text.config.tcots_config.option.witcher_eyes.eyeShape.tooltip": "Выберите стиль зрачков, который лучше\nподойдёт для вашего скина",
+    "text.config.tcots_config.enum.eYE_SHAPE.normal": "Нормальные (1x1)",
+    "text.config.tcots_config.enum.eYE_SHAPE.tall": "Высокие (1x2)",
+    "text.config.tcots_config.enum.eYE_SHAPE.long": "Длинные (2x1)",
+    "text.config.tcots_config.enum.eYE_SHAPE.tall_shadow": "Высокие (1x2)- с тенью",
+    "text.config.tcots_config.enum.eYE_SHAPE.big": "Большие (2x2)",
+
+    "text.config.tcots_config.option.witcher_eyes.eyeSeparation": "Выделение глаз",
+    "text.config.tcots_config.option.witcher_eyes.eyeSeparation.tooltip": "Выберите расстояние между\nдвумя зрачками",
+    "text.config.tcots_config.enum.eYE_SEPARATION.zero": "0px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.one": "1px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.two": "2px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.three": "3px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.four": "4px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.five": "5px",
+    "text.config.tcots_config.enum.eYE_SEPARATION.six": "6px",
+
+    "text.config.tcots_config.option.witcher_eyes.XEyePos": "Положение глаз по горизонтали",
+    "text.config.tcots_config.option.witcher_eyes.XEyePos.tooltip": "Изменение положения по горизонтали",
+
+    "text.config.tcots_config.option.witcher_eyes.YEyePos": "Положение глаз по вертикали",
+    "text.config.tcots_config.option.witcher_eyes.YEyePos.tooltip": "Изменение положения по вертикали"
+}

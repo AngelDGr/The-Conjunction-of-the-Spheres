@@ -1,59 +1,56 @@
 ```json
 {
-  "title": "Drowner",
-  "icon": "tcots-witcher:drowner_brain",
+  "title": "Болотник",
+  "icon": "tcots-witcher:scurver_spine",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
-    "tcots-witcher:drowner_tongue",
-    "tcots-witcher:drowner_brain"
+    "tcots-witcher:scurver_spine"
   ],
-  "ordinal": 1
+  "ordinal": 7
 }
 ```
 
-One of the most common necrophages, they inhabit near bodies of water, like rivers and lakes, they are specially 
-numerous in swamps.
+Болотники - это дальние родственники [гнильцов](^tcots-witcher:monsters/necrophages/rotfiend).
+В битве с ними нельзя забывать об их острых, как бритва, костяных шипах -  
+выступах, торчащих из их скелета.
 
 
-A drowner resembles a corpse dredged from the bottom of a pond. It is sickly blue or green in color,
-with slime and sludge oozing out of every pore and the acrid stench of rot wafting off of it.
+Когда Болотник близок к смерти, газы и ферменты, накопившиеся в его теле, вызывают
+взрыв.   
+
 
 ;;;;;
 
-It is often thought drowners arise from the bodies of those who drown in shallow water.
+Шипы вылетают с огромной скоростью, превращаясь в последнее смертоносное оружие в их арсенале.
 
-![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_main.png,fit)
-
-;;;;;
-
-{dark_green}**Habitat**{} 
-- Swamps and Mangrove Swamps near the water
-- Rivers and lakes
-- Beaches near the water
-![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_swimming.png,fit)
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_main.png,fit)
 
 ;;;;;
 
-{red}**Behavior**{}
+{dark_green}**Среда обитания**{}
+- Леса (ночью)
+- Равнины (ночью)
+- Джунгли (ночью)
 
-The drowner enjoys killing other water creatures, but when it doesn't find a creature to attack, 
-it will dig a hole in the ground and enter in.
-These holes leave a tiny puddle.
-If you get too close to the puddle, the drowner will emerge from it to attack you.
-
-
-When they attack, they sometimes launch themselves to their target, be careful and try to avoid those lunges.
+![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_exploding.png,fit)
 
 ;;;;;
 
-When they enter the water, they become more relaxed, so they 
-are going to be slower and only attack once in a while,
-trying to drown their target. 
-__When they are swimming, and you are underwater__ they {#0A880E}can be killed easily with a good
-crossbow shot.{}
+{red}**Поведение**{}
+
+По своей сути болотники являются более сильной версией гнильцов.
 
 
-{blue}**Loot**{}
+Их главное отличие - шипы, которые растут по всему телу. Если один из них попадёт в вас,
+то сильно ранит и заставит истекать кровью, поэтому обязательно используйте щит, когда это произойдёт, чтобы защититься
+от результата взрыва Болотника (или быстро отбегите на безопасное расстояние).
+
+;;;;;
+
+Если у вас получится {#0A880E}убить чудовище, когда оно будет гореть, вы сможете забрать его шипы как трофей и использовать их в качестве оружия.{}
+
+
+{blue}**Добыча**{}
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -72,8 +69,7 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
-
-                            <horizontal-alignment>center</horizontal-alignment>
+                              <horizontal-alignment>center</horizontal-alignment>
                             <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
@@ -81,7 +77,7 @@ crossbow shot.{}
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:drowner_tongue
+                                        tcots-witcher:rotfiend_blood
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -89,8 +85,7 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
-
-                            <horizontal-alignment>center</horizontal-alignment>
+                              <horizontal-alignment>center</horizontal-alignment>
                             <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
                         
@@ -98,7 +93,7 @@ crossbow shot.{}
                             <children>
                                 <item>
                                     <stack>
-                                        tcots-witcher:drowner_brain
+                                        tcots-witcher:scurver_spine
                                     </stack>
                                     <set-tooltip-from-stack>true</set-tooltip-from-stack>
                                 </item>
@@ -106,27 +101,10 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
-
-                            <horizontal-alignment>center</horizontal-alignment>
+                              <horizontal-alignment>center</horizontal-alignment>
                             <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
-
-                        <stack-layout>
-                            <children>
-                                <item>
-                                    <stack>
-                                        tcots-witcher:water_essence
-                                    </stack>
-                                    <set-tooltip-from-stack>true</set-tooltip-from-stack>
-                                </item>
-                            </children>
-                            <padding>
-                                <all>5</all>
-                            </padding>
-
-                            <horizontal-alignment>center</horizontal-alignment>
-                            <vertical-alignment>center</vertical-alignment>
-                        </stack-layout>
+                                               
                     </children>
                     <sizing>
                         <horizontal method="content">1</horizontal>
@@ -147,4 +125,4 @@ crossbow shot.{}
 
 
 
-![Drowner](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_full.png,fit)
+![Болотник](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_full.png,fit)

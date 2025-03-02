@@ -7,13 +7,54 @@
     "itemGroup.tcots-witcher.main.button.curseforge": "CurseForge",
     "itemGroup.tcots-witcher.main.button.modrinth": "Modrinth",
 
+    "text.lavender.entry_hud.sneak_to_view": {"text": "Sneak to view", "color": "gray"},
+    "text.lavender.entry_hud.click_to_view": {"text": "Click to view", "color": "gray"},
 
+    "text.lavender.categories": "Categories",
+    "text.lavender.index": "Index",
+    "text.lavender.index_category": "All Entries",
+    "text.lavender.index_category.title": "Entries",
+    "text.lavender.entry_tooltip": [
+        {"text": "Hold ", "color": "dark_gray"},
+        {"text": "Alt ", "color": "gold"}
+    ],
+    "text.lavender.book.click_to_open": {"text": "Click to open: ", "color": "dark_gray"},
+
+    "text.lavender.entry.multiple_unread": "Unread entries",
+    "text.lavender.entry.unread": "Unread entry",
+
+    "text.lavender.book.next": [
+        "Next Page\n",
+        {"text": "↑ Scroll Up", "color": "gray"}
+    ],
+    "text.lavender.book.back": [
+        "Go Back\n",
+        {"text": "Shift-click to return home", "color": "gray"}
+    ],
+    "text.lavender.book.previous": [
+        "Previous Page\n",
+        {"text": "↓ Scroll Down", "color": "gray"}
+    ],
+
+    "text.lavender.book.reload": "Reload",
+    "text.lavender.book.bookmark.add": "Add Bookmark",
+    "text.lavender.book.bookmark.remove_hint": {"text": "Shift-click to remove", "color": "dark_gray"},
+
+
+    "attribute.name.witcher_rpg.adrenaline_modifier": "Adrenaline Gain",
+    "attribute.name.witcher_rpg.sign_intensity": "Sign Intensity",
+    "attribute.name.witcher_rpg.aard_intensity": "Aard Sign Intensity",
+    "attribute.name.witcher_rpg.axii_intensity": "Axii Sign Intensity",
+    "attribute.name.witcher_rpg.igni_intensity": "Igni Sign Intensity",
+    "attribute.name.witcher_rpg.quen_intensity": "Quen Sign Intensity",
+    "attribute.name.witcher_rpg.yrden_intensity": "Yrden Sign Intensity",
 
     "item.tcots-witcher.witcher_bestiary": "Monster Bestiary",
     "tooltip.tcots-witcher.witcher_bestiary": "Learn about the dangers of this new world",
 
     "item.tcots-witcher.alchemy_book": "Alchemy Almanac",
     "tooltip.tcots-witcher.alchemy_book": "Information about herbs and alchemy",
+    "lavender.alchemy_book.recipes": "Compendium of recipes for potions, decoctions, monster oils, bombs, and alchemical ingredients.",
 
     "tcots-witcher.sounds.monster_emerging": "Monster emerges from ground",
     "tcots-witcher.sounds.monster_digging": "Monster return to ground",
@@ -282,6 +323,10 @@
     "block.tcots-witcher.alchemy_table.tooltip": "Station to make Witcher Potions",
     "block.tcots-witcher.alchemy_table.tooltip_book": "Put an Alchemy Almanac on it",
     "gui.recipe-book.tooltip.alchemy_table": "Recipe Book",
+    "gui.recipe-book.category.potions": "Potions",
+    "gui.recipe-book.category.decoctions": "Decoctions",
+    "gui.recipe-book.category.bombs_oils": "Bombs & Oils",
+    "gui.recipe-book.category.misc": "Ingredients",
 
     "block.tcots-witcher.herbal_table": "Herbal Table",
     "block.tcots-witcher.herbal_table.tooltip": "Put organic matter in it",
@@ -375,8 +420,9 @@
 
 
     "tooltip.tcots-witcher.refill": "Refills:",
-    "tooltip.tcots-witcher.refill.slot": "%s Slot",
-    "tooltip.tcots-witcher.refill.slots": "%s Slots",
+    "tooltip.tcots-witcher.refill.slot":   "%s Slot",
+    "tooltip.tcots-witcher.refill.slots":  "%s Slots",
+    "tooltip.tcots-witcher.refill.slots2": "%s Slots",
 
 
     "tcots-witcher.gui.toxicity_warning": "You can't drink this! Too much toxicity",

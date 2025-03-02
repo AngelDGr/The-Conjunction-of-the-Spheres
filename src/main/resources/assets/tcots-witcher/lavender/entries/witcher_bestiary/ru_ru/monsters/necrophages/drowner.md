@@ -1,6 +1,6 @@
 ```json
 {
-  "title": "Drowner",
+  "title": "Утопец",
   "icon": "tcots-witcher:drowner_brain",
   "category": "tcots-witcher:necrophages",
   "associated_items": [
@@ -11,49 +11,44 @@
 }
 ```
 
-One of the most common necrophages, they inhabit near bodies of water, like rivers and lakes, they are specially 
-numerous in swamps.
+Один из самых распространённых трупоедов, они обитают вблизи водоёмов, таких как реки, озёра, их особенно много на болотах.
 
-
-A drowner resembles a corpse dredged from the bottom of a pond. It is sickly blue or green in color,
-with slime and sludge oozing out of every pore and the acrid stench of rot wafting off of it.
+Утопец похож на труп, поднятый со дна озера. Они имеют тошнотворный синий или зелёный цвет.
+Из каждой поры на их кожи сочатся слизь и ил. Также от утопцев исходит едкий запах гнили.
 
 ;;;;;
 
-It is often thought drowners arise from the bodies of those who drown in shallow water.
+Считается, что обычно утопцами становятся те везунчики, которые утонули на мелководье.
 
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_main.png,fit)
 
 ;;;;;
 
-{dark_green}**Habitat**{} 
-- Swamps and Mangrove Swamps near the water
-- Rivers and lakes
-- Beaches near the water
+{dark_green}**Среда обитания**{} 
+- Болота и мангровые болота у воды
+- Реки и озёра
+- Пляжи рядом с водой
 ![](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_swimming.png,fit)
 
 ;;;;;
 
-{red}**Behavior**{}
+{red}**Поведение**{}
 
-The drowner enjoys killing other water creatures, but when it doesn't find a creature to attack, 
-it will dig a hole in the ground and enter in.
-These holes leave a tiny puddle.
-If you get too close to the puddle, the drowner will emerge from it to attack you.
+Утопцы убивают других водных обитателей. Когда они не находят жертву, на которую можно напасть,
+они выкапывают яму в земле и сидят внутри.
+Снаружи эти норы похожи на маленькую лужу.
 
+Если вы подойдёте к луже слишком близко, утопец нападёт на вас.
 
-When they attack, they sometimes launch themselves to their target, be careful and try to avoid those lunges.
+Когда они атакуют, то иногда набрасываются на свою цель. Остерегайтесь таких выпадов.
 
 ;;;;;
 
-When they enter the water, they become more relaxed, so they 
-are going to be slower and only attack once in a while,
-trying to drown their target. 
-__When they are swimming, and you are underwater__ they {#0A880E}can be killed easily with a good
-crossbow shot.{}
+Находясь в воде они расслабляются, поэтому будут медленные и нападать станут лишь время от времени, пытаясь утопить свою цель. 
+__Когда они плавают, а вы находитесь под водой__ их {#0A880E}можно легко убить прицельным выстрелом из арбалета.{}
 
 
-{blue}**Loot**{}
+{blue}**Добыча**{}
 ```xml owo-ui
         <flow-layout direction="vertical">
             <children>
@@ -72,7 +67,6 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
-
                             <horizontal-alignment>center</horizontal-alignment>
                             <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
@@ -89,7 +83,6 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
-
                             <horizontal-alignment>center</horizontal-alignment>
                             <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
@@ -106,7 +99,6 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
-
                             <horizontal-alignment>center</horizontal-alignment>
                             <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
@@ -123,7 +115,6 @@ crossbow shot.{}
                             <padding>
                                 <all>5</all>
                             </padding>
-
                             <horizontal-alignment>center</horizontal-alignment>
                             <vertical-alignment>center</vertical-alignment>
                         </stack-layout>
@@ -147,4 +138,4 @@ crossbow shot.{}
 
 
 
-![Drowner](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_full.png,fit)
+![Утопец](tcots-witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_full.png,fit)

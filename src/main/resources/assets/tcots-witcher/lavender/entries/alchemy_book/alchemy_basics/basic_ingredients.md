@@ -30,7 +30,7 @@ This book only covers plants ingredients, to further info in monster ingredients
                                     <stack>
                                         tcots-witcher:celandine
                                     </stack>
-<tooltip-text>Celandine:
+<tooltip-text >Celandine
 Grows in Plains, Forests,
 and Meadows.</tooltip-text>
                                 </item>

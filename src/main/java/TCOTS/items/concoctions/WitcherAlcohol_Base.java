@@ -43,7 +43,16 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base{
         tooltip.add(Text.translatable("tooltip."+Registries.ITEM.getId(this)).formatted(Formatting.GRAY));
         tooltip.add(ScreenTexts.EMPTY);
         tooltip.add(Text.translatable("tooltip.tcots-witcher.refill").formatted(Formatting.GRAY));
-        tooltip.add(ScreenTexts.space().append(Text.translatable(this.refillQuantity >1? "tooltip.tcots-witcher.refill.slots": "tooltip.tcots-witcher.refill.slot" , this.refillQuantity).formatted(Formatting.BLUE)));
+
+
+        tooltip.add(ScreenTexts.space().append(Text.translatable(
+                this.refillQuantity >1 && this.refillQuantity <6?
+                "tooltip.tcots-witcher.refill.slots":
+                        this.refillQuantity>1?
+                                "tooltip.tcots-witcher.refill.slots2":
+                                "tooltip.tcots-witcher.refill.slot",
+
+                this.refillQuantity).formatted(Formatting.BLUE)));
     }
 
     @Override
