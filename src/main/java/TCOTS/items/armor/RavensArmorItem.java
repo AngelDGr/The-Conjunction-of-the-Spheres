@@ -7,7 +7,6 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -23,11 +22,11 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class RavensArmorItem extends ArmorItem implements GeoItem {
+public class RavensArmorItem extends WitcherArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final Supplier<Object> renderProvider= GeoItem.makeRenderer(this);
     public RavensArmorItem(ArmorMaterial material, Type type, Settings settings) {
-        super(material, type, settings);
+        super(material, type, settings, 0.10);
     }
 
     @Override

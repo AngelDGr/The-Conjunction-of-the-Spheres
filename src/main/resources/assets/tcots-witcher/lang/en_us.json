@@ -41,13 +41,15 @@
     "text.lavender.book.bookmark.remove_hint": {"text": "Shift-click to remove", "color": "dark_gray"},
 
 
-    "attribute.name.witcher_rpg.adrenaline_modifier": "Adrenaline Gain",
-    "attribute.name.witcher_rpg.sign_intensity": "Sign Intensity",
-    "attribute.name.witcher_rpg.aard_intensity": "Aard Sign Intensity",
-    "attribute.name.witcher_rpg.axii_intensity": "Axii Sign Intensity",
-    "attribute.name.witcher_rpg.igni_intensity": "Igni Sign Intensity",
-    "attribute.name.witcher_rpg.quen_intensity": "Quen Sign Intensity",
-    "attribute.name.witcher_rpg.yrden_intensity": "Yrden Sign Intensity",
+    "attribute.name.generic.witcher_rpg.adrenaline_modifier": "Adrenaline Gain",
+    "attribute.name.generic.witcher_rpg.sign_intensity": "Sign Intensity",
+    "attribute.name.generic.witcher_rpg.aard_intensity": "Aard Sign Intensity",
+    "attribute.name.generic.witcher_rpg.axii_intensity": "Axii Sign Intensity",
+    "attribute.name.generic.witcher_rpg.igni_intensity": "Igni Sign Intensity",
+    "attribute.name.generic.witcher_rpg.quen_intensity": "Quen Sign Intensity",
+    "attribute.name.generic.witcher_rpg.yrden_intensity": "Yrden Sign Intensity",
+    "attribute.name.spell_power.critical_chance" : "Spell Critical Chance",
+    "attribute.name.spell_power.critical_damage" : "Spell Critical Damage",
 
     "item.tcots-witcher.witcher_bestiary": "Monster Bestiary",
     "tooltip.tcots-witcher.witcher_bestiary": "Learn about the dangers of this new world",

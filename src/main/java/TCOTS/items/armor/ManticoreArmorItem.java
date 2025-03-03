@@ -7,7 +7,6 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -23,7 +22,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class ManticoreArmorItem extends ArmorItem implements GeoItem {
+public class ManticoreArmorItem extends WitcherArmorItem implements GeoItem {
     //xTODO: Add items sprites
     //xTODO: Add functionality about toxicity
     //Faster drinking
@@ -35,7 +34,7 @@ public class ManticoreArmorItem extends ArmorItem implements GeoItem {
     private final Supplier<Object> renderProvider= GeoItem.makeRenderer(this);
 
     public ManticoreArmorItem(ArmorMaterial material, Type type, Settings settings) {
-        super(material, type, settings);
+        super(material, type, settings, 0.075);
     }
 
 

@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "TCOTS.mixin.TCOTSMixinConfigPlugin",
   "mixins": [
-    "ArmorItemMixin",
     "CrossbowMixins$CrossbowItemMixin",
     "CrossbowMixins$PersistentProjectileEntityMixin",
     "DimeritiumMagicBlock$BlockBlazeFireball",

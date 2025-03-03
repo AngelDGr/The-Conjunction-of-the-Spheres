@@ -7,7 +7,6 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -23,12 +22,12 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class WarriorsLeatherArmorItem extends ArmorItem implements GeoItem {
+public class WarriorsLeatherArmorItem extends WitcherArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final Supplier<Object> renderProvider= GeoItem.makeRenderer(this);
 
     public WarriorsLeatherArmorItem(ArmorMaterial material, Type type, Settings settings) {
-        super(material, type, settings);
+        super(material, type, settings, 0.02);
     }
 
     @Override
