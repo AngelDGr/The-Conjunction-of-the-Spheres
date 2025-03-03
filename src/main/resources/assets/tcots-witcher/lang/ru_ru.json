@@ -49,8 +49,8 @@
     "attribute.name.generic.witcher_rpg.igni_intensity": "Сила знака Игни",
     "attribute.name.generic.witcher_rpg.quen_intensity": "Сила знака Квен",
     "attribute.name.generic.witcher_rpg.yrden_intensity": "Сила знака Ирден",
-    "attribute.name.spell_power.critical_chance": "Spell Critical Chance",
-    "attribute.name.spell_power.critical_damage": "Spell Critical Damage",
+    "attribute.name.spell_power.critical_chance": "Шанс критического урона заклинания",
+    "attribute.name.spell_power.critical_damage": "Критический урон заклинания",
 
     "item.tcots-witcher.witcher_bestiary": "Бестиарий Чудовищ",
     "tooltip.tcots-witcher.witcher_bestiary": "Изучите опасности этого нового мира",
