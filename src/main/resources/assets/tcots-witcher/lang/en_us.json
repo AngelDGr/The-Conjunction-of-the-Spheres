@@ -39,6 +39,7 @@
     "text.lavender.book.reload": "Reload",
     "text.lavender.book.bookmark.add": "Add Bookmark",
     "text.lavender.book.bookmark.remove_hint": {"text": "Shift-click to remove", "color": "dark_gray"},
+    "text.owo.itemGroup.select_hint": {"text": "Shift-click to select multiple", "color": "gray"},
 
 
     "attribute.name.generic.witcher_rpg.adrenaline_modifier": "Adrenaline Gain",

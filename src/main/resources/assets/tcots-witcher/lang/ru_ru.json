@@ -39,16 +39,18 @@
     "text.lavender.book.reload": "Перезагрузить",
     "text.lavender.book.bookmark.add": "Добавить закладку",
     "text.lavender.book.bookmark.remove_hint": {"text": "Нажмите, чтобы удалить", "color": "dark_gray"},
+    "text.owo.itemGroup.select_hint": {"text": "Нажмите, чтобы выбрать категорию", "color": "gray"},
+
 
     "attribute.name.generic.witcher_rpg.adrenaline_modifier": "Прирост адреналина",
     "attribute.name.generic.witcher_rpg.sign_intensity": "Сила знаков",
     "attribute.name.generic.witcher_rpg.aard_intensity": "Сила знака Аард",
-    "attribute.name.generic.witcher_rpg.axii_intensity": "Axii Sign Intensity",
-    "attribute.name.generic.witcher_rpg.igni_intensity": "Igni Sign Intensity",
-    "attribute.name.generic.witcher_rpg.quen_intensity": "Quen Sign Intensity",
-    "attribute.name.generic.witcher_rpg.yrden_intensity": "Yrden Sign Intensity",
-    "attribute.name.spell_power.critical_chance" : "Spell Critical Chance",
-    "attribute.name.spell_power.critical_damage" : "Spell Critical Damage",
+    "attribute.name.generic.witcher_rpg.axii_intensity": "Сила знака Аксий",
+    "attribute.name.generic.witcher_rpg.igni_intensity": "Сила знака Игни",
+    "attribute.name.generic.witcher_rpg.quen_intensity": "Сила знака Квен",
+    "attribute.name.generic.witcher_rpg.yrden_intensity": "Сила знака Ирден",
+    "attribute.name.spell_power.critical_chance": "Spell Critical Chance",
+    "attribute.name.spell_power.critical_damage": "Spell Critical Damage",
 
     "item.tcots-witcher.witcher_bestiary": "Бестиарий Чудовищ",
     "tooltip.tcots-witcher.witcher_bestiary": "Изучите опасности этого нового мира",
@@ -219,7 +221,7 @@
 
 
     "item.tcots-witcher.nekker_spawn_egg": "Яйцо призыва Наккера",
-    "entity.tcots-witcher.nekker": "Nekker",
+    "entity.tcots-witcher.nekker": "Наккер",
     "tcots-witcher.sounds.nekker_attack": "Наккер атакует",
     "tcots-witcher.sounds.nekker_hurt": "Наккеру больно",
     "tcots-witcher.sounds.nekker_idle": "Наккер стонет",
