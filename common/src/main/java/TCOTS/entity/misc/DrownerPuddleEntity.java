@@ -1,6 +1,6 @@
 package TCOTS.entity.misc;
 
-import TCOTS.entity.TCOTS_Entities;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -23,7 +23,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TraceableEntity;
 import net.minecraft.world.level.Level;
 
-
 public class DrownerPuddleEntity extends Entity implements GeoEntity, TraceableEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     @Nullable
@@ -39,9 +38,8 @@ public class DrownerPuddleEntity extends Entity implements GeoEntity, TraceableE
         super(entity, world);
     }
 
-
-    public DrownerPuddleEntity(Level world, double x, double y, double z, LivingEntity owner) {
-        this(TCOTS_Entities.DROWNER_PUDDLE, world);
+    public DrownerPuddleEntity(EntityType<? extends DrownerPuddleEntity> entity, Level world, double x, double y, double z, LivingEntity owner) {
+        this(entity, world);
         this.setOwner(owner);
         this.setPos(x, y, z);
     }
@@ -76,7 +74,7 @@ public class DrownerPuddleEntity extends Entity implements GeoEntity, TraceableE
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag nbt) {
+    protected void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         if (this.ownerUuid != null) {
             nbt.putUUID("Owner", this.ownerUuid);
         }

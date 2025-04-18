@@ -2,7 +2,7 @@ package TCOTS.items.concoctions.bombs;
 
 import TCOTS.entity.misc.DragonsDreamCloud;
 import TCOTS.entity.misc.WitcherBombEntity;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class DragonsDreamBomb {
             dragonsDreamCloudEntity.setOwner((LivingEntity)entity);
         }
         dragonsDreamCloudEntity.setWaitTime(5);
-        dragonsDreamCloudEntity.setParticle(TCOTS_Particles.YELLOW_CLOUD);
+        dragonsDreamCloudEntity.setParticle(TCOTS_Particles_Fabric.YELLOW_CLOUD);
         dragonsDreamCloudEntity.setRadius(2.0f+ bomb.getLevel());
         dragonsDreamCloudEntity.setDuration(200+(bomb.getLevel()*200));
         dragonsDreamCloudEntity.setRadiusPerTick((-dragonsDreamCloudEntity.getRadius()) / (float)dragonsDreamCloudEntity.getDuration());
@@ -57,7 +57,7 @@ public class DragonsDreamBomb {
 
     public static void handleStatus(WitcherBombEntity bomb, byte status) {
         if(status== DRAGONS_DREAM_EXPLODES){
-            bomb.level().addParticle(TCOTS_Particles.DRAGONS_DREAM_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
+            bomb.level().addParticle(TCOTS_Particles_Fabric.DRAGONS_DREAM_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
         }
     }
 

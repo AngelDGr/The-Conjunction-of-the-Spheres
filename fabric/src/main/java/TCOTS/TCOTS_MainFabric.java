@@ -2,7 +2,7 @@ package TCOTS;
 
 import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.blocks.TCOTS_Blocks_Fabric;
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.items.TCOTS_DynamicRecipes_Fabric;
 import TCOTS.items.TCOTS_Items_Fabric;
 import TCOTS.items.TCOTS_ItemsGroups;
@@ -10,7 +10,7 @@ import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.recipes.ScreenHandlersAndRecipesRegister;
 import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.mixin.ServerWorldAccessor;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.world.TCOTS_Features;
 import TCOTS.world.TCOTS_PlacedFeature;
@@ -58,9 +58,9 @@ public class TCOTS_MainFabric implements ModInitializer {
 		TCOTS_DynamicRecipes_Fabric.registerDynamicRecipes();
 		ScreenHandlersAndRecipesRegister.registerScreenHandlersAndRecipes();
 		TCOTS_Sounds.registerSounds();
-		TCOTS_Entities.addSpawns();
-		TCOTS_Entities.setEntitiesAttributes();
-		TCOTS_Particles.registerParticles();
+		TCOTS_Entities_Fabric.addSpawns();
+		TCOTS_Entities_Fabric.setEntitiesAttributes();
+		TCOTS_Particles_Fabric.registerParticles();
 		TCOTS_Features.registerFeatures();
 
 		TCOTS_PlacedFeature.generateVegetation();

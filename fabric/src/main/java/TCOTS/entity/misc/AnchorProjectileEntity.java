@@ -1,12 +1,13 @@
 package TCOTS.entity.misc;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.entity.ogroids.IceGiantEntity;
 import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
 import TCOTS.world.TCOTS_DamageTypes;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -50,7 +51,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-
 public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -73,7 +73,7 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     public AnchorProjectileEntity(LivingEntity thrower, Level world) {
-        this(TCOTS_Entities.ANCHOR_PROJECTILE, world);
+        this(TCOTS_Entities_Fabric.ANCHOR_PROJECTILE, world);
         this.setOwner(thrower);
         this.setPos(thrower.getX(), thrower.getEyeY(), thrower.getZ());
         this.pickupType= AbstractArrow.Pickup.DISALLOWED;
@@ -289,7 +289,7 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
 
 
     @Override
-    public void move(MoverType movementType, Vec3 movement) {
+    public void move(@NotNull MoverType movementType, @NotNull Vec3 movement) {
         super.move(movementType, movement);
 
         if (movementType != MoverType.SELF && this.shouldContinueFall()) {
@@ -427,12 +427,12 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    protected boolean canHitEntity(Entity entity) {
+    protected boolean canHitEntity(@NotNull Entity entity) {
         return super.canHitEntity(entity);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         if (this.inBlockState != null) {
             nbt.put("inBlockState", NbtUtils.writeBlockState(this.inBlockState));
@@ -449,7 +449,7 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
+    public void readAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
         if (nbt.contains("inBlockState", Tag.TAG_COMPOUND)) {
             this.inBlockState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), nbt.getCompound("inBlockState"));
@@ -489,13 +489,13 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    public void remove(RemovalReason reason) {
+    public void remove(@NotNull RemovalReason reason) {
         this.setPlayerAnchor(null);
         super.remove(reason);
     }
 
     @Override
-    public void playerTouch(Player player) {
+    public void playerTouch(@NotNull Player player) {
         if (this.level().isClientSide || !this.inGround || this.shake > 0) {
             return;
         }
@@ -507,7 +507,7 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
         }
     }
     @Override
-    protected Entity.MovementEmission getMovementEmission() {
+    protected Entity.@NotNull MovementEmission getMovementEmission() {
         return Entity.MovementEmission.NONE;
     }
 

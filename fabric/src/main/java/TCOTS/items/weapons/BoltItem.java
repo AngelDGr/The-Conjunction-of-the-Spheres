@@ -1,6 +1,7 @@
 package TCOTS.items.weapons;
 
 import TCOTS.entity.misc.bolts.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class BoltItem extends ArrowItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type) {
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltip, @NotNull TooltipFlag type) {
         tooltip.add(Component.translatable("tooltip.tcots_witcher."+id).withStyle(ChatFormatting.GRAY));
     }
 
@@ -33,13 +34,13 @@ public class BoltItem extends ArrowItem {
 
 
     @Override
-    public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
+    public @NotNull AbstractArrow createArrow(@NotNull Level world, @NotNull ItemStack stack, @NotNull LivingEntity shooter, @Nullable ItemStack shotFrom) {
         return switch (id) {
-            default               -> new BaseBoltProjectile     (world, shooter, stack.copyWithCount(1), shotFrom);
             case "blunt_bolt"     -> new BluntBoltProjectile    (world, shooter, stack.copyWithCount(1), shotFrom);
             case "precision_bolt" -> new PrecisionBoltProjectile(world, shooter, stack.copyWithCount(1), shotFrom);
             case "exploding_bolt" -> new ExplodingBoltProjectile(world, shooter, stack.copyWithCount(1), shotFrom);
             case "broadhead_bolt" -> new BroadheadBoltProjectile(world, shooter, stack.copyWithCount(1), shotFrom);
+            default               -> new BaseBoltProjectile     (world, shooter, stack.copyWithCount(1), shotFrom);
         };
     }
 }

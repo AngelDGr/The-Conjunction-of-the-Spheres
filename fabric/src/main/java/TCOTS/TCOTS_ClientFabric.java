@@ -3,7 +3,7 @@ package TCOTS;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.blocks.TCOTS_Blocks_Fabric;
 import TCOTS.blocks.geo.renderer.*;
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.entity.misc.renderers.*;
 import TCOTS.entity.geo.renderer.*;
 import TCOTS.entity.geo.renderer.necrophages.*;
@@ -191,59 +191,59 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
 
 
         //Monsters
-        EntityRendererRegistry.register(TCOTS_Entities.DROWNER, DrownerRenderer::new);
-        EntityRendererRegistry.register(TCOTS_Entities.DROWNER_PUDDLE, DrownerPuddleRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.DROWNER, DrownerRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.DROWNER_PUDDLE, DrownerPuddleRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.ROTFIEND, RotfiendRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.ROTFIEND, RotfiendRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.GRAVE_HAG, GraveHagRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.GRAVE_HAG, GraveHagRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.WATER_HAG, WaterHagRenderer::new);
-        EntityRendererRegistry.register(TCOTS_Entities.WATER_HAG_MUD_BALL, ThrownItemRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.WATER_HAG, WaterHagRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.WATER_HAG_MUD_BALL, ThrownItemRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.FOGLET, FogletRenderer::new);
-        EntityRendererRegistry.register(TCOTS_Entities.FOGLING, FoglingRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.FOGLET, FogletRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.FOGLING, FoglingRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.GHOUL, GhoulRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.GHOUL, GhoulRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.ALGHOUL, AlghoulRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.ALGHOUL, AlghoulRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.SCURVER, ScurverRenderer::new);
-        EntityRendererRegistry.register(TCOTS_Entities.SCURVER_SPINE, ScurverSpineRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.SCURVER, ScurverRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.SCURVER_SPINE, ScurverSpineRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.DEVOURER, DevourerRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.DEVOURER, DevourerRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.GRAVEIR, GraveirRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.GRAVEIR, GraveirRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.BULLVORE, BullvoreRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.BULLVORE, BullvoreRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.NEKKER, NekkerRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.NEKKER, NekkerRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.NEKKER_WARRIOR, NekkerWarriorRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.NEKKER_WARRIOR, NekkerWarriorRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.CYCLOPS, CyclopsRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.CYCLOPS, CyclopsRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.ROCK_TROLL, RockTrollRenderer::new);
-        EntityRendererRegistry.register(TCOTS_Entities.TROLL_ROCK_PROJECTILE, context -> new ThrownItemRenderer<>(context, 2.0f, true));
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.ROCK_TROLL, RockTrollRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.TROLL_ROCK_PROJECTILE, context -> new ThrownItemRenderer<>(context, 2.0f, true));
 
-        EntityRendererRegistry.register(TCOTS_Entities.ICE_TROLL, IceTrollRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.ICE_TROLL, IceTrollRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.FOREST_TROLL, ForestTrollRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.FOREST_TROLL, ForestTrollRenderer::new);
 
-        EntityRendererRegistry.register(TCOTS_Entities.ICE_GIANT, IceGiantRenderer::new);
-        EntityRendererRegistry.register(TCOTS_Entities.ANCHOR_PROJECTILE, AnchorProjectileRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.ICE_GIANT, IceGiantRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.ANCHOR_PROJECTILE, AnchorProjectileRenderer::new);
 
         ItemProperties.register(TCOTS_Items_Fabric.GIANT_ANCHOR, ResourceLocation.parse("invisible"), (stack, world, entity, seed) ->
                 GiantAnchorItem.wasLaunched(stack)? 1.0f : 0.0f);
 
         //Bomb
-        EntityRendererRegistry.register(TCOTS_Entities.WITCHER_BOMB, ThrownItemRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.WITCHER_BOMB, ThrownItemRenderer::new);
         //Crossbow bolts
-        EntityRendererRegistry.register(TCOTS_Entities.BASE_BOLT, BaseBoltEntityRenderer::new);
-        EntityRendererRegistry.register(TCOTS_Entities.BLUNT_BOLT, BluntBoltEntityRenderer::new);
-        EntityRendererRegistry.register(TCOTS_Entities.PRECISION_BOLT, PrecisionBoltEntityRenderer::new);
-        EntityRendererRegistry.register(TCOTS_Entities.EXPLODING_BOLT, ExplodingBoltEntityRenderer::new);
-        EntityRendererRegistry.register(TCOTS_Entities.BROADHEAD_BOLT, BroadheadBoltEntityRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.BASE_BOLT, BaseBoltEntityRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.BLUNT_BOLT, BluntBoltEntityRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.PRECISION_BOLT, PrecisionBoltEntityRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.EXPLODING_BOLT, ExplodingBoltEntityRenderer::new);
+        EntityRendererRegistry.register(TCOTS_Entities_Fabric.BROADHEAD_BOLT, BroadheadBoltEntityRenderer::new);
 
 
         //Blocks
@@ -278,31 +278,31 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
 
 
         //Particles
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EXPLOSION.getType(), Rotfiend_BloodExplosionParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.ROTFIEND_BLOOD_EXPLOSION.getType(), Rotfiend_BloodExplosionParticle.Factory::new);
 
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, new Rotfiend_BloodEmitterParticle.Factory());
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.GRAVE_HAG_GREEN_SALIVA, GraveHag_GreenSaliva.Provider::new);
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.FOGLET_FOG, Foglet_FogParticle.FogFactory::new);
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.FOGLET_FOG_AROUND, Foglet_FogParticleAround.FogFactory::new);
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.GRAPESHOT_EXPLOSION_EMITTER, new Grapeshot_ExplosionEmitterParticle.Factory());
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DANCING_STAR_EXPLOSION_EMITTER, new DancingStar_ExplosionEmitterParticle.Factory());
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DEVILS_PUFFBALL_EXPLOSION_EMITTER, new DevilsPuffball_ExplosionEmitterParticle.Factory());
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.GREEN_CLOUD, CloudParticleColor.GreenCloudFactory::new);
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.SAMUM_EXPLOSION_EMITTER, new Samum_ExplosionEmitterParticle.Factory());
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.NORTHERN_WIND_EXPLOSION_EMITTER, new NorthernWind_ExplosionEmitterParticle.Factory());
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DRAGONS_DREAM_EXPLOSION_EMITTER, new DragonsDream_ExplosionEmitterParticle.Factory());
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.YELLOW_CLOUD, CloudParticleColor.YellowCloudFactory::new);
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DIMERITIUM_FLASH, DimeritiumFlash.FlashFactory::new);
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.MOON_DUST_EXPLOSION_EMITTER, new MoonDust_ExplosionEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.ROTFIEND_BLOOD_EMITTER, new Rotfiend_BloodEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.GRAVE_HAG_GREEN_SALIVA, GraveHag_GreenSaliva.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.FOGLET_FOG, Foglet_FogParticle.FogFactory::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.FOGLET_FOG_AROUND, Foglet_FogParticleAround.FogFactory::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.GRAPESHOT_EXPLOSION_EMITTER, new Grapeshot_ExplosionEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.DANCING_STAR_EXPLOSION_EMITTER, new DancingStar_ExplosionEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.DEVILS_PUFFBALL_EXPLOSION_EMITTER, new DevilsPuffball_ExplosionEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.GREEN_CLOUD, CloudParticleColor.GreenCloudFactory::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.SAMUM_EXPLOSION_EMITTER, new Samum_ExplosionEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.NORTHERN_WIND_EXPLOSION_EMITTER, new NorthernWind_ExplosionEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.DRAGONS_DREAM_EXPLOSION_EMITTER, new DragonsDream_ExplosionEmitterParticle.Factory());
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.YELLOW_CLOUD, CloudParticleColor.YellowCloudFactory::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.DIMERITIUM_FLASH, DimeritiumFlash.FlashFactory::new);
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.MOON_DUST_EXPLOSION_EMITTER, new MoonDust_ExplosionEmitterParticle.Factory());
 
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.FALLING_BLOOD_PARTICLE,
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.FALLING_BLOOD_PARTICLE,
                 (spriteProvider) ->
                 (type, world, x, y, z, velocityX, velocityY, velocityZ) ->
                         new BloodParticle.Factory(spriteProvider,
-                                BloodParticle.createFallingBlood(type, world, x, y, z, velocityX, velocityY, velocityZ))
+                                BloodParticle.createFallingBlood(type, world, x, y, z, velocityX, velocityY, velocityZ, TCOTS_Particles_Fabric.LANDING_BLOOD_PARTICLE))
                                 .createParticle(type, world, x, y, z, velocityX, velocityY, velocityZ)
         );
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.LANDING_BLOOD_PARTICLE,
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.LANDING_BLOOD_PARTICLE,
                 (spriteProvider) ->
                         (type, world, x, y, z, velocityX, velocityY, velocityZ) ->
                                 new BloodParticle.Factory(spriteProvider,
@@ -311,14 +311,14 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
         );
 
 
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.FALLING_BLACK_BLOOD_PARTICLE,
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.FALLING_BLACK_BLOOD_PARTICLE,
                 (spriteProvider) ->
                 (type, world, x, y, z, velocityX, velocityY, velocityZ) ->
                         new BloodParticle.Factory(spriteProvider,
-                                BloodParticle.createFallingBlackBlood(type, world, x, y, z, velocityX, velocityY, velocityZ))
+                                BloodParticle.createFallingBlackBlood(type, world, x, y, z, velocityX, velocityY, velocityZ, TCOTS_Particles_Fabric.LANDING_BLACK_BLOOD_PARTICLE))
                                 .createParticle(type, world, x, y, z, velocityX, velocityY, velocityZ)
         );
-        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.LANDING_BLACK_BLOOD_PARTICLE,                 (spriteProvider) ->
+        ParticleFactoryRegistry.getInstance().register(TCOTS_Particles_Fabric.LANDING_BLACK_BLOOD_PARTICLE,                 (spriteProvider) ->
                 (type, world, x, y, z, velocityX, velocityY, velocityZ) ->
                         new BloodParticle.Factory(spriteProvider,
                                 BloodParticle.createLandingBlackBlood(type, world, x, y, z, velocityX, velocityY, velocityZ))

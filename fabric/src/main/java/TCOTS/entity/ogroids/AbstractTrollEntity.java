@@ -1,7 +1,7 @@
 package TCOTS.entity.ogroids;
 
 import TCOTS.advancements.TCOTS_Criteria;
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.entity.TrollGossips;
 import TCOTS.entity.goals.MeleeAttackGoal_Animated;
 import TCOTS.items.HerbalMixture;
@@ -119,7 +119,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
 
         builder.define(RABID, Boolean.FALSE);
@@ -512,7 +512,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
 
     @Override
-    protected Component getTypeName() {
+    protected @NotNull Component getTypeName() {
         if(this.isRabid()){
             return Component.translatable(this.getType().getDescriptionId()+"_rabid");
         }
@@ -520,7 +520,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
         return super.getTypeName();
     }
     @Override
-    public boolean canAttack(LivingEntity target) {
+    public boolean canAttack(@NotNull LivingEntity target) {
         //If it's NOT rabid, doesn't attack the Villagers
         if(!this.isRabid() && target instanceof AbstractVillager){
             return false;
@@ -556,7 +556,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
 
     @Override
-    protected InteractionResult mobInteract(@NotNull Player player, InteractionHand hand) {
+    protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
         Item item = itemStack.getItem();
 
@@ -718,7 +718,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
 
     //Pickup stuff
     @Override
-    public boolean wantsToPickUp(ItemStack stack) {
+    public boolean wantsToPickUp(@NotNull ItemStack stack) {
         return canGather();
     }
 
@@ -731,7 +731,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
 
     @Override
-    protected void pickUpItem(ItemEntity item) {
+    protected void pickUpItem(@NotNull ItemEntity item) {
         this.onItemPickup(item);
         this.handleItemFromGround(item);
     }
@@ -758,7 +758,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     private static final Vec3i ITEM_PICKUP_RANGE_EXPANDER = new Vec3i(1, 1, 1);
 
     @Override
-    protected Vec3i getPickupReach() {
+    protected @NotNull Vec3i getPickupReach() {
         return ITEM_PICKUP_RANGE_EXPANDER;
     }
 
@@ -1279,22 +1279,22 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
             this.playSound(this.isWaiting() ? TCOTS_Sounds.TROLL_WAITING : TCOTS_Sounds.TROLL_FOLLOW, 1.0f, 1.0f);
 
             Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(
-                    this.getType() == TCOTS_Entities.ROCK_TROLL? 16.0:
-                    this.getType() == TCOTS_Entities.ICE_TROLL?  12.0:
+                    this.getType() == TCOTS_Entities_Fabric.ROCK_TROLL? 16.0:
+                    this.getType() == TCOTS_Entities_Fabric.ICE_TROLL?  12.0:
                             4.0);
             Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(
-                    this.getType() == TCOTS_Entities.ROCK_TROLL? 8.0:
-                    this.getType() == TCOTS_Entities.ICE_TROLL?  6.0:
+                    this.getType() == TCOTS_Entities_Fabric.ROCK_TROLL? 8.0:
+                    this.getType() == TCOTS_Entities_Fabric.ICE_TROLL?  6.0:
                             1.0);
         } else {
             this.playSound(TCOTS_Sounds.TROLL_DISMISS, 1.0f, 1.0f);
             Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(
-                    this.getType() == TCOTS_Entities.ROCK_TROLL? 8.0:
-                    this.getType() == TCOTS_Entities.ICE_TROLL?  6.0:
+                    this.getType() == TCOTS_Entities_Fabric.ROCK_TROLL? 8.0:
+                    this.getType() == TCOTS_Entities_Fabric.ICE_TROLL?  6.0:
                             4.0);
             Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(
-                    this.getType() == TCOTS_Entities.ROCK_TROLL? 4.0:
-                    this.getType() == TCOTS_Entities.ICE_TROLL?  2.0:
+                    this.getType() == TCOTS_Entities_Fabric.ROCK_TROLL? 4.0:
+                    this.getType() == TCOTS_Entities_Fabric.ICE_TROLL?  2.0:
                             1.0);
         }
     }
@@ -1509,7 +1509,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         this.addPersistentAngerSaveData(nbt);
         nbt.put("Gossips", this.getGossip().serialize(NbtOps.INSTANCE));
@@ -1540,7 +1540,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
+    public void readAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
         this.readPersistentAngerSaveData(this.level(), nbt);
         ListTag nbtList = nbt.getList("Gossips", Tag.TAG_COMPOUND);
@@ -1594,7 +1594,7 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
+    public boolean isInvulnerableTo(@NotNull DamageSource damageSource) {
         return (this.isTrollBlocking()
                 && !damageSource.is(DamageTypeTags.BYPASSES_SHIELD)
                 && !damageSource.is(DamageTypeTags.BYPASSES_ARMOR)
@@ -1631,13 +1631,13 @@ public abstract class AbstractTrollEntity extends OgroidMonster implements GeoEn
     }
 
     @Override
-    protected SoundEvent getDeathSound() {
+    protected @NotNull SoundEvent getDeathSound() {
         return TCOTS_Sounds.TROLL_DEATH;
     }
 
     @Nullable
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource source) {
         return TCOTS_Sounds.TROLL_HURT;
     }
 

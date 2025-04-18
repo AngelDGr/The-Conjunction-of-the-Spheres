@@ -3,7 +3,7 @@ package TCOTS.items.concoctions.bombs;
 import TCOTS.TCOTS_Tags;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.concoctions.TCOTS_Effects;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.utils.BombsUtil;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -156,7 +156,7 @@ public class DimeritiumBomb {
 
     public static void handleStatus(WitcherBombEntity bomb, byte status) {
         if(status== DIMERITIUM_BOMB_EXPLODES){
-            bomb.level().addParticle(TCOTS_Particles.DIMERITIUM_FLASH, bomb.getX(), bomb.getY()+2, bomb.getZ(), 0.0, 0.0, 0.0);
+            bomb.level().addParticle(TCOTS_Particles_Fabric.DIMERITIUM_FLASH, bomb.getX(), bomb.getY()+2, bomb.getZ(), 0.0, 0.0, 0.0);
         }
     }
 

@@ -4,7 +4,7 @@ import TCOTS.blocks.FrostedSnowBlock;
 import TCOTS.blocks.TCOTS_Blocks_Fabric;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.concoctions.TCOTS_Effects;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.utils.BombsUtil;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -69,7 +69,7 @@ public class NorthernWindBomb {
 
     public static void handleStatus(WitcherBombEntity bomb, byte status) {
         if(status== NORTHERN_WIND_EXPLODES){
-            bomb.level().addParticle(TCOTS_Particles.NORTHERN_WIND_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
+            bomb.level().addParticle(TCOTS_Particles_Fabric.NORTHERN_WIND_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
         }
     }
 

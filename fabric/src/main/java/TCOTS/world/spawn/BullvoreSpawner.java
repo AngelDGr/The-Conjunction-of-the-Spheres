@@ -1,6 +1,6 @@
 package TCOTS.world.spawn;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.entity.necrophages.BullvoreEntity;
 import TCOTS.entity.necrophages.NecrophageMonster;
 import TCOTS.entity.necrophages.RotfiendEntity;
@@ -24,7 +24,7 @@ public class BullvoreSpawner implements CustomSpawner {
     private int cooldown;
     private BullvoreEntity bullvoreEntity;
     @Override
-    public int tick(ServerLevel world, boolean spawnMonsters, boolean spawnAnimals) {
+    public int tick(@NotNull ServerLevel world, boolean spawnMonsters, boolean spawnAnimals) {
         //If it doesn't spawn monsters and the game rule it's false
         if (!spawnMonsters || !world.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING)) {
             return 0;
@@ -104,14 +104,14 @@ public class BullvoreSpawner implements CustomSpawner {
 
     private void spawnRotfiend(@NotNull ServerLevel world, BlockPos pos, RandomSource random){
         BlockState blockState = world.getBlockState(pos);
-        if (!NaturalSpawner.isValidEmptySpawnBlock(world, pos, blockState, blockState.getFluidState(), TCOTS_Entities.ROTFIEND)) {
+        if (!NaturalSpawner.isValidEmptySpawnBlock(world, pos, blockState, blockState.getFluidState(), TCOTS_Entities_Fabric.ROTFIEND)) {
             return;
         }
-        if (!NecrophageMonster.canSpawnInDarkW(TCOTS_Entities.ROTFIEND, world, MobSpawnType.NATURAL, pos, random)) {
+        if (!NecrophageMonster.canSpawnInDarkW(TCOTS_Entities_Fabric.ROTFIEND, world, MobSpawnType.NATURAL, pos, random)) {
             return;
         }
 
-        RotfiendEntity rotfiendEntity = TCOTS_Entities.ROTFIEND.create(world);
+        RotfiendEntity rotfiendEntity = TCOTS_Entities_Fabric.ROTFIEND.create(world);
         if (rotfiendEntity != null) {
             //Spawn the rotfiend
             rotfiendEntity.setPos(pos.getX(), pos.getY(), pos.getZ());
@@ -177,13 +177,13 @@ public class BullvoreSpawner implements CustomSpawner {
             return false;
         }
         BlockState blockState = world.getBlockState(pos);
-        if (!NaturalSpawner.isValidEmptySpawnBlock(world, pos, blockState, blockState.getFluidState(), TCOTS_Entities.BULLVORE)) {
+        if (!NaturalSpawner.isValidEmptySpawnBlock(world, pos, blockState, blockState.getFluidState(), TCOTS_Entities_Fabric.BULLVORE)) {
             return false;
         }
-        if (!BullvoreEntity.canSpawnInDarkW(TCOTS_Entities.BULLVORE, world, MobSpawnType.NATURAL, pos, random)) {
+        if (!BullvoreEntity.canSpawnInDarkW(TCOTS_Entities_Fabric.BULLVORE, world, MobSpawnType.NATURAL, pos, random)) {
             return false;
         }
-        bullvoreEntity = TCOTS_Entities.BULLVORE.create(world);
+        bullvoreEntity = TCOTS_Entities_Fabric.BULLVORE.create(world);
         if (bullvoreEntity != null) {
             //Spawn the bullvore
             bullvoreEntity.setPos(pos.getX(), pos.getY(), pos.getZ());

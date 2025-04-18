@@ -3,7 +3,7 @@ package TCOTS.items.concoctions.bombs;
 import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.concoctions.TCOTS_Effects;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.utils.BombsUtil;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -51,7 +51,7 @@ public class MoonDustBomb {
 
     public static void handleStatus(WitcherBombEntity bomb, byte status) {
         if(status== MOON_DUST_EXPLODES){
-            bomb.level().addParticle(TCOTS_Particles.MOON_DUST_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
+            bomb.level().addParticle(TCOTS_Particles_Fabric.MOON_DUST_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
         }
     }
 

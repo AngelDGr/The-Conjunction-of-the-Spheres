@@ -1,6 +1,6 @@
 package TCOTS.entity.misc.bolts;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.items.TCOTS_Items_Fabric;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -19,7 +19,7 @@ public class BroadheadBoltProjectile extends WitcherBolt {
     }
 
     public BroadheadBoltProjectile(Level world, LivingEntity owner, ItemStack stack, @Nullable ItemStack weapon) {
-        super(TCOTS_Entities.BROADHEAD_BOLT, owner, world, stack, weapon);
+        super(TCOTS_Entities_Fabric.BROADHEAD_BOLT, owner, world, stack, weapon);
         setBaseDamage(2.8);
     }
 

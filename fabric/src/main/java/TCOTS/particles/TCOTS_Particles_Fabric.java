@@ -7,7 +7,7 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 
-public class TCOTS_Particles {
+public class TCOTS_Particles_Fabric {
 
     public static final SimpleParticleType ROTFIEND_BLOOD_EXPLOSION = FabricParticleTypes.simple();
     public static final SimpleParticleType ROTFIEND_BLOOD_EMITTER = FabricParticleTypes.simple();

@@ -4,7 +4,7 @@ import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.LungeMob;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.core.BlockPos;
@@ -39,6 +39,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -250,7 +251,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
 
         builder.define(EXPLODING, Boolean.FALSE);
@@ -298,11 +299,11 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
         this.entityData.set(INVISIBLE, isInvisible);
     }
     @Override
-    protected EntityDimensions getDefaultDimensions(Pose pose) {
+    protected @NotNull EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
         return this.getInGround()? this.getType().getDimensions().withEyeHeight(0.1f): super.getDefaultDimensions(pose);
     }
     @Override
-    public void onSyncedDataUpdated(EntityDataAccessor<?> data) {
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> data) {
         super.onSyncedDataUpdated(data);
         if (!this.getInGround() || this.getInGround()) {
             this.setBoundingBox(this.makeBoundingBox());
@@ -311,7 +312,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putBoolean("InGround", this.entityData.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
@@ -373,7 +374,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected AABB makeBoundingBox() {
+    protected @NotNull AABB makeBoundingBox() {
         if (getInGround()) {
             return groundBox(this);
         }
@@ -388,13 +389,13 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
             this.dead = true;
             this.level().explode(this, null, null,
                     this.getX(), this.getY(), this.getZ(), (float)3, false, Level.ExplosionInteraction.MOB,
-                    TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Sounds.ROTFIEND_BLOOD_EXPLOSION);
+                    TCOTS_Particles_Fabric.ROTFIEND_BLOOD_EMITTER, TCOTS_Particles_Fabric.ROTFIEND_BLOOD_EMITTER, TCOTS_Sounds.ROTFIEND_BLOOD_EXPLOSION);
             this.discard();
         }
     }
 
     @Override
-    public void die(DamageSource damageSource) {
+    public void die(@NotNull DamageSource damageSource) {
         super.die(damageSource);
 
         if(this.isOnFire() && damageSource.getDirectEntity()!=null && damageSource.getDirectEntity() instanceof Player player){
@@ -428,7 +429,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
 
 
     @Override
-    public boolean shouldBlockExplode(Explosion explosion, BlockGetter world, BlockPos pos, BlockState state, float explosionPower) {
+    public boolean shouldBlockExplode(@NotNull Explosion explosion, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull BlockState state, float explosionPower) {
         return false;
     }
 
@@ -445,12 +446,12 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
+    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource source) {
         return TCOTS_Sounds.ROTFIEND_HURT;
     }
 
     @Override
-    protected SoundEvent getDeathSound() {
+    protected @NotNull SoundEvent getDeathSound() {
         if (!this.isOnFire()) {
             return null;
         } else {
@@ -483,7 +484,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
+    public boolean isInvulnerableTo(@NotNull DamageSource damageSource) {
         return this.getIsEmerging() || this.getInGround() || this.getIsExploding() || super.isInvulnerableTo(damageSource);
     }
 
@@ -498,7 +499,7 @@ public class RotfiendEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected void dropFromLootTable(DamageSource damageSource, boolean causedByPlayer) {
+    protected void dropFromLootTable(@NotNull DamageSource damageSource, boolean causedByPlayer) {
         if(this.isOnFire()){
             super.dropFromLootTable(damageSource, causedByPlayer);
         }

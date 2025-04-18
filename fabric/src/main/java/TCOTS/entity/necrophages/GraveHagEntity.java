@@ -1,7 +1,7 @@
 package TCOTS.entity.necrophages;
 
 import TCOTS.utils.GeoControllersUtil;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -339,7 +340,7 @@ public class GraveHagEntity extends NecrophageMonster implements GeoEntity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
         builder.define(TONGUE_ATTACK, Boolean.FALSE);
         builder.define(RUNNING, Boolean.FALSE);
@@ -361,7 +362,7 @@ public class GraveHagEntity extends NecrophageMonster implements GeoEntity {
         this.entityData.set(RUNNING, wasRunning);
     }
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putBoolean("TongueAttack", this.entityData.get(TONGUE_ATTACK));
         nbt.putInt("TongueAttackCooldown", tongueAttackCooldownTicks);
@@ -433,7 +434,7 @@ public class GraveHagEntity extends NecrophageMonster implements GeoEntity {
                     double xOffset = Math.cos(this.animStep);
                     double zOffset = Math.sin(this.animStep);
 
-                    this.level().addParticle(TCOTS_Particles.GRAVE_HAG_GREEN_SALIVA,
+                    this.level().addParticle(TCOTS_Particles_Fabric.GRAVE_HAG_GREEN_SALIVA,
                             vec3dCenter.x,
                             this.getEyeY()-0.2,
                             vec3dCenter.z,
@@ -470,12 +471,12 @@ public class GraveHagEntity extends NecrophageMonster implements GeoEntity {
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
+    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource source) {
         return TCOTS_Sounds.GRAVE_HAG_HURT;
     }
 
     @Override
-    protected SoundEvent getDeathSound() {
+    protected @NotNull SoundEvent getDeathSound() {
         return TCOTS_Sounds.GRAVE_HAG_DEATH;
     }
 

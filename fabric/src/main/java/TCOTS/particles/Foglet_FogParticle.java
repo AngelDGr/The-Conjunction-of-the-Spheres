@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 public class Foglet_FogParticle extends TextureSheetParticle {
     private final SpriteSet spriteProvider;
 
-
     private Foglet_FogParticle(ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, SpriteSet spriteProvider) {
         super(world, x, y, z, 0.0, 0.0, 0.0);
         float g;

@@ -2,7 +2,7 @@ package TCOTS.items.concoctions.bombs;
 
 import TCOTS.blocks.TCOTS_Blocks_Fabric;
 import TCOTS.entity.misc.WitcherBombEntity;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.utils.BombsUtil;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -35,8 +35,8 @@ public class GrapeshotBomb {
                 1.25f+(bomb.getLevel()*0.25f),
                 false,
                 Level.ExplosionInteraction.BLOCK,
-                TCOTS_Particles.GRAPESHOT_EXPLOSION_EMITTER,
-                TCOTS_Particles.GRAPESHOT_EXPLOSION_EMITTER,
+                TCOTS_Particles_Fabric.GRAPESHOT_EXPLOSION_EMITTER,
+                TCOTS_Particles_Fabric.GRAPESHOT_EXPLOSION_EMITTER,
                 SoundEvents.GENERIC_EXPLODE
         );
 

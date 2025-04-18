@@ -11,7 +11,7 @@ import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
 import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import TCOTS.items.concoctions.bombs.SamumBomb;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil_Fabric;
 import TCOTS.world.TCOTS_DamageTypes;
@@ -635,11 +635,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @Inject(method = "handleEntityEvent", at = @At("TAIL"))
     private void injectParticles(byte status, CallbackInfo ci){
         if(status == BLOOD_PARTICLES){
-            spawnBloodParticles(THIS, TCOTS_Particles.FALLING_BLOOD_PARTICLE);
+            spawnBloodParticles(THIS, TCOTS_Particles_Fabric.FALLING_BLOOD_PARTICLE);
         }
 
         if(status == BLACK_BLOOD_PARTICLES){
-            spawnBloodParticles(THIS, TCOTS_Particles.FALLING_BLACK_BLOOD_PARTICLE);
+            spawnBloodParticles(THIS, TCOTS_Particles_Fabric.FALLING_BLACK_BLOOD_PARTICLE);
         }
     }
 

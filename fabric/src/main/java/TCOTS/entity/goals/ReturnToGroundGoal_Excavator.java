@@ -1,5 +1,6 @@
 package TCOTS.entity.goals;
 
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import net.minecraft.world.entity.LivingEntity;
@@ -50,7 +51,7 @@ public class ReturnToGroundGoal_Excavator extends Goal {
 
 
     public void spawnPuddle(Level world, LivingEntity entity){
-        DrownerPuddleEntity puddle=new DrownerPuddleEntity(world, entity.getX(), entity.getY(), entity.getZ(), mob);
+        DrownerPuddleEntity puddle=new DrownerPuddleEntity(TCOTS_Entities_Fabric.DROWNER_PUDDLE,world, entity.getX(), entity.getY(), entity.getZ(), mob);
         excavatorMob.setPuddle(puddle);
         if (!world.isClientSide) {
             world.addFreshEntity(puddle);

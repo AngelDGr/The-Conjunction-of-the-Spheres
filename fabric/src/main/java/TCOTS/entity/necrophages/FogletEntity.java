@@ -1,10 +1,10 @@
 package TCOTS.entity.necrophages;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.utils.GeoControllersUtil;
 import TCOTS.entity.misc.FoglingEntity;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -41,6 +41,7 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -302,7 +303,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
             if(((FogletEntity)actor).foglingsList.size() < 2) {
                 for (int j = ((FogletEntity)actor).foglingsList.size(); j < 2; ++j) {
                     BlockPos blockPos = actor.blockPosition().offset(-2 + actor.getRandom().nextInt(5), 0, -2 + actor.getRandom().nextInt(5));
-                    FoglingEntity foglingEntity = TCOTS_Entities.FOGLING.create(actor.level());
+                    FoglingEntity foglingEntity = TCOTS_Entities_Fabric.FOGLING.create(actor.level());
                     if (foglingEntity == null) continue;
                     foglingEntity.moveTo(blockPos, 0.0f, 0.0f);
                     foglingEntity.finalizeSpawn(serverWorld, actor.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, null);
@@ -387,7 +388,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
             double d = this.getX() + (double) Mth.randomBetween(this.getRandom(), -0.8F, 0.8F);
             double e = (this.getEyeY()-0.5f)+ (double) Mth.randomBetween(this.getRandom(), -1F, 1F);
             double f = this.getZ() + (double) Mth.randomBetween(this.getRandom(), -0.8F, 0.8F);
-            this.level().addParticle(TCOTS_Particles.FOGLET_FOG, d,e,f,0,0,0);
+            this.level().addParticle(TCOTS_Particles_Fabric.FOGLET_FOG, d,e,f,0,0,0);
         }
     }
 
@@ -396,7 +397,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
             double d = this.getX() + (double) Mth.randomBetween(this.getRandom(), -10F, 10F);
             double e = (this.getEyeY()-0.5f)+ (double) Mth.randomBetween(this.getRandom(), -1F, 1F);
             double f = this.getZ() + (double) Mth.randomBetween(this.getRandom(), -10F, 10F);
-            this.level().addParticle(TCOTS_Particles.FOGLET_FOG_AROUND, d,e,f,0,0,0);
+            this.level().addParticle(TCOTS_Particles_Fabric.FOGLET_FOG_AROUND, d,e,f,0,0,0);
         }
     }
 
@@ -548,14 +549,14 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
 
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
         builder.define(ACTIVATES_FOG, Boolean.FALSE);
         builder.define(ALPHA_VALUE, 1f);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putBoolean("InFog", this.entityData.get(ACTIVATES_FOG));
         nbt.putFloat("AlphaValue", this.entityData.get(ALPHA_VALUE));
@@ -600,12 +601,12 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
+    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource source) {
         return TCOTS_Sounds.FOGLET_HURT;
     }
 
     @Override
-    protected SoundEvent getDeathSound() {
+    protected @NotNull SoundEvent getDeathSound() {
         return TCOTS_Sounds.FOGLET_DEATH;
     }
 
@@ -616,7 +617,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurt(@NotNull DamageSource source, float amount) {
         if(this.getIsFog()){
             amount=amount/8;
         }
@@ -625,7 +626,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
     }
 
     @Override
-    public void die(DamageSource damageSource) {
+    public void die(@NotNull DamageSource damageSource) {
         if(!(this.foglingsList.isEmpty())){
             this.foglingsList.forEach(
                     foglingEntity -> foglingEntity.hurt(this.damageSources().magic(), 10)
@@ -635,7 +636,7 @@ public class FogletEntity extends NecrophageMonster implements GeoEntity {
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
+    public boolean isInvulnerableTo(@NotNull DamageSource damageSource) {
         return this.getAnimationTicks() > 0 || this.getIsFog() || super.isInvulnerableTo(damageSource);
     }
 

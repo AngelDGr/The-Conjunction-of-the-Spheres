@@ -1,6 +1,6 @@
 package TCOTS.entity.misc;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.entity.ogroids.AbstractTrollEntity;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 
 public class Troll_RockProjectileEntity extends ThrowableItemProjectile {
     private float damage;
@@ -29,17 +30,17 @@ public class Troll_RockProjectileEntity extends ThrowableItemProjectile {
     }
 
     public Troll_RockProjectileEntity(Level world, LivingEntity owner, float damage) {
-        super(TCOTS_Entities.TROLL_ROCK_PROJECTILE, owner, world);
+        super(TCOTS_Entities_Fabric.TROLL_ROCK_PROJECTILE, owner, world);
         this.damage=damage;
     }
 
     @Override
-    protected Item getDefaultItem() {
+    protected @NotNull Item getDefaultItem() {
         if(this.getOwner()==null){
             return Items.COBBLESTONE;
         }
 
-        return this.getOwner().getType() == TCOTS_Entities.ICE_TROLL? Items.PACKED_ICE: Items.COBBLESTONE;
+        return this.getOwner().getType() == TCOTS_Entities_Fabric.ICE_TROLL? Items.PACKED_ICE: Items.COBBLESTONE;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class Troll_RockProjectileEntity extends ThrowableItemProjectile {
         if (status == EntityEvent.DEATH) {
             for (int i = 0; i < 8; ++i) {
                 this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK,
-                        this.getOwner()!=null && this.getOwner().getType()==TCOTS_Entities.ICE_TROLL?
+                        this.getOwner()!=null && this.getOwner().getType()== TCOTS_Entities_Fabric.ICE_TROLL?
                                 Blocks.PACKED_ICE.defaultBlockState():
                                 Blocks.COBBLESTONE.defaultBlockState()), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }
@@ -55,7 +56,7 @@ public class Troll_RockProjectileEntity extends ThrowableItemProjectile {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
+    protected void onHitEntity(@NotNull EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
 
         Entity entity = entityHitResult.getEntity();
@@ -65,11 +66,11 @@ public class Troll_RockProjectileEntity extends ThrowableItemProjectile {
 
         if(
                 //If hits another rock troll, and the thrower hasn't an owner, then it doesn't damage it
-                (entity.getType()==TCOTS_Entities.ROCK_TROLL && this.getOwner()!=null
-                        && this.getOwner().getType()==TCOTS_Entities.ROCK_TROLL && ((AbstractTrollEntity)(this.getOwner())).getOwner()==null) ||
+                (entity.getType()== TCOTS_Entities_Fabric.ROCK_TROLL && this.getOwner()!=null
+                        && this.getOwner().getType()== TCOTS_Entities_Fabric.ROCK_TROLL && ((AbstractTrollEntity)(this.getOwner())).getOwner()==null) ||
                 //If hits another ice troll, and the thrower hasn't an owner, then it doesn't damage it
-                (entity.getType()==TCOTS_Entities.ICE_TROLL && this.getOwner()!=null
-                        && this.getOwner().getType()==TCOTS_Entities.ICE_TROLL && ((AbstractTrollEntity)(this.getOwner())).getOwner()==null) ||
+                (entity.getType()== TCOTS_Entities_Fabric.ICE_TROLL && this.getOwner()!=null
+                        && this.getOwner().getType()== TCOTS_Entities_Fabric.ICE_TROLL && ((AbstractTrollEntity)(this.getOwner())).getOwner()==null) ||
                 //If hits another troll, and the owner it's the same, then it doesn't damage it
                 (entity instanceof AbstractTrollEntity trollHit && this.getOwner()!=null
                         && this.getOwner() instanceof AbstractTrollEntity trollThrower && trollThrower.getOwner() == trollHit.getOwner())
@@ -79,11 +80,11 @@ public class Troll_RockProjectileEntity extends ThrowableItemProjectile {
         double d = this.getX() - entity.getX();
         double e = this.getZ() - entity.getZ();
         if(entity instanceof LivingEntity livingEntity) {
-            if(this.getOwner()!=null && this.getOwner().getType()==TCOTS_Entities.ICE_TROLL){
+            if(this.getOwner()!=null && this.getOwner().getType()== TCOTS_Entities_Fabric.ICE_TROLL){
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 4));
             }
 
-            livingEntity.knockback(this.getOwner()!=null && this.getOwner().getType()==TCOTS_Entities.ICE_TROLL? 0.5: 2.0, d, e);
+            livingEntity.knockback(this.getOwner()!=null && this.getOwner().getType()== TCOTS_Entities_Fabric.ICE_TROLL? 0.5: 2.0, d, e);
             //Push the player
             if (entity instanceof ServerPlayer && !((ServerPlayer) entity).isCreative()) {
                 ((ServerPlayer) entity).connection.send(new ClientboundSetEntityMotionPacket(entity), null);
@@ -94,7 +95,7 @@ public class Troll_RockProjectileEntity extends ThrowableItemProjectile {
     }
 
     @Override
-    protected void onHit(HitResult hitResult) {
+    protected void onHit(@NotNull HitResult hitResult) {
         super.onHit(hitResult);
         if (!this.level().isClientSide) {
             this.playSound(TCOTS_Sounds.ROCK_PROJECTILE_IMPACT, 1, 1);

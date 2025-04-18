@@ -1,6 +1,6 @@
 package TCOTS.items.concoctions.effects.decoctions;
 
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,7 +16,7 @@ public class FogletDecoctionEffect extends DecoctionEffectBase {
             double d = entity.getX() + (double) Mth.randomBetween(entity.getRandom(), -0.8F, 0.8F);
             double e = (entity.getEyeY()-0.5f)+ (double) Mth.randomBetween(entity.getRandom(), -1F, 1F);
             double f = entity.getZ() + (double) Mth.randomBetween(entity.getRandom(), -0.8F, 0.8F);
-            entity.level().addParticle(TCOTS_Particles.FOGLET_FOG, d,e,f,0,0,0);
+            entity.level().addParticle(TCOTS_Particles_Fabric.FOGLET_FOG, d,e,f,0,0,0);
         }
     }
 

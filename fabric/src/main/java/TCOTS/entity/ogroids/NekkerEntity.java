@@ -1,7 +1,7 @@
 package TCOTS.entity.ogroids;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.ExcavatorMob;
 import TCOTS.entity.interfaces.GuardNestMob;
@@ -160,10 +160,10 @@ public class NekkerEntity extends OgroidMonster implements GeoEntity, ExcavatorM
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData) {
         RandomSource random = world.getRandom();
-        if(!this.level().isClientSide && !(spawnReason == MobSpawnType.SPAWN_EGG) && !(spawnReason == MobSpawnType.STRUCTURE) && this.getType()!=TCOTS_Entities.NEKKER_WARRIOR) {
+        if(!this.level().isClientSide && !(spawnReason == MobSpawnType.SPAWN_EGG) && !(spawnReason == MobSpawnType.STRUCTURE) && this.getType()!= TCOTS_Entities_Fabric.NEKKER_WARRIOR) {
             //Can spawn a Nekker Warrior with it instead
             if (random.nextInt() % 5 == 0) {
-                NekkerWarriorEntity nekker_warrior = TCOTS_Entities.NEKKER_WARRIOR.create(this.level());
+                NekkerWarriorEntity nekker_warrior = TCOTS_Entities_Fabric.NEKKER_WARRIOR.create(this.level());
                 if (nekker_warrior != null) {
                     nekker_warrior.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0f);
                     ((Mob)nekker_warrior).finalizeSpawn(world, world.getCurrentDifficultyAt(nekker_warrior.blockPosition()), spawnReason, null);

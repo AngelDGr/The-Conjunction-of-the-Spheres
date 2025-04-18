@@ -1,6 +1,5 @@
 package TCOTS;
 
-import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;

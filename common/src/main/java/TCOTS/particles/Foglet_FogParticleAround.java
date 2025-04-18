@@ -6,10 +6,10 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class Foglet_FogParticleAround extends TextureSheetParticle {
     private final SpriteSet spriteProvider;
-
 
     private Foglet_FogParticleAround(ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, SpriteSet spriteProvider) {
         super(world, x, y, z, 0.0, 0.0, 0.0);
@@ -33,7 +33,7 @@ public class Foglet_FogParticleAround extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
+    public @NotNull ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
@@ -70,7 +70,7 @@ public class Foglet_FogParticleAround extends TextureSheetParticle {
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType defaultParticleType, ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(@NotNull SimpleParticleType defaultParticleType, @NotNull ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
             return new Foglet_FogParticleAround(clientWorld, d, e, f, g, h, i, this.spriteProvider);
         }
     }

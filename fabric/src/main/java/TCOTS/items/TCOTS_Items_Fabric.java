@@ -3,7 +3,7 @@ package TCOTS.items;
 import TCOTS.TCOTS_Main;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.blocks.TCOTS_Blocks_Fabric;
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.entity.TCOTS_EntityAttributes;
 import TCOTS.items.armor.ManticoreArmorItem;
 import TCOTS.items.armor.RavensArmorItem;
@@ -254,7 +254,7 @@ public class TCOTS_Items_Fabric {
     //Register Drops from monsters
     public static void registerDrops() {
         DROWNER_SPAWN_EGG = registerItem("drowner_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.DROWNER, 0x8db1c0, 0x9fa3ae, new Item.Properties()));
+                new SpawnEggItem(TCOTS_Entities_Fabric.DROWNER, 0x8db1c0, 0x9fa3ae, new Item.Properties()));
         DROWNER_TONGUE = registerItem("drowner_tongue",
                 new Item(new Item.Properties()));
         DROWNER_BRAIN = registerItem("drowner_brain",
@@ -262,19 +262,19 @@ public class TCOTS_Items_Fabric {
 
 
         ROTFIEND_SPAWN_EGG = registerItem("rotfiend_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.ROTFIEND, 0xb3867b, 0xe6e1bc, new Item.Properties()));
+                new SpawnEggItem(TCOTS_Entities_Fabric.ROTFIEND, 0xb3867b, 0xe6e1bc, new Item.Properties()));
         ROTFIEND_BLOOD = registerItem("rotfiend_blood",
                 new Item(new Item.Properties()));
 
 
         GRAVE_HAG_SPAWN_EGG = registerItem("grave_hag_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.GRAVE_HAG, 0xb6b692, 0x8e8480, new Item.Properties()));
+                new SpawnEggItem(TCOTS_Entities_Fabric.GRAVE_HAG, 0xb6b692, 0x8e8480, new Item.Properties()));
         GRAVE_HAG_MUTAGEN = registerItem("grave_hag_mutagen",
                 new Item(new Item.Properties().stacksTo(8)));
 
 
         WATER_HAG_SPAWN_EGG = registerItem("water_hag_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.WATER_HAG, 0x8d93c0, 0x780b17, new Item.Properties()));
+                new SpawnEggItem(TCOTS_Entities_Fabric.WATER_HAG, 0x8d93c0, 0x780b17, new Item.Properties()));
         WATER_HAG_MUD_BALL = registerItem("water_hag_mud_ball",
                 new WaterHag_MudBallItem(new Item.Properties().stacksTo(16)));
         WATER_HAG_MUTAGEN = registerItem("water_hag_mutagen",
@@ -284,7 +284,7 @@ public class TCOTS_Items_Fabric {
 
 
         FOGLET_SPAWN_EGG = registerItem("foglet_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.FOGLET, 0x4a3f3f, 0x211c1c, new Item.Properties()));
+                new SpawnEggItem(TCOTS_Entities_Fabric.FOGLET, 0x4a3f3f, 0x211c1c, new Item.Properties()));
         FOGLET_TEETH = registerItem("foglet_teeth",
                 new Item(new Item.Properties()));
         FOGLET_MUTAGEN = registerItem("foglet_mutagen",
@@ -292,44 +292,44 @@ public class TCOTS_Items_Fabric {
 
 
         GHOUL_SPAWN_EGG = registerItem("ghoul_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.GHOUL, 0xd69d76, 0x0e0a07, new Item.Properties()));
+                new SpawnEggItem(TCOTS_Entities_Fabric.GHOUL, 0xd69d76, 0x0e0a07, new Item.Properties()));
         GHOUL_BLOOD = registerItem("ghoul_blood",
                 new Item(new Item.Properties()));
 
 
         ALGHOUL_SPAWN_EGG = registerItem("alghoul_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.ALGHOUL, 0x513e3d, 0x000000,
+                new SpawnEggItem(TCOTS_Entities_Fabric.ALGHOUL, 0x513e3d, 0x000000,
                         new Item.Properties()));
         ALGHOUL_BONE_MARROW = registerItem("alghoul_bone_marrow",
                 new Item(new Item.Properties()));
 
 
         SCURVER_SPAWN_EGG = registerItem("scurver_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.SCURVER, 0xc0887a, 0x661f1f, new Item.Properties()));
+                new SpawnEggItem(TCOTS_Entities_Fabric.SCURVER, 0xc0887a, 0x661f1f, new Item.Properties()));
 
         SCURVER_SPINE = registerItem("scurver_spine",
                 new ScurverSpineItem(new Item.Properties().stacksTo(16)));
 
 
         DEVOURER_SPAWN_EGG = registerItem("devourer_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.DEVOURER, 0x606c68, 0x1f1f1f, new Item.Properties()));
+                new SpawnEggItem(TCOTS_Entities_Fabric.DEVOURER, 0x606c68, 0x1f1f1f, new Item.Properties()));
         DEVOURER_TEETH = registerItem("devourer_teeth",
                 new Item(new Item.Properties()));
 
         GRAVEIR_SPAWN_EGG = registerItem("graveir_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.GRAVEIR, 0xab706d, 0x882925, new Item.Properties()));
+                new SpawnEggItem(TCOTS_Entities_Fabric.GRAVEIR, 0xab706d, 0x882925, new Item.Properties()));
         CADAVERINE = registerItem("cadaverine",
                 new Item(new Item.Properties()));
         GRAVEIR_BONE = registerItem("graveir_bone",
                 new Item(new Item.Properties()));
 
         BULLVORE_SPAWN_EGG = registerItem("bullvore_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.BULLVORE, 0xdad29a, 0xb1816d, new Item.Properties()));
+                new SpawnEggItem(TCOTS_Entities_Fabric.BULLVORE, 0xdad29a, 0xb1816d, new Item.Properties()));
         BULLVORE_HORN_FRAGMENT = registerItem("bullvore_horn_fragment",
                 new Item(new Item.Properties()));
 
         NEKKER_SPAWN_EGG = registerItem("nekker_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.NEKKER, 0xa59292, 0x705c5c,
+                new SpawnEggItem(TCOTS_Entities_Fabric.NEKKER, 0xa59292, 0x705c5c,
                         new Item.Properties()));
         NEKKER_EYE = registerItem("nekker_eye",
                 new Item(new Item.Properties()));
@@ -337,17 +337,17 @@ public class TCOTS_Items_Fabric {
                 new Item(new Item.Properties().stacksTo(16)));
 
         NEKKER_WARRIOR_SPAWN_EGG = registerItem("nekker_warrior_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.NEKKER_WARRIOR, 0x97a592, 0xb12022,
+                new SpawnEggItem(TCOTS_Entities_Fabric.NEKKER_WARRIOR, 0x97a592, 0xb12022,
                         new Item.Properties()));
         NEKKER_WARRIOR_MUTAGEN = registerItem("nekker_warrior_mutagen",
                 new Item(new Item.Properties().stacksTo(8)));
 
         CYCLOPS_SPAWN_EGG = registerItem("cyclops_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.CYCLOPS, 0xceb6b6, 0x3c4433,
+                new SpawnEggItem(TCOTS_Entities_Fabric.CYCLOPS, 0xceb6b6, 0x3c4433,
                         new Item.Properties()));
 
         ROCK_TROLL_SPAWN_EGG = registerItem("rock_troll_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.ROCK_TROLL, 0x90acb1, 0xeeb19a,
+                new SpawnEggItem(TCOTS_Entities_Fabric.ROCK_TROLL, 0x90acb1, 0xeeb19a,
                         new Item.Properties()));
         CAVE_TROLL_LIVER = registerItem("cave_troll_liver",
                 new Item(new Item.Properties()));
@@ -355,15 +355,15 @@ public class TCOTS_Items_Fabric {
                 new Item(new Item.Properties().stacksTo(8)));
 
         ICE_TROLL_SPAWN_EGG = registerItem("ice_troll_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.ICE_TROLL, 0xaadde6, 0xffd8c9,
+                new SpawnEggItem(TCOTS_Entities_Fabric.ICE_TROLL, 0xaadde6, 0xffd8c9,
                         new Item.Properties()));
 
         FOREST_TROLL_SPAWN_EGG = registerItem("forest_troll_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.FOREST_TROLL, 0x265558, 0xcfcfb4,
+                new SpawnEggItem(TCOTS_Entities_Fabric.FOREST_TROLL, 0x265558, 0xcfcfb4,
                         new Item.Properties()));
 
         ICE_GIANT_SPAWN_EGG = registerItem("ice_giant_spawn_egg",
-                new SpawnEggItem(TCOTS_Entities.ICE_GIANT, 0x93b7b7, 0x1d1919,
+                new SpawnEggItem(TCOTS_Entities_Fabric.ICE_GIANT, 0x93b7b7, 0x1d1919,
                         new Item.Properties()));
     }
 

@@ -8,6 +8,7 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.SimpleParticleType;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class BloodParticle extends TextureSheetParticle {
@@ -17,10 +18,8 @@ public class BloodParticle extends TextureSheetParticle {
         this.gravity = 0.06f;
     }
 
-
-
     @Override
-    public ParticleRenderType getRenderType() {
+    public @NotNull ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
@@ -60,8 +59,8 @@ public class BloodParticle extends TextureSheetParticle {
     }
 
     @SuppressWarnings("unused")
-    public static TextureSheetParticle createFallingBlood(SimpleParticleType type, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
-        ContinuousFalling blockLeakParticle = new ContinuousFalling(world, x, y, z, TCOTS_Particles.LANDING_BLOOD_PARTICLE);
+    public static TextureSheetParticle createFallingBlood(SimpleParticleType type, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, ParticleOptions nextParticle) {
+        ContinuousFalling blockLeakParticle = new ContinuousFalling(world, x, y, z, nextParticle);
         blockLeakParticle.gravity = 0.01f;
         blockLeakParticle.setColor(0.4274509f, 0, 0);
         return blockLeakParticle;
@@ -76,8 +75,8 @@ public class BloodParticle extends TextureSheetParticle {
     }
 
     @SuppressWarnings("unused")
-    public static TextureSheetParticle createFallingBlackBlood(SimpleParticleType type, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
-        ContinuousFalling blockLeakParticle = new ContinuousFalling(world, x, y, z, TCOTS_Particles.LANDING_BLACK_BLOOD_PARTICLE);
+    public static TextureSheetParticle createFallingBlackBlood(SimpleParticleType type, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, ParticleOptions nextParticle) {
+        ContinuousFalling blockLeakParticle = new ContinuousFalling(world, x, y, z, nextParticle);
         blockLeakParticle.gravity = 0.01f;
         blockLeakParticle.setColor(0.04705823f, 0.04705823f, 0.04705823f);
         return blockLeakParticle;
@@ -147,7 +146,7 @@ public class BloodParticle extends TextureSheetParticle {
 
         @Nullable
         @Override
-        public TextureSheetParticle createParticle(ParticleOptions parameters, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        public TextureSheetParticle createParticle(@NotNull ParticleOptions parameters, @NotNull ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
             this.particle.pickSprite(this.spriteProvider);
             return particle;
         }

@@ -6,7 +6,7 @@ import TCOTS.advancements.criterion.TCOTS_CustomCriterion;
 import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.blocks.TCOTS_Blocks_Fabric;
 import TCOTS.blocks.plants.SewantMushroomsPlant;
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.items.AlchemyRecipeRandomlyLootFunction;
 import TCOTS.items.TCOTS_Items_Fabric;
 import TCOTS.recipes.AlchemyTableRecipeCategory;
@@ -191,7 +191,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             {
                 //Drowner
                 {
-                    exporter.accept(TCOTS_Entities.DROWNER,
+                    exporter.accept(TCOTS_Entities_Fabric.DROWNER,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(TCOTS_Items_Fabric.DROWNER_TONGUE)
@@ -222,7 +222,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Ghoul
                 {
-                    exporter.accept(TCOTS_Entities.GHOUL,
+                    exporter.accept(TCOTS_Entities_Fabric.GHOUL,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(TCOTS_Items_Fabric.GHOUL_BLOOD)
@@ -240,7 +240,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Alghoul
                 {
-                    exporter.accept(TCOTS_Entities.ALGHOUL,
+                    exporter.accept(TCOTS_Entities_Fabric.ALGHOUL,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(TCOTS_Items_Fabric.ALGHOUL_BONE_MARROW)
@@ -264,7 +264,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Rotfiend
                 {
-                    exporter.accept(TCOTS_Entities.ROTFIEND,
+                    exporter.accept(TCOTS_Entities_Fabric.ROTFIEND,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(TCOTS_Items_Fabric.ROTFIEND_BLOOD)
@@ -282,7 +282,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Foglet
                 {
-                    exporter.accept(TCOTS_Entities.FOGLET,
+                    exporter.accept(TCOTS_Entities_Fabric.FOGLET,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(TCOTS_Items_Fabric.FOGLET_TEETH)
@@ -301,7 +301,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Water Hag
                 {
-                    exporter.accept(TCOTS_Entities.WATER_HAG,
+                    exporter.accept(TCOTS_Entities_Fabric.WATER_HAG,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(TCOTS_Items_Fabric.WATER_HAG_MUD_BALL)
@@ -326,7 +326,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Grave Hag
                 {
-                    exporter.accept(TCOTS_Entities.GRAVE_HAG,
+                    exporter.accept(TCOTS_Entities_Fabric.GRAVE_HAG,
                             LootTable.lootTable()
                                     .withPool(mutagenPool(registryLookup, TCOTS_Items_Fabric.GRAVE_HAG_MUTAGEN))
                                     .setRandomSequence(getRandomSequence("grave_hag"))
@@ -335,7 +335,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Scurver
                 {
-                    exporter.accept(TCOTS_Entities.SCURVER,
+                    exporter.accept(TCOTS_Entities_Fabric.SCURVER,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(TCOTS_Items_Fabric.SCURVER_SPINE)
@@ -362,7 +362,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Devourer
                 {
-                    exporter.accept(TCOTS_Entities.DEVOURER,
+                    exporter.accept(TCOTS_Entities_Fabric.DEVOURER,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(TCOTS_Items_Fabric.DEVOURER_TEETH)
@@ -378,7 +378,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Graveir
                 {
-                    exporter.accept(TCOTS_Entities.GRAVEIR,
+                    exporter.accept(TCOTS_Entities_Fabric.GRAVEIR,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(TCOTS_Items_Fabric.GRAVEIR_BONE)
@@ -396,7 +396,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Bullvore
                 {
-                    exporter.accept(TCOTS_Entities.BULLVORE,
+                    exporter.accept(TCOTS_Entities_Fabric.BULLVORE,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(TCOTS_Items_Fabric.BULLVORE_HORN_FRAGMENT)
@@ -415,7 +415,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
             {
                 //Nekker
                 {
-                    exporter.accept(TCOTS_Entities.NEKKER,
+                    exporter.accept(TCOTS_Entities_Fabric.NEKKER,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(
@@ -439,7 +439,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Nekker Warrior
                 {
-                    exporter.accept(TCOTS_Entities.NEKKER_WARRIOR,
+                    exporter.accept(TCOTS_Entities_Fabric.NEKKER_WARRIOR,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(
@@ -464,7 +464,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Cyclops
                 {
-                    exporter.accept(TCOTS_Entities.CYCLOPS,
+                    exporter.accept(TCOTS_Entities_Fabric.CYCLOPS,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(
@@ -487,7 +487,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Rock Troll
                 {
-                    exporter.accept(TCOTS_Entities.ROCK_TROLL,
+                    exporter.accept(TCOTS_Entities_Fabric.ROCK_TROLL,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(Items.COBBLESTONE)
@@ -512,7 +512,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Ice Troll
                 {
-                    exporter.accept(TCOTS_Entities.ICE_TROLL,
+                    exporter.accept(TCOTS_Entities_Fabric.ICE_TROLL,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(Items.BLUE_ICE)
@@ -546,7 +546,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Forest Troll
                 {
-                    exporter.accept(TCOTS_Entities.FOREST_TROLL,
+                    exporter.accept(TCOTS_Entities_Fabric.FOREST_TROLL,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(LootItem.lootTableItem(Items.LEATHER)
@@ -589,7 +589,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
                 //Ice Giant
                 {
-                    exporter.accept(TCOTS_Entities.ICE_GIANT,
+                    exporter.accept(TCOTS_Entities_Fabric.ICE_GIANT,
                             LootTable.lootTable()
                                     .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
                                             .add(
@@ -1703,27 +1703,27 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         protected void addTags(HolderLookup.Provider arg) {
             this.tag(TCOTS_Tags.NECROPHAGES)
                     .add(
-                            TCOTS_Entities.DEVOURER,
-                            TCOTS_Entities.GRAVE_HAG,
-                            TCOTS_Entities.DROWNER,
-                            TCOTS_Entities.GHOUL,
-                            TCOTS_Entities.ALGHOUL,
-                            TCOTS_Entities.FOGLET,
-                            TCOTS_Entities.BULLVORE,
-                            TCOTS_Entities.WATER_HAG,
-                            TCOTS_Entities.GRAVEIR,
-                            TCOTS_Entities.ROTFIEND,
-                            TCOTS_Entities.SCURVER);
+                            TCOTS_Entities_Fabric.DEVOURER,
+                            TCOTS_Entities_Fabric.GRAVE_HAG,
+                            TCOTS_Entities_Fabric.DROWNER,
+                            TCOTS_Entities_Fabric.GHOUL,
+                            TCOTS_Entities_Fabric.ALGHOUL,
+                            TCOTS_Entities_Fabric.FOGLET,
+                            TCOTS_Entities_Fabric.BULLVORE,
+                            TCOTS_Entities_Fabric.WATER_HAG,
+                            TCOTS_Entities_Fabric.GRAVEIR,
+                            TCOTS_Entities_Fabric.ROTFIEND,
+                            TCOTS_Entities_Fabric.SCURVER);
 
             this.tag(TCOTS_Tags.OGROIDS)
                     .add(
-                            TCOTS_Entities.ICE_GIANT,
-                            TCOTS_Entities.NEKKER,
-                            TCOTS_Entities.NEKKER_WARRIOR,
-                            TCOTS_Entities.CYCLOPS,
-                            TCOTS_Entities.ROCK_TROLL,
-                            TCOTS_Entities.ICE_TROLL,
-                            TCOTS_Entities.FOREST_TROLL);
+                            TCOTS_Entities_Fabric.ICE_GIANT,
+                            TCOTS_Entities_Fabric.NEKKER,
+                            TCOTS_Entities_Fabric.NEKKER_WARRIOR,
+                            TCOTS_Entities_Fabric.CYCLOPS,
+                            TCOTS_Entities_Fabric.ROCK_TROLL,
+                            TCOTS_Entities_Fabric.ICE_TROLL,
+                            TCOTS_Entities_Fabric.FOREST_TROLL);
 
 
 
@@ -1740,25 +1740,25 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
             this.tag(TCOTS_Tags.DIMERITIUM_DAMAGE)
                     .add(EntityType.END_CRYSTAL)
-                    .add(TCOTS_Entities.FOGLING);
+                    .add(TCOTS_Entities_Fabric.FOGLING);
 
             this.tag(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES)
-                    .add(TCOTS_Entities.ICE_TROLL);
+                    .add(TCOTS_Entities_Fabric.ICE_TROLL);
 
             this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS)
-                    .add(TCOTS_Entities.ICE_TROLL)
-                    .add(TCOTS_Entities.CYCLOPS)
-                    .add(TCOTS_Entities.ICE_GIANT);
+                    .add(TCOTS_Entities_Fabric.ICE_TROLL)
+                    .add(TCOTS_Entities_Fabric.CYCLOPS)
+                    .add(TCOTS_Entities_Fabric.ICE_GIANT);
 
             this.tag(TCOTS_Tags.BOSS_TAG)
-                    .add(TCOTS_Entities.ICE_GIANT);
+                    .add(TCOTS_Entities_Fabric.ICE_GIANT);
 
 
             this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
-                    .add(TCOTS_Entities.DROWNER);
+                    .add(TCOTS_Entities_Fabric.DROWNER);
 
             this.tag(EntityTypeTags.SENSITIVE_TO_IMPALING)
-                    .add(TCOTS_Entities.DROWNER);
+                    .add(TCOTS_Entities_Fabric.DROWNER);
         }
     }
     private static class ItemTagGenerator extends IntrinsicHolderTagsProvider<Item> {
@@ -3264,7 +3264,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                         true, // Announce to chat
                                         false // Hidden in the advancement tab
                                 )
-                                .addCriterion("kill_giant", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(TCOTS_Entities.ICE_GIANT)))
+                                .addCriterion("kill_giant", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(TCOTS_Entities_Fabric.ICE_GIANT)))
                                 .rewards(AdvancementRewards.Builder.experience(100))
                                 .save(consumer, TCOTS_Main.MOD_ID + "/kill_giant");
 
@@ -3283,7 +3283,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                             true, // Announce to chat
                                             false // Hidden in the advancement tab
                                     )
-                                    .addCriterion("kill_bullvore", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(TCOTS_Entities.BULLVORE)))
+                                    .addCriterion("kill_bullvore", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(TCOTS_Entities_Fabric.BULLVORE)))
                                     .save(consumer, TCOTS_Main.MOD_ID + "/kill_bullvore");
 
                     Advancement.Builder.advancement()
@@ -3347,11 +3347,11 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     true, // Announce to chat
                                     false // Hidden in the advancement tab
                             )
-                            .addCriterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities.ROCK_TROLL)))
+                            .addCriterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities_Fabric.ROCK_TROLL)))
                             .requirements(AdvancementRequirements.Strategy.OR)
-                            .addCriterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities.ICE_TROLL)))
+                            .addCriterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities_Fabric.ICE_TROLL)))
                             .requirements(AdvancementRequirements.Strategy.OR)
-                            .addCriterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities.FOREST_TROLL)))
+                            .addCriterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities_Fabric.FOREST_TROLL)))
                             .save(consumer, TCOTS_Main.MOD_ID + "/befriend_troll");
 
                     AdvancementHolder befriendIceTroll = Advancement.Builder.advancement()
@@ -3366,7 +3366,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     true, // Announce to chat
                                     false // Hidden in the advancement tab
                             )
-                            .addCriterion("befriend_troll_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities.ICE_TROLL)))
+                            .addCriterion("befriend_troll_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities_Fabric.ICE_TROLL)))
                             .save(consumer, TCOTS_Main.MOD_ID + "/befriend_troll_ice");
 
                     Advancement.Builder.advancement()
@@ -3381,11 +3381,11 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
                                     true, // Announce to chat
                                     false // Hidden in the advancement tab
                             )
-                            .addCriterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities.ROCK_TROLL)))
+                            .addCriterion("befriend_rock", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities_Fabric.ROCK_TROLL)))
                             .requirements(AdvancementRequirements.Strategy.AND)
-                            .addCriterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities.ICE_TROLL)))
+                            .addCriterion("befriend_ice", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities_Fabric.ICE_TROLL)))
                             .requirements(AdvancementRequirements.Strategy.AND)
-                            .addCriterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities.FOREST_TROLL)))
+                            .addCriterion("befriend_forest", GetTrollFollowerCriterion.Conditions.create(EntityPredicate.Builder.entity().of(TCOTS_Entities_Fabric.FOREST_TROLL)))
                             .save(consumer, TCOTS_Main.MOD_ID + "/befriend_all_troll");
                 }
 
@@ -3807,25 +3807,25 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         );
 
         protected static final List<EntityType<?>> MONSTERS = Arrays.asList(
-                TCOTS_Entities.DROWNER,
-                TCOTS_Entities.ROTFIEND,
-                TCOTS_Entities.FOGLET,
-                TCOTS_Entities.GRAVE_HAG,
-                TCOTS_Entities.WATER_HAG,
-                TCOTS_Entities.GHOUL,
-                TCOTS_Entities.ALGHOUL,
-                TCOTS_Entities.SCURVER,
-                TCOTS_Entities.DEVOURER,
-                TCOTS_Entities.GRAVEIR,
-                TCOTS_Entities.BULLVORE,
+                TCOTS_Entities_Fabric.DROWNER,
+                TCOTS_Entities_Fabric.ROTFIEND,
+                TCOTS_Entities_Fabric.FOGLET,
+                TCOTS_Entities_Fabric.GRAVE_HAG,
+                TCOTS_Entities_Fabric.WATER_HAG,
+                TCOTS_Entities_Fabric.GHOUL,
+                TCOTS_Entities_Fabric.ALGHOUL,
+                TCOTS_Entities_Fabric.SCURVER,
+                TCOTS_Entities_Fabric.DEVOURER,
+                TCOTS_Entities_Fabric.GRAVEIR,
+                TCOTS_Entities_Fabric.BULLVORE,
 
-                TCOTS_Entities.NEKKER,
-                TCOTS_Entities.NEKKER_WARRIOR,
-                TCOTS_Entities.CYCLOPS,
-                TCOTS_Entities.ROCK_TROLL,
-                TCOTS_Entities.ICE_TROLL,
-                TCOTS_Entities.FOREST_TROLL,
-                TCOTS_Entities.ICE_GIANT
+                TCOTS_Entities_Fabric.NEKKER,
+                TCOTS_Entities_Fabric.NEKKER_WARRIOR,
+                TCOTS_Entities_Fabric.CYCLOPS,
+                TCOTS_Entities_Fabric.ROCK_TROLL,
+                TCOTS_Entities_Fabric.ICE_TROLL,
+                TCOTS_Entities_Fabric.FOREST_TROLL,
+                TCOTS_Entities_Fabric.ICE_GIANT
         );
 
         protected static final List<Item> POTION_LV3= Arrays.asList(

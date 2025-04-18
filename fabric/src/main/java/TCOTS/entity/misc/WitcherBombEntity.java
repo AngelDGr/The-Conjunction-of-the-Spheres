@@ -1,7 +1,7 @@
 package TCOTS.entity.misc;
 
 import TCOTS.blocks.TCOTS_Blocks_Fabric;
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.items.TCOTS_Items_Fabric;
 import TCOTS.items.concoctions.bombs.*;
 import org.jetbrains.annotations.NotNull;
@@ -43,7 +43,7 @@ public class WitcherBombEntity extends ThrowableItemProjectile implements ItemSu
     }
 
     public WitcherBombEntity(Level world, LivingEntity owner, String bombId, int level) {
-        super(TCOTS_Entities.WITCHER_BOMB, owner, world);
+        super(TCOTS_Entities_Fabric.WITCHER_BOMB, owner, world);
         this.bombId=bombId;
         this.level=level;
     }
@@ -53,12 +53,12 @@ public class WitcherBombEntity extends ThrowableItemProjectile implements ItemSu
     }
 
     @Override
-    protected Item getDefaultItem() {
+    protected @NotNull Item getDefaultItem() {
         return TCOTS_Items_Fabric.GRAPESHOT;
     }
 
     @Override
-    protected void onHit(HitResult hitResult) {
+    protected void onHit(@NotNull HitResult hitResult) {
         super.onHit(hitResult);
         if (this.level().isClientSide) {
             return;
@@ -119,7 +119,7 @@ public class WitcherBombEntity extends ThrowableItemProjectile implements ItemSu
     }
 
     @Override
-    public boolean shouldBlockExplode(Explosion explosion, BlockGetter world, BlockPos pos, BlockState state, float explosionPower) {
+    public boolean shouldBlockExplode(@NotNull Explosion explosion, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull BlockState state, float explosionPower) {
         if(Objects.equals(bombId, "grapeshot") || Objects.equals(bombId, "dancing_star") || Objects.equals(bombId, "samum")  ){
             return destroyableBlocks(state);
         }

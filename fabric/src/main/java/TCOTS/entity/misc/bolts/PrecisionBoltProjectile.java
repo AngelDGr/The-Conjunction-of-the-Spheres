@@ -1,6 +1,6 @@
 package TCOTS.entity.misc.bolts;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.items.TCOTS_Items_Fabric;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,7 +16,7 @@ public class PrecisionBoltProjectile extends WitcherBolt{
     }
 
     public PrecisionBoltProjectile(Level world, LivingEntity owner, ItemStack stack, @Nullable ItemStack weapon) {
-        super(TCOTS_Entities.PRECISION_BOLT, owner, world, stack, weapon);
+        super(TCOTS_Entities_Fabric.PRECISION_BOLT, owner, world, stack, weapon);
         setBaseDamage(2.5);
     }
 

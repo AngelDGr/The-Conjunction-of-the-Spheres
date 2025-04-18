@@ -2,7 +2,7 @@ package TCOTS.items.concoctions.bombs;
 
 import TCOTS.blocks.TCOTS_Blocks_Fabric;
 import TCOTS.entity.misc.WitcherBombEntity;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.utils.BombsUtil;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -141,13 +141,13 @@ public class DancingStarBomb {
         if(status == DANCING_STAR_EXPLODES_L1 || status == DANCING_STAR_EXPLODES_L2 || status == DANCING_STAR_EXPLODES_L3){
             switch (status){
                 case DANCING_STAR_EXPLODES_L2:
-                    bomb.level().addParticle(TCOTS_Particles.DANCING_STAR_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.01, 0.0, 0.0);
+                    bomb.level().addParticle(TCOTS_Particles_Fabric.DANCING_STAR_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.01, 0.0, 0.0);
                     break;
                 case DANCING_STAR_EXPLODES_L3:
-                    bomb.level().addParticle(TCOTS_Particles.DANCING_STAR_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.02, 0.0, 0.0);
+                    bomb.level().addParticle(TCOTS_Particles_Fabric.DANCING_STAR_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.02, 0.0, 0.0);
                     break;
                 default:
-                    bomb.level().addParticle(TCOTS_Particles.DANCING_STAR_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
+                    bomb.level().addParticle(TCOTS_Particles_Fabric.DANCING_STAR_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
                     break;
             }
         }

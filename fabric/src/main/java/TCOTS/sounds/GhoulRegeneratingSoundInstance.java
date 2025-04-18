@@ -33,7 +33,7 @@ public class GhoulRegeneratingSoundInstance extends AbstractTickableSoundInstanc
         this.y = (float)this.ghoul.getY();
         this.z = (float)this.ghoul.getZ();
 
-        if(timer > (this.ghoul.getGHOUL_REGENERATION_TIME()-5)){
+        if(timer > (this.ghoul.getRegenerationTime()-5)){
             volume = volume - 0.1f;
         }
     }

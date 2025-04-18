@@ -467,7 +467,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
+    public boolean isInvulnerableTo(@NotNull DamageSource damageSource) {
         return this.getIsEmerging() || this.getInGround() || super.isInvulnerableTo(damageSource);
     }
     @Override
@@ -499,7 +499,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
 
     //This way don't reset every time it reenter the world, causing clipping
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putBoolean("Swimming", this.entityData.get(SWIM));
         nbt.putBoolean("InGround", this.entityData.get(InGROUND));
@@ -552,7 +552,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
 
     //Dynamic hitbox
     @Override
-    protected AABB makeBoundingBox() {
+    protected @NotNull AABB makeBoundingBox() {
         if (entityData.get(SWIM)) {
             // Tiny hit-box when swim
             return new AABB(this.getX() - 0.39, this.getY()+1.65, this.getZ() - 0.39,
@@ -569,7 +569,7 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
         builder.define(SWIM, Boolean.FALSE);
         builder.define(LUGGING, Boolean.FALSE);
@@ -580,12 +580,12 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
     }
 
     @Override
-    protected EntityDimensions getDefaultDimensions(Pose pose) {
+    protected @NotNull EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
         return this.getInGround()? this.getType().getDimensions().withEyeHeight(0.1f): super.getDefaultDimensions(pose);
     }
 
     @Override
-    public void onSyncedDataUpdated(EntityDataAccessor<?> data) {
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> data) {
         super.onSyncedDataUpdated(data);
         if (entityData.get(SWIM) || !entityData.get(SWIM) || !this.getInGround() || this.getInGround()) {
             this.setBoundingBox(this.makeBoundingBox());
@@ -809,15 +809,15 @@ public class DrownerEntity extends NecrophageMonster implements GeoEntity, Excav
         }
     }
     @Override
-    protected SoundEvent getSwimSound() {
+    protected @NotNull SoundEvent getSwimSound() {
         return SoundEvents.PLAYER_SWIM;
     }
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
+    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource source) {
         return TCOTS_Sounds.DROWNER_HURT;
     }
     @Override
-    protected SoundEvent getDeathSound() {
+    protected @NotNull SoundEvent getDeathSound() {
         return TCOTS_Sounds.DROWNER_DEATH;
     }
 

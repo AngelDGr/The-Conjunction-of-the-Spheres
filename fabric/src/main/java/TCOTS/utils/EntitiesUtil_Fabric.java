@@ -46,7 +46,6 @@ public class EntitiesUtil_Fabric {
                 && player.getItemBySlot(EquipmentSlot.FEET).is(TCOTS_Items_Fabric.WARRIORS_LEATHER_BOOTS);
     }
 
-
     /**
      Checks if the player it's wearing the full Raven's Armor
      */

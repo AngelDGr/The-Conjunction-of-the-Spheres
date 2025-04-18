@@ -1,6 +1,6 @@
 package TCOTS.entity.misc.bolts;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.items.TCOTS_Items_Fabric;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -23,7 +23,7 @@ public class ExplodingBoltProjectile extends WitcherBolt {
     }
 
     public ExplodingBoltProjectile(Level world, LivingEntity owner, ItemStack stack, @Nullable ItemStack weapon) {
-        super(TCOTS_Entities.EXPLODING_BOLT, owner, world, stack, weapon);
+        super(TCOTS_Entities_Fabric.EXPLODING_BOLT, owner, world, stack, weapon);
     }
 
     @Override

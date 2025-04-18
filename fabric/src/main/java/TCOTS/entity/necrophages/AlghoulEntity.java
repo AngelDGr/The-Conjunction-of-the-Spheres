@@ -69,7 +69,7 @@ public class AlghoulEntity extends GhoulEntity implements GeoEntity {
     public final int GHOUL_REGENERATION_TIME=300;
 
     @Override
-    public int getGHOUL_REGENERATION_TIME() {
+    public int getRegenerationTime() {
         return GHOUL_REGENERATION_TIME;
     }
 

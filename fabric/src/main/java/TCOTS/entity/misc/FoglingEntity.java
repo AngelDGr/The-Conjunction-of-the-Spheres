@@ -3,6 +3,7 @@ package TCOTS.entity.misc;
 import TCOTS.entity.necrophages.FogletEntity;
 import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import TCOTS.sounds.TCOTS_Sounds;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -80,7 +81,7 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, TraceableE
 
     public static final byte DEATH_FOGLING_EFFECTS = 43;
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurt(@NotNull DamageSource source, float amount) {
         if(amount>0){
             if(!this.level().isClientSide) {
                 this.level().broadcastEntityEvent(this, DEATH_FOGLING_EFFECTS);
@@ -113,7 +114,7 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, TraceableE
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
         builder.define(ALPHA_VALUE_FOGLING, 0f);
     }
@@ -128,7 +129,7 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, TraceableE
 
 
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putFloat("AlphaValue", this.entityData.get(ALPHA_VALUE_FOGLING));
         if (this.ownerUuid != null) {

@@ -7,6 +7,7 @@ import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
@@ -215,7 +216,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
         builder.define(InGROUND, Boolean.FALSE);
         builder.define(EMERGING, Boolean.FALSE);
@@ -304,7 +305,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
 
     //Excavator Common
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putBoolean("InGround", this.entityData.get(InGROUND));
         nbt.putInt("ReturnToGroundTicks", this.ReturnToGround_Ticks);
@@ -348,7 +349,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected AABB makeBoundingBox() {
+    protected @NotNull AABB makeBoundingBox() {
         if (getInGround()) {
             return groundBox(this);
         }
@@ -359,7 +360,7 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource damageSource) {
+    public boolean isInvulnerableTo(@NotNull DamageSource damageSource) {
         return this.getIsEmerging() || this.getInGround() || super.isInvulnerableTo(damageSource) || this.isFalling();
     }
 
@@ -426,12 +427,12 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected EntityDimensions getDefaultDimensions(Pose pose) {
+    protected @NotNull EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
         return this.getInGround()? this.getType().getDimensions().withEyeHeight(0.1f): super.getDefaultDimensions(pose);
     }
 
     @Override
-    public void onSyncedDataUpdated(EntityDataAccessor<?> data) {
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> data) {
         super.onSyncedDataUpdated(data);
         if (!this.getInGround() || this.getInGround()) {
             this.setBoundingBox(this.makeBoundingBox());
@@ -451,12 +452,12 @@ public class DevourerEntity extends NecrophageMonster implements GeoEntity, Exca
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
+    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource source) {
         return TCOTS_Sounds.DEVOURER_HURT;
     }
 
     @Override
-    protected SoundEvent getDeathSound() {
+    protected @NotNull SoundEvent getDeathSound() {
         return TCOTS_Sounds.DEVOURER_DEATH;
     }
 

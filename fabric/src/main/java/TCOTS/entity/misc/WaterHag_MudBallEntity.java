@@ -1,6 +1,6 @@
 package TCOTS.entity.misc;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.entity.necrophages.DrownerEntity;
 import TCOTS.entity.necrophages.WaterHagEntity;
 import TCOTS.items.TCOTS_Items_Fabric;
@@ -28,11 +28,11 @@ public class WaterHag_MudBallEntity extends ThrowableItemProjectile {
     }
 
     public WaterHag_MudBallEntity(Level world, double x, double y, double z) {
-        super(TCOTS_Entities.WATER_HAG_MUD_BALL, x, y, z, world);
+        super(TCOTS_Entities_Fabric.WATER_HAG_MUD_BALL, x, y, z, world);
     }
 
     public WaterHag_MudBallEntity(Level world, LivingEntity owner, float damage) {
-        super(TCOTS_Entities.WATER_HAG_MUD_BALL, owner, world);
+        super(TCOTS_Entities_Fabric.WATER_HAG_MUD_BALL, owner, world);
         this.damage=damage;
     }
 

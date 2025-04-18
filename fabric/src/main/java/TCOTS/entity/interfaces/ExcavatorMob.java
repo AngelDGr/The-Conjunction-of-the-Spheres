@@ -1,7 +1,7 @@
 package TCOTS.entity.interfaces;
 
-import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.sounds.TCOTS_Sounds;
+import TCOTS.entity.misc.DrownerPuddleEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoAnimatable;

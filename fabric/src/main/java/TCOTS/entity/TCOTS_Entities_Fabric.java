@@ -22,7 +22,7 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 @SuppressWarnings("all")
-public class TCOTS_Entities {
+public class TCOTS_Entities_Fabric {
 
 //    1.0.0- Necrophages & Ogroids
 // Necrophages
@@ -489,62 +489,62 @@ public class TCOTS_Entities {
         //Necrophages
         {
             //Drowner
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.DROWNER, DrownerEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.DROWNER, DrownerEntity.setAttributes());
 
             //Rotfiend
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.ROTFIEND, RotfiendEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.ROTFIEND, RotfiendEntity.setAttributes());
 
             //Grave Hag
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.GRAVE_HAG, GraveHagEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.GRAVE_HAG, GraveHagEntity.setAttributes());
 
             //Water Hag
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.WATER_HAG, WaterHagEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.WATER_HAG, WaterHagEntity.setAttributes());
 
             //Foglet
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLET, FogletEntity.setAttributes());
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOGLING, FoglingEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.FOGLET, FogletEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.FOGLING, FoglingEntity.setAttributes());
 
             //Ghoul
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.GHOUL, GhoulEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.GHOUL, GhoulEntity.setAttributes());
 
             //Alghoul
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.ALGHOUL, AlghoulEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.ALGHOUL, AlghoulEntity.setAttributes());
 
             //Scurver
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.SCURVER, ScurverEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.SCURVER, ScurverEntity.setAttributes());
 
             //Devourer
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.DEVOURER, DevourerEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.DEVOURER, DevourerEntity.setAttributes());
 
             //Graveir
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.GRAVEIR, GraveirEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.GRAVEIR, GraveirEntity.setAttributes());
 
             //Bullvore
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.BULLVORE, BullvoreEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.BULLVORE, BullvoreEntity.setAttributes());
         }
 
         //Ogroids
         {
             //Nekker
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER, NekkerEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.NEKKER, NekkerEntity.setAttributes());
 
             //Nekker Warrior
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.NEKKER_WARRIOR, NekkerWarriorEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.NEKKER_WARRIOR, NekkerWarriorEntity.setAttributes());
 
             //Cyclops
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.CYCLOPS, CyclopsEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.CYCLOPS, CyclopsEntity.setAttributes());
 
             //Rock Troll
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.ROCK_TROLL, RockTrollEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.ROCK_TROLL, RockTrollEntity.setAttributes());
 
             //Ice Troll
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.ICE_TROLL, IceTrollEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.ICE_TROLL, IceTrollEntity.setAttributes());
 
             //Forest Troll
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.FOREST_TROLL, ForestTrollEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.FOREST_TROLL, ForestTrollEntity.setAttributes());
 
             //Ice Giant
-            FabricDefaultAttributeRegistry.register(TCOTS_Entities.ICE_GIANT, IceGiantEntity.setAttributes());
+            FabricDefaultAttributeRegistry.register(TCOTS_Entities_Fabric.ICE_GIANT, IceGiantEntity.setAttributes());
 
         }
     }

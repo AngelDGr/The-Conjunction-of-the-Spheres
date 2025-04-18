@@ -10,9 +10,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import org.jetbrains.annotations.NotNull;
 
-public class PuffballMushroom extends MushroomBlock {
+public class PuffballMushroomPlant extends MushroomBlock {
 
-    public PuffballMushroom(ResourceKey<ConfiguredFeature<?, ?>> featureKey, Properties settings) {
+    public PuffballMushroomPlant(ResourceKey<ConfiguredFeature<?, ?>> featureKey, Properties settings) {
         super(featureKey, settings);
     }
 

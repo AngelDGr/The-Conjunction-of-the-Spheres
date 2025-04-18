@@ -1,7 +1,7 @@
 package TCOTS.items.concoctions.bombs;
 
 import TCOTS.entity.misc.WitcherBombEntity;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -34,7 +34,7 @@ public class DevilsPuffballBomb {
 
     public static void handleStatus(WitcherBombEntity bomb, byte status) {
         if(status==DEVILS_PUFFBALL_EXPLODES){
-            bomb.level().addParticle(TCOTS_Particles.DEVILS_PUFFBALL_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
+            bomb.level().addParticle(TCOTS_Particles_Fabric.DEVILS_PUFFBALL_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
         }
     }
 }

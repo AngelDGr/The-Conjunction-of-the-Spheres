@@ -2,7 +2,7 @@ package TCOTS.entity.necrophages;
 
 import TCOTS.entity.misc.ScurverSpineEntity;
 import TCOTS.items.TCOTS_Items_Fabric;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.sounds.TCOTS_Sounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -35,7 +35,7 @@ public class ScurverEntity extends RotfiendEntity{
             this.dead = true;
             this.level().explode(this, null, null,
                     this.getX(), this.getY(), this.getZ(), (float)2.6, false, Level.ExplosionInteraction.MOB,
-                    TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Particles.ROTFIEND_BLOOD_EMITTER, TCOTS_Sounds.ROTFIEND_BLOOD_EXPLOSION);
+                    TCOTS_Particles_Fabric.ROTFIEND_BLOOD_EMITTER, TCOTS_Particles_Fabric.ROTFIEND_BLOOD_EMITTER, TCOTS_Sounds.ROTFIEND_BLOOD_EXPLOSION);
             this.discard();
 
 

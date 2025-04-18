@@ -1,6 +1,6 @@
 package TCOTS.entity.misc;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.items.TCOTS_Items_Fabric;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ScurverSpineEntity extends AbstractArrow {
@@ -21,7 +22,7 @@ public class ScurverSpineEntity extends AbstractArrow {
     }
 
     public ScurverSpineEntity(Level world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
-        super(TCOTS_Entities.SCURVER_SPINE, x, y, z, world, stack, shotFrom);
+        super(TCOTS_Entities_Fabric.SCURVER_SPINE, x, y, z, world, stack, shotFrom);
     }
 
     protected ScurverSpineEntity(EntityType<? extends AbstractArrow> type, double x, double y, double z, Level world, ItemStack stack, @Nullable ItemStack shotFrom) {
@@ -29,8 +30,7 @@ public class ScurverSpineEntity extends AbstractArrow {
     }
 
     public ScurverSpineEntity(LivingEntity owner, Level world, ItemStack stack, @Nullable ItemStack shotFrom) {
-        super(TCOTS_Entities.SCURVER_SPINE, owner, world, stack, shotFrom);
-//        super(TCOTS_Entities.SCURVER_SPINE, owner.getX(), owner.getEyeY() - (double)0.1f, owner.getZ(), world, stack);
+        super(TCOTS_Entities_Fabric.SCURVER_SPINE, owner, world, stack, shotFrom);
         this.setOwner(owner);
         if (owner instanceof Player) {
             this.pickup = Pickup.ALLOWED;
@@ -39,7 +39,7 @@ public class ScurverSpineEntity extends AbstractArrow {
     }
 
     @Override
-    protected ItemStack getDefaultPickupItem() {
+    protected @NotNull ItemStack getDefaultPickupItem() {
         return DEFAULT_STACK;
     }
 

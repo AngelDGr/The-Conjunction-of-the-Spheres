@@ -29,7 +29,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
-
 public class BryoniaVine extends MultifaceBlock implements BonemealableBlock {
     public static final MapCodec<BryoniaVine> CODEC = BryoniaVine.simpleCodec(BryoniaVine::new);
     private final MultifaceSpreader grower = new MultifaceSpreader(this);

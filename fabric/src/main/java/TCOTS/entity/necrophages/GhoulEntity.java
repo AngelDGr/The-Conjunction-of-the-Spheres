@@ -1,6 +1,6 @@
 package TCOTS.entity.necrophages;
 
-import TCOTS.entity.TCOTS_Entities;
+import TCOTS.entity.TCOTS_Entities_Fabric;
 import TCOTS.entity.goals.*;
 import TCOTS.entity.interfaces.GuardNestMob;
 import TCOTS.entity.interfaces.LungeMob;
@@ -95,7 +95,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
     @Nullable
     private UUID ownerUuid;
 
-    public int getGHOUL_REGENERATION_TIME() {
+    public int getRegenerationTime() {
         return GHOUL_REGENERATION_TIME;
     }
 
@@ -461,7 +461,7 @@ public class GhoulEntity extends NecrophageMonster implements GeoEntity, LungeMo
         if(!(spawnReason == MobSpawnType.SPAWN_EGG) && !(spawnReason == MobSpawnType.STRUCTURE)) {
             //Can spawn an Alghoul with it instead
             if (random.nextInt() % 5 == 0) {
-                AlghoulEntity alghoul = TCOTS_Entities.ALGHOUL.create(this.level());
+                AlghoulEntity alghoul = TCOTS_Entities_Fabric.ALGHOUL.create(this.level());
                 if (alghoul != null) {
                     alghoul.moveTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0f);
                     this.level().addFreshEntity(alghoul);

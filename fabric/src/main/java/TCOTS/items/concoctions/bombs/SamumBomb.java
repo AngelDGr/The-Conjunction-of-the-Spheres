@@ -3,7 +3,7 @@ package TCOTS.items.concoctions.bombs;
 import TCOTS.blocks.TCOTS_Blocks_Fabric;
 import TCOTS.entity.misc.WitcherBombEntity;
 import TCOTS.items.concoctions.TCOTS_Effects;
-import TCOTS.particles.TCOTS_Particles;
+import TCOTS.particles.TCOTS_Particles_Fabric;
 import TCOTS.utils.BombsUtil;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -38,8 +38,8 @@ public class SamumBomb {
                         0.2f,
                         false,
                         Level.ExplosionInteraction.BLOCK,
-                        TCOTS_Particles.SAMUM_EXPLOSION_EMITTER,
-                        TCOTS_Particles.SAMUM_EXPLOSION_EMITTER,
+                        TCOTS_Particles_Fabric.SAMUM_EXPLOSION_EMITTER,
+                        TCOTS_Particles_Fabric.SAMUM_EXPLOSION_EMITTER,
                         SoundEvents.GENERIC_EXPLODE
                 );
 
@@ -120,7 +120,7 @@ public class SamumBomb {
 
     public static void handleStatus(WitcherBombEntity bomb, byte status) {
         if(status==SAMUM_EXPLODES){
-            bomb.level().addParticle(TCOTS_Particles.SAMUM_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
+            bomb.level().addParticle(TCOTS_Particles_Fabric.SAMUM_EXPLOSION_EMITTER, bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
         }
     }
 
