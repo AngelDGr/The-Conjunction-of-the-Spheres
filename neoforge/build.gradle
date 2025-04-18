@@ -1,0 +1,84 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.neoforged.moddev'
+}
+
+repositories {
+    // Add repositories to retrieve artifacts from in here.
+    // You should only use this when depending on other mods because
+    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+    // for more information about repositories.
+    maven {
+        name ='OwO-Lib'
+        url 'https://maven.wispforest.io'
+    }
+    maven {
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content {
+            includeGroupByRegex("software\\.bernie.*")
+            includeGroup("com.eliotlash.mclib")
+        }
+    }
+
+    maven { url = "https://maven.bawnorton.com/releases" }
+}
+
+dependencies {
+//    include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.2.0")))
+
+
+    //GeckoLib Dependency
+    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
+
+    //OwO-Lib Dependency
+    annotationProcessor implementation("io.wispforest:owo-lib-neoforge:${project.owo_version_neo}")
+}
+
+processResources{
+    duplicatesStrategy=DuplicatesStrategy.EXCLUDE;
+}
+
+neoForge {
+
+    version = neoforge_version
+
+    interfaceInjectionData.from(file("src/main/resources/interface_injections.json"))
+
+    accessTransformers {
+        file('src/main/resources/accesstransformer.cfg')
+    }
+
+    // Automatically enable neoforge AccessTransformers if the file exists
+//    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
+//    if (at.exists()) {
+//        accessTransformers.from(at.absolutePath)
+//    }
+    parchment {
+        minecraftVersion = parchment_minecraft
+        mappingsVersion = parchment_version
+    }
+    runs {
+        configureEach {
+            systemProperty('neoforge.enabledGameTestNamespaces', mod_id)
+            ideName = "NeoForge ${it.name.capitalize()} (${project.path})" // Unify the run config names with fabric
+        }
+        client {
+            client()
+        }
+        data {
+            data()
+        }
+        server {
+            server()
+        }
+    }
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
