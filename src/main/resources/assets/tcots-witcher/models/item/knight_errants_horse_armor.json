@@ -1,7 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "tcots-witcher:item/armors/horse/knight_errants_horse_armor"
-  }
-
-}

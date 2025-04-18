@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/tinted_cross",
+  "textures": {
+    "cross": "tcots_witcher:block/plants/crows_eye/crows_eye_fern_bottom0"
+  }
+}

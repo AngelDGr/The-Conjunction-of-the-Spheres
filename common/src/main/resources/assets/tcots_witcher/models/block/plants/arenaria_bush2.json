@@ -1,0 +1,7 @@
+{
+  "parent": "tcots_witcher:block/tinted_cross_overlay",
+  "textures": {
+    "cross": "tcots_witcher:block/plants/arenaria_bush1",
+    "overlay": "tcots_witcher:block/plants/arenaria_bush2_overlay"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "tcots_witcher:block/tinted_cross_overlay",
+  "textures": {
+    "cross": "tcots_witcher:block/plants/han_fiber/age2_cross",
+    "overlay": "tcots_witcher:block/plants/han_fiber/age2_overlay"
+  }
+}

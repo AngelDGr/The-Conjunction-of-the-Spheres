@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "tcots_witcher:block/nest_slab"
+    },
+    "type=double": {
+      "model": "tcots_witcher:block/nest_slab_block"
+    },
+    "type=top": {
+      "model": "tcots_witcher:block/nest_slab_top"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "fallback": "minecraft:empty",
+
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+
+        "location": "tcots_witcher:caves/empty",
+
+        "processors": {
+          "processors": []
+        },
+
+        "projection": "rigid"
+      },
+      "weight": 5
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+
+        "location": "tcots_witcher:caves/ice/trolls/rabid_ice",
+
+        "processors": {
+          "processors": []
+        },
+
+        "projection": "rigid"
+      },
+      "weight": 8
+    },
+    {
+      "element": {
+        "element_type": "minecraft:legacy_single_pool_element",
+
+        "location": "tcots_witcher:caves/ice/trolls/ice",
+
+        "processors": {
+          "processors": []
+        },
+
+        "projection": "rigid"
+      },
+      "weight": 10
+    }
+  ]
+}

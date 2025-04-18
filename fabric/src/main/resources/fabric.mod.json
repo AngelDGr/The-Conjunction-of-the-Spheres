@@ -1,0 +1,63 @@
+{
+	"schemaVersion": 1,
+	"id": "tcots_witcher",
+	"version": "1.0.4",
+	"name": "The Conjunction of the Spheres",
+	"description": "New monsters, armors, weapons, potions and challenges from the Witcher Universe, beware, The Conjunction of the Spheres!",
+	"authors": [
+		"Tenebris Mors"
+	],
+	"contact": {
+		"homepage": "https://legacy.curseforge.com/members/angeldgr/projects",
+		"sources": "https://github.com/AngelDGr/The-Conjunction-of-the-Spheres"
+	},
+	"license": "MIT",
+	"icon": "assets/tcots_witcher/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "TCOTS.TCOTS_MainFabric"
+		],
+
+		"client": [
+          "TCOTS.TCOTS_ClientFabric"
+		],
+
+		"fabric-datagen": [
+			"TCOTS.TCOTS_DataGenerator"
+		],
+
+		"jei_mod_plugin": [
+          "TCOTS.TCOTS_JEIPlugin"
+		]
+	},
+	"mixins": [
+      "tcots_witcher.mixins.json", "tcots_witcher.fabric.mixins.json"
+	],
+	"accessWidener" : "tcots_witcher.accesswidener",
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*",
+		"geckolib": ">=4.2",
+		"owo": "*",
+		"lavender": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.modrinth": "https://modrinth.com/user/Tenebris_Mors",
+				"modmenu.curseforge": "https://legacy.curseforge.com/members/tenebris_mors/projects",
+				"modmenu.kofi": "https://ko-fi.com/tenebris_mors"
+			}
+		},
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1309": 		 	  ["TCOTS/interfaces/LivingEntityMixinInterface"],
+			"net/minecraft/class_1657": 		 	  ["TCOTS/interfaces/PlayerEntityMixinInterface"]
+		}
+	}
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "tcots_witcher:item/alchemy/ingredients/rubedo"
+  }
+
+}

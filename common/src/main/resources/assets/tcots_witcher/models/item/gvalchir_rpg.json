@@ -1,0 +1,7 @@
+{
+  "parent": "witcher_rpg:item/witcher_sword_model",
+  "textures": {
+    "layer0": "tcots_witcher:item/weapons/gvalchir_rpg"
+  }
+
+}

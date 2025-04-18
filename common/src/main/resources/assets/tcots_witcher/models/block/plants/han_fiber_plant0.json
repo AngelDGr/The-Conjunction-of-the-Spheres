@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/tinted_cross",
+  "textures": {
+    "cross": "tcots_witcher:block/plants/han_fiber/age0_cross"
+  }
+}

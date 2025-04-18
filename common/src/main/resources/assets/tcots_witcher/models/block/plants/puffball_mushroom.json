@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "tcots_witcher:block/plants/puffball_mushroom"
+  }
+}

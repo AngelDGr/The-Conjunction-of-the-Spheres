@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "package": "TCOTS.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "DynamicRecipes",
+    "IronGolemMixin",
+    "ServerPlayerEntityMixin",
+    "ServerWorldAccessor",
+    "northern_wind.BlazeEntityMixin",
+    "northern_wind.MobMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "PlayerEntityRendererMixin",
+    "northern_wind.BlazeModelMixin",
+    "northern_wind.LivingEntityRendererMixin",
+    "northern_wind.geckolib.GeoEntityRendererMixin",
+    "northern_wind.geckolib.GeoReplacedEntityRendererMixin"
+  ],
+  "refmap": "tcots_witcher.refmap.json"
+}

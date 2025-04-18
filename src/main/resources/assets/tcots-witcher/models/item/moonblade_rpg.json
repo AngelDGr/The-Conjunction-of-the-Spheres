@@ -1,7 +1,0 @@
-{
-  "parent": "witcher_rpg:item/witcher_sword_model",
-  "textures": {
-    "layer0": "tcots-witcher:item/weapons/moonblade_rpg"
-  }
-
-}

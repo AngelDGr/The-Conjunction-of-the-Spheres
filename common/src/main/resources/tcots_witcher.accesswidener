@@ -1,0 +1,31 @@
+accessWidener v2 named
+
+#1.20.3
+accessible class net/minecraft/world/level/BaseSpawner
+accessible method net/minecraft/world/level/BaseSpawner getOrCreateNextSpawnData (Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/SpawnData;
+accessible field net/minecraft/world/level/BaseSpawner minSpawnDelay I
+accessible field net/minecraft/world/level/BaseSpawner maxSpawnDelay I
+accessible field net/minecraft/world/level/BaseSpawner spawnDelay I
+accessible field net/minecraft/world/level/BaseSpawner spawnCount I
+accessible field net/minecraft/world/level/BaseSpawner maxNearbyEntities I
+accessible field net/minecraft/world/level/BaseSpawner requiredPlayerRange I
+accessible field net/minecraft/world/level/BaseSpawner spawnRange I
+accessible field net/minecraft/world/level/BaseSpawner nextSpawnData Lnet/minecraft/world/level/SpawnData;
+accessible field net/minecraft/world/level/BaseSpawner spawnPotentials Lnet/minecraft/util/random/SimpleWeightedRandomList;
+#accessible field net/minecraft/world/level/BaseSpawner lastRotation D
+#accessible field net/minecraft/world/level/BaseSpawner rotation D
+accessible method net/minecraft/world/level/BaseSpawner isNearPlayer (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z
+#accessible field net/minecraft/world/level/BaseSpawner renderedEntity Lnet/minecraft/entity/Entity;
+accessible method net/minecraft/world/level/BaseSpawner delay (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V
+
+accessible method net/minecraft/world/level/block/MultifaceBlock getDefaultMultifaceState (Lnet/minecraft/world/level/block/state/StateDefinition;)Lnet/minecraft/world/level/block/state/BlockState;
+
+accessible class net/minecraft/client/gui/Gui$HeartType
+
+accessible class net/minecraft/client/renderer/ItemInHandRenderer$HandRenderSelection
+
+accessible method net/minecraft/world/level/block/ComposterBlock add (FLnet/minecraft/world/level/ItemLike;)V
+
+accessible field net/minecraft/client/renderer/LevelRenderer renderBuffers Lnet/minecraft/client/renderer/RenderBuffers;
+
+accessible method net/minecraft/world/entity/projectile/AbstractArrow setPierceLevel (B)V
