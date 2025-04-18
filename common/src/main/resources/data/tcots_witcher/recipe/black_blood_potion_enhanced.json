@@ -1,0 +1,33 @@
+{
+  "type": "tcots_witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots_witcher:black_blood_potion"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    2,
+    5,
+    5
+  ],
+  "ingredients": [
+    {
+      "item": "tcots_witcher:alcohest"
+    },
+    {
+      "item": "minecraft:allium"
+    },
+    {
+      "item": "tcots_witcher:sewant_mushrooms"
+    },
+    {
+      "item": "tcots_witcher:ghoul_blood"
+    }
+  ],
+  "order": 0.14999999,
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:black_blood_potion_enhanced"
+  }
+}

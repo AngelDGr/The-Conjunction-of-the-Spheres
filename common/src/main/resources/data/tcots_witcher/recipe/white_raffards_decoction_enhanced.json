@@ -1,0 +1,33 @@
+{
+  "type": "tcots_witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots_witcher:white_raffards_decoction"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    4,
+    1,
+    5
+  ],
+  "ingredients": [
+    {
+      "item": "tcots_witcher:alcohest"
+    },
+    {
+      "item": "minecraft:oxeye_daisy"
+    },
+    {
+      "item": "tcots_witcher:bryonia"
+    },
+    {
+      "item": "tcots_witcher:nekker_heart"
+    }
+  ],
+  "order": 0.08999999,
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:white_raffards_decoction_enhanced"
+  }
+}

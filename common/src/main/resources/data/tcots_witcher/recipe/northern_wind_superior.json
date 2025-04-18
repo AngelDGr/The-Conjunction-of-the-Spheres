@@ -1,0 +1,37 @@
+{
+  "type": "tcots_witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots_witcher:northern_wind_enhanced"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    3,
+    2,
+    2,
+    3,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots_witcher:water_essence"
+    },
+    {
+      "item": "minecraft:prismarine_crystals"
+    },
+    {
+      "item": "tcots_witcher:verbena"
+    },
+    {
+      "item": "tcots_witcher:allspice"
+    },
+    {
+      "item": "tcots_witcher:quebrith"
+    }
+  ],
+  "order": 0.5199998,
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:northern_wind_superior"
+  }
+}

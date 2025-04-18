@@ -1,0 +1,110 @@
+{
+  "parent": "minecraft:tcots_witcher/craft_potion",
+  "criteria": {
+    "tcots_witcher:black_blood_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:black_blood_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:cat_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:cat_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:maribor_forest_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:maribor_forest_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:rook_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:rook_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:swallow_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:swallow_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:white_honey_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:white_honey_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:white_raffards_decoction_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:white_raffards_decoction_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:wolf_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:wolf_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.craft_potion_superior.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "tcots_witcher:swallow_potion_superior"
+    },
+    "title": {
+      "translate": "advancements.witcher.craft_potion_superior.title"
+    }
+  },
+  "requirements": [
+    [
+      "tcots_witcher:swallow_potion_superior",
+      "tcots_witcher:white_raffards_decoction_superior",
+      "tcots_witcher:cat_potion_superior",
+      "tcots_witcher:black_blood_potion_superior",
+      "tcots_witcher:maribor_forest_potion_superior",
+      "tcots_witcher:white_honey_potion_superior",
+      "tcots_witcher:wolf_potion_superior",
+      "tcots_witcher:rook_potion_superior"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

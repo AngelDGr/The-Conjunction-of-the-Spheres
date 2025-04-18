@@ -1,0 +1,15 @@
+{
+  "type": "tcots_witcher:herbal_table",
+  "amplifier": 0,
+  "base_potion": 0,
+  "effects": [
+    "minecraft:saturation",
+    "minecraft:night_vision",
+    "minecraft:poison"
+  ],
+  "herb": {
+    "count": 1,
+    "id": "tcots_witcher:puffball"
+  },
+  "time": 40
+}

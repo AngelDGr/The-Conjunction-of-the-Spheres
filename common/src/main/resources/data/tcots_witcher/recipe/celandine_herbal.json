@@ -1,0 +1,14 @@
+{
+  "type": "tcots_witcher:herbal_table",
+  "amplifier": 2,
+  "base_potion": 0,
+  "effects": [
+    "minecraft:regeneration",
+    "minecraft:slowness"
+  ],
+  "herb": {
+    "count": 1,
+    "id": "tcots_witcher:celandine"
+  },
+  "time": 40
+}

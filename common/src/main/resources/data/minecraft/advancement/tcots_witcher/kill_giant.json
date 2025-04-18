@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:tcots_witcher/hunting",
+  "criteria": {
+    "kill_giant": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:ice_giant"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.kill_giant.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "tcots_witcher:winters_blade"
+    },
+    "title": {
+      "translate": "advancements.witcher.kill_giant.title"
+    }
+  },
+  "requirements": [
+    [
+      "kill_giant"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

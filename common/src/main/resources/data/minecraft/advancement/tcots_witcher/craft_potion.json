@@ -1,0 +1,363 @@
+{
+  "parent": "minecraft:tcots_witcher/alchemy",
+  "criteria": {
+    "tcots_witcher:alghoul_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:alghoul_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:black_blood_potion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:black_blood_potion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:black_blood_potion_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:black_blood_potion_enhanced"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:black_blood_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:black_blood_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:cat_potion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:cat_potion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:cat_potion_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:cat_potion_enhanced"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:cat_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:cat_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:foglet_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:foglet_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:grave_hag_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:grave_hag_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:killer_whale_potion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:killer_whale_potion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:maribor_forest_potion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:maribor_forest_potion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:maribor_forest_potion_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:maribor_forest_potion_enhanced"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:maribor_forest_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:maribor_forest_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:nekker_warrior_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:nekker_warrior_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:rook_potion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:rook_potion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:rook_potion_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:rook_potion_enhanced"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:rook_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:rook_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:swallow_potion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:swallow_potion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:swallow_potion_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:swallow_potion_enhanced"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:swallow_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:swallow_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:troll_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:troll_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:water_hag_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:water_hag_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:white_honey_potion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:white_honey_potion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:white_honey_potion_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:white_honey_potion_enhanced"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:white_honey_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:white_honey_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:white_raffards_decoction": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:white_raffards_decoction"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:white_raffards_decoction_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:white_raffards_decoction_enhanced"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:white_raffards_decoction_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:white_raffards_decoction_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:wolf_potion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:wolf_potion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:wolf_potion_enhanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:wolf_potion_enhanced"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:wolf_potion_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:wolf_potion_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.craft_potion.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "tcots_witcher:swallow_potion"
+    },
+    "title": {
+      "translate": "advancements.witcher.craft_potion.title"
+    }
+  },
+  "requirements": [
+    [
+      "tcots_witcher:swallow_potion",
+      "tcots_witcher:swallow_potion_enhanced",
+      "tcots_witcher:swallow_potion_superior",
+      "tcots_witcher:white_raffards_decoction",
+      "tcots_witcher:white_raffards_decoction_enhanced",
+      "tcots_witcher:white_raffards_decoction_superior",
+      "tcots_witcher:cat_potion",
+      "tcots_witcher:cat_potion_enhanced",
+      "tcots_witcher:cat_potion_superior",
+      "tcots_witcher:black_blood_potion",
+      "tcots_witcher:black_blood_potion_enhanced",
+      "tcots_witcher:black_blood_potion_superior",
+      "tcots_witcher:maribor_forest_potion",
+      "tcots_witcher:maribor_forest_potion_enhanced",
+      "tcots_witcher:maribor_forest_potion_superior",
+      "tcots_witcher:killer_whale_potion",
+      "tcots_witcher:white_honey_potion",
+      "tcots_witcher:white_honey_potion_enhanced",
+      "tcots_witcher:white_honey_potion_superior",
+      "tcots_witcher:wolf_potion",
+      "tcots_witcher:wolf_potion_enhanced",
+      "tcots_witcher:wolf_potion_superior",
+      "tcots_witcher:rook_potion",
+      "tcots_witcher:rook_potion_enhanced",
+      "tcots_witcher:rook_potion_superior",
+      "tcots_witcher:alghoul_decoction",
+      "tcots_witcher:grave_hag_decoction",
+      "tcots_witcher:water_hag_decoction",
+      "tcots_witcher:foglet_decoction",
+      "tcots_witcher:troll_decoction",
+      "tcots_witcher:nekker_warrior_decoction"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

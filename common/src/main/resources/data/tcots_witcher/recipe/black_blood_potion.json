@@ -1,0 +1,25 @@
+{
+  "type": "tcots_witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots_witcher:dwarven_spirit"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    2,
+    4
+  ],
+  "ingredients": [
+    {
+      "item": "tcots_witcher:sewant_mushrooms"
+    },
+    {
+      "item": "tcots_witcher:ghoul_blood"
+    }
+  ],
+  "order": 0.13999999,
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:black_blood_potion"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "tcots_witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots_witcher:dwarven_spirit"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    4,
+    2
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "tcots_witcher:water_essence"
+    }
+  ],
+  "order": 0.049999997,
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:cat_potion"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "parent": "minecraft:tcots_witcher/hunting",
+  "criteria": {
+    "tcots_witcher:foglet_mutagen": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:foglet_mutagen"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:grave_hag_mutagen": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:grave_hag_mutagen"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:nekker_warrior_mutagen": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:nekker_warrior_mutagen"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:troll_mutagen": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:troll_mutagen"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:water_hag_mutagen": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:water_hag_mutagen"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.get_mutagen.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "tcots_witcher:foglet_mutagen"
+    },
+    "title": {
+      "translate": "advancements.witcher.get_mutagen.title"
+    }
+  },
+  "requirements": [
+    [
+      "tcots_witcher:foglet_mutagen",
+      "tcots_witcher:troll_mutagen",
+      "tcots_witcher:grave_hag_mutagen",
+      "tcots_witcher:water_hag_mutagen",
+      "tcots_witcher:nekker_warrior_mutagen"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,37 @@
+{
+  "type": "tcots_witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots_witcher:cat_potion_enhanced"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    4,
+    4,
+    2,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots_witcher:white_gull"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "minecraft:brown_mushroom"
+    },
+    {
+      "item": "tcots_witcher:allspice"
+    },
+    {
+      "item": "tcots_witcher:aether"
+    }
+  ],
+  "order": 0.06999999,
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:cat_potion_superior"
+  }
+}

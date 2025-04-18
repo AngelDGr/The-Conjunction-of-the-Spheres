@@ -1,0 +1,37 @@
+{
+  "type": "tcots_witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots_witcher:white_gull"
+  },
+  "category": "misc",
+  "ingredient_counters": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots_witcher:verbena"
+    },
+    {
+      "item": "tcots_witcher:ergot_seeds"
+    },
+    {
+      "item": "tcots_witcher:allspice"
+    },
+    {
+      "item": "minecraft:oxeye_daisy"
+    },
+    {
+      "item": "minecraft:fern"
+    }
+  ],
+  "order": 0.78999954,
+  "result": {
+    "count": 2,
+    "id": "tcots_witcher:rebis"
+  }
+}

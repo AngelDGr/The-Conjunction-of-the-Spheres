@@ -1,0 +1,110 @@
+{
+  "parent": "minecraft:tcots_witcher/craft_bomb",
+  "criteria": {
+    "tcots_witcher:dancing_star_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:dancing_star_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:devils_puffball_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:devils_puffball_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:dimeritium_bomb_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:dimeritium_bomb_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:dragons_dream_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:dragons_dream_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:grapeshot_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:grapeshot_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:moon_dust_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:moon_dust_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:northern_wind_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:northern_wind_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tcots_witcher:samum_superior": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:samum_superior"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.craft_bomb_superior.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "tcots_witcher:grapeshot_superior"
+    },
+    "title": {
+      "translate": "advancements.witcher.craft_bomb_superior.title"
+    }
+  },
+  "requirements": [
+    [
+      "tcots_witcher:grapeshot_superior",
+      "tcots_witcher:dancing_star_superior",
+      "tcots_witcher:devils_puffball_superior",
+      "tcots_witcher:samum_superior",
+      "tcots_witcher:northern_wind_superior",
+      "tcots_witcher:dragons_dream_superior",
+      "tcots_witcher:dimeritium_bomb_superior",
+      "tcots_witcher:moon_dust_superior"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

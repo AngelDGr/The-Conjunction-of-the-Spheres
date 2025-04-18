@@ -1,0 +1,37 @@
+{
+  "type": "tcots_witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots_witcher:black_blood_potion_enhanced"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    6,
+    5,
+    2,
+    1
+  ],
+  "ingredients": [
+    {
+      "item": "tcots_witcher:white_gull"
+    },
+    {
+      "item": "minecraft:allium"
+    },
+    {
+      "item": "tcots_witcher:sewant_mushrooms"
+    },
+    {
+      "item": "tcots_witcher:han_fiber"
+    },
+    {
+      "item": "tcots_witcher:rebis"
+    }
+  ],
+  "order": 0.16,
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:black_blood_potion_superior"
+  }
+}
