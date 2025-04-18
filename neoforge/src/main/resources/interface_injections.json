@@ -1,0 +1,4 @@
+{
+  "net/minecraft/world/entity/LivingEntity": 		 	  ["TCOTS/interfaces/LivingEntityMixinInterface"],
+  "net/minecraft/world/entity/player/Player": 		 	  ["TCOTS/interfaces/PlayerEntityMixinInterface"]
+}
