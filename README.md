@@ -3,8 +3,17 @@
 <hr />
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.imgur.com/NxZyu1r.png" alt="" /></p>
 <p>&nbsp;</p>
-<p><a href="https://modrinth.com/mod/fabric-api" target="_blank" rel="nofollow noopener noreferrer"><img style="float: left;" src="https://i.imgur.com/8qdcVmI.png" alt="" width="200" height="65" /></a><a href="https://modrinth.com/mod/geckolib" target="_blank" rel="nofollow noopener noreferrer"><img style="float: left;" src="https://i.imgur.com/6yT6EK1.png" alt="" width="200" height="65" /></a><a href="https://modrinth.com/mod/owo-lib" target="_blank" rel="nofollow noopener noreferrer"><img style="float: left;" src="https://i.imgur.com/8gYdkfL.png" alt="" width="200" height="65" /></a><a href="https://modrinth.com/mod/lavender" target="_blank" rel="nofollow noopener noreferrer"><img style="float: left;" src="https://i.imgur.com/HUxLovE.png" alt="" width="200" height="65" /></a></p>
+<p><a href="https://modrinth.com/mod/fabric-api" target="_blank" rel="nofollow noopener noreferrer"><img style="float: left;" src="https://i.imgur.com/8qdcVmI.png" alt="" width="200" height="65" /></a><a href="https://modrinth.com/mod/geckolib" target="_blank" rel="nofollow noopener noreferrer"><img style="float: left;" src="https://i.imgur.com/6yT6EK1.png" alt="" width="200" height="65" /></a>
+  <a href="https://modrinth.com/mod/owo-lib" target="_blank" rel="nofollow noopener noreferrer"><img style="float: left;" src="https://i.imgur.com/8gYdkfL.png" alt="" width="200" height="65" /></a>
+  <a href="https://modrinth.com/mod/architectury-api" target="_blank" rel="nofollow noopener noreferrer"><img style="float: left;" src="https://i.imgur.com/ZQwo364.png" alt="" width="200" height="65" /></a>
+  
+<h1 style="text-align: center;"><span style="font-size: 24px;"><strong><em>Fabric</em></strong></span></h1>
+  <a href="https://modrinth.com/mod/lavender" target="_blank" rel="nofollow noopener noreferrer"><img style="float: left;" src="https://i.imgur.com/HUxLovE.png" alt="" width="200" height="65" /></a></p>
 <p>&nbsp;</p>
+<h1 style="text-align: center;"><span style="font-size: 24px;"><strong><em>NeoForge</em></strong></span></h1>
+  <a href="https://modrinth.com/mod/patchouli" target="_blank" rel="nofollow noopener noreferrer"><img style="float: left;" src="https://i.imgur.com/aQhCzZE.png" alt="" width="200" height="65" /></a></p>
+
+
 <hr />
 <h1 style="text-align: center;"><span style="font-size: 24px;"><strong><em>In a time past, our world intertwined with another through an upheaval scholars call the Conjunction of the Spheres&hellip;</em></strong></span></h1>
 <p style="text-align: center;"><br /><span style="font-size: 14px;"><em>Inspired by The Witcher series of books and games, this mod adds new mobs, weapons, armors, potions, a whole new toxicity mechanic and much, much more!</em></span></p>
@@ -64,8 +73,8 @@
 <hr />
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.imgur.com/EGNAYpx.png" alt="" width="850" height="55" /></p>
 <p>&nbsp;</p>
-<p><span style="font-size: 18px;"><strong>Q:</strong> Can you make a port for Quilt/Forge/NeoForge?&nbsp;</span></p>
-<p><span style="font-size: 18px;"><strong>A:</strong> Currently i don't have plans for a Forge or Quilt port, only a port for NeoForge its planned. If you want to port the mod to Forge or Quilt just ask for permission!</span></p>
+<p><span style="font-size: 18px;"><strong>Q:</strong> Can you make a port for Quilt/Forge?&nbsp;</span></p>
+<p><span style="font-size: 18px;"><strong>A:</strong> I would love to make a version for Forge, but right now the dependencies I use aren't in those mod loaders</span></p>
 <p>&nbsp;</p>
 <p><span style="font-size: 18px;"><strong>Q:</strong> When you will update for *new version*?</span></p>
 <p><span style="font-size: 18px;"><strong>A:</strong> I will try to be constant with the updates, but no promises, lol.</span></p>
