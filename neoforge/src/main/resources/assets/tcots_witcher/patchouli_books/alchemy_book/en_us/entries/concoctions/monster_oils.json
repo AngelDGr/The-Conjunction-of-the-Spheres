@@ -1,0 +1,25 @@
+{
+  "name": "Oils",
+  "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/monster_oils.png",
+  "category": "tcots_witcher:dummy",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The monster oils are strong but temporal additives that you can apply to your swords and axes, these oils gave you more damage against some specific types of monster.$(br2)To apply these additives, hold your weapon with your main hand and the oil with your offhand and use it, you also can apply them directly inside your inventory."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "This added damage it's independent of any kind of enchantment your weapon could have.",
+      "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/monster_oils/monster_oils_main.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Each oil has a number of uses, each use being one hit, these uses are going to go down with every hit you make with the weapon, $(n)independently if the oil boosts your damage against your current target$().$(br2)Similar to $(l:tcots_witcher:concoctions/potions)potions$(/l), each type of oil has three levels; $(o)Normal$(), $(o)Enhanced$() and $(o)Superior$(). Each one being stronger and having more uses than the last. They also can be $(l:tcots_witcher:alchemy_basics/refilling)refilled$(/l)."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)List of Oils$()$(br)$(li)$(#b71520)Necrophage Oil$(): $(#000000)Extra damage against necrophages and undead.$()$(li)$(#cc341d)Ogroid Oil$(): $(#000000)Extra damage against ogroids and piglins.$()$(li)$(#411106)Beast Oil$(): $(#000000)Extra damage against beasts and animals.$()$(li)$(#00752b)Hanged Man's Venom$(): $(#000000)Extra damage against villagers, illagers and humans.$()"
+    }
+  ],
+  "sortnum": 5
+}

@@ -6,7 +6,7 @@
   "associated_items": [
     "tcots_witcher:ghoul_blood"
   ],
-  "ordinal": 2
+  "ordinal": 1
 }
 ```
 

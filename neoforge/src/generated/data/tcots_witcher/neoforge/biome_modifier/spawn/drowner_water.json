@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/drowner_water",
+  "spawners": {
+    "type": "tcots_witcher:drowner",
+    "maxCount": 3,
+    "minCount": 2,
+    "weight": 8
+  }
+}

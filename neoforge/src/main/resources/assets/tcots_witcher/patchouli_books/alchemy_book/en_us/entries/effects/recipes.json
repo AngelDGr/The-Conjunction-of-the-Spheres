@@ -1,0 +1,262 @@
+{
+  "name": "Recipes Compendium",
+  "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/recipes.png",
+  "category": "tcots_witcher:dummy",
+  "pages":[
+    {
+      "type": "patchouli:text",
+      "text": "$(o)$(l)Compendium of recipes for potions, decoctions, monster oils, bombs, and alchemical ingredients."
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Potions",
+      "recipes": [
+        "tcots_witcher:swallow_potion",
+        "tcots_witcher:swallow_potion_enhanced",
+        "tcots_witcher:swallow_potion_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Potions",
+      "recipes": [
+        "tcots_witcher:swallow_splash"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Potions",
+      "recipes": [
+        "tcots_witcher:cat_potion",
+        "tcots_witcher:cat_potion_enhanced",
+        "tcots_witcher:cat_potion_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Potions",
+      "recipes": [
+        "tcots_witcher:white_raffards_decoction",
+        "tcots_witcher:white_raffards_decoction_enhanced",
+        "tcots_witcher:white_raffards_decoction_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Potions",
+      "recipes": [
+        "tcots_witcher:white_raffards_splash",
+        "tcots_witcher:killer_whale_potion",
+        "tcots_witcher:killer_whale_splash"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Potions",
+      "recipes": [
+        "tcots_witcher:black_blood_potion",
+        "tcots_witcher:black_blood_potion_enhanced",
+        "tcots_witcher:black_blood_potion_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Potions",
+      "recipes": [
+        "tcots_witcher:maribor_forest_potion",
+        "tcots_witcher:maribor_forest_potion_enhanced",
+        "tcots_witcher:maribor_forest_potion_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Potions",
+      "recipes": [
+        "tcots_witcher:wolf_potion",
+        "tcots_witcher:wolf_potion_enhanced",
+        "tcots_witcher:wolf_potion_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Potions",
+      "recipes": [
+        "tcots_witcher:rook_potion",
+        "tcots_witcher:rook_potion_enhanced",
+        "tcots_witcher:rook_potion_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Potions",
+      "recipes": [
+        "tcots_witcher:white_honey_potion",
+        "tcots_witcher:white_honey_potion_enhanced",
+        "tcots_witcher:white_honey_potion_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Decoctions",
+      "recipes": [
+        "tcots_witcher:water_hag_decoction",
+        "tcots_witcher:grave_hag_decoction",
+        "tcots_witcher:alghoul_decoction"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Decoctions",
+      "recipes": [
+        "tcots_witcher:foglet_decoction",
+        "tcots_witcher:nekker_warrior_decoction",
+        "tcots_witcher:troll_decoction"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:grapeshot",
+        "tcots_witcher:grapeshot_enhanced",
+        "tcots_witcher:grapeshot_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:samum",
+        "tcots_witcher:samum_enhanced",
+        "tcots_witcher:samum_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:dancing_star",
+        "tcots_witcher:dancing_star_enhanced",
+        "tcots_witcher:dancing_star_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:devils_puffball",
+        "tcots_witcher:devils_puffball_enhanced",
+        "tcots_witcher:devils_puffball_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:dragons_dream",
+        "tcots_witcher:dragons_dream_enhanced",
+        "tcots_witcher:dragons_dream_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:northern_wind",
+        "tcots_witcher:northern_wind_enhanced",
+        "tcots_witcher:northern_wind_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:dimeritium_bomb",
+        "tcots_witcher:dimeritium_bomb_enhanced",
+        "tcots_witcher:dimeritium_bomb_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:moon_dust",
+        "tcots_witcher:moon_dust_enhanced",
+        "tcots_witcher:moon_dust_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:oil_necrophage",
+        "tcots_witcher:oil_necrophage_enhanced",
+        "tcots_witcher:oil_necrophage_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:oil_ogroid",
+        "tcots_witcher:oil_ogroid_enhanced",
+        "tcots_witcher:oil_ogroid_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:oil_hanged",
+        "tcots_witcher:oil_hanged_enhanced",
+        "tcots_witcher:oil_hanged_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Bombs & Oils",
+      "recipes": [
+        "tcots_witcher:oil_beast",
+        "tcots_witcher:oil_beast_enhanced",
+        "tcots_witcher:oil_beast_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Ingredients",
+      "recipes": [
+        "tcots_witcher:dwarven_spirit",
+        "tcots_witcher:alcohest",
+        "tcots_witcher:white_gull"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Ingredients",
+      "recipes": [
+        "tcots_witcher:stammelfords_dust",
+        "tcots_witcher:aether",
+        "tcots_witcher:hydragenum"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Ingredients",
+      "recipes": [
+        "tcots_witcher:nigredo",
+        "tcots_witcher:quebrith",
+        "tcots_witcher:rebis"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Ingredients",
+      "recipes": [
+        "tcots_witcher:rubedo",
+        "tcots_witcher:vermilion",
+        "tcots_witcher:vitriol"
+      ]
+    }
+  ],
+  "sortnum": 9
+}

@@ -1,0 +1,13 @@
+{
+  "name": "item.tcots_witcher.witcher_bestiary.patchouli",
+  "landing_text": "patchouli.tcots_witcher.witcher_bestiary.landing_page",
+  "nameplate_color": "545454",
+  "header_color": "545454",
+  "version": 0,
+  "subtitle": " ",
+  "model": "tcots_witcher:witcher_bestiary",
+  "book_texture": "tcots_witcher:textures/gui/patchouli/witcher_bestiary_gui.png",
+  "filler_texture": "tcots_witcher:textures/gui/empty.png",
+  "use_resource_pack": true,
+  "show_progress": false
+}

@@ -1,6 +1,6 @@
 package TCOTS.advancements.criterion;
 
-import TCOTS.advancements.TCOTS_Criteria;
+import TCOTS.registry.TCOTS_Criteria;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.Optional;
@@ -33,31 +33,31 @@ public class TCOTS_CustomCriterion extends SimpleCriterionTrigger<TCOTS_CustomCr
 
 
         public static Criterion<TCOTS_CustomCriterion.Conditions> createMaxToxicityCriterion() {
-            return TCOTS_Criteria.MAX_TOXICITY_REACHED.createCriterion(new Conditions(Optional.empty()));
+            return TCOTS_Criteria.MaxToxicityReached().createCriterion(new Conditions(Optional.empty()));
         }
 
         public static Criterion<TCOTS_CustomCriterion.Conditions> createKillWithHangedCriterion() {
-            return TCOTS_Criteria.KILL_WITH_HANGED.createCriterion(new Conditions(Optional.empty()));
+            return TCOTS_Criteria.KillWithHanged().createCriterion(new Conditions(Optional.empty()));
         }
 
         public static Criterion<TCOTS_CustomCriterion.Conditions> createDestroyNestCriterion() {
-            return TCOTS_Criteria.DESTROY_MONSTER_NEST.createCriterion(new Conditions(Optional.empty()));
+            return TCOTS_Criteria.DestroyMonsterNest().createCriterion(new Conditions(Optional.empty()));
         }
 
         public static Criterion<TCOTS_CustomCriterion.Conditions> createDragonsDreamBurningCriterion() {
-            return TCOTS_Criteria.DRAGONS_DREAM_BURNING.createCriterion(new Conditions(Optional.empty()));
+            return TCOTS_Criteria.DragonsDreamBurning().createCriterion(new Conditions(Optional.empty()));
         }
 
         public static Criterion<TCOTS_CustomCriterion.Conditions> createStopCreeperCriterion() {
-            return TCOTS_Criteria.STOP_CREEPER.createCriterion(new Conditions(Optional.empty()));
+            return TCOTS_Criteria.StopCreeper().createCriterion(new Conditions(Optional.empty()));
         }
 
         public static Criterion<TCOTS_CustomCriterion.Conditions> createRefillConcoctionCriterion() {
-            return TCOTS_Criteria.REFILL_CONCOCTION.createCriterion(new Conditions(Optional.empty()));
+            return TCOTS_Criteria.RefillConcoction().createCriterion(new Conditions(Optional.empty()));
         }
 
         public static Criterion<TCOTS_CustomCriterion.Conditions> createKillRotfiendCriterion() {
-            return TCOTS_Criteria.KILL_ROTFIEND.createCriterion(new Conditions(Optional.empty()));
+            return TCOTS_Criteria.KillRotfiend().createCriterion(new Conditions(Optional.empty()));
         }
 
     }

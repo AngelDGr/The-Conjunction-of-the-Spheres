@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#tcots_witcher:has_flora/crows_eye_spawn",
+  "features": "tcots_witcher:crows_eye_placed",
+  "step": "vegetal_decoration"
+}

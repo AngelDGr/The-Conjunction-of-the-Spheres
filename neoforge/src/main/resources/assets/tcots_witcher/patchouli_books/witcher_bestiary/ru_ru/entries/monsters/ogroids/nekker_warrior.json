@@ -1,0 +1,36 @@
+{
+  "name": "Наккер Воин",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/nekker_warrior.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Наккер Воин - особенно опасный подвид Наккера обыкновенного.$(br2)Повышенная сила и живучесть этих существ отличает их от своих меньших сородичей. Они немного выше ростом и украшены более выраженными шипами и когтями. Наккеры Воины возглавляют свои стаи со свирепостью, которая делает их грозными противниками."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Встречи с Наккерами Воинами никогда не бывают одиночными, так как они всегда окружены другими Наккерами.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса$(li)Равнины$(li)$(l:tcots_witcher:misc/monster_nests)Гнёзда чудовищ$(), могут быть найдены на равнинах и в лесах.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_command.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Поведение$()$(br)Как и Наккер обыкновенный, Наккер Воин роет нору, чтобы оставаться незамеченным, когда у него нет цели, и выпрыгивает, как только находит добычу.$(br2)Их возросшая сила делает их более выносливыми противникаи, иногда способными пробить щит своего врага. Как лидеры, Наккеры Воины так же агрессивно управляют своими стаями, делая их более грозными."
+    },
+    {
+      "type": "tcots_witcher:monster_loot_mutagen",
+      "text": "Старайтесь сосредоточиться на этом, сражаясь с роем Наккеров; $(#0A880E)без лидера Наккеры теряют большую часть своей силы.$()",
+      "items": ["tcots_witcher:nekker_eye", "tcots_witcher:nekker_heart"],
+      "mutagen": ["tcots_witcher:nekker_warrior_mutagen"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_full.png"
+    }
+  ],
+  "sortnum": 1
+}

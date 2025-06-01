@@ -1,0 +1,36 @@
+{
+    "name": "Water Hag",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/water_hag.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Like $(l:tcots_witcher:monsters/necrophages/drowner)drowners$(/l), with whom they often share hunting grounds, water hags dwell near shallow streams, rivers and wetlands.$(br2)Though bulky, they are excellent swimmers. They can even swim through thick mud with astonishing agility, surfacing beside their victims to attack them with their sickle-shaped claws."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "They are also able to form this mud into balls, which they toss to temporarily blind opponents.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Habitat$()$(li)Swamps and Mangrove Swamps near the water$(li)Rivers and lakes",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_launching.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Behavior$()$(br)Similar to the drowner, when the water hag doesn't find a creature to attack, it will dig a hole in the ground and enter in. These holes leave a tiny puddle. If you get too close to the puddle, the water hag will emerge from it to attack you.$(br2)If you get enough distance it's going to launch a mudball, be warned, this mudball can easily blind you."
+        },
+        {
+            "type": "tcots_witcher:monster_loot_mutagen",
+            "text": "The mud in your eyes it's going to wash off after a little time, and it's going to wash faster if you are in water.$(br2)$(#0A880E)Just don't be fooled during the time you don't have enough vision.$()",
+            "items": ["tcots_witcher:water_hag_mud_ball", "tcots_witcher:water_essence"],
+            "mutagen": ["tcots_witcher:water_hag_mutagen"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_full.png"
+        }
+    ],
+    "sortnum": 5
+}

@@ -1,0 +1,36 @@
+{
+  "name": "Ice Troll",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/ice_troll.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Climbing to the top of snow-covered peaks is never a safe endeavor. One can slip and fall into a ravine, be buried in an avalanche – or stumble across ice trolls.$(br2)Unlike the rock trolls found at lower altitudes, these permafrost-dwelling monsters treat nearly every man they encounter as a possible ingredient for a tasty meal."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Luckily ice trolls live atop high mountain ridges so inaccessible they rarely encounter any sentient being.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Habitat$()$(li)Snowy mountains$(li)Snowy biomes",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_special.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Behavior$()$(br)Ice trolls are crueler than their rocky kin. Though they use similar tactics in battle, they are heartier and stronger than rock trolls and thus more dangerous. Like rock trolls, their backs are covered in thick protective armor, meaning one should never strike them from the rear.$(br2)Even though, there are a few reports that indicate some humans have been able to $(l:tcots_witcher:misc/befriending_troll)befriend$(/l) these monsters."
+    },
+    {
+      "type": "tcots_witcher:monster_loot_mutagen",
+      "text": "Lastly, never think of attacking them during a blizzard. At such times they draw power from the surrounding cold and fight with increased strength.",
+      "items": ["minecraft:ice", "minecraft:packed_ice"],
+      "mutagen": ["tcots_witcher:troll_mutagen"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_full.png"
+    }
+  ],
+  "sortnum": 4
+}

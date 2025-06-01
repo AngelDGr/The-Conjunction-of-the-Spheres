@@ -2,7 +2,7 @@
 {
   "title": "Recipes Compendium",
   "icon_sprite": "tcots_witcher:alchemy_almanac/category/recipes",
-  "ordinal": 10
+  "ordinal": 9
 }
 ```
 
@@ -159,6 +159,8 @@
 
 **{#395026}%{gui.recipe-book.category.bombs_oils}%{}**
 <recipe;tcots_witcher:oil_ogroid>
+<recipe;tcots_witcher:oil_ogroid_enhanced>
+<recipe;tcots_witcher:oil_ogroid_superior>
 
 ;;;;;
 

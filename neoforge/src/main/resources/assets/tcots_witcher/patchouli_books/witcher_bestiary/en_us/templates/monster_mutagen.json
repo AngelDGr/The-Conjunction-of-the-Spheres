@@ -1,0 +1,19 @@
+{
+  "components": [
+    {
+      "type": "patchouli:text",
+      "text": "#text",
+      "x": 0,
+      "y": -5
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "neoforge.TCOTS.patchouli.MonsterLoot_CustomComponent",
+      "title": "Mutagen",
+      "color_title": "0000a8",
+      "single": true,
+      "x": 0,
+      "y": 80
+    }
+  ]
+}

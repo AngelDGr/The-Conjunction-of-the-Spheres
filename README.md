@@ -29,7 +29,7 @@
 <span>For a more in-depth description, visit the <a href="https://modrinth.com/mod/the-conjunction-of-the-spheres" rel="nofollow">Modrinth</a> or <a href="https://www.curseforge.com/minecraft/mc-mods/the-conjunction-of-the-spheres" rel="nofollow">Curseforge</a></span>
 
 </ul>
-</div>
+
 <hr />
 <p>&nbsp;</p>
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.imgur.com/81iUNJ1.png" alt="" width="850" height="55" /></p>

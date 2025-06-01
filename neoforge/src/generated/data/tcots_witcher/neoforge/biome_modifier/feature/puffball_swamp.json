@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#tcots_witcher:has_flora/puffball_spawn_swamp",
+  "features": "tcots_witcher:puffball_swamp",
+  "step": "vegetal_decoration"
+}

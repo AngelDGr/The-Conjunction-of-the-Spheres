@@ -1,0 +1,30 @@
+{
+  "name": "Potions",
+  "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/potions.png",
+  "category": "tcots_witcher:dummy",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "One of the most basic forms of alchemy is the creation of potions, and while potions made in a Brewing Stand are strong, the potions made on the Alchemy Table can be even stronger.$(br2)These potions are a lot more expensive than pre-conjunction potions, but they offer many benefits compared to the normal ones."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "First of all, they are more $(o)portable$(), so you can carry more than one in a single space.",
+      "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/potions/potions_main.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "They can also be $(o)$(l:tcots_witcher:alchemy_basics/refilling)refilled$(), so if you conserve the bottle, crafting it's only expensive the first time.$(br2)Of course, nothing this good and strong is easy. They also have their own drawback; because they are significantly stronger, they have $(l:tcots_witcher:alchemy_basics/toxicity)toxicity levels$(/l) that can be dangerous to those who drink them, so your toxicity capacity limits how many of these potions you can drink at once."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(#fc5454)Levels$()$(br)Nearly each potion has three levels; $(o)Normal$(), $(o)Enhanced$() and $(o)Superior$(). Each one being stronger than the last.$(br2)Each level not only increases the intensity of the effect but also the quantity you can carry in a single space.$(br2)$(#0000a8)Splash variants$()$(br)Contrary to pre-conjunction potions, these potions are made to be drunk; however, it's possible to create a splash variant."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Using gunpowder to create them, these splash versions have a max stack of five and significantly less toxicity, but they can't be upgraded, and they have a shorter duration.",
+      "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/potions/potions_splash.png"
+    }
+  ],
+  "sortnum": 3
+}

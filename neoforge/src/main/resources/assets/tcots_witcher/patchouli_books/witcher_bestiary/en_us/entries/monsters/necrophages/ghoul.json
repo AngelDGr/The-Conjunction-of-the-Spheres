@@ -1,0 +1,35 @@
+{
+    "name": "Ghoul",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/ghoul.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "In part, they resemble humans—yet on the whole, they are the utter negation of all that is human. Though they have arms and legs like men, they walk on all fours like wolves or foxes.$(br2)Though they have eerily familiar faces, one searches them in vain for any sign of sentiment, reason or even a spark of consciousness."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "They are driven by one thing and one thing only: an insatiable craving for human flesh.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Habitat$()$(li)Forests (at night)$(li)Plains (at night)$(li)$(l:tcots_witcher:misc/monster_nests)Ghoul nests$(), found in plains or forests",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_regen.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Behavior$()$(br)Ghouls are fast creatures, they love the rotting flesh of corpses, so they usually hunt zombies, but they will not hesitate to hunt humans or even meaty livestock like cows or pigs, as they can recover from eating flesh.$(br)As other monsters, they sometimes launch themselves to their target.$(br)If a ghoul is low on health, and you stop hitting it for some seconds, the ghoul is going to start becoming enraged."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "You can tell that they are in this mode because a red aura starts to surround them. Once enraged, they start regenerating health at an alarming fast rate. This enraged mode only lasts some seconds, so $(#0A880E)try to run or just hit it rapidly.$()",
+            "items": ["tcots_witcher:cadaverine", "tcots_witcher:ghoul_blood"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_full.png"
+        }
+    ],
+    "sortnum": 1
+}

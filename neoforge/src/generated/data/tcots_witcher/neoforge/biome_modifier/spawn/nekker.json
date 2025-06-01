@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/nekker",
+  "spawners": {
+    "type": "tcots_witcher:nekker",
+    "maxCount": 6,
+    "minCount": 4,
+    "weight": 5
+  }
+}

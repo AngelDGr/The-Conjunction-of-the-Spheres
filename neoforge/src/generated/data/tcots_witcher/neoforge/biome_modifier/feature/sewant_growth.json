@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#tcots_witcher:has_flora/mushroom_spawn_old_growth",
+  "features": "tcots_witcher:sewant_mushrooms_growth",
+  "step": "vegetal_decoration"
+}

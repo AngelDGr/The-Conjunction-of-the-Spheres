@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/graveir",
+  "spawners": {
+    "type": "tcots_witcher:graveir",
+    "maxCount": 2,
+    "minCount": 1,
+    "weight": 60
+  }
+}

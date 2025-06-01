@@ -38,8 +38,7 @@ The Bullvore is the largest and most powerful necrophage known. It poses a sever
 With long, razor-sharp claws, it delivers powerful strikes that pierce any shield.
 
 
-Its most distinctive attack is its charge. 
-Using its massive horns, the Bullvore charges through anything in its path, destroying leaves and small obstacles effortlessly. 
+Its most distinctive attack is its charge; Using its massive horns, the Bullvore charges through anything in its path, destroying leaves and small obstacles effortlessly. 
 
 ;;;;;
 

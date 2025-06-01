@@ -1,0 +1,23 @@
+{
+    "name": "The Alchemy Table",
+    "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/alchemy_table.png",
+    "category": "tcots_witcher:dummy",
+    "pages": [
+        {
+            "type": "tcots_witcher:alchemy_table/alchemy_image_below_title",
+            "title": "The Alchemy Table",
+            "text": "To start this travel across the knowledge you need first to get an $(#54fc54)Alchemy Table$().",
+            "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/alchemy_table/alchemy_table_crafting.png"
+        },
+        {
+            "type": "tcots_witcher:alchemy_table/alchemy_image_below",
+            "text": "This station it's going to be your principal tool.$(br2) The use is simple, you need to mix ingredients with the correct quantity of them, all of this it's mixed in an item \"base\", wait for a while, and you get your concoction.",
+            "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/alchemy_table/alchemy_table_gui.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "The recipes can be very complex, so for an easy use $(n)put this book in the lectern the table has, that way you can access all the recipes easily.$()$(br2)Once you have your table ready, the next step it's to gather some $(l:tcots_witcher:alchemy_basics/basic_ingredients)ingredients."
+        }
+    ],
+    "sortnum": 0
+}

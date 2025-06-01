@@ -1,0 +1,36 @@
+{
+    "name": "Водная баба",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/water_hag.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Как и $(l:tcots_witcher:monsters/necrophages/drowner)утопленники$(/l), с которыми они делят охотничьи угодья, водные бабы обитают вблизи неглубоких ручьёв рек и болот.$(br2)Несмотря на свои размеры, они отлично плавают. Они плавают по густой грязи с поразительной ловкостью, выпригивая на жертву, чтобы атаковать ее своими когтями."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "Так же они умеют формировать из этой грязи шары, которые бросают, чтобы ослепить противника.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Болота и мангровые болота рядом с водой$(li)Реки и озёра",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_launching.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)Как и утопленники, когда у водной бабы нет цели, она выкапывает в земле нору и сидит внутри. В этих отверстиях остаётся крошечная лужа. Если вы подойдёте слишком близко к этой луже, из неё выскочит водная баба и нападёт на вас.$(br2)Если вы подойдёте к ней слишком близко, она кинет грязевой шар, который может вас ослепить."
+        },
+        {
+            "type": "tcots_witcher:monster_loot_mutagen",
+            "text": "Грязь, попавшая вам в глаза, через некоторое время смоется, а если вы окажетесь в воде, то ещё быстрее.$(br2)$(#0A880E)Только не дайте себя обмануть, пока вы ослеплены.$()",
+            "items": ["tcots_witcher:water_hag_mud_ball", "tcots_witcher:water_essence"],
+            "mutagen": ["tcots_witcher:water_hag_mutagen"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_full.png"
+        }
+    ],
+    "sortnum": 5
+}

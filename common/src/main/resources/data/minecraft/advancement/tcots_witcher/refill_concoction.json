@@ -2,7 +2,7 @@
   "parent": "minecraft:tcots_witcher/alchemy",
   "criteria": {
     "refill_concoction": {
-      "trigger": "minecraft:tcots_witcher/refill_concoction"
+      "trigger": "tcots_witcher:tcots_witcher/refill_concoction"
     }
   },
   "display": {

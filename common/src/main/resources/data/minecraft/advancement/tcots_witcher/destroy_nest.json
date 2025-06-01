@@ -2,7 +2,7 @@
   "parent": "minecraft:tcots_witcher/craft_bomb",
   "criteria": {
     "destroy_nest": {
-      "trigger": "minecraft:tcots_witcher/destroy_monster_nest"
+      "trigger": "tcots_witcher:tcots_witcher/destroy_monster_nest"
     }
   },
   "display": {

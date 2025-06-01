@@ -1,0 +1,25 @@
+{
+  "name": "Refilling",
+  "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/refilling.png",
+  "category": "tcots_witcher:dummy",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "When you create a potion, decoction or monster oil in the Alchemy Table you left a lot of magic in the bottle, much more than with a potion made with a Brewing Stand, those magic leftovers let you collect the empty bottles and easily refill them.$(br2)So, you are probably asking; how I can refill my concoctions?"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "You have two ways to refill them:$(li)Using an Alchemy Table.$(li)By Sleeping.",
+      "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/refilling/refilling_bottle.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "In the two cases, you need to have $(l:tcots_witcher:alchemy_basics/basic_ingredients)alcohol$(/l).$(br2)To use the Alchemy Table to refill your concoctions, just take some alcohol with your hand and use it on the table.$(br)To refill them by sleeping, you also need to have some kind of alcohol with you, by staying in bed for a while the concoctions are going to refill automatically. When you refill in this way, the $(n)alcohest has priority for refilling over others$()."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "As note, each type of alcohol is different, and each one refill a different quantity of concoctions:$(li)$(#eecc59)Icy Spirit$(): $(#000000)1 slot.$()$(li)$(#cc9395)Cherry Cordial$(): $(#000000)2 slots.$()$(li)$(#209740)Dwarven Spirit$(): $(#000000)2 slots.$()$(li)$(#ef0007)Alcohest$(): $(#000000)4 slots.$()$(li)$(#db3800)Village Herbal$(): $(#000000)4 slots.$()$(li)$(#101010)Mandrake Cordial$(): $(#000000)6 slots.$()$(li)$(#4d4c3b)White Gull$(): $(#000000)8 slots."
+    }
+  ],
+  "sortnum": 7
+}

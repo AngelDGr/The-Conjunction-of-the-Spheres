@@ -1,0 +1,15 @@
+{
+  "values": [
+    "minecraft:birch_forest",
+    "minecraft:forest",
+    "minecraft:dark_forest",
+    {
+      "id": "#minecraft:has_structure/village_savanna",
+      "required": false
+    },
+    {
+      "id": "#minecraft:is_jungle",
+      "required": false
+    }
+  ]
+}

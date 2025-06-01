@@ -31,7 +31,7 @@
 - Леса
 - Равнины
 - [Гнёзда чудовищ](^tcots_witcher:misc/monster_nests), встречаются на равнинах или в лесах
-  ![Наккер](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_lunging.png,fit)
+  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_lunging.png,fit)
 
 ;;;;;
 

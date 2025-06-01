@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#tcots_witcher:has_flora/celandine_spawn",
+  "features": "tcots_witcher:celandine_placed",
+  "step": "vegetal_decoration"
+}

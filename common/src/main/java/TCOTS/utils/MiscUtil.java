@@ -1,5 +1,9 @@
 package TCOTS.utils;
 
+import TCOTS.registry.TCOTS_Effects;
+import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.LightLayer;
 import org.apache.commons.compress.utils.Lists;
 import org.lwjgl.glfw.GLFW;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -17,6 +21,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 public class MiscUtil {
+    @SuppressWarnings("all")
+    public static float gvalchir_penetration = MiscUtil.isWitcherRPGLoaded()? 0.75f: 0.75f;
+    public static float moonblade_bonus      = MiscUtil.isWitcherRPGLoaded()? 0.15f: 0.25f;
+
+
     /**
     Puts a dynamic tooltip to an armor item that it can be open with shift
      @param stack The stack that it's going to have the tooltip
@@ -78,5 +87,29 @@ public class MiscUtil {
         }
 
         return level;
+    }
+
+
+
+
+    public static boolean canHaveCatEffect(LivingEntity player){
+
+        int lightBlock = player.level().getBrightness(LightLayer.BLOCK, player.blockPosition());
+        int lightSky   = player.level().getBrightness(LightLayer.SKY,   player.blockPosition());
+
+        return player.hasEffect(TCOTS_Effects.CatEffect()) && !(player.isSpectator()) && ((lightBlock <=4 && lightSky <= 10) || (isNightTicks(player) && lightBlock <=4));
+    }
+
+    private static boolean isNightTicks(LivingEntity player){
+        long time = player.level().getDayTime() % 24000;
+        return time >= 13000 && time < 23000;
+    }
+
+
+
+    /** In Fabric detects if <a href="https://www.curseforge.com/minecraft/mc-mods/witcher-rpg-class">Witcher (More RPG Classes)</a> is present, in NeoForge only returns false (because the mod is Fabric only)*/
+    @ExpectPlatform
+    public static boolean isWitcherRPGLoaded(){
+        throw new AssertionError();
     }
 }

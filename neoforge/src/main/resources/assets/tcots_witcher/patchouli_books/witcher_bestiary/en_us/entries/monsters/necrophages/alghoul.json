@@ -1,0 +1,35 @@
+{
+    "name": "Alghoul",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/alghoul.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Alghouls differ from normal $(l:tcots_witcher:monsters/necrophages/ghoul)ghouls$(/l) in size, strength, coloring and, most importantly, intelligence. Whereas ghouls are unfit to plan even the simplest ambush, alghouls are capable of forethought, and are thus much more dangerous.$(br2)Ghouls seem to possess wits enough to at least know a brighter mind when they see it, and so let alghouls lead their packs."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "When encountering such a pack the alghoul should be eliminated as a first priority, leaving the other beasts for once their leader is gone.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Habitat$()$(li)Forests (at night)$(li)Plains (at night)$(li)$(l:tcots_witcher:misc/monster_nests)Ghoul nests$(), found in plains or forests",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_spikes.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Behavior$()$(br)They are a stronger version of $(l:tcots_witcher:monsters/necrophages/ghoul)ghouls$(/l), so they share a lot of similarities.$(br2)One main difference is that when they start regenerating, their shout is so powerful that it's going to push any other monster nearby.$(br2)Once they stop shouting, they are going to grow their spikes, at this point any melee damage is going to damage the attacker too."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "If the Alghoul has its spikes out, or it's in the middle of a combat, it can also enrage normal ghouls that are close to it, so $(#0A880E)it's better focus on killing it before the other ghouls.$()",
+            "items": ["tcots_witcher:cadaverine", "tcots_witcher:ghoul_blood", "tcots_witcher:alghoul_bone_marrow"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_full.png"
+        }
+    ],
+    "sortnum": 2
+}

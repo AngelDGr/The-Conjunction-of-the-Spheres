@@ -7,7 +7,7 @@
     "tcots_witcher:cave_troll_liver",
     "tcots_witcher:troll_mutagen"
   ],
-  "ordinal": 4
+  "ordinal": 3
 }
 ```
 

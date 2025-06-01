@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/water_hag_swamp",
+  "spawners": {
+    "type": "tcots_witcher:water_hag",
+    "maxCount": 2,
+    "minCount": 1,
+    "weight": 80
+  }
+}

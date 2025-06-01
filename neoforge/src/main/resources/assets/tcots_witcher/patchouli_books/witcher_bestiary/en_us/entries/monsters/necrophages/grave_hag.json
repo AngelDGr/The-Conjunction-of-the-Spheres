@@ -1,0 +1,35 @@
+{
+    "name": "Grave Hag",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/grave_hag.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Few monsters' names fit as well as the grave hags.$(br2)As one might guess, these creatures resemble aged, deformed women and loiter near graveyards and battlefields.$(br2)Grave hags feed on human corpses and in particular on the rotten marrow which they slurp from human bones using their long, prehensile tongues."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "With claws built for digging up buried bodies that serve just as well as weapons to rend flesh.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Habitat$()$(li)Forests (at night)$(li)Plains (at night)$(li)Dark caves",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_running.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Behavior$()$(br)Even when it's similar in appearance to a $(l:tcots_witcher:monsters/necrophages/water_hag)water hag$(/l), a grave hag is way more aggressive and dangerous, these two don't share hunting grounds.$(br2)Instead of launching tiny mudballs, if you try to escape, it's going to run on it four limbs and try to catch you at a tremendous speed."
+        },
+        {
+            "type": "tcots_witcher:monster_mutagen",
+            "text": "It can also use its tongue as a weapon, making a sweep with it, causing a lot of knockback and damaging a lot any shield that you could use.",
+            "mutagen": ["tcots_witcher:grave_hag_mutagen"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_full.png"
+        }
+    ],
+    "sortnum": 6
+}

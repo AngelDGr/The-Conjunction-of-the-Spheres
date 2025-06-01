@@ -1,0 +1,18 @@
+{
+  "name": "Decoctions",
+  "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/decoctions.png",
+  "category": "tcots_witcher:dummy",
+  "pages": [
+    {
+      "type": "tcots_witcher:decoctions/decoctions_image_below_title",
+      "title": "      Decoctions",
+      "text": "The decoctions are special, very strong potions made with $(l:tcots_witcher:alchemy_basics/basic_ingredients)monsters mutagens.",
+      "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/decoctions/decoctions_main.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Similar to potions, they need to be drunk and they can be $(l:tcots_witcher:alchemy_basics/refilling)refilled$(/l), however you only can carry one in one space and they can't be upgraded.$(br2)The $(l:tcots_witcher:alchemy_basics/toxicity)toxicity levels$(/l) of decoctions are so high that usually you can only drink one at the time, but the effects are so strong that you usually don't need more than that.$(br)$(li)$(n)Note: The monster mutagens can be only acquired using looting"
+    }
+  ],
+  "sortnum": 4
+}

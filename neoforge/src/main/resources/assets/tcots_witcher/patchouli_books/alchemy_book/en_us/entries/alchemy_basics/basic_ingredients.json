@@ -1,0 +1,37 @@
+{
+    "name": "Ingredients",
+    "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/basic_ingredients.png",
+    "category": "tcots_witcher:dummy",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "While pre-Conjunction plants (before the Conjunction of the Spheres) used in various recipes are well-known, this section will describe where to find any post-Conjunction ingredient that may be unfamiliar.$(br2)This book only covers plants ingredients, to further info in monster ingredients, buy a Bestiary at your local librarian."
+        },
+        {
+            "type": "tcots_witcher:basic_ingredients/plants",
+            "items":     ["tcots_witcher:celandine",                "tcots_witcher:crows_eye",                   "tcots_witcher:arenaria",                            "tcots_witcher:allspice"],
+            "tooltips":  ["Grows in Plains, Forests, and Meadows.", "Grows in Taigas, Snowy Taigas and Groves.", "Grows in Taigas, Snowy Taigas and Flower Forests.", "Bought from herbalist villagers or from Sniffers."],
+            "items1":    ["tcots_witcher:bryonia",                             "tcots_witcher:ergot_seeds",                         "tcots_witcher:verbena",                                    "tcots_witcher:han_fiber"],
+            "tooltips1": ["Grows in caves, sometimes grows at surface level.", "Harvested from wheat, similar to a poisonous potato.", "Grows in Plains, Flower Forests, Forests and Meadows.", "Grows in Swamps, Jungles and Savannas."],
+            "items2":    ["minecraft:air", "tcots_witcher:puffball",            "tcots_witcher:sewant_mushrooms",           "minecraft:air"],
+            "tooltips2": ["",           "Grows in Taiga, Swamps and caves.", "Grows in Taigas, Dark Forests and caves.", ""]
+        },
+        {
+            "type": "tcots_witcher:basic_ingredients/advanced_ingredients",
+            "items":    ["tcots_witcher:aether",  "tcots_witcher:vitriol",  "tcots_witcher:vermilion", "tcots_witcher:hydragenum"],
+            "tooltips": ["Crafted, see recipes.", "Crafted, see recipes.",  "Crafted, see recipes.",   "Crafted, see recipes."],
+            "items1":   ["tcots_witcher:rubedo",  "tcots_witcher:quebrith", "tcots_witcher:rebis",     "tcots_witcher:nigredo"],
+            "tooltips1":["Crafted, see recipes.", "Crafted, see recipes.",  "Crafted, see recipes.",   "Crafted, see recipes."],
+            "items2":   ["tcots_witcher:monster_fat",                                                   "tcots_witcher:alchemy_paste",      "tcots_witcher:stammelfords_dust", "tcots_witcher:alchemists_powder"],
+            "tooltips2":["Obtained from Ravagers, Hoglins, Zoglins, Polar Bears and Piglins Brutes.",   "Bought from herbalist villagers.", "Crafted, see recipes.",           "Bought from herbalist villagers."]
+        },
+        {
+            "type": "tcots_witcher:basic_ingredients/alcohol",
+            "items":    ["tcots_witcher:icy_spirit",         "tcots_witcher:dwarven_spirit", "tcots_witcher:alcohest", "tcots_witcher:village_herbal"],
+            "tooltips": ["Bought from herbalist villagers.", "Crafted, see recipes.",        "Crafted, see recipes.",  "Bought from farmer villagers."],
+            "items1":   ["minecraft:air", "tcots_witcher:mandrake_cordial",   "tcots_witcher:cherry_cordial",     "minecraft:air"],
+            "tooltips1":["",              "Bought from herbalist villagers.", "Bought from herbalist villagers.", ""]
+        }
+    ],
+    "sortnum": 1
+}

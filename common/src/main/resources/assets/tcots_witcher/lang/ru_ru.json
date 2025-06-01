@@ -52,9 +52,13 @@
     "item.witcher_rpg.relic_witcher_swords.description_1": "Реликвия",
 
     "item.tcots_witcher.witcher_bestiary": "Бестиарий Чудовищ",
+    "item.tcots_witcher.witcher_bestiary.patchouli": "  Бестиарий Чудовищ",
+    "patchouli.tcots_witcher.witcher_bestiary.landing_page": "«Сопряжение сфер» - это название звучит столь загадочно для уха простого обывателя, что можно было бы его заменить гораздо более простой альтернативой: Столкновение миров.$(br2)Узнай всё, что сможешь о том, что стало с миром после сопряжения сфер. Если сможешь, воин.",
     "tooltip.tcots_witcher.witcher_bestiary": "Изучите опасности этого нового мира",
 
     "item.tcots_witcher.alchemy_book": "Алхимический альманах",
+    "item.tcots_witcher.alchemy_book.patchouli": "Алхимический альманах",
+    "patchouli.tcots_witcher.alchemy_book.landing_page": "Чтобы понять алхимию, необходимо осознать две великие истины.$(br)- Первая истина: «Как сверху, так и снизу.»$(br)- Вторая истина: «Всё едино.»$(br2)Эти простые истины учат тому, что алхимические вещества повсюду,$(br)потому что алхимия - это жизнь, а жизнь - это алхимия.",
     "tooltip.tcots_witcher.alchemy_book": "Информация о травах и алхимии",
     "lavender.alchemy_book.recipes": "Сборник рецептов элексиров, отваров, масел против чудовищ, бомб и алхимических ингредиентов.",
 
@@ -333,6 +337,7 @@
     "tcots_witcher.gui.herbal_table.title": "Создание травяных настоек",
 
 
+    "entity.minecraft.villager.tcots_witcher.herbalist_witcher": "Травник",
     "entity.minecraft.villager.herbalist_witcher": "Травник",
     "tcots_witcher.sounds.work_herbalist": "Травник работает",
 
@@ -694,11 +699,11 @@
 
     "item.tcots_witcher.gvalchir": "Махакамский рунный сигиль",
     "tooltip.tcots_witcher.gvalchir": "Сильный рунический меч",
-    "tooltip.tcots_witcher.gvalchir.extra": "+75% Пробитие брони",
+    "tooltip.tcots_witcher.gvalchir.extra": "+%s%% Пробитие брони",
 
     "item.tcots_witcher.moonblade": "Лунный клинок",
     "tooltip.tcots_witcher.moonblade": "Смертоносный священный меч",
-    "tooltip.tcots_witcher.moonblade.extra": "+50% Урона против чудовищ",
+    "tooltip.tcots_witcher.moonblade.extra": "+%s%% Урона против чудовищ",
 
     "item.tcots_witcher.dyaebl": "Д’Иабль",
     "tooltip.tcots_witcher.dyaebl": "Покрыт кровью Чудовищ",
@@ -925,5 +930,8 @@
     "text.config.tcots_config.option.witcher_eyes.XEyePos.tooltip": "Изменение положения по горизонтали",
 
     "text.config.tcots_config.option.witcher_eyes.YEyePos": "Положение глаз по вертикали",
-    "text.config.tcots_config.option.witcher_eyes.YEyePos.tooltip": "Изменение положения по вертикали"
+    "text.config.tcots_config.option.witcher_eyes.YEyePos.tooltip": "Изменение положения по вертикали",
+
+    "text.config.tcots_config.option.hasRPGTextures": "Текстура мечей 32x32",
+    "text.config.tcots_config.option.hasRPGTextures.tooltip": "Изменяет текстуру мечей на 32x32, для соответствия с\nВедьмаком (Больше классов РПГ), автоматически включается\nпри загруженном моде"
 }

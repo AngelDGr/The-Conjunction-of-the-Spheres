@@ -1,7 +1,7 @@
 package TCOTS.blocks.geo.model;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.registry.TCOTS_Blocks;
 import TCOTS.blocks.entity.SkeletonBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;

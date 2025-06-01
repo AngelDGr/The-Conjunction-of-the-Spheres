@@ -1,6 +1,7 @@
 package TCOTS.blocks;
 
 import TCOTS.blocks.entity.SkeletonBlockEntity;
+import TCOTS.registry.TCOTS_Blocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -106,7 +107,7 @@ public class SkeletonBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return new SkeletonBlockEntity(TCOTS_Blocks.SKELETON_BLOCK_ENTITY, pos, state);
+        return new SkeletonBlockEntity(TCOTS_Blocks.SkeletonBlockEntity(), pos, state);
     }
 }
 

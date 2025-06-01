@@ -1,7 +1,7 @@
 package TCOTS.entity.misc;
 
 import TCOTS.TCOTS_Tags;
-import TCOTS.advancements.TCOTS_Criteria;
+import TCOTS.registry.TCOTS_Criteria;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -57,7 +57,7 @@ public class DragonsDreamCloud extends AreaEffectCloud {
 
                 if(entity.isOnFire() && this.getOwner()!=null && this.getOwner() instanceof Player && entity instanceof LivingEntity){
                     if(this.getOwner() instanceof ServerPlayer serverPlayer){
-                        TCOTS_Criteria.DRAGONS_DREAM_BURNING.trigger(serverPlayer);
+                        TCOTS_Criteria.DragonsDreamBurning().trigger(serverPlayer);
                     }
                 }
 

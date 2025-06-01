@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/foglet_dark",
+  "spawners": {
+    "type": "tcots_witcher:foglet",
+    "maxCount": 2,
+    "minCount": 1,
+    "weight": 120
+  }
+}

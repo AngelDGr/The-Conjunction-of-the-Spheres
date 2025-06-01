@@ -1,6 +1,7 @@
 package TCOTS.blocks;
 
 import TCOTS.blocks.entity.GiantAnchorBlockEntity;
+import TCOTS.registry.TCOTS_Blocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -47,7 +48,7 @@ public class GiantAnchorBlock extends BaseEntityBlock {
         return Shapes.or(BOTTOM_SHAPE, topPart);
     }
 
-    protected GiantAnchorBlock(Properties settings) {
+    public GiantAnchorBlock(Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
@@ -100,6 +101,6 @@ public class GiantAnchorBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return new GiantAnchorBlockEntity(TCOTS_Blocks.GIANT_ANCHOR_ENTITY, pos, state);
+        return new GiantAnchorBlockEntity(TCOTS_Blocks.GiantAnchorEntity(), pos, state);
     }
 }

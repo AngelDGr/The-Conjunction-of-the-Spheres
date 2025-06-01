@@ -2,7 +2,7 @@
 {
   "title": "Potions",
   "icon_sprite": "tcots_witcher:alchemy_almanac/category/potions",
-  "ordinal": 4,
+  "ordinal": 3,
   "associated_items": [
     "tcots_witcher:swallow_potion",
     "tcots_witcher:killer_whale_potion",

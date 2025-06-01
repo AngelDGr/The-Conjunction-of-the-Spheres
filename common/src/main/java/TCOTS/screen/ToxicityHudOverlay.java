@@ -44,6 +44,8 @@ public class ToxicityHudOverlay {
     }
 
     public static void onHudRender(GuiGraphics context, float tickDelta) {
+
+
         Minecraft client = Minecraft.getInstance();
 
         if (client != null && !client.options.hideGui) {

@@ -1,0 +1,35 @@
+{
+    "name": "Scurver",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/scurver.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Scurvers are $(l:tcots_witcher:monsters/necrophages/rotfiend)rotfiends$(/l) larger cousins. While fighting them one cannot afford to forget about their special boney spines, razor-sharp protuberances sticking out from their skeletons.$(br2)When a scurver is near death, the gasses and enzymes gathered within its body cause it to explode."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "The spines go out at great speed, turning them into one last deadly weapon in their arsenal.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Habitat$()$(li)Forests (at night)$(li)Plains (at night)$(li)Jungles (at night)",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_exploding.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Behavior$()$(br)They are basically a stronger version of rotfiends.$(br2)Their main difference it's the spines that grows across all its body. If one of these spines hits you it's going to do a lot of damage, and it's going to make you bleed, so make sure to use a shield when this happens to protect yourself from the resulting explosion (or get far enough away quickly)."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "If you manage $(#0A880E)kill the creature when it's in flames, you could retrieve its spines and use them as weapons.$()",
+            "items": ["tcots_witcher:cadaverine","tcots_witcher:rotfiend_blood","tcots_witcher:scurver_spine"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_full.png"
+        }
+    ],
+    "sortnum": 7
+}

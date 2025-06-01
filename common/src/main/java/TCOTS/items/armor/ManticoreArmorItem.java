@@ -1,8 +1,10 @@
 package TCOTS.items.armor;
 
 import TCOTS.items.geo.renderer.ManticoreArmorRenderer;
+import TCOTS.registry.TCOTS_ItemsMaterials;
 import TCOTS.utils.GeoControllersUtil;
 import TCOTS.utils.MiscUtil;
+import TCOTS.utils.SwordsAndArmorAttributes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;

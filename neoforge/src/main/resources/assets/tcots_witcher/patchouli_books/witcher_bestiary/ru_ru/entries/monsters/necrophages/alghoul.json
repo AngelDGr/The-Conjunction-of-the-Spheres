@@ -1,0 +1,35 @@
+{
+    "name": "Альгуль",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/alghoul.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Альгули отличаются от обычных $(l:tcots_witcher:monsters/necrophages/ghoul)гулей$(/l) размером, силой, окрасом и, самое важное - интеллектом. Если, гули неспособны спланировать самую простую засаду, то альгули весьма умны и, гораздо более опасны.$(br2)Гули, похоже, способны распознать более разумное существо, когда они его видят, и поэтому позволяют альгулям вести свои стаи."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "При встрече с такой стаей в первую очередь стоит убить альгуля, оставив остальных чудовищ без вожака. Так уничтожить их будет гораздо проще.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)$(l:tcots_witcher:misc/monster_nests)Гнездо альгуля$(), найденое на равнине или в лесу.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_spikes.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)Альгуль - сильная версия $(l:tcots_witcher:monsters/necrophages/ghoul)гуля$(/l), так что, они очень похожи.$(br2)Главное отличие в том, что когда они регененрируют, их крик становится настолько мощным, что отталкивает любого монстра поблизости.$(br2)После регенерации у них вырастают шипы, и после этого любой урон, нанесённый в ближнем бою, будет наносить урон и атакующему."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "Если альгуль выпустил шипы или находится в центре боя, он также может разъярить обычных гулей, которые находятся рядом с ним, поэтому $(#0A880E)лучше сосредоточиться на том, чтобы убить его раньше других гулей.$()",
+            "items": ["tcots_witcher:cadaverine", "tcots_witcher:ghoul_blood", "tcots_witcher:alghoul_bone_marrow"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_full.png"
+        }
+    ],
+    "sortnum": 2
+}

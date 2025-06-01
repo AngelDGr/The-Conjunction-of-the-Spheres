@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/foglet_swamp",
+  "spawners": {
+    "type": "tcots_witcher:foglet",
+    "maxCount": 3,
+    "minCount": 1,
+    "weight": 80
+  }
+}

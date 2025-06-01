@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#tcots_witcher:has_flora/sewant_spawn_normal",
+  "features": "tcots_witcher:sewant_mushrooms_normal",
+  "step": "vegetal_decoration"
+}

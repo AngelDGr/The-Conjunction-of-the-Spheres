@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "tcots_witcher",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"name": "The Conjunction of the Spheres",
 	"description": "New monsters, armors, weapons, potions and challenges from the Witcher Universe, beware, The Conjunction of the Spheres!",
 	"authors": [
@@ -16,15 +16,15 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-          "TCOTS.TCOTS_MainFabric"
+          "fabric.TCOTS.TCOTS_MainFabric"
 		],
 
 		"client": [
-          "TCOTS.TCOTS_ClientFabric"
+          "fabric.TCOTS.TCOTS_ClientFabric"
 		],
 
 		"fabric-datagen": [
-			"TCOTS.TCOTS_DataGenerator"
+          "fabric.TCOTS.TCOTS_DataGenerator"
 		],
 
 		"jei_mod_plugin": [
@@ -34,7 +34,7 @@
 	"mixins": [
       "tcots_witcher.mixins.json", "tcots_witcher.fabric.mixins.json"
 	],
-	"accessWidener" : "tcots_witcher.accesswidener",
+	"accessWidener" : "tcots_witcher-common.accesswidener",
 	"depends": {
 		"fabricloader": ">=0.16.9",
 		"minecraft": "~1.21",

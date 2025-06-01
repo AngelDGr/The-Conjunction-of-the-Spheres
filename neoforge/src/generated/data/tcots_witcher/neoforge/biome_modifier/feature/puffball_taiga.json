@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#tcots_witcher:has_flora/puffball_spawn_taiga",
+  "features": "tcots_witcher:puffball_taiga",
+  "step": "vegetal_decoration"
+}

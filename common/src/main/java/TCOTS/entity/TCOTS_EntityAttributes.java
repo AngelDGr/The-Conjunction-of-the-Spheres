@@ -19,8 +19,6 @@ public class TCOTS_EntityAttributes {
     public static final Holder<Attribute> AARD_INTENSITY = BuiltInRegistries.ATTRIBUTE.wrapAsHolder(BuiltInRegistries.ATTRIBUTE.get(ResourceLocation.fromNamespaceAndPath("witcher_rpg", "aard_intensity")));
     public static final Holder<Attribute> SPELL_CRITICAL_DAMAGE = BuiltInRegistries.ATTRIBUTE.wrapAsHolder(BuiltInRegistries.ATTRIBUTE.get(ResourceLocation.fromNamespaceAndPath("spell_power", "critical_damage")));
 
-
-
     @SuppressWarnings("all")
     private static Holder<Attribute> register(String id, Attribute attribute) {
         return Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,id), attribute);

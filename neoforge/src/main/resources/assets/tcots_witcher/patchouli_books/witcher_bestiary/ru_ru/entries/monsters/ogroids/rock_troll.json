@@ -1,0 +1,36 @@
+{
+  "name": "Скальный Тролль",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/rock_troll.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Если во время похода в горы вы заметите движущийся камень — не сомневайтесь в своём зрении. Лучше приготовьте меч — скорее всего, перед вами Скальный Тролль.$(br2)Откровенно говоря, не все встречи с этими существами ведут к сражению — пусть тролли и не блещут умом, но здраво рассуждать способны."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Однако, как и другие монстры, некоторые из них откровенно враждебны, и с ними бывает невозможно договориться.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Среда обитания$()$(li)Горы$(li)Пещеры",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_special.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Поведение$()$(br)Скальные Тролли — жестокие бойцы с огромной силой и защитой. Их каменное покрытые спины надёжно оберегает от фланговых атак. Убегать от них, честно говоря, затея скверная — они с удивительной силой и точностью метают камни.$(br2)Их массивные руки также позволяют им блокировать атаки в лоб, ведь при блокировке их руки становятся крепкими, как каменная стена."
+    },
+    {
+      "type": "tcots_witcher:monster_loot_mutagen",
+      "text": "К счастью, многие Скальные Тролли не агрессивны и умеют $(l:tcots_witcher:misc/befriending_troll)дружить с человеком$(/l). Однако, существует печально известная порода $(n)бешенных$() троллей. Они настроены крайне враждебно, их легко узнать по красным от ярости глазам.",
+      "items": ["tcots_witcher:cave_troll_liver", "minecraft:cobblestone"],
+      "mutagen": ["tcots_witcher:troll_mutagen"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_full.png"
+    }
+  ],
+  "sortnum": 3
+}

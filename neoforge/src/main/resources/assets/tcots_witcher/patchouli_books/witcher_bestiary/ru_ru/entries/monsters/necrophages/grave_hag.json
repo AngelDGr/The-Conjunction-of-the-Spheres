@@ -1,0 +1,35 @@
+{
+    "name": "Кладбищенская баба",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/grave_hag.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Многим чудовищам их имена не подходят, но не кладбищенской бабе. Как можно догадаться, эти существа выглядят старыми изуродованными женщинами и бродят по кладбищам и полям битв. Кладбищенские бабы питаются трупами, в особенности гнилым костным мозгом, который они высасывают из человеческих костей своими длинными языками."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "Когти, предназначенные для раскапывания могил, служат неплохим оружием для разрывания плоти.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)Тёмные пещеры",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_running.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)Внешне похожая на $(l:tcots_witcher:monsters/necrophages/water_hag)водную бабу$(/l), кладбищенская баба гораздо агрессивнее и опаснее. Эти двое не делятся местом охоты.$(br2)Если попробуешь убежать, то она не станет кидаться в тебя грязью, а на огромной скорости погонится за тобой на четырёх конечностях, пытаясь поймать."
+        },
+        {
+            "type": "tcots_witcher:monster_mutagen",
+            "text": "Также она использует свой язык в качестве оружия, делая им взмах, она делает сильный удар нанося урон любому щиту, который вы используете.",
+            "mutagen": ["tcots_witcher:grave_hag_mutagen"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_full.png"
+        }
+    ],
+    "sortnum": 6
+}

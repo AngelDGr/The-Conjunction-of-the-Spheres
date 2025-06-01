@@ -1,0 +1,36 @@
+{
+    "name": "Туманник",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/foglet.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Туманники могут появиться везде, где может возникнуть туман: если тумана нет, они вызовут его сами. Быстро сгущающийся безветренный воздух безошибочно сигнализирует о присутствии туманника и подготовке к атаке.$(br)У этих существ мощные руки и когти, но что делает их по-настоящему опасными, так это мастерство обмана, запутывания и дезориентации."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "Говорят, что туманники также обладают способностью создавать сложные иллюзии из чистого тумана.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Болота (ночью)$(li)Леса (ночью, особенно тёмный лес)$(li)Горы (ночью)",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_fog.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)Туманник - опасный монстр-иллюзионист, при приближении к которому он начнёт создавать вокруг себя густой туман, становясь невидимым и неуязвимым, сливаясь с туманом воедино.$(br2)В момент превращения он создаёт две иллюзии, не бойтесь этих иллюзий, так как их можно развеить одним точным ударом."
+        },
+        {
+            "type": "tcots_witcher:monster_loot_mutagen",
+            "text": "Туманник и две иллюзии будут атаковать вас и только когда они нанесут вам урон - станут видимыми и снова уязвимыми, Воспользуйтесь моментом, чтобы $(#0A880E)быстро убить туманника, пока он снова не растворился в тумане.$()",
+            "items": ["tcots_witcher:cadaverine", "tcots_witcher:foglet_teeth"],
+            "mutagen": ["tcots_witcher:foglet_mutagen"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_full.png"
+        }
+    ],
+    "sortnum": 4
+}

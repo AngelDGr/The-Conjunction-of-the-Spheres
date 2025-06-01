@@ -6,7 +6,7 @@
   "associated_items": [
     "tcots_witcher:alghoul_bone_marrow"
   ],
-  "ordinal": 3
+  "ordinal": 2
 }
 ```
 

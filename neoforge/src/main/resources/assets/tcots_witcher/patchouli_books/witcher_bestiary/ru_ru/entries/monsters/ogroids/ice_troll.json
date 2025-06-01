@@ -1,0 +1,36 @@
+{
+  "name": "Ледяной Тролль",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/ice_troll.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Восхождение на вершины заснеженных пиков никогда не было безопасным занятием. Можно поскользнуться и упасть в овраг, быть погребённым под лавиной, ну, или наткнуться на ледяного тролля.$(br2)В отличие от скальных троллей, обитающих на более низких высотах, эти, обитающие в вечной мерзлоте монстры, рассматривают почти каждого встречного путника как возможный ингредиент для вкусного блюда."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "К счастью, ледяные тролли живут на вершинах высоких горных хребтов, настолько недоступных, что ни одно разумное существо туда не пойдёт по своей воле.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Среда обитания$()$(li)Заснеженные горы$(li)Снежные биомы",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_special.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Поведение$()$(br)Ледяные тролли более жестоки, чем их скалистые сородичи. Хотя они и используют схожую тактику в бою, они живучей и сильнее горных троллей и, следовательно, более опасны.$(br2)Как и у скальных троллей, их спины покрыты толстой защитной бронёй, а это значит, что напасть на них с зади даже и пытаться не стоит. Несмотря на то, что есть несколько случаев, указывающих на то, что некоторым людям удалось $(l:tcots_witcher:misc/befriending_troll)подружиться$(/l) с этими чудовищами."
+    },
+    {
+      "type": "tcots_witcher:monster_loot_mutagen",
+      "text": "И, наконец, никогда не вздумайте нападать на них во время снежной бури. В эти моменты они черпают энергию из окружающего их холода и сражаются с удвоенной силой.",
+      "items": ["minecraft:ice", "minecraft:packed_ice"],
+      "mutagen": ["tcots_witcher:troll_mutagen"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_full.png"
+    }
+  ],
+  "sortnum": 4
+}

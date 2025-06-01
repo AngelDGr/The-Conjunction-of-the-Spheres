@@ -7,7 +7,7 @@
     "tcots_witcher:drowner_tongue",
     "tcots_witcher:drowner_brain"
   ],
-  "ordinal": 1
+  "ordinal": 0
 }
 ```
 

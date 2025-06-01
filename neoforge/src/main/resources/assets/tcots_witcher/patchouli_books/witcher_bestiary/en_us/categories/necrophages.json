@@ -1,0 +1,6 @@
+{
+    "name": "Necrophages",
+    "description": "One of the most common type of post-conjunction monster, with a rotten flesh and awful smell, these undead creatures are similar to the common zombie, skeleton, stray or husk but a lot more powerful.$(br2)$(#ff0000)No poison has effect on their rotten unlife$()$(br2)$(#0A880E)Susceptible to $(#b71520)Necrophage Oil$()$().",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/necrophages.png",
+    "sortnum": 1
+}

@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#tcots_witcher:has_flora/arenaria_spawn",
+  "features": "tcots_witcher:arenaria_placed",
+  "step": "vegetal_decoration"
+}

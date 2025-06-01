@@ -1,0 +1,23 @@
+{
+    "name": "Алхимический стол",
+    "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/alchemy_table.png",
+    "category": "tcots_witcher:dummy",
+    "pages": [
+        {
+            "type": "tcots_witcher:alchemy_table/alchemy_image_below_title",
+            "title": "The Alchemy Table",
+            "text": "Чтобы начать это путешествие за знаниями, в первую очередь вам нужно получить $(#54fc54)Алхимический стол$().",
+            "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/alchemy_table/alchemy_table_crafting.png"
+        },
+        {
+            "type": "tcots_witcher:alchemy_table/alchemy_image_below",
+            "text": "Этот стол станет вашим основным инструментом.$(br2)Использование простое, вам нужно смешивать игредиенты в правильных пропорциях, всё это смешивается в \"основе\", подождите некоторе время, и вы получите свой элексир.",
+            "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/alchemy_table/alchemy_table_gui.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Рецепты могут быть очень сложными, поэтому, для удобства использования $(n)поставьте книгу, которую держите в руках, на подставку, стоящую на алхимическом столе. так рецепты будут у вас в быстром доступе.$()$(br2)Как только вы подготовите стол, следующим шагом будет сбор $(l:tcots_witcher:alchemy_basics/basic_ingredients)ингредиентов."
+        }
+    ],
+    "sortnum": 0
+}

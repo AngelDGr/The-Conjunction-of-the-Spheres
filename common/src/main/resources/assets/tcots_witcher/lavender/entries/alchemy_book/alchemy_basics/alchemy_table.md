@@ -5,7 +5,7 @@
   "associated_items": [
     "tcots_witcher:alchemy_table"
   ],
-  "ordinal": 1
+  "ordinal": 0
 }
 ```
 

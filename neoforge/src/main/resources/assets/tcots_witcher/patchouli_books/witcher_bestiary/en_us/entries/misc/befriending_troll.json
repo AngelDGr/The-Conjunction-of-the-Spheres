@@ -1,0 +1,26 @@
+{
+  "name": "Befriending a Troll",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/misc/befriending_troll.png",
+  "category": "tcots_witcher:misc",
+  "pages": [
+    {
+      "type": "tcots_witcher:image_below_title",
+      "title": "Befriending a Troll",
+      "text": "Trolls are known for their surprising intelligence, and many travelers have bonded with them over the years. The info gathered from these bonds is summarized here.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_friend.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "First of all, there are two ways to improve your standing with trolls: by doing good things for other trolls to raise your overall reputation, or by helping a specific troll to strengthen your friendship with it.$(br2)Trolls are protective of their own and will not hesitate to defend each other. If they see you attacking a $(n)non-rabid$() troll, they will immediately dislike you."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Rock trolls have a fondness for amethyst shards, ice trolls prefer lapis lazuli and forest trolls prefer copper ingots, and they may even offer items like rocks, ores, or enchanted books in exchange.$(br2)Trolls also love alcohol, honey, milk, and meat, gifting any of these will significantly boost your friendship.$(br2)Earning their respect is the easiest by defending them from enemies."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Once you've befriended a troll, you can ask it to follow you, and it will fight on your behalf. $(o)They can be healed with meat.$()$(br2)Trolls can be assigned to guard a spot, either by interacting with them or by using a stick in the ground. They will guard this place against any nearby monster.$(br)While following you, they can also be given any $(n)pre-conjunction$() potion. To dismiss a troll, simply crouch and speak to it."
+    }
+  ],
+  "sortnum": 2
+}

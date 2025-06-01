@@ -17460,3 +17460,6 @@ replay_*.log
 /buildSrc/build.gradle
 /fabric/runs/client/mods/[1.21-fabric]-Epic-Knights-9.14.jar.disabled
 /buildSrc/build.gradle
+/fabric/runs/client/mods/[1.21-fabric]-Epic-Knights-9.14.jar.disabled
+/fabric/runs/client/logs/2025-04-18-5.log.gz
+/fabric/runs/client/mods/[1.21-fabric]-Epic-Knights-9.14.jar.disabled

@@ -1,0 +1,36 @@
+{
+  "name": "Лесные Тролли",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/forest_troll.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Пересечение зарослей густого леса не всегда лёгкая задача, ведь иногда костры на горизонте означают совсем не то, что рядом деревня, а то, что вам предстоит встреча лицом к лицу с лесным троллем, который может стать последним, кого вы увидите в своей жизни.$(br)Но шансы есть...$(br)У них нет надёжной элементальной брони, как у других троллей, поэтому вместо этого они пытаются компенсировать отсутствие защиты надевая примитивную одежду."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Несмотря на то, что лесные тролли немного крупнее каменных или ледяных, они являются самыми спокойными из всех подвидов троллей.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Среда обитания$()$(li)Лес$(li)Тёмный лес",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_special.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Поведение$()$(br)Лесные тролли быстрее, чем горные или ледяные тролли, они предпочитают ближний бой.$(br)Иногда в целях защиты они закрываются своими толстыми и крепкими руками, хотя меткий удар острым топором может помочь пробить их защиту.$(br)Эти тролли имеют способности к быстрой регенерации, они быстро оправляются от ран, если их не убить окончательно.$(br)Оказавшись вдали от своей добычи, они бросаются в атаку на полной скорости, словно циклопы, уничтожая всё на своём пути."
+    },
+    {
+      "type": "tcots_witcher:monster_loot_mutagen",
+      "text": "В этом подвиде встречаются даже $(n)бешенные$() тролли, но встречаются они довольно редко.$(br)Лучшая стратегия против этих чудовищ - это $(l:tcots_witcher:misc/befriending_troll)подружиться$(/l)  с ними, если это возможно, вместо того, чтобы вступать в бой.",
+      "items": ["minecraft:leather", "minecraft:bone", "minecraft:string", "minecraft:white_wool"],
+      "mutagen": ["tcots_witcher:troll_mutagen"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_full.png"
+    }
+  ],
+  "sortnum": 5
+}

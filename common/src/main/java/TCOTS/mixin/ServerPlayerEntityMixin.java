@@ -1,7 +1,7 @@
 package TCOTS.mixin;
 
-import TCOTS.advancements.TCOTS_Criteria;
 import TCOTS.entity.WitcherMob_Class;
+import TCOTS.registry.TCOTS_Criteria;
 import com.mojang.authlib.GameProfile;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
@@ -51,7 +51,7 @@ public abstract class ServerPlayerEntityMixin extends Player {
     @Inject(method = "tick", at = @At("TAIL"))
     public void injectTriggerMaxToxicity(CallbackInfo ci){
         if(this.theConjunctionOfTheSpheres$getAllToxicity() >= this.theConjunctionOfTheSpheres$getMaxToxicity()*0.9){
-            TCOTS_Criteria.MAX_TOXICITY_REACHED.trigger(THIS);
+            TCOTS_Criteria.MaxToxicityReached().trigger(THIS);
         }
     }
 

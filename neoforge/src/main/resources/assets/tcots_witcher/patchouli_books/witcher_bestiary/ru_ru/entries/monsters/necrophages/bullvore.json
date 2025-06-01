@@ -1,0 +1,35 @@
+{
+    "name": "Утковол",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/bullvore.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Утковола можно сравнить с грудой мышц, сдерживаемых мешком из жёсткой и эластичной кожи.$(br)Его голова похожа на голову крупного быка, а во рту острые, как лезвия, зубы для раздирания плоти.$(br)Признаками Хаоса, бросающимися в глаза, являются рога и маленькие отростки рук, растуще по всему его телу, которыми существо едва шевелит."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "Это чудовище не любит компанию себе подобных, но иногда ему составляют компанию более мелкие и слабые твари, в особенности гнильцы.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Подземелья$(li)Тёмные пещеры$(br)*Он всегда окружён меньшими по размеру трупоедами*",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_special.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)Утковол - самый крупный и мощный из известных трупоедов. Он - огромная проблема даже для железного голема.$(br)С его длинными, острыми, как бритва, когтями он наносит мощные удары, пробивающие любой щит.$(br)Самая характерная атака это его таран. Используя свои огромные рога, утковол пробивает всё на своём пути, без особого труда уничтожая листья и небольшие препятствия."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "Несмотря на всю его мощь, медлительность утковола может быть использована против него.$(br)Кроме того, $(#0A880E)начав таранить, он не изменит направление, пока не дойдёт до конца.$()",
+            "items": ["tcots_witcher:cadaverine","tcots_witcher:bullvore_horn_fragment"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_full.png"
+        }
+    ],
+    "sortnum": 11
+}

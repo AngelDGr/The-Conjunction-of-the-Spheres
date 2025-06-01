@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/drowner_beach",
+  "spawners": {
+    "type": "tcots_witcher:drowner",
+    "maxCount": 4,
+    "minCount": 2,
+    "weight": 50
+  }
+}

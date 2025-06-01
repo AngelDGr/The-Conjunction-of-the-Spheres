@@ -1,0 +1,35 @@
+{
+    "name": "Гнилец",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/rotfiend.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Гнильцы напоминают разлагающееся человеческое тело, с которого сняли кожу.$(br2)Понять что рядом гнилец не сложно - их выдаёт непреодолимая вонь гнили, которая и дала им название. Они охотятся большими группами, а учитывая их скорость - они являются большой опасностью для одиноких путешественников."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "Будь осторожен, путешественник, эти существа представляют огромную угрозу для любого неопытного воина.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)Тёмные пещеры",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_exploding.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)Гнильцы скрываются под землёй и нападают, когда находят цель. Будьте осторожны, они могут застать вас врасплох. Они быстрые и опасные. Попытаются броситься на вас, так что будьте быстрее, чем они.$(br2)Помните об их худшей черте: они очень взрывоопасны, Перед смертью тело гнильца начинает неконтроллируемо дрожать, что приводит к большому взрыву."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "Если вы будете рядом во время взрыва - будет очень больно, но он может убить и гнильцов рядом, вызвав цепную реакцию.$(br2)Единственный способ предотвратить этот взрыв - это $(#0A880E)убить гнильца, когда он горит.$()",
+            "items": ["tcots_witcher:cadaverine", "tcots_witcher:rotfiend_blood"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_full.png"
+        }
+    ],
+    "sortnum": 3
+}

@@ -52,9 +52,13 @@
     "item.witcher_rpg.relic_witcher_swords.description_1": "Relic Sword",
 
     "item.tcots_witcher.witcher_bestiary": "Monster Bestiary",
+    "item.tcots_witcher.witcher_bestiary.patchouli": "    Monster Bestiary",
+    "patchouli.tcots_witcher.witcher_bestiary.landing_page": "\"The Conjunction of the Spheres\", this name, so mysterious to a commoner's ear, could be replaced with a much simpler alternative: When the Worlds Collided.$(br2)Learn everything you can about this post-conjunction world if you want to survive, fellow warrior.",
     "tooltip.tcots_witcher.witcher_bestiary": "Learn about the dangers of this new world",
 
     "item.tcots_witcher.alchemy_book": "Alchemy Almanac",
+    "item.tcots_witcher.alchemy_book.patchouli": "     Alchemy Almanac",
+    "patchouli.tcots_witcher.alchemy_book.landing_page": "To understand alchemy, you must understand two great truths.$(li)First truth: \"As above, so below.\"$(li)Second truth: \"Everything is one.\"$(br2)These truths teach that alchemical substances are everywhere around you, this is because alchemy is life, and life is alchemy.",
     "tooltip.tcots_witcher.alchemy_book": "Information about herbs and alchemy",
     "lavender.alchemy_book.recipes": "Compendium of recipes for potions, decoctions, monster oils, bombs, and alchemical ingredients.",
 
@@ -335,10 +339,9 @@
     "item.tcots_witcher.herbal_mixture": "Herbal Mixture",
     "tcots_witcher.gui.herbal_table.title": "Create herbal mixtures",
 
-
+    "entity.minecraft.villager.tcots_witcher.herbalist_witcher": "Herbalist",
     "entity.minecraft.villager.herbalist_witcher": "Herbalist",
     "tcots_witcher.sounds.work_herbalist": "Herbalist works",
-
 
     "tcots_witcher.sounds.ingredient_pops": "Ingredients pop",
     "item.tcots_witcher.allspice": "Allspice",
@@ -697,11 +700,11 @@
 
     "item.tcots_witcher.gvalchir": "G'valchir",
     "tooltip.tcots_witcher.gvalchir": "A powerful runic sword",
-    "tooltip.tcots_witcher.gvalchir.extra": "+75% Armor Penetration",
+    "tooltip.tcots_witcher.gvalchir.extra": "+%s%% Armor Penetration",
 
     "item.tcots_witcher.moonblade": "Moonblade",
     "tooltip.tcots_witcher.moonblade": "A powerful holy sword",
-    "tooltip.tcots_witcher.moonblade.extra": "+50% Attack Damage against monsters",
+    "tooltip.tcots_witcher.moonblade.extra": "+%s%% Attack Damage against monsters",
 
     "item.tcots_witcher.dyaebl": "D'yaebl",
     "tooltip.tcots_witcher.dyaebl": "Coated in monster blood",
@@ -709,9 +712,10 @@
 
     "item.tcots_witcher.winters_blade": "Winter's Blade",
     "tooltip.tcots_witcher.winters_blade": "Contains the winter itself",
-    "tooltip.tcots_witcher.winters_blade.extra":  "+2 Attack Damage to fiery enemies",
-    "tooltip.tcots_witcher.winters_blade.extra2": " 20% Chance to freeze enemies",
     "tooltip.tcots_witcher.winters_blade.extra3": " Extinguish flames from the user",
+    "tooltip.tcots_witcher.winters_blade.extra2": " 20% Chance to freeze enemies",
+    "tooltip.tcots_witcher.winters_blade.extra":  "+2 Attack Damage to fiery enemies",
+
 
     "item.tcots_witcher.ardaenye": "Ard'aenye",
 
@@ -928,5 +932,8 @@
     "text.config.tcots_config.option.witcher_eyes.XEyePos.tooltip": "Modify the X position",
 
     "text.config.tcots_config.option.witcher_eyes.YEyePos": "Eye YPos",
-    "text.config.tcots_config.option.witcher_eyes.YEyePos.tooltip": "Modify the Y position"
+    "text.config.tcots_config.option.witcher_eyes.YEyePos.tooltip": "Modify the Y position",
+
+    "text.config.tcots_config.option.hasRPGTextures": "Swords 32x32 Texture",
+    "text.config.tcots_config.option.hasRPGTextures.tooltip": "Changes Swords to a 32x32 texture, for parity with\nWitcher (More RPG Classes), automatically enabled\nwith the mod loaded"
 }

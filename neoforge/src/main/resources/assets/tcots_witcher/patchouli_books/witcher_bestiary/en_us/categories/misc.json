@@ -1,0 +1,6 @@
+{
+    "name": "Extra Info",
+    "description": "Extra info regarding some specific topics.",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/misc.png",
+    "sortnum": 99
+}

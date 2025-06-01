@@ -1,0 +1,36 @@
+{
+  "name": "Nekker Warrior",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/nekker_warrior.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Nekker Warriors are a particularly dangerous subspecies of the common Nekker.$(br)These creatures' increased strength and resilience are what set them apart from their lesser kin. Standing slightly taller and adorned with more pronounced spines and claws, Nekker Warriors lead their packs with a ferocity that makes them formidable adversaries."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Encounters with Nekker Warriors are never solitary affairs, as these are always surrounded by other Nekkers.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Habitat$()$(li)Forests$(li)Plains$(li)$(l:tcots_witcher:misc/monster_nests)Nekker nests$(), found in plains or forests",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_command.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Behavior$()$(br)Just like the common Nekker, the Nekker Warrior digs a burrow to stay hidden when it doesn't have a target, jumping the moment it finds a prey.$(br2)Their increased strength makes them tougher opponents, sometimes able to break through a warrior's shield. As leaders, Nekker Warriors also boost the effectiveness of the Nekkers they command, making their packs more formidable."
+    },
+    {
+      "type": "tcots_witcher:monster_loot_mutagen",
+      "text": "Try to focus on it when fighting a Nekker swarm; $(#0A880E)without a leader, the Nekkers lose much of their strength.$()",
+      "items": ["tcots_witcher:nekker_eye", "tcots_witcher:nekker_heart"],
+      "mutagen": ["tcots_witcher:nekker_warrior_mutagen"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_full.png"
+    }
+  ],
+  "sortnum": 1
+}

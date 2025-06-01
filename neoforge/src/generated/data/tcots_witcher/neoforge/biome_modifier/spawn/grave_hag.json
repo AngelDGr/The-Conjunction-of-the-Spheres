@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/grave_hag",
+  "spawners": {
+    "type": "tcots_witcher:grave_hag",
+    "maxCount": 2,
+    "minCount": 1,
+    "weight": 80
+  }
+}

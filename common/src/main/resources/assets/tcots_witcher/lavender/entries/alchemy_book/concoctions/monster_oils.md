@@ -8,7 +8,7 @@
     "tcots_witcher:oil_beast",
     "tcots_witcher:oil_hanged"
   ],
-  "ordinal": 6
+  "ordinal": 5
 }
 ```
 

@@ -1,0 +1,47 @@
+{
+  "components": [
+    {
+      "type": "patchouli:separator",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(#00a800)$(l)Basic Ingredients$()",
+      "x": 5,
+      "y": 10
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(o)Post-conjunction plants$()",
+      "x": 5,
+      "y": 18
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "neoforge.TCOTS.patchouli.ItemsInLine_CustomComponent",
+      "index": 0,
+      "x": 0,
+      "y": 20
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "neoforge.TCOTS.patchouli.ItemsInLine_CustomComponent",
+      "index": 1,
+      "x": 0,
+      "y": 40
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "neoforge.TCOTS.patchouli.ItemsInLine_CustomComponent",
+      "index": 2,
+      "x": 0,
+      "y": 60
+    },
+    {
+      "type": "patchouli:separator",
+      "x": 0,
+      "y": 100
+    }
+  ]
+}

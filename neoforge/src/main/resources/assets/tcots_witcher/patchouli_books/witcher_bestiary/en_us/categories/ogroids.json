@@ -1,0 +1,6 @@
+{
+  "name": "Ogroids",
+  "description": "These type of post-conjunction monster it's usually found in caves, mountains or nests, they are know to have some kind of conscience.$(br2)They share some similarities with the Piglins.$(br2)$(#0A880E)Susceptible to $(#cc341d)Ogroid Oil$()$().",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/ogroids.png",
+  "sortnum": 2
+}

@@ -1,6 +1,6 @@
 package TCOTS.blocks.skull;
 
-import TCOTS.blocks.TCOTS_Blocks;
+import TCOTS.registry.TCOTS_Blocks;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import java.util.Map;

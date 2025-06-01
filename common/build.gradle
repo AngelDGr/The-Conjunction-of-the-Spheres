@@ -1,28 +1,5 @@
-plugins {
-    id 'multiloader-common'
-    id 'net.neoforged.moddev'
-}
-
-neoForge {
-    neoFormVersion = neo_form_version
-
-    interfaceInjectionData.from(file("src/main/resources/interface_injections.json"))
-
-    accessTransformers {
-        file('src/main/resources/accesstransformer.cfg')
-    }
-
-//    // Automatically enable AccessTransformers if the file exists
-//    def at = file('src/main/resources/META-INF/accesstransformer.cfg')
-//    if (at.exists()) {
-//        accessTransformers.add(at.absolutePath)
-//    }
-
-
-    parchment {
-        minecraftVersion = parchment_minecraft
-        mappingsVersion = parchment_version
-    }
+architectury {
+    common rootProject.enabled_platforms.split(',')
 }
 
 repositories {
@@ -55,9 +32,29 @@ repositories {
     }
 
     maven { url = "https://maven.bawnorton.com/releases" }
+
+    maven {
+        name = 'Sponge'
+        url = uri('https://repo.spongepowered.org/repository/maven-public')
+    }
+
+    maven {
+        // location of the maven that hosts JEI files since January 2023
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
 }
 
 dependencies {
+    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
+    // Do NOT use other classes from fabric loader
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+
     compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
     // fabric and neoforge both bundle mixinextras, so it is safe to use it in common
     compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
@@ -69,33 +66,48 @@ dependencies {
 
     // compile against the JEI API but do not include it at runtime
     compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
+    // at runtime, use the full JEI jar for NeoForge
+    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+//    compileOnlyApi "maven.modrinth:jei:${jei_version}"
+//    modRuntimeOnly "maven.modrinth:jei:${jei_version}"
 
     //OwO-Lib Dependency
-    annotationProcessor implementation("io.wispforest:owo-lib-neoforge:${project.owo_version_neo}")
+    // Arch Loom Projects - Neoforge
+    // Don't worry about loading issues as it will only be present to get the arch interface injection and Access Widener
+    annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
+
+    // Architectury API. This is optional, and you can comment it out if you don't need it.
+    modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 }
 
-configurations {
-    commonJava {
-        canBeResolved = false
-        canBeConsumed = true
+loom {
+    accessWidenerPath = file("src/main/resources/tcots_witcher-common.accesswidener")
+
+    runs {
+        // This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
+        datagen {
+            inherit server
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=tcots_witcher"
+
+            runDir "build/datagen"
+        }
     }
-    commonResources {
-        canBeResolved = false
-        canBeConsumed = true
+
+    mixin {
+        defaultRefmapName.set("tcots_witcher-common-refmap.json")
     }
 }
 
-artifacts {
-    commonJava sourceSets.main.java.sourceDirectories.singleFile
-    commonResources sourceSets.main.resources.sourceDirectories.singleFile
-}
-
+File generatedResourcesDir = file("src/main/generated/resources")
 // Add the generated resources to the main source set
 sourceSets {
     main {
         resources {
             srcDirs += [
-                    'src/main/generated'
+                    generatedResourcesDir
             ]
         }
     }

@@ -1,0 +1,35 @@
+{
+    "name": "Болотник",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/scurver.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Болотники - это дальние родственники $(l:tcots_witcher:monsters/necrophages/rotfiend)гнильцов$(/l). В битве с ними нельзя забывать об их острых, как бритва, костяных шипах -  выступах, торчащих из их скелета.$(br2)Когда Болотник близок к смерти, газы и ферменты, накопившиеся в его теле, вызывают взрыв."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "Шипы вылетают с огромной скоростью, превращаясь в последнее смертоносное оружие в их арсенале.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)Джунгли (ночью)",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_exploding.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)По своей сути болотники являются более сильной версией гнильцов.$(br2)Их главное отличие - шипы, которые растут по всему телу. Если один из них попадёт в вас, то сильно ранит и заставит истекать кровью, поэтому обязательно используйте щит, когда это произойдёт, чтобы защититься от результата взрыва Болотника (или быстро отбегите на безопасное расстояние)."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "Если у вас получится $(#0A880E)убить чудовище, когда оно будет гореть, вы сможете забрать его шипы как трофей и использовать их в качестве оружия.$()",
+            "items": ["tcots_witcher:cadaverine","tcots_witcher:rotfiend_blood","tcots_witcher:scurver_spine"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_full.png"
+        }
+    ],
+    "sortnum": 7
+}

@@ -1,0 +1,52 @@
+accessWidener v2 named
+
+#1.20.3
+accessible class net/minecraft/world/level/BaseSpawner
+accessible method net/minecraft/world/level/BaseSpawner getOrCreateNextSpawnData (Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/SpawnData;
+accessible field net/minecraft/world/level/BaseSpawner minSpawnDelay I
+accessible field net/minecraft/world/level/BaseSpawner maxSpawnDelay I
+accessible field net/minecraft/world/level/BaseSpawner spawnDelay I
+accessible field net/minecraft/world/level/BaseSpawner spawnCount I
+accessible field net/minecraft/world/level/BaseSpawner maxNearbyEntities I
+accessible field net/minecraft/world/level/BaseSpawner requiredPlayerRange I
+accessible field net/minecraft/world/level/BaseSpawner spawnRange I
+accessible field net/minecraft/world/level/BaseSpawner nextSpawnData Lnet/minecraft/world/level/SpawnData;
+accessible field net/minecraft/world/level/BaseSpawner spawnPotentials Lnet/minecraft/util/random/SimpleWeightedRandomList;
+#accessible field net/minecraft/world/level/BaseSpawner lastRotation D
+#accessible field net/minecraft/world/level/BaseSpawner rotation D
+accessible method net/minecraft/world/level/BaseSpawner isNearPlayer (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z
+#accessible field net/minecraft/world/level/BaseSpawner renderedEntity Lnet/minecraft/entity/Entity;
+accessible method net/minecraft/world/level/BaseSpawner delay (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V
+
+accessible method net/minecraft/world/level/block/MultifaceBlock getDefaultMultifaceState (Lnet/minecraft/world/level/block/state/StateDefinition;)Lnet/minecraft/world/level/block/state/BlockState;
+
+accessible class net/minecraft/client/gui/Gui$HeartType
+
+accessible class net/minecraft/client/renderer/ItemInHandRenderer$HandRenderSelection
+
+accessible method net/minecraft/world/level/block/ComposterBlock add (FLnet/minecraft/world/level/ItemLike;)V
+
+accessible field net/minecraft/client/renderer/LevelRenderer renderBuffers Lnet/minecraft/client/renderer/RenderBuffers;
+
+accessible method net/minecraft/world/entity/projectile/AbstractArrow setPierceLevel (B)V
+
+accessible method net/minecraft/advancements/CriteriaTriggers register (Ljava/lang/String;Lnet/minecraft/advancements/CriterionTrigger;)Lnet/minecraft/advancements/CriterionTrigger;
+accessible class net/minecraft/client/renderer/ItemInHandRenderer$HandRenderSelection
+accessible method net/minecraft/world/entity/projectile/Projectile <init> (Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+
+accessible method net/minecraft/world/level/block/Blocks flowerPot (Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;
+accessible method net/minecraft/world/level/block/Blocks always (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/EntityType;)Ljava/lang/Boolean;
+
+accessible method net/minecraft/world/entity/npc/VillagerTrades$TreasureMapForEmeralds <init> (ILnet/minecraft/tags/TagKey;Ljava/lang/String;Lnet/minecraft/core/Holder;II)V
+accessible class net/minecraft/world/entity/npc/VillagerTrades$TreasureMapForEmeralds
+accessible class net/minecraft/world/entity/npc/VillagerTrades$ItemsForEmeralds
+accessible class net/minecraft/world/entity/npc/VillagerTrades$EmeraldForItems
+
+accessible field net/minecraft/world/level/levelgen/structure/pools/StructureTemplatePool templates Lit/unimi/dsi/fastutil/objects/ObjectArrayList;
+
+mutable field net/minecraft/world/level/levelgen/structure/pools/StructureTemplatePool rawTemplates Ljava/util/List;
+accessible field net/minecraft/world/level/levelgen/structure/pools/StructureTemplatePool rawTemplates Ljava/util/List;
+
+#For Patchouli
+accessible method net/minecraft/world/item/Item$Properties buildAndValidateComponents ()Lnet/minecraft/core/component/DataComponentMap;
+accessible field net/minecraft/world/item/Item components Lnet/minecraft/core/component/DataComponentMap;

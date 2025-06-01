@@ -1,0 +1,17 @@
+{
+  "name": "Monster Nests",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/misc/monster_nests.png",
+  "category": "tcots_witcher:misc",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Some creatures live in nests made from dirt and bones around the world. The nest will host more and more monsters until it's destroyed.$(br2)A monster nest is very hard to break, and while it's well-known that a nest can be destroyed with an explosion, some rumours say that it can also be destroyed with an efficiency enchantment strong enough."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "But breaking one has a reward, as monsters usually hide magic goods inside them.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/monster_nest.png"
+    }
+  ],
+  "sortnum": 1
+}

@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/ice_troll",
+  "spawners": {
+    "type": "tcots_witcher:ice_troll",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 2
+  }
+}

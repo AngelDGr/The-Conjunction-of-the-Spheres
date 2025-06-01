@@ -5,7 +5,7 @@
   "category": "tcots_witcher:ogroids",
   "associated_items": [
   ],
-  "ordinal": 6
+  "ordinal": 5
 }
 ```
 
@@ -26,7 +26,7 @@ the calmest of the troll's subspecies.
 
 {dark_green}**Habitat**{}
 - Forest
-- Dark Forest
+- Dark Forests
 
 ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_special.png,fit)
 

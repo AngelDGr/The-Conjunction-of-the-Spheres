@@ -30,7 +30,6 @@ public class WitcherBaseCrossbow extends CrossbowItem {
     private boolean charged = false;
     private boolean loaded = false;
 
-
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, Player user, @NotNull InteractionHand hand) {
         ItemStack itemStack = user.getItemInHand(hand);

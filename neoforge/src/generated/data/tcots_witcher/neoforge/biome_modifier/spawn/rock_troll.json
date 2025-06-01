@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/rock_troll",
+  "spawners": {
+    "type": "tcots_witcher:rock_troll",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 5
+  }
+}

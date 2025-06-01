@@ -2,7 +2,7 @@
 {
   "title": "Bombs",
   "icon_sprite": "tcots_witcher:alchemy_almanac/category/bombs",
-  "ordinal": 7,
+  "ordinal": 6,
   "associated_items": [
     "tcots_witcher:grapeshot",
     "tcots_witcher:dancing_star",

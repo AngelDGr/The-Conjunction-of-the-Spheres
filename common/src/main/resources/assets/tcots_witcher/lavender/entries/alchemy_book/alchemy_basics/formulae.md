@@ -2,7 +2,7 @@
 {
   "title": "Formulae",
   "icon_sprite": "tcots_witcher:alchemy_almanac/category/formulae",
-  "ordinal": 9,
+  "ordinal": 8,
   "associated_items": [
     "tcots_witcher:alchemy_formula"
   ]

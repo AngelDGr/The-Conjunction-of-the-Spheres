@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:old_growth_spruce_taiga",
+    "minecraft:jagged_peaks",
+    "minecraft:stony_peaks",
+    {
+      "id": "#minecraft:is_hill",
+      "required": false
+    }
+  ]
+}

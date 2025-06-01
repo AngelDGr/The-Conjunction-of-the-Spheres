@@ -6,7 +6,7 @@
   "associated_items": [
     "tcots_witcher:nekker_warrior_mutagen"
   ],
-  "ordinal": 2
+  "ordinal": 1
 }
 ```
 

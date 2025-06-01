@@ -1,7 +1,7 @@
 package TCOTS.effects;
 
 import TCOTS.utils.EntitiesUtil;
-import TCOTS.world.TCOTS_DamageTypes;
+import TCOTS.registry.TCOTS_DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EquipmentSlot;

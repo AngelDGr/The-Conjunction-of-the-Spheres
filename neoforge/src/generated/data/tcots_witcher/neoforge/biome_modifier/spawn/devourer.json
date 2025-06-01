@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/devourer",
+  "spawners": {
+    "type": "tcots_witcher:devourer",
+    "maxCount": 4,
+    "minCount": 3,
+    "weight": 60
+  }
+}

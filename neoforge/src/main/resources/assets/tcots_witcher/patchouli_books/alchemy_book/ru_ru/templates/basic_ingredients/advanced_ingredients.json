@@ -1,0 +1,47 @@
+{
+  "components": [
+    {
+      "type": "patchouli:separator",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(#00a800)$(l)Ингредиенты для опытных$()",
+      "x": 5,
+      "y": 10
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(o)Ингредиенты, появившиеся после сопряжения сфер$()",
+      "x": 5,
+      "y": 18
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "neoforge.TCOTS.patchouli.ItemsInLine_CustomComponent",
+      "index": 0,
+      "x": 0,
+      "y": 25
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "neoforge.TCOTS.patchouli.ItemsInLine_CustomComponent",
+      "index": 1,
+      "x": 0,
+      "y": 45
+    },
+    {
+      "type": "patchouli:custom",
+      "class": "neoforge.TCOTS.patchouli.ItemsInLine_CustomComponent",
+      "index": 2,
+      "x": 0,
+      "y": 65
+    },
+    {
+      "type": "patchouli:separator",
+      "x": 0,
+      "y": 100
+    }
+  ]
+}

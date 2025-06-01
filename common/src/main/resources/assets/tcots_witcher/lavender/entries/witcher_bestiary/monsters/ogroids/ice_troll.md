@@ -5,7 +5,7 @@
   "category": "tcots_witcher:ogroids",
   "associated_items": [
   ],
-  "ordinal": 5
+  "ordinal": 4
 }
 ```
 

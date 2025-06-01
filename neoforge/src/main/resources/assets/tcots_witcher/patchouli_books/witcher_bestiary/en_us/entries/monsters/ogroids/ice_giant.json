@@ -1,0 +1,35 @@
+{
+  "name": "Ice Giant",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/ice_giant.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These kinds of powerful, primeval monsters are quite rare these days, possibly being near extinction.$(br)The Ice Giant resembles a humanoid in many respects, but is blue as frost and taller than a tree.$(br)Though it seems capable of reason, all attempts to communicate with it to date have ended the same way – in a quick and painful death."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Some claim its skin is blue because it was born of snow and ice, which is clearly impossible – though it's capable of withstanding the fiercest frosts.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Habitat$()$(li)*Unknown*",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_special.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Behavior$()$(br)The Ice Giant is the most powerful ogroid known.$(br)Often found sleeping in its lair, it’s best left undisturbed, but if you choose to face it, prepare for a fierce fight.$(br)If you’re seeking an Ice Giant’s lair, your best option is to find a cartographer for a map to its cave.$(br)But beware, as survivors of past confrontations report that these giants favor a deadly weapon: a massive ship’s anchor."
+    },
+    {
+      "type": "tcots_witcher:monster_loot",
+      "text": "Many have sought out an Ice Giant in hopes of slaying it, yet few return.$(br2)Legends tell of these warriors wielding a powerful weapon called $(#007b77)Winter’s Blade$()—a relic that might still lie hidden within the monster’s lair.",
+      "items": ["minecraft:leather", "minecraft:bone"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_full.png"
+    }
+  ],
+  "sortnum": 6
+}

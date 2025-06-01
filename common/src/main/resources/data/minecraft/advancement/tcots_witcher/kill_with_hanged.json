@@ -2,7 +2,7 @@
   "parent": "minecraft:tcots_witcher/craft_oil",
   "criteria": {
     "kill_with_hanged": {
-      "trigger": "minecraft:tcots_witcher/kill_with_hanged"
+      "trigger": "tcots_witcher:tcots_witcher/kill_with_hanged"
     }
   },
   "display": {

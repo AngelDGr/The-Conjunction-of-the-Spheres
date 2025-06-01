@@ -19,9 +19,11 @@ import net.minecraft.world.item.crafting.RecipeManager;
 public class DynamicRecipes {
     @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V", at = @At("HEAD"))
     public void interceptApply(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profiler, CallbackInfo ci) {
-        for(Tuple<ResourceLocation, JsonObject> recipePair: TCOTS_Main.recipes){
-            if(recipePair.getB()!=null){
-                map.put(recipePair.getA(), recipePair.getB());
+        if(TCOTS_Main.recipes!=null){
+            for(Tuple<ResourceLocation, JsonObject> recipePair: TCOTS_Main.recipes){
+                if(recipePair.getA()!=null && recipePair.getB()!=null){
+                    map.put(recipePair.getA(), recipePair.getB());
+                }
             }
         }
     }

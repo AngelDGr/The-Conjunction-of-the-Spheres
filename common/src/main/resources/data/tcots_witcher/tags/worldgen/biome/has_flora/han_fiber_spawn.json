@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:is_jungle",
+      "required": false
+    },
+    {
+      "id": "#minecraft:has_structure/ruined_portal_swamp",
+      "required": false
+    },
+    {
+      "id": "#minecraft:has_structure/village_savanna",
+      "required": false
+    }
+  ]
+}

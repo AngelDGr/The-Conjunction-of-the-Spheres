@@ -2,7 +2,7 @@
 {
   "title": "Toxicity",
   "icon_sprite": "tcots_witcher:alchemy_almanac/category/toxicity",
-  "ordinal": 3
+  "ordinal": 2
 }
 ```
 Post-conjunction potions have a unique and dangerous trait: {#41d331}toxicity{}.

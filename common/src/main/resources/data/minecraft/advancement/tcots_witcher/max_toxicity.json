@@ -2,7 +2,7 @@
   "parent": "minecraft:tcots_witcher/craft_potion",
   "criteria": {
     "max_toxicity": {
-      "trigger": "minecraft:tcots_witcher/max_toxicity"
+      "trigger": "tcots_witcher:tcots_witcher/max_toxicity"
     }
   },
   "display": {

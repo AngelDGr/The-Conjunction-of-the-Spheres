@@ -6,7 +6,7 @@
   "associated_items": [
     "tcots_witcher:giant_anchor"
   ],
-  "ordinal": 7
+  "ordinal": 6
 }
 ```
 

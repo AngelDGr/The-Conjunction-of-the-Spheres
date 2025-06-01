@@ -1,0 +1,35 @@
+{
+    "name": "Graveir",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/graveir.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Graveirs are depraved, lecherous and treacherous bastards. They are one of the most massive necrophages, they have some bony combs on their head and short but cruel, thick claws.$(br2)Their teeth and thin tongue allow them to eat marrow — and the more rotten and rancid the marrow, the more it is to their liking."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "The vile graveirs have cadaverine in their teeth, so anyone who engages one in battle beware.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Habitat$()$(li)Underground$(li)Dark Caves",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_toxic.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Behavior$()$(br)The Graveir is a formidable foe, capable of defeating seasoned warriors with powerful strikes that deliver significant knockback.$(br)Thanks to the cadaverine stored in its teeth, it can apply this acid to its target, rapidly decaying both health and armor.$(br2)Its thick, resilient skin provides armor and high resistance to explosions, making it even tougher to defeat."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "Despite its immense strength, the Graveir's $(#0A880E)slow speed can be exploited in combat, providing opportunities for skilled fighters to gain the upper hand and ultimately overcome this formidable adversary.$()",
+            "items": ["tcots_witcher:cadaverine","tcots_witcher:graveir_bone"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_full.png"
+        }
+    ],
+    "sortnum": 9
+}

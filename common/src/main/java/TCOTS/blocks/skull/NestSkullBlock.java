@@ -1,7 +1,7 @@
 package TCOTS.blocks.skull;
 
-import TCOTS.blocks.TCOTS_Blocks;
 import TCOTS.blocks.entity.NestSkullBlockEntity;
+import TCOTS.registry.TCOTS_Blocks;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -49,7 +49,7 @@ public class NestSkullBlock extends BaseEntityBlock implements Equipable {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return new NestSkullBlockEntity(TCOTS_Blocks.SKULL_NEST_ENTITY, pos, state);
+        return new NestSkullBlockEntity(TCOTS_Blocks.SkullNestEntity(), pos, state);
     }
 
 

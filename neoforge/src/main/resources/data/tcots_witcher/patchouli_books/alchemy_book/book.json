@@ -1,0 +1,14 @@
+{
+  "name": "item.tcots_witcher.alchemy_book.patchouli",
+  "landing_text": "patchouli.tcots_witcher.alchemy_book.landing_page",
+  "nameplate_color": "545454",
+  "header_color": "545454",
+  "version": 0,
+  "subtitle": " ",
+  "model": "tcots_witcher:alchemy_book",
+  "book_texture": "tcots_witcher:textures/gui/patchouli/alchemy_book_gui.png",
+  "filler_texture": "tcots_witcher:textures/gui/empty.png",
+  "use_resource_pack": true,
+  "show_progress": false,
+  "pamphlet": true
+}

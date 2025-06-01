@@ -7,7 +7,7 @@
     "tcots_witcher:nekker_heart",
     "tcots_witcher:nekker_eye"
   ],
-  "ordinal": 1
+  "ordinal": 0
 }
 ```
 

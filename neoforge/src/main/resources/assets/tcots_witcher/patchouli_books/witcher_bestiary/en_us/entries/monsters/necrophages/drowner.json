@@ -1,0 +1,35 @@
+{
+    "name": "Drowner",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/drowner.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "One of the most common necrophages, they inhabit near bodies of water, like rivers and lakes, they are specially numerous in swamps.$(br2)A drowner resembles a corpse dredged from the bottom of a pond. It is sickly blue or green in color, with slime and sludge oozing out of every pore and the acrid stench of rot wafting off of it."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "It is often thought drowners arise from the bodies of those who drown in shallow water.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Habitat$()$(li)Swamps and Mangrove Swamps near the water$(li)Rivers and lakes$(li)Beaches near the water",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_swimming.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Behavior$()$(br)The drowner enjoys killing other water creatures, but when it doesn't find a creature to attack, it will dig a hole in the ground and enter in. These holes leave a tiny puddle. If you get too close to the puddle, the drowner will emerge from it to attack you.$(br2)When they attack, they sometimes launch themselves to their target, be careful and try to avoid those lunges."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "When they enter the water, they become more relaxed, so they are going to be slower and only attack once in a while, trying to drown their target. $(n)When they are swimming, and you are underwater$() they $(#0A880E)can be killed easily with a good crossbow shot.$()",
+            "items": ["tcots_witcher:cadaverine", "tcots_witcher:drowner_tongue", "tcots_witcher:drowner_brain", "tcots_witcher:water_essence"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_full.png"
+        }
+    ],
+    "sortnum": 0
+}

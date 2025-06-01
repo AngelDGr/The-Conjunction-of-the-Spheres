@@ -13,7 +13,7 @@
           }
         ]
       },
-      "trigger": "minecraft:tcots_witcher/get_troll_follower"
+      "trigger": "tcots_witcher:tcots_witcher/get_troll_follower"
     },
     "befriend_ice": {
       "conditions": {
@@ -27,7 +27,7 @@
           }
         ]
       },
-      "trigger": "minecraft:tcots_witcher/get_troll_follower"
+      "trigger": "tcots_witcher:tcots_witcher/get_troll_follower"
     },
     "befriend_rock": {
       "conditions": {
@@ -41,7 +41,7 @@
           }
         ]
       },
-      "trigger": "minecraft:tcots_witcher/get_troll_follower"
+      "trigger": "tcots_witcher:tcots_witcher/get_troll_follower"
     }
   },
   "display": {

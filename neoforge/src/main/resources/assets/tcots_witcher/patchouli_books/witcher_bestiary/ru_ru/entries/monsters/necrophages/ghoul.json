@@ -1,0 +1,35 @@
+{
+    "name": "Гуль",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/ghoul.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Отчасти они похожи на людей, но по своей сути являются полным отрицанием всего человеческого.$(br2)Руки и ноги у них похожи на человеческие, но ходят они на четвереньках, как волки и лисы.$(br)Хоть у них и до жути знакомые лица, вы напрасно ищете в них хоть какие-то признаки чувств, разума или хотя бы искру сознания."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "Ими движет одно и только одно: неутолимая жажда человеческой плоти.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)$(l:tcots_witcher:misc/monster_nests)Гнёзда гулей$(), найденые на равнинах и в лесах.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_regen.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)Гули - быстрые существа, они любят гниющую плоть трупов, поэтому обычно они охотятся на зомби, но без колебаний убивают и людей или даже скот. Например, коров и свиней, так они могут восстанавливать силы, питаясь плотью.$(br2)Как и другие чудовища, гули иногда бросаются на свою цель.$(br2)Если у гуля мало здоровья и вы не будете атаковать его несколько секунд, гуль начнёт впадать в ярость."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "Вы можете определить, что они разъярены по окружающей их красной ауре. Разъярившись они начинают восстанавливать здоровье с пугающей скоростью. Режим ярости длится несколько секунд, так что $(#0A880E)попытайтесь убежать или быстро наносите удары.$()",
+            "items": ["tcots_witcher:cadaverine", "tcots_witcher:ghoul_blood"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_full.png"
+        }
+    ],
+    "sortnum": 1
+}

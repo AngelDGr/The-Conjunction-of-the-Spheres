@@ -1,0 +1,35 @@
+{
+    "name": "Утопец",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/drowner.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Один из самых распространённых трупоедов, они обитают вблизи водоёмов, таких как реки, озёра, их особенно много на болотах.$(br2)Утопец похож на труп, поднятый со дна озера. Они имеют тошнотворный синий или зелёный цвет.$(br)Из каждой поры на их кожи сочатся слизь и ил. Также от утопцев исходит едкий запах гнили."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "Считается, что обычно утопцами становятся те везунчики, которые утонули на мелководье.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Болота и мангровые болота у воды$(li)Реки и озёра$(li)Пляжи рядом с водой",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_swimming.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)Утопцы убивают других водных обитателей. Когда они не находят жертву, на которую можно напасть, они выкапывают яму в земле и сидят внутри.$(br)Снаружи эти норы похожи на маленькую лужу.$(br2)Если вы подойдёте к луже слишком близко, утопец нападёт на вас.$(br2)Когда они атакуют, то иногда набрасываются на свою цель. Остерегайтесь таких выпадов."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "Находясь в воде они расслабляются, поэтому будут медленные и нападать станут лишь время от времени, пытаясь утопить свою цель.$(n)Когда они плавают, а вы находитесь под водой$() их $(#0A880E)можно легко убить прицельным выстрелом из арбалета.$()",
+            "items": ["tcots_witcher:cadaverine", "tcots_witcher:drowner_tongue", "tcots_witcher:drowner_brain", "tcots_witcher:water_essence"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_full.png"
+        }
+    ],
+    "sortnum": 0
+}

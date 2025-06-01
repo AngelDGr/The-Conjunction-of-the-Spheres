@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "TCOTS.mixin",
+  "package": "neoforge.TCOTS.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
@@ -8,6 +8,8 @@
     "defaultRequire": 1
   },
   "client": [
-  ],
-  "refmap": "tcots_witcher-refmap.json"
+    "BackgroundRendererMixin",
+    "InGameHudMixin",
+    "LightmapTextureMixin"
+  ]
 }

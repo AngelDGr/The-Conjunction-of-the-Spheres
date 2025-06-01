@@ -1,0 +1,17 @@
+{
+  "name": "Формулы",
+  "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/formulae.png",
+  "category": "tcots_witcher:dummy",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Формулы - это алхимические рецепты для создания зелий, масел и бомб. \nВ каждой формуле перечислены необходимые ингредиенты и описан тип основы, необходимый для создания смеси.$(br)Эти формулы можно найти в разных сундуках по всему миру или получить, торгуя с деревенскими жителями. $(br)$(n)Вы должны знать рецепт, чтобы приготовить элексир.$()"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Рецепты для $(l:tcots_witcher:concoctions/decoctions)элексиров$(/l) можно найти только в $(n)Древних городах$().",
+      "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/formulae/formulae_main.png"
+    }
+  ],
+  "sortnum": 8
+}

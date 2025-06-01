@@ -1,0 +1,36 @@
+{
+  "name": "Forest Troll",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/forest_troll.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Transversing a dense forest isn't always an easy task, as sometimes those campfires in the horizon doesn't mean that a village it's near, but instead a forest troll it's ahead.$(br2)They don't have the same rocky defenses as other trolls, so instead they try to counter their lack of defense wearing primitive clothing."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Even though forest troll are slightly larger than rock or ice trolls, they are the calmest of the troll's subspecies.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Habitat$()$(li)Forest$(li)Dark Forests",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_special.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Behavior$()$(br)Quicker than rock or ice trolls, forest trolls favor melee combat.$(br)They sometimes block their front with thick, sturdy arms, though a well-aimed strike with a sharp axe can shatter their defense.$(br)Capable of rapid regeneration, these trolls will recover from wounds unless utterly slain.$(br2)When distant from their prey, they charge at full speed, destroying anything in their path."
+    },
+    {
+      "type": "tcots_witcher:monster_loot_mutagen",
+      "text": "Even the $(n)rabid$() breed is also present in the subspecies, though it's rare to find one.$(br)The best strategy against these monsters is to try to $(l:tcots_witcher:misc/befriending_troll)befriend$(/l) them if possible instead of engaging in combat.",
+      "items": ["minecraft:leather", "minecraft:bone", "minecraft:string", "minecraft:white_wool"],
+      "mutagen": ["tcots_witcher:troll_mutagen"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_full.png"
+    }
+  ],
+  "sortnum": 5
+}

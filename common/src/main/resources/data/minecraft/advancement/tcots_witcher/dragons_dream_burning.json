@@ -2,7 +2,7 @@
   "parent": "minecraft:tcots_witcher/craft_bomb",
   "criteria": {
     "dragons_dream_burning": {
-      "trigger": "minecraft:tcots_witcher/dragons_dream_burning"
+      "trigger": "tcots_witcher:tcots_witcher/dragons_dream_burning"
     }
   },
   "display": {

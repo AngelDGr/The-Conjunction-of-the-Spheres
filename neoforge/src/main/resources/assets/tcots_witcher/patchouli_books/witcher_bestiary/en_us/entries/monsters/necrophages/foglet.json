@@ -1,0 +1,36 @@
+{
+    "name": "Foglet",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/foglet.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Foglets may appear wherever thick fog can arise: if no fog is forthcoming, they summon it themselves. Quickly thickening air undisturbed by the wind infallibly signals a foglet is present - and preparing an attack.$(br2)These creatures have powerful arms and claws, yet what makes them truly dangerous is their mastery of deception, beguilement and disorientation."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "The foglets are additionally said to possess an ability to create complicated illusions made from pure fog.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Habitat$()$(li)Swamps (at night)$(li)Forests (at night, especially Dark Forests)$(li)Mountains (at night)",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_fog.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Behavior$()$(br)The Foglet it's a dangerous illusionist monster, when some target it's near it's going to summon dense fog around it and become invisible and invincible, transforming in just fog.$(br2)At the moment of the transformation it's going to summon two illusions, don't be afraid of these illusions, as they can be dispelled with only one hit."
+        },
+        {
+            "type": "tcots_witcher:monster_loot_mutagen",
+            "text": "The foglet and the two illusions are going to attack you, and only when they hit you they will become visible and vulnerable again, take this moment to $(#0A880E)kill it rapidly before transforms again in fog.$()",
+            "items": ["tcots_witcher:cadaverine", "tcots_witcher:foglet_teeth"],
+            "mutagen": ["tcots_witcher:foglet_mutagen"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_full.png"
+        }
+    ],
+    "sortnum": 4
+}

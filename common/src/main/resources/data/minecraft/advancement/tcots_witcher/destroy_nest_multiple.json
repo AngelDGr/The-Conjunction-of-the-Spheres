@@ -5,7 +5,7 @@
       "conditions": {
         "quantity": 30
       },
-      "trigger": "minecraft:tcots_witcher/destroy_multiple_monster_nest"
+      "trigger": "tcots_witcher:tcots_witcher/destroy_multiple_monster_nest"
     }
   },
   "display": {

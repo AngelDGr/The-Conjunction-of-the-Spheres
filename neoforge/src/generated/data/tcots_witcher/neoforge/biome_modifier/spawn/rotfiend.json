@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/rotfiend",
+  "spawners": {
+    "type": "tcots_witcher:rotfiend",
+    "maxCount": 6,
+    "minCount": 4,
+    "weight": 80
+  }
+}

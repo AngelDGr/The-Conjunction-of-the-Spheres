@@ -2,45 +2,32 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        exclusiveContent {
-            forRepository {
-                maven {
-                    name = 'Fabric'
-                    url = uri('https://maven.fabricmc.net')
-                }
-            }
-            filter {
-                includeGroup('net.fabricmc')
-                includeGroup('fabric-loom')
-            }
+        maven {
+            name = "Architectury"
+            url "https://maven.architectury.dev/"
         }
-        exclusiveContent {
-            forRepository {
-                maven {
-                    name = 'Sponge'
-                    url = uri('https://repo.spongepowered.org/repository/maven-public')
-                }
-            }
-            filter {
-                includeGroupAndSubgroups("org.spongepowered")
-            }
+        maven {
+            name = 'Fabric'
+            url = uri('https://maven.fabricmc.net')
         }
-        exclusiveContent {
-            forRepository {
-                maven {
-                    name = 'Forge'
-                    url = uri('https://maven.minecraftforge.net')
-                }
-            }
-            filter {
-                includeGroupAndSubgroups('net.minecraftforge')
-            }
+        maven {
+            name = 'Forge'
+            url = uri('https://maven.minecraftforge.net')
+        }
+        maven {
+            name = 'Sponge'
+            url = uri('https://repo.spongepowered.org/repository/maven-public')
+        }
+        maven {
+            name = 'Forgix'
+            url = "https://plugins.gradle.org/m2/"
         }
     }
 }
 
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+//    id "io.github.pacifistmc.forgix" version "2.0.0-SNAPSHOT.5.1"
 }
 
 // This should match the folder name of the project, or else IDEA may complain (see https://youtrack.jetbrains.com/issue/IDEA-317606)

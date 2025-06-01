@@ -1,0 +1,17 @@
+{
+  "name": "Formulae",
+  "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/formulae.png",
+  "category": "tcots_witcher:dummy",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Formulae are alchemical recipes for creating potions, oils and bombs. $(br)Each formula lists the required ingredients and describes the type of base necessary to create the mixture.$(br)These formulae can be discovered in various chests throughout the world or obtained by trading with villagers. $(br)$(n)You must know the recipe in order to craft the concoction.$()"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "The recipes for $(l:tcots_witcher:concoctions/decoctions)decoctions$(/l) can be only found in $(n)Ancient Cities$().",
+      "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/formulae/formulae_main.png"
+    }
+  ],
+  "sortnum": 8
+}

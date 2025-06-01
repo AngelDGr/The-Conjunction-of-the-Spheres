@@ -1,0 +1,36 @@
+{
+  "name": "Rock Troll",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/rock_troll.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "If while hiking high in the mountains you come across a walking stone, do not think your eyes deceive you. Instead, draw your sword – for before you stands a rock troll.$(br2)True, not every encounter with these creatures ends in a fight - while not particularly intelligent, trolls are capable of reason."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Just like other monsters though, some are outright hostile and can't be reasoned with.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Habitat$()$(li)Mountains$(li)Caves",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_special.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Behavior$()$(br)Rock trolls are vicious fighters, boasting both immense strength and defense, their stone-covered backs armors them too well for flanking tactics. Fleeing from a troll offers little safety, as they can throw stones with surprising speed and precision.$(br2)Their massive arms also allow them to block front attacks, making them as sturdy as a stone wall when blocking."
+    },
+    {
+      "type": "tcots_witcher:monster_loot_mutagen",
+      "text": "Thankfully, many rock trolls are not aggressive and can even $(l:tcots_witcher:misc/befriending_troll)befriend humans$(/l). However, a particular breed known as $(n)rabid trolls$() is purely hostile, easily recognized by their red eyes.",
+      "items": ["tcots_witcher:cave_troll_liver", "minecraft:cobblestone"],
+      "mutagen": ["tcots_witcher:troll_mutagen"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_full.png"
+    }
+  ],
+  "sortnum": 3
+}

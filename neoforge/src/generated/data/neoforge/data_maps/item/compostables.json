@@ -1,0 +1,43 @@
+{
+  "values": {
+    "tcots_witcher:allspice": {
+      "chance": 0.3
+    },
+    "tcots_witcher:arenaria": {
+      "chance": 0.65
+    },
+    "tcots_witcher:bryonia": {
+      "chance": 0.65
+    },
+    "tcots_witcher:cadaverine": {
+      "chance": 0.85
+    },
+    "tcots_witcher:celandine": {
+      "chance": 0.65
+    },
+    "tcots_witcher:crows_eye": {
+      "chance": 0.65
+    },
+    "tcots_witcher:han_fiber": {
+      "chance": 0.65
+    },
+    "tcots_witcher:puffball": {
+      "chance": 0.65
+    },
+    "tcots_witcher:puffball_mushroom_block": {
+      "chance": 0.85
+    },
+    "tcots_witcher:sewant_mushroom_block": {
+      "chance": 0.85
+    },
+    "tcots_witcher:sewant_mushroom_stem": {
+      "chance": 0.85
+    },
+    "tcots_witcher:sewant_mushrooms": {
+      "chance": 0.65
+    },
+    "tcots_witcher:verbena": {
+      "chance": 0.65
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "parent": "minecraft:tcots_witcher/hunting",
   "criteria": {
     "kill_rotfiend": {
-      "trigger": "minecraft:tcots_witcher/kill_rotfiend"
+      "trigger": "tcots_witcher:tcots_witcher/kill_rotfiend"
     }
   },
   "display": {

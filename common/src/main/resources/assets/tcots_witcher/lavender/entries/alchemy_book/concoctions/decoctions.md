@@ -2,7 +2,7 @@
 {
   "title": "Decoctions",
   "icon_sprite": "tcots_witcher:alchemy_almanac/category/decoctions",
-  "ordinal": 5,
+  "ordinal": 4,
   "associated_items": [
     "tcots_witcher:grave_hag_decoction",
     "tcots_witcher:water_hag_decoction",

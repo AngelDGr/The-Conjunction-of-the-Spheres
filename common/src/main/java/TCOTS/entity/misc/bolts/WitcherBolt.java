@@ -12,7 +12,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class WitcherBolt extends AbstractArrow {
-    private ItemStack stack = this.getDefaultPickupItem();
     @Nullable
     private ItemStack weapon = null;
     protected WitcherBolt(EntityType<? extends AbstractArrow> entityType, Level world) {
@@ -21,7 +20,7 @@ public abstract class WitcherBolt extends AbstractArrow {
 
     protected WitcherBolt(EntityType<? extends AbstractArrow> type, double x, double y, double z, Level world, ItemStack stack, @Nullable ItemStack weapon) {
         this(type, world);
-        this.stack = stack.copy();
+        ItemStack stack1 = stack.copy();
         this.setCustomName(stack.get(DataComponents.CUSTOM_NAME));
         Unit unit = stack.remove(DataComponents.INTANGIBLE_PROJECTILE);
         if (unit != null) {
@@ -35,7 +34,7 @@ public abstract class WitcherBolt extends AbstractArrow {
             }
 
             this.weapon = weapon.copy();
-            int i = EnchantmentHelper.getPiercingCount(serverWorld, weapon, this.stack);
+            int i = EnchantmentHelper.getPiercingCount(serverWorld, weapon, stack1);
             if (i > 0) {
                 this.setPierceLevel((byte)i);
             }
@@ -48,20 +47,5 @@ public abstract class WitcherBolt extends AbstractArrow {
         this(type, owner.getX(), owner.getEyeY() - 0.1F, owner.getZ(), world, stack, shotFrom);
         this.setOwner(owner);
     }
-
-//    protected WitcherBolt(EntityType<? extends WitcherBolt> type, World world, ItemStack stack) {
-//        super(type, world, stack);
-//    }
-//    protected WitcherBolt(EntityType<? extends WitcherBolt> type, double x, double y, double z, World world, ItemStack stack) {
-//        this(type, world, stack);
-//        this.setPosition(x, y, z);
-//    }
-//    protected WitcherBolt(EntityType<? extends WitcherBolt> type, LivingEntity owner, World world, ItemStack stack) {
-//        this(type, owner.getX(), owner.getEyeY() - (double)0.1f, owner.getZ(), world, stack);
-//        this.setOwner(owner);
-//        if (owner instanceof PlayerEntity) {
-//            this.pickupType = PickupPermission.ALLOWED;
-//        }
-//    }
 
 }

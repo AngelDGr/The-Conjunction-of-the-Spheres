@@ -1,0 +1,35 @@
+{
+    "name": "Грайвер",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/graveir.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Грайверы - развратные, вероломные и коварные ублюдки. Они одни из самых крупных падальщиков, у них есть несколько костяных гребней на голове и короткие, и тупые когти.$(br2)Их зубы и тонкий язык позволяют им есть костный мозг - чем костный мозг более гнилой и прогорьклый, тем больше он им нравится."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "У мерзких Грайверов в зубах содержится трупный яд. Так что, если вы встретитесь с ними в бою, остерегайтесь их клыков.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Под землёй$(li)В тёмных пещерах",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_toxic.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)Грайвер - грозный противник, способный победить опытных воинов мощными ударами, наносящими значительный урон.$(br)Они могут наносить трупный яд как кислоту на свою цель, быстро растворяя их броню и отравляя.$(br2)Его толстая кожа обеспечивает броню и высокую устойчивость к взрывам, что делает его более непобедимым."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "Несмотря на огромную силу, $(#0A880E)они медленно передвигаются, что даёт приемущество опытным бойцам в победе над этим грозным противником.$()",
+            "items": ["tcots_witcher:cadaverine","tcots_witcher:graveir_bone"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_full.png"
+        }
+    ],
+    "sortnum": 9
+}

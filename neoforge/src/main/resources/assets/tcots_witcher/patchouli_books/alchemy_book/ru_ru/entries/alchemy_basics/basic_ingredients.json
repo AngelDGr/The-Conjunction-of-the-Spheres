@@ -1,0 +1,37 @@
+{
+    "name": "Ингредиенты",
+    "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/basic_ingredients.png",
+    "category": "tcots_witcher:dummy",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Если растения, использовавшиеся в различных рецептах до Сопряжения Сфер прекрасно известны, то в этом разделе мы расскажем, где найти любые **неизвестные** ингредиенты, используемые после Сопряжения Сфер.$(br)В этой книге описаны только растения. Для получения информации про ингредиенты из чудовищ купите бестиарий у местного библеотекаря."
+        },
+        {
+            "type": "tcots_witcher:basic_ingredients/plants",
+            "items":     ["tcots_witcher:celandine",               "tcots_witcher:crows_eye",                "tcots_witcher:arenaria",                           "tcots_witcher:allspice"],
+            "tooltips":  ["Растёт на равнинах, в Лесах, и Лугах.", "Растёт в тайге, снежной тайге и рощах.", "Растёт в тайге, снежной тайге и цветочных лесах.", "Покупается у деревенских травников или знахарей."],
+            "items1":    ["tcots_witcher:bryonia",                               "tcots_witcher:ergot_seeds",                           "tcots_witcher:verbena",                                         "tcots_witcher:han_fiber"],
+            "tooltips1": ["Растёт в пещерах, иногда проростает на поверхности.", "Собираются с пшеницы, похожи на ядовитый картофель.", "Растёт на равнинах, в цветочных лесах, обычных лесах и лугах.", "Растёт на балотах, в джунглях и саванне."],
+            "items2":    ["minecraft:air", "tcots_witcher:puffball",                  "tcots_witcher:sewant_mushrooms",           "minecraft:air"],
+            "tooltips2": ["",              "Растёт в тайге, на болотах и в пещерах.", "Растёт в тайге, Тёмных лесах и пещерах.",  ""]
+        },
+        {
+            "type": "tcots_witcher:basic_ingredients/advanced_ingredients",
+            "items":    ["tcots_witcher:aether",               "tcots_witcher:vitriol",               "tcots_witcher:vermilion",              "tcots_witcher:hydragenum"],
+            "tooltips": ["Изготавливается, смотреть рецепты.", "Изготавливается, смотреть рецепты.",  "Изготавливается, смотреть рецепты.",   "Изготавливается, смотреть рецепты."],
+            "items1":   ["tcots_witcher:rubedo",               "tcots_witcher:quebrith",             "tcots_witcher:rebis",                "tcots_witcher:nigredo"],
+            "tooltips1":["Изготавливается, смотреть рецепты.", "Изготавливается, смотреть рецепты.", "Изготавливается, смотреть рецепты.", "Изготавливается, смотреть рецепты."],
+            "items2":   ["tcots_witcher:monster_fat",                                                               "tcots_witcher:alchemy_paste",        "tcots_witcher:stammelfords_dust", "tcots_witcher:alchemists_powder"],
+            "tooltips2":["Собирается с Разорителей, Хоглинов, Зоглинов, Полярных медведей и брутальных Пиглинов.",  "Покупается у деревенских травников", "Изготавливается, смотреть рецепты.",           "Покупается у деревенских травников."]
+        },
+        {
+            "type": "tcots_witcher:basic_ingredients/alcohol",
+            "items":    ["tcots_witcher:icy_spirit",            "tcots_witcher:dwarven_spirit",              "tcots_witcher:alcohest",              "tcots_witcher:village_herbal"],
+            "tooltips": ["Покупается у деревенских травников.", "Изготавливается, смотреть рецепты.",        "Изготавливается, смотреть рецепты.",  "Покупается у деревенских фермеров."],
+            "items1":   ["minecraft:air", "tcots_witcher:mandrake_cordial",      "tcots_witcher:cherry_cordial",        "minecraft:air"],
+            "tooltips1":["",              "Покупается у деревенских травников.", "Покупается у деревенских травников.", ""]
+        }
+    ],
+    "sortnum": 1
+}

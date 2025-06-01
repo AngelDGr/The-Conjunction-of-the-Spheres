@@ -1,0 +1,33 @@
+{
+  "name": "Bombs",
+  "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/bombs.png",
+  "category": "tcots_witcher:dummy",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Bombs are thrown projectiles that you can use to supplement your combat. When thrown, Bombs produce a variety of effects, including dealing with damage in an area, hindering the abilities of monsters or inflicting crowd control effects on targets.$(br2)Similar to $(l:tcots_witcher:concoctions/potions)potions$(/l), each type of bomb has three levels; $(o)Normal$(), $(o)Enhanced$() and $(o)Superior$()."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Once they are used, you can use the remaining powder to $(l:tcots_witcher:alchemy_basics/refilling)remade them$(/l).",
+      "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/bombs/bombs_main.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(o)Basic bombs$()$(br)$(l)$(#885038)Grapeshot$()$(br)The most basic kind of bomb, it only causes a tiny explosion that doesn't damage the terrain, only burns if it directly hits the target. It can be used to destroy Monster Nests or Spawners.$(br2)$(l)$(#880000)Dancing Star$()$(br)It causes a fiery explosion that burns enemies and puts fire in the area.$(br)It can be used to destroy Monster Nests or Spawners."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(o)Advanced bombs$()$(br)$(l)$(#888300)Dragon's Dream$()$(br)Creates a volatile gas that explodes violently if it's ignited. The explosion can destroy blocks. The gas can be ignited with flaming arrows, fire or mobs that are already in flames.$(br2)$(l)$(#5e8815)Devil's Puffball$()$(br)Creates a cloud of poisonous gas, try to launch it far enough to not breathe the toxic gas."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(o)Crowd control bombs$()$(br)$(l)$(#6c777b)Samum$()$(br)Stuns monsters and blinds humans, monsters that are stunned won't attack anyone. $(br)Don't work in Wardens or Guardians.$(br)It can be used to destroy Monster Nests or Spawners.$(br2)$(l)$(#007b77)Northern Wind$()$(br)Freezes monsters and slows humans; frozen monsters become immobile and take extra damage. Fiery monsters take extra damage, it doesn't affect cold-resistant ones."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(o)Weakening bombs$()$(br)$(l)$(#25882f)Dimeritium Bomb$()$(br)Closes portals and nullifies magic: Evokers won't be able to cast spells, Ghasts, Blazes, Guardians and Shulkers won't be able to shoot projectiles, Endermen won't be able to teleport.$(br2)$(l)$(#87b8b8)Moon Dust$()$(br)Blocks any kind of regeneration and nullifies any kind of invisibility. At Superior level, permanently disables a Creeper's ability to explode."
+    }
+  ],
+  "sortnum": 6
+}

@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/ghoul",
+  "spawners": {
+    "type": "tcots_witcher:ghoul",
+    "maxCount": 5,
+    "minCount": 3,
+    "weight": 10
+  }
+}

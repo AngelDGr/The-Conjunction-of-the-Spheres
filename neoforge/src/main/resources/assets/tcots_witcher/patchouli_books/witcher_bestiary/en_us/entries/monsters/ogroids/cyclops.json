@@ -1,0 +1,35 @@
+{
+  "name": "Cyclops",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/cyclops.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Cyclopses can easily be recognized by the single eye located in the center of their foreheads.$(br)If for some reason that is not visible, other tell-tale signs are their enormous size, incredible strength and a seething hatred for all humans.$(br2)Cyclopses go where they want; any warrior should move to the side if a cyclops is charging forward."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "They rarely flinch from anything a warrior can do to them, so they keep trying to fight no matter how many cuts from a blade they take.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Habitat$()$(li)Mountains$(li)Old Growth Taigas$(li)Snowy Plains",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_special.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Behavior$()$(br)The Cyclops is a large but simple-minded creature. Its massive muscles allow it to deliver powerful punches with significant knockback and damage.$(br2)At longer ranges, a Cyclops can leap into the air, crashing down and knocking over anything near its landing site.$(br2)These solitary beings are ruthless, showing no hesitation in killing one of their own kind."
+    },
+    {
+      "type": "tcots_witcher:monster_loot",
+      "text": "When battling a Cyclops, maintain a medium distance. If it starts to jump, either raise your shield or run for your life.",
+      "items": ["minecraft:leather", "minecraft:rabbit_hide"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_full.png"
+    }
+  ],
+  "sortnum": 2
+}

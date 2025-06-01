@@ -1,0 +1,35 @@
+{
+    "name": "Rotfiend",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/rotfiend.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Rotfiends resemble decomposing human bodies that have been stripped of their skin.$(br2)Their presence is given away by the overwhelming stench of the rot which gives them their name. They usually feed in large groups and thus present a danger to lone travelers – especially considering their speed."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "Be careful fellow traveler, these creatures can represent a serious threat to any inexperienced warrior.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Habitat$()$(li)Forests (at night)$(li)Plains (at night)$(li)Dark caves",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_exploding.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Behavior$()$(br)The rotfiend rests underground and only emerges when find a target, so be careful, as it can take you by surprise. They are fast and dangerous, and it will try to lunge at you, so be faster than it.$(br2)Be warned of their worst trait; they are highly explosive, when they damaged enough its body thrashes around in uncontrollable tremors, leading to an aggressive explosion."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "The resulting explosion will hurt a lot, but it might also kill nearby rotfiends, creating something of a chain reaction.$(br2)The only way to prevent this explosion is $(#0A880E)killing it when the creature it's in flames.$()",
+            "items": ["tcots_witcher:cadaverine", "tcots_witcher:rotfiend_blood"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_full.png"
+        }
+    ],
+    "sortnum": 3
+}

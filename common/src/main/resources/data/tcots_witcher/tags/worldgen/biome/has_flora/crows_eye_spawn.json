@@ -1,0 +1,9 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:is_taiga",
+      "required": false
+    },
+    "minecraft:grove"
+  ]
+}

@@ -1,6 +1,6 @@
 package TCOTS.advancements.criterion;
 
-import TCOTS.advancements.TCOTS_Criteria;
+import TCOTS.registry.TCOTS_Criteria;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.Optional;
@@ -39,7 +39,7 @@ public class DestroyMultipleMonsterNestsCriterion extends SimpleCriterionTrigger
 
 
         public static Criterion<DestroyMultipleMonsterNestsCriterion.Conditions> createMultipleDestroyNestCriterion(int quantity) {
-            return TCOTS_Criteria.DESTROY_MULTIPLE_MONSTER_NEST.createCriterion(
+            return TCOTS_Criteria.DestroyMultipleMonsterNest().createCriterion(
                     new DestroyMultipleMonsterNestsCriterion.Conditions(
                             Optional.empty(),
                             Optional.of(quantity)));

@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/scurver",
+  "spawners": {
+    "type": "tcots_witcher:scurver",
+    "maxCount": 3,
+    "minCount": 2,
+    "weight": 40
+  }
+}

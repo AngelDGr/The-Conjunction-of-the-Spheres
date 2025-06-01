@@ -1,0 +1,21 @@
+{
+  "name": "Гнёзда Чудовищ",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/misc/monster_nests.png",
+  "category": "tcots_witcher:misc",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Некоторые чудовища живут в гнёздах из грязи и костей. Они расположены по всему миру.$(br2)Из гнезда будут вылезать всё новые и новые чудовища, пока оно не будет уничтожено."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Гнёзда чудовищ очень трудно разрушить, и, хотя известно, что гнездо можно уничтожить взрывом, некоторые слухи говорят о том, что так же, его можно уничтожить с помощью достаточно сильного заклинания эффективности."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "За разрушение любого из таких гнёзд полагается награда, так как монстры обычно прячут в них магические предметы.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/monster_nest.png"
+    }
+  ],
+  "sortnum": 1
+}

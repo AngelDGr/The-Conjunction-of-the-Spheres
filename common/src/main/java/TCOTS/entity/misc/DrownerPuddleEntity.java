@@ -44,6 +44,7 @@ public class DrownerPuddleEntity extends Entity implements GeoEntity, TraceableE
         this.setPos(x, y, z);
     }
 
+
     public void setOwner(@Nullable LivingEntity owner) {
         this.owner = owner;
         this.ownerUuid = owner == null ? null : owner.getUUID();

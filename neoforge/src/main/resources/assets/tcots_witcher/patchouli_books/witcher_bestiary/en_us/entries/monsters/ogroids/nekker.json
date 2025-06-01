@@ -1,0 +1,35 @@
+{
+  "name": "Nekker",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/nekker.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A lone nekker is harmless. Five are dangerous. Ten can kill even a veteran monster slayer.$(br2)The nekkers basic tactic is to strike en masse. They burrow from beneath the ground and swarm upon their prey. Though primitive, the tactic is surprisingly effective. One must be ready to repel many foes at once."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "They live in nests of several individuals.$(br)So if you found one, rest assure that you are going to find more.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Habitat$()$(li)Forests$(li)Plains$(li)$(l:tcots_witcher:misc/monster_nests)Nekker nests$(), found in plains or forests",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_lunging.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Behavior$()$(br)Be careful with this nasty creature. As without a target, it's going to be buried underground, waiting for a prey. With its long claws, it's a great digger and fast attacker, and with their tiny size can be a real problem.$(br2)If you get far enough, it will try to launch itself to you with a great force, this attack is pretty common to these agile creatures."
+    },
+    {
+      "type": "tcots_witcher:monster_loot",
+      "text": "Avoid being overwhelmed with the quantity of these tiny creatures, and you can manage to defeat them easily.",
+      "items": ["tcots_witcher:nekker_eye", "tcots_witcher:nekker_heart"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_full.png"
+    }
+  ],
+  "sortnum": 0
+}

@@ -1,6 +1,7 @@
 package TCOTS.blocks;
 
 import TCOTS.blocks.entity.WintersBladeSkeletonBlockEntity;
+import TCOTS.registry.TCOTS_Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -27,7 +28,7 @@ public class WintersBladeSkeletonBlock extends SkeletonBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return new WintersBladeSkeletonBlockEntity(TCOTS_Blocks.WINTERS_BLADE_SKELETON_ENTITY, pos, state);
+        return new WintersBladeSkeletonBlockEntity(TCOTS_Blocks.WintersBladeSkeletonBlockEntity(), pos, state);
     }
 
     @Override

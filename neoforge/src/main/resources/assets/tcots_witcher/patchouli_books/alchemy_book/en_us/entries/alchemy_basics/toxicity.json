@@ -1,0 +1,20 @@
+{
+    "name": "Toxicity",
+    "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/toxicity.png",
+    "category": "tcots_witcher:dummy",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Post-conjunction potions have a unique and dangerous trait: $(#41d331)toxicity$(). This toxicity can be dangerous when it reaches high levels and can even kill you.$(br2)There are two types of toxicity:$(li)$(#0e740a)Normal Toxicity$(): $(#000000)This kind of toxicity comes from normal and splash $(l:tcots_witcher:concoctions/potions)potions$(/l) and slowly depletes over time.$()"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(li)$(#043a02)Decoction Toxicity$(): $(#000000)This toxicity comes from drinking $(l:tcots_witcher:concoctions/decoctions)decoctions$(/l), and does not dissipate over time, only decreasing when the decoction effect wears off.$()$(br2)You have a maximum toxicity capacity, and if you exceed 75% of that capacity, you will start taking continuous damage. If you surpass 90% of your capacity, this damage will become even worse."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "If the potion you want to drink makes you exceed your maximum toxicity capacity, $(n)you won't be able to drink it$(). Also, your toxicity can be completely depleted off by drinking milk or a White Honey potion.$(br2)Overall, toxicity prevents you from drinking too many potions, but there are rumors that certain objects can increase your toxicity tolerance..."
+        }
+    ],
+    "sortnum": 2
+}

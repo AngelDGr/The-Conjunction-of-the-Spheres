@@ -11,10 +11,5 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BlazeModel.class)
 public class BlazeModelMixin {
 
-//    @Inject(method = "setupAnim", at = @At("HEAD"), cancellable = true)
-//    private <T extends Entity>  void stopAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci){
-//        if(entity instanceof LivingEntity living && living.theConjunctionOfTheSpheres$isFrozen()){
-//            ci.cancel();
-//        }
-//    }
+
 }

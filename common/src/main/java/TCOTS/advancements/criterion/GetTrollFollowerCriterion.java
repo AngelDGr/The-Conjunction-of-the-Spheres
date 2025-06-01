@@ -1,6 +1,6 @@
 package TCOTS.advancements.criterion;
 
-import TCOTS.advancements.TCOTS_Criteria;
+import TCOTS.registry.TCOTS_Criteria;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.Optional;
@@ -39,7 +39,7 @@ public class GetTrollFollowerCriterion extends SimpleCriterionTrigger<GetTrollFo
                                 .apply(instance, GetTrollFollowerCriterion.Conditions::new));
 
         public static Criterion<GetTrollFollowerCriterion.Conditions> create(EntityPredicate.Builder entity) {
-            return TCOTS_Criteria.GET_TROLL_FOLLOWER.createCriterion(
+            return TCOTS_Criteria.GetTrollFollower().createCriterion(
                     new GetTrollFollowerCriterion.Conditions(
                             Optional.empty(),
                             Optional.of(EntityPredicate.wrap(entity))));

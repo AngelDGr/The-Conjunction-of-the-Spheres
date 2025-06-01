@@ -2,7 +2,7 @@
 {
   "title": "Ingredients",
   "icon_sprite": "tcots_witcher:alchemy_almanac/category/basic_ingredients",
-  "ordinal": 2
+  "ordinal": 1
 }
 ```
 

@@ -2,7 +2,7 @@
 {
   "title": "Refilling",
   "icon_sprite": "tcots_witcher:alchemy_almanac/category/refilling",
-  "ordinal": 8,
+  "ordinal": 7,
   "associated_items": [
     "tcots_witcher:dwarven_spirit",
     "tcots_witcher:alcohest",

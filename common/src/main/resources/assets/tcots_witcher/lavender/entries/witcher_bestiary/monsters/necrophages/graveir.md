@@ -22,7 +22,7 @@ the more it is to their liking.
 
 ;;;;;
 
-The vile graveirs have cadaverine in their teeth, so anyone who engages one in battle beware
+The vile graveirs have cadaverine in their teeth, so anyone who engages one in battle beware.
 
 ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_main.png,fit)
 

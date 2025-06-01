@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#tcots_witcher:has_flora/sewant_spawn_dark",
+  "features": "tcots_witcher:sewant_mushrooms_dark_forest",
+  "step": "vegetal_decoration"
+}

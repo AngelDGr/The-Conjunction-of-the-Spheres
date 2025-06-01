@@ -1,0 +1,18 @@
+{
+  "name": "Отвары",
+  "icon": "tcots_witcher:textures/gui/sprites/alchemy_almanac/category/decoctions.png",
+  "category": "tcots_witcher:dummy",
+  "pages": [
+    {
+      "type": "tcots_witcher:decoctions/decoctions_image_below_title",
+      "title": "      Отвары",
+      "text": "Отвары - это очень сильные зелья, в состав которых входит $(l:tcots_witcher:alchemy_basics/basic_ingredients)мутаген чудовища.",
+      "image": "tcots_witcher:textures/gui/sprites/alchemy_almanac/entries/decoctions/decoctions_main.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Как и элексиры, их нужно пить и их можно $(l:tcots_witcher:alchemy_basics/refilling)пополнять$(/l). Однако, вы можете носить только один отвар в одном слоте и их нельзя улучшать.$(br2)Уровень $(l:tcots_witcher:alchemy_basics/toxicity)интоксикации$(/l) отваров настолько высок, что обычно можно пить только один за раз, но эффекты настолько сильны, что больше и не захочется.$(br)$(li)$(n)Заметка: мутаген чудовища можно добыть только с его трупа"
+    }
+  ],
+  "sortnum": 4
+}

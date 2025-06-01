@@ -1,0 +1,35 @@
+{
+    "name": "Bullvore",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/bullvore.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "The bullvore can be compared to a heap of muscles constrained by a sack of hard, elastic skin.$(br)Its head is that of a bovine's, yet its mouth is filled with sharp teeth adapted to rending flesh.$(br2)The visible mark of Chaos are the horns and vestigial hands the creature barely moves, growing all over its body."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "This monster does not like the company of its own kind, but it is at times accompanied by smaller, weaker beasts, especially rotfiends.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Habitat$()$(li)Underground$(li)Dark Caves$(br)*It's always surrounded by lesser necrophages",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_special.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Behavior$()$(br)The Bullvore is the largest and most powerful necrophage known. It poses a severe challenge, even to an Iron Golem.$(br)With long, razor-sharp claws, it delivers powerful strikes that pierce any shield.$(br2)Its most distinctive attack is its charge; using its massive horns, the Bullvore charges through anything in its path, destroying leaves and small obstacles effortlessly."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "Despite its power, the Bullvore’s slow speed can be exploited in combat.$(br)Additionally, $(#0A880E)once it starts its charge, it won’t change direction until it reaches the end.$()",
+            "items": ["tcots_witcher:cadaverine","tcots_witcher:bullvore_horn_fragment"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_full.png"
+        }
+    ],
+    "sortnum": 11
+}

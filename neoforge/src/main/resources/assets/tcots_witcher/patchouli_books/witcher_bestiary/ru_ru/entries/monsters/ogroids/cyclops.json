@@ -1,0 +1,35 @@
+{
+  "name": "Циклопы",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/ogroids/cyclops.png",
+  "category": "tcots_witcher:ogroids",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Циклопа можно легко узнать по одному глазу, расположенному в центре их лба.$(br)Если по какой-то причине глаза не видно, то ещё один признак - это их огромные размеры, невероятная сила и кипящая ко всем людям ненависть.$(br2)Циклопы идут туда, куда хотят; любому храбрецу стоит отойти в сторону, если циклоп несётся вперёд."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "Они не страшатся того, что с ними может сделать клинок воина, и продолжают сражаться, не смотря на колличество кровоточащих ран.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Среда обитания$()$(li)Горы$(li)Древние массивы тайги$(li)Снежные равнины",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_special.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Поведение$()$(br)Циклоп - крупное существо и, несмотря на размеры, слабоумное... За то мощные мышцы дают ему силу наносить сокрушительный урон.$(br2)На дальних дистанциях циклоп может высоко прыгнуть и при падении уничтожить всё живое в зоне приземления.$(br2)Циклопы - истинные одиночки, они безжалостно убивают себе подобных, не колеблясь."
+    },
+    {
+      "type": "tcots_witcher:monster_loot",
+      "text": "Во время сражения с циклопом лучше держаться на средней дистанции. Если он начнёт прыгать, либо поднимите щит, что с небольшой вероятностью поможет вам выжить, либо бегите изо всех сил, в попытках спасти свою жизнь.",
+      "items": ["minecraft:leather", "minecraft:rabbit_hide"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_full.png"
+    }
+  ],
+  "sortnum": 2
+}

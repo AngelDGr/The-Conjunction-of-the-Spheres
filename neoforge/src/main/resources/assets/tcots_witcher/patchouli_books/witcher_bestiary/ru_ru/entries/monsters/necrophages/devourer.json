@@ -1,0 +1,35 @@
+{
+    "name": "Яга",
+    "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/devourer.png",
+    "category": "tcots_witcher:necrophages",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Яг часто называют ночными ведьмами, потому что они похожи на старых, уродливых женщин и славятся ведьминской жестокостью.$(br2)Эти существа не прочь полакомиться человеческой плотью; хотя они охотно поедают трупы, прежде всего они жаждут свежей и тёплой плоти.$(br2)Ночью Яги охотятся группами, которые крестьяне называют шабашами ведьм."
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "Они любят дурачить и мучить своих жертв, но в сказках об их полуночных полётах на мётлах и пряничных домиках нет ни капли правды.",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_main.png"
+        },
+        {
+            "type": "tcots_witcher:image_below",
+            "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)Болота (ночью)",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_jump.png"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(l)$(#fc5454)Поведение$()$(br)Это ненасытное чудовище обладает огромной силой: средняя группа с лёгкостью справляется с железным големом, но их главная уязвимость - скорость.$(br2)Их главное оружие - мощные ноги, которые позволяют им совершать сильные прыжки, отталкивая и нанося урон любому существу рядом с силой, зависящей от силы прыжка."
+        },
+        {
+            "type": "tcots_witcher:monster_loot",
+            "text": "Примите во внимание главный недостаток этой атаки: $(#0A880E)она должна приземлиться на достаточно твёрдую поверхность, чтобы нанести хоть какой-то урон.$()",
+            "items": ["tcots_witcher:cadaverine","tcots_witcher:devourer_teeth"]
+        },
+        {
+            "type": "tcots_witcher:image_center",
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_full.png"
+        }
+    ],
+    "sortnum": 8
+}
