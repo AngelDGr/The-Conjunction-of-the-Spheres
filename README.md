@@ -5,8 +5,8 @@
 <p>&nbsp;</p>
 <p>
   <a href="https://modrinth.com/mod/architectury-api" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/ZQwo364.png" alt="" width="200" height="65" /></a>
-  <a href="https://www.curseforge.com/minecraft/mc-mods/geckolib" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/6yT6EK1.png" alt="" width="200" height="65" /></a>
-  <a href="https://www.curseforge.com/minecraft/mc-mods/owo-lib" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/8gYdkfL.png" alt="" width="200" height="65" /></a>
+  <a href="https://modrinth.com/mod/geckolib" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/6yT6EK1.png" alt="" width="200" height="65" /></a>
+  <a href="https://modrinth.com/mod/owo-lib" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/8gYdkfL.png" alt="" width="200" height="65" /></a>
   
 <h1 style="text-align: center;"><span style="font-size: 24px;"><strong><em>Fabric</em></strong></span></h1>
   <a href="https://modrinth.com/mod/lavender" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/HUxLovE.png" alt="" width="200" height="65" /></a></p>
