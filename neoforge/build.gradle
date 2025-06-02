@@ -53,6 +53,12 @@ repositories {
     maven {
         name = 'Patchouli'
         url = 'https://maven.blamejared.com' }
+
+
+    maven {
+        name = "Curios"
+        url = "https://maven.theillusivec4.top/"
+    }
 }
 
 dependencies {
@@ -61,7 +67,8 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 
-//    include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.2.0")))
+    compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.2-beta.4"))
+    implementation(include("com.github.bawnorton.mixinsquared:mixinsquared-forge:0.3.2-beta.4"))
 
     //GeckoLib Dependency
     implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
@@ -81,6 +88,13 @@ dependencies {
     //Patchouli
     modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}:api"
     modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
+
+
+
+
+    //Curios Dependency
+    runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
 }
 
 processResources {
