@@ -48,8 +48,7 @@
     "samum.LookAtEntityGoalMixin",
     "structurized.PoolStructurePieceMixin",
     "structurized.RegistryLoaderMixin",
-    "structurized.StructurePoolAccessor",
-    "trinket.ChangeTrinketTooltipColorMixin"
+    "structurized.StructurePoolAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -73,7 +72,8 @@
     "WorldRendererMixin",
     "northern_wind.BlazeEntityMixin",
     "northern_wind.LivingEntityRendererMixin",
-    "northern_wind.geckolib.GeoEntityRendererMixin"
+    "northern_wind.geckolib.GeoEntityRendererMixin",
+    "trinket.ChangeTrinketTooltipColorMixin"
   ],
   "refmap": "tcots-witcher-refmap.json"
 }
