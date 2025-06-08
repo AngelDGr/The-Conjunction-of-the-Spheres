@@ -4,15 +4,15 @@
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.imgur.com/NxZyu1r.png" alt="" /></p>
 <p>&nbsp;</p>
 <p>
-  <a href="https://modrinth.com/mod/architectury-api" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/ZQwo364.png" alt="" width="200" height="65" /></a>
-  <a href="https://modrinth.com/mod/geckolib" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/6yT6EK1.png" alt="" width="200" height="65" /></a>
-  <a href="https://modrinth.com/mod/owo-lib" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/8gYdkfL.png" alt="" width="200" height="65" /></a>
+<a href="https://modrinth.com/mod/architectury-api" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/i8AIf3p.png" alt="" width="200" height="65" /></a>
+<a href="https://modrinth.com/mod/geckolib" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/N7C5fjd.png" alt="" width="200" height="65" /></a>
+<a href="https://modrinth.com/mod/owo-lib" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/w7qqQM9.png" alt="" width="200" height="65" /></a>
   
 <h1 style="text-align: center;"><span style="font-size: 24px;"><strong><em>Fabric</em></strong></span></h1>
-  <a href="https://modrinth.com/mod/lavender" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/HUxLovE.png" alt="" width="200" height="65" /></a></p>
+  <a href="https://modrinth.com/mod/lavender" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/jwgMdZF.png" alt="" width="200" height="65" /></a></p>
 <p>&nbsp;</p>
 <h1 style="text-align: center;"><span style="font-size: 24px;"><strong><em>NeoForge</em></strong></span></h1>
-  <a href="https://modrinth.com/mod/patchouli" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/aQhCzZE.png" alt="" width="200" height="65" /></a></p>
+  <a href="https://modrinth.com/mod/patchouli" target="_blank" rel="nofollow noopener noreferrer"><img src="https://i.imgur.com/4WZeeAu.png" alt="" width="200" height="65" /></a></p>
 
 
 <hr />
