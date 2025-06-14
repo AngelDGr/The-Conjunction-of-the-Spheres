@@ -9,6 +9,7 @@ import TCOTS.items.concoctions.bombs.SamumBomb;
 import TCOTS.registry.*;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.MiscUtil;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -197,7 +198,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     //Wolf Effect
-    @ModifyConstant(method = "attack", constant = @Constant(floatValue = 1.5f))
+    @ModifyExpressionValue(method = "attack", at = @At(value = "CONSTANT", args = "floatValue=1.5"))
     private float injectExtraCriticalWolf(float value){
         if(this.hasEffect(TCOTS_Effects.WolfEffect())){
             //Wolf I:   -> 2.0f

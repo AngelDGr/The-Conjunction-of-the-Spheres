@@ -2,6 +2,7 @@ package TCOTS.mixin;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.utils.MiscUtil;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.renderer.ItemModelShaper;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 public class WitcherRPGChangeModels {
     @SuppressWarnings("unused")
@@ -22,21 +23,16 @@ public class WitcherRPGChangeModels {
     private static class ItemRenderMixin {
         @Shadow @Final private ItemModelShaper itemModelShaper;
 
-        @Redirect(method = "<init>", at = @At(value = "INVOKE",
-                target = "Lnet/minecraft/client/renderer/ItemModelShaper;register(Lnet/minecraft/world/item/Item;Lnet/minecraft/client/resources/model/ModelResourceLocation;)V"))
-        private void changeModels(ItemModelShaper instance, Item item, ModelResourceLocation modelId){
-            if(MiscUtil.isWitcherRPGLoaded() || TCOTS_Main.CONFIG.hasRPGTextures()){
-                if(item instanceof SwordItem && BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(TCOTS_Main.MOD_ID)){
-                    this.itemModelShaper.register(item,
-                            ModelResourceLocation.inventory(
-                                    ResourceLocation.fromNamespaceAndPath(BuiltInRegistries.ITEM.getKey(item).getNamespace(), BuiltInRegistries.ITEM.getKey(item).getPath()+"_rpg")
-                            )
-                    );
-                } else {
-                    this.itemModelShaper.register(item, ModelResourceLocation.inventory(BuiltInRegistries.ITEM.getKey(item)));
-                }
+        @ModifyArg(method = "<init>", at = @At(value = "INVOKE",
+                target = "Lnet/minecraft/client/renderer/ItemModelShaper;register(Lnet/minecraft/world/item/Item;Lnet/minecraft/client/resources/model/ModelResourceLocation;)V"), index = 1)
+        private ModelResourceLocation changeModels(ModelResourceLocation modelId, @Local Item item){
+            if((MiscUtil.isWitcherRPGLoaded() || TCOTS_Main.CONFIG.hasRPGTextures())
+                    && item instanceof SwordItem && BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(TCOTS_Main.MOD_ID)){
+                return ModelResourceLocation.inventory(
+                        ResourceLocation.fromNamespaceAndPath(BuiltInRegistries.ITEM.getKey(item).getNamespace(), BuiltInRegistries.ITEM.getKey(item).getPath()+"_rpg")
+                );
             } else {
-                this.itemModelShaper.register(item, ModelResourceLocation.inventory(BuiltInRegistries.ITEM.getKey(item)));
+                return modelId;
             }
         }
     }
@@ -46,19 +42,14 @@ public class WitcherRPGChangeModels {
     private static abstract class ModelLoaderMixin {
         @Shadow protected abstract void loadItemModelAndDependencies(ResourceLocation id);
 
-        @Redirect(method = "<init>", at = @At(value = "INVOKE",
+        @ModifyArg(method = "<init>", at = @At(value = "INVOKE",
                 target = "Lnet/minecraft/client/resources/model/ModelBakery;loadItemModelAndDependencies(Lnet/minecraft/resources/ResourceLocation;)V"))
-        private void changeModels(ModelBakery instance, ResourceLocation id) {
-            if(MiscUtil.isWitcherRPGLoaded() || TCOTS_Main.CONFIG.hasRPGTextures()) {
-                if (BuiltInRegistries.ITEM.get(id) instanceof SwordItem && id.getNamespace().equals(TCOTS_Main.MOD_ID)) {
-                    this.loadItemModelAndDependencies(
-                            ResourceLocation.fromNamespaceAndPath(id.getNamespace(), id.getPath() + "_rpg")
-                    );
-                } else {
-                    this.loadItemModelAndDependencies(id);
-                }
+        private ResourceLocation changeModels(ResourceLocation id) {
+            if ((MiscUtil.isWitcherRPGLoaded() || TCOTS_Main.CONFIG.hasRPGTextures())
+                    && BuiltInRegistries.ITEM.get(id) instanceof SwordItem && id.getNamespace().equals(TCOTS_Main.MOD_ID)) {
+                return ResourceLocation.fromNamespaceAndPath(id.getNamespace(), id.getPath() + "_rpg");
             } else {
-                this.loadItemModelAndDependencies(id);
+                return id;
             }
         }
     }

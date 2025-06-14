@@ -5,6 +5,8 @@ import TCOTS.entity.misc.bolts.WitcherBolt;
 import TCOTS.items.weapons.BoltItem;
 import TCOTS.items.weapons.WitcherBaseCrossbow;
 import TCOTS.registry.TCOTS_Items;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
@@ -21,7 +23,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
@@ -101,12 +102,9 @@ public class CrossbowMixins {
         @Unique
         AbstractArrow THIS = (AbstractArrow)(Object)this;
 
-        @Redirect(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setArrowCount(I)V"))
-        private void redirectNoStuckArrows(LivingEntity entity, int stuckArrowCount){
-            if(THIS instanceof WitcherBolt || THIS instanceof ScurverSpineEntity)
-                entity.setArrowCount(entity.getArrowCount());
-            else
-                entity.setArrowCount(entity.getArrowCount()+1);
+        @WrapWithCondition(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setArrowCount(I)V"))
+        private boolean dontStuckArrows(LivingEntity instance, int stuckArrowCount, @Local LivingEntity entity){
+            return !(THIS instanceof WitcherBolt) && !(THIS instanceof ScurverSpineEntity);
         }
 
     }

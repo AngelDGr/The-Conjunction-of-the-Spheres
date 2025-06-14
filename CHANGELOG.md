@@ -1,3 +1,8 @@
+# 1.0.6 - 1.21
+### Bugfixes
+- Changed some internal logic for better compatibility with other mods.
+- Fixed Manticore toxicity attribute don't changing to green color in NeoForge.
+
 # 1.0.5 - 1.21
 ### Additions
 - Added new and unique animations from Better Combat to all Witcher swords.

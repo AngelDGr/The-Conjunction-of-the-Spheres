@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
@@ -20,7 +20,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
@@ -51,16 +50,16 @@ public abstract class ItemStackMixin {
 
 
     //Manticore Armor
-    @Redirect(method = "addModifierTooltip", at = @At(
-            value = "INVOKE"
-            ,target = "Lnet/minecraft/network/chat/MutableComponent;withStyle(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/MutableComponent;",
+    @ModifyArg(method = "addModifierTooltip", at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/network/chat/MutableComponent;withStyle(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/MutableComponent;",
             ordinal = 1))
-    private MutableComponent manticoreAttributeMaxToxicityColor(MutableComponent instance, ChatFormatting formatting, @Local(argsOnly = true) Holder<Attribute> attribute){
+    private ChatFormatting manticoreAttributeMaxToxicityColor(ChatFormatting formatting, @Local(argsOnly = true) Holder<Attribute> attribute){
         if(attribute == TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY){
-            return instance.withStyle(ChatFormatting.DARK_GREEN);
+            return ChatFormatting.DARK_GREEN;
         }
 
-        return instance.withStyle(formatting);
+        return formatting;
     }
 
     @Inject(method = "getUseDuration", at = @At("RETURN"), cancellable = true)

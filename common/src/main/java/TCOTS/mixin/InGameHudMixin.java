@@ -3,6 +3,9 @@ package TCOTS.mixin;
 import TCOTS.TCOTS_Main;
 import TCOTS.registry.TCOTS_Effects;
 import TCOTS.screen.TCOTS_HeartTypes;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.DeltaTracker;
@@ -19,7 +22,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(value= EnvType.CLIENT)
@@ -91,22 +93,23 @@ public abstract class InGameHudMixin {
         }
     }
 
-
-    @Redirect(method = "renderHearts", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/Gui;renderHeart(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Gui$HeartType;IIZZZ)V",
-            ordinal = 3))
-    private void injectEffectsHearts(Gui instance, GuiGraphics context, Gui.HeartType type, int x, int y, boolean hardcore, boolean blinking, boolean half){
+    @WrapOperation(
+            method = "renderHearts",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;renderHeart(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Gui$HeartType;IIZZZ)V", ordinal = 3)
+    )
+    private void injectEffectsHearts(Gui instance, GuiGraphics context, Gui.HeartType heartType, int x, int y, boolean hardcore, boolean blinking, boolean half, Operation<Void> original) {
         Player player = this.getCameraPlayer();
-        if(player!=null) {
 
-            if (player.theConjunctionOfTheSpheres$toxicityOverThreshold() && !player.hasEffect(MobEffects.WITHER)) {
-                context.blitSprite(TCOTS_HeartTypes.TOXIC.getTexture(hardcore,half,blinking), x, y, 9, 9);
-            } else if (player.hasEffect(TCOTS_Effects.Cadaverine()) && !player.hasEffect(MobEffects.WITHER)){
-                context.blitSprite(TCOTS_HeartTypes.CADAVERINE.getTexture(hardcore,half,blinking), x, y, 9, 9);
-            }
-            else {
-                renderHeart(context, type, x, y, hardcore, blinking, half);
-            }
+        if (player!=null&& player.theConjunctionOfTheSpheres$toxicityOverThreshold() && !player.hasEffect(MobEffects.WITHER)) {
+            RenderSystem.enableBlend();
+            context.blitSprite(TCOTS_HeartTypes.TOXIC.getTexture(hardcore,half,blinking), x, y, 9, 9);
+            RenderSystem.disableBlend();
+        } else if (player!=null&& player.hasEffect(TCOTS_Effects.Cadaverine()) && !player.hasEffect(MobEffects.WITHER)){
+            RenderSystem.enableBlend();
+            context.blitSprite(TCOTS_HeartTypes.CADAVERINE.getTexture(hardcore,half,blinking), x, y, 9, 9);
+            RenderSystem.disableBlend();
+        } else {
+            original.call(instance, context, heartType, x, y, hardcore, blinking, half);
         }
     }
 }

@@ -255,74 +255,33 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
 
             int resultCount = recipe.getResultItem(null).getCount();
 
-            //Draw result count
-            if (resultCount > 1) {
-                context.pose().pushPose();
-                context.pose().translate(0, 0, 200);
-                context.drawString(textRenderer, String.valueOf(resultCount), this.getX() + 14, this.getY() + 12, 0xffffff, true);
-                context.pose().popPose();
-            }
+            drawItemAmount(context, resultCount, 0xffffff, 14);
 
             //Draw ingredients
             for (int l = 0; l < recipe.getIngredients().size(); l++) {
                 ItemStack stack = recipe.getIngredients().get(l).getItems()[0];
-                int number = recipe.getIngredientsCounts().get(l);
+                int amount = recipe.getIngredientsCounts().get(l);
                 switch (l) {
                     case 0:
                         //Draw ingredient Item
                         context.renderFakeItem(stack, this.getX() + 62, this.getY() + 3);
-
-                        //Draw ingredient number
-                        if (number > 1) {
-                            context.pose().pushPose();
-                            context.pose().translate(0, 0, 200);
-                            context.drawString(textRenderer, String.valueOf(number), this.getX() + 73, this.getY() + 12, textColor1, true);
-                            context.pose().popPose();
-                        }
+                        drawItemAmount(context, amount, textColor1, 73);
                         break;
                     case 1:
                         context.renderFakeItem(stack, this.getX() + 43, this.getY() + 3);
-
-                        //Draw ingredient number
-                        if (number > 1) {
-                            context.pose().pushPose();
-                            context.pose().translate(0, 0, 200);
-                            context.drawString(textRenderer, String.valueOf(number), this.getX() + 54, this.getY() + 12, textColor2, true);
-                            context.pose().popPose();
-                        }
+                        drawItemAmount(context, amount, textColor2, 54);
                         break;
                     case 2:
                         context.renderFakeItem(stack, this.getX() + 81, this.getY() + 3);
-
-                        //Draw ingredient number
-                        if (number > 1) {
-                            context.pose().pushPose();
-                            context.pose().translate(0, 0, 200);
-                            context.drawString(textRenderer, String.valueOf(number), this.getX() + 92, this.getY() + 12, textColor3, true);
-                            context.pose().popPose();
-                        }
+                        drawItemAmount(context, amount, textColor4, 92);
                         break;
                     case 3:
                         context.renderFakeItem(stack, this.getX() + 24, this.getY() + 3);
-
-                        //Draw ingredient number
-                        if (number > 1) {
-                            context.pose().pushPose();
-                            context.pose().translate(0, 0, 200);
-                            context.drawString(textRenderer, String.valueOf(number), this.getX() + 35, this.getY() + 12, textColor4, true);
-                            context.pose().popPose();
-                        }
+                        drawItemAmount(context, amount, textColor4, 35);
                         break;
                     case 4:
                         context.renderFakeItem(stack, this.getX() + 100, this.getY() + 3);
-
-                        //Draw ingredient number
-                        if (number > 1) {
-                            context.pose().pushPose();
-                            context.pose().translate(0, 0, 200);
-                            context.drawString(textRenderer, String.valueOf(number), this.getX() + 111, this.getY() + 12, textColor5, true);
-                            context.pose().popPose();
-                        }
+                        drawItemAmount(context, amount, textColor5, 111);
                         break;
 
                     default:
@@ -331,16 +290,23 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
             }
 
             //Draw base
-            int baseCount = recipe.getBaseItem().getCount();
+            int baseAmount = recipe.getBaseItem().getCount();
             context.renderFakeItem(recipe.getBaseItem(), this.getX() + 117, this.getY() + 3);
-            //Draw base count
-            if (baseCount > 1) {
-                context.pose().pushPose();
-                context.pose().translate(0, 0, 200);
-                context.drawString(textRenderer, String.valueOf(baseCount), this.getX() + 128, this.getY() + 12, textColorBase, true);
-                context.pose().popPose();
-            }
+            drawItemAmount(context, baseAmount, textColorBase, 128);
         }
+    }
+
+    private void drawItemAmount(GuiGraphics context, int amount, int textColor, int xOffset, int yOffset){
+        if (amount > 1) {
+            context.pose().pushPose();
+            context.pose().translate(0, 0, 200);
+            context.drawString(textRenderer, String.valueOf(amount), this.getX() + xOffset-(amount>9?6:0), this.getY() + yOffset, textColor, true);
+            context.pose().popPose();
+        }
+    }
+
+    private void drawItemAmount(GuiGraphics context, int amount, int textColor, int xOffset){
+        drawItemAmount(context, amount, textColor, xOffset, 12);
     }
 
     @Override
