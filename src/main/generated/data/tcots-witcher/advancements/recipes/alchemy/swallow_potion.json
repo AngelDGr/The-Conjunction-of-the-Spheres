@@ -1,5 +1,4 @@
 {
-  "parent": "minecraft:recipes/root",
   "criteria": {
     "has_alchemy_book": {
       "conditions": {
@@ -36,5 +35,6 @@
     "recipes": [
       "tcots-witcher:swallow_potion"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

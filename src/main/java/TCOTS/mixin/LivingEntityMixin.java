@@ -12,6 +12,7 @@ import TCOTS.items.concoctions.bombs.SamumBomb;
 import TCOTS.particles.TCOTS_Particles;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
+import TCOTS.utils.MiscUtil;
 import TCOTS.world.TCOTS_DamageTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -425,7 +426,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             float armor = args.get(1);
             float armorToughness = args.get(2);
 
-            args.set(1, armor*0.25f);
+            args.set(1, armor*(1-MiscUtil.gvalchir_penetration));
             args.set(2, armorToughness*0.50f);
         }
     }

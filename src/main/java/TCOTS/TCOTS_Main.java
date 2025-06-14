@@ -77,7 +77,8 @@ public class TCOTS_Main implements ModInitializer {
 		TCOTS_DynamicRecipes.registerDynamicRecipes();
 		ScreenHandlersAndRecipesRegister.registerScreenHandlersAndRecipes();
 		TCOTS_Sounds.registerSounds();
-		TCOTS_Entities.addSpawns();
+		TCOTS_Entities.registerSpawnPlacements();
+		TCOTS_Entities.registerBiomeModificationSpawn();
 		TCOTS_Entities.setEntitiesAttributes();
 		TCOTS_Particles.registerParticles();
 		TCOTS_Features.registerFeatures();

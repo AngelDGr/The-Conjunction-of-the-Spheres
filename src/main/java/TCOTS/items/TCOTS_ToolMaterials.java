@@ -1,6 +1,6 @@
 package TCOTS.items;
 
-import net.fabricmc.loader.api.FabricLoader;
+import TCOTS.utils.MiscUtil;
 import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
@@ -16,26 +16,26 @@ public enum TCOTS_ToolMaterials implements ToolMaterial {
 
     MOONBLADE(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () ->
             Ingredient.ofItems(
-                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                    MiscUtil.isWitcherRPGLoaded()?
                             Registries.ITEM.get(Identifier.of("witcher_rpg", "silver_ingot")) :
                     Items.GOLD_INGOT
             )),
 
     DYAEBL(MiningLevels.DIAMOND, 800, 9.0f, 3.0f, 20, () ->
             Ingredient.ofItems(
-                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                    MiscUtil.isWitcherRPGLoaded()?
                             Registries.ITEM.get(Identifier.of("witcher_rpg", "steel_ingot")) :
                     Items.IRON_INGOT)),
 
     WINTERS_BLADE(MiningLevels.NETHERITE, 2031, 9.0f, 4.0f, 30, () ->
             Ingredient.ofItems(
-                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                    MiscUtil.isWitcherRPGLoaded()?
                             Registries.ITEM.get(Identifier.of("witcher_rpg", "dark_steel_ingot")) :
                     Items.NETHERITE_INGOT)),
 
     ARDAENYE(MiningLevels.NETHERITE, 1400, 9.0f, 4.0f, 20, () ->
             Ingredient.ofItems(
-                    FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                    MiscUtil.isWitcherRPGLoaded()?
                             Registries.ITEM.get(Identifier.of("witcher_rpg", "dark_steel_ingot")) :
                     Items.DIAMOND)),
 

@@ -695,11 +695,11 @@
 
     "item.tcots-witcher.gvalchir": "Махакамский рунный сигиль",
     "tooltip.tcots-witcher.gvalchir": "Сильный рунический меч",
-    "tooltip.tcots-witcher.gvalchir.extra": "+75% Пробитие брони",
+    "tooltip.tcots-witcher.gvalchir.extra": "+%s%% Пробитие брони",
 
     "item.tcots-witcher.moonblade": "Лунный клинок",
     "tooltip.tcots-witcher.moonblade": "Смертоносный священный меч",
-    "tooltip.tcots-witcher.moonblade.extra": "+50% Урона против чудовищ",
+    "tooltip.tcots-witcher.moonblade.extra": "+%s%% Урона против чудовищ",
 
     "item.tcots-witcher.dyaebl": "Д’Иабль",
     "tooltip.tcots-witcher.dyaebl": "Покрыт кровью Чудовищ",
@@ -707,9 +707,9 @@
 
     "item.tcots-witcher.winters_blade": "Клинок зимы",
     "tooltip.tcots-witcher.winters_blade": "В нём заключена сила зимы",
-    "tooltip.tcots-witcher.winters_blade.extra":  "+2 урона огненным врагам",
-    "tooltip.tcots-witcher.winters_blade.extra2": " 20% Шанс заморозить врага",
     "tooltip.tcots-witcher.winters_blade.extra3": " Гасит пламя если вы горите",
+    "tooltip.tcots-witcher.winters_blade.extra2": " 20% Шанс заморозить врага",
+    "tooltip.tcots-witcher.winters_blade.extra":  "+2 урона огненным врагам",
 
     "item.tcots-witcher.ardaenye": "Ард'энье",
 
@@ -926,5 +926,8 @@
     "text.config.tcots_config.option.witcher_eyes.XEyePos.tooltip": "Изменение положения по горизонтали",
 
     "text.config.tcots_config.option.witcher_eyes.YEyePos": "Положение глаз по вертикали",
-    "text.config.tcots_config.option.witcher_eyes.YEyePos.tooltip": "Изменение положения по вертикали"
+    "text.config.tcots_config.option.witcher_eyes.YEyePos.tooltip": "Изменение положения по вертикали",
+
+    "text.config.tcots_config.option.hasRPGTextures": "Текстура мечей 32x32",
+    "text.config.tcots_config.option.hasRPGTextures.tooltip": "Изменяет текстуру мечей на 32x32, для соответствия с\nВедьмаком (Больше классов РПГ), автоматически включается\nпри загруженном моде"
 }

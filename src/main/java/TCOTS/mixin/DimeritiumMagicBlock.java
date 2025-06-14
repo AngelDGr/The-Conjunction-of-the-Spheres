@@ -1,11 +1,13 @@
 package TCOTS.mixin;
 
+import TCOTS.entity.goals.FleeWithDimeritium;
 import TCOTS.items.concoctions.bombs.DimeritiumBomb;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.util.hit.EntityHitResult;
@@ -125,7 +127,7 @@ public abstract class DimeritiumMagicBlock {
     }
 
     //Evoker
-    @Mixin(targets = "net.minecraft.entity.mob.SpellcastingIllagerEntity$CastSpellGoal")
+    @Mixin(targets = "net.minecraft.entity.mob.SpellcastingIllagerEntity.CastSpellGoal")
     public abstract static class BlockCastSpellGoal {
         @Final
         @Shadow SpellcastingIllagerEntity field_7386;
@@ -152,6 +154,18 @@ public abstract class DimeritiumMagicBlock {
         @Inject(method = "shouldContinue", at = @At("HEAD"), cancellable = true)
         private void magicBlockingContinue(CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(field_7268, cir);
+        }
+    }
+
+    @Mixin(net.minecraft.entity.mob.EvokerEntity.class)
+    public abstract static class EvokerRunsFromPlayer extends SpellcastingIllagerEntity{
+        protected EvokerRunsFromPlayer(EntityType<? extends SpellcastingIllagerEntity> entityType, World level) {
+            super(entityType, level);
+        }
+
+        @Inject(method = "initGoals", at = @At("HEAD"))
+        private void magicBlockingStart(CallbackInfo ci){
+            this.goalSelector.add(1, new FleeWithDimeritium<>(this, PlayerEntity.class, 10.0f, 1.0, 1.2));
         }
     }
 }

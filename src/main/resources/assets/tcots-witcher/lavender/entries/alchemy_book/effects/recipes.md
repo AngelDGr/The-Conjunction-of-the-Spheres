@@ -159,6 +159,8 @@
 
 **{#395026}%{gui.recipe-book.category.bombs_oils}%{}**
 <recipe;tcots-witcher:oil_ogroid>
+<recipe;tcots-witcher:oil_ogroid_enhanced>
+<recipe;tcots-witcher:oil_ogroid_superior>
 
 ;;;;;
 

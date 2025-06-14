@@ -246,74 +246,38 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
 
             int resultCount = recipe.getOutput(null).getCount();
 
-            //Draw result count
-            if (resultCount > 1) {
-                context.getMatrices().push();
-                context.getMatrices().translate(0, 0, 200);
-                context.drawText(textRenderer, String.valueOf(resultCount), this.getX() + 3, this.getY() + 11, 0xffffff, true);
-                context.getMatrices().pop();
-            }
+            drawItemAmount(context, resultCount, 0xffffff, 14);
 
             //Draw ingredients
             for (int l = 0; l < recipe.getIngredients().size(); l++) {
                 ItemStack stack = recipe.getIngredients().get(l).getMatchingStacks()[0];
-                int number = recipe.getIngredientsCounts().get(l);
+                int amount = recipe.getIngredientsCounts().get(l);
                 switch (l) {
                     case 0:
                         //Draw ingredient Item
                         context.drawItemWithoutEntity(stack, this.getX() + 62, this.getY() + 3);
 
-                        //Draw ingredient number
-                        if (number > 1) {
-                            context.getMatrices().push();
-                            context.getMatrices().translate(0, 0, 200);
-                            context.drawText(textRenderer, String.valueOf(number), this.getX() + 62, this.getY() + 11, textColor1, true);
-                            context.getMatrices().pop();
-                        }
+                        drawItemAmount(context, amount, textColor1, 73);
                         break;
                     case 1:
                         context.drawItemWithoutEntity(stack, this.getX() + 43, this.getY() + 3);
 
-                        //Draw ingredient number
-                        if (number > 1) {
-                            context.getMatrices().push();
-                            context.getMatrices().translate(0, 0, 200);
-                            context.drawText(textRenderer, String.valueOf(number), this.getX() + 43, this.getY() + 11, textColor2, true);
-                            context.getMatrices().pop();
-                        }
+                        drawItemAmount(context, amount, textColor2, 54);
                         break;
                     case 2:
                         context.drawItemWithoutEntity(stack, this.getX() + 81, this.getY() + 3);
 
-                        //Draw ingredient number
-                        if (number > 1) {
-                            context.getMatrices().push();
-                            context.getMatrices().translate(0, 0, 200);
-                            context.drawText(textRenderer, String.valueOf(number), this.getX() + 81, this.getY() + 11, textColor3, true);
-                            context.getMatrices().pop();
-                        }
+                        drawItemAmount(context, amount, textColor3, 92);
                         break;
                     case 3:
                         context.drawItemWithoutEntity(stack, this.getX() + 24, this.getY() + 3);
 
-                        //Draw ingredient number
-                        if (number > 1) {
-                            context.getMatrices().push();
-                            context.getMatrices().translate(0, 0, 200);
-                            context.drawText(textRenderer, String.valueOf(number), this.getX() + 24, this.getY() + 11, textColor4, true);
-                            context.getMatrices().pop();
-                        }
+                        drawItemAmount(context, amount, textColor4, 35);
                         break;
                     case 4:
                         context.drawItemWithoutEntity(stack, this.getX() + 100, this.getY() + 3);
 
-                        //Draw ingredient number
-                        if (number > 1) {
-                            context.getMatrices().push();
-                            context.getMatrices().translate(0, 0, 200);
-                            context.drawText(textRenderer, String.valueOf(number), this.getX() + 100, this.getY() + 11, textColor5, true);
-                            context.getMatrices().pop();
-                        }
+                        drawItemAmount(context, amount, textColor5, 111);
                         break;
 
                     default:
@@ -322,16 +286,24 @@ public class AlchemyRecipeResultButton extends ClickableWidget {
             }
 
             //Draw base
-            int baseCount = recipe.getBaseItem().getCount();
+            int baseAmount = recipe.getBaseItem().getCount();
             context.drawItemWithoutEntity(recipe.getBaseItem(), this.getX() + 117, this.getY() + 3);
-            //Draw base count
-            if (baseCount > 1) {
-                context.getMatrices().push();
-                context.getMatrices().translate(0, 0, 200);
-                context.drawText(textRenderer, String.valueOf(baseCount), this.getX() + 119, this.getY() + 11, textColorBase, true);
-                context.getMatrices().pop();
-            }
+
+            drawItemAmount(context, baseAmount, textColorBase, 128);
         }
+    }
+
+    private void drawItemAmount(DrawContext context, int amount, int textColor, int xOffset, int yOffset){
+        if (amount > 1) {
+            context.getMatrices().push();
+            context.getMatrices().translate(0, 0, 200);
+            context.drawText(textRenderer, String.valueOf(amount), this.getX() + xOffset-(amount>9?6:0), this.getY() + yOffset, textColor, true);
+            context.getMatrices().pop();
+        }
+    }
+
+    private void drawItemAmount(DrawContext context, int amount, int textColor, int xOffset){
+        drawItemAmount(context, amount, textColor, xOffset, 12);
     }
 
     @Override

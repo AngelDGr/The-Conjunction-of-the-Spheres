@@ -2,6 +2,7 @@ package TCOTS.mixin;
 
 import TCOTS.entity.goals.FleeWithSilverSplinters;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.client.render.entity.feature.SkinOverlayOwner;
@@ -19,7 +20,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -71,12 +71,12 @@ public class MoonDustTransformingBlock {
 
     @Mixin(SkeletonEntity.class)
     public abstract static class BlockSkeletonTransformation{
-        @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/SkeletonEntity;isAlive()Z"))
-        private boolean injectNoMoonDust(SkeletonEntity instance){
-            if(MoonDustBomb.checkEffectAndSplinters(instance))
-                return false;
 
-            return !instance.isRemoved() && instance.getHealth() > 0.0f;
+        @Unique
+        SkeletonEntity THIS = (SkeletonEntity)(Object)this;
+        @ModifyExpressionValue(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/SkeletonEntity;isAlive()Z"))
+        private boolean injectNoMoonDust(boolean original){
+            return original && !MoonDustBomb.checkEffectAndSplinters(THIS);
         }
 
     }

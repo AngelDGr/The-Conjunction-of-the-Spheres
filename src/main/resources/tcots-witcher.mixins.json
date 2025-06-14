@@ -14,6 +14,7 @@
     "DimeritiumMagicBlock$BlockGuardianBeamGoal",
     "DimeritiumMagicBlock$BlockShulkerBullet",
     "DimeritiumMagicBlock$BlockWololoGoal",
+    "DimeritiumMagicBlock$EvokerRunsFromPlayer",
     "DimeritiumMagicBlock$MakeEndermanArrowDamageable",
     "DynamicRecipes",
     "ExplosionMixin",

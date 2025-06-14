@@ -10,7 +10,9 @@ import TCOTS.items.concoctions.WitcherAlcohol_Base;
 import TCOTS.items.concoctions.bombs.SamumBomb;
 import TCOTS.sounds.TCOTS_Sounds;
 import TCOTS.utils.EntitiesUtil;
+import TCOTS.utils.MiscUtil;
 import TCOTS.world.TCOTS_DamageTypes;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -533,8 +535,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return value;
     }
 
-    //Wolf & Rook Effects
-    @ModifyConstant(method = "attack", constant = @Constant(floatValue = 1.5f))
+    //Wolf Effect
+    @ModifyExpressionValue(method = "attack", at = @At(value = "CONSTANT", args = "floatValue=1.5"))
     private float injectExtraCriticalWolf(float value){
         if(this.hasStatusEffect(TCOTS_Effects.WOLF_EFFECT)){
             //Wolf I:   -> 2.0f
@@ -548,6 +550,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         return value;
     }
 
+    //Rook Effect
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 1
             , slice = @Slice(
             from = @At(value = "INVOKE",
@@ -586,18 +589,27 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
 
     //Moonblade
-    @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 0
-            , slice = @Slice(
-            from = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/entity/Entity;handleAttack(Lnet/minecraft/entity/Entity;)Z", ordinal = 0),
-            to = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/enchantment/EnchantmentHelper;getAttackDamage(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EntityGroup;)F", ordinal = 0))
-    )
+    @ModifyArg(method = "attack", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z",
+            ordinal = 0))
     private float injectMoonBladeDamage(float value, @Local(argsOnly = true) Entity target){
+        //+25% extra in the normal attack
         return value*(
                 THIS.getMainHandStack().getItem() == TCOTS_Items.MOONBLADE
                         && target instanceof LivingEntity livingTarget
-                        && EntitiesUtil.isMonster(livingTarget)? 1.5f : 1.0f);
+                        && EntitiesUtil.isMonster(livingTarget)? (1+ MiscUtil.moonblade_bonus)
+                        : 1.0f);
+    }
+
+    @ModifyArg(method = "attack", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z",
+            ordinal = 0))
+    private float injectMoonBladeDamageSweep(float value, @Local(argsOnly = true) Entity target){
+        //+10% extra in the sweep attack
+        return value*(
+                THIS.getMainHandStack().getItem() == TCOTS_Items.MOONBLADE
+                        && target instanceof LivingEntity livingTarget
+                        && EntitiesUtil.isMonster(livingTarget)? 1.10f : 1.0f);
     }
 
     //Winter's Blade

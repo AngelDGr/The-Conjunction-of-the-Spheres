@@ -1,9 +1,9 @@
 package TCOTS.items.armor;
 
 import TCOTS.entity.TCOTS_EntityAttributes;
+import TCOTS.utils.MiscUtil;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -50,7 +50,7 @@ public class WitcherArmorItem extends ArmorItem {
         }
 
 
-        if(FabricLoader.getInstance().isModLoaded("witcher_rpg")){
+        if(MiscUtil.isWitcherRPGLoaded()){
             builder.put(
                     TCOTS_EntityAttributes.ADRENALINE_GAIN.value(),
                     new EntityAttributeModifier(uUID, "Armor adrenaline gain", adrenaline, EntityAttributeModifier.Operation.MULTIPLY_BASE)

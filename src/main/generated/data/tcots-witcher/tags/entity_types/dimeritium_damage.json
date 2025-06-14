@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "minecraft:end_crystal",
+    "minecraft:vex",
+    "minecraft:allay",
     "tcots-witcher:fogling"
   ]
 }

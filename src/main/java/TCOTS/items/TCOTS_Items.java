@@ -10,6 +10,7 @@ import TCOTS.items.armor.WitcherHorseArmorItem;
 import TCOTS.items.blocks.*;
 import TCOTS.items.concoctions.*;
 import TCOTS.items.weapons.*;
+import TCOTS.utils.MiscUtil;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.block.Block;
@@ -1021,7 +1022,7 @@ public class TCOTS_Items {
                             Text.translatable("tooltip.tcots-witcher.gvalchir").formatted(Formatting.GRAY, Formatting.ITALIC),
                             SwordsAttributes.createGvalchirAttributeModifiers(),
                             List.of(
-                                    Text.translatable("tooltip.tcots-witcher.gvalchir.extra").formatted(Formatting.DARK_GREEN))
+                                    Text.translatable("tooltip.tcots-witcher.gvalchir.extra", (int)(MiscUtil.gvalchir_penetration*100)).formatted(Formatting.DARK_GREEN))
                     ));
 
             MOONBLADE = registerItem("moonblade",
@@ -1029,7 +1030,7 @@ public class TCOTS_Items {
                             Text.translatable("tooltip.tcots-witcher.moonblade").formatted(Formatting.GRAY, Formatting.ITALIC),
                             SwordsAttributes.createMoonbladeAttributeModifiers(),
                             List.of(
-                                    Text.translatable("tooltip.tcots-witcher.moonblade.extra").formatted(Formatting.DARK_GREEN))
+                                    Text.translatable("tooltip.tcots-witcher.moonblade.extra", (int)(MiscUtil.moonblade_bonus*100)).formatted(Formatting.DARK_GREEN))
                     ));
 
             DYAEBL = registerItem("dyaebl",
@@ -1045,9 +1046,10 @@ public class TCOTS_Items {
                             Text.translatable("tooltip.tcots-witcher.winters_blade").formatted(Formatting.GRAY, Formatting.ITALIC),
                             SwordsAttributes.createWintersBladeAttributeModifiers(),
                             List.of(
-                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra").setStyle(Style.EMPTY.withColor(0x007b77)),
+                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra3").setStyle(Style.EMPTY.withColor(0x007b77)),
                                     Text.translatable("tooltip.tcots-witcher.winters_blade.extra2").setStyle(Style.EMPTY.withColor(0x007b77)),
-                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra3").setStyle(Style.EMPTY.withColor(0x007b77))
+                                    Text.translatable("tooltip.tcots-witcher.winters_blade.extra").setStyle(Style.EMPTY.withColor(0x007b77)
+                                    )
                     )));
 
             ARDAENYE = registerItem("ardaenye",

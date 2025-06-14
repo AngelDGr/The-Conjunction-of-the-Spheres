@@ -5,6 +5,9 @@ import TCOTS.entity.misc.bolts.WitcherBolt;
 import TCOTS.items.TCOTS_Items;
 import TCOTS.items.weapons.BoltItem;
 import TCOTS.items.weapons.WitcherBaseCrossbow;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
@@ -13,7 +16,6 @@ import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -21,7 +23,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
@@ -55,9 +56,9 @@ public class CrossbowMixins {
             cir.setReturnValue((stack.getItem() instanceof WitcherBaseCrossbow) && CrossbowItem.isCharged(stack));
         }
 
-        @Redirect(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z", ordinal = 1))
-        private boolean injectCrossbowFirstPerson(ItemStack stack, Item item) {
-            return (stack.getItem() instanceof WitcherBaseCrossbow) || stack.isOf(item);
+        @ModifyExpressionValue(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z", ordinal = 1))
+        private boolean injectCrossbowFirstPerson(boolean original, @Local(argsOnly = true) ItemStack stack) {
+            return original || (stack.getItem() instanceof WitcherBaseCrossbow);
         }
     }
 
@@ -104,13 +105,10 @@ public class CrossbowMixins {
         @Unique
         PersistentProjectileEntity THIS = (PersistentProjectileEntity)(Object)this;
 
-        @Redirect(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setStuckArrowCount(I)V"))
-        private void redirectNoStuckArrows(LivingEntity entity, int stuckArrowCount){
-            if(THIS instanceof WitcherBolt || THIS instanceof ScurverSpineEntity)
-                entity.setStuckArrowCount(entity.getStuckArrowCount());
-            else
-                entity.setStuckArrowCount(entity.getStuckArrowCount()+1);
-        }
 
+        @WrapWithCondition(method = "onEntityHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setStuckArrowCount(I)V"))
+        private boolean dontStuckArrows(LivingEntity instance, int stuckArrowCount, @Local LivingEntity entity){
+            return !(THIS instanceof WitcherBolt) && !(THIS instanceof ScurverSpineEntity);
+        }
     }
 }

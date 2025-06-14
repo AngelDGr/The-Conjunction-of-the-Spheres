@@ -3,6 +3,8 @@ package TCOTS.items;
 import TCOTS.TCOTS_Main;
 import TCOTS.items.concoctions.*;
 import TCOTS.utils.AlchemyFormulaUtil;
+import io.wispforest.owo.client.texture.AnimatedTextureDrawable;
+import io.wispforest.owo.client.texture.SpriteSheetMetadata;
 import io.wispforest.owo.itemgroup.Icon;
 import io.wispforest.owo.itemgroup.OwoItemGroup;
 import io.wispforest.owo.itemgroup.gui.ItemGroupButton;
@@ -21,7 +23,8 @@ public class TCOTS_ItemsGroups {
     public static OwoItemGroup owoItemGroup;
 
     public static void registerGroupItems() {
-        owoItemGroup  = OwoItemGroup.builder(new Identifier(TCOTS_Main.MOD_ID, "main"), () -> Icon.of(TCOTS_Items.WITCHER_BESTIARY))
+        owoItemGroup  = OwoItemGroup.builder(new Identifier(TCOTS_Main.MOD_ID, "main"),
+                        () -> createAnimatedIcon(Identifier.of(TCOTS_Main.MOD_ID, "textures/gui/tab_icon_sheet.png")))
                         .initializer(
                                 owoItemGroup -> {
 
@@ -311,15 +314,43 @@ public class TCOTS_ItemsGroups {
                                             },
                                             true);
 
-                                    owoItemGroup.addButton(ItemGroupButton.curseforge(owoItemGroup, "https://www.curseforge.com/minecraft/mc-mods/the-conjunction-of-the-spheres"));
+                                    owoItemGroup.addButton(ItemGroupButton.curseforge(owoItemGroup, "https://www.curseforge.com/members/tenebris_mors/projects"));
 
-                                    owoItemGroup.addButton(ItemGroupButton.modrinth(owoItemGroup, "https://modrinth.com/mod/the-conjunction-of-the-spheres"));
+                                    owoItemGroup.addButton(ItemGroupButton.modrinth(owoItemGroup, "https://modrinth.com/user/Tenebris_Mors"));
 
                                     owoItemGroup.addButton(ItemGroupButton.github(owoItemGroup, "https://github.com/AngelDGr/The-Conjunction-of-the-Spheres"));
                                 })
                         .build();
 
         owoItemGroup.initialize();
+    }
+
+    @SuppressWarnings("all")
+    static Icon createAnimatedIcon(final Identifier texture) {
+        var widget = new AnimatedTextureDrawable(
+                0, 0,
+                96, 96,
+                texture,
+                new SpriteSheetMetadata(1344, 1248, 96, 96), 200, true);
+
+        return (context, x, y, mouseX, mouseY, delta) -> {
+            context.getMatrixStack().push();
+
+            //Scales down to fit a 16x16 texture
+            float scaleValue= (float) 16 /96;
+
+            //Moves the texture
+            double translationX=x* ((1/scaleValue));
+            double translationY=y* ((1/scaleValue));
+
+            context.getMatrixStack().scale(scaleValue,scaleValue,1);
+            context.getMatrixStack().translate(translationX,translationY,0);
+
+            widget.render(context, mouseX, mouseY, delta);
+
+
+            context.getMatrixStack().pop();
+        };
     }
 
     private static void addFormulaeEntries(ItemGroup.Entries entries){

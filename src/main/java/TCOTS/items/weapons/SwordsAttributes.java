@@ -2,8 +2,8 @@ package TCOTS.items.weapons;
 
 import TCOTS.entity.TCOTS_EntityAttributes;
 import TCOTS.items.TCOTS_ToolMaterials;
+import TCOTS.utils.MiscUtil;
 import com.google.common.collect.ImmutableMultimap;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -13,6 +13,14 @@ import net.minecraft.item.ToolMaterial;
 import java.util.UUID;
 
 public class SwordsAttributes {
+    // It subtracts from 4 to get final speed
+    @SuppressWarnings("all")
+    static float slowSwordSpeed   =   MiscUtil.isWitcherRPGLoaded()? -2.6f : -2.6f; // W(RPG) = 1.4 / Vanilla = 1.4
+    @SuppressWarnings("all")
+    static float normalSwordSpeed =   MiscUtil.isWitcherRPGLoaded()? -2.4f : -2.4f; // W(RPG) = 1.6 / Vanilla = 1.6
+    @SuppressWarnings("all")
+    static float fastSwordSpeed   =   MiscUtil.isWitcherRPGLoaded()? -2.2f : -2.2f; // W(RPG) = 1.8 / Vanilla = 1.8
+
     protected static final UUID ADRENALINE_GAIN = UUID.fromString("78166baa-0606-47c7-a8ae-d89935a1cb63");
     protected static final UUID AARD_INTENSITY = UUID.fromString("627fe661-e00a-4097-8e50-200a72d37af8");
     protected static final UUID SPELL_CRITICAL = UUID.fromString("20ef940b-3ba9-425a-b34d-5b668d0e90ea");
@@ -34,9 +42,9 @@ public class SwordsAttributes {
     }
 
     public static ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> createWintersBladeAttributeModifiers() {
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder =createMainSwordAttributeModifiers(TCOTS_ToolMaterials.WINTERS_BLADE, 4, -2.4f);
+        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder =createMainSwordAttributeModifiers(TCOTS_ToolMaterials.WINTERS_BLADE, 4, normalSwordSpeed);
 
-        if(FabricLoader.getInstance().isModLoaded("witcher_rpg")){
+        if(MiscUtil.isWitcherRPGLoaded()){
             builder
                     .put(
                             TCOTS_EntityAttributes.AARD_INTENSITY.value(),
@@ -56,9 +64,9 @@ public class SwordsAttributes {
     }
 
     public static ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> createArdaenyeAttributeModifiers() {
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = createMainSwordAttributeModifiers(TCOTS_ToolMaterials.ARDAENYE, 3, -2.6f);
+        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = createMainSwordAttributeModifiers(TCOTS_ToolMaterials.ARDAENYE, 3, slowSwordSpeed);
 
-        if(FabricLoader.getInstance().isModLoaded("witcher_rpg")){
+        if(MiscUtil.isWitcherRPGLoaded()){
             builder
                     .put(
                             TCOTS_EntityAttributes.ADRENALINE_GAIN.value(),
@@ -70,9 +78,9 @@ public class SwordsAttributes {
     }
 
     public static ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> createDyaeblAttributeModifiers() {
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = createMainSwordAttributeModifiers(TCOTS_ToolMaterials.DYAEBL,  2, -2.4f);
+        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = createMainSwordAttributeModifiers(TCOTS_ToolMaterials.DYAEBL,  2, normalSwordSpeed);
 
-        if(FabricLoader.getInstance().isModLoaded("witcher_rpg")){
+        if(MiscUtil.isWitcherRPGLoaded()){
             builder
                     .put(
                             TCOTS_EntityAttributes.ADRENALINE_GAIN.value(),
@@ -84,9 +92,9 @@ public class SwordsAttributes {
     }
 
     public static ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> createMoonbladeAttributeModifiers() {
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = createMainSwordAttributeModifiers(TCOTS_ToolMaterials.MOONBLADE, 2, -2.2f);
+        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = createMainSwordAttributeModifiers(TCOTS_ToolMaterials.MOONBLADE, 2, fastSwordSpeed);
 
-        if(FabricLoader.getInstance().isModLoaded("witcher_rpg")){
+        if(MiscUtil.isWitcherRPGLoaded()){
             builder
                     .put(
                             TCOTS_EntityAttributes.SIGN_INTENSITY.value(),
@@ -102,9 +110,9 @@ public class SwordsAttributes {
     }
 
     public static ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> createGvalchirAttributeModifiers() {
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = createMainSwordAttributeModifiers(TCOTS_ToolMaterials.GVALCHIR, 3, -2.2f);
+        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = createMainSwordAttributeModifiers(TCOTS_ToolMaterials.GVALCHIR, 3, fastSwordSpeed);
 
-        if(FabricLoader.getInstance().isModLoaded("witcher_rpg")){
+        if(MiscUtil.isWitcherRPGLoaded()){
             builder
                     .put(
                             TCOTS_EntityAttributes.SIGN_INTENSITY.value(),

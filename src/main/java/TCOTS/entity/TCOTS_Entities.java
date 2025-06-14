@@ -5,6 +5,7 @@ import TCOTS.entity.misc.*;
 import TCOTS.entity.misc.bolts.*;
 import TCOTS.entity.necrophages.*;
 import TCOTS.entity.ogroids.*;
+import TCOTS.world.TCOTS_Features;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -16,7 +17,6 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.biome.BiomeKeys;
 
 @SuppressWarnings("all")
 public class TCOTS_Entities {
@@ -263,154 +263,174 @@ public class TCOTS_Entities {
                             .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
                             .trackRangeBlocks(4).trackedUpdateRate(20).build());
 
-    public static void addSpawns() {
+    public static void registerSpawnPlacements() {
+        //Necrophages
+        {
+            //Drowners
+            SpawnRestriction.register(TCOTS_Entities.DROWNER, SpawnRestriction.Location.NO_RESTRICTIONS,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DrownerEntity::canSpawnDrowner);
+
+
+            //Rotfiends
+            SpawnRestriction.register(TCOTS_Entities.ROTFIEND, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RotfiendEntity::canSpawnInDarkW);
+
+
+            //Foglets
+            SpawnRestriction.register(TCOTS_Entities.FOGLET, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, FogletEntity::canSpawnInDark_NotCaves);
+
+
+            //Water Hags
+            SpawnRestriction.register(TCOTS_Entities.WATER_HAG, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DrownerEntity::canSpawnDrowner);
+
+
+            //Grave Hags
+            SpawnRestriction.register(TCOTS_Entities.GRAVE_HAG, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GraveHagEntity::canSpawnInDarkNotBelowDeepslate);
+
+
+            //Ghouls & Alghouls
+            SpawnRestriction.register(TCOTS_Entities.GHOUL, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GhoulEntity::canSpawnGhoul);
+
+
+            //Scurvers
+            SpawnRestriction.register(TCOTS_Entities.SCURVER, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ScurverEntity::canSpawnInDarkW);
+
+
+            //Devourer
+            SpawnRestriction.register(TCOTS_Entities.DEVOURER, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DevourerEntity::canSpawnInDarkW);
+
+
+            //Graveir
+            SpawnRestriction.register(TCOTS_Entities.GRAVEIR, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GraveirEntity::canSpawnGraveir);
+
+
+            //Bullvore
+            SpawnRestriction.register(TCOTS_Entities.BULLVORE, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BullvoreEntity::canSpawnInDarkW);
+
+        }
+
+        //Ogroids
+        {
+            //Nekkers
+            SpawnRestriction.register(TCOTS_Entities.NEKKER, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NekkerEntity::canSpawnNekker);
+
+
+            //Cyclops
+            SpawnRestriction.register(TCOTS_Entities.CYCLOPS, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CyclopsEntity::canCyclopsSpawn);
+
+
+            //Rock Troll
+            SpawnRestriction.register(TCOTS_Entities.ROCK_TROLL, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RockTrollEntity::canSpawnInDarkNotBelowDeepslate);
+
+
+            //Ice Troll
+            SpawnRestriction.register(TCOTS_Entities.ICE_TROLL, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, IceTrollEntity::canSpawnInDarkNotBelowDeepslate);
+
+
+
+            //Forest Troll
+            SpawnRestriction.register(TCOTS_Entities.FOREST_TROLL, SpawnRestriction.Location.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ForestTrollEntity::canSpawnInDarkNotBelowDeepslate);
+
+        }
+    }
+
+    public static void registerBiomeModificationSpawn(){
         //Necrophages
         {
             //Drowners
             {
-                SpawnRestriction.register(DROWNER, SpawnRestriction.Location.NO_RESTRICTIONS,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DrownerEntity::canSpawnDrowner);
-
                 //In swamps
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP,
-                                BiomeKeys.MANGROVE_SWAMP), SpawnGroup.MONSTER,
-                        DROWNER, 130, 3, 5);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.DROWNER_SWAMP), SpawnGroup.MONSTER,
+                        TCOTS_Entities.DROWNER, 130, 3, 5);
 
                 //In beaches
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.BEACH), SpawnGroup.MONSTER,
-                        DROWNER, 50, 2, 4);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.DROWNER_BEACH), SpawnGroup.MONSTER,
+                        TCOTS_Entities.DROWNER, 50, 2, 4);
 
                 //Swimming in oceans/rivers
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN, BiomeKeys.DEEP_OCEAN,
-                                BiomeKeys.LUKEWARM_OCEAN, BiomeKeys.DEEP_LUKEWARM_OCEAN,
-                                BiomeKeys.COLD_OCEAN, BiomeKeys.DEEP_COLD_OCEAN,
-                                BiomeKeys.RIVER), SpawnGroup.MONSTER,
-                        DROWNER, 8, 2, 3);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.DROWNER_WATER), SpawnGroup.MONSTER,
+                        TCOTS_Entities.DROWNER, 8, 2, 3);
             }
 
             //Rotfiends
             {
-                SpawnRestriction.register(ROTFIEND, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RotfiendEntity::canSpawnInDarkW);
-
                 //In night
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST, BiomeKeys.DARK_FOREST,
-                                BiomeKeys.DRIPSTONE_CAVES,
-                                BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
-                                BiomeKeys.PLAINS, BiomeKeys.TAIGA), SpawnGroup.MONSTER,
-                        ROTFIEND, 80, 4, 6);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.ROTFIEND), SpawnGroup.MONSTER,
+                        TCOTS_Entities.ROTFIEND, 80, 4, 6);
             }
 
             //Foglets
             {
-                SpawnRestriction.register(FOGLET, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, FogletEntity::canSpawnInDark_NotCaves);
-
                 //In swamps/rivers
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP,
-                                BiomeKeys.RIVER
-                        ), SpawnGroup.MONSTER,
-                        FOGLET, 80, 1, 3);
-
-                //In forests/mountains
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.OLD_GROWTH_BIRCH_FOREST,
-                                BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS
-                        ), SpawnGroup.MONSTER,
-                        FOGLET, 50, 1, 2);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.FOGLET_SWAMP), SpawnGroup.MONSTER,
+                        TCOTS_Entities.FOGLET, 80, 1, 3);
 
                 //In dark forests
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST
-                        ), SpawnGroup.MONSTER,
-                        FOGLET, 120, 1, 2);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.FOGLET_DARK), SpawnGroup.MONSTER,
+                        TCOTS_Entities.FOGLET, 120, 1, 2);
+
+                //In forests/mountains
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.FOGLET_HILLS_FORESTS), SpawnGroup.MONSTER,
+                        TCOTS_Entities.FOGLET, 50, 1, 2);
             }
 
             //Water Hags
             {
-                SpawnRestriction.register(WATER_HAG, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DrownerEntity::canSpawnDrowner);
-
                 //In swamps
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP,
-                                BiomeKeys.MANGROVE_SWAMP), SpawnGroup.MONSTER,
-                        WATER_HAG, 80, 1, 2);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.WATER_HAG_SWAMP), SpawnGroup.MONSTER,
+                        TCOTS_Entities.WATER_HAG, 80, 1, 2);
 
                 //In rivers
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.RIVER), SpawnGroup.MONSTER,
-                        DROWNER, 20, 1, 2);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.WATER_HAG_RIVER), SpawnGroup.MONSTER,
+                        TCOTS_Entities.WATER_HAG, 20, 1, 2);
             }
 
             //Grave Hags
             {
-                SpawnRestriction.register(GRAVE_HAG, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GraveHagEntity::canSpawnInDarkNotBelowDeepslate);
-
                 //In night
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST, BiomeKeys.DARK_FOREST,
-                                BiomeKeys.DRIPSTONE_CAVES,
-                                BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
-                                BiomeKeys.PLAINS, BiomeKeys.SAVANNA, BiomeKeys.TAIGA), SpawnGroup.MONSTER,
-                        GRAVE_HAG, 80, 1, 2);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.GRAVE_HAG), SpawnGroup.MONSTER,
+                        TCOTS_Entities.GRAVE_HAG, 80, 1, 2);
             }
 
             //Ghouls & Alghouls
             {
-                SpawnRestriction.register(GHOUL, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GhoulEntity::canSpawnGhoul);
-
                 //In night
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                BiomeKeys.SAVANNA, BiomeKeys.PLAINS,
-                                BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
-                                BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.DARK_FOREST), SpawnGroup.MONSTER,
-                        GHOUL, 10, 3, 5);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.GHOUL), SpawnGroup.MONSTER,
+                        TCOTS_Entities.GHOUL, 10, 3, 5);
             }
 
             //Scurvers
             {
-                SpawnRestriction.register(SCURVER, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ScurverEntity::canSpawnInDarkW);
-
                 //In night
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST, BiomeKeys.DARK_FOREST,
-                                BiomeKeys.OLD_GROWTH_BIRCH_FOREST,
-                                BiomeKeys.PLAINS, BiomeKeys.SAVANNA,
-                                BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE), SpawnGroup.MONSTER,
-                        SCURVER, 40, 2, 3);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.SCURVER), SpawnGroup.MONSTER,
+                        TCOTS_Entities.SCURVER, 40, 2, 3);
             }
 
             //Devourer
             {
-                SpawnRestriction.register(DEVOURER, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DevourerEntity::canSpawnInDarkW);
-
                 //In night
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST,
-                                BiomeKeys.SWAMP, BiomeKeys.RIVER,
-                                BiomeKeys.PLAINS), SpawnGroup.MONSTER,
-                        DEVOURER, 60, 3, 4);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.DEVOURER), SpawnGroup.MONSTER,
+                        TCOTS_Entities.DEVOURER, 60, 3, 4);
             }
 
             //Graveir
             {
-                SpawnRestriction.register(GRAVEIR, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GraveirEntity::canSpawnGraveir);
-
                 //In Caves
-                BiomeModifications.addSpawn(
-                        BiomeSelectors.foundInOverworld()
-                                .and(BiomeSelectors.excludeByKey(BiomeKeys.DEEP_DARK, BiomeKeys.LUSH_CAVES, BiomeKeys.MUSHROOM_FIELDS)
-                                ), SpawnGroup.MONSTER,
-                        GRAVEIR, 60, 1, 2);
-            }
-
-            //Bullvore
-            {
-                SpawnRestriction.register(BULLVORE, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BullvoreEntity::canSpawnInDarkW);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.GRAVEIR), SpawnGroup.MONSTER,
+                        TCOTS_Entities.GRAVEIR, 60, 1, 2);
             }
         }
 
@@ -418,77 +438,38 @@ public class TCOTS_Entities {
         {
             //Nekkers
             {
-                SpawnRestriction.register(NEKKER, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NekkerEntity::canSpawnNekker);
-
                 //In night
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                BiomeKeys.SAVANNA, BiomeKeys.PLAINS,
-                                BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE,
-                                BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,
-                                BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.DARK_FOREST), SpawnGroup.MONSTER,
-                        NEKKER, 5, 4, 6);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.NEKKER), SpawnGroup.MONSTER,
+                        TCOTS_Entities.NEKKER, 5, 4, 6);
             }
 
             //Cyclops
             {
-                SpawnRestriction.register(CYCLOPS, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CyclopsEntity::canCyclopsSpawn);
-
                 //In snowy plains/mountains/taigas
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                //Snowy Plains
-                                BiomeKeys.SNOWY_PLAINS, BiomeKeys.STONY_SHORE,
-                                //Is_Hill
-                                BiomeKeys.WINDSWEPT_HILLS,BiomeKeys.WINDSWEPT_FOREST,BiomeKeys.WINDSWEPT_GRAVELLY_HILLS,
-                                //Is_Mountain
-                                BiomeKeys.MEADOW,BiomeKeys.FROZEN_PEAKS,BiomeKeys.JAGGED_PEAKS,BiomeKeys.STONY_PEAKS,BiomeKeys.SNOWY_SLOPES,
-                                //Is_Taiga
-                                BiomeKeys.OLD_GROWTH_PINE_TAIGA,BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA), SpawnGroup.MONSTER,
-                        CYCLOPS, 15, 1, 1);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.CYCLOPS), SpawnGroup.MONSTER,
+                        TCOTS_Entities.CYCLOPS, 15, 1, 1);
             }
 
             //Rock Troll
             {
-                SpawnRestriction.register(ROCK_TROLL, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, RockTrollEntity::canSpawnInDarkNotBelowDeepslate);
-
                 //In mountains/taigas
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                //Mountains
-                                BiomeKeys.STONY_PEAKS, BiomeKeys.MEADOW, BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST,
-                                //Taiga
-                                BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA,
-                                //Caves/Shore
-                                BiomeKeys.DRIPSTONE_CAVES, BiomeKeys.STONY_SHORE), SpawnGroup.MONSTER,
-                        ROCK_TROLL, 5, 1, 1);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.ROCK_TROLL), SpawnGroup.MONSTER,
+                        TCOTS_Entities.ROCK_TROLL, 5, 1, 1);
             }
 
             //Ice Troll
             {
-                SpawnRestriction.register(ICE_TROLL, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, IceTrollEntity::canSpawnInDarkNotBelowDeepslate);
                 //In snowy plains/mountains/taigas
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                //Mountains
-                                BiomeKeys.JAGGED_PEAKS, BiomeKeys.SNOWY_SLOPES, BiomeKeys.GROVE,
-                                //Snowy Plains
-                                BiomeKeys.SNOWY_PLAINS, BiomeKeys.ICE_SPIKES), SpawnGroup.MONSTER,
-                        ICE_TROLL, 2, 1, 1);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.ICE_TROLL), SpawnGroup.MONSTER,
+                        TCOTS_Entities.ICE_TROLL, 2, 1, 1);
             }
 
 
             //Forest Troll
             {
-                SpawnRestriction.register(FOREST_TROLL, SpawnRestriction.Location.ON_GROUND,
-                        Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ForestTrollEntity::canSpawnInDarkNotBelowDeepslate);
                 //In forests
-                BiomeModifications.addSpawn(BiomeSelectors.includeByKey(
-                                //Forest
-                                BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys.OLD_GROWTH_BIRCH_FOREST,
-                                //Dark Forest
-                                BiomeKeys.DARK_FOREST), SpawnGroup.MONSTER,
-                        FOREST_TROLL, 5, 1, 1);
+                BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Features.FOREST_TROLL), SpawnGroup.MONSTER,
+                        TCOTS_Entities.FOREST_TROLL, 5, 1, 1);
             }
         }
     }

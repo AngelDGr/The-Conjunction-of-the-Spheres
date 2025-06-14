@@ -48,9 +48,9 @@ public class DimeritiumBomb {
             //To not apply effect across walls
             if(BombsUtil.getExposure(entity.getPos(), bomb) == 0) continue;
 
-            //Destroy End Crystals and Foglings
+            //Damages magic entities
             if(entity.getType().isIn(TCOTS_Entities.DIMERITIUM_DAMAGE))
-                entity.damage(bomb.getDamageSources().magic(), 1);
+                entity.damage(bomb.getDamageSources().magic(), 5);
 
             //Remove magic entities
             if(entity.getType().isIn(TCOTS_Entities.DIMERITIUM_REMOVAL))

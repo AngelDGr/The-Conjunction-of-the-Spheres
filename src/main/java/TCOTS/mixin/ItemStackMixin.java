@@ -22,10 +22,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
@@ -115,16 +112,18 @@ public abstract class ItemStackMixin {
 
 
     //Manticore Armor
-    @Redirect(method = "getTooltip", at = @At(
-            value = "INVOKE"
-            ,target = "Lnet/minecraft/text/MutableText;formatted(Lnet/minecraft/util/Formatting;)Lnet/minecraft/text/MutableText;",
-            ordinal = 6))
-    private MutableText manticoreAttributeMaxToxicityColor(MutableText instance, Formatting formatting, @Local Map.Entry<EntityAttribute, EntityAttributeModifier> entry){
+    @ModifyArg(
+            method = "getTooltip",
+            at = @At(
+                    value = "INVOKE"
+                    ,target = "Lnet/minecraft/text/MutableText;formatted(Lnet/minecraft/util/Formatting;)Lnet/minecraft/text/MutableText;",
+                    ordinal = 6))
+    private Formatting injectColorChange(Formatting formatting, @Local Map.Entry<EntityAttribute, EntityAttributeModifier> entry){
         if(entry.getKey() == TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY){
-            return instance.formatted(Formatting.DARK_GREEN);
+            return Formatting.DARK_GREEN;
         }
 
-        return instance.formatted(formatting);
+        return formatting;
     }
 
     @Unique

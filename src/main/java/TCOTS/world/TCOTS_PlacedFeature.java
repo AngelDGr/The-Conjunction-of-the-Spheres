@@ -12,7 +12,6 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.PlacedFeature;
@@ -96,7 +95,7 @@ public class TCOTS_PlacedFeature {
     }
 
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("all")
     private static List<PlacementModifier> mushroomModifiers(int chance, @Nullable PlacementModifier modifier) {
         ImmutableList.Builder builder = ImmutableList.builder();
         if (modifier != null) {
@@ -113,67 +112,49 @@ public class TCOTS_PlacedFeature {
 
     public static void generateVegetation() {
         //Celandine
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.PLAINS,  BiomeKeys.MEADOW,
-                        BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST, BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.DARK_FOREST),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.CELANDINE_SPAWN),
                 GenerationStep.Feature.VEGETAL_DECORATION, CELANDINE_PLANT_PLACED);
 
         //Verbena
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.PLAINS,  BiomeKeys.MEADOW,
-                        BiomeKeys.BIRCH_FOREST, BiomeKeys.FOREST, BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.DARK_FOREST,
-                        BiomeKeys.FLOWER_FOREST),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.VERBENA_SPAWN),
                 GenerationStep.Feature.VEGETAL_DECORATION, VERBENA_FLOWER_PLACED);
 
         //Han Fiber
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE,
-                        BiomeKeys.MANGROVE_SWAMP, BiomeKeys.SWAMP, BiomeKeys.SAVANNA
-                        ),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.HAN_FIBER_SPAWN),
                 GenerationStep.Feature.VEGETAL_DECORATION, HAN_FIBER_PLACED);
 
         //Crow's Eye
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA,
-                        BiomeKeys.SNOWY_TAIGA, BiomeKeys.GROVE
-                ),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.CROWS_EYE_SPAWN),
                 GenerationStep.Feature.VEGETAL_DECORATION, CROWS_EYE_FERN_PLACED);
 
         //Arenaria
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA,
-                        BiomeKeys.SNOWY_TAIGA, BiomeKeys.FLOWER_FOREST
-                ),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.ARENARIA_SPAWN),
                 GenerationStep.Feature.VEGETAL_DECORATION, ARENARIA_BUSH_PLACED);
 
         //Puffball
-        BiomeModifications.addFeature(
-                BiomeSelectors.excludeByKey(
-                        BiomeKeys.MUSHROOM_FIELDS,
-                        BiomeKeys.TAIGA, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.THE_VOID,
-                        BiomeKeys.MEADOW, BiomeKeys.FROZEN_PEAKS, BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.SNOWY_SLOPES, BiomeKeys.GROVE,
-                        BiomeKeys.LUSH_CAVES),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.PUFFBALL_SPAWN_NORMAL),
                 GenerationStep.Feature.VEGETAL_DECORATION, PUFFBALL_NORMAL);
 
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.TAIGA, BiomeKeys.SNOWY_TAIGA),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.PUFFBALL_SPAWN_TAIGA),
                 GenerationStep.Feature.VEGETAL_DECORATION, PUFFBALL_TAIGA);
 
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.SWAMP),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.PUFFBALL_SPAWN_SWAMP),
                 GenerationStep.Feature.VEGETAL_DECORATION, PUFFBALL_SWAMP);
 
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.MUSHROOM_SPAWN_OLD_GROWTH),
                 GenerationStep.Feature.VEGETAL_DECORATION, PUFFBALL_OLD_GROWTH);
 
         //Sewant Mushrooms
-        BiomeModifications.addFeature(
-                BiomeSelectors.excludeByKey(
-                        BiomeKeys.TAIGA, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.THE_VOID,
-                        BiomeKeys.MEADOW, BiomeKeys.FROZEN_PEAKS, BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.SNOWY_SLOPES, BiomeKeys.GROVE,
-                        BiomeKeys.LUSH_CAVES),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.SEWANT_SPAWN_NORMAL),
                 GenerationStep.Feature.VEGETAL_DECORATION, SEWANT_MUSHROOMS_NORMAL);
 
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.TAIGA),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.SEWANT_SPAWN_TAIGA),
                 GenerationStep.Feature.VEGETAL_DECORATION, SEWANT_MUSHROOMS_TAIGA);
 
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.MUSHROOM_SPAWN_OLD_GROWTH),
                 GenerationStep.Feature.VEGETAL_DECORATION, SEWANT_MUSHROOMS_OLD_GROWTH);
 
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
+        BiomeModifications.addFeature(BiomeSelectors.tag(TCOTS_Features.SEWANT_SPAWN_DARK),
                 GenerationStep.Feature.VEGETAL_DECORATION, SEWANT_MUSHROOMS_DARK_FOREST);
 
         //Bryonia

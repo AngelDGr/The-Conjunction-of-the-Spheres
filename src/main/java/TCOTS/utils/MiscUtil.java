@@ -1,5 +1,6 @@
 package TCOTS.utils;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,10 @@ import org.lwjgl.glfw.GLFW;
 import java.util.List;
 
 public class MiscUtil {
+    @SuppressWarnings("all")
+    public static float gvalchir_penetration = MiscUtil.isWitcherRPGLoaded()? 0.75f: 0.75f;
+    public static float moonblade_bonus      = MiscUtil.isWitcherRPGLoaded()? 0.15f: 0.25f;
+
     /**
     Puts a dynamic tooltip to an armor item that it can be open with shift
      @param stack The stack that it's going to have the tooltip
@@ -57,5 +62,9 @@ public class MiscUtil {
 
     public static int getTimeInTicks(int seconds){
         return seconds*20;
+    }
+
+    public static boolean isWitcherRPGLoaded() {
+        return FabricLoader.getInstance().isModLoaded("witcher_rpg");
     }
 }

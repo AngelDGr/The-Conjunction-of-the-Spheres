@@ -1,9 +1,9 @@
 package TCOTS.items;
 
 import TCOTS.TCOTS_Main;
+import TCOTS.utils.MiscUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
@@ -37,7 +37,7 @@ public class TCOTS_DynamicRecipes {
                                 addItem('F', TCOTS_Items.FOGLET_TEETH),
                                 addItem('H', TCOTS_Items.BULLVORE_HORN_FRAGMENT),
                                 addItem('D', TCOTS_Items.DEVOURER_TEETH),
-                                addItem('S', FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                                addItem('S', MiscUtil.isWitcherRPGLoaded()?
                                         Identifier.of("witcher_rpg", "dark_iron_witcher_sword"):
                                         Identifier.of("minecraft","iron_sword"))
                         ),
@@ -59,7 +59,7 @@ public class TCOTS_DynamicRecipes {
                                 addItem('G', TCOTS_Items.GRAVEIR_BONE),
                                 addItem('H', TCOTS_Items.NEKKER_HEART),
                                 addItem('B', TCOTS_Items.MONSTER_BLOOD),
-                                addItem('S', FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                                addItem('S', MiscUtil.isWitcherRPGLoaded()?
                                         Identifier.of("witcher_rpg", "silver_witcher_sword"):
                                         Identifier.of("minecraft","golden_sword"))
                         ),
@@ -81,7 +81,7 @@ public class TCOTS_DynamicRecipes {
                                 addItem('C', TCOTS_Items.CADAVERINE),
                                 addItem('D', TCOTS_Items.DEVOURER_TEETH),
                                 addItem('B', Items.BLAZE_POWDER),
-                                addItem('S', FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                                addItem('S', MiscUtil.isWitcherRPGLoaded()?
                                         Identifier.of("witcher_rpg", "dark_steel_witcher_sword"):
                                         Identifier.of("minecraft","diamond_sword"))
                         ),
@@ -102,7 +102,7 @@ public class TCOTS_DynamicRecipes {
                         List.of(
                                 addItem('R', TCOTS_Items.ROTFIEND_BLOOD),
                                 addItem('G', TCOTS_Items.GHOUL_BLOOD),
-                                addItem('S', FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                                addItem('S', MiscUtil.isWitcherRPGLoaded()?
                                         Identifier.of("witcher_rpg", "steel_witcher_sword"):
                                         Identifier.of("minecraft","iron_sword"))
                         ),
@@ -123,7 +123,7 @@ public class TCOTS_DynamicRecipes {
                     TCOTS_Items.KNIGHT_ERRANTS_HORSE_ARMOR,
                     List.of(
                             addItem('N', Items.IRON_NUGGET),
-                            addItem('I', FabricLoader.getInstance().isModLoaded("witcher_rpg")?
+                            addItem('I', MiscUtil.isWitcherRPGLoaded()?
                                     Identifier.of("witcher_rpg", "steel_ingot"):
                                     Identifier.of("minecraft","iron_ingot")),
                             addItem('A', Items.IRON_HORSE_ARMOR)

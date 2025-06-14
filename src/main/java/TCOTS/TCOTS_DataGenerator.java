@@ -11,10 +11,7 @@ import TCOTS.items.TCOTS_Items;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeCategory;
 import TCOTS.items.concoctions.recipes.AlchemyTableRecipeJsonBuilder;
 import TCOTS.items.concoctions.recipes.HerbalTableRecipeJsonBuilder;
-import TCOTS.world.TCOTS_ConfiguredFeatures;
-import TCOTS.world.TCOTS_DamageTypes;
-import TCOTS.world.TCOTS_PlacedFeature;
-import TCOTS.world.TCOTS_ProcessorList;
+import TCOTS.world.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -32,7 +29,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.data.DataOutput;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
@@ -68,6 +64,8 @@ import net.minecraft.registry.tag.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.poi.PointOfInterestType;
 
 import java.util.Arrays;
@@ -93,6 +91,7 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         main.addProvider(BlockTagsGenerator::new);
         main.addProvider(EntityTagGenerator::new);
         main.addProvider(ItemTagGenerator::new);
+        main.addProvider(BiomeTagGenerator::new);
         main.addProvider(RecipesGenerator::new);
         main.addProvider(AdvancementsGenerator::new);
     }
@@ -1681,6 +1680,8 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
             this.getOrCreateTagBuilder(TCOTS_Entities.DIMERITIUM_DAMAGE)
                     .add(EntityType.END_CRYSTAL)
+                    .add(EntityType.VEX)
+                    .add(EntityType.ALLAY)
                     .add(TCOTS_Entities.FOGLING);
 
             this.getOrCreateTagBuilder(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES)
@@ -1739,6 +1740,403 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
         }
     }
 
+    private static class BiomeTagGenerator extends TagProvider<Biome> {
+
+        public BiomeTagGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, RegistryKeys.BIOME, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup arg) {
+            //Has_Flora
+            {
+                this.getOrCreateTagBuilder(TCOTS_Features.CELANDINE_SPAWN)
+                        .add(BiomeKeys.PLAINS).add(BiomeKeys.MEADOW)
+                        .add(BiomeKeys.BIRCH_FOREST).add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST).add(BiomeKeys.FOREST).add(BiomeKeys.DARK_FOREST)
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.VERBENA_SPAWN)
+                        .add(BiomeKeys.PLAINS).add(BiomeKeys.MEADOW)
+                        .add(BiomeKeys.BIRCH_FOREST).add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST).add(BiomeKeys.FOREST).add(BiomeKeys.DARK_FOREST)
+                        .add(BiomeKeys.FLOWER_FOREST)
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.HAN_FIBER_SPAWN)
+                        .addOptionalTag(BiomeTags.IS_JUNGLE.id())
+                        .addOptionalTag(BiomeTags.RUINED_PORTAL_SWAMP_HAS_STRUCTURE.id())
+                        .addOptionalTag(BiomeTags.VILLAGE_SAVANNA_HAS_STRUCTURE.id())
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.CROWS_EYE_SPAWN)
+                        .addOptionalTag(BiomeTags.IS_TAIGA.id())
+                        .add(BiomeKeys.GROVE)
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.ARENARIA_SPAWN)
+                        .addOptionalTag(BiomeTags.IS_TAIGA.id())
+                        .add(BiomeKeys.FLOWER_FOREST)
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.PUFFBALL_SPAWN_NORMAL)
+                        .add(BiomeKeys.PLAINS)
+                        .add(BiomeKeys.SUNFLOWER_PLAINS)
+                        .add(BiomeKeys.SNOWY_PLAINS)
+                        .add(BiomeKeys.ICE_SPIKES)
+                        .add(BiomeKeys.DESERT)
+                        .add(BiomeKeys.SWAMP)
+                        .add(BiomeKeys.MANGROVE_SWAMP)
+                        .add(BiomeKeys.FOREST)
+                        .add(BiomeKeys.FLOWER_FOREST)
+                        .add(BiomeKeys.BIRCH_FOREST)
+                        .add(BiomeKeys.DARK_FOREST)
+                        .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
+                        .add(BiomeKeys.SAVANNA)
+                        .add(BiomeKeys.SAVANNA_PLATEAU)
+                        .add(BiomeKeys.WINDSWEPT_HILLS)
+                        .add(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS)
+                        .add(BiomeKeys.WINDSWEPT_FOREST)
+                        .add(BiomeKeys.WINDSWEPT_SAVANNA)
+                        .add(BiomeKeys.JUNGLE)
+                        .add(BiomeKeys.SPARSE_JUNGLE)
+                        .add(BiomeKeys.BAMBOO_JUNGLE)
+                        .add(BiomeKeys.BADLANDS)
+                        .add(BiomeKeys.ERODED_BADLANDS)
+                        .add(BiomeKeys.WOODED_BADLANDS)
+                        .add(BiomeKeys.MEADOW)
+                        .add(BiomeKeys.CHERRY_GROVE)
+                        .add(BiomeKeys.RIVER)
+                        .add(BiomeKeys.FROZEN_RIVER)
+                        .add(BiomeKeys.BEACH)
+                        .add(BiomeKeys.SNOWY_BEACH)
+                        .add(BiomeKeys.STONY_SHORE)
+                        .add(BiomeKeys.WARM_OCEAN)
+                        .add(BiomeKeys.LUKEWARM_OCEAN)
+                        .add(BiomeKeys.DEEP_LUKEWARM_OCEAN)
+                        .add(BiomeKeys.OCEAN)
+                        .add(BiomeKeys.DEEP_OCEAN)
+                        .add(BiomeKeys.COLD_OCEAN)
+                        .add(BiomeKeys.DEEP_COLD_OCEAN)
+                        .add(BiomeKeys.FROZEN_OCEAN)
+                        .add(BiomeKeys.DEEP_FROZEN_OCEAN)
+                        .add(BiomeKeys.DRIPSTONE_CAVES)
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.PUFFBALL_SPAWN_TAIGA)
+                        .add(BiomeKeys.TAIGA).add(BiomeKeys.SNOWY_TAIGA)
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.PUFFBALL_SPAWN_SWAMP)
+                        .addOptionalTag(BiomeTags.RUINED_PORTAL_SWAMP_HAS_STRUCTURE.id())
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.MUSHROOM_SPAWN_OLD_GROWTH)
+                        .add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA).add(BiomeKeys.OLD_GROWTH_PINE_TAIGA)
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.SEWANT_SPAWN_NORMAL)
+                        .add(BiomeKeys.PLAINS)
+                        .add(BiomeKeys.SUNFLOWER_PLAINS)
+                        .add(BiomeKeys.SNOWY_PLAINS)
+                        .add(BiomeKeys.ICE_SPIKES)
+                        .add(BiomeKeys.DESERT)
+                        .add(BiomeKeys.SWAMP)
+                        .add(BiomeKeys.MANGROVE_SWAMP)
+                        .add(BiomeKeys.FOREST)
+                        .add(BiomeKeys.FLOWER_FOREST)
+                        .add(BiomeKeys.BIRCH_FOREST)
+                        .add(BiomeKeys.DARK_FOREST)
+                        .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
+                        .add(BiomeKeys.SNOWY_TAIGA)
+                        .add(BiomeKeys.SAVANNA)
+                        .add(BiomeKeys.SAVANNA_PLATEAU)
+                        .add(BiomeKeys.WINDSWEPT_HILLS)
+                        .add(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS)
+                        .add(BiomeKeys.WINDSWEPT_FOREST)
+                        .add(BiomeKeys.WINDSWEPT_SAVANNA)
+                        .add(BiomeKeys.JUNGLE)
+                        .add(BiomeKeys.SPARSE_JUNGLE)
+                        .add(BiomeKeys.BAMBOO_JUNGLE)
+                        .add(BiomeKeys.BADLANDS)
+                        .add(BiomeKeys.ERODED_BADLANDS)
+                        .add(BiomeKeys.WOODED_BADLANDS)
+                        .add(BiomeKeys.CHERRY_GROVE)
+                        .add(BiomeKeys.RIVER)
+                        .add(BiomeKeys.FROZEN_RIVER)
+                        .add(BiomeKeys.BEACH)
+                        .add(BiomeKeys.SNOWY_BEACH)
+                        .add(BiomeKeys.STONY_SHORE)
+                        .add(BiomeKeys.WARM_OCEAN)
+                        .add(BiomeKeys.LUKEWARM_OCEAN)
+                        .add(BiomeKeys.DEEP_LUKEWARM_OCEAN)
+                        .add(BiomeKeys.OCEAN)
+                        .add(BiomeKeys.DEEP_OCEAN)
+                        .add(BiomeKeys.COLD_OCEAN)
+                        .add(BiomeKeys.DEEP_COLD_OCEAN)
+                        .add(BiomeKeys.FROZEN_OCEAN)
+                        .add(BiomeKeys.DEEP_FROZEN_OCEAN)
+                        .add(BiomeKeys.MUSHROOM_FIELDS)
+                        .add(BiomeKeys.DRIPSTONE_CAVES)
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.SEWANT_SPAWN_TAIGA)
+                        .add(BiomeKeys.TAIGA)
+                ;
+
+                this.getOrCreateTagBuilder(TCOTS_Features.SEWANT_SPAWN_DARK)
+                        .add(BiomeKeys.DARK_FOREST)
+                ;
+            }
+
+            //Has_Monster
+            {
+                //Necrophages
+                {
+                    //Drowners
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.DROWNER_SWAMP)
+                                .addOptionalTag(BiomeTags.RUINED_PORTAL_SWAMP_HAS_STRUCTURE.id());
+
+                        this.getOrCreateTagBuilder(TCOTS_Features.DROWNER_BEACH)
+                                .addOptionalTag(BiomeTags.IS_BEACH.id());
+
+                        this.getOrCreateTagBuilder(TCOTS_Features.DROWNER_WATER)
+                                .addOptionalTag(BiomeTags.IS_OCEAN.id())
+                                .addOptionalTag(BiomeTags.IS_DEEP_OCEAN.id())
+                                .add(BiomeKeys.RIVER);
+                    }
+
+                    //Rotfiends
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.ROTFIEND)
+                                .add(BiomeKeys.BIRCH_FOREST).add(BiomeKeys.FOREST).add(BiomeKeys.DARK_FOREST)
+                                .add(BiomeKeys.DRIPSTONE_CAVES)
+                                .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA).add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)
+                                .add(BiomeKeys.PLAINS).add(BiomeKeys.TAIGA);
+                    }
+
+                    //Foglets
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.FOGLET_SWAMP)
+                                .addOptionalTag(BiomeTags.RUINED_PORTAL_SWAMP_HAS_STRUCTURE.id())
+                                .add(BiomeKeys.RIVER);
+
+                        this.getOrCreateTagBuilder(TCOTS_Features.FOGLET_DARK)
+                                .addOptionalTag(BiomeTags.WOODLAND_MANSION_HAS_STRUCTURE.id());
+
+                        this.getOrCreateTagBuilder(TCOTS_Features.FOGLET_HILLS_FORESTS)
+                                .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA).add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)
+                                .add(BiomeKeys.JAGGED_PEAKS).add(BiomeKeys.STONY_PEAKS)
+                                .addOptionalTag(BiomeTags.IS_HILL.id());
+                    }
+
+                    //Water Hags
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.WATER_HAG_SWAMP)
+                                .addOptionalTag(BiomeTags.RUINED_PORTAL_SWAMP_HAS_STRUCTURE.id());
+
+                        this.getOrCreateTagBuilder(TCOTS_Features.WATER_HAG_RIVER)
+                                .add(BiomeKeys.RIVER);
+                    }
+
+                    //Grave Hags
+                    {
+
+                        this.getOrCreateTagBuilder(TCOTS_Features.GRAVE_HAG)
+                                .add(BiomeKeys.BIRCH_FOREST).add(BiomeKeys.FOREST).add(BiomeKeys.DARK_FOREST)
+                                .add(BiomeKeys.DRIPSTONE_CAVES)
+                                .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA).add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)
+                                .add(BiomeKeys.PLAINS).add(BiomeKeys.SAVANNA).add(BiomeKeys.TAIGA);
+                    }
+
+                    //Ghouls & Alghouls
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.GHOUL)
+                                .add(BiomeKeys.SAVANNA).add(BiomeKeys.PLAINS)
+                                .add(BiomeKeys.TAIGA).add(BiomeKeys.OLD_GROWTH_PINE_TAIGA).add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)
+                                .add(BiomeKeys.FOREST).add(BiomeKeys.FLOWER_FOREST).add(BiomeKeys.BIRCH_FOREST)
+                                .add(BiomeKeys.DARK_FOREST);
+                    }
+
+                    //Scurvers
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.SCURVER)
+                                .add(BiomeKeys.BIRCH_FOREST).add(BiomeKeys.FOREST).add(BiomeKeys.DARK_FOREST)
+                                .addOptionalTag(BiomeTags.VILLAGE_SAVANNA_HAS_STRUCTURE.id())
+                                .addOptionalTag(BiomeTags.IS_JUNGLE.id());
+                    }
+
+                    //Devourer
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.DEVOURER)
+                                .add(BiomeKeys.BIRCH_FOREST).add(BiomeKeys.FOREST)
+                                .add(BiomeKeys.SWAMP).add(BiomeKeys.RIVER)
+                                .add(BiomeKeys.PLAINS);
+                    }
+
+                    //Graveir
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.GRAVEIR)
+                                .add(BiomeKeys.PLAINS)
+                                .add(BiomeKeys.SUNFLOWER_PLAINS)
+                                .add(BiomeKeys.SNOWY_PLAINS)
+                                .add(BiomeKeys.ICE_SPIKES)
+                                .add(BiomeKeys.DESERT)
+                                .add(BiomeKeys.SWAMP)
+                                .add(BiomeKeys.MANGROVE_SWAMP)
+                                .add(BiomeKeys.FOREST)
+                                .add(BiomeKeys.FLOWER_FOREST)
+                                .add(BiomeKeys.BIRCH_FOREST)
+                                .add(BiomeKeys.DARK_FOREST)
+                                .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
+                                .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA)
+                                .add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)
+                                .add(BiomeKeys.TAIGA)
+                                .add(BiomeKeys.SNOWY_TAIGA)
+                                .add(BiomeKeys.SAVANNA)
+                                .add(BiomeKeys.SAVANNA_PLATEAU)
+                                .add(BiomeKeys.WINDSWEPT_HILLS)
+                                .add(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS)
+                                .add(BiomeKeys.WINDSWEPT_FOREST)
+                                .add(BiomeKeys.WINDSWEPT_SAVANNA)
+                                .add(BiomeKeys.JUNGLE)
+                                .add(BiomeKeys.SPARSE_JUNGLE)
+                                .add(BiomeKeys.BAMBOO_JUNGLE)
+                                .add(BiomeKeys.BADLANDS)
+                                .add(BiomeKeys.ERODED_BADLANDS)
+                                .add(BiomeKeys.WOODED_BADLANDS)
+                                .add(BiomeKeys.MEADOW)
+                                .add(BiomeKeys.CHERRY_GROVE)
+                                .add(BiomeKeys.GROVE)
+                                .add(BiomeKeys.SNOWY_SLOPES)
+                                .add(BiomeKeys.FROZEN_PEAKS)
+                                .add(BiomeKeys.JAGGED_PEAKS)
+                                .add(BiomeKeys.STONY_PEAKS)
+                                .add(BiomeKeys.RIVER)
+                                .add(BiomeKeys.FROZEN_RIVER)
+                                .add(BiomeKeys.BEACH)
+                                .add(BiomeKeys.SNOWY_BEACH)
+                                .add(BiomeKeys.STONY_SHORE)
+                                .add(BiomeKeys.WARM_OCEAN)
+                                .add(BiomeKeys.LUKEWARM_OCEAN)
+                                .add(BiomeKeys.DEEP_LUKEWARM_OCEAN)
+                                .add(BiomeKeys.OCEAN)
+                                .add(BiomeKeys.DEEP_OCEAN)
+                                .add(BiomeKeys.COLD_OCEAN)
+                                .add(BiomeKeys.DEEP_COLD_OCEAN)
+                                .add(BiomeKeys.FROZEN_OCEAN)
+                                .add(BiomeKeys.DEEP_FROZEN_OCEAN)
+                                .add(BiomeKeys.DRIPSTONE_CAVES);
+                    }
+
+                }
+
+                //Ogroids
+                {
+                    //Nekkers
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.NEKKER)
+                                .add(BiomeKeys.SAVANNA).add(BiomeKeys.PLAINS)
+                                .addOptionalTag(BiomeTags.IS_JUNGLE.id())
+                                .addOptionalTag(BiomeTags.IS_FOREST.id());
+                    }
+
+                    //Cyclops
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.CYCLOPS)
+                                .add(BiomeKeys.SNOWY_PLAINS)
+                                .add(BiomeKeys.STONY_SHORE)
+                                .addOptionalTag(BiomeTags.IS_HILL.id())
+                                .add(BiomeKeys.MEADOW).add(BiomeKeys.FROZEN_PEAKS).add(BiomeKeys.JAGGED_PEAKS).add(BiomeKeys.STONY_PEAKS).add(BiomeKeys.SNOWY_SLOPES)
+                                .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA).add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA);
+                    }
+
+                    //Rock Troll
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.ROCK_TROLL)
+                                .add(BiomeKeys.STONY_PEAKS).add(BiomeKeys.MEADOW)
+                                .addOptionalTag(BiomeTags.IS_HILL.id())
+                                .add(BiomeKeys.TAIGA).add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA).add(BiomeKeys.OLD_GROWTH_PINE_TAIGA)
+                                .add(BiomeKeys.DRIPSTONE_CAVES).add(BiomeKeys.STONY_SHORE);
+                    }
+
+                    //Ice Troll
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.ICE_TROLL)
+                                .add(BiomeKeys.SNOWY_PLAINS)
+                                .add(BiomeKeys.ICE_SPIKES)
+                                .add(BiomeKeys.SNOWY_TAIGA)
+                                .add(BiomeKeys.FROZEN_PEAKS)
+                                .add(BiomeKeys.JAGGED_PEAKS)
+                                .add(BiomeKeys.SNOWY_SLOPES)
+                                .add(BiomeKeys.GROVE);
+                    }
+
+
+                    //Forest Troll
+                    {
+                        this.getOrCreateTagBuilder(TCOTS_Features.FOREST_TROLL)
+                                .addOptionalTag(BiomeTags.IS_FOREST.id());
+                    }
+                }
+            }
+
+//            All overworld biomes
+//                    .add(BiomeKeys.PLAINS)
+//                    .add(BiomeKeys.SUNFLOWER_PLAINS)
+//                    .add(BiomeKeys.SNOWY_PLAINS)
+//                    .add(BiomeKeys.ICE_SPIKES)
+//                    .add(BiomeKeys.DESERT)
+//                    .add(BiomeKeys.SWAMP)
+//                    .add(BiomeKeys.MANGROVE_SWAMP)
+//                    .add(BiomeKeys.FOREST)
+//                    .add(BiomeKeys.FLOWER_FOREST)
+//                    .add(BiomeKeys.BIRCH_FOREST)
+//                    .add(BiomeKeys.DARK_FOREST)
+//                    .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
+//                    .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA)
+//                    .add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)
+//                    .add(BiomeKeys.TAIGA)
+//                    .add(BiomeKeys.SNOWY_TAIGA)
+//                    .add(BiomeKeys.SAVANNA)
+//                    .add(BiomeKeys.SAVANNA_PLATEAU)
+//                    .add(BiomeKeys.WINDSWEPT_HILLS)
+//                    .add(BiomeKeys.WINDSWEPT_GRAVELLY_HILLS)
+//                    .add(BiomeKeys.WINDSWEPT_FOREST)
+//                    .add(BiomeKeys.WINDSWEPT_SAVANNA)
+//                    .add(BiomeKeys.JUNGLE)
+//                    .add(BiomeKeys.SPARSE_JUNGLE)
+//                    .add(BiomeKeys.BAMBOO_JUNGLE)
+//                    .add(BiomeKeys.BADLANDS)
+//                    .add(BiomeKeys.ERODED_BADLANDS)
+//                    .add(BiomeKeys.WOODED_BADLANDS)
+//                    .add(BiomeKeys.MEADOW)
+//                    .add(BiomeKeys.CHERRY_GROVE)
+//                    .add(BiomeKeys.GROVE)
+//                    .add(BiomeKeys.SNOWY_SLOPES)
+//                    .add(BiomeKeys.FROZEN_PEAKS)
+//                    .add(BiomeKeys.JAGGED_PEAKS)
+//                    .add(BiomeKeys.STONY_PEAKS)
+//                    .add(BiomeKeys.RIVER)
+//                    .add(BiomeKeys.FROZEN_RIVER)
+//                    .add(BiomeKeys.BEACH)
+//                    .add(BiomeKeys.SNOWY_BEACH)
+//                    .add(BiomeKeys.STONY_SHORE)
+//                    .add(BiomeKeys.WARM_OCEAN)
+//                    .add(BiomeKeys.LUKEWARM_OCEAN)
+//                    .add(BiomeKeys.DEEP_LUKEWARM_OCEAN)
+//                    .add(BiomeKeys.OCEAN)
+//                    .add(BiomeKeys.DEEP_OCEAN)
+//                    .add(BiomeKeys.COLD_OCEAN)
+//                    .add(BiomeKeys.DEEP_COLD_OCEAN)
+//                    .add(BiomeKeys.FROZEN_OCEAN)
+//                    .add(BiomeKeys.DEEP_FROZEN_OCEAN)
+//                    .add(BiomeKeys.MUSHROOM_FIELDS)
+//                    .add(BiomeKeys.DRIPSTONE_CAVES)
+//                    .add(BiomeKeys.LUSH_CAVES)
+//                    .add(BiomeKeys.DEEP_DARK);
+//            ;
+        }
+    }
 
     private static class RecipesGenerator extends FabricRecipeProvider{
 
@@ -3189,12 +3587,12 @@ public class TCOTS_DataGenerator implements DataGeneratorEntrypoint {
 
         private void generateBasicRecipeAdvancement(String id, Consumer<Advancement> consumer){
             Advancement.Builder.createUntelemetered()
-                    .parent(CraftingRecipeJsonBuilder.ROOT)
+//                    .parent(Identifier.of("minecraft","recipes/root"))
                     .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_TABLE_ITEM), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_TABLE_ITEM))
                     .criteriaMerger(CriterionMerger.OR)
                     .criterion(FabricRecipeProvider.hasItem(TCOTS_Items.ALCHEMY_BOOK), FabricRecipeProvider.conditionsFromItem(TCOTS_Items.ALCHEMY_BOOK))
                     .rewards(AdvancementRewards.Builder.recipe(new Identifier(TCOTS_Main.MOD_ID,id)))
-                    .toJson();
+                    .build(consumer, Identifier.of(TCOTS_Main.MOD_ID,"recipes/alchemy")+"/"+id);
         }
 
         @Override

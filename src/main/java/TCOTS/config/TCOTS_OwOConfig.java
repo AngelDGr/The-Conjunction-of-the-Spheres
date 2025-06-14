@@ -87,4 +87,7 @@ public class TCOTS_OwOConfig {
     public enum EYE_SEPARATION {
         ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX
     }
+
+    @RestartRequired
+    public boolean hasRPGTextures=false;
 }
