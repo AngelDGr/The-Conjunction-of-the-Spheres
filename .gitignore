@@ -25,19 +25,16 @@ bin/
 .project
 
 # macos
-
 *.DS_Store
 
-# fabric
-
-run/
 
 # java
-
 hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+
+#other
 /.gitattributes
 /.architectury-transformer/
 
