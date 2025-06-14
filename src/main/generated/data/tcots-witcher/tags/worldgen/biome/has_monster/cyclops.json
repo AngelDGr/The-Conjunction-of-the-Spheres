@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:snowy_plains",
+    "minecraft:stony_shore",
+    {
+      "id": "#minecraft:is_hill",
+      "required": false
+    },
+    "minecraft:meadow",
+    "minecraft:frozen_peaks",
+    "minecraft:jagged_peaks",
+    "minecraft:stony_peaks",
+    "minecraft:snowy_slopes",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:old_growth_spruce_taiga"
+  ]
+}

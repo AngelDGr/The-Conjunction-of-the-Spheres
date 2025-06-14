@@ -38,3 +38,9 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+/.architectury-transformer/debug.log
+/common/.architectury-transformer/debug.log
+/.gitattributes
+/fabric/
+/neoforge/
+/common/

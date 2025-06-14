@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:stony_peaks",
+    "minecraft:meadow",
+    {
+      "id": "#minecraft:is_hill",
+      "required": false
+    },
+    "minecraft:taiga",
+    "minecraft:old_growth_spruce_taiga",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:dripstone_caves",
+    "minecraft:stony_shore"
+  ]
+}
