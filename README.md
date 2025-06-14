@@ -91,7 +91,7 @@
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.imgur.com/BgAWeRm.png" alt="" width="850" height="55" /></p>
 <p>&nbsp;</p>
 <ul>
-<li><span style="font-size: 18px;">Add better animations with <a href="https://modrinth.com/mod/better-combat" rel="nofollow">Better Combat</a>. Exclusive Better Combat animations are planned for the future.</span></li>
+<li><span style="font-size: 18px;">Add better animations with <a href="https://modrinth.com/mod/better-combat" rel="nofollow">Better Combat</a>. Exclusive Witcher animations included!</span></li>
 <li><span style="font-size: 18px;">A simple roll mod, like&nbsp;<a href="https://modrinth.com/mod/combat-roll" rel="nofollow">Combat Roll</a>.</span></li>
 <li><span style="font-size: 18px;">A mod like&nbsp;<a href="https://modrinth.com/mod/weaponmaster" rel="nofollow">YDM's Weapon Master</a> to be able to put your swords in your back like a Witcher.</span></li>
 <li><span style="font-size: 18px;">Also try my other witcher-related mod, <a href="https://modrinth.com/mod/witcher-medallions" rel="nofollow">Witcher Medallions</a>!</span></li>
