@@ -3,6 +3,8 @@ package TCOTS.mixin;
 import TCOTS.TCOTS_Main;
 import TCOTS.items.concoctions.TCOTS_Effects;
 import TCOTS.screen.TCOTS_HeartTypes;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -21,7 +23,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(value= EnvType.CLIENT)
@@ -39,17 +40,16 @@ public abstract class InGameHudMixin {
     private int ticks;
     @Shadow
     private int renderHealthValue;
-    @Shadow public abstract void drawHeart(DrawContext context, InGameHud.HeartType type, int x, int y, int v, boolean blinking, boolean halfHeart);
 
     //Moving hearts for swallow
     @ModifyArg(method = "renderStatusBars", at = @At(value = "INVOKE", target =
             "Lnet/minecraft/client/gui/hud/InGameHud;renderHealthBar(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/entity/player/PlayerEntity;IIIIFIIIZ)V"), index=5)
-    private int InjectMovingHearths(int x){
-        int j = this.renderHealthValue;
-        PlayerEntity playerEntity = this.getCameraPlayer();
+    private int InjectMovingHearths(final int x){
+        final int j = this.renderHealthValue;
+        final PlayerEntity playerEntity = this.getCameraPlayer();
         assert playerEntity != null;
-        int i = MathHelper.ceil(playerEntity.getHealth());
-        float f = Math.max((float)playerEntity.getAttributeValue(EntityAttributes.GENERIC_MAX_HEALTH), (float)Math.max(j, i));
+        final int i = MathHelper.ceil(playerEntity.getHealth());
+        final float f = Math.max((float)playerEntity.getAttributeValue(EntityAttributes.GENERIC_MAX_HEALTH), (float)Math.max(j, i));
 
             if(playerEntity.hasStatusEffect(TCOTS_Effects.GRAVE_HAG_DECOCTION_EFFECT)){
                 return this.ticks % MathHelper.ceil(
@@ -79,7 +79,7 @@ public abstract class InGameHudMixin {
     Identifier MUD_BALL_OVERLAY=MUD_BALL_OVERLAY_1;
     @Unique
     private void changeOverlay(){
-        int random = this.random.nextBetween(0,3);
+        final int random = this.random.nextBetween(0,3);
         if(changeOverlay) {
             switch (random) {
                 case 0:
@@ -104,7 +104,7 @@ public abstract class InGameHudMixin {
         }
     }
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getFrozenTicks()I"))
-    private void renderMudBall(DrawContext context, float tickDelta, CallbackInfo ci){
+    private void renderMudBall(final DrawContext context, final float tickDelta, final CallbackInfo ci){
         assert this.client.player != null;
 
         changeOverlay();
@@ -120,25 +120,23 @@ public abstract class InGameHudMixin {
     }
 
 
-    @Redirect(method = "renderHealthBar", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/hud/InGameHud;drawHeart(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/gui/hud/InGameHud$HeartType;IIIZZ)V",
-            ordinal = 3))
-    private void injectEffectsHearts(InGameHud instance, DrawContext context, InGameHud.HeartType type, int x, int y, int v, boolean blinking, boolean halfHeart){
-        PlayerEntity player = this.getCameraPlayer();
-        if(player!=null) {
+    @WrapOperation(
+            method = "renderHealthBar",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;drawHeart(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/gui/hud/InGameHud$HeartType;IIIZZ)V", ordinal = 3)
+    )
+    private void injectEffectsHearts(final InGameHud instance, final DrawContext context, final InGameHud.HeartType heartType, final int x, final int y, final int v, final boolean blinking, final boolean halfHeart, final Operation<Void> original) {
+        final PlayerEntity player = this.getCameraPlayer();
 
-            if (player.theConjunctionOfTheSpheres$toxicityOverThreshold() && !player.hasStatusEffect(StatusEffects.WITHER)) {
-                context.drawTexture(
-                        TCOTS_HeartTypes.TOXIC.getTexture(player.getWorld().getLevelProperties().isHardcore(), halfHeart, blinking),
-                        x, y, 0, 0, 9, 9, 9,9);
-            } else if (player.hasStatusEffect(TCOTS_Effects.CADAVERINE) && !player.hasStatusEffect(StatusEffects.WITHER)){
-                context.drawTexture(
-                        TCOTS_HeartTypes.CADAVERINE.getTexture(player.getWorld().getLevelProperties().isHardcore(), halfHeart, blinking),
-                        x, y, 0, 0, 9, 9, 9,9);
-            }
-            else {
-                drawHeart(context, type, x, y, v, blinking, halfHeart);
-            }
+        if (player!=null&& player.theConjunctionOfTheSpheres$toxicityOverThreshold() && !player.hasStatusEffect(StatusEffects.WITHER)) {
+            context.drawTexture(
+                    TCOTS_HeartTypes.TOXIC.getTexture(player.getWorld().getLevelProperties().isHardcore(), halfHeart, blinking),
+                    x, y, 0, 0, 9, 9, 9,9);
+        } else if (player!=null&& player.hasStatusEffect(TCOTS_Effects.CADAVERINE) && !player.hasStatusEffect(StatusEffects.WITHER)){
+            context.drawTexture(
+                    TCOTS_HeartTypes.CADAVERINE.getTexture(player.getWorld().getLevelProperties().isHardcore(), halfHeart, blinking),
+                    x, y, 0, 0, 9, 9, 9,9);
+        } else {
+            original.call(instance, context, heartType, x, y, v, blinking, halfHeart);
         }
     }
 }

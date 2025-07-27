@@ -1,3 +1,7 @@
+# 1.0.6 - 1.20.1
+### Bugfixes
+- Changed some internal logic for better compatibility with other mods.
+
 # 1.0.5 - 1.20.1
 ### Additions
 - Added new and unique animations from Better Combat to all Witcher swords.
