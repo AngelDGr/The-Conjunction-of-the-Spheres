@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 public class WitcherBombs_Base extends Item {
     private final String bombId;
     private final int level;
-    public WitcherBombs_Base(Properties settings, String bombId, int level) {
+    public WitcherBombs_Base(final Properties settings, final String bombId, final int level) {
         super(settings);
         this.bombId=bombId;
         this.level=level;
@@ -34,11 +34,11 @@ public class WitcherBombs_Base extends Item {
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, @NotNull InteractionHand hand) {
-        ItemStack itemStack = playerEntity.getItemInHand(hand);
+    public @NotNull InteractionResultHolder<ItemStack> use(final Level world, final Player playerEntity, @NotNull final InteractionHand hand) {
+        final ItemStack itemStack = playerEntity.getItemInHand(hand);
         //Launch the bomb
         if (!world.isClientSide) {
-            WitcherBombEntity bombEntity = new WitcherBombEntity(world, playerEntity, bombId, level);
+            final WitcherBombEntity bombEntity = new WitcherBombEntity(world, playerEntity, bombId, level);
             playerEntity.getCooldowns().addCooldown(this, EntitiesUtil.isWearingManticoreArmor(playerEntity)? 10: 40);
             bombEntity.setItem(itemStack);
             bombEntity.shootFromRotation(playerEntity, playerEntity.getXRot(), playerEntity.getYRot(), -20.0f, 0.8f, 1.0f);
@@ -51,7 +51,7 @@ public class WitcherBombs_Base extends Item {
 
         //Gives player the powder
         //Select the powder
-        ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_BOMB_POWDER);
+        final ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_BOMB_POWDER);
 
         stack_Empty.set(DataComponents.MAX_STACK_SIZE, this.getDefaultMaxStackSize());
 
@@ -77,7 +77,7 @@ public class WitcherBombs_Base extends Item {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag type) {
+    public void appendHoverText(@NotNull final ItemStack stack, @NotNull final TooltipContext context, @NotNull final List<Component> tooltip, @NotNull final TooltipFlag type) {
         if(Objects.equals(bombId, "grapeshot") || Objects.equals(bombId, "dancing_star") || Objects.equals(bombId, "samum")  ){
             tooltip.add(Component.translatable("tooltip.bomb.monster_nest.first").withStyle(ChatFormatting.GRAY,ChatFormatting.ITALIC));
             tooltip.add(Component.translatable("tooltip.bomb.monster_nest.second").withStyle(ChatFormatting.GRAY,ChatFormatting.ITALIC));

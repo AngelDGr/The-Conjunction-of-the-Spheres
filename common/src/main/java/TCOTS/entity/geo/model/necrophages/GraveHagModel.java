@@ -2,7 +2,7 @@ package TCOTS.entity.geo.model.necrophages;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.geo.model.BipedGeoModelBase;
-import TCOTS.entity.necrophages.GraveHagEntity;
+import TCOTS.entity.monsters.necrophages.GraveHagEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib.constant.DataTickets;
@@ -14,34 +14,34 @@ public class GraveHagModel extends BipedGeoModelBase<GraveHagEntity> {
 
     //xTODO: Fix the running animation
     @Override
-    public ResourceLocation getModelResource(GraveHagEntity animatable) {
+    public ResourceLocation getModelResource(final GraveHagEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/necrophages/grave_hag.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(GraveHagEntity animatable) {
+    public ResourceLocation getTextureResource(final GraveHagEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/entity/necrophages/grave_hag.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(GraveHagEntity animatable) {
+    public ResourceLocation getAnimationResource(final GraveHagEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/necrophages/grave_hag.animation.json");
     }
 
     @Override
-    protected boolean hasNormalHead(GraveHagEntity entity) {
+    protected boolean hasNormalHead(final GraveHagEntity entity) {
         return false;
     }
 
     @Override
-    public void setCustomAnimations(GraveHagEntity entity, long instanceId, AnimationState<GraveHagEntity> animationState) {
+    public void setCustomAnimations(final GraveHagEntity entity, final long instanceId, final AnimationState<GraveHagEntity> animationState) {
         super.setCustomAnimations(entity, instanceId, animationState);
 
-        GeoBone head = getAnimationProcessor().getBone("head");
-        GeoBone wholeBody = getAnimationProcessor().getBone("wholeBody");
+        final GeoBone head = getAnimationProcessor().getBone("head");
+        final GeoBone wholeBody = getAnimationProcessor().getBone("wholeBody");
 
         if (head!=null && wholeBody!=null) {
-            EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+            final EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
             if(entity.getIsRunning()){
                 head.setRotY(entityData.netHeadYaw() * Mth.DEG_TO_RAD);
                 head.setRotX(((entityData.headPitch()+60) * Mth.DEG_TO_RAD));
@@ -61,7 +61,7 @@ public class GraveHagModel extends BipedGeoModelBase<GraveHagEntity> {
         }
     }
 
-    private void resetWholeBody(GeoBone wholeBody){
+    private void resetWholeBody(final GeoBone wholeBody){
         if(wholeBody.getRotX() != 0){
             wholeBody.setRotX(0);
         }

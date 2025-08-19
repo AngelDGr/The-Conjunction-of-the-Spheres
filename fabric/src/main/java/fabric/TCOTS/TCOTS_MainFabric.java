@@ -1,10 +1,10 @@
 package fabric.TCOTS;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.TCOTS_Tags;
+import TCOTS.registry.TCOTS_Tags;
 import TCOTS.entity.misc.FoglingEntity;
-import TCOTS.entity.necrophages.*;
-import TCOTS.entity.ogroids.*;
+import TCOTS.entity.monsters.necrophages.*;
+import TCOTS.entity.monsters.ogroids.*;
 import TCOTS.items.AlchemyRecipeRandomlyLootFunction;
 import TCOTS.items.components.RecipeTeacherComponent;
 import TCOTS.registry.*;
@@ -90,8 +90,8 @@ public class TCOTS_MainFabric implements ModInitializer {
 	}
 
 	public static class ServerWorldSpawnersUtil {
-		public static void register(ServerLevel world, CustomSpawner spawner) {
-			List<CustomSpawner> spawnerList = new ArrayList<>(((ServerWorldAccessor) world).getCustomSpawners());
+		public static void register(final ServerLevel world, final CustomSpawner spawner) {
+			final List<CustomSpawner> spawnerList = new ArrayList<>(((ServerWorldAccessor) world).getCustomSpawners());
 			spawnerList.add(spawner);
 			((ServerWorldAccessor) world).setCustomSpawners(spawnerList);
 		}
@@ -142,6 +142,9 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 			//Devourer
 			FabricDefaultAttributeRegistry.register(TCOTS_Entities.DEVOURER.get(), DevourerEntity.setAttributes());
+
+			//Bloedzuiger
+			FabricDefaultAttributeRegistry.register(TCOTS_Entities.BLOEDZUIGER.get(), BloedzuigerEntity.setAttributes());
 
 			//Graveir
 			FabricDefaultAttributeRegistry.register(TCOTS_Entities.GRAVEIR.get(), GraveirEntity.setAttributes());
@@ -218,11 +221,13 @@ public class TCOTS_MainFabric implements ModInitializer {
 			SpawnPlacements.register(TCOTS_Entities.DEVOURER.get(), SpawnPlacementTypes.ON_GROUND,
 					Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DevourerEntity::canSpawnInDarkW);
 
+			//Bloedzuiger
+			SpawnPlacements.register(TCOTS_Entities.BLOEDZUIGER.get(), SpawnPlacementTypes.ON_GROUND,
+					Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BloedzuigerEntity::canSpawnBloedzuiger);
 
 			//Graveir
 			SpawnPlacements.register(TCOTS_Entities.GRAVEIR.get(), SpawnPlacementTypes.ON_GROUND,
 					Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GraveirEntity::canSpawnGraveir);
-
 
 			//Bullvore
 			SpawnPlacements.register(TCOTS_Entities.BULLVORE.get(), SpawnPlacementTypes.ON_GROUND,
@@ -264,7 +269,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 		LootTableEvents.MODIFY.register( (id, tableBuilder, source, wrapperLookup) -> {
 
 			if(Blocks.WHEAT.getLootTable().equals(id) && source.isBuiltin()){
-				LootPool.Builder ergotSeeds = LootPool.lootPool()
+				final LootPool.Builder ergotSeeds = LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1))
 						.add(LootItem.lootTableItem(TCOTS_Items.ERGOT_SEEDS.get()))
 						.when(LootItemRandomChanceCondition.randomChance(0.05f))
@@ -277,7 +282,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 			}
 
 			if(EntityType.RAVAGER.getDefaultLootTable().equals(id) && source.isBuiltin()){
-				LootPool.Builder monsterFat = LootPool.lootPool()
+				final LootPool.Builder monsterFat = LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1))
 						.add(LootItem.lootTableItem(TCOTS_Items.MONSTER_FAT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(3f,8f))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
@@ -287,7 +292,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 			}
 
 			if((EntityType.HOGLIN.getDefaultLootTable().equals(id) || EntityType.ZOGLIN.getDefaultLootTable().equals(id)) && source.isBuiltin()){
-				LootPool.Builder monsterFat = LootPool.lootPool()
+				final LootPool.Builder monsterFat = LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1))
 						.add(LootItem.lootTableItem(TCOTS_Items.MONSTER_FAT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(2f,4f))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
@@ -297,7 +302,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 			}
 
 			if(EntityType.POLAR_BEAR.getDefaultLootTable().equals(id) && source.isBuiltin()){
-				LootPool.Builder monsterFat = LootPool.lootPool()
+				final LootPool.Builder monsterFat = LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1))
 						.add(LootItem.lootTableItem(TCOTS_Items.MONSTER_FAT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(2f,3f))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
@@ -307,7 +312,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 			}
 
 			if(EntityType.PIGLIN_BRUTE.getDefaultLootTable().equals(id) && source.isBuiltin()){
-				LootPool.Builder monsterFat = LootPool.lootPool()
+				final LootPool.Builder monsterFat = LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1))
 						.add(LootItem.lootTableItem(TCOTS_Items.MONSTER_FAT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f,2f))))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
@@ -320,12 +325,12 @@ public class TCOTS_MainFabric implements ModInitializer {
 			{
 				if (BuiltInLootTables.ABANDONED_MINESHAFT.equals(id) && source.isBuiltin()) {
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(0, 2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 							.when(LootItemRandomChanceCondition.randomChance(0.4f));
 
-					LootPool.Builder witcher_alcohol = LootPool.lootPool()
+					final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
 							.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(14).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,4))))
@@ -337,12 +342,12 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 				if (BuiltInLootTables.ANCIENT_CITY.equals(id) && source.isBuiltin()) {
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(0, 1))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(new AlchemyRecipeRandomlyLootFunction.Builder().add(1))
 							.when(LootItemRandomChanceCondition.randomChance(0.9f));
 
-					LootPool.Builder witcher_alcohol = LootPool.lootPool()
+					final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,3))))
 							.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -356,13 +361,13 @@ public class TCOTS_MainFabric implements ModInitializer {
 				{
 					if (BuiltInLootTables.BASTION_BRIDGE.equals(id) && source.isBuiltin()) {
 
-						LootPool.Builder alchemy_formulae = LootPool.lootPool()
+						final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(0, 1))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get()))
 								.apply(AlchemyRecipeRandomlyLootFunction.builder())
 								.when(LootItemRandomChanceCondition.randomChance(0.4f));
 
-						LootPool.Builder witcher_alcohol = LootPool.lootPool()
+						final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(1, 2))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 3))))
@@ -376,13 +381,13 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 					if (BuiltInLootTables.BASTION_OTHER.equals(id) && source.isBuiltin()) {
 
-						LootPool.Builder alchemy_formulae = LootPool.lootPool()
+						final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(0, 1))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get()))
 								.apply(AlchemyRecipeRandomlyLootFunction.builder())
 								.when(LootItemRandomChanceCondition.randomChance(0.3f));
 
-						LootPool.Builder witcher_alcohol = LootPool.lootPool()
+						final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(1, 2))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 3))))
@@ -398,12 +403,12 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 				if(BuiltInLootTables.DESERT_PYRAMID.equals(id) && source.isBuiltin()){
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(0,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 							.when(LootItemRandomChanceCondition.randomChance(0.4f));
 
-					LootPool.Builder witcher_alcohol = LootPool.lootPool()
+					final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,3))))
 							.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -415,12 +420,12 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 				if(BuiltInLootTables.IGLOO_CHEST.equals(id) && source.isBuiltin()){
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 							.when(LootItemRandomChanceCondition.randomChance(1f));
 
-					LootPool.Builder witcher_alcohol = LootPool.lootPool()
+					final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,3))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(1,5))))
 							.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(1,3))))
@@ -433,12 +438,12 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 				if(BuiltInLootTables.JUNGLE_TEMPLE.equals(id) && source.isBuiltin()){
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(0,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 							.when(LootItemRandomChanceCondition.randomChance(0.8f));
 
-					LootPool.Builder witcher_alcohol = LootPool.lootPool()
+					final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,4))))
 							.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -450,12 +455,12 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 				if(BuiltInLootTables.NETHER_BRIDGE.equals(id) && source.isBuiltin()){
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(0,1))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 							.when(LootItemRandomChanceCondition.randomChance(0.6f));
 
-					LootPool.Builder witcher_alcohol = LootPool.lootPool()
+					final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,4))))
 							.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -467,13 +472,13 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 				if(BuiltInLootTables.PILLAGER_OUTPOST.equals(id) && source.isBuiltin()){
 
-					LootPool.Builder extra_loot_oils = LootPool.lootPool()
+					final LootPool.Builder extra_loot_oils = LootPool.lootPool()
 							.setRolls(ConstantValue.exactly(1))
 							.add(LootItem.lootTableItem(TCOTS_Items.HANGED_OIL.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
 							.add(LootItem.lootTableItem(TCOTS_Items.ENHANCED_HANGED_OIL.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
 							.when(LootItemRandomChanceCondition.randomChance(0.05f));
 
-					LootPool.Builder crossbow_bolts = LootPool.lootPool()
+					final LootPool.Builder crossbow_bolts = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,4))
 							.add(LootItem.lootTableItem(TCOTS_Items.BASE_BOLT.get()).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(1,12))))
 							.add(LootItem.lootTableItem(TCOTS_Items.BLUNT_BOLT.get()).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1,6))))
@@ -482,12 +487,12 @@ public class TCOTS_MainFabric implements ModInitializer {
 							.add(LootItem.lootTableItem(TCOTS_Items.EXPLODING_BOLT.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1,2))))
 							.when(LootItemRandomChanceCondition.randomChance(0.4f));
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(0,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 							.when(LootItemRandomChanceCondition.randomChance(0.5f));
 
-					LootPool.Builder witcher_alcohol = LootPool.lootPool()
+					final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1, 2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(8).apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 1))))
 							.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2))))
@@ -506,7 +511,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 				//Shipwreck
 				{
 					if (BuiltInLootTables.SHIPWRECK_SUPPLY.equals(id) && source.isBuiltin()) {
-						LootPool.Builder witcher_alcohol = LootPool.lootPool()
+						final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(1, 4))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(8).apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 1))))
 								.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2))))
@@ -520,7 +525,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 					}
 
 					if (BuiltInLootTables.SHIPWRECK_MAP.equals(id) && source.isBuiltin()) {
-						LootPool.Builder alchemy_formulae = LootPool.lootPool()
+						final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(0, 2))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 								.when(LootItemRandomChanceCondition.randomChance(0.6f));
@@ -531,12 +536,12 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 				if(BuiltInLootTables.SIMPLE_DUNGEON.equals(id) && source.isBuiltin()){
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,3))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 							.when(LootItemRandomChanceCondition.randomChance(0.7f));
 
-					LootPool.Builder witcher_alcohol = LootPool.lootPool()
+					final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
 							.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -551,12 +556,12 @@ public class TCOTS_MainFabric implements ModInitializer {
 				{
 					if (BuiltInLootTables.STRONGHOLD_CORRIDOR.equals(id) && source.isBuiltin()) {
 
-						LootPool.Builder alchemy_formulae = LootPool.lootPool()
+						final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(0, 3))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 								.when(LootItemRandomChanceCondition.randomChance(0.6f));
 
-						LootPool.Builder witcher_alcohol = LootPool.lootPool()
+						final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(1,2))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,4))))
 								.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -568,7 +573,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 					if (BuiltInLootTables.STRONGHOLD_CROSSING.equals(id) && source.isBuiltin()) {
 
-						LootPool.Builder alchemy_formulae = LootPool.lootPool()
+						final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(0, 2))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 								.when(LootItemRandomChanceCondition.randomChance(0.4f));
@@ -578,7 +583,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 					if (BuiltInLootTables.STRONGHOLD_LIBRARY.equals(id) && source.isBuiltin()) {
 
-						LootPool.Builder alchemy_formulae = LootPool.lootPool()
+						final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(0, 4))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 								.when(LootItemRandomChanceCondition.randomChance(1f));
@@ -591,7 +596,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 				{
 					if (BuiltInLootTables.UNDERWATER_RUIN_BIG.equals(id) && source.isBuiltin()) {
 
-						LootPool.Builder alchemy_formulae = LootPool.lootPool()
+						final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(0, 2))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 								.when(LootItemRandomChanceCondition.randomChance(0.3f));
@@ -601,7 +606,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 					if (BuiltInLootTables.UNDERWATER_RUIN_SMALL.equals(id) && source.isBuiltin()) {
 
-						LootPool.Builder alchemy_formulae = LootPool.lootPool()
+						final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 								.setRolls(UniformGenerator.between(0, 1))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 								.when(LootItemRandomChanceCondition.randomChance(0.2f));
@@ -611,20 +616,20 @@ public class TCOTS_MainFabric implements ModInitializer {
 				}
 
 				if(BuiltInLootTables.WOODLAND_MANSION.equals(id) && source.isBuiltin()){
-					LootPool.Builder extra_loot_oils = LootPool.lootPool()
+					final LootPool.Builder extra_loot_oils = LootPool.lootPool()
 							.setRolls(ConstantValue.exactly(1))
 							.add(LootItem.lootTableItem(TCOTS_Items.HANGED_OIL.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
 							.add(LootItem.lootTableItem(TCOTS_Items.ENHANCED_HANGED_OIL.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
 							.add(LootItem.lootTableItem(TCOTS_Items.SUPERIOR_HANGED_OIL.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
 							.when(LootItemRandomChanceCondition.randomChance(0.05f));
 
-					LootPool.Builder witcher_books = LootPool.lootPool()
+					final LootPool.Builder witcher_books = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,3))
 							.add(LootItem.lootTableItem(TCOTS_Items.WITCHER_BESTIARY.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_BOOK.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
 							.when(LootItemRandomChanceCondition.randomChance(0.05f));
 
-					LootPool.Builder witcher_alcohol = LootPool.lootPool()
+					final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 							.setRolls(ConstantValue.exactly(1))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1))))
 							.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(14).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2))))
@@ -634,7 +639,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 							.add(LootItem.lootTableItem(TCOTS_Items.MANDRAKE_CORDIAL.get()).setWeight(18).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1))))
 							.when(LootItemRandomChanceCondition.randomChance(0.1f));
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(0, 2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 							.when(LootItemRandomChanceCondition.randomChance(0.6f));
@@ -648,7 +653,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 				//Village
 				{
 					if(BuiltInLootTables.FARMER_GIFT.equals(id) && source.isBuiltin()){
-						LootPool.Builder witcher_alcohol = LootPool.lootPool()
+						final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 								.setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(15).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
 								.add(LootItem.lootTableItem(TCOTS_Items.VILLAGE_HERBAL.get()).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2))))
@@ -663,7 +668,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 							|| BuiltInLootTables.VILLAGE_TAIGA_HOUSE.equals(id)
 							|| BuiltInLootTables.VILLAGE_SNOWY_HOUSE.equals(id))
 							&& source.isBuiltin()){
-						LootPool.Builder witcher_alcohol = LootPool.lootPool()
+						final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 								.setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1))))
 								.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(11).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2))))
@@ -673,7 +678,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 								.add(LootItem.lootTableItem(TCOTS_Items.MANDRAKE_CORDIAL.get()).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1))))
 								.when(LootItemRandomChanceCondition.randomChance(0.15f));
 
-						LootPool.Builder witcher_bestiary = LootPool.lootPool()
+						final LootPool.Builder witcher_bestiary = LootPool.lootPool()
 								.setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(TCOTS_Items.WITCHER_BESTIARY.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
 								.when(LootItemRandomChanceCondition.randomChance(0.05f));
@@ -685,12 +690,12 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 				if(BuiltInLootTables.SPAWN_BONUS_CHEST.equals(id) && source.isBuiltin()){
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(0,2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
 							.when(LootItemRandomChanceCondition.randomChance(0.5f));
 
-					LootPool.Builder witcher_alcohol = LootPool.lootPool()
+					final LootPool.Builder witcher_alcohol = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(1,3))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,3))))
 							.add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,4))))
@@ -704,7 +709,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 			{
 				if (BuiltInLootTables.SNIFFER_DIGGING.equals(id) && source.isBuiltin()) {
 
-					LootPool.Builder allspice = LootPool.lootPool()
+					final LootPool.Builder allspice = LootPool.lootPool()
 							.setRolls(ConstantValue.exactly(1))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALLSPICE.get()))
 							.when(LootItemRandomChanceCondition.randomChance(0.4f));
@@ -721,9 +726,9 @@ public class TCOTS_MainFabric implements ModInitializer {
 			{
 				if(id.location().equals(ResourceLocation.fromNamespaceAndPath("witcher_rpg","chests/witcher_grave"))){
 
-					LootTable.Builder newLootTable = new LootTable.Builder();
+					final LootTable.Builder newLootTable = new LootTable.Builder();
 
-					LootPool.Builder ingredientsPool = LootPool.lootPool().setRolls(UniformGenerator.between(3,5))
+					final LootPool.Builder ingredientsPool = LootPool.lootPool().setRolls(UniformGenerator.between(3,5))
 							.setBonusRolls(ConstantValue.exactly(1))
 							.add(LootItem.lootTableItem(Items.LEATHER)
 									.setWeight(10)
@@ -754,7 +759,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 									.apply(SetItemCountFunction.setCount(UniformGenerator.between(1,4)))
 							);
 
-					LootPool.Builder diagramsPool = LootPool.lootPool().setRolls(UniformGenerator.between(1,1))
+					final LootPool.Builder diagramsPool = LootPool.lootPool().setRolls(UniformGenerator.between(1,1))
 							.setBonusRolls(ConstantValue.exactly(1))
 							.add(EmptyLootItem.emptyItem()
 									.setWeight(5)
@@ -784,7 +789,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 									.setWeight(1)
 							);
 
-					LootPool.Builder weaponsPool = LootPool.lootPool().setRolls(UniformGenerator.between(1,1))
+					final LootPool.Builder weaponsPool = LootPool.lootPool().setRolls(UniformGenerator.between(1,1))
 							.setBonusRolls(ConstantValue.exactly(1))
 							.add(EmptyLootItem.emptyItem()
 									.setWeight(10)
@@ -821,7 +826,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 							);
 
 
-					LootPool.Builder alchemy_formulae = LootPool.lootPool()
+					final LootPool.Builder alchemy_formulae = LootPool.lootPool()
 							.setRolls(UniformGenerator.between(0, 2))
 							.add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get()))
 							.apply(AlchemyRecipeRandomlyLootFunction.builder())
@@ -834,7 +839,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 					newLootTable.withPool(alchemy_formulae);
 
 					if(FabricLoader.getInstance().isModLoaded("witcher_medallions")){
-						LootPool.Builder medallionsPool = LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
+						final LootPool.Builder medallionsPool = LootPool.lootPool().setRolls(UniformGenerator.between(0, 1))
 								.add(EmptyLootItem.emptyItem()
 										.setWeight(8)
 								)
@@ -1090,6 +1095,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.BLACK_BLOOD_POTION, 32, TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED));
 										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.MARIBOR_FOREST_POTION, 32, TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED));
 										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.WOLF_POTION, 32, TCOTS_Items.WOLF_POTION_ENHANCED));
+										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.BINDWEED_POTION, 32, TCOTS_Items.BINDWEED_POTION_ENHANCED));
 										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.ROOK_POTION, 32, TCOTS_Items.ROOK_POTION_ENHANCED));
 
 										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.WHITE_HONEY_POTION, 16, TCOTS_Items.WHITE_HONEY_POTION_ENHANCED));
@@ -1102,6 +1108,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED, 48, TCOTS_Items.BLACK_BLOOD_POTION_SUPERIOR));
 										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED, 48, TCOTS_Items.MARIBOR_FOREST_POTION_SUPERIOR));
 										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.WOLF_POTION_ENHANCED, 48, TCOTS_Items.WOLF_POTION_SUPERIOR));
+										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.BINDWEED_POTION_ENHANCED, 48, TCOTS_Items.BINDWEED_POTION_SUPERIOR));
 										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.ROOK_POTION_ENHANCED, 48, TCOTS_Items.ROOK_POTION_SUPERIOR));
 
 										factories.add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.WHITE_HONEY_POTION_ENHANCED, 32, TCOTS_Items.WHITE_HONEY_POTION_SUPERIOR));
@@ -1299,7 +1306,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 			}
 		}
 
-		private static MerchantOffer upgradeRecipeTrade(Supplier<Item> recipeToUpgrade, int Cost, Supplier<Item> upgradedRecipe){
+		private static MerchantOffer upgradeRecipeTrade(final Supplier<Item> recipeToUpgrade, final int Cost, final Supplier<Item> upgradedRecipe){
 			return new MerchantOffer(
 					//Wants
 					new ItemCost(TCOTS_Items.ALCHEMY_FORMULA.get())
@@ -1313,7 +1320,7 @@ public class TCOTS_MainFabric implements ModInitializer {
 					0.2f);
 		}
 
-		private static MerchantOffer miscRecipeTrade(Supplier<? extends Item> item){
+		private static MerchantOffer miscRecipeTrade(final Supplier<? extends Item> item){
 			return new MerchantOffer(
 					//Wants
 					new ItemCost(Items.EMERALD, 16),
@@ -1337,11 +1344,11 @@ public class TCOTS_MainFabric implements ModInitializer {
 
 	@SuppressWarnings("unused")
 	public static void registerCompostableItems(){
-		float f = 0.3f;
-		float g = 0.5f;
-		float h = 0.65f;
-		float i = 0.85f;
-		float j = 1.0f;
+		final float f = 0.3f;
+		final float g = 0.5f;
+		final float h = 0.65f;
+		final float i = 0.85f;
+		final float j = 1.0f;
 		ComposterBlock.add(0.65f, TCOTS_Items.ARENARIA.get());
 		ComposterBlock.add(0.3f, TCOTS_Items.ALLSPICE.get());
 
@@ -1442,6 +1449,13 @@ public class TCOTS_MainFabric implements ModInitializer {
 				//In night
 				BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Tags.DEVOURER), MobCategory.MONSTER,
 						TCOTS_Entities.DEVOURER.get(), 60, 3, 4);
+			}
+
+			//Bloedzuiger
+			{
+				//In night
+				BiomeModifications.addSpawn(BiomeSelectors.tag(TCOTS_Tags.BLOEDZUIGER), MobCategory.MONSTER,
+						TCOTS_Entities.BLOEDZUIGER.get(), 100, 3, 6);
 			}
 
 			//Graveir

@@ -11,11 +11,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class BluntBoltProjectile extends WitcherBolt {
     private static final ItemStack DEFAULT_STACK = new ItemStack(TCOTS_Items.BLUNT_BOLT.get());
-    public BluntBoltProjectile(EntityType<? extends BluntBoltProjectile> type, Level world) {
+    public BluntBoltProjectile(final EntityType<? extends BluntBoltProjectile> type, final Level world) {
         super(type, world);
     }
 
-    public BluntBoltProjectile(Level world, LivingEntity owner, ItemStack stack, @Nullable ItemStack weapon) {
+    public BluntBoltProjectile(final Level world, final LivingEntity owner, final ItemStack stack, @Nullable final ItemStack weapon) {
         super(TCOTS_Entities.BluntBolt(), owner, world, stack, weapon);
         setBaseDamage(3.8);
     }

@@ -15,7 +15,7 @@ public enum AlchemyTableRecipeCategory implements StringRepresentable
 
     private final String id;
 
-    AlchemyTableRecipeCategory(String id) {
+    AlchemyTableRecipeCategory(final String id) {
         this.id = id;
     }
 

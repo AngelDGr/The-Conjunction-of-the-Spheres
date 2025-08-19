@@ -15,7 +15,7 @@ public interface GuardNestMob {
     boolean canHaveNest();
     void setCanHaveNest(boolean canHaveNest);
 
-    default void writeNbtGuardNest(CompoundTag nbt){
+    default void writeNbtGuardNest(final CompoundTag nbt){
         nbt.putInt("NestPosX", this.getNestPos().getX());
         nbt.putInt("NestPosY", this.getNestPos().getY());
         nbt.putInt("NestPosZ", this.getNestPos().getZ());
@@ -23,16 +23,16 @@ public interface GuardNestMob {
         nbt.putBoolean("CanHaveNest", this.canHaveNest());
     }
 
-    default void readNbtGuardNest(CompoundTag nbt){
-        int x = nbt.getInt("NestPosX");
-        int y = nbt.getInt("NestPosY");
-        int z = nbt.getInt("NestPosZ");
+    default void readNbtGuardNest(final CompoundTag nbt){
+        final int x = nbt.getInt("NestPosX");
+        final int y = nbt.getInt("NestPosY");
+        final int z = nbt.getInt("NestPosZ");
         this.setNestPos(new BlockPos(x, y, z));
 
         this.setCanHaveNest(nbt.getBoolean("CanHaveNest"));
     }
 
-    default Predicate<BlockPos> getPredicateForNest(PathfinderMob entity){
+    default Predicate<BlockPos> getPredicateForNest(final PathfinderMob entity){
        return pos -> entity.level().getBlockState(pos).is(TCOTS_Blocks.MonsterNest());
     }
 
@@ -40,13 +40,13 @@ public interface GuardNestMob {
         return true;
     }
 
-    private Optional<BlockPos> findNest(PathfinderMob entity) {
-        double searchDistance = 15;
+    private Optional<BlockPos> findNest(final PathfinderMob entity) {
+        final double searchDistance = 15;
 
-        Predicate<BlockPos> predicate = this.getPredicateForNest(entity);
+        final Predicate<BlockPos> predicate = this.getPredicateForNest(entity);
 
-        BlockPos blockPos = entity.blockPosition();
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        final BlockPos blockPos = entity.blockPosition();
+        final BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         int i = 0;
         while ((double)i <= searchDistance) {
             int j = 0;
@@ -71,9 +71,9 @@ public interface GuardNestMob {
         return Optional.empty();
     }
 
-    default void tickGuardNest(PathfinderMob entity){
+    default void tickGuardNest(final PathfinderMob entity){
         if(this.getNestPos()==BlockPos.ZERO && this.canHaveNest()) {
-            Optional<BlockPos> optional = this.findNest(entity);
+            final Optional<BlockPos> optional = this.findNest(entity);
             optional.ifPresent(this::setNestPos);
             this.setCanHaveNest(false);
         }

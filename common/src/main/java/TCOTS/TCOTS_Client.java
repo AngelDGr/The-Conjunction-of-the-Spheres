@@ -37,7 +37,7 @@ public class TCOTS_Client {
         ItemPropertiesRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW.get(), ResourceLocation.parse("pulling"), (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack && !CrossbowItem.isCharged(stack) ? 1.0f : 0.0f);
         ItemPropertiesRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW.get(), ResourceLocation.parse("charged"), (stack, world, entity, seed) -> CrossbowItem.isCharged(stack) ? 1.0f : 0.0f);
         ItemPropertiesRegistry.register(TCOTS_Items.KNIGHT_CROSSBOW.get(), ResourceLocation.parse("firework"), (stack, world, entity, seed) -> {
-            ChargedProjectiles chargedProjectilesComponent = stack.get(DataComponents.CHARGED_PROJECTILES);
+            final ChargedProjectiles chargedProjectilesComponent = stack.get(DataComponents.CHARGED_PROJECTILES);
             return chargedProjectilesComponent != null && chargedProjectilesComponent.contains(Items.FIREWORK_ROCKET) ? 1.0F : 0.0F;
         });
 
@@ -47,12 +47,12 @@ public class TCOTS_Client {
                 CrossbowItem.isCharged(stack) && hasBoltProjectile(stack) ? 1.0f : 0.0f);
     }
 
-    public static void renderNorthernWindIce(LivingEntity livingEntity, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, BlockRenderDispatcher blockRenderManager){
+    public static void renderNorthernWindIce(final LivingEntity livingEntity, final PoseStack matrixStack, final MultiBufferSource vertexConsumerProvider, final BlockRenderDispatcher blockRenderManager){
 
         matrixStack.pushPose();
-        float blockSize = 1.75f;
-        AABB boundingBox = livingEntity.getBoundingBox();
-        BlockPos blockPos = BlockPos.containing(livingEntity.getX(), boundingBox.minY, livingEntity.getZ());
+        final float blockSize = 1.75f;
+        final AABB boundingBox = livingEntity.getBoundingBox();
+        final BlockPos blockPos = BlockPos.containing(livingEntity.getX(), boundingBox.minY, livingEntity.getZ());
         matrixStack.scale(
                 blockSize * (float)boundingBox.getXsize(),
                 blockSize * (float)boundingBox.getYsize(),

@@ -1,12 +1,12 @@
 package TCOTS.entity.geo.renderer.necrophages;
 
 import TCOTS.entity.geo.model.necrophages.ScurverModel;
-import TCOTS.entity.necrophages.ScurverEntity;
+import TCOTS.entity.monsters.necrophages.ScurverEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class ScurverRenderer extends GeoEntityRenderer<ScurverEntity> {
-    public ScurverRenderer(EntityRendererProvider.Context renderManager) {
+    public ScurverRenderer(final EntityRendererProvider.Context renderManager) {
         super(renderManager, new ScurverModel());
 
         this.shadowRadius = 0.5f;

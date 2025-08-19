@@ -32,7 +32,7 @@ public class HerbalTableRecipe implements Recipe<HerbalTableRecipe.HerbalTableIn
         public record HerbalTableInventory(ItemStack herb, ItemStack potion)  implements RecipeInput {
 
             @Override
-            public @NotNull ItemStack getItem(int slot) {
+            public @NotNull ItemStack getItem(final int slot) {
                 return switch (slot){
                     case 0 -> herb;
                     case 1 -> potion;
@@ -55,7 +55,7 @@ public class HerbalTableRecipe implements Recipe<HerbalTableRecipe.HerbalTableIn
 
     private final int badAmplifier;
 
-    public HerbalTableRecipe(ItemStack herb, List<String> EffectID, int basePotion, int tickEffectTime, int badAmplifier){
+    public HerbalTableRecipe(final ItemStack herb, final List<String> EffectID, final int basePotion, final int tickEffectTime, final int badAmplifier){
         this.herb=herb;
         EffectID.forEach(s -> this.EffectID.add(ResourceLocation.parse(s)));
         this.basePotion=basePotion;
@@ -63,14 +63,14 @@ public class HerbalTableRecipe implements Recipe<HerbalTableRecipe.HerbalTableIn
         this.badAmplifier=badAmplifier;
     }
     @Override
-    public boolean matches(@NotNull HerbalTableInventory inventory, Level world) {
+    public boolean matches(@NotNull final HerbalTableInventory inventory, final Level world) {
         if(world.isClientSide()) {
             return false;
         }
 
-        ItemStack herb = this.getHerb();
+        final ItemStack herb = this.getHerb();
 
-        int basePotionId = this.getBasePotion();
+        final int basePotionId = this.getBasePotion();
 
         if(inventory.getItem(0).getItem() == herb.getItem()){
             if(!inventory.getItem(1).has(DataComponents.POTION_CONTENTS)){
@@ -88,7 +88,7 @@ public class HerbalTableRecipe implements Recipe<HerbalTableRecipe.HerbalTableIn
     }
 
     public List<Holder<MobEffect>> getEffects(){
-        List<Holder<MobEffect>> effectList = new ArrayList<>();
+        final List<Holder<MobEffect>> effectList = new ArrayList<>();
 
         this.EffectID.forEach(id ->
                 effectList.add(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(BuiltInRegistries.MOB_EFFECT.get(id))));
@@ -117,10 +117,10 @@ public class HerbalTableRecipe implements Recipe<HerbalTableRecipe.HerbalTableIn
     }
 
     @Override
-    public @NotNull ItemStack assemble(HerbalTableInventory inventory, HolderLookup.@NotNull Provider lookup) {
-        int herbCount = inventory.getItem(0).getCount();
+    public @NotNull ItemStack assemble(final HerbalTableInventory inventory, final HolderLookup.@NotNull Provider lookup) {
+        final int herbCount = inventory.getItem(0).getCount();
 
-        List<MobEffectInstance> totalEffects = new ArrayList<>();
+        final List<MobEffectInstance> totalEffects = new ArrayList<>();
 
         this.getEffects().forEach(effect -> {
             if(!effect.value().isBeneficial())
@@ -136,12 +136,12 @@ public class HerbalTableRecipe implements Recipe<HerbalTableRecipe.HerbalTableIn
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registriesLookup) {
+    public @NotNull ItemStack getResultItem(final HolderLookup.@NotNull Provider registriesLookup) {
         return new ItemStack(TCOTS_Items.HERBAL_MIXTURE.get());
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
+    public boolean canCraftInDimensions(final int width, final int height) {
         return true;
     }
 
@@ -219,7 +219,7 @@ public class HerbalTableRecipe implements Recipe<HerbalTableRecipe.HerbalTableIn
         );
 
         // Turns Recipe into PacketByteBuf
-        public static void write(RegistryFriendlyByteBuf buf, HerbalTableRecipe recipe) {
+        public static void write(final RegistryFriendlyByteBuf buf, final HerbalTableRecipe recipe) {
 
             buf.writeCollection(recipe.getEffectID(), (buff, id) -> buf.writeUtf(id.toString()));
 
@@ -233,17 +233,17 @@ public class HerbalTableRecipe implements Recipe<HerbalTableRecipe.HerbalTableIn
         }
 
         // Turns PacketByteBuf into Recipe(InGame)
-        public static HerbalTableRecipe read(RegistryFriendlyByteBuf buf) {
+        public static HerbalTableRecipe read(final RegistryFriendlyByteBuf buf) {
             // Make sure the read in the same order you have written!
-            List<String> effects = buf.readList(FriendlyByteBuf::readUtf);
+            final List<String> effects = buf.readList(FriendlyByteBuf::readUtf);
 
-            ItemStack herb = ItemStack.STREAM_CODEC.decode(buf);
+            final ItemStack herb = ItemStack.STREAM_CODEC.decode(buf);
 
-            int basePotion = buf.readInt();
+            final int basePotion = buf.readInt();
 
-            int tickEffectTime = buf.readInt();
+            final int tickEffectTime = buf.readInt();
 
-            int badAmplifier = buf.readInt();
+            final int badAmplifier = buf.readInt();
 
             return new HerbalTableRecipe(herb, effects, basePotion, tickEffectTime, badAmplifier);
         }

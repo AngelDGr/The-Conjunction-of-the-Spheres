@@ -34,25 +34,25 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class HerbalMixture extends PotionItem {
-    public HerbalMixture(Properties settings) {
+    public HerbalMixture(final Properties settings) {
         super(settings);
     }
 
-    public static ItemStack writeEffects(ItemStack mixture, List<MobEffectInstance> effects) {
+    public static ItemStack writeEffects(final ItemStack mixture, final List<MobEffectInstance> effects) {
         CustomEffectsComponent.of(mixture, effects);
         return mixture;
     }
 
     private static final Component NONE_TEXT = Component.translatable("effect.none").withStyle(ChatFormatting.GRAY);
 
-    public static void buildTooltip(Iterable<MobEffectInstance> effects, Consumer<Component> textConsumer, float durationMultiplier, float tickRate) {
-        List<Pair<Holder<Attribute>, AttributeModifier>> list = Lists.newArrayList();
+    public static void buildTooltip(final Iterable<MobEffectInstance> effects, final Consumer<Component> textConsumer, final float durationMultiplier, final float tickRate) {
+        final List<Pair<Holder<Attribute>, AttributeModifier>> list = Lists.newArrayList();
         boolean bl = true;
 
-        for (MobEffectInstance statusEffectInstance : effects) {
+        for (final MobEffectInstance statusEffectInstance : effects) {
             bl = false;
             MutableComponent mutableText = Component.translatable(statusEffectInstance.getDescriptionId());
-            Holder<MobEffect> registryEntry = statusEffectInstance.getEffect();
+            final Holder<MobEffect> registryEntry = statusEffectInstance.getEffect();
             registryEntry.value().createModifiers(statusEffectInstance.getAmplifier(), (attribute, modifier) -> list.add(new Pair<>(attribute, modifier)));
             if (statusEffectInstance.getAmplifier() > 0) {
                 mutableText = Component.translatable("potion.withAmplifier", mutableText, Component.translatable("potion.potency." + statusEffectInstance.getAmplifier()));
@@ -73,9 +73,9 @@ public class HerbalMixture extends PotionItem {
             textConsumer.accept(CommonComponents.EMPTY);
             textConsumer.accept(Component.translatable("potion.whenDrank").withStyle(ChatFormatting.DARK_PURPLE));
 
-            for (Pair<Holder<Attribute>, AttributeModifier> pair : list) {
-                AttributeModifier entityAttributeModifier = pair.getSecond();
-                double d = entityAttributeModifier.amount();
+            for (final Pair<Holder<Attribute>, AttributeModifier> pair : list) {
+                final AttributeModifier entityAttributeModifier = pair.getSecond();
+                final double d = entityAttributeModifier.amount();
                 double e;
                 if (entityAttributeModifier.operation() != AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                         && entityAttributeModifier.operation() != AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
@@ -109,12 +109,12 @@ public class HerbalMixture extends PotionItem {
     }
 
     @Override
-    public @NotNull InteractionResult useOn(@NotNull UseOnContext context) {
+    public @NotNull InteractionResult useOn(@NotNull final UseOnContext context) {
         return InteractionResult.PASS;
     }
 
     @Override
-    public @NotNull String getDescriptionId(@NotNull ItemStack stack) {
+    public @NotNull String getDescriptionId(@NotNull final ItemStack stack) {
         return this.getDescriptionId();
     }
 
@@ -160,8 +160,8 @@ public class HerbalMixture extends PotionItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag type) {
-        CustomEffectsComponent customEffectsComponent = stack.get(TCOTS_Items.CustomEffects());
+    public void appendHoverText(final ItemStack stack, @NotNull final TooltipContext context, @NotNull final List<Component> tooltip, @NotNull final TooltipFlag type) {
+        final CustomEffectsComponent customEffectsComponent = stack.get(TCOTS_Items.CustomEffects());
         if (customEffectsComponent != null) {
             buildTooltip(customEffectsComponent.customEffects(),tooltip::add, 1.0F, context.tickRate());
         } else {
@@ -180,7 +180,7 @@ public class HerbalMixture extends PotionItem {
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity user) {
+    public int getUseDuration(@NotNull final ItemStack stack, @NotNull final LivingEntity user) {
         return 42;
     }
 }

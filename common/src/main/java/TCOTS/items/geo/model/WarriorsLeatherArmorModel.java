@@ -7,17 +7,17 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class WarriorsLeatherArmorModel extends GeoModel<WarriorsLeatherArmorItem> {
     @Override
-    public ResourceLocation getModelResource(WarriorsLeatherArmorItem animatable) {
+    public ResourceLocation getModelResource(final WarriorsLeatherArmorItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/armor/warriors_leather_armor.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(WarriorsLeatherArmorItem animatable) {
+    public ResourceLocation getTextureResource(final WarriorsLeatherArmorItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/models/armor/warriors_leather_armor.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(WarriorsLeatherArmorItem animatable) {
+    public ResourceLocation getAnimationResource(final WarriorsLeatherArmorItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 }

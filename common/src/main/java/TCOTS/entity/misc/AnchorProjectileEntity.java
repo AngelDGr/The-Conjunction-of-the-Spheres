@@ -2,7 +2,7 @@ package TCOTS.entity.misc;
 
 import TCOTS.registry.TCOTS_Sounds;
 import TCOTS.registry.TCOTS_Entities;
-import TCOTS.entity.ogroids.IceGiantEntity;
+import TCOTS.entity.monsters.ogroids.IceGiantEntity;
 import TCOTS.items.weapons.GiantAnchorItem;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.utils.GeoControllersUtil;
@@ -68,28 +68,28 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     public boolean dealtDamage;
     public float bodyYaw;
     public float prevBodyYaw;
-    public AnchorProjectileEntity(EntityType<? extends Projectile> entityType, Level world) {
+    public AnchorProjectileEntity(final EntityType<? extends Projectile> entityType, final Level world) {
         super(entityType, world);
     }
 
-    public AnchorProjectileEntity(LivingEntity thrower, Level world) {
+    public AnchorProjectileEntity(final LivingEntity thrower, final Level world) {
         this(TCOTS_Entities.AnchorProjectile(), world);
         this.setOwner(thrower);
         this.setPos(thrower.getX(), thrower.getEyeY(), thrower.getZ());
         this.pickupType= AbstractArrow.Pickup.DISALLOWED;
     }
 
-    public void setSound(SoundEvent sound) {
+    public void setSound(final SoundEvent sound) {
         this.sound = sound;
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(final SynchedEntityData.Builder builder) {
         builder.define(FALLING_DISTANCE, fallDistance);
         builder.define(ENCHANTED, false);
     }
 
-    public void setFallingDistance(float fallingDistance) {
+    public void setFallingDistance(final float fallingDistance) {
         this.entityData.set(FALLING_DISTANCE, fallingDistance);
     }
 
@@ -97,7 +97,7 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
         return this.entityData.get(FALLING_DISTANCE);
     }
 
-    public void setEnchanted(boolean enchanted) {
+    public void setEnchanted(final boolean enchanted) {
         this.entityData.set(ENCHANTED, enchanted);
     }
 
@@ -106,19 +106,19 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    public void shoot(double x, double y, double z, float speed, float divergence) {
+    public void shoot(final double x, final double y, final double z, final float speed, final float divergence) {
         super.shoot(x, y, z, speed, divergence);
     }
 
     @Override
-    public void lerpMotion(double x, double y, double z) {
+    public void lerpMotion(final double x, final double y, final double z) {
         super.lerpMotion(x, y, z);
     }
     //xTODO: Fix the falling distance
 
 
     private void returnToOwnerLogic(){
-        if(this.getOwner()==null || !(this.getOwner() instanceof LivingEntity owner)) return;
+        if(this.getOwner()==null || !(this.getOwner() instanceof final LivingEntity owner)) return;
 
         //If the owner reach the distance limit
         if(this.distanceTo(owner)>20){
@@ -283,13 +283,13 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
 
     private void fall() {
         this.inGround = false;
-        Vec3 vec3d = this.getDeltaMovement();
+        final Vec3 vec3d = this.getDeltaMovement();
         this.setDeltaMovement(vec3d.multiply(this.random.nextFloat() * 0.2f, this.random.nextFloat() * 0.2f, this.random.nextFloat() * 0.2f));
     }
 
 
     @Override
-    public void move(@NotNull MoverType movementType, @NotNull Vec3 movement) {
+    public void move(@NotNull final MoverType movementType, @NotNull final Vec3 movement) {
         super.move(movementType, movement);
 
         if (movementType != MoverType.SELF && this.shouldContinueFall()) {
@@ -298,21 +298,21 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
-        Entity entity = entityHitResult.getEntity();
-        Entity entity2 = this.getOwner();
-        DamageSource damageSource = TCOTS_DamageTypes.anchorDamage(this.level(), this, entity2 == null ? this : entity2);
+    protected void onHitEntity(final EntityHitResult entityHitResult) {
+        final Entity entity = entityHitResult.getEntity();
+        final Entity entity2 = this.getOwner();
+        final DamageSource damageSource = TCOTS_DamageTypes.anchorDamage(this.level(), this, entity2 == null ? this : entity2);
         this.dealtDamage = true;
         if (entity.hurt(damageSource, this.getDamage())) {
             if (entity.getType() == EntityType.ENDERMAN) {
                 return;
             }
 
-            if (this.level() instanceof ServerLevel serverWorld) {
+            if (this.level() instanceof final ServerLevel serverWorld) {
                 EnchantmentHelper.doPostAttackEffectsWithItemSource(serverWorld, entity, damageSource, this.getWeaponItem());
             }
 
-            if (entity instanceof LivingEntity livingEntity) {
+            if (entity instanceof final LivingEntity livingEntity) {
                 this.knockback(livingEntity, damageSource);
                 this.onHit(livingEntity);
             }
@@ -324,7 +324,7 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     public void deflect() {
-        float f = this.random.nextFloat() * 360.0f;
+        final float f = this.random.nextFloat() * 360.0f;
         this.setDeltaMovement(this.getDeltaMovement().yRot(f * ((float)Math.PI / 180)).scale(0.5));
         this.setYRot(this.getYRot() + f);
         this.yRotO += f;
@@ -332,12 +332,12 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
 
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult) {
+    protected void onHitBlock(final BlockHitResult blockHitResult) {
         this.inBlockState = this.level().getBlockState(blockHitResult.getBlockPos());
         super.onHitBlock(blockHitResult);
-        Vec3 vec3d = blockHitResult.getLocation().subtract(this.getX(), this.getY(), this.getZ());
+        final Vec3 vec3d = blockHitResult.getLocation().subtract(this.getX(), this.getY(), this.getZ());
         this.setDeltaMovement(vec3d);
-        Vec3 vec3d2 = vec3d.normalize().scale(0.05f);
+        final Vec3 vec3d2 = vec3d.normalize().scale(0.05f);
         this.setPosRaw(this.getX() - vec3d2.x, this.getY() - vec3d2.y, this.getZ() - vec3d2.z);
 
         this.playSound(this.getSound(), 1.0f, 1.2f / (this.random.nextFloat() * 0.2f + 0.9f));
@@ -380,9 +380,9 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    public void handleEntityEvent(byte status) {
+    public void handleEntityEvent(final byte status) {
         if(status==FALLING_PARTICLES){
-            double radius=0.8f + (this.getFallingDistance() * 0.5f);
+            final double radius=0.8f + (this.getFallingDistance() * 0.5f);
             EntitiesUtil.spawnImpactParticles(this,
                     radius,
                     this.getFallingDistance(),
@@ -400,7 +400,7 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
         return this.sound;
     }
 
-    protected void knockback(LivingEntity target, DamageSource source) {
+    protected void knockback(final LivingEntity target, final DamageSource source) {
 //        double d = (double)(
 //                this.weapon != null && this.getWorld() instanceof ServerWorld serverWorld
 //                        ? EnchantmentHelper.modifyKnockback(serverWorld, this.weapon, target, source, 0.0F)
@@ -415,11 +415,11 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
 //        }
     }
 
-    protected void onHit(LivingEntity target) {
+    protected void onHit(final LivingEntity target) {
     }
 
     @Nullable
-    protected EntityHitResult getEntityCollision(Vec3 currentPosition, Vec3 nextPosition) {
+    protected EntityHitResult getEntityCollision(final Vec3 currentPosition, final Vec3 nextPosition) {
         if (this.dealtDamage) {
             return null;
         }
@@ -427,12 +427,12 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    protected boolean canHitEntity(@NotNull Entity entity) {
+    protected boolean canHitEntity(@NotNull final Entity entity) {
         return super.canHitEntity(entity);
     }
 
     @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull final CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         if (this.inBlockState != null) {
             nbt.put("inBlockState", NbtUtils.writeBlockState(this.inBlockState));
@@ -449,7 +449,7 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag nbt) {
+    public void readAdditionalSaveData(@NotNull final CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
         if (nbt.contains("inBlockState", Tag.TAG_COMPOUND)) {
             this.inBlockState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), nbt.getCompound("inBlockState"));
@@ -470,13 +470,13 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    public void setOwner(@Nullable Entity entity) {
+    public void setOwner(@Nullable final Entity entity) {
         super.setOwner(entity);
         setPlayerAnchor(this);
     }
 
-    private void setPlayerAnchor(@Nullable AnchorProjectileEntity anchor) {
-        if(this.getOwner()==null || !(this.getOwner() instanceof LivingEntity livingEntity)){
+    private void setPlayerAnchor(@Nullable final AnchorProjectileEntity anchor) {
+        if(this.getOwner()==null || !(this.getOwner() instanceof final LivingEntity livingEntity)){
             return;
         }
 
@@ -489,13 +489,13 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    public void remove(@NotNull RemovalReason reason) {
+    public void remove(@NotNull final RemovalReason reason) {
         this.setPlayerAnchor(null);
         super.remove(reason);
     }
 
     @Override
-    public void playerTouch(@NotNull Player player) {
+    public void playerTouch(@NotNull final Player player) {
         if (this.level().isClientSide || !this.inGround || this.shake > 0) {
             return;
         }
@@ -511,7 +511,7 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
         return Entity.MovementEmission.NONE;
     }
 
-    public void setDamage(double damage) {
+    public void setDamage(final double damage) {
         this.damage = damage;
     }
 
@@ -529,13 +529,13 @@ public class AnchorProjectileEntity extends Projectile implements GeoEntity {
     }
 
     @Override
-    public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
+    public boolean shouldRender(final double cameraX, final double cameraY, final double cameraZ) {
         return true;
     }
 
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(GeoControllersUtil.genericIdleController(this));
     }
 

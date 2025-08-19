@@ -33,14 +33,14 @@ public class AlchemyRecipeRandomlyLootFunction extends LootItemConditionalFuncti
                             .apply(instance, AlchemyRecipeRandomlyLootFunction::new));
 
 
-    protected AlchemyRecipeRandomlyLootFunction(List<LootItemCondition> conditions, int decoctions) {
+    protected AlchemyRecipeRandomlyLootFunction(final List<LootItemCondition> conditions, final int decoctions) {
         super(conditions);
         this.decoctions=decoctions;
     }
 
     @Override
-    protected @NotNull ItemStack run(@NotNull ItemStack stack, LootContext context) {
-        RandomSource random = context.getRandom();
+    protected @NotNull ItemStack run(@NotNull final ItemStack stack, final LootContext context) {
+        final RandomSource random = context.getRandom();
 
         return getRandomFormula(stack, random, getConcoctionsID(this.decoctions));
     }
@@ -50,15 +50,15 @@ public class AlchemyRecipeRandomlyLootFunction extends LootItemConditionalFuncti
     }
 
 
-    public static List<ResourceLocation> getConcoctionsID(int decoction){
-        List<ResourceLocation> listConcoctions = new ArrayList<>();
+    public static List<ResourceLocation> getConcoctionsID(final int decoction){
+        final List<ResourceLocation> listConcoctions = new ArrayList<>();
 
         BuiltInRegistries.ITEM.forEach(item ->
                 {
                     if(decoction == 0) {
                         if (
                             //If it's potion (No decoction)
-                                (item instanceof WitcherPotions_Base potion && !(item instanceof WitcherAlcohol_Base) && !potion.isDecoction())
+                                (item instanceof final WitcherPotions_Base potion && !(item instanceof WitcherAlcohol_Base) && !potion.isDecoction())
                                         //If it's bomb
                                         || item instanceof WitcherBombs_Base
                                         //If it's oil
@@ -68,7 +68,7 @@ public class AlchemyRecipeRandomlyLootFunction extends LootItemConditionalFuncti
 
                             listConcoctions.add(BuiltInRegistries.ITEM.getKey(item));
                     } else {
-                        if(item instanceof WitcherPotions_Base potion && potion.isDecoction())
+                        if(item instanceof final WitcherPotions_Base potion && potion.isDecoction())
                             listConcoctions.add(BuiltInRegistries.ITEM.getKey(item));
                     }
                 }
@@ -77,8 +77,8 @@ public class AlchemyRecipeRandomlyLootFunction extends LootItemConditionalFuncti
         return listConcoctions;
     }
 
-    public static ItemStack getRandomFormula(ItemStack stack, RandomSource random, List<ResourceLocation> idList){
-        int index = random.nextIntBetweenInclusive(0, idList.size()-1);
+    public static ItemStack getRandomFormula(ItemStack stack, final RandomSource random, final List<ResourceLocation> idList){
+        final int index = random.nextIntBetweenInclusive(0, idList.size()-1);
         if(stack.is(TCOTS_Items.ALCHEMY_FORMULA.get())){
             stack = AlchemyFormulaUtil.setFormula(idList.get(index));
         }
@@ -108,7 +108,7 @@ public class AlchemyRecipeRandomlyLootFunction extends LootItemConditionalFuncti
             return this;
         }
 
-        public AlchemyRecipeRandomlyLootFunction.Builder add(int decoction) {
+        public AlchemyRecipeRandomlyLootFunction.Builder add(final int decoction) {
             this.decoction = decoction;
             return this;
         }

@@ -2,7 +2,7 @@ package TCOTS.entity.geo.model.necrophages;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.geo.model.BipedGeoModelBase;
-import TCOTS.entity.necrophages.DrownerEntity;
+import TCOTS.entity.monsters.necrophages.DrownerEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib.constant.DataTickets;
@@ -10,36 +10,34 @@ import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.model.data.EntityModelData;
 
-
-
 public class DrownerModel extends BipedGeoModelBase<DrownerEntity> {
 
     @Override
-    public ResourceLocation getModelResource(DrownerEntity animatable) {
+    public ResourceLocation getModelResource(final DrownerEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/necrophages/drowner.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(DrownerEntity animatable) {
+    public ResourceLocation getTextureResource(final DrownerEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(DrownerEntity animatable) {
+    public ResourceLocation getAnimationResource(final DrownerEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/necrophages/drowner.animation.json");
     }
 
     @Override
-    protected boolean hasNormalHead(DrownerEntity drowner) {
+    protected boolean hasNormalHead(final DrownerEntity drowner) {
         return false;
     }
 
     @Override
-    public void setCustomAnimations(DrownerEntity entity, long instanceId, AnimationState<DrownerEntity> animationState) {
+    public void setCustomAnimations(final DrownerEntity entity, final long instanceId, final AnimationState<DrownerEntity> animationState) {
 
-        GeoBone head = getAnimationProcessor().getBone("head");
-        GeoBone wholeBody = getAnimationProcessor().getBone("wholeBody");
-        EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+        final GeoBone head = getAnimationProcessor().getBone("head");
+        final GeoBone wholeBody = getAnimationProcessor().getBone("wholeBody");
+        final EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         if(head!=null) {
             //Swimming
             if (entity.getSwimmingDataTracker()) {
@@ -53,7 +51,7 @@ public class DrownerModel extends BipedGeoModelBase<DrownerEntity> {
 
                 if(wholeBody.getRotY()!=0){wholeBody.setRotY(0);}
 
-                GeoBone Thingy =  getAnimationProcessor().getBone("Thingy");
+                final GeoBone Thingy =  getAnimationProcessor().getBone("Thingy");
 
                 if(Thingy!=null){
                     Thingy.setRotX((float)-(Math.sin(animationState.getLimbSwing()*getLegsSpeed(entity))*(animationState.getLimbSwingAmount()*getLegsAmount(entity))));

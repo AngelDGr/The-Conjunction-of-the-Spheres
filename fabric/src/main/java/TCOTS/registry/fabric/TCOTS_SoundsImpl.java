@@ -19,7 +19,7 @@ public class TCOTS_SoundsImpl {
         return ROTFIEND_BLOOD_EXPLOSION;
     }
 
-    public static Holder.Reference<SoundEvent> registerReference(String id) {
+    public static Holder.Reference<SoundEvent> registerReference(final String id) {
         return Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, id), SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, id)));
     }
 }

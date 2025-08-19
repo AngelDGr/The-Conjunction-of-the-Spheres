@@ -16,10 +16,10 @@ public class AlchemyRecipeGroupButton extends StateSwitchingButton {
     private final AlchemyTableRecipeCategory category;
     ItemStack icon;
 
-    public AlchemyRecipeGroupButton(ItemStack icon, AlchemyTableRecipeCategory category) {
+    public AlchemyRecipeGroupButton(final ItemStack icon, final AlchemyTableRecipeCategory category) {
         super(0, 0, 39, 27, false);
 
-        WidgetSprites BUTTON_TEXTURES = new WidgetSprites(
+        final WidgetSprites BUTTON_TEXTURES = new WidgetSprites(
                 ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "buttons/button_group_highlighted"),
                 ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"buttons/button_group"),
                 ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "buttons/button_group_highlighted"));
@@ -30,7 +30,7 @@ public class AlchemyRecipeGroupButton extends StateSwitchingButton {
         this.initTextureValues(BUTTON_TEXTURES);
     }
 
-    public void checkForNewRecipes(Minecraft client) {
+    public void checkForNewRecipes(final Minecraft client) {
         assert client.player != null;
     }
 
@@ -39,7 +39,7 @@ public class AlchemyRecipeGroupButton extends StateSwitchingButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void renderWidget(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
 
         context.pose().pushPose();
         context.pose().translate(0,0,500);
@@ -53,13 +53,13 @@ public class AlchemyRecipeGroupButton extends StateSwitchingButton {
         context.blitSprite(this.sprites.get(this.isStateTriggered, this.isHoveredOrFocused()), this.getX(), this.getY(), this.width, this.height);
     }
 
-    private void renderIcons(GuiGraphics context) {
+    private void renderIcons(final GuiGraphics context) {
 
         context.renderFakeItem(this.icon, this.getX() + 18, this.getY() + 6);
     }
 
 
-    public void playDownSound(SoundManager soundManager) {
+    public void playDownSound(final SoundManager soundManager) {
         soundManager.play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 0.7f));
     }
 }

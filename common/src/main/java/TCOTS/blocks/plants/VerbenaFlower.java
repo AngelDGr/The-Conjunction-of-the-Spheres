@@ -35,12 +35,12 @@ public class VerbenaFlower extends BushBlock implements BonemealableBlock {
             Block.box(5.0, 0.0, 5.0, 12, 14.0, 12)};
 
     @Override
-    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-        Vec3 vec3d = state.getOffset(world, pos);
+    public @NotNull VoxelShape getShape(final BlockState state, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final CollisionContext context) {
+        final Vec3 vec3d = state.getOffset(world, pos);
         return AGE_TO_SHAPE[this.getAge(state)].move(vec3d.x, vec3d.y, vec3d.z);
     }
 
-    public int getAge(BlockState state) {
+    public int getAge(final BlockState state) {
         return state.getValue(this.getAgeProperty());
     }
 
@@ -53,50 +53,50 @@ public class VerbenaFlower extends BushBlock implements BonemealableBlock {
         return CODEC;
     }
 
-    public VerbenaFlower(Properties settings) {
+    public VerbenaFlower(final Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(final StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AGE);
     }
 
     @Override
-    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public @NotNull ItemStack getCloneItemStack(@NotNull final LevelReader world, @NotNull final BlockPos pos, @NotNull final BlockState state) {
         return new ItemStack(TCOTS_Items.VERBENA);
     }
 
     @Override
-    public boolean isRandomlyTicking(BlockState state) {
+    public boolean isRandomlyTicking(final BlockState state) {
         return state.getValue(AGE) < 3;
     }
 
     @Override
-    public void randomTick(BlockState state, @NotNull ServerLevel world, @NotNull BlockPos pos, @NotNull RandomSource random) {
-        int i = state.getValue(AGE);
+    public void randomTick(final BlockState state, @NotNull final ServerLevel world, @NotNull final BlockPos pos, @NotNull final RandomSource random) {
+        final int i = state.getValue(AGE);
         if (i < 3 && random.nextInt(5) == 0 && world.getRawBrightness(pos.above(), 0) >= 9) {
-            BlockState blockState = state.setValue(AGE, i + 1);
+            final BlockState blockState = state.setValue(AGE, i + 1);
             world.setBlock(pos, blockState, Block.UPDATE_CLIENTS);
             world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockState));
         }
     }
 
     @Override
-    public boolean isValidBonemealTarget(@NotNull LevelReader world, @NotNull BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(@NotNull final LevelReader world, @NotNull final BlockPos pos, final BlockState state) {
         return state.getValue(AGE) < 3;
     }
 
 
     @Override
-    public boolean isBonemealSuccess(@NotNull Level world, @NotNull RandomSource random, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public boolean isBonemealSuccess(@NotNull final Level world, @NotNull final RandomSource random, @NotNull final BlockPos pos, @NotNull final BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel world, @NotNull RandomSource random, @NotNull BlockPos pos, BlockState state) {
-        int i = Math.min(3, state.getValue(AGE) + 1);
+    public void performBonemeal(final ServerLevel world, @NotNull final RandomSource random, @NotNull final BlockPos pos, final BlockState state) {
+        final int i = Math.min(3, state.getValue(AGE) + 1);
         world.setBlock(pos, state.setValue(AGE, i), Block.UPDATE_CLIENTS);
     }
 }

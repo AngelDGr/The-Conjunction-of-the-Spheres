@@ -15,16 +15,16 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 public class BryoniaPatchFeature extends Feature<BryoniaPatchFeatureConfig> {
-    public BryoniaPatchFeature(Codec<BryoniaPatchFeatureConfig> configCodec) {
+    public BryoniaPatchFeature(final Codec<BryoniaPatchFeatureConfig> configCodec) {
         super(configCodec);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<BryoniaPatchFeatureConfig> context) {
-        WorldGenLevel structureWorldAccess = context.level();
-        BlockPos blockPos = context.origin();
-        RandomSource random = context.random();
-        BryoniaPatchFeatureConfig bryoniaGrowthFeatureConfig = context.config();
+    public boolean place(final FeaturePlaceContext<BryoniaPatchFeatureConfig> context) {
+        final WorldGenLevel structureWorldAccess = context.level();
+        final BlockPos blockPos = context.origin();
+        final RandomSource random = context.random();
+        final BryoniaPatchFeatureConfig bryoniaGrowthFeatureConfig = context.config();
 
         if(blockPos.getY() > bryoniaGrowthFeatureConfig.YMax || blockPos.getY() < bryoniaGrowthFeatureConfig.YMin){
            return false;
@@ -34,18 +34,18 @@ public class BryoniaPatchFeature extends Feature<BryoniaPatchFeatureConfig> {
             return false;
         }
 
-        List<Direction> list = bryoniaGrowthFeatureConfig.shuffleDirections(random);
+        final List<Direction> list = bryoniaGrowthFeatureConfig.shuffleDirections(random);
         return generate(structureWorldAccess, blockPos, structureWorldAccess.getBlockState(blockPos), bryoniaGrowthFeatureConfig, random, list);
     }
 
-    public static boolean generate(WorldGenLevel world, BlockPos pos, BlockState state, BryoniaPatchFeatureConfig config, RandomSource random, List<Direction> directions) {
-        BlockPos.MutableBlockPos mutable = pos.mutable();
-        for (Direction direction : directions) {
-            BlockState blockState = world.getBlockState(mutable.setWithOffset(pos, direction));
+    public static boolean generate(final WorldGenLevel world, final BlockPos pos, final BlockState state, final BryoniaPatchFeatureConfig config, final RandomSource random, final List<Direction> directions) {
+        final BlockPos.MutableBlockPos mutable = pos.mutable();
+        for (final Direction direction : directions) {
+            final BlockState blockState = world.getBlockState(mutable.setWithOffset(pos, direction));
 
             if(isNotInBlock(blockState)) continue;
 
-            BlockState blockState2 = config.lichen.getStateForPlacement(state, world, pos, direction);
+            final BlockState blockState2 = config.lichen.getStateForPlacement(state, world, pos, direction);
 
             if (blockState2 == null) {
                 return false;
@@ -59,11 +59,11 @@ public class BryoniaPatchFeature extends Feature<BryoniaPatchFeatureConfig> {
         return false;
     }
 
-    private static boolean isNotAir(BlockState state) {
+    private static boolean isNotAir(final BlockState state) {
         return !state.isAir();
     }
 
-    private static boolean isNotInBlock(BlockState state) {
+    private static boolean isNotInBlock(final BlockState state) {
         return !(state.is(BlockTags.LOGS_THAT_BURN) || state.is(BlockTags.STONE_BRICKS) || state.is(BlockTags.TERRACOTTA)
                 || state.is(BlockTags.PLANKS) || state.is(BlockTags.STONE_ORE_REPLACEABLES) || state.is(BlockTags.PLANKS)
                 || state.is(Blocks.MOSSY_COBBLESTONE)) || state.is(Blocks.MOSS_BLOCK);

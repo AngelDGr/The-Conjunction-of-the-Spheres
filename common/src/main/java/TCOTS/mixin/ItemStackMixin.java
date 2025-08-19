@@ -1,9 +1,11 @@
 package TCOTS.mixin;
 
 import TCOTS.entity.TCOTS_EntityAttributes;
+import TCOTS.items.weapons.SwordWithTooltip;
 import TCOTS.registry.TCOTS_Items;
 import TCOTS.utils.EntitiesUtil;
 import TCOTS.items.AlchemyFormulaItem;
+import TCOTS.utils.MiscUtil;
 import com.llamalad7.mixinextras.sugar.Local;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,7 +32,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
 
-@Mixin(ItemStack.class)
+@Mixin(value = ItemStack.class, priority = 20000)
 public abstract class ItemStackMixin {
     @Shadow public abstract Item getItem();
 
@@ -44,7 +46,7 @@ public abstract class ItemStackMixin {
             value = "INVOKE"
             ,target = "Lnet/minecraft/world/item/ItemStack;addToTooltip(Lnet/minecraft/core/component/DataComponentType;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/world/item/TooltipFlag;)V",
             ordinal = 4))
-    private void monsterOilTooltipInWeapons(Item.TooltipContext context, @Nullable Player player, TooltipFlag type, CallbackInfoReturnable<List<Component>> cir, @Local Consumer<Component> consumer){
+    private void monsterOilTooltipInWeapons(final Item.TooltipContext context, @Nullable final Player player, final TooltipFlag type, final CallbackInfoReturnable<List<Component>> cir, @Local final Consumer<Component> consumer){
         this.addToTooltip(TCOTS_Items.MonsterOilComponent(), context, consumer, type);
     }
 
@@ -54,7 +56,7 @@ public abstract class ItemStackMixin {
             value = "INVOKE",
             target = "Lnet/minecraft/network/chat/MutableComponent;withStyle(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/MutableComponent;",
             ordinal = 1))
-    private ChatFormatting manticoreAttributeMaxToxicityColor(ChatFormatting formatting, @Local(argsOnly = true) Holder<Attribute> attribute){
+    private ChatFormatting manticoreAttributeMaxToxicityColor(final ChatFormatting formatting, @Local(argsOnly = true) final Holder<Attribute> attribute){
         if(attribute == TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY){
             return ChatFormatting.DARK_GREEN;
         }
@@ -63,9 +65,17 @@ public abstract class ItemStackMixin {
     }
 
     @Inject(method = "getUseDuration", at = @At("RETURN"), cancellable = true)
-    private void reduceDrinkingTime(LivingEntity user, CallbackInfoReturnable<Integer> cir){
+    private void reduceDrinkingTime(final LivingEntity user, final CallbackInfoReturnable<Integer> cir){
         if(EntitiesUtil.isWearingManticoreArmor(user) && this.getItem() instanceof PotionItem){
             cir.setReturnValue(this.getItem().getUseDuration(THIS,user)/2);
+        }
+    }
+
+    //Weapon Tooltips
+    @Inject(method = "getTooltipLines", at = @At(value = "RETURN", ordinal = 1))
+    private void customWeaponTooltip(final Item.TooltipContext context, @Nullable final Player player, final TooltipFlag type, final CallbackInfoReturnable<List<Component>> cir){
+        if(player!=null && THIS.getItem() instanceof final SwordWithTooltip sword){
+            MiscUtil.setSpecialTooltip(Component.translatable("tooltip.tcots_witcher.generic_tooltip.special_abilities"), THIS, cir.getReturnValue(), sword.tooltip, type);
         }
     }
 
@@ -74,14 +84,14 @@ public abstract class ItemStackMixin {
             value = "INVOKE"
             ,target = "Lnet/minecraft/world/item/ItemStack;addToTooltip(Lnet/minecraft/core/component/DataComponentType;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/world/item/TooltipFlag;)V",
             ordinal = 4))
-    private void customTooltipFormula(Item.TooltipContext context, @Nullable Player player, TooltipFlag type, CallbackInfoReturnable<List<Component>> cir, @Local Consumer<Component> consumer){
+    private void customTooltipFormula(final Item.TooltipContext context, @Nullable final Player player, final TooltipFlag type, final CallbackInfoReturnable<List<Component>> cir, @Local final Consumer<Component> consumer){
         if(player!=null){
             AlchemyFormulaItem.appendTooltip(THIS, player.level(), consumer);
         }
     }
 
     @Inject(method = "getRarity", at = @At("HEAD"), cancellable = true)
-    private void injectFormulaRarity(CallbackInfoReturnable<Rarity> cir){
+    private void injectFormulaRarity(final CallbackInfoReturnable<Rarity> cir){
         if(THIS.is(TCOTS_Items.ALCHEMY_FORMULA.get()) && AlchemyFormulaItem.isDecoctionRecipe(THIS)){
             cir.setReturnValue(Rarity.RARE);
         }

@@ -9,7 +9,7 @@ public interface PlayerEntityMixinInterface {
         return 0;
     }
 
-    default void theConjunctionOfTheSpheres$setMudInFace(int ticks){}
+    default void theConjunctionOfTheSpheres$setMudInFace(final int ticks){}
 
     default float theConjunctionOfTheSpheres$getMudTransparency(){
         return 0f;
@@ -19,39 +19,42 @@ public interface PlayerEntityMixinInterface {
 
     default int theConjunctionOfTheSpheres$getNormalToxicity(){return 0;}
 
-    default void theConjunctionOfTheSpheres$setToxicity(int toxicity){}
+    default void theConjunctionOfTheSpheres$setToxicity(final int toxicity){}
 
     default int theConjunctionOfTheSpheres$getMaxToxicity(){return 0;}
 
-    default void theConjunctionOfTheSpheres$setMaxToxicity(int MaxToxicity){}
+    default void theConjunctionOfTheSpheres$setMaxToxicity(final int MaxToxicity){}
 
-    default void theConjunctionOfTheSpheres$setDecoctionToxicity(int DecoctionToxicity){}
+    default void theConjunctionOfTheSpheres$setDecoctionToxicity(final int DecoctionToxicity){}
 
     default int theConjunctionOfTheSpheres$getDecoctionToxicity(){return 0;}
 
-    default void theConjunctionOfTheSpheres$addToxicity(int toxicity,boolean decoction){}
+    default void theConjunctionOfTheSpheres$addToxicity(final int toxicity, final boolean decoction){}
 
     default int theConjunctionOfTheSpheres$getAllToxicity(){return 0;}
 
-    default void theConjunctionOfTheSpheres$decreaseToxicity(int toxicity, boolean decoction){}
+    default void theConjunctionOfTheSpheres$decreaseToxicity(final int toxicity, final boolean decoction){}
 
     default boolean theConjunctionOfTheSpheres$toxicityOverThreshold(){return false;}
 
     //Witcher Eyes
     default boolean theConjunctionOfTheSpheres$getWitcherEyesActivated(){return false;}
-    default void theConjunctionOfTheSpheres$setWitcherEyesActivated(boolean activate){}
+    default void theConjunctionOfTheSpheres$setWitcherEyesActivated(final boolean activate){}
 
     default boolean theConjunctionOfTheSpheres$getToxicityActivated(){return false;}
-    default void theConjunctionOfTheSpheres$setToxicityActivated(boolean activate){}
+    default void theConjunctionOfTheSpheres$setToxicityActivated(final boolean activate){}
 
 
     default Vector3f theConjunctionOfTheSpheres$getEyesPivot(){return new Vector3f();}
-    default void theConjunctionOfTheSpheres$setEyesPivot(Vector3f vector3f){}
+    default void theConjunctionOfTheSpheres$setEyesPivot(final Vector3f vector3f){}
 
 
     default int theConjunctionOfTheSpheres$getEyeSeparation(){return 2;}
-    default void theConjunctionOfTheSpheres$setEyeSeparation(int separation){}
+    default void theConjunctionOfTheSpheres$setEyeSeparation(final int separation){}
 
     default int theConjunctionOfTheSpheres$getEyeShape(){return 0;}
-    default void theConjunctionOfTheSpheres$setEyeShape(int shape){}
+    default void theConjunctionOfTheSpheres$setEyeShape(final int shape){}
+
+    default boolean theConjunctionOfTheSpheres$getEyeMoves(){return false;}
+    default void theConjunctionOfTheSpheres$setEyeMoves(final boolean moves){}
 }

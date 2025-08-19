@@ -2,7 +2,7 @@ package TCOTS.entity.geo.renderer.necrophages;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.geo.model.necrophages.GhoulModel;
-import TCOTS.entity.necrophages.GhoulEntity;
+import TCOTS.entity.monsters.necrophages.GhoulEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -28,7 +28,7 @@ public class GhoulRenderer extends GeoEntityRenderer<GhoulEntity> {
 
     protected ItemStack mouthItem;
 
-    public GhoulRenderer(EntityRendererProvider.Context renderManager) {
+    public GhoulRenderer(final EntityRendererProvider.Context renderManager) {
         super(renderManager, new GhoulModel());
 
         this.shadowRadius = 0.7f;
@@ -38,10 +38,10 @@ public class GhoulRenderer extends GeoEntityRenderer<GhoulEntity> {
             private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/entity/necrophages/ghoul/ghoul_regen_layer.png");
 
             @Override
-            public void render(PoseStack poseStack, GhoulEntity animatable, BakedGeoModel bakedModel, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
+            public void render(final PoseStack poseStack, final GhoulEntity animatable, final BakedGeoModel bakedModel, final RenderType renderType, final MultiBufferSource bufferSource, final VertexConsumer buffer, final float partialTick, final int packedLight, final int packedOverlay) {
                 if (animatable.getIsRegenerating()) {
-                    float f = (float) animatable.tickCount + partialTick;
-                    RenderType armorRenderType = RenderType.energySwirl(TEXTURE, this.getEnergySwirlX(f) % 1.0f, f * 0.01f % 1.0f);
+                    final float f = (float) animatable.tickCount + partialTick;
+                    final RenderType armorRenderType = RenderType.energySwirl(TEXTURE, this.getEnergySwirlX(f) % 1.0f, f * 0.01f % 1.0f);
 
                     getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, armorRenderType,
                             bufferSource.getBuffer(armorRenderType), partialTick, packedLight, OverlayTexture.NO_OVERLAY,
@@ -50,7 +50,7 @@ public class GhoulRenderer extends GeoEntityRenderer<GhoulEntity> {
                 }
             }
 
-            private float getEnergySwirlX(float partialAge) {
+            private float getEnergySwirlX(final float partialAge) {
                 return partialAge * 0.00001f;
             }
         });
@@ -59,21 +59,21 @@ public class GhoulRenderer extends GeoEntityRenderer<GhoulEntity> {
         addRenderLayer(new BlockAndItemGeoLayer<>(this) {
             @Nullable
             @Override
-            protected ItemStack getStackForBone(GeoBone bone, GhoulEntity animatable) {
+            protected ItemStack getStackForBone(final GeoBone bone, final GhoulEntity animatable) {
                 // Retrieve the items in the entity's mouth for the relevant bone
                 return Objects.equals(bone.getName(), MOUTH) ?  GhoulRenderer.this.mouthItem : null;
             }
 
             @Override
-            protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, GhoulEntity animatable) {
+            protected ItemDisplayContext getTransformTypeForStack(final GeoBone bone, final ItemStack stack, final GhoulEntity animatable) {
                 // Apply the camera transform for the mouth
                 return Objects.equals(bone.getName(), MOUTH) ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND: ItemDisplayContext.NONE;
             }
 
             // Do some quick render modifications depending on what the item is
             @Override
-            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, GhoulEntity troll,
-                                              MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
+            protected void renderStackForBone(final PoseStack poseStack, final GeoBone bone, final ItemStack stack, final GhoulEntity troll,
+                                              final MultiBufferSource bufferSource, final float partialTick, final int packedLight, final int packedOverlay) {
                 if (stack == GhoulRenderer.this.mouthItem) {
                     poseStack.mulPose(Axis.XP.rotationDegrees(-90f));
                 }
@@ -84,7 +84,7 @@ public class GhoulRenderer extends GeoEntityRenderer<GhoulEntity> {
     }
 
     @Override
-    public void preRender(PoseStack poseStack, GhoulEntity animatable, BakedGeoModel model, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+    public void preRender(final PoseStack poseStack, final GhoulEntity animatable, final BakedGeoModel model, @Nullable final MultiBufferSource bufferSource, @Nullable final VertexConsumer buffer, final boolean isReRender, final float partialTick, final int packedLight, final int packedOverlay, final int colour) {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
 
         this.mouthItem = animatable.getMainHandItem();

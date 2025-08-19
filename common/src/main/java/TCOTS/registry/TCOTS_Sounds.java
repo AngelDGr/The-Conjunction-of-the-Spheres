@@ -96,6 +96,13 @@ public class TCOTS_Sounds {
     public static RegistrySupplier<SoundEvent> DEVOURER_DEATH = registerSoundEvent("devourer_death");
     public static RegistrySupplier<SoundEvent> DEVOURER_JUMP = registerSoundEvent("devourer_jump");
 
+    //Bloedzuiger
+    public static RegistrySupplier<SoundEvent> BLOEDZUIGER_ATTACK = registerSoundEvent("bloedzuiger_attack");
+    public static RegistrySupplier<SoundEvent> BLOEDZUIGER_HURT = registerSoundEvent("bloedzuiger_hurt");
+    public static RegistrySupplier<SoundEvent> BLOEDZUIGER_IDLE = registerSoundEvent("bloedzuiger_idle");
+    public static RegistrySupplier<SoundEvent> BLOEDZUIGER_DEATH = registerSoundEvent("bloedzuiger_death");
+    public static RegistrySupplier<SoundEvent> BLOEDZUIGER_EXPLOSION = registerSoundEvent("bloedzuiger_exploding");
+
     //Graveir
     public static RegistrySupplier<SoundEvent> GRAVEIR_ATTACK = registerSoundEvent("graveir_attack");
     public static RegistrySupplier<SoundEvent> GRAVEIR_HURT = registerSoundEvent("graveir_hurt");
@@ -168,7 +175,7 @@ public class TCOTS_Sounds {
     public static RegistrySupplier<SoundEvent> BLACK_BLOOD_HIT = registerSoundEvent("black_blood_hit");
     public static RegistrySupplier<SoundEvent> HERBALIST_WORKS = registerSoundEvent("work_herbalist");
 
-    public static SoundEvent getSoundEvent(String soundName) {
+    public static SoundEvent getSoundEvent(final String soundName) {
         return switch (soundName) {
             case "monster_emerging" -> MONSTER_EMERGING.get();
             case "monster_digging" -> MONSTER_DIGGING.get();
@@ -254,6 +261,13 @@ public class TCOTS_Sounds {
             case "devourer_death" -> DEVOURER_DEATH.get();
             case "devourer_jump" -> DEVOURER_JUMP.get();
 
+            // Bloedzuiger Sounds
+            case "bloedzuiger_attack" -> BLOEDZUIGER_ATTACK.get();
+            case "bloedzuiger_hurt" -> BLOEDZUIGER_HURT.get();
+            case "bloedzuiger_idle" -> BLOEDZUIGER_IDLE.get();
+            case "bloedzuiger_death" -> BLOEDZUIGER_DEATH.get();
+            case "bloedzuiger_exploding" -> BLOEDZUIGER_EXPLOSION.get();
+
             // Graveir Sounds
             case "graveir_attack" -> GRAVEIR_ATTACK.get();
             case "graveir_hurt" -> GRAVEIR_HURT.get();
@@ -329,7 +343,7 @@ public class TCOTS_Sounds {
         };
     }
 
-    private static RegistrySupplier<SoundEvent> registerSoundEvent(String name) {
+    private static RegistrySupplier<SoundEvent> registerSoundEvent(final String name) {
         return TCOTS_Registries.SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, name)));
     }
 

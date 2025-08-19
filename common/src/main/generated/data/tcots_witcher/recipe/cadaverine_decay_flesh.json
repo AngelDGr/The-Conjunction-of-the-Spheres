@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "tcots_witcher:cadaverine"
+    },
+    {
+      "tag": "tcots_witcher:decaying_flesh"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "id": "minecraft:bone"
+  }
+}

@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class WitcherBaseCrossbow extends CrossbowItem {
 
-    public WitcherBaseCrossbow(Item.Properties settings) {
+    public WitcherBaseCrossbow(final Item.Properties settings) {
         super(settings);
     }
 
@@ -31,9 +31,9 @@ public class WitcherBaseCrossbow extends CrossbowItem {
     private boolean loaded = false;
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, Player user, @NotNull InteractionHand hand) {
-        ItemStack itemStack = user.getItemInHand(hand);
-        ChargedProjectiles chargedProjectilesComponent = itemStack.get(DataComponents.CHARGED_PROJECTILES);
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull final Level world, final Player user, @NotNull final InteractionHand hand) {
+        final ItemStack itemStack = user.getItemInHand(hand);
+        final ChargedProjectiles chargedProjectilesComponent = itemStack.get(DataComponents.CHARGED_PROJECTILES);
         if (chargedProjectilesComponent != null && !chargedProjectilesComponent.isEmpty()) {
             this.performShooting(world, user, hand, itemStack, getShootingPower(chargedProjectilesComponent), 1.0F, null);
             return InteractionResultHolder.consume(itemStack);
@@ -53,15 +53,15 @@ public class WitcherBaseCrossbow extends CrossbowItem {
             Optional.of(SoundEvents.CROSSBOW_LOADING_END)
     );
 
-    CrossbowItem.ChargingSounds getChargingSounds(ItemStack stack) {
+    CrossbowItem.ChargingSounds getChargingSounds(final ItemStack stack) {
         return EnchantmentHelper.pickHighestLevel(stack, EnchantmentEffectComponents.CROSSBOW_CHARGING_SOUNDS)
                 .orElse(DEFAULT_LOADING_SOUNDS);
     }
     @Override
-    public void onUseTick(Level world, @NotNull LivingEntity user, @NotNull ItemStack stack, int remainingUseTicks) {
+    public void onUseTick(final Level world, @NotNull final LivingEntity user, @NotNull final ItemStack stack, final int remainingUseTicks) {
         if (!world.isClientSide) {
-            CrossbowItem.ChargingSounds loadingSounds = this.getChargingSounds(stack);
-            float f = (float)(stack.getUseDuration(user) - remainingUseTicks) / (float)getChargeDuration(stack, user);
+            final CrossbowItem.ChargingSounds loadingSounds = this.getChargingSounds(stack);
+            final float f = (float)(stack.getUseDuration(user) - remainingUseTicks) / (float)getChargeDuration(stack, user);
             if (f < 0.2F) {
                 this.charged = false;
                 this.loaded = false;
@@ -82,11 +82,11 @@ public class WitcherBaseCrossbow extends CrossbowItem {
     }
 
     @Override
-    public void releaseUsing(@NotNull ItemStack stack, @NotNull Level world, @NotNull LivingEntity user, int remainingUseTicks) {
-        int i = this.getUseDuration(stack, user) - remainingUseTicks;
-        float f = getPowerForTime(i, stack, user);
+    public void releaseUsing(@NotNull final ItemStack stack, @NotNull final Level world, @NotNull final LivingEntity user, final int remainingUseTicks) {
+        final int i = this.getUseDuration(stack, user) - remainingUseTicks;
+        final float f = getPowerForTime(i, stack, user);
         if (f >= 1.0F && !isCharged(stack) && tryLoadProjectiles(user, stack)) {
-            CrossbowItem.ChargingSounds loadingSounds = this.getChargingSounds(stack);
+            final CrossbowItem.ChargingSounds loadingSounds = this.getChargingSounds(stack);
             loadingSounds.end()
                     .ifPresent(
                             sound -> world.playSound(
@@ -103,8 +103,8 @@ public class WitcherBaseCrossbow extends CrossbowItem {
         }
     }
 
-    private static boolean tryLoadProjectiles(LivingEntity shooter, ItemStack crossbow) {
-        List<ItemStack> list = draw(crossbow, shooter.getProjectile(crossbow), shooter);
+    private static boolean tryLoadProjectiles(final LivingEntity shooter, final ItemStack crossbow) {
+        final List<ItemStack> list = draw(crossbow, shooter.getProjectile(crossbow), shooter);
         if (!list.isEmpty()) {
             crossbow.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.of(list));
             return true;
@@ -112,7 +112,7 @@ public class WitcherBaseCrossbow extends CrossbowItem {
             return false;
         }
     }
-    private float getPowerForTime(int useTicks, ItemStack stack, LivingEntity user) {
+    private float getPowerForTime(final int useTicks, final ItemStack stack, final LivingEntity user) {
         float f = (float)useTicks / (float)getCrossbowPullTime(stack, user);
         if (f > 1.0F) {
             f = 1.0F;
@@ -122,16 +122,16 @@ public class WitcherBaseCrossbow extends CrossbowItem {
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity user) {
+    public int getUseDuration(@NotNull final ItemStack stack, @NotNull final LivingEntity user) {
         return this.getCrossbowPullTime(stack, user) + 3;
     }
 
-    protected float getShootingPower(ChargedProjectiles stack) {
+    protected float getShootingPower(final ChargedProjectiles stack) {
         return stack.contains(Items.FIREWORK_ROCKET) ? 1.6F : 3.15F;
     }
 
-    public int getCrossbowPullTime(ItemStack stack, LivingEntity user) {
-        float f = EnchantmentHelper.modifyCrossbowChargingTime(stack, user, 1.25F);
+    public int getCrossbowPullTime(final ItemStack stack, final LivingEntity user) {
+        final float f = EnchantmentHelper.modifyCrossbowChargingTime(stack, user, 1.25F);
         return Mth.floor(f * 20.0F);
     }
 }

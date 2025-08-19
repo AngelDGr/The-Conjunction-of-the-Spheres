@@ -13,7 +13,7 @@ public class FollowMonsterOwnerGoal extends Goal {
     private final double speed;
     private int delay;
 
-    public FollowMonsterOwnerGoal(PathfinderMob mob, double speed) {
+    public FollowMonsterOwnerGoal(final PathfinderMob mob, final double speed) {
         if (!(mob instanceof TraceableEntity)) {
             throw new IllegalArgumentException("FollowOwnerGoal requires Mob implements Ownable");
         }
@@ -29,7 +29,7 @@ public class FollowMonsterOwnerGoal extends Goal {
         }
 
         this.owner= (PathfinderMob) ((TraceableEntity)(this.mob)).getOwner();
-        double d = this.mob.distanceToSqr(this.owner);
+        final double d = this.mob.distanceToSqr(this.owner);
 
         return !(d < 9.0) && !(d > 256.0) && this.isExcavating() && mob.getTarget()==null;
     }
@@ -43,7 +43,7 @@ public class FollowMonsterOwnerGoal extends Goal {
         if (!this.owner.isAlive()) {
             return false;
         }
-        double d = this.mob.distanceToSqr(this.owner);
+        final double d = this.mob.distanceToSqr(this.owner);
         return !(d < 9.0) && !(d > 256.0) && this.isExcavating();
     }
 
@@ -67,7 +67,7 @@ public class FollowMonsterOwnerGoal extends Goal {
     }
 
     private boolean isExcavating(){
-        if(mob instanceof ExcavatorMob excavator){
+        if(mob instanceof final ExcavatorMob excavator){
             return !excavator.getInGround() && !excavator.getIsEmerging();
         }
 

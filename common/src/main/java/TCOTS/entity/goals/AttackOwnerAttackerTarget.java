@@ -13,7 +13,7 @@ public class AttackOwnerAttackerTarget extends TargetGoal {
     private LivingEntity attacker;
     private int lastAttackedTime;
 
-    public AttackOwnerAttackerTarget(Mob ownable) {
+    public AttackOwnerAttackerTarget(final Mob ownable) {
         super(ownable, false);
         this.ownable = ownable;
         this.setFlags(EnumSet.of(Goal.Flag.TARGET));
@@ -21,19 +21,19 @@ public class AttackOwnerAttackerTarget extends TargetGoal {
 
     @Override
     public boolean canUse() {
-        LivingEntity livingEntity = (LivingEntity) ((TraceableEntity)(this.ownable)).getOwner();
+        final LivingEntity livingEntity = (LivingEntity) ((TraceableEntity)(this.ownable)).getOwner();
         if (livingEntity == null) {
             return false;
         }
         this.attacker = livingEntity.getLastHurtByMob();
-        int i = livingEntity.getLastHurtByMobTimestamp();
+        final int i = livingEntity.getLastHurtByMobTimestamp();
         return i != this.lastAttackedTime && this.canAttack(this.attacker, TargetingConditions.DEFAULT);
     }
 
     @Override
     public void start() {
         this.mob.setTarget(this.attacker);
-        LivingEntity livingEntity = (LivingEntity) ((TraceableEntity)(this.ownable)).getOwner();
+        final LivingEntity livingEntity = (LivingEntity) ((TraceableEntity)(this.ownable)).getOwner();
         if (livingEntity != null) {
             this.lastAttackedTime = livingEntity.getLastHurtByMobTimestamp();
         }

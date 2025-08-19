@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class BloodParticle extends TextureSheetParticle {
-    public BloodParticle(ClientLevel clientWorld, double d, double e, double f) {
+    public BloodParticle(final ClientLevel clientWorld, final double d, final double e, final double f) {
         super(clientWorld, d, e, f);
         this.setSize(0.01f, 0.01f);
         this.gravity = 0.06f;
@@ -42,7 +42,7 @@ public class BloodParticle extends TextureSheetParticle {
         this.yd *= 0.98f;
         this.zd *= 0.98f;
 
-        BlockPos blockPos = BlockPos.containing(this.x, this.y, this.z);
+        final BlockPos blockPos = BlockPos.containing(this.x, this.y, this.z);
 
         if ( this.y < blockPos.getY()) {
             this.remove();
@@ -59,32 +59,32 @@ public class BloodParticle extends TextureSheetParticle {
     }
 
     @SuppressWarnings("unused")
-    public static TextureSheetParticle createFallingBlood(SimpleParticleType type, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, ParticleOptions nextParticle) {
-        ContinuousFalling blockLeakParticle = new ContinuousFalling(world, x, y, z, nextParticle);
+    public static TextureSheetParticle createFallingBlood(final SimpleParticleType type, final ClientLevel world, final double x, final double y, final double z, final double velocityX, final double velocityY, final double velocityZ, final ParticleOptions nextParticle) {
+        final ContinuousFalling blockLeakParticle = new ContinuousFalling(world, x, y, z, nextParticle);
         blockLeakParticle.gravity = 0.01f;
         blockLeakParticle.setColor(0.4274509f, 0, 0);
         return blockLeakParticle;
     }
 
     @SuppressWarnings("unused")
-    public static TextureSheetParticle createLandingBlood(SimpleParticleType type, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
-        Landing blockLeakParticle = new Landing(world, x, y, z);
+    public static TextureSheetParticle createLandingBlood(final SimpleParticleType type, final ClientLevel world, final double x, final double y, final double z, final double velocityX, final double velocityY, final double velocityZ) {
+        final Landing blockLeakParticle = new Landing(world, x, y, z);
         blockLeakParticle.lifetime = (int)(28.0 / (Math.random() * 0.8 + 0.2));
         blockLeakParticle.setColor(0.4274509f, 0, 0);
         return blockLeakParticle;
     }
 
     @SuppressWarnings("unused")
-    public static TextureSheetParticle createFallingBlackBlood(SimpleParticleType type, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, ParticleOptions nextParticle) {
-        ContinuousFalling blockLeakParticle = new ContinuousFalling(world, x, y, z, nextParticle);
+    public static TextureSheetParticle createFallingBlackBlood(final SimpleParticleType type, final ClientLevel world, final double x, final double y, final double z, final double velocityX, final double velocityY, final double velocityZ, final ParticleOptions nextParticle) {
+        final ContinuousFalling blockLeakParticle = new ContinuousFalling(world, x, y, z, nextParticle);
         blockLeakParticle.gravity = 0.01f;
         blockLeakParticle.setColor(0.04705823f, 0.04705823f, 0.04705823f);
         return blockLeakParticle;
     }
 
     @SuppressWarnings("unused")
-    public static TextureSheetParticle createLandingBlackBlood(SimpleParticleType type, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
-        Landing blockLeakParticle = new Landing(world, x, y, z);
+    public static TextureSheetParticle createLandingBlackBlood(final SimpleParticleType type, final ClientLevel world, final double x, final double y, final double z, final double velocityX, final double velocityY, final double velocityZ) {
+        final Landing blockLeakParticle = new Landing(world, x, y, z);
         blockLeakParticle.lifetime = (int)(28.0 / (Math.random() * 0.8 + 0.2));
         blockLeakParticle.setColor(0.04705823f, 0.04705823f, 0.04705823f);
         return blockLeakParticle;
@@ -94,7 +94,7 @@ public class BloodParticle extends TextureSheetParticle {
     static class ContinuousFalling extends Falling {
         protected final ParticleOptions nextParticle;
 
-        ContinuousFalling(ClientLevel world, double x, double y, double z, ParticleOptions nextParticle) {
+        ContinuousFalling(final ClientLevel world, final double x, final double y, final double z, final ParticleOptions nextParticle) {
             super(world, x, y, z);
             this.nextParticle = nextParticle;
         }
@@ -110,7 +110,7 @@ public class BloodParticle extends TextureSheetParticle {
 
 
     static class Landing extends BloodParticle {
-        Landing(ClientLevel clientWorld, double d, double e, double f) {
+        Landing(final ClientLevel clientWorld, final double d, final double e, final double f) {
             super(clientWorld, d, e, f);
             this.lifetime = (int)(16.0 / (Math.random() * 0.8 + 0.2));
         }
@@ -118,11 +118,11 @@ public class BloodParticle extends TextureSheetParticle {
 
 
     static class Falling extends BloodParticle {
-        Falling(ClientLevel clientWorld, double d, double e, double f) {
+        Falling(final ClientLevel clientWorld, final double d, final double e, final double f) {
             this(clientWorld, d, e, f, (int)(64.0 / (Math.random() * 0.8 + 0.2)));
         }
 
-        Falling(ClientLevel world, double x, double y, double z, int maxAge) {
+        Falling(final ClientLevel world, final double x, final double y, final double z, final int maxAge) {
             super(world, x, y, z);
             this.lifetime = maxAge;
         }
@@ -139,14 +139,14 @@ public class BloodParticle extends TextureSheetParticle {
         private final SpriteSet spriteProvider;
         private final TextureSheetParticle particle;
 
-        public Factory(SpriteSet spriteProvider, TextureSheetParticle particle) {
+        public Factory(final SpriteSet spriteProvider, final TextureSheetParticle particle) {
             this.spriteProvider = spriteProvider;
             this.particle=particle;
         }
 
         @Nullable
         @Override
-        public TextureSheetParticle createParticle(@NotNull ParticleOptions parameters, @NotNull ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+        public TextureSheetParticle createParticle(@NotNull final ParticleOptions parameters, @NotNull final ClientLevel world, final double x, final double y, final double z, final double velocityX, final double velocityY, final double velocityZ) {
             this.particle.pickSprite(this.spriteProvider);
             return particle;
         }

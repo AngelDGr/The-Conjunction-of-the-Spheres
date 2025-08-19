@@ -5,12 +5,10 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.neoforged.neoforge.common.extensions.IAttributeExtension;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-@Debug(export = true)
 @Mixin(IAttributeExtension.class)
 public interface IAttributeExtensionMixin {
 
@@ -18,7 +16,7 @@ public interface IAttributeExtensionMixin {
             value = "INVOKE",
             target = "Lnet/minecraft/network/chat/MutableComponent;withStyle(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/MutableComponent;",
             ordinal = 0))
-    private ChatFormatting manticoreAttributeMaxToxicityColorNeo(ChatFormatting formatting, @Local Attribute attribute){
+    private ChatFormatting manticoreAttributeMaxToxicityColorNeo(final ChatFormatting formatting, @Local final Attribute attribute){
         if(attribute == TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY.value()){
             return ChatFormatting.DARK_GREEN;
         }

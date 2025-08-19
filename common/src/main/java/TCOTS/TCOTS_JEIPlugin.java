@@ -81,7 +81,7 @@ public class TCOTS_JEIPlugin implements IModPlugin {
     }
 
     @Override
-    public void registerItemSubtypes(ISubtypeRegistration registration) {
+    public void registerItemSubtypes(final ISubtypeRegistration registration) {
         registration.registerSubtypeInterpreter(TCOTS_Items.ALCHEMY_FORMULA.get(), AlchemyFormulaInterpreter.INSTANCE);
     }
 
@@ -92,17 +92,17 @@ public class TCOTS_JEIPlugin implements IModPlugin {
 
 
         @Override
-        public @Nullable Object getSubtypeData(ItemStack ingredient, @NotNull UidContext context) {
+        public @Nullable Object getSubtypeData(final ItemStack ingredient, @NotNull final UidContext context) {
             return ingredient.get(TCOTS_Items.RecipeTeacher());
         }
 
         @Override
-        public @NotNull String getLegacyStringSubtypeInfo(ItemStack ingredient, @NotNull UidContext context) {
+        public @NotNull String getLegacyStringSubtypeInfo(final ItemStack ingredient, @NotNull final UidContext context) {
             if (!ingredient.has(TCOTS_Items.RecipeTeacher())) {
                 return "";
             }
 
-            RecipeTeacherComponent recipeTeacher = ingredient.get(TCOTS_Items.RecipeTeacher());
+            final RecipeTeacherComponent recipeTeacher = ingredient.get(TCOTS_Items.RecipeTeacher());
 
             String formulaString=null;
             if(recipeTeacher != null){
@@ -114,9 +114,9 @@ public class TCOTS_JEIPlugin implements IModPlugin {
     }
 
     @Override
-    public void registerCategories(@NotNull IRecipeCategoryRegistration registration) {
-        IJeiHelpers jeiHelpers = registration.getJeiHelpers();
-        IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
+    public void registerCategories(@NotNull final IRecipeCategoryRegistration registration) {
+        final IJeiHelpers jeiHelpers = registration.getJeiHelpers();
+        final IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 
         registration.addRecipeCategories(
                 alchemyTableCategory =  new AlchemyTableRecipeCategory(guiHelper),
@@ -126,13 +126,13 @@ public class TCOTS_JEIPlugin implements IModPlugin {
 
 
     @Override
-    public void registerRecipes(IRecipeRegistration registration) {
+    public void registerRecipes(final IRecipeRegistration registration) {
         ErrorUtil.checkNotNull(alchemyTableCategory, "alchemyTableCategory");
         ErrorUtil.checkNotNull(herbalTableCategory, "herbalTableCategory");
 
-        IIngredientManager ingredientManager = registration.getIngredientManager();
-        TCOTSRecipes TCOTSRecipes = new TCOTSRecipes(ingredientManager);
-        IVanillaRecipeFactory vanillaRecipeFactory = registration.getVanillaRecipeFactory();
+        final IIngredientManager ingredientManager = registration.getIngredientManager();
+        final TCOTSRecipes TCOTSRecipes = new TCOTSRecipes(ingredientManager);
+        final IVanillaRecipeFactory vanillaRecipeFactory = registration.getVanillaRecipeFactory();
 
 
         registration.addRecipes(ALCHEMY_TABLE.get(), TCOTSRecipes.getAlchemyTableRecipes(alchemyTableCategory));
@@ -142,18 +142,18 @@ public class TCOTS_JEIPlugin implements IModPlugin {
     }
 
     @Override
-    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+    public void registerRecipeCatalysts(final IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(TCOTS_Blocks.AlchemyTable()), ALCHEMY_TABLE.get());
         registration.addRecipeCatalyst(new ItemStack(TCOTS_Blocks.HerbalTable()), HERBAL_TABLE.get());
     }
 
     @Override
-    public void registerModInfo(IModInfoRegistration registration) {
+    public void registerModInfo(final IModInfoRegistration registration) {
         registration.addModAliases(TCOTS_Main.MOD_ID, "tcots", "witcher");
     }
 
     @Override
-    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+    public void registerGuiHandlers(final IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(HerbalTableScreen.class, 102, 48, 22, 15, HERBAL_TABLE.get());
     }
 
@@ -161,7 +161,7 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         private final IDrawable background;
         private final IDrawable icon;
 
-        public AlchemyTableRecipeCategory(IGuiHelper guiHelper) {
+        public AlchemyTableRecipeCategory(final IGuiHelper guiHelper) {
 
             background = guiHelper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/gui/alchemy_table_jei.png"),
                             0,0,
@@ -198,10 +198,10 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         }
 
         @Override
-        public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<AlchemyTableRecipe> recipe, @NotNull IFocusGroup focuses) {
-            List<ItemStack> potionInputs = recipe.value().returnItemStackWithQuantity();
-            ItemStack baseItem = recipe.value().getBaseItem();
-            ItemStack result = recipe.value().getResultItem(null);
+        public void setRecipe(@NotNull final IRecipeLayoutBuilder builder, @NotNull final RecipeHolder<AlchemyTableRecipe> recipe, @NotNull final IFocusGroup focuses) {
+            final List<ItemStack> potionInputs = recipe.value().returnItemStackWithQuantity();
+            final ItemStack baseItem = recipe.value().getBaseItem();
+            final ItemStack result = recipe.value().getResultItem(null);
 
             //Put the ingredients
             for(int i=0; i<potionInputs.size(); i++) {
@@ -242,16 +242,16 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         }
 
         @Override
-        public void draw(@NotNull RecipeHolder<AlchemyTableRecipe> recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphics guiGraphics, double mouseX, double mouseY) {
-            Minecraft minecraft = Minecraft.getInstance();
+        public void draw(@NotNull final RecipeHolder<AlchemyTableRecipe> recipe, @NotNull final IRecipeSlotsView recipeSlotsView, @NotNull final GuiGraphics guiGraphics, final double mouseX, final double mouseY) {
+            final Minecraft minecraft = Minecraft.getInstance();
             this.background.draw(guiGraphics);
             if(minecraft.player != null && minecraft.player.getRecipeBook().contains(recipe)){
                 return;
             }
 
-            String text = Translator.translateToLocalFormatted("gui.jei.tcots_witcher.requires_recipe");
+            final String text = Translator.translateToLocalFormatted("gui.jei.tcots_witcher.requires_recipe");
 
-            Font font = minecraft.font;
+            final Font font = minecraft.font;
             guiGraphics.drawString(font, text, 0, 0, 0xFF5555, true);
 
         }
@@ -261,7 +261,7 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         private final IDrawable background;
         private final IDrawable icon;
 
-        public HerbalTableRecipeCategory(IGuiHelper guiHelper) {
+        public HerbalTableRecipeCategory(final IGuiHelper guiHelper) {
 
             background = guiHelper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/gui/herbal_table_jei.png"),
                             0,0,
@@ -299,21 +299,21 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         }
 
         @Override
-        public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<HerbalTableRecipe> recipeEntry, @NotNull IFocusGroup focuses) {
-            HerbalTableRecipe recipe = recipeEntry.value();
+        public void setRecipe(@NotNull final IRecipeLayoutBuilder builder, @NotNull final RecipeHolder<HerbalTableRecipe> recipeEntry, @NotNull final IFocusGroup focuses) {
+            final HerbalTableRecipe recipe = recipeEntry.value();
 
             //Herb
-            ItemStack herb = new ItemStack(recipe.getHerb().getItem(), 1);
+            final ItemStack herb = new ItemStack(recipe.getHerb().getItem(), 1);
 
             //Bottle
-            ItemStack bottle =
+            final ItemStack bottle =
                     recipe.getBasePotion() == 1?
                             PotionContents.createItemStack(Items.POTION, Potions.MUNDANE) :
                             recipe.getBasePotion() == 2? PotionContents.createItemStack(Items.POTION, Potions.THICK):
                                     PotionContents.createItemStack(Items.POTION, Potions.WATER);
 
             //Result
-            List<MobEffectInstance> totalEffectsFirst = new ArrayList<>();
+            final List<MobEffectInstance> totalEffectsFirst = new ArrayList<>();
             recipe.getEffects().forEach(effect -> {
                 if (!effect.value().isBeneficial()) {
                     totalEffectsFirst.add(new MobEffectInstance(effect, effect.value().isInstantenous()? 1:recipe.getTickEffectTime(), recipe.getBadAmplifier()));
@@ -341,12 +341,12 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         }
 
         @Override
-        public void draw(@NotNull RecipeHolder<HerbalTableRecipe> recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        public void draw(@NotNull final RecipeHolder<HerbalTableRecipe> recipe, @NotNull final IRecipeSlotsView recipeSlotsView, @NotNull final GuiGraphics guiGraphics, final double mouseX, final double mouseY) {
             IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
-            Minecraft minecraft = Minecraft.getInstance();
-            String text = Translator.translateToLocalFormatted("gui.jei.tcots_witcher.for_herb", recipe.value().getTickEffectTime()/20);
+            final Minecraft minecraft = Minecraft.getInstance();
+            final String text = Translator.translateToLocalFormatted("gui.jei.tcots_witcher.for_herb", recipe.value().getTickEffectTime()/20);
 
-            Font font = minecraft.font;
+            final Font font = minecraft.font;
             guiGraphics.drawString(font, text, 0, 2, 43520, true);
 
             this.background.draw(guiGraphics);
@@ -357,22 +357,22 @@ public class TCOTS_JEIPlugin implements IModPlugin {
         private final RecipeManager recipeManager;
         private final IIngredientManager ingredientManager;
 
-        public TCOTSRecipes(IIngredientManager ingredientManager) {
-            Minecraft minecraft = Minecraft.getInstance();
+        public TCOTSRecipes(final IIngredientManager ingredientManager) {
+            final Minecraft minecraft = Minecraft.getInstance();
             ErrorUtil.checkNotNull(minecraft, "minecraft");
-            ClientLevel world = minecraft.level;
+            final ClientLevel world = minecraft.level;
             ErrorUtil.checkNotNull(world, "minecraft world");
             this.recipeManager = world.getRecipeManager();
             this.ingredientManager = ingredientManager;
         }
 
-        public List<RecipeHolder<AlchemyTableRecipe>> getAlchemyTableRecipes(IRecipeCategory<RecipeHolder<AlchemyTableRecipe>> alchemyTableCategory) {
-            var validator = new CategoryRecipeValidator<>(alchemyTableCategory, ingredientManager, 6);
+        public List<RecipeHolder<AlchemyTableRecipe>> getAlchemyTableRecipes(final IRecipeCategory<RecipeHolder<AlchemyTableRecipe>> alchemyTableCategory) {
+            final var validator = new CategoryRecipeValidator<>(alchemyTableCategory, ingredientManager, 6);
             return getValidAlchemyTableRecipes(recipeManager, AlchemyTableRecipe.Type.INSTANCE, validator);
         }
 
-        public List<RecipeHolder<HerbalTableRecipe>> getHerbalTableRecipes(IRecipeCategory<RecipeHolder<HerbalTableRecipe>> herbalTableCategory) {
-            var validator = new CategoryRecipeValidator<>(herbalTableCategory, ingredientManager, 2);
+        public List<RecipeHolder<HerbalTableRecipe>> getHerbalTableRecipes(final IRecipeCategory<RecipeHolder<HerbalTableRecipe>> herbalTableCategory) {
+            final var validator = new CategoryRecipeValidator<>(herbalTableCategory, ingredientManager, 2);
             return getValidHandledRecipes(recipeManager, HerbalTableRecipe.Type.INSTANCE, validator);
         }
 
@@ -399,7 +399,7 @@ public class TCOTS_JEIPlugin implements IModPlugin {
     }
 
     private static class RepairDataMaker {
-        public static List<IJeiAnvilRecipe> getAnvilRecipes(IVanillaRecipeFactory vanillaRecipeFactory) {
+        public static List<IJeiAnvilRecipe> getAnvilRecipes(final IVanillaRecipeFactory vanillaRecipeFactory) {
             return getRepairData().flatMap(repairData -> getRepairRecipes(repairData, vanillaRecipeFactory)).toList();
         }
 
@@ -441,28 +441,28 @@ public class TCOTS_JEIPlugin implements IModPlugin {
             );
         }
 
-        private static Stream<IJeiAnvilRecipe> getRepairRecipes(RepairDataMaker.RepairData repairData, IVanillaRecipeFactory vanillaRecipeFactory) {
-            Ingredient repairIngredient = repairData.getRepairIngredient();
-            List<ItemStack> repairable = repairData.getRepairable();
+        private static Stream<IJeiAnvilRecipe> getRepairRecipes(final RepairDataMaker.RepairData repairData, final IVanillaRecipeFactory vanillaRecipeFactory) {
+            final Ingredient repairIngredient = repairData.getRepairIngredient();
+            final List<ItemStack> repairable = repairData.getRepairable();
 
-            List<ItemStack> repairMaterials = List.of(repairIngredient.getItems());
+            final List<ItemStack> repairMaterials = List.of(repairIngredient.getItems());
 
             return repairable.stream()
                     .mapMulti((itemStack, consumer) -> {
-                        ItemStack damagedThreeQuarters = itemStack.copy();
+                        final ItemStack damagedThreeQuarters = itemStack.copy();
                         damagedThreeQuarters.setDamageValue(damagedThreeQuarters.getMaxDamage() * 3 / 4);
-                        ItemStack damagedHalf = itemStack.copy();
+                        final ItemStack damagedHalf = itemStack.copy();
                         damagedHalf.setDamageValue(damagedHalf.getMaxDamage() / 2);
 
 
 
-                        IJeiAnvilRecipe repairWithSame = vanillaRecipeFactory.createAnvilRecipe(List.of(damagedThreeQuarters), List.of(damagedThreeQuarters), List.of(damagedHalf));
+                        final IJeiAnvilRecipe repairWithSame = vanillaRecipeFactory.createAnvilRecipe(List.of(damagedThreeQuarters), List.of(damagedThreeQuarters), List.of(damagedHalf));
                         consumer.accept(repairWithSame);
 
                         if (!repairMaterials.isEmpty()) {
-                            ItemStack damagedFully = itemStack.copy();
+                            final ItemStack damagedFully = itemStack.copy();
                             damagedFully.setDamageValue(damagedFully.getMaxDamage());
-                            IJeiAnvilRecipe repairWithMaterial = vanillaRecipeFactory.createAnvilRecipe(List.of(damagedFully), repairMaterials, List.of(damagedThreeQuarters));
+                            final IJeiAnvilRecipe repairWithMaterial = vanillaRecipeFactory.createAnvilRecipe(List.of(damagedFully), repairMaterials, List.of(damagedThreeQuarters));
                             consumer.accept(repairWithMaterial);
                         }
                     });
@@ -472,7 +472,7 @@ public class TCOTS_JEIPlugin implements IModPlugin {
             private final Ingredient repairIngredient;
             private final List<ItemStack> repairable;
 
-            public RepairData(Ingredient repairIngredient, ItemStack... repairable) {
+            public RepairData(final Ingredient repairIngredient, final ItemStack... repairable) {
                 this.repairIngredient = repairIngredient;
                 this.repairable = List.of(repairable);
             }

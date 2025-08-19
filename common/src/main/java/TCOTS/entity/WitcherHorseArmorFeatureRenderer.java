@@ -23,23 +23,23 @@ import software.bernie.geckolib.util.Color;
 
 public class WitcherHorseArmorFeatureRenderer extends RenderLayer<Horse, HorseModel<Horse>> {
     private final HorseModel<Horse> model;
-    public WitcherHorseArmorFeatureRenderer(RenderLayerParent<Horse, HorseModel<Horse>> context) {
+    public WitcherHorseArmorFeatureRenderer(final RenderLayerParent<Horse, HorseModel<Horse>> context) {
         super(context);
         this.model=new HorseArmorModel<>(HorseArmorModel.createBodyMesh(new CubeDeformation(0.1f)).getRoot().bake(64,96));
     }
 
     @Override
-    public void render(PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int light, Horse horseEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+    public void render(final PoseStack matrixStack, final MultiBufferSource vertexConsumerProvider, final int light, final Horse horseEntity, final float limbAngle, final float limbDistance, final float tickDelta, final float animationProgress, final float headYaw, final float headPitch) {
 
-        ItemStack itemStack = horseEntity.getBodyArmorItem();
-        if (!(itemStack.getItem() instanceof WitcherHorseArmorItem horseArmorItem)) {
+        final ItemStack itemStack = horseEntity.getBodyArmorItem();
+        if (!(itemStack.getItem() instanceof final WitcherHorseArmorItem horseArmorItem)) {
             return;
         }
 
         this.getParentModel().copyPropertiesTo(this.model);
         this.model.prepareMobModel(horseEntity, limbAngle, limbDistance, tickDelta);
         this.model.setupAnim(horseEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entityCutoutNoCull(horseArmorItem.getOuterTexture()));
+        final VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entityCutoutNoCull(horseArmorItem.getOuterTexture()));
         this.model.renderToBuffer(matrixStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, Color.ofARGB(1.0f, 1.0f, 1.0f, 1.0f).argbInt());
     }
 
@@ -57,28 +57,28 @@ public class WitcherHorseArmorFeatureRenderer extends RenderLayer<Horse, HorseMo
         private static final String RIGHT_SADDLE_LINE = "right_saddle_line";
         private static final String HEAD_SADDLE = "head_saddle";
         private static final String MOUTH_SADDLE_WRAP = "mouth_saddle_wrap";
-        public HorseArmorModel(ModelPart root) {
+        public HorseArmorModel(final ModelPart root) {
             super(root);
         }
 
-        public static MeshDefinition createBodyMesh(CubeDeformation dilation) {
-            MeshDefinition modelData = new MeshDefinition();
-            PartDefinition modelPartData = modelData.getRoot();
-            PartDefinition modelPartData2 = modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create().texOffs(0, 32).addBox(-5.0f, -8.0f, -17.0f, 10.0f, 13.0f, 22.0f, new CubeDeformation(0.45f)), PartPose.offset(0.0f, 11.0f, 5.0f));
+        public static MeshDefinition createBodyMesh(final CubeDeformation dilation) {
+            final MeshDefinition modelData = new MeshDefinition();
+            final PartDefinition modelPartData = modelData.getRoot();
+            final PartDefinition modelPartData2 = modelPartData.addOrReplaceChild(PartNames.BODY, CubeListBuilder.create().texOffs(0, 32).addBox(-5.0f, -8.0f, -17.0f, 10.0f, 13.0f, 22.0f, new CubeDeformation(0.45f)), PartPose.offset(0.0f, 11.0f, 5.0f));
 
 
 
 
-            PartDefinition modelPartData3 = modelPartData.addOrReplaceChild(HEAD_PARTS, CubeListBuilder.create().texOffs(0, 70).addBox(-2.05f, -11.0f, -2.0f, 4.0f, 17.0f, 9.0f, new CubeDeformation(0.05f)), PartPose.offsetAndRotation(0.0f, 4.0f, -12.0f, 0.5235988f, 0.0f, 0.0f));
+            final PartDefinition modelPartData3 = modelPartData.addOrReplaceChild(HEAD_PARTS, CubeListBuilder.create().texOffs(0, 70).addBox(-2.05f, -11.0f, -2.0f, 4.0f, 17.0f, 9.0f, new CubeDeformation(0.05f)), PartPose.offsetAndRotation(0.0f, 4.0f, -12.0f, 0.5235988f, 0.0f, 0.0f));
 
-            PartDefinition modelPartData4 = modelPartData3.addOrReplaceChild(PartNames.HEAD, CubeListBuilder.create().texOffs(0, 13).addBox(-3.0f, -11.0f, -2.0f, 6.0f, 5.0f, 7.0f, dilation), PartPose.ZERO);
+            final PartDefinition modelPartData4 = modelPartData3.addOrReplaceChild(PartNames.HEAD, CubeListBuilder.create().texOffs(0, 13).addBox(-3.0f, -11.0f, -2.0f, 6.0f, 5.0f, 7.0f, dilation), PartPose.ZERO);
             modelPartData3.addOrReplaceChild(PartNames.MANE, CubeListBuilder.create().texOffs(56, 36).addBox(-1.0f, -11.0f, 5.01f, 2.0f, 16.0f, 2.0f, dilation), PartPose.ZERO);
             modelPartData3.addOrReplaceChild("upper_mouth", CubeListBuilder.create().texOffs(0, 25).addBox(-2.0f, -11.0f, -7.0f, 4.0f, 5.0f, 5.0f, dilation), PartPose.ZERO);
             modelPartData.addOrReplaceChild(PartNames.LEFT_HIND_LEG, CubeListBuilder.create().texOffs(48, 21).mirror().addBox(-3.0f, -1.01f, -1.0f, 4.0f, 11.0f, 4.0f, dilation), PartPose.offset(4.0f, 14.0f, 7.0f));
             modelPartData.addOrReplaceChild(PartNames.RIGHT_HIND_LEG, CubeListBuilder.create().texOffs(48, 21).addBox(-1.0f, -1.01f, -1.0f, 4.0f, 11.0f, 4.0f, dilation), PartPose.offset(-4.0f, 14.0f, 7.0f));
             modelPartData.addOrReplaceChild(PartNames.LEFT_FRONT_LEG, CubeListBuilder.create().texOffs(48, 21).mirror().addBox(-3.0f, -1.01f, -1.9f, 4.0f, 11.0f, 4.0f, dilation), PartPose.offset(4.0f, 14.0f, -12.0f));
             modelPartData.addOrReplaceChild(PartNames.RIGHT_FRONT_LEG, CubeListBuilder.create().texOffs(48, 21).addBox(-1.0f, -1.01f, -1.9f, 4.0f, 11.0f, 4.0f, dilation), PartPose.offset(-4.0f, 14.0f, -12.0f));
-            CubeDeformation dilation2 = dilation.extend(0.0f, 5.5f, 0.0f);
+            final CubeDeformation dilation2 = dilation.extend(0.0f, 5.5f, 0.0f);
             modelPartData.addOrReplaceChild(LEFT_HIND_BABY_LEG, CubeListBuilder.create().texOffs(48, 21).mirror().addBox(-3.0f, -1.01f, -1.0f, 4.0f, 11.0f, 4.0f, dilation2), PartPose.offset(4.0f, 14.0f, 7.0f));
             modelPartData.addOrReplaceChild(RIGHT_HIND_BABY_LEG, CubeListBuilder.create().texOffs(48, 21).addBox(-1.0f, -1.01f, -1.0f, 4.0f, 11.0f, 4.0f, dilation2), PartPose.offset(-4.0f, 14.0f, 7.0f));
             modelPartData.addOrReplaceChild(LEFT_FRONT_BABY_LEG, CubeListBuilder.create().texOffs(48, 21).mirror().addBox(-3.0f, -1.01f, -1.9f, 4.0f, 11.0f, 4.0f, dilation2), PartPose.offset(4.0f, 14.0f, -12.0f));

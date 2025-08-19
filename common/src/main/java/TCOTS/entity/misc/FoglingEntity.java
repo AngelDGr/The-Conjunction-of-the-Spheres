@@ -1,7 +1,7 @@
 package TCOTS.entity.misc;
 
 import TCOTS.registry.TCOTS_Sounds;
-import TCOTS.entity.necrophages.FogletEntity;
+import TCOTS.entity.monsters.necrophages.FogletEntity;
 import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -62,7 +62,7 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, TraceableE
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
     }
 
-    public FoglingEntity(EntityType<? extends FoglingEntity> entityType, Level world) {
+    public FoglingEntity(final EntityType<? extends FoglingEntity> entityType, final Level world) {
         super(entityType, world);
     }
 
@@ -81,7 +81,7 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, TraceableE
 
     public static final byte DEATH_FOGLING_EFFECTS = 43;
     @Override
-    public boolean hurt(@NotNull DamageSource source, float amount) {
+    public boolean hurt(@NotNull final DamageSource source, final float amount) {
         if(amount>0){
             if(!this.level().isClientSide) {
                 this.level().broadcastEntityEvent(this, DEATH_FOGLING_EFFECTS);
@@ -95,7 +95,7 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, TraceableE
     }
 
     @Override
-    public void handleEntityEvent(byte status) {
+    public void handleEntityEvent(final byte status) {
         if(status == DEATH_FOGLING_EFFECTS){
             this.vanishParticles();
         }
@@ -106,15 +106,15 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, TraceableE
 
     private void vanishParticles(){
         for (int i = 0; i < 10; i++) {
-            double d = this.getX() + (double) Mth.randomBetween(this.getRandom(), -0.8F, 0.8F);
-            double e = (this.getEyeY()-0.5f)+ (double) Mth.randomBetween(this.getRandom(), -1F, 1F);
-            double f = this.getZ() + (double) Mth.randomBetween(this.getRandom(), -0.8F, 0.8F);
+            final double d = this.getX() + (double) Mth.randomBetween(this.getRandom(), -0.8F, 0.8F);
+            final double e = (this.getEyeY()-0.5f)+ (double) Mth.randomBetween(this.getRandom(), -1F, 1F);
+            final double f = this.getZ() + (double) Mth.randomBetween(this.getRandom(), -0.8F, 0.8F);
             this.level().addParticle(ParticleTypes.CLOUD, d,e,f,0,0,0);
         }
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
+    protected void defineSynchedData(final SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
         builder.define(ALPHA_VALUE_FOGLING, 0f);
     }
@@ -123,13 +123,13 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, TraceableE
         return this.entityData.get(ALPHA_VALUE_FOGLING);
     }
 
-    public final void setAlphaValue(float AlphaValue) {
+    public final void setAlphaValue(final float AlphaValue) {
         this.entityData.set(ALPHA_VALUE_FOGLING, AlphaValue);
     }
 
 
     @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull final CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putFloat("AlphaValue", this.entityData.get(ALPHA_VALUE_FOGLING));
         if (this.ownerUuid != null) {
@@ -137,7 +137,7 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, TraceableE
         }
     }
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
+    public void readAdditionalSaveData(final CompoundTag nbt) {
         this.setAlphaValue(nbt.getFloat("AlphaValue"));
         if (nbt.hasUUID("Owner")) {
             this.ownerUuid = nbt.getUUID("Owner");
@@ -169,14 +169,14 @@ public class FoglingEntity extends FogletEntity implements GeoEntity, TraceableE
     @Nullable
     @Override
     public Entity getOwner() {
-        Entity entity;
+        final Entity entity;
         if (this.owner == null && this.ownerUuid != null && this.level() instanceof ServerLevel && (entity = ((ServerLevel)this.level()).getEntity(this.ownerUuid)) instanceof LivingEntity) {
             this.owner = (Mob) entity;
         }
         return this.owner;
     }
 
-    public void setOwner(@Nullable Mob owner) {
+    public void setOwner(@Nullable final Mob owner) {
         this.owner = owner;
         this.ownerUuid = owner == null ? null : owner.getUUID();
     }

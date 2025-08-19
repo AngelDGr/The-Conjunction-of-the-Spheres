@@ -6,7 +6,7 @@
   "associated_items": [
     "tcots_witcher:graveir_bone"
   ],
-  "ordinal": 9
+  "ordinal": 10
 }
 ```
 

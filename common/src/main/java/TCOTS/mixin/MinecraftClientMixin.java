@@ -24,9 +24,9 @@ public class MinecraftClientMixin {
 
     @Inject(method = "handleKeybinds", at = @At(value ="INVOKE",
             target = "Lnet/minecraft/client/Minecraft;startAttack()Z", shift = At.Shift.AFTER))
-    private void injectAnchorRetrieving(CallbackInfo ci){
+    private void injectAnchorRetrieving(final CallbackInfo ci){
         if(this.player!=null) {
-            ItemStack stack = this.player.getItemInHand(InteractionHand.MAIN_HAND);
+            final ItemStack stack = this.player.getItemInHand(InteractionHand.MAIN_HAND);
             if (stack.is(TCOTS_Items.GIANT_ANCHOR.get()) && GiantAnchorItem.wasLaunched(stack)){
                 TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(new TCOTS_Main.RetrieveAnchorPacket());
             }

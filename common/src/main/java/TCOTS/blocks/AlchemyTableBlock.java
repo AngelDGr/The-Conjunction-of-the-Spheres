@@ -59,52 +59,52 @@ public class AlchemyTableBlock extends BaseEntityBlock implements EntityBlock {
         return CODEC;
     }
 
-    public AlchemyTableBlock(Properties settings) {
+    public AlchemyTableBlock(final Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
         this.registerDefaultState(defaultBlockState().setValue(HAS_ALCHEMY_BOOK, false));
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state){
+    public @NotNull RenderShape getRenderShape(@NotNull final BlockState state){
         return RenderShape.MODEL;
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull final BlockPos pos, @NotNull final BlockState state) {
         return new AlchemyTableBlockEntity(TCOTS_Blocks.AlchemyTableBlockEntity(), pos, state);
     }
 
     @Override
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public @NotNull VoxelShape getShape(@NotNull final BlockState state, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, Item.@NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag options) {
+    public void appendHoverText(@NotNull final ItemStack stack, final Item.@NotNull TooltipContext context, @NotNull final List<Component> tooltip, @NotNull final TooltipFlag options) {
         super.appendHoverText(stack, context, tooltip, options);
         tooltip.add(Component.translatable("block.tcots_witcher.alchemy_table.tooltip").withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("block.tcots_witcher.alchemy_table.tooltip_book").withStyle(ChatFormatting.GRAY));
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    public BlockState getStateForPlacement(final BlockPlaceContext ctx) {
         return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
+    public @NotNull BlockState rotate(final BlockState state, final Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
+    public @NotNull BlockState mirror(final BlockState state, final Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(final StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, HAS_ALCHEMY_BOOK);
     }
 
@@ -112,9 +112,9 @@ public class AlchemyTableBlock extends BaseEntityBlock implements EntityBlock {
     //Crafting stuff
 
     @Override
-    public void onRemove(BlockState state, @NotNull Level world, @NotNull BlockPos pos, BlockState newState, boolean moved) {
+    public void onRemove(final BlockState state, @NotNull final Level world, @NotNull final BlockPos pos, final BlockState newState, final boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            final BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof AlchemyTableBlockEntity) {
                 world.updateNeighbourForOutputSignal(pos,this);
             }
@@ -126,25 +126,25 @@ public class AlchemyTableBlock extends BaseEntityBlock implements EntityBlock {
         }
     }
 
-    private void dropBook(BlockState state, Level world, BlockPos pos) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
+    private void dropBook(final BlockState state, final Level world, final BlockPos pos) {
+        final BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof AlchemyTableBlockEntity) {
-            ItemStack book = new ItemStack(TCOTS_Items.ALCHEMY_BOOK, 1);
-            Direction direction = state.getValue(FACING);
-            float f = 0.25f * (float)direction.getStepX();
-            float g = 0.25f * (float)direction.getStepZ();
-            ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5 + (double)f, pos.getY() + 1, (double)pos.getZ() + 0.5 + (double)g, book);
+            final ItemStack book = new ItemStack(TCOTS_Items.ALCHEMY_BOOK, 1);
+            final Direction direction = state.getValue(FACING);
+            final float f = 0.25f * (float)direction.getStepX();
+            final float g = 0.25f * (float)direction.getStepZ();
+            final ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5 + (double)f, pos.getY() + 1, (double)pos.getZ() + 0.5 + (double)g, book);
             itemEntity.setDefaultPickUpDelay();
             world.addFreshEntity(itemEntity);
         }
     }
 
     @Override
-    public @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, Level world, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
+    public @NotNull InteractionResult useWithoutItem(@NotNull final BlockState state, final Level world, @NotNull final BlockPos pos, @NotNull final Player player, @NotNull final BlockHitResult hit) {
 
         if (!world.isClientSide) {
             //If the player have an alcohol in the hand refill the potion
-            if(player.getMainHandItem().getItem() instanceof WitcherAlcohol_Base alcohol){
+            if(player.getMainHandItem().getItem() instanceof final WitcherAlcohol_Base alcohol){
 
                 int loopP= EntitiesUtil.isWearingManticoreArmor(player)? alcohol.getRefillQuantity()+2:alcohol.getRefillQuantity();
                 boolean refilled=false;
@@ -153,13 +153,13 @@ public class AlchemyTableBlock extends BaseEntityBlock implements EntityBlock {
                 for(int i=0; i<player.getInventory().getContainerSize(); i++){
                     //If found an Empty Potion with a component
                     if(player.getInventory().getItem(i).getItem() instanceof EmptyWitcherPotionItem && player.getInventory().getItem(i).has(TCOTS_Items.RefillRecipe())){
-                        String refillItem= player.getInventory().getItem(i).get(TCOTS_Items.RefillRecipe());
+                        final String refillItem= player.getInventory().getItem(i).get(TCOTS_Items.RefillRecipe());
                         if(refillItem!=null){
                             //Save the potion type
-                            Item PotionI = BuiltInRegistries.ITEM.get(ResourceLocation.parse(refillItem));
+                            final Item PotionI = BuiltInRegistries.ITEM.get(ResourceLocation.parse(refillItem));
 
                             //Saves the count of empty bottles
-                            int countI = player.getInventory().getItem(i).getCount();
+                            final int countI = player.getInventory().getItem(i).getCount();
 
                             //Erases the slot
                             player.getInventory().getItem(i).shrink(player.getInventory().getItem(i).getCount());
@@ -179,7 +179,7 @@ public class AlchemyTableBlock extends BaseEntityBlock implements EntityBlock {
                                     player.getMainHandItem().shrink(1);
                                 }
                                 //Triggers the advancement
-                                if(player instanceof ServerPlayer serverPlayer) TCOTS_Criteria.RefillConcoction().trigger(serverPlayer);
+                                if(player instanceof final ServerPlayer serverPlayer) TCOTS_Criteria.RefillConcoction().trigger(serverPlayer);
                                 //Play a sound
                                 world.playSound(null, pos, TCOTS_Sounds.getSoundEvent("potion_refill"), SoundSource.BLOCKS, 1.0f, 1.0f);
                                 //Success
@@ -195,7 +195,7 @@ public class AlchemyTableBlock extends BaseEntityBlock implements EntityBlock {
                             player.getMainHandItem().shrink(1);
                         }
                         //Triggers the advancement
-                        if(player instanceof ServerPlayer serverPlayer) TCOTS_Criteria.RefillConcoction().trigger(serverPlayer);
+                        if(player instanceof final ServerPlayer serverPlayer) TCOTS_Criteria.RefillConcoction().trigger(serverPlayer);
                         //Play a sound
                         world.playSound(null, pos, TCOTS_Sounds.getSoundEvent("potion_refill"), SoundSource.BLOCKS, 3.0f, 1.0f);
                         //Success
@@ -224,7 +224,7 @@ public class AlchemyTableBlock extends BaseEntityBlock implements EntityBlock {
                 if(world.getBlockState(pos).getValue(HAS_ALCHEMY_BOOK)
                         && player.getMainHandItem().isEmpty() && player.isShiftKeyDown()){
 
-                    ItemStack book = new ItemStack(TCOTS_Items.ALCHEMY_BOOK, 1);
+                    final ItemStack book = new ItemStack(TCOTS_Items.ALCHEMY_BOOK, 1);
 
                     player.getInventory().add(book);
                     world.setBlockAndUpdate(pos, state.setValue(HAS_ALCHEMY_BOOK, false));
@@ -235,7 +235,7 @@ public class AlchemyTableBlock extends BaseEntityBlock implements EntityBlock {
 
 
             //Screen opener - Extended thanks to Architectury!
-            ExtendedMenuProvider screenHandlerFactory = ((AlchemyTableBlockEntity) world.getBlockEntity(pos));
+            final ExtendedMenuProvider screenHandlerFactory = ((AlchemyTableBlockEntity) world.getBlockEntity(pos));
             if (screenHandlerFactory != null) {
                 MenuRegistry.openExtendedMenu((ServerPlayer) player, screenHandlerFactory);
             }

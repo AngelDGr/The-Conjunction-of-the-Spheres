@@ -21,8 +21,8 @@ public class TCOTS_SoundsImpl {
         return ROTFIEND_BLOOD_EXPLOSION.get();
     }
 
-    public static Supplier<Holder.Reference<SoundEvent>> registerReference(String id) {
-        DeferredHolder<SoundEvent,SoundEvent> soundEventReference = TCOTS_Registries.SOUND_EVENTS.register(id,
+    public static Supplier<Holder.Reference<SoundEvent>> registerReference(final String id) {
+        final DeferredHolder<SoundEvent,SoundEvent> soundEventReference = TCOTS_Registries.SOUND_EVENTS.register(id,
                 () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, id)));
         return () -> (Holder.Reference<SoundEvent>) soundEventReference.getDelegate();
     }

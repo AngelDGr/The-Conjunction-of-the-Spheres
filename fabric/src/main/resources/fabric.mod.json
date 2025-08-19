@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "tcots_witcher",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"name": "The Conjunction of the Spheres",
 	"description": "New monsters, armors, weapons, potions and challenges from the Witcher Universe, beware, The Conjunction of the Spheres!",
 	"authors": [
@@ -21,10 +21,6 @@
 
 		"client": [
           "fabric.TCOTS.TCOTS_ClientFabric"
-		],
-
-		"fabric-datagen": [
-          "fabric.TCOTS.TCOTS_DataGenerator"
 		],
 
 		"jei_mod_plugin": [

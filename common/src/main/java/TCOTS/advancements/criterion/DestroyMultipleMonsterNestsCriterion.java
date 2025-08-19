@@ -19,7 +19,7 @@ public class DestroyMultipleMonsterNestsCriterion extends SimpleCriterionTrigger
         return Conditions.CODEC;
     }
 
-    public void trigger(ServerPlayer player, int stat) {
+    public void trigger(final ServerPlayer player, final int stat) {
         this.trigger(player, conditions -> conditions.quantity.filter(integer -> stat >= integer).isPresent()
         );
     }
@@ -38,7 +38,7 @@ public class DestroyMultipleMonsterNestsCriterion extends SimpleCriterionTrigger
                                 .apply(instance, DestroyMultipleMonsterNestsCriterion.Conditions::new));
 
 
-        public static Criterion<DestroyMultipleMonsterNestsCriterion.Conditions> createMultipleDestroyNestCriterion(int quantity) {
+        public static Criterion<DestroyMultipleMonsterNestsCriterion.Conditions> createMultipleDestroyNestCriterion(final int quantity) {
             return TCOTS_Criteria.DestroyMultipleMonsterNest().createCriterion(
                     new DestroyMultipleMonsterNestsCriterion.Conditions(
                             Optional.empty(),

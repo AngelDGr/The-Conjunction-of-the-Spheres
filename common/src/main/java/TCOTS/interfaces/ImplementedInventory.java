@@ -37,7 +37,7 @@ public interface ImplementedInventory extends WorldlyContainer {
      * @param items the item list
      * @return a new inventory
      */
-    static ImplementedInventory of(NonNullList<ItemStack> items) {
+    static ImplementedInventory of(final NonNullList<ItemStack> items) {
         return () -> items;
     }
 
@@ -47,7 +47,7 @@ public interface ImplementedInventory extends WorldlyContainer {
      * @param size the inventory size
      * @return a new inventory
      */
-    static ImplementedInventory ofSize(int size) {
+    static ImplementedInventory ofSize(final int size) {
         return of(NonNullList.withSize(size, ItemStack.EMPTY));
     }
 
@@ -62,8 +62,8 @@ public interface ImplementedInventory extends WorldlyContainer {
      * @return the available slots
      */
     @Override
-    default int[] getSlotsForFace(Direction side) {
-        int[] result = new int[getItems().size()];
+    default int[] getSlotsForFace(final Direction side) {
+        final int[] result = new int[getItems().size()];
         for (int i = 0; i < result.length; i++) {
             result[i] = i;
         }
@@ -82,7 +82,7 @@ public interface ImplementedInventory extends WorldlyContainer {
      * @return true if the stack can be inserted
      */
     @Override
-    default boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction side) {
+    default boolean canPlaceItemThroughFace(final int slot, final ItemStack stack, @Nullable final Direction side) {
         return true;
     }
 
@@ -97,7 +97,7 @@ public interface ImplementedInventory extends WorldlyContainer {
      * @return true if the stack can be extracted
      */
     @Override
-    default boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction side) {
+    default boolean canTakeItemThroughFace(final int slot, final ItemStack stack, final Direction side) {
         return true;
     }
 
@@ -121,7 +121,7 @@ public interface ImplementedInventory extends WorldlyContainer {
     @Override
     default boolean isEmpty() {
         for (int i = 0; i < getContainerSize(); i++) {
-            ItemStack stack = getItem(i);
+            final ItemStack stack = getItem(i);
             if (!stack.isEmpty()) {
                 return false;
             }
@@ -137,7 +137,7 @@ public interface ImplementedInventory extends WorldlyContainer {
      * @return the item in the slot
      */
     @Override
-    default ItemStack getItem(int slot) {
+    default ItemStack getItem(final int slot) {
         return getItems().get(slot);
     }
 
@@ -152,8 +152,8 @@ public interface ImplementedInventory extends WorldlyContainer {
      * @return a stack
      */
     @Override
-    default ItemStack removeItem(int slot, int count) {
-        ItemStack result = ContainerHelper.removeItem(getItems(), slot, count);
+    default ItemStack removeItem(final int slot, final int count) {
+        final ItemStack result = ContainerHelper.removeItem(getItems(), slot, count);
         if (!result.isEmpty()) {
             setChanged();
         }
@@ -169,7 +169,7 @@ public interface ImplementedInventory extends WorldlyContainer {
      * @return the removed stack
      */
     @Override
-    default ItemStack removeItemNoUpdate(int slot) {
+    default ItemStack removeItemNoUpdate(final int slot) {
         return ContainerHelper.takeItem(getItems(), slot);
     }
 
@@ -183,7 +183,7 @@ public interface ImplementedInventory extends WorldlyContainer {
      * @param stack the stack
      */
     @Override
-    default void setItem(int slot, ItemStack stack) {
+    default void setItem(final int slot, final ItemStack stack) {
         getItems().set(slot, stack);
         if (stack.getCount() > getMaxStackSize()) {
             stack.setCount(getMaxStackSize());
@@ -205,7 +205,7 @@ public interface ImplementedInventory extends WorldlyContainer {
     }
 
     @Override
-    default boolean stillValid(Player player) {
+    default boolean stillValid(final Player player) {
         return true;
     }
 }

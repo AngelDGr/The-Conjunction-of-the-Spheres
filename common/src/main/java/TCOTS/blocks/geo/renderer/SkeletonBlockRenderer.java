@@ -7,7 +7,7 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
 @SuppressWarnings("unused")
 public class SkeletonBlockRenderer extends GeoBlockRenderer<SkeletonBlockEntity> {
-    public SkeletonBlockRenderer(BlockEntityRendererProvider.Context ctx) {
+    public SkeletonBlockRenderer(final BlockEntityRendererProvider.Context ctx) {
         super(new SkeletonBlockEntityModel());
     }
 }

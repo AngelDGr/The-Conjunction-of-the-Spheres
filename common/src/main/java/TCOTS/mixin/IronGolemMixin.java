@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(IronGolem.class)
 public abstract class IronGolemMixin extends AbstractGolem implements NeutralMob {
-    protected IronGolemMixin(EntityType<? extends AbstractGolem> entityType, Level world) {
+    protected IronGolemMixin(final EntityType<? extends AbstractGolem> entityType, final Level world) {
         super(entityType, world);
     }
 
     @Inject(method = "doHurtTarget", at = @At("TAIL"))
-    private void injectOnAttacking(Entity target, CallbackInfoReturnable<Boolean> cir){
+    private void injectOnAttacking(final Entity target, final CallbackInfoReturnable<Boolean> cir){
         this.setLastHurtMob(target);
     }
 

@@ -18,13 +18,13 @@ import net.minecraft.world.level.Level;
 public class BoltItem extends ArrowItem {
 
     private final String id;
-    public BoltItem(Item.Properties settings, String id) {
+    public BoltItem(final Item.Properties settings, final String id) {
         super(settings);
         this.id=id;
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltip, @NotNull TooltipFlag type) {
+    public void appendHoverText(@NotNull final ItemStack stack, @NotNull final TooltipContext context, final List<Component> tooltip, @NotNull final TooltipFlag type) {
         tooltip.add(Component.translatable("tooltip.tcots_witcher."+id).withStyle(ChatFormatting.GRAY));
     }
 
@@ -34,7 +34,7 @@ public class BoltItem extends ArrowItem {
 
 
     @Override
-    public @NotNull AbstractArrow createArrow(@NotNull Level world, @NotNull ItemStack stack, @NotNull LivingEntity shooter, @Nullable ItemStack shotFrom) {
+    public @NotNull AbstractArrow createArrow(@NotNull final Level world, @NotNull final ItemStack stack, @NotNull final LivingEntity shooter, @Nullable final ItemStack shotFrom) {
         return switch (id) {
             case "blunt_bolt"     -> new BluntBoltProjectile(world, shooter, stack.copyWithCount(1), shotFrom);
             case "precision_bolt" -> new PrecisionBoltProjectile(world, shooter, stack.copyWithCount(1), shotFrom);

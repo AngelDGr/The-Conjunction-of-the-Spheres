@@ -20,13 +20,13 @@ public class BackgroundRendererMixin {
     private static Entity entity;
 
     @Inject(method = "setupColor", at = @At("HEAD"))
-    private static void renderGet(Camera camera, float tickDelta, ClientLevel world, int viewDistance, float skyDarkness, CallbackInfo ci){
+    private static void renderGet(final Camera camera, final float tickDelta, final ClientLevel world, final int viewDistance, final float skyDarkness, final CallbackInfo ci){
         entity = camera.getEntity();
     }
 
     @ModifyVariable(method = "setupColor", at = @At(value = "STORE"), ordinal = 2)
-    private static float modifyCatFogBrightness(float s){
-        if(entity instanceof LivingEntity entityP && MiscUtil.canHaveCatEffect(entityP)){
+    private static float modifyCatFogBrightness(final float s){
+        if(entity instanceof final LivingEntity entityP && MiscUtil.canHaveCatEffect(entityP)){
             return 1.1f;
         }
 

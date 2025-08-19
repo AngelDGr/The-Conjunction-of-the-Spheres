@@ -17,19 +17,19 @@ import org.jetbrains.annotations.Nullable;
 public class ScurverSpineEntity extends AbstractArrow {
     private static final ItemStack DEFAULT_STACK = new ItemStack(TCOTS_Items.SCURVER_SPINE.get());
 
-    public ScurverSpineEntity(EntityType<? extends ScurverSpineEntity> entityType, Level world) {
+    public ScurverSpineEntity(final EntityType<? extends ScurverSpineEntity> entityType, final Level world) {
         super(entityType, world);
     }
 
-    public ScurverSpineEntity(Level world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
+    public ScurverSpineEntity(final Level world, final double x, final double y, final double z, final ItemStack stack, @Nullable final ItemStack shotFrom) {
         super(TCOTS_Entities.ScurverSpine(), x, y, z, world, stack, shotFrom);
     }
 
-    protected ScurverSpineEntity(EntityType<? extends AbstractArrow> type, double x, double y, double z, Level world, ItemStack stack, @Nullable ItemStack shotFrom) {
+    protected ScurverSpineEntity(final EntityType<? extends AbstractArrow> type, final double x, final double y, final double z, final Level world, final ItemStack stack, @Nullable final ItemStack shotFrom) {
         super(type, x, y, z, world, stack, shotFrom);
     }
 
-    public ScurverSpineEntity(LivingEntity owner, Level world, ItemStack stack, @Nullable ItemStack shotFrom) {
+    public ScurverSpineEntity(final LivingEntity owner, final Level world, final ItemStack stack, @Nullable final ItemStack shotFrom) {
         super(TCOTS_Entities.ScurverSpine(), owner, world, stack, shotFrom);
         this.setOwner(owner);
         if (owner instanceof Player) {
@@ -46,8 +46,8 @@ public class ScurverSpineEntity extends AbstractArrow {
     int life=0;
 
     @Override
-    protected void doPostHurtEffects(LivingEntity target) {
-        Entity entity = this.getEffectSource();
+    protected void doPostHurtEffects(final LivingEntity target) {
+        final Entity entity = this.getEffectSource();
         target.addEffect(new MobEffectInstance(TCOTS_Effects.Bleeding(), 200, 0, false, false, true), entity);
     }
 

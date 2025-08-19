@@ -13,14 +13,14 @@ public class GraveHagDecoctionEffect extends DecoctionEffectBase {
 //             0.1hp/s          extra for each kill
 
 
-    public GraveHagDecoctionEffect(MobEffectCategory category, int color) {
+    public GraveHagDecoctionEffect(final MobEffectCategory category, final int color) {
         super(category, color,50);
     }
 
     private int killCounterIn=0;
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(@NotNull final LivingEntity entity, final int amplifier) {
 
         //When killed a mob
         if((killCounterIn != entity.theConjunctionOfTheSpheres$getKillCount()) && killCounterIn < 20){
@@ -42,7 +42,7 @@ public class GraveHagDecoctionEffect extends DecoctionEffectBase {
     }
 
     @Override
-    public void removeAttributeModifiers(@NotNull AttributeMap attributes) {
+    public void removeAttributeModifiers(@NotNull final AttributeMap attributes) {
         killCounterIn=0;
         super.removeAttributeModifiers(attributes);
     }

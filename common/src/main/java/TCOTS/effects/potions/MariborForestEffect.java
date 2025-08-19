@@ -11,14 +11,14 @@ public class MariborForestEffect extends WitcherPotionEffect {
     //Maribor Forest II     ----->      0.5 Saturation x 3 seconds
     //Maribor Forest III    ----->      0.8 Saturation x 3 seconds
 
-    public MariborForestEffect(MobEffectCategory category, int color) {
+    public MariborForestEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(final LivingEntity entity, final int amplifier) {
         if(!entity.level().isClientSide){
-            if(entity instanceof Player playerEntity && entity.tickCount%60==0){
+            if(entity instanceof final Player playerEntity && entity.tickCount%60==0){
                 playerEntity.getFoodData().eat(1, 0.2f+(0.3f*amplifier));
             }
         }

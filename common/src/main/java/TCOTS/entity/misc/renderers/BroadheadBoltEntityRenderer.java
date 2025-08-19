@@ -7,12 +7,12 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BroadheadBoltEntityRenderer extends BoltEntityRenderer<BroadheadBoltProjectile>{
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"textures/entity/broadhead_bolt.png");
-    public BroadheadBoltEntityRenderer(EntityRendererProvider.Context context) {
+    public BroadheadBoltEntityRenderer(final EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BroadheadBoltProjectile arrowEntity) {
+    public ResourceLocation getTextureLocation(final BroadheadBoltProjectile arrowEntity) {
         return TEXTURE;
     }
 }

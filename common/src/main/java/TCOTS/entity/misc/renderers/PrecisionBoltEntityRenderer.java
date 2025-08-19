@@ -7,12 +7,12 @@ import net.minecraft.resources.ResourceLocation;
 
 public class PrecisionBoltEntityRenderer extends BoltEntityRenderer<PrecisionBoltProjectile> {
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"textures/entity/precision_bolt.png");
-    public PrecisionBoltEntityRenderer(EntityRendererProvider.Context context) {
+    public PrecisionBoltEntityRenderer(final EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(PrecisionBoltProjectile arrowEntity) {
+    public ResourceLocation getTextureLocation(final PrecisionBoltProjectile arrowEntity) {
         return TEXTURE;
     }
 }

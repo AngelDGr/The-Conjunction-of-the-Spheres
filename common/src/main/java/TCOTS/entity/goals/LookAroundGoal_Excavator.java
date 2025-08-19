@@ -8,7 +8,7 @@ public class LookAroundGoal_Excavator extends RandomLookAroundGoal {
 
     ExcavatorMob excavatorMob;
 
-    public LookAroundGoal_Excavator(Mob mob) {
+    public LookAroundGoal_Excavator(final Mob mob) {
         super(mob);
         if (!(mob instanceof ExcavatorMob)) {
             throw new IllegalArgumentException("LookAroundGoal_InGround requires Mob implements ExcavatorMob");

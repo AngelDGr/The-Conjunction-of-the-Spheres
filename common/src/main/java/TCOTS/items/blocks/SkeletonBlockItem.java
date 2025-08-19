@@ -21,12 +21,12 @@ import net.minecraft.world.level.block.Block;
 
 public class SkeletonBlockItem extends BlockItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    public SkeletonBlockItem(Block block, Properties settings) {
+    public SkeletonBlockItem(final Block block, final Properties settings) {
         super(block, settings);
     }
 
     @Override
-    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+    public void createGeoRenderer(final Consumer<GeoRenderProvider> consumer) {
         consumer.accept(new GeoRenderProvider() {
 
             private final SkeletonBlockItemRenderer renderer = new SkeletonBlockItemRenderer();
@@ -41,13 +41,13 @@ public class SkeletonBlockItem extends BlockItem implements GeoItem {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltip, @NotNull TooltipFlag type) {
+    public void appendHoverText(@NotNull final ItemStack stack, @NotNull final TooltipContext context, final List<Component> tooltip, @NotNull final TooltipFlag type) {
         tooltip.add(Component.translatable("tooltip.tcots_witcher.skeleton_block1").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
         tooltip.add(Component.translatable("tooltip.tcots_witcher.skeleton_block2").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(GeoControllersUtil.genericIdleController(this));
     }
 

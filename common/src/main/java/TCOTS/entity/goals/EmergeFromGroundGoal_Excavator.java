@@ -17,11 +17,11 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
 
     int AnimationTicks=36;
 
-    public EmergeFromGroundGoal_Excavator(PathfinderMob mob, int returnTicks) {
+    public EmergeFromGroundGoal_Excavator(final PathfinderMob mob, final int returnTicks) {
         this(mob,returnTicks,false);
     }
 
-    public EmergeFromGroundGoal_Excavator(PathfinderMob mob, int returnTicks, boolean generatesPuddle) {
+    public EmergeFromGroundGoal_Excavator(final PathfinderMob mob, final int returnTicks, final boolean generatesPuddle) {
         if (!(mob instanceof ExcavatorMob)) {
             throw new IllegalArgumentException("EmergeFromGroundGoal requires Mob implements ExcavatorMob");
         }
@@ -36,7 +36,7 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
         return (canStartO() || detectedBySomeone()) && excavatorMob.getInGround();
     }
     public boolean canStartO(){
-        LivingEntity livingEntity = this.mob.getTarget();
+        final LivingEntity livingEntity = this.mob.getTarget();
         //If it doesn't have target
         if (livingEntity == null) {
             return false;
@@ -51,7 +51,7 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
     }
 
     public boolean detectedBySomeone(){
-        List<Mob> enemiesList =
+        final List<Mob> enemiesList =
         this.mob.level().getEntitiesOfClass(Mob.class, this.mob.getBoundingBox().inflate(10,5,10),
                 entity -> entity.getTarget() == this.mob);
 
@@ -80,7 +80,7 @@ public class EmergeFromGroundGoal_Excavator extends Goal {
         return (shouldContinueO() || detectedBySomeone()) && excavatorMob.getInGround();
     }
     public boolean shouldContinueO(){
-        LivingEntity livingEntity = this.mob.getTarget();
+        final LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity == null) {
             return false;
         } else if (!livingEntity.isAlive()) {

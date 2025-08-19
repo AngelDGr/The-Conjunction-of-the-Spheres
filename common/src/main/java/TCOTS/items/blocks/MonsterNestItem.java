@@ -19,13 +19,13 @@ public class MonsterNestItem extends BlockItem implements GeoItem {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public MonsterNestItem(Block block, Properties settings) {
+    public MonsterNestItem(final Block block, final Properties settings) {
         super(block, settings);
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     @Override
-    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+    public void createGeoRenderer(final Consumer<GeoRenderProvider> consumer) {
         consumer.accept(new GeoRenderProvider() {
 
             private final MonsterNestItemRenderer renderer = new MonsterNestItemRenderer();
@@ -39,7 +39,7 @@ public class MonsterNestItem extends BlockItem implements GeoItem {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(GeoControllersUtil.genericIdleController(this));
     }
 

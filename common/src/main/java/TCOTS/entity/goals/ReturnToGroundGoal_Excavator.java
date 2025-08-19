@@ -16,11 +16,11 @@ public class ReturnToGroundGoal_Excavator extends Goal {
     int ticks=35;
     private final boolean generatesPuddle;
 
-    public ReturnToGroundGoal_Excavator(PathfinderMob mob) {
+    public ReturnToGroundGoal_Excavator(final PathfinderMob mob) {
         this(mob, false);
     }
 
-    public ReturnToGroundGoal_Excavator(PathfinderMob mob, boolean generatesPuddle) {
+    public ReturnToGroundGoal_Excavator(final PathfinderMob mob, final boolean generatesPuddle) {
         if (!(mob instanceof ExcavatorMob)) {
             throw new IllegalArgumentException("ReturnToGroundGoal requires Mob implements ExcavatorMob");
         }
@@ -50,8 +50,8 @@ public class ReturnToGroundGoal_Excavator extends Goal {
     }
 
 
-    public void spawnPuddle(Level world, LivingEntity entity){
-        DrownerPuddleEntity puddle=new DrownerPuddleEntity(TCOTS_Entities.DrownerPuddle(),world, entity.getX(), entity.getY(), entity.getZ(), mob);
+    public void spawnPuddle(final Level world, final LivingEntity entity){
+        final DrownerPuddleEntity puddle=new DrownerPuddleEntity(TCOTS_Entities.DrownerPuddle(),world, entity.getX(), entity.getY(), entity.getZ(), mob);
         excavatorMob.setPuddle(puddle);
         if (!world.isClientSide) {
             world.addFreshEntity(puddle);

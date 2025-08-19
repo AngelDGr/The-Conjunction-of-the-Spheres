@@ -152,7 +152,8 @@ loom {
         data {
             data()
             programArgs "--all", "--mod", "tcots_witcher"
-            programArgs "--output", generatedResources.absolutePath
+            programArgs("--output", project(":common").file("src/main/generated").absolutePath)
+            programArgs("--existing", project(":common").file("src/main/resources").absolutePath)
         }
     }
 

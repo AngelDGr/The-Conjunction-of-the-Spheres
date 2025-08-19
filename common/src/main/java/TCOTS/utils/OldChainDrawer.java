@@ -31,42 +31,42 @@ public class OldChainDrawer {
      * @param vertexConsumerProvider The VertexConsumerProvider, whatever it does.
      * @param toEntity               The entity that we connect the chain to, this can be a {PlayerEntity} or a {ChainKnotEntity}.
      */
-    private void createChainLine(Entity fromEntity, float tickDelta, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, Entity toEntity) {
+    private void createChainLine(final Entity fromEntity, final float tickDelta, final PoseStack matrixStack, final MultiBufferSource vertexConsumerProvider, final Entity toEntity) {
 
-        double lerpBodyAngle = (Mth.lerp(tickDelta, fromEntity.yRotO, fromEntity.getVisualRotationYInDegrees()) * Mth.DEG_TO_RAD) + Mth.HALF_PI;
-        Vec3 leashOffset = new Vec3(0, 0, 0);
-        double xAngleOffset = Math.cos(lerpBodyAngle) * leashOffset.z + Math.sin(lerpBodyAngle) * leashOffset.x;
-        double zAngleOffset = Math.sin(lerpBodyAngle) * leashOffset.z - Math.cos(lerpBodyAngle) * leashOffset.x;
+        final double lerpBodyAngle = (Mth.lerp(tickDelta, fromEntity.yRotO, fromEntity.getVisualRotationYInDegrees()) * Mth.DEG_TO_RAD) + Mth.HALF_PI;
+        final Vec3 leashOffset = new Vec3(0, 0, 0);
+        final double xAngleOffset = Math.cos(lerpBodyAngle) * leashOffset.z + Math.sin(lerpBodyAngle) * leashOffset.x;
+        final double zAngleOffset = Math.sin(lerpBodyAngle) * leashOffset.z - Math.cos(lerpBodyAngle) * leashOffset.x;
 
-        Vec3 ropeGripPosition = toEntity.getRopeHoldPosition(tickDelta);
+        final Vec3 ropeGripPosition = toEntity.getRopeHoldPosition(tickDelta);
 
-        double lerpOriginX = Mth.lerp(tickDelta, fromEntity.xo, fromEntity.getX()) + xAngleOffset;
-        double lerpOriginY = Mth.lerp(tickDelta, fromEntity.yo, fromEntity.getY()) + leashOffset.y;
-        double lerpOriginZ = Mth.lerp(tickDelta, fromEntity.zo, fromEntity.getZ()) + zAngleOffset;
+        final double lerpOriginX = Mth.lerp(tickDelta, fromEntity.xo, fromEntity.getX()) + xAngleOffset;
+        final double lerpOriginY = Mth.lerp(tickDelta, fromEntity.yo, fromEntity.getY()) + leashOffset.y;
+        final double lerpOriginZ = Mth.lerp(tickDelta, fromEntity.zo, fromEntity.getZ()) + zAngleOffset;
 
-        float lerpDistanceX = (float) (ropeGripPosition.x - lerpOriginX);
-        float lerpDistanceY = (float) (ropeGripPosition.y - lerpOriginY);
-        float lerpDistanceZ = (float) (ropeGripPosition.z - lerpOriginZ);
+        final float lerpDistanceX = (float) (ropeGripPosition.x - lerpOriginX);
+        final float lerpDistanceY = (float) (ropeGripPosition.y - lerpOriginY);
+        final float lerpDistanceZ = (float) (ropeGripPosition.z - lerpOriginZ);
         //Create offset based on the location. Example that a line that does not travel in the x then the xOffset will be 0.
-        float v = Mth.invSqrt(lerpDistanceX * lerpDistanceX + lerpDistanceZ * lerpDistanceZ) * 0.025F / 2;
-        float xOffset = lerpDistanceZ * v;
-        float zOffset = lerpDistanceX * v;
+        final float v = Mth.invSqrt(lerpDistanceX * lerpDistanceX + lerpDistanceZ * lerpDistanceZ) * 0.025F / 2;
+        final float xOffset = lerpDistanceZ * v;
+        final float zOffset = lerpDistanceX * v;
 
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.leash());
+        final VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.leash());
 
         matrixStack.pushPose(); // We push here to start new I think.
         matrixStack.translate(xAngleOffset, leashOffset.y, zAngleOffset);
 
         // Now we gather light information for the chain. Since the chain is lighter if there is more light.
-        BlockPos entityEyePos = BlockPos.containing(fromEntity.getEyePosition(tickDelta));
-        BlockPos holderEyePos = BlockPos.containing(toEntity.getEyePosition(tickDelta));
-        int entityBlockLight = getBlockLight(fromEntity, entityEyePos);
-        int holderBlockLight = toEntity.isOnFire() ? 15 : toEntity.level().getBrightness(LightLayer.BLOCK, holderEyePos);
-        int entitySkyLight = fromEntity.level().getBrightness(LightLayer.SKY, entityEyePos);
-        int holderSkyLight = fromEntity.level().getBrightness(LightLayer.SKY, holderEyePos);
+        final BlockPos entityEyePos = BlockPos.containing(fromEntity.getEyePosition(tickDelta));
+        final BlockPos holderEyePos = BlockPos.containing(toEntity.getEyePosition(tickDelta));
+        final int entityBlockLight = getBlockLight(fromEntity, entityEyePos);
+        final int holderBlockLight = toEntity.isOnFire() ? 15 : toEntity.level().getBrightness(LightLayer.BLOCK, holderEyePos);
+        final int entitySkyLight = fromEntity.level().getBrightness(LightLayer.SKY, entityEyePos);
+        final int holderSkyLight = fromEntity.level().getBrightness(LightLayer.SKY, holderEyePos);
 
-        float distance = toEntity.distanceTo(fromEntity);
-        Matrix4f matrix4f = matrixStack.last().pose();
+        final float distance = toEntity.distanceTo(fromEntity);
+        final Matrix4f matrix4f = matrixStack.last().pose();
 
         //This number specifies the number of pixels on the chain.
         chainDrawer(distance, vertexConsumer, matrix4f, lerpDistanceX, lerpDistanceY, lerpDistanceZ,
@@ -83,14 +83,19 @@ public class OldChainDrawer {
      * This method is the big drawer of the chain.
      */
     @SuppressWarnings("DuplicatedCode")
-    private void chainDrawer(float distance, VertexConsumer vertexConsumer, Matrix4f matrix4f,
-                             float lerpDistanceX, float lerpDistanceY, float lerpDistanceZ,
-                             int blockLightLevelOfStart, int blockLightLevelOfEnd,
-                             int skylightLevelOfStart, int skylightLevelOfEnd,
-                             float xOffset, float zOffset) {
+    private void chainDrawer(final float distance, final VertexConsumer vertexConsumer, final Matrix4f matrix4f,
+                             final float lerpDistanceX, final float lerpDistanceY, final float lerpDistanceZ,
+                             final int blockLightLevelOfStart, final int blockLightLevelOfEnd,
+                             final int skylightLevelOfStart, final int skylightLevelOfEnd,
+                             final float xOffset, final float zOffset) {
 
         //Can you see the chain here?
-        List<Integer> topLineA, middleLineA, bottomLineA, topLineB, middleLineB, bottomLineB;
+        final List<Integer> topLineA;
+        List<Integer> middleLineA;
+        List<Integer> bottomLineA;
+        List<Integer> topLineB;
+        List<Integer> middleLineB;
+        final List<Integer> bottomLineB;
         topLineA    = Arrays.asList(   1, 2, 3,       6, 7, 8, 9,         12, 13, 14);
         middleLineA = Arrays.asList(   1,    3,       6,       9,         12,     14);
         bottomLineA = Arrays.asList(   1, 2, 3,       6, 7, 8, 9,         12, 13, 14);
@@ -99,35 +104,38 @@ public class OldChainDrawer {
         middleLineB = Arrays.asList(   1,    3,       6,       9,         12,     14    );
         bottomLineB = Arrays.asList(0, 1,    3, 4, 5, 6,       9, 10, 11, 12,     14, 15);
 
-        int length = (int) Math.floor(distance * 48); //This number specifies the number of pixels on the chain.
+        final int length = (int) Math.floor(distance * 48); //This number specifies the number of pixels on the chain.
 
         // LightLevel Stuff
-        float s = (float) skylightLevelOfEnd / (length - 1);
-        int t = (int) Mth.lerp(s, (float) blockLightLevelOfStart, (float) blockLightLevelOfEnd);
-        int u = (int) Mth.lerp(s, (float) skylightLevelOfStart, (float) skylightLevelOfEnd);
-        int pack = LightTexture.pack(t, u);
+        final float s = (float) skylightLevelOfEnd / (length - 1);
+        final int t = (int) Mth.lerp(s, (float) blockLightLevelOfStart, (float) blockLightLevelOfEnd);
+        final int u = (int) Mth.lerp(s, (float) skylightLevelOfStart, (float) skylightLevelOfEnd);
+        final int pack = LightTexture.pack(t, u);
 
         for (int step = 0; step < length; ++step) {
-            float startStepFraction = ((float) step / (float) length);
-            float endStepFraction = ((float) (step + 1) / (float) length);
-            float startDrip = (float) drip2(startStepFraction * distance, distance, lerpDistanceY);
-            float endDrip = (float) drip2(endStepFraction * distance, distance, lerpDistanceY);
+            final float startStepFraction = ((float) step / (float) length);
+            final float endStepFraction = ((float) (step + 1) / (float) length);
+            final float startDrip = (float) drip2(startStepFraction * distance, distance, lerpDistanceY);
+            final float endDrip = (float) drip2(endStepFraction * distance, distance, lerpDistanceY);
 
-            float startRootX = lerpDistanceX * startStepFraction;
-            float startRootZ = lerpDistanceZ * startStepFraction;
-            float endRootX = lerpDistanceX * endStepFraction;
-            float endRootZ = lerpDistanceZ * endStepFraction;
-            float[] rotateStartEnd = rotator(startRootX - endRootX, (startDrip - endDrip), startRootZ - endRootZ);
-            float v1 = (rotateStartEnd[3] != 1.0F) ? 1.0F : -1.0F;
+            final float startRootX = lerpDistanceX * startStepFraction;
+            final float startRootZ = lerpDistanceZ * startStepFraction;
+            final float endRootX = lerpDistanceX * endStepFraction;
+            final float endRootZ = lerpDistanceZ * endStepFraction;
+            final float[] rotateStartEnd = rotator(startRootX - endRootX, (startDrip - endDrip), startRootZ - endRootZ);
+            final float v1 = (rotateStartEnd[3] != 1.0F) ? 1.0F : -1.0F;
             float R, G, B;
 
-            float rotate0 = rotateStartEnd[0];
-            float rotate1 = rotateStartEnd[1];
-            float rotate2 = rotateStartEnd[2];
+            final float rotate0 = rotateStartEnd[0];
+            final float rotate1 = rotateStartEnd[1];
+            final float rotate2 = rotateStartEnd[2];
             // First Line
-            float chainHeight = 0.0125F;
+            final float chainHeight = 0.0125F;
             if (topLineA.contains(step % 16)) {
-                Vector3f startA, endA, startB, endB;
+                final Vector3f startA;
+                Vector3f endA;
+                Vector3f startB;
+                final Vector3f endB;
                 startA = new Vector3f(
                         startRootX - rotate0 + xOffset,
                         chainHeight + rotate1 + startDrip,
@@ -154,7 +162,10 @@ public class OldChainDrawer {
                 renderPixel(startA, startB, endA, endB, vertexConsumer, matrix4f, pack, R, G, B);
             }
             if (middleLineA.contains(step % 16)) {
-                Vector3f startA, endA, startB, endB;
+                final Vector3f startA;
+                Vector3f endA;
+                Vector3f startB;
+                final Vector3f endB;
                 startA = new Vector3f(
                         startRootX + rotate0 + xOffset,
                         chainHeight - rotate1 + startDrip,
@@ -181,7 +192,10 @@ public class OldChainDrawer {
                 renderPixel(startA, startB, endA, endB, vertexConsumer, matrix4f, pack, R, G, B);
             }
             if (bottomLineA.contains(step % 16)) {
-                Vector3f startA, endA, startB, endB;
+                final Vector3f startA;
+                Vector3f endA;
+                Vector3f startB;
+                final Vector3f endB;
                 startA = new Vector3f(
                         startRootX + (rotate0 - xOffset) * 3,
                         chainHeight - rotate1 * 3 + startDrip,
@@ -209,7 +223,10 @@ public class OldChainDrawer {
             }
             // Second Line
             if (topLineB.contains(step % 16)) {
-                Vector3f startA, endA, startB, endB;
+                final Vector3f startA;
+                Vector3f endA;
+                Vector3f startB;
+                final Vector3f endB;
                 startA = new Vector3f(
                         startRootX - (rotate0 * v1) - xOffset,
                         chainHeight + rotate1 + startDrip,
@@ -236,7 +253,10 @@ public class OldChainDrawer {
                 renderPixel(startA, startB, endA, endB, vertexConsumer, matrix4f, pack, R, G, B);
             }
             if (middleLineB.contains(step % 16)) {
-                Vector3f startA, endA, startB, endB;
+                final Vector3f startA;
+                Vector3f endA;
+                Vector3f startB;
+                final Vector3f endB;
                 startA = new Vector3f(
                         startRootX + (rotate0 * v1) - xOffset,
                         chainHeight - rotate1 + startDrip,
@@ -263,7 +283,10 @@ public class OldChainDrawer {
                 renderPixel(startA, startB, endA, endB, vertexConsumer, matrix4f, pack, R, G, B);
             }
             if (bottomLineB.contains(step % 16)) {
-                Vector3f startA, endA, startB, endB;
+                final Vector3f startA;
+                Vector3f endA;
+                Vector3f startB;
+                final Vector3f endB;
                 startA = new Vector3f(
                         startRootX + ((rotate0 * v1) + xOffset) * 3,
                         chainHeight - rotate1 * 3 + startDrip,
@@ -295,9 +318,9 @@ public class OldChainDrawer {
     /**
      * Draw a pixel with 4 vector locations and the other information.
      */
-    private static void renderPixel(Vector3f startA, Vector3f startB, Vector3f endA, Vector3f endB,
-                                    VertexConsumer vertexConsumer, Matrix4f matrix4f, int lightPack,
-                                    float R, float G, float B) {
+    private static void renderPixel(final Vector3f startA, final Vector3f startB, final Vector3f endA, final Vector3f endB,
+                                    final VertexConsumer vertexConsumer, final Matrix4f matrix4f, final int lightPack,
+                                    final float R, final float G, final float B) {
         vertexConsumer
                 .addVertex(matrix4f, startA.x(), startA.y(), startA.z())
                 .setColor(R, G, B, 1.0F)
@@ -355,15 +378,15 @@ public class OldChainDrawer {
      * @param h height at x=d
      * @return y
      */
-    public static double drip2(double x, double d, double h) {
+    public static double drip2(final double x, final double d, final double h) {
         double a = 20;
         a = a + (d * 0.3);
-        double p1 = a * asinh((h / (2D * a)) * (1D / Math.sinh(d / (2D * a))));
-        double p2 = -a * Math.cosh((2D * p1 - d) / (2D * a));
+        final double p1 = a * asinh((h / (2D * a)) * (1D / Math.sinh(d / (2D * a))));
+        final double p2 = -a * Math.cosh((2D * p1 - d) / (2D * a));
         return p2 + a * Math.cosh((((2D * x) + (2D * p1)) - d) / (2D * a));
     }
 
-    private static double asinh(double x) {
+    private static double asinh(final double x) {
         return Math.log(x + Math.sqrt(x * x + 1.0));
     }
 
@@ -372,15 +395,15 @@ public class OldChainDrawer {
      * in every direction the pixels look the same size.
      *
      */
-    private static float[] rotator(double x, double y, double z) {
-        double x2 = x * x;
-        double z2 = z * z;
-        double zx = Math.sqrt(x2 + z2);
-        double arc1 = Math.atan2(y, zx);
-        double arc2 = Math.atan2(x, z);
-        double d = Math.sin(arc1) * 0.0125F;
-        float y_new = (float) (Math.cos(arc1) * 0.0125F);
-        float z_new = (float) (Math.cos(arc2) * d);
+    private static float[] rotator(final double x, final double y, final double z) {
+        final double x2 = x * x;
+        final double z2 = z * z;
+        final double zx = Math.sqrt(x2 + z2);
+        final double arc1 = Math.atan2(y, zx);
+        final double arc2 = Math.atan2(x, z);
+        final double d = Math.sin(arc1) * 0.0125F;
+        final float y_new = (float) (Math.cos(arc1) * 0.0125F);
+        final float z_new = (float) (Math.cos(arc2) * d);
         float x_new = (float) (Math.sin(arc2) * d);
         float v = 0.0F;
         if (zx == 0.0F) {
@@ -391,7 +414,7 @@ public class OldChainDrawer {
     }
 
 
-    protected int getBlockLight(@NotNull Entity entity, BlockPos pos) {
+    protected int getBlockLight(@NotNull final Entity entity, final BlockPos pos) {
         if (entity.isOnFire()) {
             return 15;
         }

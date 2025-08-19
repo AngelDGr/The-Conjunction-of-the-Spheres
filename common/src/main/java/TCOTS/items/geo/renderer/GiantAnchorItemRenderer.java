@@ -22,7 +22,7 @@ public class GiantAnchorItemRenderer extends GeoItemRenderer<GiantAnchorItem> {
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemDisplayContext transformType, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+    public void renderByItem(final ItemStack stack, final ItemDisplayContext transformType, final PoseStack poseStack, final MultiBufferSource bufferSource, final int packedLight, final int packedOverlay) {
         this.animatable = (GiantAnchorItem) stack.getItem();
         this.currentItemStack = stack;
         this.renderPerspective = transformType;
@@ -36,8 +36,8 @@ public class GiantAnchorItemRenderer extends GeoItemRenderer<GiantAnchorItem> {
         }
         else {
 
-            RenderType renderType = getRenderType(this.animatable, getTextureLocation(this.animatable), bufferSource, Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true));
-            VertexConsumer buffer = ItemRenderer.getFoilBufferDirect(bufferSource, renderType, false, this.currentItemStack != null && this.currentItemStack.hasFoil());
+            final RenderType renderType = getRenderType(this.animatable, getTextureLocation(this.animatable), bufferSource, Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true));
+            final VertexConsumer buffer = ItemRenderer.getFoilBufferDirect(bufferSource, renderType, false, this.currentItemStack != null && this.currentItemStack.hasFoil());
 
             defaultRender(poseStack, this.animatable, bufferSource, renderType, buffer,
                     0, Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true), packedLight);
@@ -48,16 +48,16 @@ public class GiantAnchorItemRenderer extends GeoItemRenderer<GiantAnchorItem> {
      Used to change the texture based only in the stack and NBT
      */
     @SuppressWarnings("unused")
-    protected void renderInGuiChain(ItemDisplayContext transformType, PoseStack poseStack,
-                               MultiBufferSource bufferSource, int packedLight, int packedOverlay, float partialTick) {
+    protected void renderInGuiChain(final ItemDisplayContext transformType, final PoseStack poseStack,
+                                    final MultiBufferSource bufferSource, final int packedLight, final int packedOverlay, final float partialTick) {
         setupLightingForGuiRender();
 
-        MultiBufferSource.BufferSource defaultBufferSource =
-                bufferSource instanceof MultiBufferSource.BufferSource bufferSource2 ? bufferSource2 :
+        final MultiBufferSource.BufferSource defaultBufferSource =
+                bufferSource instanceof final MultiBufferSource.BufferSource bufferSource2 ? bufferSource2 :
                         Minecraft.getInstance().levelRenderer.renderBuffers.bufferSource();
 
-        RenderType renderType = getRenderType(this.animatable, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"textures/entity/anchor_chain.png"), defaultBufferSource, partialTick);
-        VertexConsumer buffer = ItemRenderer.getFoilBufferDirect(bufferSource, renderType, true, this.currentItemStack != null && this.currentItemStack.hasFoil());
+        final RenderType renderType = getRenderType(this.animatable, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"textures/entity/anchor_chain.png"), defaultBufferSource, partialTick);
+        final VertexConsumer buffer = ItemRenderer.getFoilBufferDirect(bufferSource, renderType, true, this.currentItemStack != null && this.currentItemStack.hasFoil());
 
         poseStack.pushPose();
         defaultRender(poseStack, this.animatable, defaultBufferSource, renderType, buffer, 0, partialTick, packedLight);

@@ -39,28 +39,28 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntity, Spawner {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    public MonsterNestBlockEntity(BlockEntityType<?> entityType, BlockPos pos, BlockState state) {
+    public MonsterNestBlockEntity(final BlockEntityType<?> entityType, final BlockPos pos, final BlockState state) {
         super(entityType, pos, state);
     }
 
     private final BaseSpawner logicMonsterNest = new BaseSpawner(){
 
         @Override
-        public void broadcastEvent(Level world, @NotNull BlockPos pos, int status) {
+        public void broadcastEvent(final Level world, @NotNull final BlockPos pos, final int status) {
             world.blockEvent(pos, TCOTS_Blocks.MonsterNest(), status, 0);
         }
 
         @Override
-        public void setNextSpawnData(@Nullable Level world, @NotNull BlockPos pos, @NotNull SpawnData spawnEntry) {
+        public void setNextSpawnData(@Nullable final Level world, @NotNull final BlockPos pos, @NotNull final SpawnData spawnEntry) {
             super.setNextSpawnData(world, pos, spawnEntry);
             if (world != null) {
-                BlockState blockState = world.getBlockState(pos);
+                final BlockState blockState = world.getBlockState(pos);
                 world.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_INVISIBLE);
             }
         }
 
         @Override
-        public @NotNull CompoundTag save(CompoundTag nbt) {
+        public @NotNull CompoundTag save(final CompoundTag nbt) {
             this.spawnRange = 3;
             this.requiredPlayerRange = 64;
             this.minSpawnDelay = 1200;
@@ -84,7 +84,7 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
         }
 
         @Override
-        public void serverTick(@NotNull ServerLevel world, @NotNull BlockPos pos) {
+        public void serverTick(@NotNull final ServerLevel world, @NotNull final BlockPos pos) {
             if (this.isNearPlayer(world, pos)) {
                 if (this.spawnDelay == -1) {
                     this.delay(world, pos);
@@ -94,30 +94,30 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
                     this.spawnDelay--;
                 } else {
                     boolean bl = false;
-                    RandomSource random = world.getRandom();
-                    SpawnData mobSpawnerEntry = this.getOrCreateNextSpawnData(world, random, pos);
+                    final RandomSource random = world.getRandom();
+                    final SpawnData mobSpawnerEntry = this.getOrCreateNextSpawnData(world, random, pos);
 
                     for (int i = 0; i < this.spawnCount; i++) {
-                        CompoundTag nbtCompound = mobSpawnerEntry.getEntityToSpawn();
-                        Optional<EntityType<?>> optional = EntityType.by(nbtCompound);
+                        final CompoundTag nbtCompound = mobSpawnerEntry.getEntityToSpawn();
+                        final Optional<EntityType<?>> optional = EntityType.by(nbtCompound);
                         if (optional.isEmpty()) {
                             this.delay(world, pos);
                             return;
                         }
 
-                        ListTag nbtList = nbtCompound.getList("Pos", Tag.TAG_DOUBLE);
-                        int j = nbtList.size();
-                        double d = j >= 1 ? nbtList.getDouble(0) : (double)pos.getX() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
-                        double e = j >= 2 ? nbtList.getDouble(1) : (double)(pos.getY() + random.nextInt(3) - 1);
-                        double f = j >= 3 ? nbtList.getDouble(2) : (double)pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
+                        final ListTag nbtList = nbtCompound.getList("Pos", Tag.TAG_DOUBLE);
+                        final int j = nbtList.size();
+                        final double d = j >= 1 ? nbtList.getDouble(0) : (double)pos.getX() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
+                        final double e = j >= 2 ? nbtList.getDouble(1) : (double)(pos.getY() + random.nextInt(3) - 1);
+                        final double f = j >= 3 ? nbtList.getDouble(2) : (double)pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
                         if (world.noCollision(optional.get().getSpawnAABB(d, e, f))) {
-                            BlockPos blockPos = BlockPos.containing(d, e, f);
+                            final BlockPos blockPos = BlockPos.containing(d, e, f);
                             if (mobSpawnerEntry.getCustomSpawnRules().isPresent()) {
                                 if (!optional.get().getCategory().isFriendly() && world.getDifficulty() == Difficulty.PEACEFUL) {
                                     continue;
                                 }
 
-                                SpawnData.CustomSpawnRules customSpawnRules = mobSpawnerEntry.getCustomSpawnRules().get();
+                                final SpawnData.CustomSpawnRules customSpawnRules = mobSpawnerEntry.getCustomSpawnRules().get();
                                 if (!customSpawnRules.isValidPosition(blockPos, world)) {
                                     continue;
                                 }
@@ -125,7 +125,7 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
                                 continue;
                             }
 
-                            Entity entity = EntityType.loadEntityRecursive(nbtCompound, world, entityX -> {
+                            final Entity entity = EntityType.loadEntityRecursive(nbtCompound, world, entityX -> {
                                 entityX.moveTo(d, e, f, entityX.getYRot(), entityX.getXRot());
                                 return entityX;
                             });
@@ -134,7 +134,7 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
                                 return;
                             }
 
-                            int k = world.getEntities(
+                            final int k = world.getEntities(
                                             EntityTypeTest.forExactClass(entity.getClass()),
                                             new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1)
                                                     .inflate(this.spawnRange),
@@ -147,14 +147,14 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
                             }
 
                             entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), random.nextFloat() * 360.0F, 0.0F);
-                            if (entity instanceof Mob mobEntity) {
+                            if (entity instanceof final Mob mobEntity) {
                                 if (mobSpawnerEntry.getCustomSpawnRules().isEmpty() && !mobEntity.checkSpawnRules(world, MobSpawnType.SPAWNER) || !mobEntity.checkSpawnObstruction(world)) {
                                     continue;
                                 }
 
-                                boolean bl2 = mobSpawnerEntry.getEntityToSpawn().size() == 1 && mobSpawnerEntry.getEntityToSpawn().contains("id", Tag.TAG_STRING);
+                                final boolean bl2 = mobSpawnerEntry.getEntityToSpawn().size() == 1 && mobSpawnerEntry.getEntityToSpawn().contains("id", Tag.TAG_STRING);
                                 if (bl2) {
-                                    ((Mob)entity).finalizeSpawn(world, world.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null);
+                                    mobEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null);
                                 }
 
                                 mobSpawnerEntry.getEquipment().ifPresent(mobEntity::equip);
@@ -185,7 +185,7 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
     };
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 0, state ->{
             state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
@@ -198,34 +198,34 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
     }
 
     @Override
-    protected void loadAdditional(@NotNull CompoundTag nbt, HolderLookup.@NotNull Provider registryLookup) {
+    protected void loadAdditional(@NotNull final CompoundTag nbt, final HolderLookup.@NotNull Provider registryLookup) {
         super.loadAdditional(nbt, registryLookup);
         this.logicMonsterNest.load(this.level, this.worldPosition, nbt);
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag nbt, HolderLookup.@NotNull Provider registryLookup) {
+    protected void saveAdditional(@NotNull final CompoundTag nbt, final HolderLookup.@NotNull Provider registryLookup) {
         super.saveAdditional(nbt, registryLookup);
         this.logicMonsterNest.save(nbt);
     }
 
-    public static void clientTick(Level world, BlockPos pos, BlockState state, MonsterNestBlockEntity blockEntity) {
+    public static void clientTick(final Level world, final BlockPos pos, final BlockState state, final MonsterNestBlockEntity blockEntity) {
         blockEntity.logicMonsterNest.clientTick(world, pos);
     }
 
-    public static void serverTick(Level world, BlockPos pos, BlockState state, MonsterNestBlockEntity blockEntity) {
+    public static void serverTick(final Level world, final BlockPos pos, final BlockState state, final MonsterNestBlockEntity blockEntity) {
         blockEntity.logicMonsterNest.serverTick((ServerLevel)world, pos);
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider registryLookup) {
-        CompoundTag nbtCompound = this.saveCustomOnly(registryLookup);
+    public @NotNull CompoundTag getUpdateTag(final HolderLookup.@NotNull Provider registryLookup) {
+        final CompoundTag nbtCompound = this.saveCustomOnly(registryLookup);
         nbtCompound.remove("SpawnPotentials");
         return nbtCompound;
     }
 
     @Override
-    public boolean triggerEvent(int type, int data) {
+    public boolean triggerEvent(final int type, final int data) {
         if (this.logicMonsterNest.onEventTriggered(this.level, type)) {
             return true;
         }
@@ -238,7 +238,7 @@ public class MonsterNestBlockEntity extends BlockEntity implements GeoBlockEntit
     }
 
     @Override
-    public void setEntityId(@NotNull EntityType<?> type, @NotNull RandomSource random) {
+    public void setEntityId(@NotNull final EntityType<?> type, @NotNull final RandomSource random) {
         this.logicMonsterNest.setEntityId(type, this.level, random, this.worldPosition);
         this.setChanged();
     }

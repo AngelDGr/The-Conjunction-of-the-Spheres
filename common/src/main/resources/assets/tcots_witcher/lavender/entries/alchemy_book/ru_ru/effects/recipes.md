@@ -67,6 +67,13 @@
 ;;;;;
 
 **{#395026}%{gui.recipe-book.category.potions}%{}**
+<recipe;tcots_witcher:bindweed_potion>
+<recipe;tcots_witcher:bindweed_potion_enhanced>
+<recipe;tcots_witcher:bindweed_potion_superior>
+
+;;;;;
+
+**{#395026}%{gui.recipe-book.category.potions}%{}**
 <recipe;tcots_witcher:rook_potion>
 <recipe;tcots_witcher:rook_potion_enhanced>
 <recipe;tcots_witcher:rook_potion_superior>

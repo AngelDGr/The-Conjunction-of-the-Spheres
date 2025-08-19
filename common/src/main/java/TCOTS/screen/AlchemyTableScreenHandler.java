@@ -36,7 +36,7 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
     public final SimpleContainer inputInventory = new SimpleContainer(6){
 
         @Override
-        public @NotNull ItemStack getItem(int slot) {
+        public @NotNull ItemStack getItem(final int slot) {
             if (slot >= this.getContainerSize()) {
                 return ItemStack.EMPTY;
             }
@@ -44,13 +44,13 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
         }
 
         @Override
-        public @NotNull ItemStack removeItemNoUpdate(int slot) {
+        public @NotNull ItemStack removeItemNoUpdate(final int slot) {
             return ContainerHelper.takeItem(this.getItems(), slot);
         }
 
         @Override
-        public @NotNull ItemStack removeItem(int slot, int amount) {
-            ItemStack itemStack = ContainerHelper.removeItem(this.getItems(), slot, amount);
+        public @NotNull ItemStack removeItem(final int slot, final int amount) {
+            final ItemStack itemStack = ContainerHelper.removeItem(this.getItems(), slot, amount);
             if (!itemStack.isEmpty()) {
                 AlchemyTableScreenHandler.this.slotsChanged(this);
             }
@@ -58,7 +58,7 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
         }
 
         @Override
-        public void setItem(int slot, @NotNull ItemStack stack) {
+        public void setItem(final int slot, @NotNull final ItemStack stack) {
             super.setItem(slot, stack);
             AlchemyTableScreenHandler.this.slotsChanged(this);
         }
@@ -74,7 +74,7 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
     private final Player player;
     private final AlchemyTableBlockEntity blockEntity;
 
-    public AlchemyTableScreenHandler(int syncId, Inventory playerInventory, FriendlyByteBuf buf) {
+    public AlchemyTableScreenHandler(final int syncId, final Inventory playerInventory, final FriendlyByteBuf buf) {
         this(syncId, playerInventory, ContainerLevelAccess.NULL, playerInventory.player.level().getBlockEntity(buf.readBlockPos()));
     }
 
@@ -82,7 +82,7 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
         return blockEntity;
     }
 
-    public AlchemyTableScreenHandler(int syncId, Inventory playerInventory, ContainerLevelAccess context, BlockEntity blockEntity) {
+    public AlchemyTableScreenHandler(final int syncId, final Inventory playerInventory, final ContainerLevelAccess context, final BlockEntity blockEntity) {
         super(TCOTS_ScreenHandlersAndRecipes.AlchemyTableScreenHandler(), syncId);
         this.player = playerInventory.player;
         this.context = context;
@@ -119,12 +119,12 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
 
     }
     @Override
-    public void fillCraftSlotsStackedContents(@NotNull StackedContents finder) {
+    public void fillCraftSlotsStackedContents(@NotNull final StackedContents finder) {
 
     }
 
     @Override
-    public void slotsChanged(@NotNull Container inventory) {
+    public void slotsChanged(@NotNull final Container inventory) {
         this.context.execute(
                 (world, pos) ->
                         updateResult(this, world, this.player, new AlchemyTableRecipe.AlchemyTableInventory(
@@ -144,14 +144,14 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
     }
 
     @Override
-    public void removed(@NotNull Player player) {
+    public void removed(@NotNull final Player player) {
         super.removed(player);
         this.context.execute((world, pos) -> this.clearContainer(player, this.inputInventory));
     }
 
 
     @Override
-    public boolean recipeMatches(RecipeHolder<AlchemyTableRecipe> recipe) {
+    public boolean recipeMatches(final RecipeHolder<AlchemyTableRecipe> recipe) {
         return recipe.value().matches(new AlchemyTableRecipe.AlchemyTableInventory(
                 this.inputInventory.getItem(0),
                 this.inputInventory.getItem(1),
@@ -190,16 +190,16 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
     }
 
     @Override
-    public boolean shouldMoveToInventory(int index) {
+    public boolean shouldMoveToInventory(final int index) {
         return index != this.getResultSlotIndex();
     }
 
     @Override
-    public @NotNull ItemStack quickMoveStack(@NotNull Player player, int slotIndex) {
+    public @NotNull ItemStack quickMoveStack(@NotNull final Player player, final int slotIndex) {
         ItemStack itemStack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(slotIndex);
+        final Slot slot = this.slots.get(slotIndex);
         if (slot.hasItem()) {
-            ItemStack itemStack2 = slot.getItem();
+            final ItemStack itemStack2 = slot.getItem();
             itemStack = itemStack2.copy();
             //If it's the result slot
             if (slotIndex == 6) {
@@ -238,7 +238,7 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
     }
 
     @Override
-    public boolean stillValid(@NotNull Player player) {
+    public boolean stillValid(@NotNull final Player player) {
         return AlchemyTableScreenHandler.stillValid(this.context, player, TCOTS_Blocks.AlchemyTable());
     }
 
@@ -246,23 +246,23 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
     Used when clicking a button in the recipe book widget
      */
     @Override
-    public void handlePlacement(boolean craftAll, @NotNull RecipeHolder<?> recipe, ServerPlayer player) {
-        List<ItemStack> TotalInventoryItems = new ArrayList<>();
+    public void handlePlacement(final boolean craftAll, @NotNull final RecipeHolder<?> recipe, final ServerPlayer player) {
+        final List<ItemStack> TotalInventoryItems = new ArrayList<>();
 
         //Mix the inventory the stacks in the player inventory and ScreenHandler inventory
         TotalInventoryItems.addAll(player.getInventory().items);
         TotalInventoryItems.addAll(this.inputInventory.getItems());
 
         this.recipeFinder.clear();
-        for(ItemStack stack: TotalInventoryItems){
+        for(final ItemStack stack: TotalInventoryItems){
             recipeFinder.accountStack(stack, stack.getCount());
         }
 
-        if (recipeFinder.canCraft(recipe.value(), null) && recipe.value() instanceof AlchemyTableRecipe alchemyRecipe) {
-            List<ItemStack> ingredientsStacksList = alchemyRecipe.returnItemStackWithQuantity();
+        if (recipeFinder.canCraft(recipe.value(), null) && recipe.value() instanceof final AlchemyTableRecipe alchemyRecipe) {
+            final List<ItemStack> ingredientsStacksList = alchemyRecipe.returnItemStackWithQuantity();
             //Empties the table inventory
             for(int i=0; i < 6; i++){
-                ItemStack stackInsideSlot = this.inputInventory.getItem(i);
+                final ItemStack stackInsideSlot = this.inputInventory.getItem(i);
                 if(this.inputInventory.getItem(i) != ItemStack.EMPTY){
                     if(player.getInventory().getSlotWithRemainingSpace(stackInsideSlot) != -1){
                         player.getInventory().add(player.getInventory().getSlotWithRemainingSpace(stackInsideSlot), stackInsideSlot);
@@ -278,12 +278,12 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
 
             //To put ingredients in place
             for(int i=0; i < ingredientsStacksList.size(); i++){
-                int slotWithIngredient = player.getInventory().findSlotMatchingItem(ingredientsStacksList.get(i));
-                int quantity =  ingredientsStacksList.get(i).getCount();
+                final int slotWithIngredient = player.getInventory().findSlotMatchingItem(ingredientsStacksList.get(i));
+                final int quantity =  ingredientsStacksList.get(i).getCount();
 
                 if(this.inputInventory.getItem(i) == ItemStack.EMPTY) {
 
-                    ItemStack stack = player.getInventory().getItem(slotWithIngredient).copyWithCount(quantity);
+                    final ItemStack stack = player.getInventory().getItem(slotWithIngredient).copyWithCount(quantity);
 
                     player.getInventory().getItem(player.getInventory().findSlotMatchingItem(ingredientsStacksList.get(i))).shrink(quantity);
 
@@ -291,12 +291,12 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
                 }
             }
 
-            int slotWithBase = player.getInventory().findSlotMatchingItem(alchemyRecipe.getBaseItem());
-            int quantity     = alchemyRecipe.getBaseItem().getCount();
+            final int slotWithBase = player.getInventory().findSlotMatchingItem(alchemyRecipe.getBaseItem());
+            final int quantity     = alchemyRecipe.getBaseItem().getCount();
             //To put the base in place
             if(this.inputInventory.getItem(5) == ItemStack.EMPTY) {
 
-                ItemStack base = player.getInventory().getItem(slotWithBase).copyWithCount(quantity);
+                final ItemStack base = player.getInventory().getItem(slotWithBase).copyWithCount(quantity);
 
                 player.getInventory().getItem(slotWithBase).shrink(quantity);
 
@@ -307,23 +307,23 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
         player.getInventory().setChanged();
     }
 
-    protected void updateResult(AbstractContainerMenu handler, Level world, Player player, AlchemyTableRecipe.AlchemyTableInventory craftingInventory, AlchemyTableResultInventory resultInventory) {
+    protected void updateResult(final AbstractContainerMenu handler, final Level world, final Player player, final AlchemyTableRecipe.AlchemyTableInventory craftingInventory, final AlchemyTableResultInventory resultInventory) {
 
         if (world.isClientSide) {
             return;
         }
-        ServerPlayer serverPlayerEntity = (ServerPlayer)player;
+        final ServerPlayer serverPlayerEntity = (ServerPlayer)player;
         ItemStack itemStack = ItemStack.EMPTY;
 
         if(world.getServer() == null) return;
-        Optional<RecipeHolder<AlchemyTableRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(
+        final Optional<RecipeHolder<AlchemyTableRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(
                 TCOTS_ScreenHandlersAndRecipes.AlchemyTable(),
                 craftingInventory, world);
         if (optional.isPresent()) {
-            ItemStack itemStack2;
-            RecipeHolder<AlchemyTableRecipe> recipeEntry = optional.get();
-            AlchemyTableRecipe craftingRecipe = recipeEntry.value();
-            if(player instanceof ServerPlayer serverPlayer){
+            final ItemStack itemStack2;
+            final RecipeHolder<AlchemyTableRecipe> recipeEntry = optional.get();
+            final AlchemyTableRecipe craftingRecipe = recipeEntry.value();
+            if(player instanceof final ServerPlayer serverPlayer){
 
                 if (serverPlayer.getRecipeBook().contains(recipeEntry) && (itemStack2 = craftingRecipe.assemble(craftingInventory, world.registryAccess())).isItemEnabled(world.enabledFeatures())) {
                     itemStack = itemStack2;
@@ -341,7 +341,7 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
         private final SimpleContainer input;
         private final Player player;
         private int amount;
-        public PotionOutputSlot(Player player, AlchemyTableResultInventory result, SimpleContainer input, int index, int x, int y) {
+        public PotionOutputSlot(final Player player, final AlchemyTableResultInventory result, final SimpleContainer input, final int index, final int x, final int y) {
             super(result, index, x, y);
             this.player = player;
             this.input = input;
@@ -353,12 +353,12 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
         }
 
         @Override
-        public boolean mayPlace(@NotNull ItemStack stack) {
+        public boolean mayPlace(@NotNull final ItemStack stack) {
             return false;
         }
 
         @Override
-        public @NotNull ItemStack remove(int amount) {
+        public @NotNull ItemStack remove(final int amount) {
             if (this.hasItem()) {
                 this.amount += Math.min(amount, this.getItem().getCount());
             }
@@ -366,18 +366,18 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
         }
 
         @Override
-        protected void onQuickCraft(@NotNull ItemStack stack, int amount) {
+        protected void onQuickCraft(@NotNull final ItemStack stack, final int amount) {
             this.amount += amount;
             this.checkTakeAchievements(stack);
         }
 
         @Override
-        protected void onSwapCraft(int amount) {
+        protected void onSwapCraft(final int amount) {
             this.amount += amount;
         }
 
         @Override
-        protected void checkTakeAchievements(@NotNull ItemStack stack) {
+        protected void checkTakeAchievements(@NotNull final ItemStack stack) {
             Optional<RecipeHolder<AlchemyTableRecipe>> optional = Optional.empty();
             if(player.level().getServer()!=null) {
                 optional =
@@ -402,7 +402,7 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
         }
 
         @Override
-        public void onTake(Player player, @NotNull ItemStack stack) {
+        public void onTake(final Player player, @NotNull final ItemStack stack) {
             this.checkTakeAchievements(stack);
             this.input.setItem(0, ItemStack.EMPTY);
             this.input.setItem(1, ItemStack.EMPTY);
@@ -423,7 +423,7 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
 
         @Override
         public boolean isEmpty() {
-            for (ItemStack itemStack : this.stacks) {
+            for (final ItemStack itemStack : this.stacks) {
                 if (itemStack.isEmpty()) continue;
                 return false;
             }
@@ -431,22 +431,22 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
         }
 
         @Override
-        public @NotNull ItemStack getItem(int slot) {
+        public @NotNull ItemStack getItem(final int slot) {
             return this.stacks.get(0);
         }
 
         @Override
-        public @NotNull ItemStack removeItem(int slot, int amount) {
+        public @NotNull ItemStack removeItem(final int slot, final int amount) {
             return ContainerHelper.takeItem(this.stacks, 0);
         }
 
         @Override
-        public @NotNull ItemStack removeItemNoUpdate(int slot) {
+        public @NotNull ItemStack removeItemNoUpdate(final int slot) {
             return ContainerHelper.takeItem(this.stacks, 0);
         }
 
         @Override
-        public void setItem(int slot, @NotNull ItemStack stack) {
+        public void setItem(final int slot, @NotNull final ItemStack stack) {
             this.stacks.set(0, stack);
         }
 
@@ -455,7 +455,7 @@ public class AlchemyTableScreenHandler extends RecipeBookMenu<AlchemyTableRecipe
         }
 
         @Override
-        public boolean stillValid(@NotNull Player player) {
+        public boolean stillValid(@NotNull final Player player) {
             return true;
         }
 

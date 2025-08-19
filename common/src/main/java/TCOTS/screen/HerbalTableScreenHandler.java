@@ -37,11 +37,11 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
     private final ContainerLevelAccess context;
     private final Player player;
 
-    public HerbalTableScreenHandler(int syncId, Inventory inventory) {
+    public HerbalTableScreenHandler(final int syncId, final Inventory inventory) {
         this(syncId, inventory, ContainerLevelAccess.NULL);
     }
 
-    public HerbalTableScreenHandler(int syncId, Inventory playerInventory, final ContainerLevelAccess context) {
+    public HerbalTableScreenHandler(final int syncId, final Inventory playerInventory, final ContainerLevelAccess context) {
         super(TCOTS_ScreenHandlersAndRecipes.HerbalTableScreenHandler(), syncId);
         this.context=context;
         this.player = playerInventory.player;
@@ -58,7 +58,7 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
             }
 
             @Override
-            public boolean mayPlace(@NotNull ItemStack stack) {
+            public boolean mayPlace(@NotNull final ItemStack stack) {
                 return isFitPotion(stack);
             }
         });
@@ -78,12 +78,12 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
         }
     }
 
-    private boolean isFitPotion(ItemStack stack){
+    private boolean isFitPotion(final ItemStack stack){
         if(!stack.has(DataComponents.POTION_CONTENTS)){
             return false;
         }
 
-        PotionContents potionContents = stack.get(DataComponents.POTION_CONTENTS);
+        final PotionContents potionContents = stack.get(DataComponents.POTION_CONTENTS);
 
          return potionContents!=null &&
                  (potionContents.potion().get().equals(Potions.WATER)
@@ -92,7 +92,7 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
     }
 
     @Override
-    protected boolean moveItemStackTo(@NotNull ItemStack stackToInsert, int startIndex, int endIndex, boolean fromLast) {
+    protected boolean moveItemStackTo(@NotNull final ItemStack stackToInsert, final int startIndex, final int endIndex, final boolean fromLast) {
         if(startIndex==0){
             if(stackToInsert.getCount() + this.slots.get(0).getItem().getCount() <=5 && !isFitPotion(stackToInsert)){
                 return super.moveItemStackTo(stackToInsert, startIndex, endIndex, fromLast);
@@ -105,12 +105,12 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
     }
 
     @Override
-    public @NotNull ItemStack quickMoveStack(@NotNull Player player, int slotIndex) {
+    public @NotNull ItemStack quickMoveStack(@NotNull final Player player, final int slotIndex) {
         ItemStack itemStack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(slotIndex);
+        final Slot slot = this.slots.get(slotIndex);
         if (slot.hasItem()) {
 
-            ItemStack stackInSlot = slot.getItem();
+            final ItemStack stackInSlot = slot.getItem();
             itemStack = stackInSlot.copy();
 
             //If it's the result slot
@@ -154,13 +154,13 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
     }
 
     @Override
-    public void removed(@NotNull Player player) {
+    public void removed(@NotNull final Player player) {
         super.removed(player);
         this.context.execute((world, pos) -> this.clearContainer(player, this.inputInventory));
     }
 
     @Override
-    public void slotsChanged(@NotNull Container inventory) {
+    public void slotsChanged(@NotNull final Container inventory) {
         this.context.execute((world, pos) -> HerbalTableScreenHandler.updateResult(
                 this,
                 world,
@@ -170,22 +170,22 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
                 this.resultInventory));
     }
 
-    protected static void updateResult(AbstractContainerMenu handler, Level world, Player player, HerbalTableRecipe.HerbalTableInventory craftingInventory, HerbalTableResultInventory resultInventory) {
+    protected static void updateResult(final AbstractContainerMenu handler, final Level world, final Player player, final HerbalTableRecipe.HerbalTableInventory craftingInventory, final HerbalTableResultInventory resultInventory) {
         if (world.isClientSide) {
             return;
         }
 
-        ServerPlayer serverPlayerEntity = (ServerPlayer) player;
+        final ServerPlayer serverPlayerEntity = (ServerPlayer) player;
         ItemStack outputItem = ItemStack.EMPTY;
 
         if (world.getServer() == null) return;
 
         //Crafting
-        Optional<RecipeHolder<HerbalTableRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(TCOTS_ScreenHandlersAndRecipes.HerbalTable(), craftingInventory, world);
+        final Optional<RecipeHolder<HerbalTableRecipe>> optional = world.getServer().getRecipeManager().getRecipeFor(TCOTS_ScreenHandlersAndRecipes.HerbalTable(), craftingInventory, world);
         if (optional.isPresent()) {
-            ItemStack itemStack2;
-            RecipeHolder<HerbalTableRecipe> recipeEntry = optional.get();
-            HerbalTableRecipe craftingRecipe = recipeEntry.value();
+            final ItemStack itemStack2;
+            final RecipeHolder<HerbalTableRecipe> recipeEntry = optional.get();
+            final HerbalTableRecipe craftingRecipe = recipeEntry.value();
             if(player instanceof ServerPlayer){
                 if ((itemStack2 = craftingRecipe.assemble(craftingInventory, world.registryAccess())).isItemEnabled(world.enabledFeatures())) {
                     outputItem = itemStack2;
@@ -199,12 +199,12 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(@NotNull Player player) {
+    public boolean stillValid(@NotNull final Player player) {
         return true;
     }
 
     @Override
-    public boolean canDragTo(Slot slot) {
+    public boolean canDragTo(final Slot slot) {
         return slot.getContainerSlot() != 2;
     }
 
@@ -213,19 +213,19 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
         private final Player player;
         private int amount;
 
-        public MixtureOutputSlot(Player player, HerbalTableResultInventory result, SimpleContainer input, int index, int x, int y) {
+        public MixtureOutputSlot(final Player player, final HerbalTableResultInventory result, final SimpleContainer input, final int index, final int x, final int y) {
             super(result, index, x, y);
             this.player = player;
             this.input=input;
         }
 
         @Override
-        public boolean mayPlace(@NotNull ItemStack stack) {
+        public boolean mayPlace(@NotNull final ItemStack stack) {
             return false;
         }
 
         @Override
-        public @NotNull ItemStack remove(int amount) {
+        public @NotNull ItemStack remove(final int amount) {
             if (this.hasItem()) {
                 this.amount += Math.min(amount, this.getItem().getCount());
             }
@@ -233,18 +233,18 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
         }
 
         @Override
-        protected void onQuickCraft(@NotNull ItemStack stack, int amount) {
+        protected void onQuickCraft(@NotNull final ItemStack stack, final int amount) {
             this.amount += amount;
             this.checkTakeAchievements(stack);
         }
 
         @Override
-        protected void onSwapCraft(int amount) {
+        protected void onSwapCraft(final int amount) {
             this.amount += amount;
         }
 
         @Override
-        protected void checkTakeAchievements(@NotNull ItemStack stack) {
+        protected void checkTakeAchievements(@NotNull final ItemStack stack) {
             if (this.amount > 0) {
                 stack.onCraftedBy(this.player.level(), this.player, this.amount);
             }
@@ -252,13 +252,13 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
         }
 
         @Override
-        public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
+        public void onTake(@NotNull final Player player, @NotNull final ItemStack stack) {
             this.checkTakeAchievements(stack);
-            List<ItemStack> inventoryStacksList = List.of(this.input.getItem(0), this.input.getItem(1));
+            final List<ItemStack> inventoryStacksList = List.of(this.input.getItem(0), this.input.getItem(1));
 
             for (int i = 0; i < inventoryStacksList.size(); ++i) {
                 ItemStack itemStack = this.input.getItem(i);
-                ItemStack itemStack2 = inventoryStacksList.get(i);
+                final ItemStack itemStack2 = inventoryStacksList.get(i);
                 if (!itemStack.isEmpty()) {
                     this.input.removeItem(i, this.input.getItem(i).getCount());
                     itemStack = this.input.getItem(i);
@@ -290,7 +290,7 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
 
         @Override
         public boolean isEmpty() {
-            for (ItemStack itemStack : this.stacks) {
+            for (final ItemStack itemStack : this.stacks) {
                 if (itemStack.isEmpty()) continue;
                 return false;
             }
@@ -298,22 +298,22 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
         }
 
         @Override
-        public @NotNull ItemStack getItem(int slot) {
+        public @NotNull ItemStack getItem(final int slot) {
             return this.stacks.get(0);
         }
 
         @Override
-        public @NotNull ItemStack removeItem(int slot, int amount) {
+        public @NotNull ItemStack removeItem(final int slot, final int amount) {
             return ContainerHelper.takeItem(this.stacks, 0);
         }
 
         @Override
-        public @NotNull ItemStack removeItemNoUpdate(int slot) {
+        public @NotNull ItemStack removeItemNoUpdate(final int slot) {
             return ContainerHelper.takeItem(this.stacks, 0);
         }
 
         @Override
-        public void setItem(int slot, @NotNull ItemStack stack) {
+        public void setItem(final int slot, @NotNull final ItemStack stack) {
             this.stacks.set(0, stack);
         }
 
@@ -323,7 +323,7 @@ public class HerbalTableScreenHandler extends AbstractContainerMenu {
         }
 
         @Override
-        public boolean stillValid(@NotNull Player player) {
+        public boolean stillValid(@NotNull final Player player) {
             return true;
         }
 

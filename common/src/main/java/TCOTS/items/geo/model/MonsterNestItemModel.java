@@ -7,17 +7,17 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class MonsterNestItemModel  extends GeoModel<MonsterNestItem> {
     @Override
-    public ResourceLocation getModelResource(MonsterNestItem animatable) {
+    public ResourceLocation getModelResource(final MonsterNestItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/block/monster_nest.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(MonsterNestItem animatable) {
+    public ResourceLocation getTextureResource(final MonsterNestItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/block/monster_nest.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(MonsterNestItem animatable) {
+    public ResourceLocation getAnimationResource(final MonsterNestItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 }

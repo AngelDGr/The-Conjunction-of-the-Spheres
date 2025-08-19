@@ -15,13 +15,13 @@ public record RecipeTeacherComponent(String recipeName, boolean isDecoction) {
                     .apply(instance, RecipeTeacherComponent::new)
     );
 
-    public static ItemStack set(ItemStack stack, String recipeName, boolean isDecoction){
+    public static ItemStack set(final ItemStack stack, final String recipeName, final boolean isDecoction){
         stack.set(TCOTS_Items.RecipeTeacher(), new RecipeTeacherComponent(recipeName, isDecoction));
 
         return stack;
     }
 
-    public static ItemStack set(ItemStack stack, String recipeName){
+    public static ItemStack set(final ItemStack stack, final String recipeName){
         return set(stack, recipeName, false);
     }
 

@@ -13,12 +13,12 @@ import net.minecraft.world.item.TooltipFlag;
 import org.jetbrains.annotations.NotNull;
 
 public class EmptyBombPowderItem extends EmptyWitcherPotionItem {
-    public EmptyBombPowderItem(Properties settings) {
+    public EmptyBombPowderItem(final Properties settings) {
         super(settings);
     }
 
     @Override
-    public @NotNull Component getName(ItemStack stack) {
+    public @NotNull Component getName(final ItemStack stack) {
         return Component.translatable("item.tcots_witcher.bomb_powder");
     }
 

@@ -7,7 +7,7 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
 @SuppressWarnings("unused")
 public class HerbalTableRenderer extends GeoBlockRenderer<HerbalTableBlockEntity> {
-    public HerbalTableRenderer(BlockEntityRendererProvider.Context ctx) {
+    public HerbalTableRenderer(final BlockEntityRendererProvider.Context ctx) {
         super(new HerbalTableModel());
     }
 }

@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 public class Rotfiend_BloodExplosionParticle extends TextureSheetParticle {
     private final SpriteSet spriteProvider;
 
-    protected Rotfiend_BloodExplosionParticle(ClientLevel world, double x, double y, double z, double d, SpriteSet spriteProvider) {
+    protected Rotfiend_BloodExplosionParticle(final ClientLevel world, final double x, final double y, final double z, final double d, final SpriteSet spriteProvider) {
         super(world, x, y, z, 0.0, 0.0, 0.0);
-        float f;
+        final float f;
         this.lifetime = 6 + this.random.nextInt(4);
         this.rCol = f = this.random.nextFloat() * 0.6f + 0.4f;
         this.gCol = f;
@@ -24,7 +24,7 @@ public class Rotfiend_BloodExplosionParticle extends TextureSheetParticle {
     }
 
     @Override
-    public int getLightColor(float tint) {
+    public int getLightColor(final float tint) {
         return 0xF000F0;
     }
 
@@ -49,12 +49,12 @@ public class Rotfiend_BloodExplosionParticle extends TextureSheetParticle {
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteProvider;
 
-        public Factory(SpriteSet spriteProvider) {
+        public Factory(final SpriteSet spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
 
         @Override
-        public Particle createParticle(@NotNull SimpleParticleType defaultParticleType, @NotNull ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(@NotNull final SimpleParticleType defaultParticleType, @NotNull final ClientLevel clientWorld, final double d, final double e, final double f, final double g, final double h, final double i) {
             return new Rotfiend_BloodExplosionParticle(clientWorld, d, e, f, g, this.spriteProvider);
         }
     }

@@ -18,11 +18,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class ExplodingBoltProjectile extends WitcherBolt {
     private static final ItemStack DEFAULT_STACK = new ItemStack(TCOTS_Items.EXPLODING_BOLT.get());
-    public ExplodingBoltProjectile(EntityType<? extends ExplodingBoltProjectile> entityType, Level world) {
+    public ExplodingBoltProjectile(final EntityType<? extends ExplodingBoltProjectile> entityType, final Level world) {
         super(entityType, world);
     }
 
-    public ExplodingBoltProjectile(Level world, LivingEntity owner, ItemStack stack, @Nullable ItemStack weapon) {
+    public ExplodingBoltProjectile(final Level world, final LivingEntity owner, final ItemStack stack, @Nullable final ItemStack weapon) {
         super(TCOTS_Entities.ExplodingBolt(), owner, world, stack, weapon);
     }
 
@@ -34,7 +34,7 @@ public class ExplodingBoltProjectile extends WitcherBolt {
     private final float explosionPower = 1.8f;
 
     @Override
-    protected void doPostHurtEffects(@NotNull LivingEntity target) {
+    protected void doPostHurtEffects(@NotNull final LivingEntity target) {
         super.doPostHurtEffects(target);
 
         this.level().explode(this, null, null,
@@ -48,7 +48,7 @@ public class ExplodingBoltProjectile extends WitcherBolt {
     }
 
     @Override
-    protected void onHitBlock(@NotNull BlockHitResult blockHitResult) {
+    protected void onHitBlock(@NotNull final BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
 
         this.level().explode(this, null, null,
@@ -62,7 +62,7 @@ public class ExplodingBoltProjectile extends WitcherBolt {
     }
 
     @Override
-    public boolean shouldBlockExplode(@NotNull Explosion explosion, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull BlockState state, float explosionPower) {
+    public boolean shouldBlockExplode(@NotNull final Explosion explosion, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final BlockState state, final float explosionPower) {
         return false;
     }
 }

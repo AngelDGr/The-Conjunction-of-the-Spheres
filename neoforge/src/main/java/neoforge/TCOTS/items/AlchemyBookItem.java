@@ -12,16 +12,16 @@ import java.util.List;
 
 public class AlchemyBookItem extends ItemModBook {
 
-    public @NotNull Component getName(ItemStack arg) {
+    public @NotNull Component getName(final ItemStack arg) {
         return Component.translatable(this.getDescriptionId(arg));
     }
 
-    public AlchemyBookItem(Item.Properties arg) {
+    public AlchemyBookItem(final Item.Properties arg) {
         this.components = arg.buildAndValidateComponents();
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(final ItemStack stack, final TooltipContext context, final List<Component> tooltip, final TooltipFlag flagIn) {
         tooltip.add(Component.translatable("tooltip.tcots_witcher.alchemy_book").withStyle(ChatFormatting.GRAY));
     }
 

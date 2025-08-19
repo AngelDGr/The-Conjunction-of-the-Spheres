@@ -28,15 +28,15 @@ import java.util.Optional;
 public class RegistryLoaderMixin {
 
     @Inject(method = "loadContentsFromManager(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/resources/RegistryOps$RegistryInfoLookup;Lnet/minecraft/core/WritableRegistry;Lcom/mojang/serialization/Decoder;Ljava/util/Map;)V", at = @At("TAIL"))
-    private static <E> void load(ResourceManager resourceManager, RegistryOps.RegistryInfoLookup infoGetter, WritableRegistry<E> registry, Decoder<E> elementDecoder, Map<ResourceKey<?>, Exception> errors, CallbackInfo ci) {
+    private static <E> void load(final ResourceManager resourceManager, final RegistryOps.RegistryInfoLookup infoGetter, final WritableRegistry<E> registry, final Decoder<E> elementDecoder, final Map<ResourceKey<?>, Exception> errors, final CallbackInfo ci) {
         if (registry.key().equals(Registries.TEMPLATE_POOL)) {
-            for (E registryEntry : registry.stream().toList()) {
-                if (!(registryEntry instanceof StructureTemplatePool pool)) {
+            for (final E registryEntry : registry.stream().toList()) {
+                if (!(registryEntry instanceof final StructureTemplatePool pool)) {
                     continue;
                 }
-                ResourceLocation id = registry.getKey(registryEntry);
+                final ResourceLocation id = registry.getKey(registryEntry);
                 if (FabricStructurePoolRegistry.registryEntryLookup == null) {
-                    Optional<RegistryOps.RegistryInfo<StructureProcessorList>> optionalRegistryInfo = infoGetter.lookup(Registries.PROCESSOR_LIST);
+                    final Optional<RegistryOps.RegistryInfo<StructureProcessorList>> optionalRegistryInfo = infoGetter.lookup(Registries.PROCESSOR_LIST);
                     optionalRegistryInfo.ifPresent(info ->
                             FabricStructurePoolRegistry.registryEntryLookup = info.getter());
                 }

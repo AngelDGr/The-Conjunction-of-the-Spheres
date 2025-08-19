@@ -7,17 +7,17 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class AnchorProjectileModel extends GeoModel<AnchorProjectileEntity> {
     @Override
-    public ResourceLocation getModelResource(AnchorProjectileEntity animatable) {
+    public ResourceLocation getModelResource(final AnchorProjectileEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/anchor.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(AnchorProjectileEntity animatable) {
+    public ResourceLocation getTextureResource(final AnchorProjectileEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/entity/anchor.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(AnchorProjectileEntity animatable) {
+    public ResourceLocation getAnimationResource(final AnchorProjectileEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 

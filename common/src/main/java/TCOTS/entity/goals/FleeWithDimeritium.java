@@ -6,7 +6,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 
 public class FleeWithDimeritium<T extends LivingEntity> extends AvoidEntityGoal<T> {
-    public FleeWithDimeritium(PathfinderMob mob, Class<T> fleeFromType, float distance, double slowSpeed, double fastSpeed) {
+    public FleeWithDimeritium(final PathfinderMob mob, final Class<T> fleeFromType, final float distance, final double slowSpeed, final double fastSpeed) {
         super(mob, fleeFromType, distance, slowSpeed, fastSpeed);
     }
 

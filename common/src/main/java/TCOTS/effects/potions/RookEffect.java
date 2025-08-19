@@ -4,7 +4,7 @@ import TCOTS.effects.WitcherPotionEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 
 public class RookEffect extends WitcherPotionEffect {
-    public RookEffect(MobEffectCategory category, int color) {
+    public RookEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
@@ -19,7 +19,7 @@ public class RookEffect extends WitcherPotionEffect {
     }
 
     @Override
-    public int getSpecialAttributesValue(int amplifier) {
+    public int getSpecialAttributesValue(final int amplifier) {
         return amplifier+2;
     }
 }

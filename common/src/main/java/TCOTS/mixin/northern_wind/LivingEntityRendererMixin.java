@@ -22,13 +22,13 @@ public class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityM
     @Unique
     private BlockRenderDispatcher blockRenderManager;
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void injectInConstructor(EntityRendererProvider.Context ctx, M model, float shadowRadius, CallbackInfo ci) {
+    private void injectInConstructor(final EntityRendererProvider.Context ctx, final M model, final float shadowRadius, final CallbackInfo ci) {
         this.blockRenderManager = ctx.getBlockRenderDispatcher();
     }
 
     @Inject(method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
             at = @At(value = "TAIL"))
-    private void renderIceOnEntity(T livingEntity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, CallbackInfo ci) {
+    private void renderIceOnEntity(final T livingEntity, final float f, final float g, final PoseStack matrixStack, final MultiBufferSource vertexConsumerProvider, final int i, final CallbackInfo ci) {
         if (livingEntity.theConjunctionOfTheSpheres$isFrozen()) {
             TCOTS_Client.renderNorthernWindIce(livingEntity, matrixStack, vertexConsumerProvider, blockRenderManager);
         }

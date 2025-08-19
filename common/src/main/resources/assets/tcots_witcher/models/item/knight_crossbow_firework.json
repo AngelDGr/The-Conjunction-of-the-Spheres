@@ -1,7 +1,7 @@
 {
     "parent": "item/crossbow",
     "textures": {
-        "layer0": "tcots_witcher:item/weapons/knight_crossbow_overlay",
-        "layer1": "tcots_witcher:item/weapons/knight_crossbow_firework"
+        "layer0": "tcots_witcher:item/weapon/knight_crossbow_overlay",
+        "layer1": "tcots_witcher:item/weapon/knight_crossbow_firework"
     }
 }

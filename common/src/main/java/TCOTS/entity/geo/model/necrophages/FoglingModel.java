@@ -13,48 +13,48 @@ import software.bernie.geckolib.model.data.EntityModelData;
 
 public class FoglingModel extends BipedGeoModelBase<FoglingEntity>{
     @Override
-    public ResourceLocation getModelResource(FoglingEntity animatable) {
+    public ResourceLocation getModelResource(final FoglingEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/necrophages/foglet.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(FoglingEntity animatable) {
+    public ResourceLocation getTextureResource(final FoglingEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/entity/necrophages/foglet/fogling.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(FoglingEntity animatable) {
+    public ResourceLocation getAnimationResource(final FoglingEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/necrophages/foglet.animation.json");
     }
 
     @Override
-    public RenderType getRenderType(FoglingEntity animatable, ResourceLocation texture) {
+    public RenderType getRenderType(final FoglingEntity animatable, final ResourceLocation texture) {
         return RenderType.entityTranslucent(texture);
     }
 
     @Override
-    protected boolean hasNormalHead(FoglingEntity entity) {
+    protected boolean hasNormalHead(final FoglingEntity entity) {
         return false;
     }
 
     @Override
-    protected float getArmsAmount(FoglingEntity entity) {
+    protected float getArmsAmount(final FoglingEntity entity) {
         return 0.8f;
     }
 
     @Override
-    protected float getLegsAmount(FoglingEntity entity) {
+    protected float getLegsAmount(final FoglingEntity entity) {
         return 1.0f;
     }
 
     @Override
-    public void setCustomAnimations(FoglingEntity entity, long instanceId, AnimationState<FoglingEntity> animationState) {
+    public void setCustomAnimations(final FoglingEntity entity, final long instanceId, final AnimationState<FoglingEntity> animationState) {
         super.setCustomAnimations(entity,instanceId,animationState);
 
-        GeoBone head = getAnimationProcessor().getBone("head");
+        final GeoBone head = getAnimationProcessor().getBone("head");
 
         if (head != null) {
-            EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+            final EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
             if(animationState.isMoving()){
                 head.setRotY(((entityData.netHeadYaw()+17.5f) * Mth.DEG_TO_RAD));
                 head.setRotX((entityData.headPitch() * Mth.DEG_TO_RAD));

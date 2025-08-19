@@ -4,12 +4,12 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 
 public class NorthernWindEffect extends MobEffect {
-    public NorthernWindEffect(MobEffectCategory category, int color) {
+    public NorthernWindEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(final int duration, final int amplifier) {
         return true;
     }
 }

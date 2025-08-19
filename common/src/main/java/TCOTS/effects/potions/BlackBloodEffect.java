@@ -4,7 +4,7 @@ import TCOTS.effects.WitcherPotionEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 
 public class BlackBloodEffect extends WitcherPotionEffect {
-    public BlackBloodEffect(MobEffectCategory category, int color) {
+    public BlackBloodEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
@@ -14,7 +14,7 @@ public class BlackBloodEffect extends WitcherPotionEffect {
     }
 
     @Override
-    public int getSpecialAttributesValue(int amplifier) {
+    public int getSpecialAttributesValue(final int amplifier) {
         return amplifier == 0? 15: amplifier == 1? 20: 30;
     }
 
@@ -24,7 +24,7 @@ public class BlackBloodEffect extends WitcherPotionEffect {
     }
 
     @Override
-    public boolean hasExtraLine(int amplifier) {
+    public boolean hasExtraLine(final int amplifier) {
         return amplifier > 1;
     }
 

@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 public class NestWallSkullBlock extends NestSkullBlock {
 
     private static final Map<Direction, VoxelShape> FACING_TO_SHAPE = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.box(4.0, 4.0, 8.0, 12.0, 12.0, 16.0), Direction.SOUTH, Block.box(4.0, 4.0, 0.0, 12.0, 12.0, 8.0), Direction.EAST, Block.box(0.0, 4.0, 4.0, 8.0, 12.0, 12.0), Direction.WEST, Block.box(8.0, 4.0, 4.0, 16.0, 12.0, 12.0)));
-    public NestWallSkullBlock(Properties settings) {
+    public NestWallSkullBlock(final Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(TCOTS_Blocks.FACING, Direction.NORTH));
     }
@@ -31,18 +31,18 @@ public class NestWallSkullBlock extends NestSkullBlock {
     }
 
     @Override
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public @NotNull VoxelShape getShape(@NotNull final BlockState state, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final CollisionContext context) {
         return FACING_TO_SHAPE.get(state.getValue(TCOTS_Blocks.FACING));
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    public BlockState getStateForPlacement(final BlockPlaceContext ctx) {
         BlockState blockState = this.defaultBlockState();
-        Level blockView = ctx.getLevel();
-        BlockPos blockPos = ctx.getClickedPos();
-        for (Direction direction : ctx.getNearestLookingDirections()) {
+        final Level blockView = ctx.getLevel();
+        final BlockPos blockPos = ctx.getClickedPos();
+        for (final Direction direction : ctx.getNearestLookingDirections()) {
             if (!direction.getAxis().isHorizontal()) continue;
-            Direction direction2 = direction.getOpposite();
+            final Direction direction2 = direction.getOpposite();
             blockState = blockState.setValue(TCOTS_Blocks.FACING, direction2);
             if (blockView.getBlockState(blockPos.relative(direction)).canBeReplaced(ctx)) continue;
             return blockState;
@@ -51,17 +51,17 @@ public class NestWallSkullBlock extends NestSkullBlock {
     }
 
     @Override
-    public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
+    public @NotNull BlockState rotate(final BlockState state, final Rotation rotation) {
         return state.setValue(TCOTS_Blocks.FACING, rotation.rotate(state.getValue(TCOTS_Blocks.FACING)));
     }
 
     @Override
-    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
+    public @NotNull BlockState mirror(final BlockState state, final Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(TCOTS_Blocks.FACING)));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(final StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(TCOTS_Blocks.FACING);
     }

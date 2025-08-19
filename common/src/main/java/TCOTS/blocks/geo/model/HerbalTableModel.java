@@ -7,17 +7,17 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class HerbalTableModel extends GeoModel<HerbalTableBlockEntity> {
     @Override
-    public ResourceLocation getModelResource(HerbalTableBlockEntity animatable) {
+    public ResourceLocation getModelResource(final HerbalTableBlockEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/block/herbal_table.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(HerbalTableBlockEntity animatable) {
+    public ResourceLocation getTextureResource(final HerbalTableBlockEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/block/herbal_table.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(HerbalTableBlockEntity animatable) {
+    public ResourceLocation getAnimationResource(final HerbalTableBlockEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 }

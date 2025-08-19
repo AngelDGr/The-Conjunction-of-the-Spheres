@@ -25,11 +25,11 @@ public record MonsterOilComponent(int groupId, int uses, int level, String oilNa
                     .apply(instance, MonsterOilComponent::new)
     );
 
-    public static MonsterOilComponent of(int groupId, int uses, int oilLevel, String oilId){
+    public static MonsterOilComponent of(final int groupId, final int uses, final int oilLevel, final String oilId){
         return new MonsterOilComponent(groupId, uses, oilLevel, oilId);
     }
 
-    public static MonsterOilComponent decreaseUse(MonsterOilComponent monsterOilComponent){
+    public static MonsterOilComponent decreaseUse(final MonsterOilComponent monsterOilComponent){
         return new MonsterOilComponent(monsterOilComponent.groupId(), monsterOilComponent.uses()-1, monsterOilComponent.level(), monsterOilComponent.oilName());
     }
 
@@ -76,9 +76,9 @@ public record MonsterOilComponent(int groupId, int uses, int level, String oilNa
 
 
 
-    private void OilNamer(Consumer<Component> value, int color){
+    private void OilNamer(final Consumer<Component> value, final int color){
         value.accept(CommonComponents.EMPTY);
-        MutableComponent OilName = (MutableComponent) BuiltInRegistries.ITEM.get(ResourceLocation.parse(this.oilName)).getDescription();
+        final MutableComponent OilName = (MutableComponent) BuiltInRegistries.ITEM.get(ResourceLocation.parse(this.oilName)).getDescription();
         OilName.withStyle(
                 style -> style.withColor(color)
         );

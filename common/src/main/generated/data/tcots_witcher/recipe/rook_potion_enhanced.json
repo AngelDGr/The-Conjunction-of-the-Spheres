@@ -1,0 +1,33 @@
+{
+  "type": "tcots_witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "tcots_witcher:rook_potion"
+  },
+  "category": "potions",
+  "ingredient_counters": [
+    1,
+    6,
+    4,
+    6
+  ],
+  "ingredients": [
+    {
+      "item": "tcots_witcher:alcohest"
+    },
+    {
+      "item": "minecraft:poppy"
+    },
+    {
+      "item": "minecraft:brown_mushroom"
+    },
+    {
+      "item": "tcots_witcher:nekker_eye"
+    }
+  ],
+  "order": 0.27,
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:rook_potion_enhanced"
+  }
+}

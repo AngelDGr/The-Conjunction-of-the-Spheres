@@ -36,7 +36,7 @@ public class MoonDustTransformingBlock {
         @Unique
         AbstractPiglin THIS = (AbstractPiglin)(Object)this;
         @Inject(method = "isConverting", at = @At("HEAD"), cancellable = true)
-        private void injectNoMoonDust(CallbackInfoReturnable<Boolean> cir){
+        private void injectNoMoonDust(final CallbackInfoReturnable<Boolean> cir){
             MoonDustBomb.checkEffectAndSplintersMixin(THIS, cir);
         }
 
@@ -47,7 +47,7 @@ public class MoonDustTransformingBlock {
         @Unique
         Hoglin THIS = (Hoglin)(Object)this;
         @Inject(method = "isConverting", at = @At("HEAD"), cancellable = true)
-        private void injectNoMoonDust(CallbackInfoReturnable<Boolean> cir){
+        private void injectNoMoonDust(final CallbackInfoReturnable<Boolean> cir){
             MoonDustBomb.checkEffectAndSplintersMixin(THIS, cir);
         }
 
@@ -58,7 +58,7 @@ public class MoonDustTransformingBlock {
         @Unique
         Zombie THIS = (Zombie)(Object)this;
         @Inject(method = "convertsInWater", at = @At("HEAD"), cancellable = true)
-        private void injectNoMoonDust(CallbackInfoReturnable<Boolean> cir){
+        private void injectNoMoonDust(final CallbackInfoReturnable<Boolean> cir){
             MoonDustBomb.checkEffectAndSplintersMixin(THIS, cir);
         }
 
@@ -69,7 +69,7 @@ public class MoonDustTransformingBlock {
         @Unique
         Husk THIS = (Husk)(Object)this;
         @Inject(method = "convertsInWater", at = @At("HEAD"), cancellable = true)
-        private void injectNoMoonDust(CallbackInfoReturnable<Boolean> cir){
+        private void injectNoMoonDust(final CallbackInfoReturnable<Boolean> cir){
             MoonDustBomb.checkEffectAndSplintersMixin(THIS, cir);
         }
 
@@ -81,7 +81,7 @@ public class MoonDustTransformingBlock {
         @Unique
         Skeleton THIS = (Skeleton)(Object)this;
         @ModifyExpressionValue(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/Skeleton;isAlive()Z"))
-        private boolean injectNoMoonDust(boolean original){
+        private boolean injectNoMoonDust(final boolean original){
             return original && !MoonDustBomb.checkEffectAndSplinters(THIS);
         }
 
@@ -92,7 +92,7 @@ public class MoonDustTransformingBlock {
         @Unique
         Villager THIS = (Villager)(Object)this;
         @Inject(method = "thunderHit", at = @At("HEAD"), cancellable = true)
-        private void injectNoMoonDust(ServerLevel world, LightningBolt lightning, CallbackInfo ci){
+        private void injectNoMoonDust(final ServerLevel world, final LightningBolt lightning, final CallbackInfo ci){
             if(MoonDustBomb.checkEffectAndSplinters(THIS))
                 ci.cancel();
         }
@@ -103,7 +103,7 @@ public class MoonDustTransformingBlock {
         @Unique
         Pig THIS = (Pig)(Object)this;
         @Inject(method = "thunderHit", at = @At("HEAD"), cancellable = true)
-        private void injectNoMoonDust(ServerLevel world, LightningBolt lightning, CallbackInfo ci){
+        private void injectNoMoonDust(final ServerLevel world, final LightningBolt lightning, final CallbackInfo ci){
             if(MoonDustBomb.checkEffectAndSplinters(THIS))
                 ci.cancel();
         }
@@ -114,7 +114,7 @@ public class MoonDustTransformingBlock {
     public abstract static class BlockCreeperExplosion{
         @Shadow @Final private Creeper creeper;
         @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
-        private void injectNoMoonDust(CallbackInfoReturnable<Boolean> cir){
+        private void injectNoMoonDust(final CallbackInfoReturnable<Boolean> cir){
             if(MoonDustBomb.checkSilverSplinters(creeper))
                 cir.setReturnValue(false);
         }
@@ -122,7 +122,7 @@ public class MoonDustTransformingBlock {
 
     @Mixin(Creeper.class)
     public abstract static class BlockCreeperEntityExplosion extends Monster implements PowerableMob {
-        protected BlockCreeperEntityExplosion(EntityType<? extends Monster> entityType, Level world) {
+        protected BlockCreeperEntityExplosion(final EntityType<? extends Monster> entityType, final Level world) {
             super(entityType, world);
         }
         @Shadow @Final private static EntityDataAccessor<Boolean> DATA_IS_IGNITED;
@@ -130,12 +130,12 @@ public class MoonDustTransformingBlock {
         Creeper THIS = (Creeper)(Object)this;
 
         @Inject(method = "registerGoals", at = @At("HEAD"))
-        private void injectMoonDustRun(CallbackInfo ci){
+        private void injectMoonDustRun(final CallbackInfo ci){
             this.goalSelector.addGoal(3, new FleeWithSilverSplinters<>(this, Player.class, 6.0f, 1.0, 1.2));
         }
 
         @Inject(method = "tick", at = @At("HEAD"))
-        private void injectNoMoonDust(CallbackInfo ci){
+        private void injectNoMoonDust(final CallbackInfo ci){
             if(THIS.getSwellDir() > 0 && MoonDustBomb.checkSilverSplinters(THIS))
                 THIS.setSwellDir(-1);
 

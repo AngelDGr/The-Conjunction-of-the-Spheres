@@ -24,37 +24,37 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 
 public class AlchemyFormulaItem extends Item {
-    public AlchemyFormulaItem(Properties settings) {
+    public AlchemyFormulaItem(final Properties settings) {
         super(settings);
     }
 
     @Override
-    public boolean isFoil(@NotNull ItemStack stack) {
+    public boolean isFoil(@NotNull final ItemStack stack) {
         return super.isFoil(stack) || isDecoctionRecipe(stack);
     }
 
-    public static boolean isDecoctionRecipe(ItemStack stack){
+    public static boolean isDecoctionRecipe(final ItemStack stack){
         if(!stack.has(TCOTS_Items.RecipeTeacher())){
             return false;
         }
 
-        RecipeTeacherComponent recipeTeacher = stack.get(TCOTS_Items.RecipeTeacher());
+        final RecipeTeacherComponent recipeTeacher = stack.get(TCOTS_Items.RecipeTeacher());
 
         assert recipeTeacher != null;
         return recipeTeacher.isDecoction();
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, Player player, @NotNull InteractionHand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull final Level world, final Player player, @NotNull final InteractionHand hand) {
+        final ItemStack itemStack = player.getItemInHand(hand);
         if(!itemStack.has(TCOTS_Items.RecipeTeacher())){
             return InteractionResultHolder.pass(itemStack);
         }
 
-        RecipeTeacherComponent recipeTeacher = itemStack.get(TCOTS_Items.RecipeTeacher());
+        final RecipeTeacherComponent recipeTeacher = itemStack.get(TCOTS_Items.RecipeTeacher());
 
-        if(recipeTeacher!=null && player instanceof ServerPlayer serverPlayer){
-            ResourceLocation recipeIdentifier = ResourceLocation.parse(recipeTeacher.recipeName());
+        if(recipeTeacher!=null && player instanceof final ServerPlayer serverPlayer){
+            final ResourceLocation recipeIdentifier = ResourceLocation.parse(recipeTeacher.recipeName());
 
             if(serverPlayer.getRecipeBook().contains(recipeIdentifier)){
                 player.displayClientMessage(Component.translatable("item.tcots_witcher.alchemy_formula.already_know").withStyle(ChatFormatting.RED), true);
@@ -73,20 +73,20 @@ public class AlchemyFormulaItem extends Item {
         return InteractionResultHolder.pass(itemStack);
     }
 
-    public static void appendTooltip(ItemStack stack, @Nullable Level world, Consumer<Component> tooltip) {
+    public static void appendTooltip(final ItemStack stack, @Nullable final Level world, final Consumer<Component> tooltip) {
         if(!stack.has(TCOTS_Items.RecipeTeacher())){
             return;
         }
 
-        RecipeTeacherComponent recipeTeacher = stack.get(TCOTS_Items.RecipeTeacher());
+        final RecipeTeacherComponent recipeTeacher = stack.get(TCOTS_Items.RecipeTeacher());
         if(world != null && recipeTeacher != null){
             if(world.getRecipeManager().byKey(ResourceLocation.parse(recipeTeacher.recipeName())).isPresent()){
-                Optional<RecipeHolder<?>> recipe = world.getRecipeManager().byKey(ResourceLocation.parse(recipeTeacher.recipeName()));
+                final Optional<RecipeHolder<?>> recipe = world.getRecipeManager().byKey(ResourceLocation.parse(recipeTeacher.recipeName()));
                 if (recipe.isEmpty()){
                     return;
                 }
 
-                Item output = recipe.get().value().getResultItem(null).getItem();
+                final Item output = recipe.get().value().getResultItem(null).getItem();
 
                 Component text = Component.translatable("item.tcots_witcher.alchemy_formula.tooltip", output.getDescription()).withStyle(ChatFormatting.BLUE);
 

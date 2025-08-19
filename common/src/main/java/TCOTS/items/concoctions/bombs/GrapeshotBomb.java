@@ -20,8 +20,8 @@ import net.minecraft.world.level.material.FluidState;
 
 public class GrapeshotBomb {
 
-    public static void explosionLogic(WitcherBombEntity bomb, @Nullable Entity entity){
-        Explosion explosion =
+    public static void explosionLogic(final WitcherBombEntity bomb, @Nullable final Entity entity){
+        final Explosion explosion =
                 bomb.level().explode(
                 bomb,
                 null,
@@ -50,11 +50,11 @@ public class GrapeshotBomb {
         }
     }
 
-    public static void destroyNests(WitcherBombEntity bomb, Explosion explosion){
-        ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList<>();
+    public static void destroyNests(final WitcherBombEntity bomb, final Explosion explosion){
+        final ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList<>();
         int l;
         int k;
-        HashSet<BlockPos> set = Sets.newHashSet();
+        final HashSet<BlockPos> set = Sets.newHashSet();
         for (int j = 0; j < 16; ++j) {
             for (k = 0; k < 16; ++k) {
                 for (l = 0; l < 16; ++l) {
@@ -62,7 +62,7 @@ public class GrapeshotBomb {
                     double d = (float) j / 15.0f * 2.0f - 1.0f;
                     double e = (float) k / 15.0f * 2.0f - 1.0f;
                     double f = (float) l / 15.0f * 2.0f - 1.0f;
-                    double g = Math.sqrt(d * d + e * e + f * f);
+                    final double g = Math.sqrt(d * d + e * e + f * f);
                     d /= g;
                     e /= g;
                     f /= g;
@@ -70,12 +70,12 @@ public class GrapeshotBomb {
                     double n = bomb.getY();
                     double o = bomb.getZ();
                     for (float h = (1.25f + (bomb.getLevel() * 0.25f)) * (0.7f + bomb.level().random.nextFloat() * 0.6f); h > 0.0f; h -= 0.22500001f) {
-                        BlockPos blockPos = BlockPos.containing(m, n, o);
+                        final BlockPos blockPos = BlockPos.containing(m, n, o);
 
-                        BlockState blockState = bomb.level().getBlockState(blockPos);
-                        FluidState fluidState = bomb.level().getFluidState(blockPos);
+                        final BlockState blockState = bomb.level().getBlockState(blockPos);
+                        final FluidState fluidState = bomb.level().getFluidState(blockPos);
 
-                        Optional<Float> optional = BombsUtil.getBlastResistance(blockState, fluidState);
+                        final Optional<Float> optional = BombsUtil.getBlastResistance(blockState, fluidState);
                         if (optional.isPresent() && !bomb.destroyableBlocks(blockState)) {
                             h -= (optional.get() + 0.3f) * 0.3f;
                         }
@@ -92,8 +92,8 @@ public class GrapeshotBomb {
 
         affectedBlocks.addAll(set);
 
-        for (BlockPos blockPos : affectedBlocks) {
-            BlockState state = bomb.level().getBlockState(blockPos);
+        for (final BlockPos blockPos : affectedBlocks) {
+            final BlockState state = bomb.level().getBlockState(blockPos);
 
             //Destroy nest blocks
             if(bomb.destroyableBlocks(state)) {

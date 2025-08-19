@@ -1,6 +1,6 @@
 package TCOTS.entity.misc;
 
-import TCOTS.TCOTS_Tags;
+import TCOTS.registry.TCOTS_Tags;
 import TCOTS.registry.TCOTS_Criteria;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,13 +21,13 @@ import java.util.List;
 
 public class DragonsDreamCloud extends AreaEffectCloud {
     //xTODO: Make it explode with flaming arrows and flaming entities
-    public DragonsDreamCloud(EntityType<? extends AreaEffectCloud> entityType, Level world) {
+    public DragonsDreamCloud(final EntityType<? extends AreaEffectCloud> entityType, final Level world) {
         super(entityType, world);
     }
 
     private int level;
 
-    public DragonsDreamCloud(Level world, double x, double y, double z, int level) {
+    public DragonsDreamCloud(final Level world, final double x, final double y, final double z, final int level) {
         this(EntityType.AREA_EFFECT_CLOUD, world);
         this.setPos(x, y, z);
         this.level=level;
@@ -39,7 +39,7 @@ public class DragonsDreamCloud extends AreaEffectCloud {
 
     //To explode in contact with igniting blocks
     @Override
-    protected void onInsideBlock(@NotNull BlockState state) {
+    protected void onInsideBlock(@NotNull final BlockState state) {
         super.onInsideBlock(state);
         if(state.is(TCOTS_Tags.IGNITING_BLOCKS) || CampfireBlock.isLitCampfire(state)){
             createExplosion();
@@ -51,12 +51,12 @@ public class DragonsDreamCloud extends AreaEffectCloud {
         super.tick();
         checkInsideBlocks();
         //To explode in contact with entities on fire or Igniting Entities
-        List<Entity> entitiesList = this.level().getEntitiesOfClass(Entity.class, this.getBoundingBox());
-        for(Entity entity: entitiesList){
+        final List<Entity> entitiesList = this.level().getEntitiesOfClass(Entity.class, this.getBoundingBox());
+        for(final Entity entity: entitiesList){
             if(entity.isOnFire() || entity.getType().is(TCOTS_Tags.IGNITING_ENTITIES)){
 
                 if(entity.isOnFire() && this.getOwner()!=null && this.getOwner() instanceof Player && entity instanceof LivingEntity){
-                    if(this.getOwner() instanceof ServerPlayer serverPlayer){
+                    if(this.getOwner() instanceof final ServerPlayer serverPlayer){
                         TCOTS_Criteria.DragonsDreamBurning().trigger(serverPlayer);
                     }
                 }
@@ -71,7 +71,7 @@ public class DragonsDreamCloud extends AreaEffectCloud {
     }
 
     @Override
-    public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
+    public @NotNull EntityDimensions getDimensions(@NotNull final Pose pose) {
         return EntityDimensions.scalable(this.getRadius() * 2.0f, 1.5f);
     }
 

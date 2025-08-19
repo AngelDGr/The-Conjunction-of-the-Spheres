@@ -6,11 +6,11 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.sounds.SoundEvents;
 
 public class AlchemyRecipeBookButtonPage extends StateSwitchingButton {
-    public AlchemyRecipeBookButtonPage(int x, int y, int width, int height, boolean toggled) {
+    public AlchemyRecipeBookButtonPage(final int x, final int y, final int width, final int height, final boolean toggled) {
         super(x, y, width, height, toggled);
     }
 
-    public void playDownSound(SoundManager soundManager) {
+    public void playDownSound(final SoundManager soundManager) {
         soundManager.play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1.0f));
     }
 }

@@ -38,7 +38,7 @@ public class AlchemyTableScreen extends AbstractContainerScreen<AlchemyTableScre
 
     private AlchemyRecipeBookButtonTextured buttonWidget;
 
-    public AlchemyTableScreen(AlchemyTableScreenHandler handler,  Inventory inventory, Component title) {
+    public AlchemyTableScreen(final AlchemyTableScreenHandler handler, final Inventory inventory, final Component title) {
         super(handler, inventory, title);
         this.imageHeight=189;
         this.inventoryLabelY=this.imageHeight-94;
@@ -74,10 +74,10 @@ public class AlchemyTableScreen extends AbstractContainerScreen<AlchemyTableScre
     }
 
     @Override
-    protected void renderBg(@NotNull GuiGraphics context, float delta, int mouseX, int mouseY) {
+    protected void renderBg(@NotNull final GuiGraphics context, final float delta, final int mouseX, final int mouseY) {
         recipeBook.drawBackground(context, delta, mouseX, mouseY);
-        int i = this.leftPos;
-        int j =(this.height - this.imageHeight) / 2;
+        final int i = this.leftPos;
+        final int j =(this.height - this.imageHeight) / 2;
 
         context.blit(SCREEN_BACKGROUND, i, j, 0, 0, this.imageWidth, this.imageHeight);
         recipeBook.render(context, mouseX, mouseY, delta);
@@ -90,7 +90,7 @@ public class AlchemyTableScreen extends AbstractContainerScreen<AlchemyTableScre
     }
 
     @Override
-    public void render(@NotNull GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void render(@NotNull final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
         super.render(context, mouseX, mouseY, delta);
         if(conditionForBook()){
         buttonWidget.active = true;

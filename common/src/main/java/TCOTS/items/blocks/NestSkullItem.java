@@ -30,7 +30,7 @@ public class NestSkullItem extends BlockItem implements GeoItem {
 
     protected final Block wallBlock;
     private final Direction verticalAttachmentDirection;
-    public NestSkullItem(Block block, Block wallBlock, Properties settings, Direction verticalAttachmentDirection) {
+    public NestSkullItem(final Block block, final Block wallBlock, final Properties settings, final Direction verticalAttachmentDirection) {
         super(block, settings);
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
         this.wallBlock = wallBlock;
@@ -38,7 +38,7 @@ public class NestSkullItem extends BlockItem implements GeoItem {
     }
 
     @Override
-    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+    public void createGeoRenderer(final Consumer<GeoRenderProvider> consumer) {
         consumer.accept(new GeoRenderProvider() {
 
             private final NestSkullItemRenderer renderer = new NestSkullItemRenderer();
@@ -51,7 +51,7 @@ public class NestSkullItem extends BlockItem implements GeoItem {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(GeoControllersUtil.genericIdleController(this));
     }
 
@@ -59,19 +59,19 @@ public class NestSkullItem extends BlockItem implements GeoItem {
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
     }
-    protected boolean canPlaceAt(LevelReader world, BlockState state, BlockPos pos) {
+    protected boolean canPlaceAt(final LevelReader world, final BlockState state, final BlockPos pos) {
         return state.canSurvive(world, pos);
     }
 
     @Override
     @Nullable
-    protected BlockState getPlacementState(@NotNull BlockPlaceContext context) {
-        BlockState blockState = this.wallBlock.getStateForPlacement(context);
+    protected BlockState getPlacementState(@NotNull final BlockPlaceContext context) {
+        final BlockState blockState = this.wallBlock.getStateForPlacement(context);
         BlockState blockState2 = null;
-        Level worldView = context.getLevel();
-        BlockPos blockPos = context.getClickedPos();
-        for (Direction direction : context.getNearestLookingDirections()) {
-            BlockState blockState3;
+        final Level worldView = context.getLevel();
+        final BlockPos blockPos = context.getClickedPos();
+        for (final Direction direction : context.getNearestLookingDirections()) {
+            final BlockState blockState3;
             if (direction == this.verticalAttachmentDirection.getOpposite()) continue;
             blockState3 = direction == this.verticalAttachmentDirection ? this.getBlock().getStateForPlacement(context) : blockState;
             if (blockState3 == null || !this.canPlaceAt(worldView, blockState3, blockPos)) continue;
@@ -82,7 +82,7 @@ public class NestSkullItem extends BlockItem implements GeoItem {
     }
 
     @Override
-    public void registerBlocks(@NotNull Map<Block, Item> map, @NotNull Item item) {
+    public void registerBlocks(@NotNull final Map<Block, Item> map, @NotNull final Item item) {
         super.registerBlocks(map, item);
         map.put(this.wallBlock, item);
     }

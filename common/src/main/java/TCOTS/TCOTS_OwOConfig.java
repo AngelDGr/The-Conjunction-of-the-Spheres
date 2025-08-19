@@ -60,11 +60,14 @@ public class TCOTS_OwOConfig {
 
         @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
+        public boolean eyeMoves=true;
+
+        @Sync(Option.SyncMode.INFORM_SERVER)
+        @Hook
         public EYE_SHAPE eyeShape = EYE_SHAPE.NORMAL;
         @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
         public EYE_SEPARATION eyeSeparation = EYE_SEPARATION.TWO;
-
 
         @Sync(Option.SyncMode.INFORM_SERVER)
         @Hook
@@ -80,8 +83,18 @@ public class TCOTS_OwOConfig {
         CENTER_DOWN, CENTER_UP, RIGHT_DOWN, RIGHT_UP, LEFT_DOWN, LEFT_UP
     }
 
+    //xTODO:
+    // xx Normal Eyes
+    // xx Tall Eyes
+    // xx Tall Shadow Eyes
+    // xx Tall Center Eyes
+    // xx Derp Eyes
+    // xx Enderman Eyes
+    // xo Allay Eyes
+    // xo Long Eyes
+    // xo Big Eyes
     public enum EYE_SHAPE {
-        NORMAL, TALL, LONG, TALL_SHADOW, BIG
+        NORMAL, TALL, TALL_SHADOW, TALL_CENTER, DERP, ENDERMAN, ALLAY, LONG, BIG,
     }
 
     public enum EYE_SEPARATION {

@@ -74,7 +74,8 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
                                     TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                     TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                     TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos()
+                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                    TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()
                             )
                     ));
         }
@@ -99,7 +100,8 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
                                     TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                     TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                     TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                    TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()));
                 });
 
                 TCOTS_Main.CONFIG.witcher_eyes.subscribeToEyeSeparation(eye_separation ->
@@ -111,7 +113,8 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
                                     TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                     eye_separation.ordinal(),
                                     TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                    TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()));
                 });
 
                 TCOTS_Main.CONFIG.witcher_eyes.subscribeToEyeShape(eye_shape ->
@@ -123,7 +126,8 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
                                     eye_shape.ordinal(),
                                     TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                     TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                    TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()));
                 });
 
                 TCOTS_Main.CONFIG.witcher_eyes.subscribeToXEyePos(xEyePos ->
@@ -135,7 +139,8 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
                                     TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                     TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                     xEyePos,
-                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                    TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()));
                 });
 
                 TCOTS_Main.CONFIG.witcher_eyes.subscribeToYEyePos(yEyePos ->
@@ -147,7 +152,21 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
                                     TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                     TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                     TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                                    yEyePos));
+                                    yEyePos,
+                                    TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()));
+                });
+
+                TCOTS_Main.CONFIG.witcher_eyes.subscribeToEyeMoves(eyeMoves ->
+                {
+                    if(Minecraft.getInstance().getConnection()==null)return;
+                    TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
+                            new TCOTS_Main.WitcherEyesFullPacket(
+                                    TCOTS_Main.CONFIG.witcher_eyes.activateEyes(),
+                                    TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
+                                    TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
+                                    TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
+                                    TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                    eyeMoves));
                 });
 
                 TCOTS_Main.CONFIG.witcher_eyes.subscribeToActivateToxicity(activateToxicity ->
@@ -213,6 +232,8 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
             EntityRendererRegistry.register(TCOTS_Entities.ScurverSpine(), ScurverSpineRenderer::new);
 
             EntityRendererRegistry.register(TCOTS_Entities.Devourer(), DevourerRenderer::new);
+
+            EntityRendererRegistry.register(TCOTS_Entities.Bloedzuiger(), BloedzuigerRenderer::new);
 
             EntityRendererRegistry.register(TCOTS_Entities.Graveir(), GraveirRenderer::new);
 
@@ -297,6 +318,10 @@ public class TCOTS_ClientFabric implements ClientModInitializer {
             ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.YellowCloud(), CloudParticleColor.YellowCloudFactory::new);
             ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.DimeritiumFlash(), DimeritiumFlash.FlashFactory::new);
             ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.MoonDustExplosionEmitter(), new MoonDust_ExplosionEmitterParticle.Factory());
+
+            ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.BloedzuigerBloodEmitter(), new Bloedzuiger_BloodEmitterParticle.Factory());
+
+            ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.CadaverineCloud(), CloudParticleColor.CadaverineCloudFactory::new);
 
             ParticleFactoryRegistry.getInstance().register(TCOTS_Particles.FallingBloodParticle(),
                     (spriteProvider) ->

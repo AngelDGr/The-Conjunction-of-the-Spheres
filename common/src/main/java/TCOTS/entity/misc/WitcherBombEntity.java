@@ -38,11 +38,11 @@ public class WitcherBombEntity extends ThrowableItemProjectile implements ItemSu
     private String bombId;
     private int level;
 
-    public WitcherBombEntity(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
+    public WitcherBombEntity(final EntityType<? extends ThrowableItemProjectile> entityType, final Level world) {
         super(entityType, world);
     }
 
-    public WitcherBombEntity(Level world, LivingEntity owner, String bombId, int level) {
+    public WitcherBombEntity(final Level world, final LivingEntity owner, final String bombId, final int level) {
         super(TCOTS_Entities.WitcherBomb(), owner, world);
         this.bombId=bombId;
         this.level=level;
@@ -58,7 +58,7 @@ public class WitcherBombEntity extends ThrowableItemProjectile implements ItemSu
     }
 
     @Override
-    protected void onHit(@NotNull HitResult hitResult) {
+    protected void onHit(@NotNull final HitResult hitResult) {
         super.onHit(hitResult);
         if (this.level().isClientSide) {
             return;
@@ -107,7 +107,7 @@ public class WitcherBombEntity extends ThrowableItemProjectile implements ItemSu
     }
 
     @Override
-    public void handleEntityEvent(byte status) {
+    public void handleEntityEvent(final byte status) {
         super.handleEntityEvent(status);
         DancingStarBomb.handleStatus(this,status);
         DevilsPuffballBomb.handleStatus(this,status);
@@ -119,7 +119,7 @@ public class WitcherBombEntity extends ThrowableItemProjectile implements ItemSu
     }
 
     @Override
-    public boolean shouldBlockExplode(@NotNull Explosion explosion, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull BlockState state, float explosionPower) {
+    public boolean shouldBlockExplode(@NotNull final Explosion explosion, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final BlockState state, final float explosionPower) {
         if(Objects.equals(bombId, "grapeshot") || Objects.equals(bombId, "dancing_star") || Objects.equals(bombId, "samum")  ){
             return destroyableBlocks(state);
         }
@@ -127,7 +127,7 @@ public class WitcherBombEntity extends ThrowableItemProjectile implements ItemSu
         return false;
     }
 
-    public boolean destroyableBlocks(@NotNull BlockState state){
+    public boolean destroyableBlocks(@NotNull final BlockState state){
         return
                     state.getBlock() == TCOTS_Blocks.MonsterNest()
                 || (state.getBlock() == TCOTS_Blocks.NestSlab() && !(state == TCOTS_Blocks.NestSlab().defaultBlockState().setValue(SlabBlock.TYPE, SlabType.DOUBLE)))

@@ -15,7 +15,7 @@ public class ReturnToNestGoal extends Goal {
     private final double distanceBeforeReturning;
 
 
-    public ReturnToNestGoal(PathfinderMob mob, double speed, double distanceBeforeReturning){
+    public ReturnToNestGoal(final PathfinderMob mob, final double speed, final double distanceBeforeReturning){
         this.mob = mob;
 
         if (!(mob instanceof GuardNestMob)) {
@@ -28,7 +28,7 @@ public class ReturnToNestGoal extends Goal {
         this.distanceBeforeReturning=distanceBeforeReturning;
     }
 
-    public ReturnToNestGoal(PathfinderMob mob, double speed){
+    public ReturnToNestGoal(final PathfinderMob mob, final double speed){
         this(mob, speed, 100);
     }
 
@@ -47,7 +47,7 @@ public class ReturnToNestGoal extends Goal {
     }
 
     private boolean isExcavator(){
-        if(this.mob instanceof ExcavatorMob excavatorMob){
+        if(this.mob instanceof final ExcavatorMob excavatorMob){
             return !excavatorMob.getIsEmerging() && !excavatorMob.getInGround();
         }
 
@@ -64,7 +64,7 @@ public class ReturnToNestGoal extends Goal {
         this.startMovingTo(mob.getNavigation(), guardMob.getNestPos().getX(), guardMob.getNestPos().getY(), guardMob.getNestPos().getZ(), speed);
     }
 
-    public void startMovingTo(PathNavigation navigation, int x, int y, int z, double speed) {
+    public void startMovingTo(final PathNavigation navigation, final int x, final int y, final int z, final double speed) {
         navigation.moveTo(navigation.createPath(x, y, z, 2), speed);
     }
 

@@ -12,7 +12,7 @@ public class AlchemyFormulaUtil {
     Return an Alchemy Formula with a recipe
     @param id ID of the recipe to apply
      */
-    public static ItemStack setFormula(ResourceLocation id) {
+    public static ItemStack setFormula(final ResourceLocation id) {
         return setFormula(id, false);
     }
 
@@ -21,8 +21,8 @@ public class AlchemyFormulaUtil {
      @param id ID of the recipe to apply
      @param decoction If it's a decoction applies extra rarity
      */
-    public static ItemStack setFormula(ResourceLocation id, boolean decoction) {
-        ItemStack stack = new ItemStack(TCOTS_Items.ALCHEMY_FORMULA.get());
+    public static ItemStack setFormula(final ResourceLocation id, final boolean decoction) {
+        final ItemStack stack = new ItemStack(TCOTS_Items.ALCHEMY_FORMULA.get());
 
         RecipeTeacherComponent.set(stack, id.toString(), decoction);
 

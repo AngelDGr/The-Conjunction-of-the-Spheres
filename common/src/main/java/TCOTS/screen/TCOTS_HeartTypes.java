@@ -32,7 +32,7 @@ public enum TCOTS_HeartTypes {
     private final ResourceLocation hardcoreHalfTexture;
     private final ResourceLocation hardcoreHalfBlinkingTexture;
 
-    TCOTS_HeartTypes(ResourceLocation fullTexture, ResourceLocation fullBlinkingTexture, ResourceLocation halfTexture, ResourceLocation halfBlinkingTexture, ResourceLocation hardcoreFullTexture, ResourceLocation hardcoreFullBlinkingTexture, ResourceLocation hardcoreHalfTexture, ResourceLocation hardcoreHalfBlinkingTexture) {
+    TCOTS_HeartTypes(final ResourceLocation fullTexture, final ResourceLocation fullBlinkingTexture, final ResourceLocation halfTexture, final ResourceLocation halfBlinkingTexture, final ResourceLocation hardcoreFullTexture, final ResourceLocation hardcoreFullBlinkingTexture, final ResourceLocation hardcoreHalfTexture, final ResourceLocation hardcoreHalfBlinkingTexture) {
         this.fullTexture = fullTexture;
         this.fullBlinkingTexture = fullBlinkingTexture;
         this.halfTexture = halfTexture;
@@ -43,7 +43,7 @@ public enum TCOTS_HeartTypes {
         this.hardcoreHalfBlinkingTexture = hardcoreHalfBlinkingTexture;
     }
 
-    public ResourceLocation getTexture(boolean hardcore, boolean half, boolean blinking) {
+    public ResourceLocation getTexture(final boolean hardcore, final boolean half, final boolean blinking) {
         if (!hardcore) {
             if (half) {
                 return blinking ? this.halfBlinkingTexture : this.halfTexture;

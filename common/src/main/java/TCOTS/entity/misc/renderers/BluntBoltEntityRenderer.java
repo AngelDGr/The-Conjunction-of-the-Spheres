@@ -7,12 +7,12 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BluntBoltEntityRenderer extends BoltEntityRenderer<BluntBoltProjectile> {
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"textures/entity/blunt_bolt.png");
-    public BluntBoltEntityRenderer(EntityRendererProvider.Context context) {
+    public BluntBoltEntityRenderer(final EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BluntBoltProjectile arrowEntity) {
+    public ResourceLocation getTextureLocation(final BluntBoltProjectile arrowEntity) {
         return TEXTURE;
     }
 }

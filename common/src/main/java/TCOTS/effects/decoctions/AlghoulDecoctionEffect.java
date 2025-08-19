@@ -6,16 +6,16 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class AlghoulDecoctionEffect extends DecoctionEffectBase {
-    public AlghoulDecoctionEffect(MobEffectCategory category, int color) {
+    public AlghoulDecoctionEffect(final MobEffectCategory category, final int color) {
         super(category, color,50);
     }
 
     private int cooldownAttacks=0;
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(@NotNull final LivingEntity entity, final int amplifier) {
         if(!entity.level().isClientSide) {
-            if (entity instanceof Player playerEntity){
+            if (entity instanceof final Player playerEntity){
                 if (entity.tickCount < (entity.getLastHurtMobTimestamp() + 300)
                         && cooldownAttacks==0
                         && entity.getLastHurtByMob() == null

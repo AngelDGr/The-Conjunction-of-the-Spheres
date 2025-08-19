@@ -10,7 +10,7 @@ public class MeleeAttackGoal_Excavator extends MeleeAttackGoal_Animated {
     private final int ticksBeforeToGround;
 
     //For returning mobs
-    public MeleeAttackGoal_Excavator(PathfinderMob mob, double speed, boolean pauseWhenMobIdle, int ticksBeforeToGround) {
+    public MeleeAttackGoal_Excavator(final PathfinderMob mob, final double speed, final boolean pauseWhenMobIdle, final int ticksBeforeToGround) {
         super(mob, speed, pauseWhenMobIdle);
         if (!(mob instanceof ExcavatorMob)) {
             throw new IllegalArgumentException("MeleeAttackGoal_Excavator requires Mob implements ExcavatorMob");
@@ -20,7 +20,7 @@ public class MeleeAttackGoal_Excavator extends MeleeAttackGoal_Animated {
     }
 
     @SuppressWarnings("unused")
-    public MeleeAttackGoal_Excavator(PathfinderMob mob, double speed, boolean pauseWhenMobIdle, int ticksBeforeToGround, boolean twoAttacks) {
+    public MeleeAttackGoal_Excavator(final PathfinderMob mob, final double speed, final boolean pauseWhenMobIdle, final int ticksBeforeToGround, final boolean twoAttacks) {
         super(mob, speed, pauseWhenMobIdle, 2);
         if (!(mob instanceof ExcavatorMob)) {
             throw new IllegalArgumentException("MeleeAttackGoal_Excavator requires Mob implements ExcavatorMob");
@@ -30,7 +30,7 @@ public class MeleeAttackGoal_Excavator extends MeleeAttackGoal_Animated {
     }
 
     //For no returning mobs
-    public MeleeAttackGoal_Excavator(PathfinderMob mob, double speed, boolean pauseWhenMobIdle) {
+    public MeleeAttackGoal_Excavator(final PathfinderMob mob, final double speed, final boolean pauseWhenMobIdle) {
         this(mob, speed, pauseWhenMobIdle,0);
     }
 
@@ -44,7 +44,7 @@ public class MeleeAttackGoal_Excavator extends MeleeAttackGoal_Animated {
     @Override
     public void start() {
         if(ticksBeforeToGround > 0){
-            int randomExtra = mob.getRandom().nextIntBetweenInclusive(1,51);
+            final int randomExtra = mob.getRandom().nextIntBetweenInclusive(1,51);
             excavatorMob.setReturnToGround_Ticks(this.ticksBeforeToGround + randomExtra);
         } else if (ticksBeforeToGround == 0) {
             excavatorMob.setReturnToGround_Ticks(5000);
@@ -54,9 +54,9 @@ public class MeleeAttackGoal_Excavator extends MeleeAttackGoal_Animated {
     }
 
     @Override
-    protected void attack(LivingEntity target) {
+    protected void attack(final LivingEntity target) {
         if(target!=null && ticksBeforeToGround > 0){
-            int randomExtra = mob.getRandom().nextIntBetweenInclusive(1,51);
+            final int randomExtra = mob.getRandom().nextIntBetweenInclusive(1,51);
 
             excavatorMob.setReturnToGround_Ticks(this.ticksBeforeToGround + randomExtra);
 

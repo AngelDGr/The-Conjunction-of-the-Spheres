@@ -63,19 +63,19 @@ public class CrowsEyeFern extends DoublePlantBlock implements BonemealableBlock 
         return CODEC;
     }
 
-    public CrowsEyeFern(Properties settings) {
+    public CrowsEyeFern(final Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0).setValue(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Override
-    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public @NotNull ItemStack getCloneItemStack(@NotNull final LevelReader world, @NotNull final BlockPos pos, @NotNull final BlockState state) {
         return new ItemStack(TCOTS_Items.CROWS_EYE);
     }
 
     @Override
-    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-        Vec3 offset = state.getOffset(world, pos);
+    public @NotNull VoxelShape getShape(final BlockState state, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final CollisionContext context) {
+        final Vec3 offset = state.getOffset(world, pos);
 
         return state.getValue(HALF) == DoubleBlockHalf.UPPER ?
                 UPPER_OUTLINE_SHAPES[Math.min(Math.abs(4 - (state.getValue(AGE) + 1)), UPPER_OUTLINE_SHAPES.length - 1)].move(offset.x, offset.y, offset.z) :
@@ -83,7 +83,7 @@ public class CrowsEyeFern extends DoublePlantBlock implements BonemealableBlock 
     }
 
     @Override
-    public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState, @NotNull LevelAccessor world, @NotNull BlockPos pos, @NotNull BlockPos neighborPos) {
+    public @NotNull BlockState updateShape(final BlockState state, @NotNull final Direction direction, @NotNull final BlockState neighborState, @NotNull final LevelAccessor world, @NotNull final BlockPos pos, @NotNull final BlockPos neighborPos) {
         if (isDoubleTallAtAge(state.getValue(AGE))) {
             return super.updateShape(state, direction, neighborState, world, pos, neighborPos);
         }
@@ -91,13 +91,13 @@ public class CrowsEyeFern extends DoublePlantBlock implements BonemealableBlock 
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(final StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AGE);
         super.createBlockStateDefinition(builder);
     }
 
     @Override
-    public void entityInside(@NotNull BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull Entity entity) {
+    public void entityInside(@NotNull final BlockState state, @NotNull final Level world, @NotNull final BlockPos pos, @NotNull final Entity entity) {
         if (entity instanceof Ravager && world.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             world.destroyBlock(pos, true, entity);
         }
@@ -105,11 +105,11 @@ public class CrowsEyeFern extends DoublePlantBlock implements BonemealableBlock 
     }
 
     @Override
-    public void setPlacedBy(@NotNull Level world, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull LivingEntity placer, @NotNull ItemStack itemStack) {
+    public void setPlacedBy(@NotNull final Level world, @NotNull final BlockPos pos, @NotNull final BlockState state, @NotNull final LivingEntity placer, @NotNull final ItemStack itemStack) {
     }
 
     @Override
-    public boolean isRandomlyTicking(BlockState state) {
+    public boolean isRandomlyTicking(final BlockState state) {
         return state.getValue(HALF) == DoubleBlockHalf.LOWER && !this.isFullyGrown(state);
     }
 
@@ -119,34 +119,34 @@ public class CrowsEyeFern extends DoublePlantBlock implements BonemealableBlock 
     }
 
     @Override
-    public void randomTick(BlockState state, @NotNull ServerLevel world, @NotNull BlockPos pos, @NotNull RandomSource random) {
-        int i = state.getValue(AGE);
+    public void randomTick(final BlockState state, @NotNull final ServerLevel world, @NotNull final BlockPos pos, @NotNull final RandomSource random) {
+        final int i = state.getValue(AGE);
         if (i < 3 && random.nextInt(5) == 0 && world.getRawBrightness(pos.above(), 0) >= 9) {
-            BlockState blockState = state.setValue(AGE, i + 1);
+            final BlockState blockState = state.setValue(AGE, i + 1);
             world.setBlock(pos, blockState, Block.UPDATE_CLIENTS);
             world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockState));
         }
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
-        int i = state.getValue(AGE);
-        boolean bl = i == 4;
+    protected @NotNull ItemInteractionResult useItemOn(@NotNull final ItemStack stack, final BlockState state, @NotNull final Level world, @NotNull final BlockPos pos, @NotNull final Player player, @NotNull final InteractionHand hand, @NotNull final BlockHitResult hit) {
+        final int i = state.getValue(AGE);
+        final boolean bl = i == 4;
         return !bl && stack.is(Items.BONE_MEAL)
                 ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
                 : super.useItemOn(stack, state, world, pos, player, hand, hit);
     }
 
     @Override
-    public @NotNull InteractionResult useWithoutItem(BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
-        int i = state.getValue(AGE);
+    public @NotNull InteractionResult useWithoutItem(final BlockState state, @NotNull final Level world, @NotNull final BlockPos pos, @NotNull final Player player, @NotNull final BlockHitResult hit) {
+        final int i = state.getValue(AGE);
         if (i > 3) {
-            int j = 1 + world.random.nextInt(4);
+            final int j = 1 + world.random.nextInt(4);
             SweetBerryBushBlock.popResource(world, pos, new ItemStack(TCOTS_Items.CROWS_EYE, j));
 
             world.playSound(null, pos, TCOTS_Sounds.getSoundEvent("ingredient_pops"), SoundSource.BLOCKS, 1.0f, 0.8f + world.random.nextFloat() * 0.4f);
 
-            BlockState ageState = state.setValue(AGE, 3);
+            final BlockState ageState = state.setValue(AGE, 3);
 
             //Changes itself
             world.setBlock(pos, ageState, Block.UPDATE_CLIENTS);
@@ -169,8 +169,8 @@ public class CrowsEyeFern extends DoublePlantBlock implements BonemealableBlock 
     }
 
     @Override
-    public boolean isValidBonemealTarget(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state) {
-        LowerHalfContext lowerHalfContext = this.getLowerHalfContext(world, pos, state);
+    public boolean isValidBonemealTarget(@NotNull final LevelReader world, @NotNull final BlockPos pos, @NotNull final BlockState state) {
+        final LowerHalfContext lowerHalfContext = this.getLowerHalfContext(world, pos, state);
         if (lowerHalfContext == null) {
             return false;
         }
@@ -183,33 +183,33 @@ public class CrowsEyeFern extends DoublePlantBlock implements BonemealableBlock 
         return blockState.isAir() || blockState.is(TCOTS_Blocks.CrowsEyeFern());
     }
 
-    private boolean canGrow(LevelReader world, BlockPos pos, BlockState state, int age) {
+    private boolean canGrow(final LevelReader world, final BlockPos pos, final BlockState state, final int age) {
         return !this.isFullyGrown(state)
                 && canSurvive(state, world, pos)
                 && (!isDoubleTallAtAge(age) || canGrowAt(world, pos.above()));
     }
 
     @Override
-    public boolean isBonemealSuccess(@NotNull Level world, @NotNull RandomSource random, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public boolean isBonemealSuccess(@NotNull final Level world, @NotNull final RandomSource random, @NotNull final BlockPos pos, @NotNull final BlockState state) {
         return true;
     }
 
-    private static boolean isDoubleTallAtAge(int age) {
+    private static boolean isDoubleTallAtAge(final int age) {
         return age >= 3;
     }
 
 
-    private static boolean isLowerHalf(BlockState state) {
+    private static boolean isLowerHalf(final BlockState state) {
         return state.is(TCOTS_Blocks.CrowsEyeFern()) && state.getValue(HALF) == DoubleBlockHalf.LOWER;
     }
 
     @Nullable
-    private LowerHalfContext getLowerHalfContext(LevelReader world, BlockPos pos, BlockState state) {
+    private LowerHalfContext getLowerHalfContext(final LevelReader world, final BlockPos pos, final BlockState state) {
         if (isLowerHalf(state)) {
             return new LowerHalfContext(pos, state);
         }
-        BlockPos blockPos = pos.below();
-        BlockState blockState = world.getBlockState(blockPos);
+        final BlockPos blockPos = pos.below();
+        final BlockState blockState = world.getBlockState(blockPos);
         if (isLowerHalf(blockState)) {
             return new LowerHalfContext(blockPos, blockState);
         }
@@ -217,8 +217,8 @@ public class CrowsEyeFern extends DoublePlantBlock implements BonemealableBlock 
     }
 
     @Override
-    public void performBonemeal(@NotNull ServerLevel world, @NotNull RandomSource random, @NotNull BlockPos pos, @NotNull BlockState state) {
-        LowerHalfContext lowerHalfContext = this.getLowerHalfContext(world, pos, state);
+    public void performBonemeal(@NotNull final ServerLevel world, @NotNull final RandomSource random, @NotNull final BlockPos pos, @NotNull final BlockState state) {
+        final LowerHalfContext lowerHalfContext = this.getLowerHalfContext(world, pos, state);
         if (lowerHalfContext == null) {
             return;
         }

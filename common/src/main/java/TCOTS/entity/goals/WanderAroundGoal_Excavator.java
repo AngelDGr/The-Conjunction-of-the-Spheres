@@ -8,7 +8,7 @@ public class WanderAroundGoal_Excavator extends RandomStrollGoal {
 
     ExcavatorMob excavatorMob;
 
-    public WanderAroundGoal_Excavator(PathfinderMob mob, double speed, int chance) {
+    public WanderAroundGoal_Excavator(final PathfinderMob mob, final double speed, final int chance) {
         super(mob, speed, chance);
         if (!(mob instanceof ExcavatorMob)) {
             throw new IllegalArgumentException("WanderAroundGoal_Excavator requires Mob implements ExcavatorMob");

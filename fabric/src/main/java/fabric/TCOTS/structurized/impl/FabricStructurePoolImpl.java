@@ -16,25 +16,25 @@ public class FabricStructurePoolImpl implements FabricStructurePool {
     private final StructureTemplatePool pool;
     private final ResourceLocation id;
 
-    public FabricStructurePoolImpl(StructureTemplatePool pool, ResourceLocation id) {
+    public FabricStructurePoolImpl(final StructureTemplatePool pool, final ResourceLocation id) {
         this.pool = pool;
         this.id = id;
     }
 
     @Override
-    public void addStructurePoolElement(StructurePoolElement element) {
+    public void addStructurePoolElement(final StructurePoolElement element) {
         addStructurePoolElement(element, 1);
     }
 
     @Override
-    public void addStructurePoolElement(StructurePoolElement element, int weight) {
+    public void addStructurePoolElement(final StructurePoolElement element, final int weight) {
         //adds to elementCounts list; minecraft makes these immutable lists, so we replace them with an array list
-        StructurePoolAccessor pool = (StructurePoolAccessor) getUnderlyingPool();
+        final StructurePoolAccessor pool = (StructurePoolAccessor) getUnderlyingPool();
 
         if (pool.getRawTemplates() instanceof ArrayList) {
             pool.getRawTemplates().add(Pair.of(element, weight));
         } else {
-            List<Pair<StructurePoolElement, Integer>> list = new ArrayList<>(pool.getRawTemplates());
+            final List<Pair<StructurePoolElement, Integer>> list = new ArrayList<>(pool.getRawTemplates());
             list.add(Pair.of(element, weight));
             pool.setRawTemplates(list);
         }

@@ -12,12 +12,12 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 
 public class HugePuffballMushroomFeature extends AbstractHugeMushroomFeature {
-    public HugePuffballMushroomFeature(Codec<HugeMushroomFeatureConfiguration> codec) {
+    public HugePuffballMushroomFeature(final Codec<HugeMushroomFeatureConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    protected int getTreeRadiusForHeight(int i, int j, int capSize, int y) {
+    protected int getTreeRadiusForHeight(final int i, final int j, final int capSize, final int y) {
         int k = 0;
         if (y < j && y >= j - 3) {
             k = capSize;
@@ -28,11 +28,11 @@ public class HugePuffballMushroomFeature extends AbstractHugeMushroomFeature {
     }
 
     @Override
-    protected void makeCap(LevelAccessor world, RandomSource random, BlockPos start, int height, BlockPos.MutableBlockPos mutable, HugeMushroomFeatureConfiguration config) {
+    protected void makeCap(final LevelAccessor world, final RandomSource random, final BlockPos start, final int height, final BlockPos.MutableBlockPos mutable, final HugeMushroomFeatureConfiguration config) {
         // Loop through the height-coordinates from (height - 3) to height
         for (int i = height - 4; i <= height; ++i) {
-            int j;
-            int k;
+            final int j;
+            final int k;
             // Determine the foliage radius based on the current height-coordinate
             if (i < height) {
                 j = config.foliageRadius;
@@ -46,12 +46,12 @@ public class HugePuffballMushroomFeature extends AbstractHugeMushroomFeature {
             for (int l = -j; l <= j; ++l) {
                 for (int m = -j; m <= j; ++m) {
                     // Determine if the current position is at the edge of the cap
-                    boolean bl = l == -j;
-                    boolean bl2 = l == j;
-                    boolean bl3 = m == -j;
-                    boolean bl4 = m == j;
-                    boolean bl5 = bl || bl2;
-                    boolean bl6 = bl3 || bl4;
+                    final boolean bl = l == -j;
+                    final boolean bl2 = l == j;
+                    final boolean bl3 = m == -j;
+                    final boolean bl4 = m == j;
+                    final boolean bl5 = bl || bl2;
+                    final boolean bl6 = bl3 || bl4;
 
                     // Skip if not at the edge and not below the cap
                     if (i < height && bl5 == bl6) continue;
@@ -83,13 +83,13 @@ public class HugePuffballMushroomFeature extends AbstractHugeMushroomFeature {
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<HugeMushroomFeatureConfiguration> context) {
-        BlockPos.MutableBlockPos mutable;
-        WorldGenLevel structureWorldAccess = context.level();
-        BlockPos blockPos = context.origin();
-        RandomSource random = context.random();
-        HugeMushroomFeatureConfiguration hugeMushroomFeatureConfig = context.config();
-        int i = this.getTreeHeight(random);
+    public boolean place(final FeaturePlaceContext<HugeMushroomFeatureConfiguration> context) {
+        final BlockPos.MutableBlockPos mutable;
+        final WorldGenLevel structureWorldAccess = context.level();
+        final BlockPos blockPos = context.origin();
+        final RandomSource random = context.random();
+        final HugeMushroomFeatureConfiguration hugeMushroomFeatureConfig = context.config();
+        final int i = this.getTreeHeight(random);
         if (!this.isValidPosition(structureWorldAccess, blockPos, i, mutable = new BlockPos.MutableBlockPos(), hugeMushroomFeatureConfig)) {
             return false;
         }
@@ -99,12 +99,12 @@ public class HugePuffballMushroomFeature extends AbstractHugeMushroomFeature {
     }
 
     @Override
-    protected boolean isValidPosition(LevelAccessor world, BlockPos pos, int height, BlockPos.MutableBlockPos mutablePos, HugeMushroomFeatureConfiguration config) {
+    protected boolean isValidPosition(final LevelAccessor world, final BlockPos pos, final int height, final BlockPos.MutableBlockPos mutablePos, final HugeMushroomFeatureConfiguration config) {
         return super.isValidPosition(world, pos, height, mutablePos, config);
     }
 
     @Override
-    protected int getTreeHeight(RandomSource random) {
+    protected int getTreeHeight(final RandomSource random) {
         return random.nextInt(2) + 5;
     }
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
+@SuppressWarnings("all")
 public class ItemsInLine_CustomComponent implements ICustomComponent {
     private transient int x, y;
 

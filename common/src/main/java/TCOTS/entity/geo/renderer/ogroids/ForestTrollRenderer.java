@@ -2,7 +2,7 @@ package TCOTS.entity.geo.renderer.ogroids;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.geo.model.ogroids.ForestTrollModel;
-import TCOTS.entity.ogroids.ForestTrollEntity;
+import TCOTS.entity.monsters.ogroids.ForestTrollEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -27,7 +27,7 @@ public class ForestTrollRenderer extends GeoEntityRenderer<ForestTrollEntity> {
     private static final String RIGHT_HAND = "right_hand";
     protected ItemStack mainHandItem;
     protected ItemStack offhandItem;
-    public ForestTrollRenderer(EntityRendererProvider.Context renderManager) {
+    public ForestTrollRenderer(final EntityRendererProvider.Context renderManager) {
         super(renderManager, new ForestTrollModel());
         this.shadowRadius = 0.75f;
 
@@ -36,9 +36,9 @@ public class ForestTrollRenderer extends GeoEntityRenderer<ForestTrollEntity> {
             private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/entity/ogroids/troll/forest_rabid_eyes.png");
 
             @Override
-            public void render(PoseStack poseStack, ForestTrollEntity animatable, BakedGeoModel bakedModel, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
+            public void render(final PoseStack poseStack, final ForestTrollEntity animatable, final BakedGeoModel bakedModel, final RenderType renderType, final MultiBufferSource bufferSource, final VertexConsumer buffer, final float partialTick, final int packedLight, final int packedOverlay) {
                 if(animatable.isRabid()){
-                    RenderType armorRenderType = RenderType.armorCutoutNoCull(TEXTURE);
+                    final RenderType armorRenderType = RenderType.armorCutoutNoCull(TEXTURE);
 
                     getRenderer().reRender(getDefaultBakedModel(animatable), poseStack, bufferSource, animatable, armorRenderType,
                             bufferSource.getBuffer(armorRenderType), partialTick, packedLight, OverlayTexture.NO_OVERLAY,
@@ -51,7 +51,7 @@ public class ForestTrollRenderer extends GeoEntityRenderer<ForestTrollEntity> {
         addRenderLayer(new BlockAndItemGeoLayer<>(this) {
             @Nullable
             @Override
-            protected ItemStack getStackForBone(GeoBone bone, ForestTrollEntity animatable) {
+            protected ItemStack getStackForBone(final GeoBone bone, final ForestTrollEntity animatable) {
                 // Retrieve the items in the entity's hands for the relevant bone
                 return switch (bone.getName()) {
                     case LEFT_HAND -> animatable.isLeftHanded() ?
@@ -63,7 +63,7 @@ public class ForestTrollRenderer extends GeoEntityRenderer<ForestTrollEntity> {
             }
 
             @Override
-            protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, ForestTrollEntity animatable) {
+            protected ItemDisplayContext getTransformTypeForStack(final GeoBone bone, final ItemStack stack, final ForestTrollEntity animatable) {
                 // Apply the camera transform for the given hand
                 return switch (bone.getName()) {
                     case LEFT_HAND, RIGHT_HAND -> ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
@@ -73,8 +73,8 @@ public class ForestTrollRenderer extends GeoEntityRenderer<ForestTrollEntity> {
 
             // Do some quick render modifications depending on what the item is
             @Override
-            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, ForestTrollEntity troll,
-                                              MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
+            protected void renderStackForBone(final PoseStack poseStack, final GeoBone bone, final ItemStack stack, final ForestTrollEntity troll,
+                                              final MultiBufferSource bufferSource, final float partialTick, final int packedLight, final int packedOverlay) {
                 if (stack == ForestTrollRenderer.this.mainHandItem) {
                     poseStack.mulPose(Axis.XP.rotationDegrees(-90f));
 
@@ -97,7 +97,7 @@ public class ForestTrollRenderer extends GeoEntityRenderer<ForestTrollEntity> {
     }
 
     @Override
-    public void preRender(PoseStack poseStack, ForestTrollEntity animatable, BakedGeoModel model, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+    public void preRender(final PoseStack poseStack, final ForestTrollEntity animatable, final BakedGeoModel model, @Nullable final MultiBufferSource bufferSource, @Nullable final VertexConsumer buffer, final boolean isReRender, final float partialTick, final int packedLight, final int packedOverlay, final int colour) {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
 
         this.mainHandItem = animatable.getMainHandItem();

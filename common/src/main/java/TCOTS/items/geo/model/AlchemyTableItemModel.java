@@ -10,28 +10,28 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class AlchemyTableItemModel extends GeoModel<AlchemyTableItem> {
     @Override
-    public ResourceLocation getModelResource(AlchemyTableItem animatable) {
+    public ResourceLocation getModelResource(final AlchemyTableItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/block/alchemy_table.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(AlchemyTableItem animatable) {
+    public ResourceLocation getTextureResource(final AlchemyTableItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/block/alchemy_table.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(AlchemyTableItem animatable) {
+    public ResourceLocation getAnimationResource(final AlchemyTableItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 
     @Override
-    public RenderType getRenderType(AlchemyTableItem animatable, ResourceLocation texture) {
+    public RenderType getRenderType(final AlchemyTableItem animatable, final ResourceLocation texture) {
         return RenderType.entityTranslucent(texture);
     }
 
     @Override
-    public void setCustomAnimations(AlchemyTableItem animatable, long instanceId, AnimationState<AlchemyTableItem> animationState) {
-        GeoBone book = getAnimationProcessor().getBone("Book");
+    public void setCustomAnimations(final AlchemyTableItem animatable, final long instanceId, final AnimationState<AlchemyTableItem> animationState) {
+        final GeoBone book = getAnimationProcessor().getBone("Book");
         book.setHidden(true);
         super.setCustomAnimations(animatable, instanceId, animationState);
     }

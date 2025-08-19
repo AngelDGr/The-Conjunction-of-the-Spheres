@@ -42,18 +42,18 @@ public class ArenariaBush extends BushBlock implements BonemealableBlock {
         return CODEC;
     }
 
-    public ArenariaBush(Properties settings) {
+    public ArenariaBush(final Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
     }
 
     @Override
-    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public @NotNull ItemStack getCloneItemStack(@NotNull final LevelReader world, @NotNull final BlockPos pos, @NotNull final BlockState state) {
         return new ItemStack(TCOTS_Items.ARENARIA);
     }
 
     @Override
-    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public @NotNull VoxelShape getShape(final BlockState state, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final CollisionContext context) {
         if (state.getValue(AGE) == 0) {
             return SMALL_SHAPE;
         }
@@ -64,44 +64,44 @@ public class ArenariaBush extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(final StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AGE);
     }
 
     @Override
-    public boolean isRandomlyTicking(BlockState state) {
+    public boolean isRandomlyTicking(final BlockState state) {
         return state.getValue(AGE) < 2;
     }
 
     @Override
-    public void randomTick(BlockState state, @NotNull ServerLevel world, @NotNull BlockPos pos, @NotNull RandomSource random) {
-        int i = state.getValue(AGE);
+    public void randomTick(final BlockState state, @NotNull final ServerLevel world, @NotNull final BlockPos pos, @NotNull final RandomSource random) {
+        final int i = state.getValue(AGE);
         if (i < 3 && random.nextInt(5) == 0 && world.getRawBrightness(pos.above(), 0) >= 9) {
-            BlockState blockState = state.setValue(AGE, i + 1);
+            final BlockState blockState = state.setValue(AGE, i + 1);
             world.setBlock(pos, blockState, Block.UPDATE_CLIENTS);
             world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockState));
         }
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
-        int i = state.getValue(AGE);
-        boolean bl = i == 2;
+    protected @NotNull ItemInteractionResult useItemOn(@NotNull final ItemStack stack, final BlockState state, @NotNull final Level world, @NotNull final BlockPos pos, @NotNull final Player player, @NotNull final InteractionHand hand, @NotNull final BlockHitResult hit) {
+        final int i = state.getValue(AGE);
+        final boolean bl = i == 2;
         return !bl && stack.is(Items.BONE_MEAL)
                 ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
                 : super.useItemOn(stack, state, world, pos, player, hand, hit);
     }
 
     @Override
-    public @NotNull InteractionResult useWithoutItem(BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
-        int i = state.getValue(AGE);
+    public @NotNull InteractionResult useWithoutItem(final BlockState state, @NotNull final Level world, @NotNull final BlockPos pos, @NotNull final Player player, @NotNull final BlockHitResult hit) {
+        final int i = state.getValue(AGE);
         if (i > 1) {
-            int j = 1 + world.random.nextInt(3);
+            final int j = 1 + world.random.nextInt(3);
             SweetBerryBushBlock.popResource(world, pos, new ItemStack(TCOTS_Items.ARENARIA, j));
 
             world.playSound(null, pos, TCOTS_Sounds.getSoundEvent("ingredient_pops"), SoundSource.BLOCKS, 1.0f, 0.8f + world.random.nextFloat() * 0.4f);
 
-            BlockState blockState = state.setValue(AGE, 1);
+            final BlockState blockState = state.setValue(AGE, 1);
             world.setBlock(pos, blockState, Block.UPDATE_CLIENTS);
             world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockState));
             return InteractionResult.sidedSuccess(world.isClientSide);
@@ -110,18 +110,18 @@ public class ArenariaBush extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(@NotNull LevelReader world, @NotNull BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(@NotNull final LevelReader world, @NotNull final BlockPos pos, final BlockState state) {
         return state.getValue(AGE) < 2;
     }
 
     @Override
-    public boolean isBonemealSuccess(@NotNull Level world, @NotNull RandomSource random, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public boolean isBonemealSuccess(@NotNull final Level world, @NotNull final RandomSource random, @NotNull final BlockPos pos, @NotNull final BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel world, @NotNull RandomSource random, @NotNull BlockPos pos, BlockState state) {
-        int i = Math.min(2, state.getValue(AGE) + 1);
+    public void performBonemeal(final ServerLevel world, @NotNull final RandomSource random, @NotNull final BlockPos pos, final BlockState state) {
+        final int i = Math.min(2, state.getValue(AGE) + 1);
         world.setBlock(pos, state.setValue(AGE, i), Block.UPDATE_CLIENTS);
     }
 }

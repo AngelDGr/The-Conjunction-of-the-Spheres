@@ -12,7 +12,7 @@ public class Rotfiend_BloodEmitterParticle extends NoRenderParticle {
     private int age;
     private final int lifetime;
 
-    Rotfiend_BloodEmitterParticle(ClientLevel clientWorld, double d, double e, double f) {
+    Rotfiend_BloodEmitterParticle(final ClientLevel clientWorld, final double d, final double e, final double f) {
         super(clientWorld, d, e, f, 0.0, 0.0, 0.0);
         this.lifetime = 8;
     }
@@ -20,9 +20,9 @@ public class Rotfiend_BloodEmitterParticle extends NoRenderParticle {
     @Override
     public void tick() {
         for (int i = 0; i < 6; ++i) {
-            double d = this.x + (this.random.nextDouble() - this.random.nextDouble()) * 3.0;
-            double e = this.y + (this.random.nextDouble()) * 4.0;
-            double f = this.z + (this.random.nextDouble() - this.random.nextDouble()) * 3.0;
+            final double d = this.x + (this.random.nextDouble() - this.random.nextDouble()) * 3.0;
+            final double e = this.y + (this.random.nextDouble()) * 4.0;
+            final double f = this.z + (this.random.nextDouble() - this.random.nextDouble()) * 3.0;
             this.level.addParticle(TCOTS_Particles.RotfiendBloodExplosion(), d, e, f, (float)this.age / (float)this.lifetime, 0.0, 0.0);
         }
         ++this.age;
@@ -34,7 +34,7 @@ public class Rotfiend_BloodEmitterParticle extends NoRenderParticle {
 
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         @Override
-        public Particle createParticle(@NotNull SimpleParticleType defaultParticleType, @NotNull ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(@NotNull final SimpleParticleType defaultParticleType, @NotNull final ClientLevel clientWorld, final double d, final double e, final double f, final double g, final double h, final double i) {
             return new Rotfiend_BloodEmitterParticle(clientWorld, d, e, f);
         }
     }

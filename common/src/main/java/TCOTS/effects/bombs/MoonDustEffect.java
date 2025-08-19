@@ -6,12 +6,12 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 
 public class MoonDustEffect extends BombEffectBase {
-    public MoonDustEffect(MobEffectCategory category, int color) {
+    public MoonDustEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(final LivingEntity entity, final int amplifier) {
         //Remove invisibility effect
         if(entity.hasEffect(MobEffects.INVISIBILITY))
             entity.removeEffect(MobEffects.INVISIBILITY);

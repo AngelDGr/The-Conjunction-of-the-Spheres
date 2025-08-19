@@ -13,11 +13,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animation.RawAnimation;
 
 @SuppressWarnings({"unused"})
 public class WitcherMob_Class extends Monster implements Enemy {
-    protected WitcherMob_Class(EntityType<? extends WitcherMob_Class> entityType, Level world) {
+    protected WitcherMob_Class(final EntityType<? extends WitcherMob_Class> entityType, final Level world) {
         super(entityType, world);
         this.xpReward = 5;
     }
@@ -27,7 +28,7 @@ public class WitcherMob_Class extends Monster implements Enemy {
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
 
     @Override
-    public float getWalkTargetValue(BlockPos pos, LevelReader world) {
+    public float getWalkTargetValue(final @NotNull BlockPos pos, final @NotNull LevelReader world) {
         return 0.0f;
     }
 
@@ -36,7 +37,7 @@ public class WitcherMob_Class extends Monster implements Enemy {
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
+    protected void playStepSound(final @NotNull BlockPos pos, final @NotNull BlockState state) {
         if(getStepSound()!=null){
             this.playSound(this.getStepSound(), 0.15F, 1.0F);}
         else {
@@ -45,7 +46,7 @@ public class WitcherMob_Class extends Monster implements Enemy {
     }
 
     @Override
-    public boolean doHurtTarget(Entity target) {
+    public boolean doHurtTarget(final @NotNull Entity target) {
         if(this.getAttackSound() != null){
             this.playSound(this.getAttackSound(), 1.0F, 1.0F);
         }
@@ -56,11 +57,11 @@ public class WitcherMob_Class extends Monster implements Enemy {
         return null;
     }
 
-    public static boolean canSpawnInDarkW(EntityType<? extends WitcherMob_Class> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
+    public static boolean canSpawnInDarkW(final EntityType<? extends WitcherMob_Class> type, final ServerLevelAccessor world, final MobSpawnType spawnReason, final BlockPos pos, final RandomSource random) {
         return world.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(world, pos, random) && Monster.checkMobSpawnRules(type, world, spawnReason, pos, random);
     }
 
-    public static boolean canSpawnInDarkNotSurface(EntityType<? extends WitcherMob_Class> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
+    public static boolean canSpawnInDarkNotSurface(final EntityType<? extends WitcherMob_Class> type, final ServerLevelAccessor world, final MobSpawnType spawnReason, final BlockPos pos, final RandomSource random) {
         if(spawnReason == MobSpawnType.SPAWNER){
            return world.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(world, pos, random) && Monster.checkMobSpawnRules(type, world, spawnReason, pos, random);
         } else {
@@ -69,7 +70,7 @@ public class WitcherMob_Class extends Monster implements Enemy {
         }
     }
 
-    public static boolean canSpawnInDark_NotCaves(EntityType<? extends WitcherMob_Class> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
+    public static boolean canSpawnInDark_NotCaves(final EntityType<? extends WitcherMob_Class> type, final ServerLevelAccessor world, final MobSpawnType spawnReason, final BlockPos pos, final RandomSource random) {
         if(spawnReason==MobSpawnType.SPAWNER){
             return world.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(world, pos, random) && Monster.checkMobSpawnRules(type, world, spawnReason, pos, random);
         } else {
@@ -78,7 +79,7 @@ public class WitcherMob_Class extends Monster implements Enemy {
         }
     }
 
-    public static boolean canSpawnInDarkNotBelowDeepslate(EntityType<? extends WitcherMob_Class> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
+    public static boolean canSpawnInDarkNotBelowDeepslate(final EntityType<? extends WitcherMob_Class> type, final ServerLevelAccessor world, final MobSpawnType spawnReason, final BlockPos pos, final RandomSource random) {
         if(spawnReason==MobSpawnType.SPAWNER){
             return world.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(world, pos, random) && Monster.checkMobSpawnRules(type, world, spawnReason, pos, random);
         } else {

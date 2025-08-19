@@ -20,7 +20,7 @@ public class LungeAttackGoal extends Goal {
     private final int minDistance;
     private final int maxDistance;
 
-    public LungeAttackGoal(PathfinderMob mob, int cooldownBetweenLungesAttacks, double lungeImpulse, int minDistance, int maxDistance) {
+    public LungeAttackGoal(final PathfinderMob mob, final int cooldownBetweenLungesAttacks, final double lungeImpulse, final int minDistance, final int maxDistance) {
         this.mob = mob;
         if(mob instanceof ExcavatorMob){
             this.excavatorMob= (ExcavatorMob) mob;
@@ -42,7 +42,7 @@ public class LungeAttackGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        LivingEntity target = this.mob.getTarget();
+        final LivingEntity target = this.mob.getTarget();
         if (target != null) {
             //5 square distance like 1.5 blocks approx
             //I want 7.5 blocks approx
@@ -77,7 +77,7 @@ public class LungeAttackGoal extends Goal {
 
     @Override
     public void tick() {
-        LivingEntity livingEntity = this.mob.getTarget();
+        final LivingEntity livingEntity = this.mob.getTarget();
 
         if (livingEntity != null) {
             LungeAttack(livingEntity);
@@ -85,11 +85,11 @@ public class LungeAttackGoal extends Goal {
     }
 
     @NotNull
-    private Vec3 getVec3d(LivingEntity target) {
-        double dXtoTarget = target.getX() - this.mob.getEyePosition().x;
-        double dYtoTarget = target.getY() - this.mob.getEyePosition().y;
-        double dZtoTarget = target.getZ() - this.mob.getEyePosition().z;
-        double length = Math.sqrt(dXtoTarget * dXtoTarget + dYtoTarget * dYtoTarget + dZtoTarget * dZtoTarget);
+    private Vec3 getVec3d(final LivingEntity target) {
+        final double dXtoTarget = target.getX() - this.mob.getEyePosition().x;
+        final double dYtoTarget = target.getY() - this.mob.getEyePosition().y;
+        final double dZtoTarget = target.getZ() - this.mob.getEyePosition().z;
+        final double length = Math.sqrt(dXtoTarget * dXtoTarget + dYtoTarget * dYtoTarget + dZtoTarget * dZtoTarget);
 
         //Movement Vector
         return new Vec3((dXtoTarget / length) * SpeedLungeMultiplier,
@@ -97,14 +97,14 @@ public class LungeAttackGoal extends Goal {
                 (dZtoTarget / length) * SpeedLungeMultiplier);
     }
 
-    private void LungeAttack(LivingEntity target) {
+    private void LungeAttack(final LivingEntity target) {
         //Check if it can do a lunge
         if (lungeMob.getNotCooldownBetweenLunges()) {
             //Makes the lunge
             //Extra random ticks in cooldown
             randomExtra = mob.getRandom().nextInt(51);
 
-            Vec3 vec3D_lunge = getVec3d(target).normalize();
+            final Vec3 vec3D_lunge = getVec3d(target).normalize();
             if(lungeMob instanceof GeoEntity){
                 ((GeoEntity) lungeMob).triggerAnim("LungeController","lunge");
             }

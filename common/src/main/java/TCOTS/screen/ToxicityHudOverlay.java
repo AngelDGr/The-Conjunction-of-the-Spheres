@@ -25,7 +25,7 @@ public class ToxicityHudOverlay {
 
     private static boolean activeHud=false;
 
-    private static int getXAnchor(int scaledWith, TCOTS_OwOConfig.ANCHORS anchor){
+    private static int getXAnchor(final int scaledWith, final TCOTS_OwOConfig.ANCHORS anchor){
         return switch (anchor){
             case CENTER_DOWN,CENTER_UP -> scaledWith/2 - 61;
             case RIGHT_DOWN, RIGHT_UP -> scaledWith - 120;
@@ -33,7 +33,7 @@ public class ToxicityHudOverlay {
         };
     }
 
-    private static int getYAnchor(int scaledHeight, TCOTS_OwOConfig.ANCHORS anchor){
+    private static int getYAnchor(final int scaledHeight, final TCOTS_OwOConfig.ANCHORS anchor){
         return switch (anchor){
             case CENTER_DOWN -> scaledHeight-71;
             case CENTER_UP -> 22;
@@ -43,20 +43,20 @@ public class ToxicityHudOverlay {
         };
     }
 
-    public static void onHudRender(GuiGraphics context, float tickDelta) {
+    public static void onHudRender(final GuiGraphics context, final float tickDelta) {
 
 
-        Minecraft client = Minecraft.getInstance();
+        final Minecraft client = Minecraft.getInstance();
 
         if (client != null && !client.options.hideGui) {
-            int scaledWidth = context.guiWidth();
-            int scaledHeight = context.guiHeight();
+            final int scaledWidth = context.guiWidth();
+            final int scaledHeight = context.guiHeight();
 
-            int x = (getXAnchor(scaledWidth, TCOTS_Main.CONFIG.hud.anchor())) + TCOTS_Main.CONFIG.hud.Hud_X();
-            int y = (getYAnchor(scaledHeight, TCOTS_Main.CONFIG.hud.anchor())) + TCOTS_Main.CONFIG.hud.Hud_Y();
+            final int x = (getXAnchor(scaledWidth, TCOTS_Main.CONFIG.hud.anchor())) + TCOTS_Main.CONFIG.hud.Hud_X();
+            final int y = (getYAnchor(scaledHeight, TCOTS_Main.CONFIG.hud.anchor())) + TCOTS_Main.CONFIG.hud.Hud_Y();
 
             if(client.player!=null){
-                Player player=client.player;
+                final Player player=client.player;
 
                 //For fade out
                 if(player.theConjunctionOfTheSpheres$getAllToxicity()>0){
@@ -74,8 +74,8 @@ public class ToxicityHudOverlay {
                 }
 
                 if(activeHud) {
-                    int allToxicity=player.theConjunctionOfTheSpheres$getAllToxicity();
-                    int maxToxicity= player.theConjunctionOfTheSpheres$getMaxToxicity();
+                    final int allToxicity=player.theConjunctionOfTheSpheres$getAllToxicity();
+                    final int maxToxicity= player.theConjunctionOfTheSpheres$getMaxToxicity();
                     RenderSystem.enableBlend();
 
                     context.setColor(1,1,1, transparency);
@@ -96,7 +96,7 @@ public class ToxicityHudOverlay {
                     context.setColor(1,1,1,1);
 
                     //Toxicity Overlay
-                    float toxicityThreshold= maxToxicity*0.5f;
+                    final float toxicityThreshold= maxToxicity*0.5f;
                     if(allToxicity>=toxicityThreshold){
                         context.setColor(1,1,1,(allToxicity-toxicityThreshold)/toxicityThreshold);
                         context.blit(TOXICITY_OVERLAY, 0, 0, -90, 0.0f, 0.0f, scaledWidth, scaledHeight, scaledWidth, scaledHeight);

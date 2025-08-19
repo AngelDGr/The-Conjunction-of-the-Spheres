@@ -32,8 +32,8 @@ public class CrossbowMixins {
     @Mixin(PlayerRenderer.class)
     public static class PlayerEntityRendererMixin {
         @Inject(method = "getArmPose", at = @At("TAIL"), cancellable = true)
-        private static void injectKnightCrossbowPose(AbstractClientPlayer player, InteractionHand hand, CallbackInfoReturnable<HumanoidModel.ArmPose> cir){
-            ItemStack itemStack = player.getItemInHand(hand);
+        private static void injectKnightCrossbowPose(final AbstractClientPlayer player, final InteractionHand hand, final CallbackInfoReturnable<HumanoidModel.ArmPose> cir){
+            final ItemStack itemStack = player.getItemInHand(hand);
             if (!player.swinging && (itemStack.getItem() instanceof WitcherBaseCrossbow) && CrossbowItem.isCharged(itemStack)) {
                 cir.setReturnValue(HumanoidModel.ArmPose.CROSSBOW_HOLD);
             }
@@ -43,16 +43,16 @@ public class CrossbowMixins {
     @Mixin(ItemInHandRenderer.class)
     public static class HeldItemRendererMixin {
         @Inject(method = "selectionUsingItemWhileHoldingBowLike", at = @At("TAIL"), cancellable = true)
-        private static void injectKnightCrossbowHandRenderer(LocalPlayer player, CallbackInfoReturnable<ItemInHandRenderer.HandRenderSelection> cir){
-            ItemStack itemStack = player.getUseItem();
-            InteractionHand hand = player.getUsedItemHand();
+        private static void injectKnightCrossbowHandRenderer(final LocalPlayer player, final CallbackInfoReturnable<ItemInHandRenderer.HandRenderSelection> cir){
+            final ItemStack itemStack = player.getUseItem();
+            final InteractionHand hand = player.getUsedItemHand();
             if (itemStack.getItem() instanceof WitcherBaseCrossbow) {
                 cir.setReturnValue(ItemInHandRenderer.HandRenderSelection.onlyForHand(hand));
             }
         }
 
         @Inject(method = "isChargedCrossbow", at = @At("TAIL"), cancellable = true)
-        private static void injectKnightCrossbowCharged(ItemStack stack, CallbackInfoReturnable<Boolean> cir){
+        private static void injectKnightCrossbowCharged(final ItemStack stack, final CallbackInfoReturnable<Boolean> cir){
             cir.setReturnValue((stack.getItem() instanceof WitcherBaseCrossbow) && CrossbowItem.isCharged(stack));
         }
     }
@@ -60,8 +60,8 @@ public class CrossbowMixins {
     @Mixin(CrossbowItem.class)
     public static class CrossbowItemMixin {
         @Inject(method = "getChargeDuration", at = @At("HEAD"), cancellable = true)
-        private static void getPullTimeCorrectlyForAnimation(ItemStack stack, LivingEntity user, CallbackInfoReturnable<Integer> cir){
-            if(stack.getItem() instanceof WitcherBaseCrossbow crossbow){
+        private static void getPullTimeCorrectlyForAnimation(final ItemStack stack, final LivingEntity user, final CallbackInfoReturnable<Integer> cir){
+            if(stack.getItem() instanceof final WitcherBaseCrossbow crossbow){
                 cir.setReturnValue(crossbow.getCrossbowPullTime(stack, user));
             }
         }
@@ -74,20 +74,20 @@ public class CrossbowMixins {
                 stack.is(TCOTS_Items.BROADHEAD_BOLT.get());
 
         @Inject(method = "getAllSupportedProjectiles()Ljava/util/function/Predicate;", at = @At("RETURN"), cancellable = true)
-        private void insertCrossbowProjectiles(CallbackInfoReturnable<Predicate<ItemStack>> cir){
+        private void insertCrossbowProjectiles(final CallbackInfoReturnable<Predicate<ItemStack>> cir){
             cir.setReturnValue(cir.getReturnValue().or(CROSSBOW_BOLTS));
         }
 
         @Inject(method = "getSupportedHeldProjectiles()Ljava/util/function/Predicate;", at = @At("RETURN"), cancellable = true)
-        private void insertCrossbowHeldProjectiles(CallbackInfoReturnable<Predicate<ItemStack>> cir){
+        private void insertCrossbowHeldProjectiles(final CallbackInfoReturnable<Predicate<ItemStack>> cir){
             cir.setReturnValue(cir.getReturnValue().or(CROSSBOW_BOLTS));
         }
 
         @Inject(method = "createProjectile", at = @At("RETURN"), cancellable = true)
-        private void injectExtraPiercing(Level world, LivingEntity shooter, ItemStack weaponStack, ItemStack arrow, boolean critical, CallbackInfoReturnable<Projectile> cir){
-            boolean precisionBolt = arrow.getItem() instanceof BoltItem bolt && Objects.equals(bolt.getId(), "precision_bolt");
+        private void injectExtraPiercing(final Level world, final LivingEntity shooter, final ItemStack weaponStack, final ItemStack arrow, final boolean critical, final CallbackInfoReturnable<Projectile> cir){
+            final boolean precisionBolt = arrow.getItem() instanceof final BoltItem bolt && Objects.equals(bolt.getId(), "precision_bolt");
             if(precisionBolt) {
-                if(cir.getReturnValue() instanceof AbstractArrow persistentProjectileEntity){
+                if(cir.getReturnValue() instanceof final AbstractArrow persistentProjectileEntity){
                     persistentProjectileEntity.setPierceLevel((byte) (persistentProjectileEntity.getPierceLevel() + 2));
                     cir.setReturnValue(persistentProjectileEntity);
                 }
@@ -103,7 +103,7 @@ public class CrossbowMixins {
         AbstractArrow THIS = (AbstractArrow)(Object)this;
 
         @WrapWithCondition(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setArrowCount(I)V"))
-        private boolean dontStuckArrows(LivingEntity instance, int stuckArrowCount, @Local LivingEntity entity){
+        private boolean dontStuckArrows(final LivingEntity instance, final int stuckArrowCount, @Local final LivingEntity entity){
             return !(THIS instanceof WitcherBolt) && !(THIS instanceof ScurverSpineEntity);
         }
 

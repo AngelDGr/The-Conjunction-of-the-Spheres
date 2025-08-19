@@ -1,7 +1,7 @@
 package TCOTS.mixin;
 
-import TCOTS.entity.necrophages.BullvoreEntity;
-import TCOTS.entity.ogroids.ForestTrollEntity;
+import TCOTS.entity.monsters.necrophages.BullvoreEntity;
+import TCOTS.entity.monsters.ogroids.ForestTrollEntity;
 import TCOTS.items.concoctions.bombs.NorthernWindBomb;
 import TCOTS.items.concoctions.bombs.SamumBomb;
 import net.minecraft.core.BlockPos;
@@ -32,7 +32,7 @@ public class MobEntityMixin {
 
     //Samum
     @Inject(method = "setTarget", at = @At("HEAD"), cancellable = true)
-    private void injectNoSamumEffectSet(LivingEntity target, CallbackInfo ci) {
+    private void injectNoSamumEffectSet(final LivingEntity target, final CallbackInfo ci) {
         if (SamumBomb.checkSamumEffect(THIS)) {
             this.target = null;
             ci.cancel();
@@ -49,7 +49,7 @@ public class MobEntityMixin {
     double z = -1;
 
     @Inject(method = "tick", at = @At("TAIL"))
-    private void injectNorthernWindFreeze(CallbackInfo ci) {
+    private void injectNorthernWindFreeze(final CallbackInfo ci) {
 
         if (NorthernWindBomb.checkEffect(THIS)) {
 
@@ -73,14 +73,14 @@ public class MobEntityMixin {
     }
 
     @Inject(method = "serverAiStep", at = @At("HEAD"), cancellable = true)
-    private void injectNorthernWindMove(CallbackInfo ci) {
+    private void injectNorthernWindMove(final CallbackInfo ci) {
         if (NorthernWindBomb.checkEffect(THIS)) {
             ci.cancel();
         }
     }
 
     @ModifyVariable(method = "isSunBurnTick", at = @At("STORE"), ordinal = 0)
-    private boolean injectNoFireWhenFreeze(boolean value){
+    private boolean injectNoFireWhenFreeze(final boolean value){
         return value || NorthernWindBomb.checkEffect(THIS);
     }
 
@@ -88,7 +88,7 @@ public class MobEntityMixin {
     public abstract static class BullvoreDestroyCrops{
 
         @Inject(method = "entityInside", at = @At("HEAD"))
-        private void injectBreakCrops(BlockState state, Level world, BlockPos pos, Entity entity, CallbackInfo ci){
+        private void injectBreakCrops(final BlockState state, final Level world, final BlockPos pos, final Entity entity, final CallbackInfo ci){
             if ((entity instanceof BullvoreEntity && ((BullvoreEntity)entity).isCharging()) && world.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
                 world.destroyBlock(pos, true, entity);
             }
@@ -100,7 +100,7 @@ public class MobEntityMixin {
     public abstract static class ForestTrollNotGetCampfireDamage{
 
         @Inject(method = "entityInside", at = @At("HEAD"), cancellable = true)
-        private void noCampfireDamage(BlockState state, Level world, BlockPos pos, Entity entity, CallbackInfo ci){
+        private void noCampfireDamage(final BlockState state, final Level world, final BlockPos pos, final Entity entity, final CallbackInfo ci){
             if (entity instanceof ForestTrollEntity) {
                 ci.cancel();
             }

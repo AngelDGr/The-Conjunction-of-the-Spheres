@@ -14,27 +14,27 @@ import org.jetbrains.annotations.Nullable;
 public abstract class WitcherBolt extends AbstractArrow {
     @Nullable
     private ItemStack weapon = null;
-    protected WitcherBolt(EntityType<? extends AbstractArrow> entityType, Level world) {
+    protected WitcherBolt(final EntityType<? extends AbstractArrow> entityType, final Level world) {
         super(entityType, world);
     }
 
-    protected WitcherBolt(EntityType<? extends AbstractArrow> type, double x, double y, double z, Level world, ItemStack stack, @Nullable ItemStack weapon) {
+    protected WitcherBolt(final EntityType<? extends AbstractArrow> type, final double x, final double y, final double z, final Level world, final ItemStack stack, @Nullable final ItemStack weapon) {
         this(type, world);
-        ItemStack stack1 = stack.copy();
+        final ItemStack stack1 = stack.copy();
         this.setCustomName(stack.get(DataComponents.CUSTOM_NAME));
-        Unit unit = stack.remove(DataComponents.INTANGIBLE_PROJECTILE);
+        final Unit unit = stack.remove(DataComponents.INTANGIBLE_PROJECTILE);
         if (unit != null) {
             this.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
         }
 
         this.setPos(x, y, z);
-        if (weapon != null && world instanceof ServerLevel serverWorld) {
+        if (weapon != null && world instanceof final ServerLevel serverWorld) {
             if (weapon.isEmpty()) {
                 throw new IllegalArgumentException("Invalid weapon firing an arrow");
             }
 
             this.weapon = weapon.copy();
-            int i = EnchantmentHelper.getPiercingCount(serverWorld, weapon, stack1);
+            final int i = EnchantmentHelper.getPiercingCount(serverWorld, weapon, stack1);
             if (i > 0) {
                 this.setPierceLevel((byte)i);
             }
@@ -43,7 +43,7 @@ public abstract class WitcherBolt extends AbstractArrow {
         }
     }
 
-    protected WitcherBolt(EntityType<? extends AbstractArrow> type, LivingEntity owner, Level world, ItemStack stack, @Nullable ItemStack shotFrom) {
+    protected WitcherBolt(final EntityType<? extends AbstractArrow> type, final LivingEntity owner, final Level world, final ItemStack stack, @Nullable final ItemStack shotFrom) {
         this(type, owner.getX(), owner.getEyeY() - 0.1F, owner.getZ(), world, stack, shotFrom);
         this.setOwner(owner);
     }

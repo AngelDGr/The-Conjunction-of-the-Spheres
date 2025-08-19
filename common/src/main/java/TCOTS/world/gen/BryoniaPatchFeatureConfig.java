@@ -56,9 +56,9 @@ public class BryoniaPatchFeatureConfig implements FeatureConfiguration {
     public final boolean placeOnWalls;
     private final ObjectArrayList<Direction> directions;
 
-    private static DataResult<MultifaceBlock> validateBlock(Block block) {
-        DataResult<MultifaceBlock> dataResult;
-        if (block instanceof MultifaceBlock multifaceGrowthBlock) {
+    private static DataResult<MultifaceBlock> validateBlock(final Block block) {
+        final DataResult<MultifaceBlock> dataResult;
+        if (block instanceof final MultifaceBlock multifaceGrowthBlock) {
             dataResult = DataResult.success(multifaceGrowthBlock);
         } else {
             dataResult = DataResult.error(() -> "Growth block should be a multiface block");
@@ -67,7 +67,7 @@ public class BryoniaPatchFeatureConfig implements FeatureConfiguration {
     }
 
     @SuppressWarnings({"rawtypes","unchecked"})
-    public BryoniaPatchFeatureConfig(MultifaceBlock lichen, int searchRange, boolean placeOnFloor, boolean placeOnCeiling, boolean placeOnWalls, float YMin, float YMax) {
+    public BryoniaPatchFeatureConfig(final MultifaceBlock lichen, final int searchRange, final boolean placeOnFloor, final boolean placeOnCeiling, final boolean placeOnWalls, final float YMin, final float YMax) {
 
         this.YMin=YMin;
         this.YMax=YMax;
@@ -91,11 +91,11 @@ public class BryoniaPatchFeatureConfig implements FeatureConfiguration {
     }
 
     @SuppressWarnings("unused")
-    public List<Direction> shuffleDirections(RandomSource random, Direction excluded) {
+    public List<Direction> shuffleDirections(final RandomSource random, final Direction excluded) {
         return Util.toShuffledList(this.directions.stream().filter(direction -> direction != excluded), random);
     }
 
-    public List<Direction> shuffleDirections(RandomSource random) {
+    public List<Direction> shuffleDirections(final RandomSource random) {
         return Util.shuffledCopy(this.directions, random);
     }
 

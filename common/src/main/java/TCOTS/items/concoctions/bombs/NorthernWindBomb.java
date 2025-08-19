@@ -31,21 +31,21 @@ import java.util.List;
 public class NorthernWindBomb {
     private static final byte NORTHERN_WIND_EXPLODES = 38;
 
-    public static void explosionLogic(WitcherBombEntity bomb){
+    public static void explosionLogic(final WitcherBombEntity bomb){
 
         bomb.playSound(SoundEvents.GENERIC_EXPLODE.value(), 1,1);
 
         bomb.level().broadcastEntityEvent(bomb, NORTHERN_WIND_EXPLODES);
 
-        List<LivingEntity> list = bomb.level().getEntitiesOfClass(LivingEntity.class, bomb.getBoundingBox().inflate(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
+        final List<LivingEntity> list = bomb.level().getEntitiesOfClass(LivingEntity.class, bomb.getBoundingBox().inflate(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
                 livingEntity ->
                         !(livingEntity instanceof Warden) && !(livingEntity instanceof ArmorStand)
                         && livingEntity.isAlive()
                         && livingEntity != bomb.getOwner()
                         && !(livingEntity.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES)));
 
-        Entity entityCause = bomb.getEffectSource();
-        for(LivingEntity entity: list){
+        final Entity entityCause = bomb.getEffectSource();
+        for(final LivingEntity entity: list){
             //To not apply effect across walls
             if(BombsUtil.getExposure(entity.position(), bomb) == 0) continue;
 
@@ -67,17 +67,17 @@ public class NorthernWindBomb {
         createIce(bomb);
     }
 
-    public static void handleStatus(WitcherBombEntity bomb, byte status) {
+    public static void handleStatus(final WitcherBombEntity bomb, final byte status) {
         if(status== NORTHERN_WIND_EXPLODES){
             bomb.level().addParticle(TCOTS_Particles.NorthernWindExplosionEmitter(), bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
         }
     }
 
-    private static void createIce(WitcherBombEntity bomb){
-        ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList<>();
+    private static void createIce(final WitcherBombEntity bomb){
+        final ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList<>();
         int l;
         int k;
-        HashSet<BlockPos> set = Sets.newHashSet();
+        final HashSet<BlockPos> set = Sets.newHashSet();
         for (int j = 0; j < 16; ++j) {
             for (k = 0; k < 16; ++k) {
                 block2: for (l = 0; l < 16; ++l) {
@@ -85,7 +85,7 @@ public class NorthernWindBomb {
                     double d = (float)j / 15.0f * 2.0f - 1.0f;
                     double e = (float)k / 15.0f * 2.0f - 1.0f;
                     double f = (float)l / 15.0f * 2.0f - 1.0f;
-                    double g = Math.sqrt(d * d + e * e + f * f);
+                    final double g = Math.sqrt(d * d + e * e + f * f);
                     d /= g;
                     e /= g;
                     f /= g;
@@ -93,7 +93,7 @@ public class NorthernWindBomb {
                     double n = bomb.getY();
                     double o = bomb.getZ();
                     for (float h = (1f+(bomb.getLevel())) * (0.7f + bomb.level().random.nextFloat() * 0.6f); h > 0.0f; h -= 0.22500001f) {
-                        BlockPos blockPos = BlockPos.containing(m, n, o);
+                        final BlockPos blockPos = BlockPos.containing(m, n, o);
                         if (!bomb.level().isInWorldBounds(blockPos)) continue block2;
                         set.add(blockPos);
                         m += d * (double)0.3f;
@@ -105,15 +105,15 @@ public class NorthernWindBomb {
         }
         affectedBlocks.addAll(set);
 
-        for (BlockPos possibleBlockPos : affectedBlocks) {
+        for (final BlockPos possibleBlockPos : affectedBlocks) {
             //To not destroy blocks behind other blocks
             if (BombsUtil.getExposure(possibleBlockPos.getCenter(), bomb) == 0 || bomb.isUnderWater()) continue;
 
-            BlockState blockStateWaterIce = Blocks.FROSTED_ICE.defaultBlockState();
+            final BlockState blockStateWaterIce = Blocks.FROSTED_ICE.defaultBlockState();
 
             //To put ice in blocks
-            for (BooleanProperty booleanProperty : PipeBlock.PROPERTY_BY_DIRECTION.values()) {
-                BlockState blockStateIce = TCOTS_Blocks.FrostedSnow().defaultBlockState().setValue(booleanProperty,true);
+            for (final BooleanProperty booleanProperty : PipeBlock.PROPERTY_BY_DIRECTION.values()) {
+                final BlockState blockStateIce = TCOTS_Blocks.FrostedSnow().defaultBlockState().setValue(booleanProperty,true);
 
                 //To not put ice in water or in the nether
                 if(bomb.level().getBlockState(possibleBlockPos) == FrostedIceBlock.meltsInto() || bomb.level().dimensionType().ultraWarm()) continue;
@@ -143,7 +143,7 @@ public class NorthernWindBomb {
         }
     }
 
-    public static boolean checkEffect(LivingEntity entity){
+    public static boolean checkEffect(final LivingEntity entity){
         return entity.hasEffect(TCOTS_Effects.NorthernWindEffect());
     }
 }

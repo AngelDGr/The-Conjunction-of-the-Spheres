@@ -21,28 +21,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class SwordWithTooltip extends SwordItem {
-    protected final List<MutableComponent> tooltip;
+    public final List<MutableComponent> tooltip;
     protected final MutableComponent littleDescription;
 
-    public SwordWithTooltip(Tier toolMaterial, Properties settings, MutableComponent littleDescription, List<MutableComponent> tooltip) {
+    public SwordWithTooltip(final Tier toolMaterial, final Properties settings, final MutableComponent littleDescription, final List<MutableComponent> tooltip) {
         super(toolMaterial, settings);
         this.tooltip=tooltip;
 
         this.littleDescription=littleDescription;
     }
 
-    @SuppressWarnings("all")
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type) {
-
-        tooltip.add(this.littleDescription);
-
-        MiscUtil.setSpecialTooltip(Component.translatable("tooltip.tcots_witcher.generic_tooltip.special_abilities"), stack, tooltip, this.tooltip);
-    }
-
-    @Override
-    public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
-        boolean result = super.hurtEnemy(stack, target, attacker);
+    public boolean hurtEnemy(@NotNull final ItemStack stack, @NotNull final LivingEntity target, @NotNull final LivingEntity attacker) {
+        final boolean result = super.hurtEnemy(stack, target, attacker);
 
         if(stack.is(TCOTS_Items.WINTERS_BLADE.get())) {
             if (attacker.getRandom().nextIntBetweenInclusive(0, 5) == 1) {

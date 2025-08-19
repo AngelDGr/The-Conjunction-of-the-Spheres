@@ -16,7 +16,7 @@ public class LightmapTextureMixin {
     @Shadow @Final private Minecraft minecraft;
 
     @ModifyVariable(method = "updateLightTexture", at = @At("STORE"), ordinal = 7)
-    private float injectCatEffectLight(float l){
+    private float injectCatEffectLight(final float l){
 
         if(MiscUtil.canHaveCatEffect(this.minecraft.player)){
             return 1f;

@@ -10,28 +10,28 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class WintersBladeSkeletonItemModel extends GeoModel<WintersBladeSkeletonItem> {
     @Override
-    public ResourceLocation getModelResource(WintersBladeSkeletonItem animatable) {
+    public ResourceLocation getModelResource(final WintersBladeSkeletonItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/block/winters_blade_skeleton.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(WintersBladeSkeletonItem animatable) {
+    public ResourceLocation getTextureResource(final WintersBladeSkeletonItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/block/winters_blade_skeleton.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(WintersBladeSkeletonItem animatable) {
+    public ResourceLocation getAnimationResource(final WintersBladeSkeletonItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 
     @Override
-    public RenderType getRenderType(WintersBladeSkeletonItem animatable, ResourceLocation texture) {
+    public RenderType getRenderType(final WintersBladeSkeletonItem animatable, final ResourceLocation texture) {
         return RenderType.entityTranslucent(texture);
     }
 
     @Override
-    public void setCustomAnimations(WintersBladeSkeletonItem animatable, long instanceId, AnimationState<WintersBladeSkeletonItem> animationState) {
-        GeoBone block = getAnimationProcessor().getBone("block");
+    public void setCustomAnimations(final WintersBladeSkeletonItem animatable, final long instanceId, final AnimationState<WintersBladeSkeletonItem> animationState) {
+        final GeoBone block = getAnimationProcessor().getBone("block");
         if(block.getRotY() != 0){
             block.setRotY(0);
         }

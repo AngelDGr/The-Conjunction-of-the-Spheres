@@ -23,7 +23,7 @@ public class BackgroundRendererMixin {
     private static Entity entity;
 
     @Inject(method = "setupColor", at = @At("HEAD"))
-    private static void renderGet(Camera camera, float tickDelta, ClientLevel world, int viewDistance, float skyDarkness, CallbackInfo ci){
+    private static void renderGet(final Camera camera, final float tickDelta, final ClientLevel world, final int viewDistance, final float skyDarkness, final CallbackInfo ci){
         entity = camera.getEntity();
     }
 
@@ -36,8 +36,8 @@ public class BackgroundRendererMixin {
             ),
             ordinal = 3
     )
-    private static float modifyCatFogBrightness(float o) {
-        if (entity instanceof LivingEntity living && MiscUtil.canHaveCatEffect(living)) {
+    private static float modifyCatFogBrightness(final float o) {
+        if (entity instanceof final LivingEntity living && MiscUtil.canHaveCatEffect(living)) {
             return 1.1f;
         }
         return o;

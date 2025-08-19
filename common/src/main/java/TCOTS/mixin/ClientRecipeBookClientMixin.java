@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ClientRecipeBook.class)
 public class ClientRecipeBookClientMixin {
     @Inject(method = "getCategory", at = @At("HEAD"), cancellable = true)
-    private static void fixWarning(RecipeHolder<?> recipe, CallbackInfoReturnable<RecipeBookCategories> cir){
+    private static void fixWarning(final RecipeHolder<?> recipe, final CallbackInfoReturnable<RecipeBookCategories> cir){
         if (recipe.value() instanceof AlchemyTableRecipe) {
             cir.setReturnValue(RecipeBookCategories.UNKNOWN);
         }

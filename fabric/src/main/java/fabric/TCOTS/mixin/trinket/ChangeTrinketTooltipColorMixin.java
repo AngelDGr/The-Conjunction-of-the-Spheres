@@ -29,8 +29,8 @@ public class ChangeTrinketTooltipColorMixin {
                     value = "INVOKE"
                     ,target = "Lnet/minecraft/network/chat/MutableComponent;withStyle(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/MutableComponent;",
                     ordinal = 0))
-    private ChatFormatting injectColorChange(ChatFormatting formatting,
-                                             @Local Map.Entry<Holder<Attribute>, AttributeModifier> entry){
+    private ChatFormatting injectColorChange(final ChatFormatting formatting,
+                                             @Local final Map.Entry<Holder<Attribute>, AttributeModifier> entry){
 
         if(entry.getKey() == BuiltInRegistries.ATTRIBUTE.wrapAsHolder(BuiltInRegistries.ATTRIBUTE.get(ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"generic.witcher_toxicity")))){
             return ChatFormatting.DARK_GREEN;

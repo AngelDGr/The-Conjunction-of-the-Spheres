@@ -4,12 +4,12 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 
 public class BombEffectBase extends MobEffect {
-    public BombEffectBase(MobEffectCategory category, int color) {
+    public BombEffectBase(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(final int duration, final int amplifier) {
         return true;
     }
 }

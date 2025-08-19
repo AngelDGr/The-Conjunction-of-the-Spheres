@@ -1,7 +1,6 @@
 package TCOTS.registry;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.TCOTS_Tags;
 import TCOTS.utils.MiscUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -139,20 +138,20 @@ public class TCOTS_DynamicRecipes {
         }
     }
 
-    public static void addRecipe(String recipeId, JsonObject json){
+    public static void addRecipe(final String recipeId, final JsonObject json){
         TCOTS_Main.recipes.add(new Tuple<>(ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, recipeId), json));
     }
 
-    public static @NotNull JsonObject createShapedRecipe(@NotNull RecipeCategory category, Item result,
-                                                  @NotNull List<Triplet<String, Character, ResourceLocation>> keys,
-                                                  @NotNull List<String> pattern){
+    public static @NotNull JsonObject createShapedRecipe(@NotNull final RecipeCategory category, final Item result,
+                                                         @NotNull final List<Triplet<String, Character, ResourceLocation>> keys,
+                                                         @NotNull final List<String> pattern){
         return createShapedRecipe(category, BuiltInRegistries.ITEM.getKey(result), keys, pattern);
     }
 
-    public static @NotNull JsonObject createShapedRecipe(@NotNull RecipeCategory category, ResourceLocation result,
-                                                         @NotNull List<Triplet<String, Character, ResourceLocation>> keys,
-                                                         @NotNull List<String> pattern){
-        JsonObject mainJson = new JsonObject();
+    public static @NotNull JsonObject createShapedRecipe(@NotNull final RecipeCategory category, final ResourceLocation result,
+                                                         @NotNull final List<Triplet<String, Character, ResourceLocation>> keys,
+                                                         @NotNull final List<String> pattern){
+        final JsonObject mainJson = new JsonObject();
 
         //Type
         mainJson.addProperty("type", "minecraft:crafting_shaped");
@@ -161,7 +160,7 @@ public class TCOTS_DynamicRecipes {
         mainJson.addProperty("category", category.getFolderName());
 
         //We create a new Json Element, and add our crafting pattern to it.
-        JsonArray jsonArray = new JsonArray();
+        final JsonArray jsonArray = new JsonArray();
         jsonArray.add(pattern.get(0));
         jsonArray.add(pattern.get(1));
         jsonArray.add(pattern.get(2));
@@ -170,9 +169,9 @@ public class TCOTS_DynamicRecipes {
 
         //Next we need to define what the keys in the pattern are. For this we need different JsonObjects per key definition, and one main JsonObject that will contain all the defined keys.
         JsonObject individualKey; //Individual key
-        JsonObject keyList = new JsonObject(); //The main key object, containing all the keys
+        final JsonObject keyList = new JsonObject(); //The main key object, containing all the keys
 
-        for (Triplet<String, Character, ResourceLocation> key : keys) {
+        for (final Triplet<String, Character, ResourceLocation> key : keys) {
             individualKey = new JsonObject();
             individualKey.addProperty(key.getA(), key.getC().toString()); //This will create a key in the form "type": "input", where type is either "item" or "tag", and input is our input item.
             keyList.add(key.getB() + "", individualKey); //Then we add this key to the main key object.
@@ -186,7 +185,7 @@ public class TCOTS_DynamicRecipes {
         mainJson.add("key", keyList);
 
         //Result
-        JsonObject jsonobject = new JsonObject();
+        final JsonObject jsonobject = new JsonObject();
         jsonobject.addProperty("id", result.toString());
         jsonobject.addProperty("count", 1);
         mainJson.add("result", jsonobject);
@@ -194,11 +193,11 @@ public class TCOTS_DynamicRecipes {
         return mainJson;
     }
 
-    public static Triplet<String, Character, ResourceLocation> addItem(Character c, Supplier<Item> item){
+    public static Triplet<String, Character, ResourceLocation> addItem(final Character c, final Supplier<Item> item){
         return new Triplet<>("item", c, BuiltInRegistries.ITEM.getKey(item.get()));
     }
 
-    public static Triplet<String, Character, ResourceLocation> addItem(Character c, Item item){
+    public static Triplet<String, Character, ResourceLocation> addItem(final Character c, final Item item){
         return new Triplet<>("item", c, BuiltInRegistries.ITEM.getKey(item));
     }
 
@@ -207,12 +206,12 @@ public class TCOTS_DynamicRecipes {
         return new Triplet<>("tag", c, tag.location());
     }
 
-    public static Triplet<String, Character, ResourceLocation> addItem(Character c, ResourceLocation tag, boolean isTag){
+    public static Triplet<String, Character, ResourceLocation> addItem(final Character c, final ResourceLocation tag, final boolean isTag){
 
         return new Triplet<>(isTag? "tag": "item", c, tag);
     }
 
-    public static Triplet<String, Character, ResourceLocation> addItem(Character c, ResourceLocation item){
+    public static Triplet<String, Character, ResourceLocation> addItem(final Character c, final ResourceLocation item){
         return addItem(c, item, false);
     }
 }

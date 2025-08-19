@@ -19,16 +19,16 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class ScurverSpineItem extends Item  implements ProjectileItem {
-    public ScurverSpineItem(Item.Properties settings) {
+    public ScurverSpineItem(final Item.Properties settings) {
         super(settings);
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(Level world, Player user, @NotNull InteractionHand hand) {
-        ItemStack itemStack = user.getItemInHand(hand);
+    public @NotNull InteractionResultHolder<ItemStack> use(final Level world, final Player user, @NotNull final InteractionHand hand) {
+        final ItemStack itemStack = user.getItemInHand(hand);
         world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.NEUTRAL, 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
         if (!world.isClientSide) {
-            Projectile scurverSpine = new ScurverSpineEntity(user, world, new ItemStack(TCOTS_Items.SCURVER_SPINE.get()), null);
+            final Projectile scurverSpine = new ScurverSpineEntity(user, world, new ItemStack(TCOTS_Items.SCURVER_SPINE.get()), null);
             user.getCooldowns().addCooldown(this, 20);
             scurverSpine.shootFromRotation(user, user.getXRot(), user.getYRot(), 0.0f, 1.0f, 1.0f);
             world.addFreshEntity(scurverSpine);
@@ -42,8 +42,8 @@ public class ScurverSpineItem extends Item  implements ProjectileItem {
 
 
     @Override
-    public @NotNull Projectile asProjectile(@NotNull Level world, Position pos, ItemStack stack, @NotNull Direction direction) {
-        ScurverSpineEntity scurverSpine = new ScurverSpineEntity(world, pos.x(), pos.y(), pos.z(), stack.copyWithCount(1), null);
+    public @NotNull Projectile asProjectile(@NotNull final Level world, final Position pos, final ItemStack stack, @NotNull final Direction direction) {
+        final ScurverSpineEntity scurverSpine = new ScurverSpineEntity(world, pos.x(), pos.y(), pos.z(), stack.copyWithCount(1), null);
         scurverSpine.pickup = AbstractArrow.Pickup.ALLOWED;
         return scurverSpine;
     }

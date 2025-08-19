@@ -25,17 +25,17 @@ import java.util.List;
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerEntityMixin extends Player {
 
-    public ServerPlayerEntityMixin(Level world, BlockPos pos, float yaw, GameProfile gameProfile) {
+    public ServerPlayerEntityMixin(final Level world, final BlockPos pos, final float yaw, final GameProfile gameProfile) {
         super(world, pos, yaw, gameProfile);
     }
 
     @Shadow protected abstract void checkFallDamage(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition);
 
     @Inject(method = "startSleepInBed", at = @At("HEAD"), cancellable = true)
-    public void injectWitcherMobsDangerous(BlockPos pos, CallbackInfoReturnable<Either<Player.BedSleepingProblem, Unit>> cir){
+    public void injectWitcherMobsDangerous(final BlockPos pos, final CallbackInfoReturnable<Either<Player.BedSleepingProblem, Unit>> cir){
         if (!this.isCreative()) {
-            Vec3 vec3d = Vec3.atBottomCenterOf(pos);
-            List<WitcherMob_Class> list = this.level().getEntitiesOfClass(WitcherMob_Class.class, new AABB(vec3d.x() - 8.0, vec3d.y() - 5.0, vec3d.z() - 8.0, vec3d.x() + 8.0, vec3d.y() + 5.0, vec3d.z() + 8.0), entity -> entity.isPreventingPlayerRest(this));
+            final Vec3 vec3d = Vec3.atBottomCenterOf(pos);
+            final List<WitcherMob_Class> list = this.level().getEntitiesOfClass(WitcherMob_Class.class, new AABB(vec3d.x() - 8.0, vec3d.y() - 5.0, vec3d.z() - 8.0, vec3d.x() + 8.0, vec3d.y() + 5.0, vec3d.z() + 8.0), entity -> entity.isPreventingPlayerRest(this));
             if (!list.isEmpty()) {
                 cir.setReturnValue(Either.left(Player.BedSleepingProblem.NOT_SAFE));
             }
@@ -49,7 +49,7 @@ public abstract class ServerPlayerEntityMixin extends Player {
     @Unique
     ServerPlayer THIS = (ServerPlayer)(Object)this;
     @Inject(method = "tick", at = @At("TAIL"))
-    public void injectTriggerMaxToxicity(CallbackInfo ci){
+    public void injectTriggerMaxToxicity(final CallbackInfo ci){
         if(this.theConjunctionOfTheSpheres$getAllToxicity() >= this.theConjunctionOfTheSpheres$getMaxToxicity()*0.9){
             TCOTS_Criteria.MaxToxicityReached().trigger(THIS);
         }

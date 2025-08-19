@@ -7,7 +7,7 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
 @SuppressWarnings("unused")
 public class GiantAnchorRenderer extends GeoBlockRenderer<GiantAnchorBlockEntity> {
-    public GiantAnchorRenderer(BlockEntityRendererProvider.Context ctx) {
+    public GiantAnchorRenderer(final BlockEntityRendererProvider.Context ctx) {
         super(new GiantAnchorModel());
     }
 }

@@ -1,3 +1,27 @@
+# 1.0.7 - 1.21
+### Additions
+- Added the *Bloedzuiger*, a necrophage from W1 that dies with a cadaverine explosion, spawn on swamps
+- Added Bindweed, a new potion made with Bloedzuiger blood, it reduces the damage taken from poison, cadaverine, wither and any damage-over-time effect
+- Added support for witcher eyes/toxicity face for both Just Expressions and Fresh Moves!
+- - Added an option to the config to make the pupils move alongside the animated eyes, true by default
+- - Added allay, tall_center, derp and enderman eye options
+
+### Changes
+- Changed the location of many textures
+- Changed the subtitles translation to "subtitles.tcots_witcher.[sound_name]"
+- The green cloud particle used on the Devil's Puffball explosion now is the same color as the poison effect
+- The cadaverine effect now does double damage to necrophages
+- Changed all the pictures of the books containing text, not it uses the enchantment table language, to fit better with translations
+- Changed damage and speed values from swords to fit better with Witcher (More RPG Classes).
+- - Moonblade speed reduced from 1.8 to 1.6 
+- - Winter's Blade damage reduced from 9 to 8
+- - Winter's Blade aard sign intensity, from Witcher (More RPG Classes), reduced from 4 to 3
+- - Ardaenye damage reduced from 8 to 7.5
+- - Ardaenye speed increased from 1.4 to 1.6
+- Modified the swords tooltip position to fit better with Witcher (More RPG Classes).
+- Cadaverine decaying flesh recipe now gives 3 bones instead of two, added the possibility to decay rotten flesh to get 2 bones
+- Superior Rook and Superior Wolf stack size increased from 3 to 4
+
 # 1.0.6 - 1.21
 ### Bugfixes
 - Changed some internal logic for better compatibility with other mods.

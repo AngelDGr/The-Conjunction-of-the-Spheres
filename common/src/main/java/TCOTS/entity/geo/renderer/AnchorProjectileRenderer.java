@@ -17,29 +17,29 @@ import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class AnchorProjectileRenderer extends GeoEntityRenderer<AnchorProjectileEntity> {
-    public AnchorProjectileRenderer(EntityRendererProvider.Context renderManager) {
+    public AnchorProjectileRenderer(final EntityRendererProvider.Context renderManager) {
         super(renderManager, new AnchorProjectileModel());
     }
 
     @Override
-    public void actuallyRender(PoseStack matrixStack, AnchorProjectileEntity anchor, BakedGeoModel model, @Nullable RenderType renderType, MultiBufferSource vertexConsumerProvider, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+    public void actuallyRender(final PoseStack matrixStack, final AnchorProjectileEntity anchor, final BakedGeoModel model, @Nullable final RenderType renderType, final MultiBufferSource vertexConsumerProvider, @Nullable final VertexConsumer buffer, final boolean isReRender, final float partialTick, final int packedLight, final int packedOverlay, final int colour) {
         matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTick, anchor.yRotO, anchor.getYRot()) - 90.0f));
         matrixStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTick, anchor.xRotO, anchor.getXRot()) + 90.0f));
 
-        VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(vertexConsumerProvider, renderType, false, anchor.isEnchanted());
+        final VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(vertexConsumerProvider, renderType, false, anchor.isEnchanted());
 
         super.actuallyRender(matrixStack, animatable, model, renderType, vertexConsumerProvider, vertexConsumer, isReRender, partialTick, packedLight, packedOverlay, colour);
     }
 
     @Override
-    public void renderFinal(PoseStack matrixStack, AnchorProjectileEntity anchor, BakedGeoModel model, MultiBufferSource vertexConsumerProvider, @Nullable VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay, int colour) {
+    public void renderFinal(final PoseStack matrixStack, final AnchorProjectileEntity anchor, final BakedGeoModel model, final MultiBufferSource vertexConsumerProvider, @Nullable final VertexConsumer buffer, final float partialTick, final int packedLight, final int packedOverlay, final int colour) {
         super.renderFinal(matrixStack, animatable, model, vertexConsumerProvider, buffer, partialTick, packedLight, packedOverlay, colour);
 
         if(anchor.getOwner()!=null) ChainDrawerUtil.renderChain(anchor, partialTick, matrixStack, vertexConsumerProvider, anchor.getOwner());
     }
 
     @Override
-    public boolean shouldRender(AnchorProjectileEntity entity, Frustum frustum, double x, double y, double z) {
+    public boolean shouldRender(final AnchorProjectileEntity entity, final Frustum frustum, final double x, final double y, final double z) {
         return true;
     }
 }

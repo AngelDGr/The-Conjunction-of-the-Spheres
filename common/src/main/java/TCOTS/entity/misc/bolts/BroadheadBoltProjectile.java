@@ -14,11 +14,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class BroadheadBoltProjectile extends WitcherBolt {
     private static final ItemStack DEFAULT_STACK = new ItemStack(TCOTS_Items.BROADHEAD_BOLT.get());
-    public BroadheadBoltProjectile(EntityType<? extends BroadheadBoltProjectile> entityType, Level world) {
+    public BroadheadBoltProjectile(final EntityType<? extends BroadheadBoltProjectile> entityType, final Level world) {
         super(entityType, world);
     }
 
-    public BroadheadBoltProjectile(Level world, LivingEntity owner, ItemStack stack, @Nullable ItemStack weapon) {
+    public BroadheadBoltProjectile(final Level world, final LivingEntity owner, final ItemStack stack, @Nullable final ItemStack weapon) {
         super(TCOTS_Entities.BroadheadBolt(), owner, world, stack, weapon);
         setBaseDamage(2.8);
     }
@@ -29,8 +29,8 @@ public class BroadheadBoltProjectile extends WitcherBolt {
     }
 
     @Override
-    protected void doPostHurtEffects(LivingEntity target) {
-        Entity entity = this.getEffectSource();
+    protected void doPostHurtEffects(final LivingEntity target) {
+        final Entity entity = this.getEffectSource();
         target.addEffect(new MobEffectInstance(TCOTS_Effects.Bleeding(), 15*20, 0, false, false, true),entity);
     }
 }

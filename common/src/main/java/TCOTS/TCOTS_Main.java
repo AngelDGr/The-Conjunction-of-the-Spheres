@@ -63,7 +63,7 @@ public class TCOTS_Main {
                 //Receive the packet from the client
                 TCOTS_Main.PACKETS_CHANNEL.registerServerbound(TCOTS_Main.WitcherEyesFullPacket.class, ((message, access) ->
                 {
-                    ServerPlayer player = access.player();
+                    final ServerPlayer player = access.player();
 
                     player.theConjunctionOfTheSpheres$setWitcherEyesActivated(message.activate());
 
@@ -75,16 +75,18 @@ public class TCOTS_Main {
 
                     player.theConjunctionOfTheSpheres$getEyesPivot().setComponent(1, -1*message.eyePosY());
 
+                    player.theConjunctionOfTheSpheres$setEyeMoves(message.moves());
+
                     //Send another packet to the client, for full sync ->
                     TCOTS_Main.PACKETS_CHANNEL.serverHandle(player).send(new TCOTS_Main.WitcherEyesFullPacket(
-                            message.activate(), message.shape(), message.separation(), message.eyePosX(), message.eyePosY()));
+                            message.activate(), message.shape(), message.separation(), message.eyePosX(), message.eyePosY(), message.moves()));
                 }));
 
 
                 //Receive the packet from the server
                 TCOTS_Main.PACKETS_CHANNEL.registerClientbound(TCOTS_Main.WitcherEyesFullPacket.class, ((message, access) ->
                 {
-                    LocalPlayer player = access.player();
+                    final LocalPlayer player = access.player();
 
                     player.theConjunctionOfTheSpheres$setWitcherEyesActivated(message.activate());
 
@@ -95,6 +97,8 @@ public class TCOTS_Main {
                     player.theConjunctionOfTheSpheres$getEyesPivot().setComponent(0, message.eyePosX());
 
                     player.theConjunctionOfTheSpheres$getEyesPivot().setComponent(1, -1*message.eyePosY());
+
+                    player.theConjunctionOfTheSpheres$setEyeMoves(message.moves());
 
                 }));
             }
@@ -105,7 +109,7 @@ public class TCOTS_Main {
                 //Receive the packet from the client
                 TCOTS_Main.PACKETS_CHANNEL.registerServerbound(TCOTS_Main.ToxicityFacePacket.class, ((message, access) ->
                 {
-                    ServerPlayer player = access.player();
+                    final ServerPlayer player = access.player();
 
                     player.theConjunctionOfTheSpheres$setToxicityActivated(message.activate());
 
@@ -118,7 +122,7 @@ public class TCOTS_Main {
                 //Receive the packet from the server
                 TCOTS_Main.PACKETS_CHANNEL.registerClientbound(TCOTS_Main.ToxicityFacePacket.class, ((message, access) ->
                 {
-                    LocalPlayer player = access.player();
+                    final LocalPlayer player = access.player();
 
                     player.theConjunctionOfTheSpheres$setToxicityActivated(message.activate());
 
@@ -135,12 +139,13 @@ public class TCOTS_Main {
 
     }
 
-    public record WitcherEyesFullPacket(Boolean activate, int shape, int separation, float eyePosX, float eyePosY) {
+    public record WitcherEyesFullPacket(Boolean activate, int shape, int separation, float eyePosX, float eyePosY, boolean moves) {
         public Boolean activate(){return this.activate;}
         public int shape(){return this.shape;}
         public int separation(){return this.separation;}
         public float eyePosX(){return this.eyePosX;}
         public float eyePosY(){return this.eyePosY;}
+        public boolean moves(){return this.moves;}
     }
 
     public record RetrieveAnchorPacket() {}
@@ -149,7 +154,7 @@ public class TCOTS_Main {
         public Boolean activate(){return this.activate;}
     }
 
-    public static ResourceLocation id(String id){
+    public static ResourceLocation id(final String id){
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, id);
     }
 }

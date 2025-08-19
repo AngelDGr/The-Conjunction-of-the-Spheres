@@ -30,17 +30,17 @@ public class HanFiberPlant extends VerbenaFlower {
             Block.box(5.0, 0.0, 5.0, 12, 16.0, 12)};
 
     @Override
-    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-        Vec3 vec3d = state.getOffset(world, pos);
+    public @NotNull VoxelShape getShape(final BlockState state, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final CollisionContext context) {
+        final Vec3 vec3d = state.getOffset(world, pos);
         return AGE_TO_SHAPE[this.getAge(state)].move(vec3d.x, vec3d.y, vec3d.z);
     }
 
-    public HanFiberPlant(Properties settings) {
+    public HanFiberPlant(final Properties settings) {
         super(settings);
     }
 
     @Override
-    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public @NotNull ItemStack getCloneItemStack(@NotNull final LevelReader world, @NotNull final BlockPos pos, @NotNull final BlockState state) {
         return new ItemStack(TCOTS_Items.HAN_FIBER.get());
     }
 

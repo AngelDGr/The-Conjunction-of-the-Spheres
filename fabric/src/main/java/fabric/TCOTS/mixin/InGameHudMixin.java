@@ -30,12 +30,12 @@ public abstract class InGameHudMixin {
     //Moving hearts for swallow
     @ModifyArg(method = "renderPlayerHealth", at = @At(value = "INVOKE", target =
             "Lnet/minecraft/client/gui/Gui;renderHearts(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/entity/player/Player;IIIIFIIIZ)V"), index=5)
-    private int InjectMovingHearths(int x){
-        int j = this.displayHealth;
-        Player playerEntity = this.getCameraPlayer();
+    private int InjectMovingHearths(final int x){
+        final int j = this.displayHealth;
+        final Player playerEntity = this.getCameraPlayer();
         assert playerEntity != null;
-        int i = Mth.ceil(playerEntity.getHealth());
-        float f = Math.max((float)playerEntity.getAttributeValue(Attributes.MAX_HEALTH), (float)Math.max(j, i));
+        final int i = Mth.ceil(playerEntity.getHealth());
+        final float f = Math.max((float)playerEntity.getAttributeValue(Attributes.MAX_HEALTH), (float)Math.max(j, i));
 
             if(playerEntity.hasEffect(TCOTS_Effects.GraveHagDecoctionEffect())){
                 return this.tickCount % Mth.ceil(

@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
 public class AlchemyTableRenderer extends GeoBlockRenderer<AlchemyTableBlockEntity> {
-    public AlchemyTableRenderer(BlockEntityRendererProvider.Context ctx) {
+    public AlchemyTableRenderer(final BlockEntityRendererProvider.Context ctx) {
         super(new AlchemyTableModel());
     }
 }

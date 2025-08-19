@@ -1,7 +1,7 @@
 package TCOTS.utils;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.TCOTS_Tags;
+import TCOTS.registry.TCOTS_Tags;
 import TCOTS.registry.TCOTS_Items;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -39,17 +39,17 @@ public class EntitiesUtil {
     /**
     Util method to push and damage enemies, disable player shield and destroy End Crystals, Vehicles and Item Frames
      */
-    public static void pushAndDamageEntities(Mob pusherEntity, float damage, double lateralExpansion, double yExpansion, double knockbackStrength, Class<?>... classException){
+    public static void pushAndDamageEntities(final Mob pusherEntity, final float damage, final double lateralExpansion, final double yExpansion, final double knockbackStrength, final Class<?>... classException){
         pushAndDamageEntities(pusherEntity, damage, lateralExpansion, yExpansion, knockbackStrength, pusherEntity.damageSources().mobAttack(pusherEntity), classException);
     }
 
     /**
      Util method to push and damage enemies, disable player shield and destroy End Crystals, Vehicles and Item Frames, for entities that aren't mobs
      */
-    public static void pushAndDamageEntities(Entity pusherEntity, float damage, double lateralExpansion, double yExpansion, double knockbackStrength, DamageSource damageSource, Class<?>... classException){
-        List<Entity> listMobs= pusherEntity.level().getEntitiesOfClass(Entity.class, pusherEntity.getBoundingBox().inflate(lateralExpansion,yExpansion,lateralExpansion),
+    public static void pushAndDamageEntities(final Entity pusherEntity, final float damage, final double lateralExpansion, final double yExpansion, final double knockbackStrength, final DamageSource damageSource, final Class<?>... classException){
+        final List<Entity> listMobs= pusherEntity.level().getEntitiesOfClass(Entity.class, pusherEntity.getBoundingBox().inflate(lateralExpansion,yExpansion,lateralExpansion),
                 entity -> {
-                    for (Class<?> class_ : classException) {
+                    for (final Class<?> class_ : classException) {
                         if (class_.isAssignableFrom(entity.getClass()))
                             return false;
                     }
@@ -58,10 +58,10 @@ public class EntitiesUtil {
         );
 
 
-        for (Entity entity : listMobs){
-            double d = pusherEntity.getX() - entity.getX();
-            double e = pusherEntity.getZ() - entity.getZ();
-            if(entity instanceof LivingEntity livingEntity) {
+        for (final Entity entity : listMobs){
+            final double d = pusherEntity.getX() - entity.getX();
+            final double e = pusherEntity.getZ() - entity.getZ();
+            if(entity instanceof final LivingEntity livingEntity) {
 
                 livingEntity.knockback(knockbackStrength, d, e);
                 //Push the player
@@ -86,17 +86,17 @@ public class EntitiesUtil {
         }
     }
 
-    public static void spawnImpactParticles(Entity entity, double radius, double fallingDistance){
+    public static void spawnImpactParticles(final Entity entity, final double radius, final double fallingDistance){
         spawnImpactParticles(entity, radius, fallingDistance, Math.max(80 + fallingDistance, 2 * Math.PI * radius));
     }
 
     /**
     Spawns particles with the texture of the block where it impacts, in a circle shape
      */
-    public static void spawnImpactParticles(Entity entity, double radius, double fallingDistance, double pQuantity) {
+    public static void spawnImpactParticles(final Entity entity, final double radius, final double fallingDistance, final double pQuantity) {
 
         // To get the ground position
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(entity.getOnPos().getX(), entity.getOnPos().getY(), entity.getOnPos().getZ());
+        final BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(entity.getOnPos().getX(), entity.getOnPos().getY(), entity.getOnPos().getZ());
         while (entity.level().getBlockState(pos).isAir() && pos.getY()>-64) {
             pos.setY(pos.getY() - 1);
         }
@@ -106,30 +106,30 @@ public class EntitiesUtil {
         if(entity.isInWater()) pos.set(entity.getOnPos());
 
         // Fill the circle with particles
-        double stepSize = radius / 10.0;  // Adjust the step size for more or fewer particles inside the circle
+        final double stepSize = radius / 10.0;  // Adjust the step size for more or fewer particles inside the circle
         for (double r = 0; r <= radius; r += stepSize) {
-            double particlesInRing = Math.max(pQuantity, 2 * Math.PI * r);
+            final double particlesInRing = Math.max(pQuantity, 2 * Math.PI * r);
             for (int i = 0; i < particlesInRing; i++) {
-                double angle = (2 * Math.PI) * i / particlesInRing;
-                double offsetX = r * Math.cos(angle);
-                double offsetZ = r * Math.sin(angle);
+                final double angle = (2 * Math.PI) * i / particlesInRing;
+                final double offsetX = r * Math.cos(angle);
+                final double offsetZ = r * Math.sin(angle);
 
                 // Add some vertical randomness for particle height
-                double d = entity.level().getRandom().nextGaussian() * 0.5;
-                double e = entity.level().getRandom().nextGaussian() * 0.5;
-                double f = entity.level().getRandom().nextGaussian() * 0.5;
+                final double d = entity.level().getRandom().nextGaussian() * 0.5;
+                final double e = entity.level().getRandom().nextGaussian() * 0.5;
+                final double f = entity.level().getRandom().nextGaussian() * 0.5;
 
 
 
                 // Use a block particle for the interior
-                BlockState blockState = entity.level().getBlockState(
+                final BlockState blockState = entity.level().getBlockState(
                         new BlockPos(
                                 (int) (entity.getX()+offsetX),
                                 pos.below().getY(),
                                 (int) (entity.getZ()+offsetZ)));
                 if(blockState.getRenderShape() != RenderShape.INVISIBLE) {
                     // Select the particle type
-                    ParticleOptions particleType = new BlockParticleOption(ParticleTypes.BLOCK, blockState);
+                    final ParticleOptions particleType = new BlockParticleOption(ParticleTypes.BLOCK, blockState);
 
                     // Spawn the particle at the calculated position
                     entity.level().addParticle(particleType,
@@ -149,9 +149,9 @@ public class EntitiesUtil {
     Gets an ItemStack from an ItemEntity
     @param stack The ItemEntity
      */
-    public static ItemStack getItemFromStack(ItemEntity stack) {
-        ItemStack itemStack = stack.getItem();
-        ItemStack itemStack2 = itemStack.split(1);
+    public static ItemStack getItemFromStack(final ItemEntity stack) {
+        final ItemStack itemStack = stack.getItem();
+        final ItemStack itemStack2 = itemStack.split(1);
         if (itemStack.isEmpty()) {
             stack.discard();
         } else {
@@ -163,13 +163,13 @@ public class EntitiesUtil {
     /**
     Adds particles when running
      */
-    public static void spawnGroundParticles(PathfinderMob entity) {
-        BlockState blockState = entity.getBlockStateOn();
+    public static void spawnGroundParticles(final PathfinderMob entity) {
+        final BlockState blockState = entity.getBlockStateOn();
         if (blockState.getRenderShape() != RenderShape.INVISIBLE) {
             for (int i = 0; i < 8; ++i) {
-                double d = entity.getX() + (double) Mth.randomBetween(entity.getRandom(), -0.7F, 0.7F);
-                double e = entity.getY();
-                double f = entity.getZ() + (double) Mth.randomBetween(entity.getRandom(), -0.7F, 0.7F);
+                final double d = entity.getX() + (double) Mth.randomBetween(entity.getRandom(), -0.7F, 0.7F);
+                final double e = entity.getY();
+                final double f = entity.getZ() + (double) Mth.randomBetween(entity.getRandom(), -0.7F, 0.7F);
 
                 entity.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
             }
@@ -183,12 +183,12 @@ public class EntitiesUtil {
      @param amount The amount of damage
      @param slots The slots to damage
      */
-    public static void damageEquipment(LivingEntity entity,DamageSource source, float amount, EquipmentSlot... slots) {
+    public static void damageEquipment(final LivingEntity entity, final DamageSource source, final float amount, final EquipmentSlot... slots) {
         if (!(amount <= 0.0F)) {
-            int i = (int)Math.max(1.0F, amount / 4.0F);
+            final int i = (int)Math.max(1.0F, amount / 4.0F);
 
-            for (EquipmentSlot equipmentSlot : slots) {
-                ItemStack itemStack = entity.getItemBySlot(equipmentSlot);
+            for (final EquipmentSlot equipmentSlot : slots) {
+                final ItemStack itemStack = entity.getItemBySlot(equipmentSlot);
                 if (itemStack.getItem() instanceof ArmorItem && itemStack.canBeHurtBy(source)) {
                     itemStack.hurtAndBreak(i, entity, equipmentSlot);
                 }
@@ -199,7 +199,7 @@ public class EntitiesUtil {
     /**
      Checks if the player it's wearing the full Manticore Armor
      */
-    public static boolean isWearingManticoreArmor(LivingEntity player){
+    public static boolean isWearingManticoreArmor(final LivingEntity player){
 
         return player.getItemBySlot(EquipmentSlot.CHEST).is(TCOTS_Items.MANTICORE_ARMOR.get())
                 && player.getItemBySlot(EquipmentSlot.LEGS).is(TCOTS_Items.MANTICORE_TROUSERS.get())
@@ -209,7 +209,7 @@ public class EntitiesUtil {
     /**
      Checks if the player it's wearing the full Warrior's Leather Armor
      */
-    public static boolean isWearingWarriorsLeatherArmor(LivingEntity player){
+    public static boolean isWearingWarriorsLeatherArmor(final LivingEntity player){
 
         return player.getItemBySlot(EquipmentSlot.CHEST).is(TCOTS_Items.WARRIORS_LEATHER_JACKET.get())
                 && player.getItemBySlot(EquipmentSlot.LEGS).is(TCOTS_Items.WARRIORS_LEATHER_TROUSERS.get())
@@ -219,7 +219,7 @@ public class EntitiesUtil {
     /**
      Checks if the player it's wearing the full Raven's Armor
      */
-    public static boolean isWearingRavensArmor(LivingEntity player){
+    public static boolean isWearingRavensArmor(final LivingEntity player){
 
         return player.getItemBySlot(EquipmentSlot.CHEST).is(TCOTS_Items.RAVENS_ARMOR.get())
                 && player.getItemBySlot(EquipmentSlot.LEGS).is(TCOTS_Items.RAVENS_TROUSERS.get())
@@ -230,7 +230,7 @@ public class EntitiesUtil {
     Checks if the entity it's a magical monster
      @param entity The entity to check
      */
-    public static boolean isMonster(LivingEntity entity){
+    public static boolean isMonster(final LivingEntity entity){
         return
                 isNecrophage(entity) ||
                 isOgroid(entity)||
@@ -244,42 +244,42 @@ public class EntitiesUtil {
                 isRelict(entity);
     }
 
-    public static boolean isNecrophage(LivingEntity entity){
+    public static boolean isNecrophage(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.NECROPHAGES) ||
                 entity.getType().is(EntityTypeTags.UNDEAD) ||
                 TCOTS_Main.CONFIG.monsters.Necrophages().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isOgroid(LivingEntity entity){
+    public static boolean isOgroid(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.OGROIDS) ||
                 entity instanceof AbstractPiglin ||
                 TCOTS_Main.CONFIG.monsters.Ogroids().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isSpecter(LivingEntity entity){
+    public static boolean isSpecter(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.SPECTERS) ||
                 entity instanceof Ghast ||
                 TCOTS_Main.CONFIG.monsters.Specters().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isVampire(LivingEntity entity){
+    public static boolean isVampire(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.VAMPIRES) ||
                 TCOTS_Main.CONFIG.monsters.Vampires().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isInsectoid(LivingEntity entity){
+    public static boolean isInsectoid(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.INSECTOIDS) ||
                 entity.getType().is(EntityTypeTags.ARTHROPOD) ||
                 TCOTS_Main.CONFIG.monsters.Insectoids().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isBeast(LivingEntity entity){
+    public static boolean isBeast(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.BEASTS) ||
                 entity instanceof Animal ||
                 TCOTS_Main.CONFIG.monsters.Beasts().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isElementa(LivingEntity entity){
+    public static boolean isElementa(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.ELEMENTA) ||
                 entity instanceof Allay ||
                 entity instanceof AbstractGolem ||
@@ -290,25 +290,25 @@ public class EntitiesUtil {
                 TCOTS_Main.CONFIG.monsters.Elementa().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isHybrid(LivingEntity entity){
+    public static boolean isHybrid(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.HYBRIDS) ||
                 TCOTS_Main.CONFIG.monsters.Hybrids().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isCursedOne(LivingEntity entity){
+    public static boolean isCursedOne(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.CURSED_ONES) ||
                 entity instanceof Creeper ||
                 entity instanceof Ravager ||
                 TCOTS_Main.CONFIG.monsters.Cursed_Ones().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isDraconid(LivingEntity entity){
+    public static boolean isDraconid(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.DRACONIDS) ||
                 entity instanceof EnderDragon ||
                 TCOTS_Main.CONFIG.monsters.Draconids().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isRelict(LivingEntity entity){
+    public static boolean isRelict(final LivingEntity entity){
         return entity.getType().is(TCOTS_Tags.RELICTS) ||
                 entity instanceof EnderMan ||
                 entity instanceof Guardian ||
@@ -316,7 +316,7 @@ public class EntitiesUtil {
                 TCOTS_Main.CONFIG.monsters.Relicts().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
     }
 
-    public static boolean isHumanoid(LivingEntity entity){
+    public static boolean isHumanoid(final LivingEntity entity){
         return entity.getType().is(EntityTypeTags.ILLAGER) ||
                 entity instanceof AbstractVillager ||
                 entity instanceof Witch ||

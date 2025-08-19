@@ -31,14 +31,14 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base {
 
     private final java.util.List<MobEffectInstance> effects = Lists.newArrayList();
 
-    public WitcherAlcohol_Base(Properties settings, List<MobEffectInstance> effects, int refillQuantity) {
+    public WitcherAlcohol_Base(final Properties settings, final List<MobEffectInstance> effects, final int refillQuantity) {
         super(settings, new MobEffectInstance(MobEffects.BLINDNESS), 0, false);
         this.refillQuantity = refillQuantity;
         this.effects.addAll(effects);
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag type) {
+    public void appendHoverText(@NotNull final ItemStack stack, final TooltipContext context, @NotNull final List<Component> tooltip, @NotNull final TooltipFlag type) {
         tooltip.add(Component.translatable("tooltip."+BuiltInRegistries.ITEM.getKey(this)).withStyle(ChatFormatting.GRAY));
         tooltip.add(CommonComponents.EMPTY);
         tooltip.add(Component.translatable("tooltip.tcots_witcher.refill").withStyle(ChatFormatting.GRAY));
@@ -55,14 +55,14 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base {
     }
 
     @Override
-    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level world, @NotNull LivingEntity user) {
-        Player playerEntity = user instanceof Player ? (Player)user : null;
+    public @NotNull ItemStack finishUsingItem(@NotNull final ItemStack stack, @NotNull final Level world, @NotNull final LivingEntity user) {
+        final Player playerEntity = user instanceof Player ? (Player)user : null;
         if (playerEntity instanceof ServerPlayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer)playerEntity, stack);
         }
 
         if (!world.isClientSide) {
-            for(MobEffectInstance effect : this.effects){
+            for(final MobEffectInstance effect : this.effects){
                 if(effect.getEffect().value().isInstantenous()){
                     effect.getEffect().value().applyInstantenousEffect(playerEntity, playerEntity, user, effect.getAmplifier(), 1.0);
                 }
@@ -90,7 +90,7 @@ public class WitcherAlcohol_Base extends WitcherPotions_Base {
     }
 
     @Override
-    public @NotNull UseAnim getUseAnimation(ItemStack stack) {
+    public @NotNull UseAnim getUseAnimation(final ItemStack stack) {
         return UseAnim.DRINK;
     }
 }

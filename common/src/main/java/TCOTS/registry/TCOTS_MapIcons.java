@@ -22,8 +22,8 @@ public class TCOTS_MapIcons {
         TCOTS_Registries.MAP_ICONS.register(id, ()-> new MapDecorationType(ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, assetId), showOnItemFrame, mapColor, explorationMapElement, trackCount));
     }
 
-    public static Holder<MapDecorationType> getHolder(ResourceLocation id) {
-        Holder<MapDecorationType> holder = TCOTS_Registries.MAP_ICONS.getRegistrar().getHolder(id);
+    public static Holder<MapDecorationType> getHolder(final ResourceLocation id) {
+        final Holder<MapDecorationType> holder = TCOTS_Registries.MAP_ICONS.getRegistrar().getHolder(id);
 
         if (holder == null) {
             throw new IllegalArgumentException("MapIcon with id " + id + " does not exist");

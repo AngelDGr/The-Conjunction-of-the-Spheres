@@ -74,7 +74,7 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
         }
     }
 
-    public void init(int height, int width, Font parenttextRenderer, Minecraft client, AlchemyTableScreenHandler craftingScreenHandler) {
+    public void init(final int height, final int width, final Font parenttextRenderer, final Minecraft client, final AlchemyTableScreenHandler craftingScreenHandler) {
         this.narrow = width < 379;
         this.parentWidth=width;
         this.parentHeight=height;
@@ -92,10 +92,10 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
         if(listRecipes.isEmpty()){
             assert this.client.player != null;
 
-            List<RecipeCollection> list= recipeBook.getCollection(RecipeBookCategories.UNKNOWN);
+            final List<RecipeCollection> list= recipeBook.getCollection(RecipeBookCategories.UNKNOWN);
 
-            for (RecipeCollection resultCollection: list){
-                if(resultCollection.getRecipes().get(0).value() instanceof AlchemyTableRecipe recipe){
+            for (final RecipeCollection resultCollection: list){
+                if(resultCollection.getRecipes().get(0).value() instanceof final AlchemyTableRecipe recipe){
 
                     listRecipes.add((RecipeHolder<AlchemyTableRecipe>) resultCollection.getRecipes().get(0));
 
@@ -109,7 +109,7 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
         }
     }
 
-    public int findLeftEdge(int width, int backgroundWidth) {
+    public int findLeftEdge(final int width, final int backgroundWidth) {
         return this.isOpen() && !this.narrow ? 177 + (width - backgroundWidth - 200) / 2 : (width - backgroundWidth) / 2;
     }
 
@@ -121,21 +121,21 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
         return this.open;
     }
 
-    public void drawBackground(GuiGraphics context, float delta, int mouseX, int mouseY) {
+    public void drawBackground(final GuiGraphics context, final float delta, final int mouseX, final int mouseY) {
         this.leftOffset = this.narrow ? 0 : 86;
     }
 
     @Override
-    public void render(@NotNull GuiGraphics context, int mouseX, int mouseY, float delta) {
+    public void render(@NotNull final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
         if (!this.open) {
             return;
         }
         context.pose().pushPose();
         context.pose().translate(0,0,100);
-        int i = (parentWidth - 147) / 2 - this.leftOffset;
-        int j = (parentHeight - 189) / 2;
+        final int i = (parentWidth - 147) / 2 - this.leftOffset;
+        final int j = (parentHeight - 189) / 2;
 
-        int color = 0x395026;
+        final int color = 0x395026;
 
         switch (Objects.requireNonNull(currentTab).getCategory()){
             case POTIONS:
@@ -155,7 +155,7 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
                 break;
         }
 
-        for (AlchemyRecipeGroupButton recipeGroupButtonWidget : this.tabButtons) {
+        for (final AlchemyRecipeGroupButton recipeGroupButtonWidget : this.tabButtons) {
             recipeGroupButtonWidget.render(context, mouseX, mouseY, delta);
         }
         context.pose().popPose();
@@ -164,7 +164,7 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
         renderRecipeBookBackground(context, this.parentWidth, this.parentHeight, i, j);
         this.recipesArea.draw(context, i,j,mouseX,mouseY,delta);
     }
-    public void renderRecipeBookBackground(GuiGraphics context, int width, int height, int i, int j){
+    public void renderRecipeBookBackground(final GuiGraphics context, final int width, final int height, final int i, final int j){
         if (open) {
             context.pose().pushPose();
             context.pose().translate(0,0,0);
@@ -179,8 +179,8 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
     }
 
     public void reset(){
-        int i = (parentWidth - 147) / 2 - this.leftOffset;
-        int j = (parentHeight - 189) / 2;
+        final int i = (parentWidth - 147) / 2 - this.leftOffset;
+        final int j = (parentHeight - 189) / 2;
 
         if(this.tabButtons.isEmpty()){
             //Potions
@@ -207,7 +207,7 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
         this.refreshTabButtons();
     }
 
-    protected void setOpen(boolean opened) {
+    protected void setOpen(final boolean opened) {
         if (opened) {
             this.reset();
         }
@@ -215,7 +215,7 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
     }
 
     @Override
-    public void setFocused(boolean focused) {
+    public void setFocused(final boolean focused) {
 
     }
 
@@ -225,7 +225,7 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {
         if (!this.isOpen() || Objects.requireNonNull(this.client.player).isSpectator()) {
             return false;
         }
@@ -270,7 +270,7 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
         }
 
 
-        for (AlchemyRecipeGroupButton recipeGroupButtonWidget : this.tabButtons) {
+        for (final AlchemyRecipeGroupButton recipeGroupButtonWidget : this.tabButtons) {
             if (!recipeGroupButtonWidget.mouseClicked(mouseX, mouseY, button)) continue;
             if (this.currentTab != recipeGroupButtonWidget) {
                 if (this.currentTab != null) {
@@ -290,27 +290,27 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
     }
 
     @Override
-    public void updateNarration(@NotNull NarrationElementOutput builder) {
-        ArrayList<AbstractWidget> list = Lists.newArrayList();
+    public void updateNarration(@NotNull final NarrationElementOutput builder) {
+        final ArrayList<AbstractWidget> list = Lists.newArrayList();
         this.recipesArea.forEachButton(button -> {
             if (button.isActive()) {
                 list.add(button);
             }
         });
 
-        Screen.NarratableSearchResult selectedElementNarrationData = Screen.findNarratableWidget(list, null);
+        final Screen.NarratableSearchResult selectedElementNarrationData = Screen.findNarratableWidget(list, null);
         if (selectedElementNarrationData != null) {
             selectedElementNarrationData.entry.updateNarration(builder.nest());
         }
     }
 
     @Override
-    public void addItemToSlot(@NotNull Ingredient input, int slot, int amount, int gridX, int gridY) {
+    public void addItemToSlot(@NotNull final Ingredient input, final int slot, final int amount, final int gridX, final int gridY) {
 
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(final int keyCode, final int scanCode, final int modifiers) {
         this.searching = false;
         if (!this.isOpen() || Objects.requireNonNull(this.client.player).isSpectator()) {
             return false;
@@ -324,23 +324,23 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
     }
 
     @Override
-    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+    public boolean keyReleased(final int keyCode, final int scanCode, final int modifiers) {
         this.searching = false;
         return GuiEventListener.super.keyReleased(keyCode, scanCode, modifiers);
     }
 
     private void refreshTabButtons() {
-        int i = (this.parentWidth - 147) / 2 - this.leftOffset - 32;
-        int j = (this.parentHeight - 189) / 2 + 3;
+        final int i = (this.parentWidth - 147) / 2 - this.leftOffset - 32;
+        final int j = (this.parentHeight - 189) / 2 + 3;
         int l = 0;
-        for (AlchemyRecipeGroupButton recipeGroupButtonWidget : this.tabButtons) {
+        for (final AlchemyRecipeGroupButton recipeGroupButtonWidget : this.tabButtons) {
             recipeGroupButtonWidget.setPosition(i, j + 14 + (l++ * 28));
             recipeGroupButtonWidget.checkForNewRecipes(this.client);
         }
     }
 
     @Override
-    public boolean charTyped(char chr, int modifiers) {
+    public boolean charTyped(final char chr, final int modifiers) {
         if (this.searching) {
             return false;
         }
@@ -351,7 +351,7 @@ public class AlchemyRecipeBookWidget implements PlaceRecipe<Ingredient>,
     }
 
     @Override
-    public void recipesShown(@NotNull List<RecipeHolder<?>> recipes) {
+    public void recipesShown(@NotNull final List<RecipeHolder<?>> recipes) {
 
     }
 }

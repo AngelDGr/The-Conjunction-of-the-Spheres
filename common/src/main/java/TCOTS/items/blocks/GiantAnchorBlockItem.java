@@ -16,12 +16,12 @@ import net.minecraft.world.level.block.Block;
 
 public class GiantAnchorBlockItem extends BlockItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    public GiantAnchorBlockItem(Block block, Properties settings) {
+    public GiantAnchorBlockItem(final Block block, final Properties settings) {
         super(block, settings);
     }
 
     @Override
-    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+    public void createGeoRenderer(final Consumer<GeoRenderProvider> consumer) {
         consumer.accept(new GeoRenderProvider() {
 
             private final GiantAnchorBlockItemRenderer renderer = new GiantAnchorBlockItemRenderer();
@@ -34,7 +34,7 @@ public class GiantAnchorBlockItem extends BlockItem implements GeoItem {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(GeoControllersUtil.genericIdleController(this));
     }
 

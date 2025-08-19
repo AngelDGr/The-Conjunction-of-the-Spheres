@@ -11,7 +11,6 @@ import TCOTS.effects.bombs.NorthernWindEffect;
 import TCOTS.effects.bombs.SamumEffect;
 import TCOTS.effects.decoctions.*;
 import TCOTS.effects.potions.*;
-import dev.architectury.registry.registries.Registrar;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -26,6 +25,8 @@ public class TCOTS_Effects {
     static final int decoctionColor=0x0b7000;
     //W1
     public static final ResourceLocation WOLF_EFFECT= id("wolf_effect");
+    //W1
+    public static final ResourceLocation BINDWEED_EFFECT= id("bindweed");
     //W2
     public static final ResourceLocation ROOK_EFFECT = id("rook_effect");
     //W3
@@ -59,6 +60,10 @@ public class TCOTS_Effects {
             //W1
             registerEffect(WOLF_EFFECT,
                     () -> createStatusEffect(WolfEffect.class, MobEffectCategory.BENEFICIAL, 0xdd531d));
+
+
+            registerEffect(BINDWEED_EFFECT,
+                    () -> createStatusEffect(BindweedEffect.class, MobEffectCategory.BENEFICIAL, 0xdff39f));
 
             //W2
             registerEffect(ROOK_EFFECT,
@@ -172,6 +177,10 @@ public class TCOTS_Effects {
         return getHolder(WOLF_EFFECT);
     }
 
+    public static Holder<MobEffect> BindweedEffect() {
+        return getHolder(BINDWEED_EFFECT);
+    }
+
     // W2
     public static Holder<MobEffect> RookEffect() {
         return getHolder(ROOK_EFFECT);
@@ -257,24 +266,24 @@ public class TCOTS_Effects {
         return getHolder(CADAVERINE);
     }
 
-    public static MobEffect createStatusEffect(Class<? extends MobEffect> effectClass, MobEffectCategory category, int color) {
+    public static MobEffect createStatusEffect(final Class<? extends MobEffect> effectClass, final MobEffectCategory category, final int color) {
         try {
             return  effectClass.getConstructor(MobEffectCategory.class, int.class).newInstance(category, color);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new IllegalArgumentException("The effect was not created");
         }
     }
 
-    private static ResourceLocation id(String name){
+    private static ResourceLocation id(final String name){
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, name);
     }
 
-    private static void registerEffect(ResourceLocation id, Supplier<MobEffect> statusEffect) {
+    private static void registerEffect(final ResourceLocation id, final Supplier<MobEffect> statusEffect) {
         TCOTS_Registries.MOB_EFFECTS.register(id, statusEffect);
     }
 
-    public static Holder<MobEffect> getHolder(ResourceLocation id) {
-        Holder<MobEffect> holder = TCOTS_Registries.MOB_EFFECTS.getRegistrar().getHolder(id);
+    public static Holder<MobEffect> getHolder(final ResourceLocation id) {
+        final Holder<MobEffect> holder = TCOTS_Registries.MOB_EFFECTS.getRegistrar().getHolder(id);
         if (holder == null) {
             throw new IllegalArgumentException("MobEffect with id " + id + " does not exist");
         }

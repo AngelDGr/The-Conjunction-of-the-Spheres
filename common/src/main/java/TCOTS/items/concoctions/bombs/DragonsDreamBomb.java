@@ -15,7 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 public class DragonsDreamBomb {
     private static final byte DRAGONS_DREAM_EXPLODES = 42;
 
-    public static void explosionLogic(WitcherBombEntity bomb){
+    public static void explosionLogic(final WitcherBombEntity bomb){
 
         bomb.level().playSound(null, bomb.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), bomb.getSoundSource());
 
@@ -25,13 +25,13 @@ public class DragonsDreamBomb {
         setCloud(bomb);
     }
 
-    private static void setCloud(WitcherBombEntity bomb){
-        List<LivingEntity> list = bomb.level().getEntitiesOfClass(LivingEntity.class, bomb.getBoundingBox().inflate(4.0, 2.0, 4.0));
-        DragonsDreamCloud dragonsDreamCloudEntity = getDragonsDreamCloud(bomb);
+    private static void setCloud(final WitcherBombEntity bomb){
+        final List<LivingEntity> list = bomb.level().getEntitiesOfClass(LivingEntity.class, bomb.getBoundingBox().inflate(4.0, 2.0, 4.0));
+        final DragonsDreamCloud dragonsDreamCloudEntity = getDragonsDreamCloud(bomb);
         dragonsDreamCloudEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
         if (!list.isEmpty()) {
-            for (LivingEntity livingEntity : list) {
-                double d = bomb.distanceToSqr(livingEntity);
+            for (final LivingEntity livingEntity : list) {
+                final double d = bomb.distanceToSqr(livingEntity);
                 if (!(d < 16.0)) continue;
                 dragonsDreamCloudEntity.setPos(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
                 break;
@@ -41,9 +41,9 @@ public class DragonsDreamBomb {
     }
 
     @NotNull
-    private static DragonsDreamCloud getDragonsDreamCloud(WitcherBombEntity bomb) {
-        DragonsDreamCloud dragonsDreamCloudEntity = new DragonsDreamCloud(bomb.level(), bomb.getX(), bomb.getY(), bomb.getZ(), bomb.getLevel());
-        Entity entity = bomb.getOwner();
+    private static DragonsDreamCloud getDragonsDreamCloud(final WitcherBombEntity bomb) {
+        final DragonsDreamCloud dragonsDreamCloudEntity = new DragonsDreamCloud(bomb.level(), bomb.getX(), bomb.getY(), bomb.getZ(), bomb.getLevel());
+        final Entity entity = bomb.getOwner();
         if (entity instanceof LivingEntity) {
             dragonsDreamCloudEntity.setOwner((LivingEntity)entity);
         }
@@ -55,7 +55,7 @@ public class DragonsDreamBomb {
         return dragonsDreamCloudEntity;
     }
 
-    public static void handleStatus(WitcherBombEntity bomb, byte status) {
+    public static void handleStatus(final WitcherBombEntity bomb, final byte status) {
         if(status== DRAGONS_DREAM_EXPLODES){
             bomb.level().addParticle(TCOTS_Particles.DragonsDreamExplosionEmitter(), bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
         }

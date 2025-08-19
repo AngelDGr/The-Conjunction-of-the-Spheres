@@ -26,26 +26,26 @@ public class MonsterNestLogic extends BaseSpawner {
 
     private final Block block;
 
-    public MonsterNestLogic(Block block){
+    public MonsterNestLogic(final Block block){
         this.block=block;
     }
 
     @Override
-    public void broadcastEvent(Level world, @NotNull BlockPos pos, int status) {
+    public void broadcastEvent(final Level world, @NotNull final BlockPos pos, final int status) {
         world.blockEvent(pos, block, status, 0);
     }
 
     @Override
-    public void setNextSpawnData(@Nullable Level world, @NotNull BlockPos pos, @NotNull SpawnData spawnEntry) {
+    public void setNextSpawnData(@Nullable final Level world, @NotNull final BlockPos pos, @NotNull final SpawnData spawnEntry) {
         super.setNextSpawnData(world, pos, spawnEntry);
         if (world != null) {
-            BlockState blockState = world.getBlockState(pos);
+            final BlockState blockState = world.getBlockState(pos);
             world.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_INVISIBLE);
         }
     }
 
     @Override
-    public @NotNull CompoundTag save(CompoundTag nbt) {
+    public @NotNull CompoundTag save(final CompoundTag nbt) {
         this.spawnRange = 3;
         this.requiredPlayerRange = 64;
         this.minSpawnDelay = 1200;
@@ -69,7 +69,7 @@ public class MonsterNestLogic extends BaseSpawner {
     }
 
     @Override
-    public void serverTick(@NotNull ServerLevel world, @NotNull BlockPos pos) {
+    public void serverTick(@NotNull final ServerLevel world, @NotNull final BlockPos pos) {
         if (this.isNearPlayer(world, pos)) {
             if (this.spawnDelay == -1) {
                 this.delay(world, pos);
@@ -79,30 +79,30 @@ public class MonsterNestLogic extends BaseSpawner {
                 this.spawnDelay--;
             } else {
                 boolean bl = false;
-                RandomSource random = world.getRandom();
-                SpawnData mobSpawnerEntry = this.getOrCreateNextSpawnData(world, random, pos);
+                final RandomSource random = world.getRandom();
+                final SpawnData mobSpawnerEntry = this.getOrCreateNextSpawnData(world, random, pos);
 
                 for (int i = 0; i < this.spawnCount; i++) {
-                    CompoundTag nbtCompound = mobSpawnerEntry.getEntityToSpawn();
-                    Optional<EntityType<?>> optional = EntityType.by(nbtCompound);
+                    final CompoundTag nbtCompound = mobSpawnerEntry.getEntityToSpawn();
+                    final Optional<EntityType<?>> optional = EntityType.by(nbtCompound);
                     if (optional.isEmpty()) {
                         this.delay(world, pos);
                         return;
                     }
 
-                    ListTag nbtList = nbtCompound.getList("Pos", Tag.TAG_DOUBLE);
-                    int j = nbtList.size();
-                    double d = j >= 1 ? nbtList.getDouble(0) : (double)pos.getX() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
-                    double e = j >= 2 ? nbtList.getDouble(1) : (double)(pos.getY() + random.nextInt(3) - 1);
-                    double f = j >= 3 ? nbtList.getDouble(2) : (double)pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
+                    final ListTag nbtList = nbtCompound.getList("Pos", Tag.TAG_DOUBLE);
+                    final int j = nbtList.size();
+                    final double d = j >= 1 ? nbtList.getDouble(0) : (double)pos.getX() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
+                    final double e = j >= 2 ? nbtList.getDouble(1) : (double)(pos.getY() + random.nextInt(3) - 1);
+                    final double f = j >= 3 ? nbtList.getDouble(2) : (double)pos.getZ() + (random.nextDouble() - random.nextDouble()) * (double)this.spawnRange + 0.5;
                     if (world.noCollision(optional.get().getSpawnAABB(d, e, f))) {
-                        BlockPos blockPos = BlockPos.containing(d, e, f);
+                        final BlockPos blockPos = BlockPos.containing(d, e, f);
                         if (mobSpawnerEntry.getCustomSpawnRules().isPresent()) {
                             if (!optional.get().getCategory().isFriendly() && world.getDifficulty() == Difficulty.PEACEFUL) {
                                 continue;
                             }
 
-                            SpawnData.CustomSpawnRules customSpawnRules = mobSpawnerEntry.getCustomSpawnRules().get();
+                            final SpawnData.CustomSpawnRules customSpawnRules = mobSpawnerEntry.getCustomSpawnRules().get();
                             if (!customSpawnRules.isValidPosition(blockPos, world)) {
                                 continue;
                             }
@@ -110,7 +110,7 @@ public class MonsterNestLogic extends BaseSpawner {
                             continue;
                         }
 
-                        Entity entity = EntityType.loadEntityRecursive(nbtCompound, world, entityX -> {
+                        final Entity entity = EntityType.loadEntityRecursive(nbtCompound, world, entityX -> {
                             entityX.moveTo(d, e, f, entityX.getYRot(), entityX.getXRot());
                             return entityX;
                         });
@@ -119,7 +119,7 @@ public class MonsterNestLogic extends BaseSpawner {
                             return;
                         }
 
-                        int k = world.getEntities(
+                        final int k = world.getEntities(
                                         EntityTypeTest.forExactClass(entity.getClass()),
                                         new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1)
                                                 .inflate(this.spawnRange),
@@ -132,14 +132,14 @@ public class MonsterNestLogic extends BaseSpawner {
                         }
 
                         entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), random.nextFloat() * 360.0F, 0.0F);
-                        if (entity instanceof Mob mobEntity) {
+                        if (entity instanceof final Mob mobEntity) {
                             if (mobSpawnerEntry.getCustomSpawnRules().isEmpty() && !mobEntity.checkSpawnRules(world, MobSpawnType.SPAWNER) || !mobEntity.checkSpawnObstruction(world)) {
                                 continue;
                             }
 
-                            boolean bl2 = mobSpawnerEntry.getEntityToSpawn().size() == 1 && mobSpawnerEntry.getEntityToSpawn().contains("id", Tag.TAG_STRING);
+                            final boolean bl2 = mobSpawnerEntry.getEntityToSpawn().size() == 1 && mobSpawnerEntry.getEntityToSpawn().contains("id", Tag.TAG_STRING);
                             if (bl2) {
-                                ((Mob)entity).finalizeSpawn(world, world.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null);
+                                mobEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null);
                             }
 
                             mobSpawnerEntry.getEquipment().ifPresent(mobEntity::equip);

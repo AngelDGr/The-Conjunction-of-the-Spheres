@@ -25,7 +25,7 @@ public class WitcherRPGChangeModels {
 
         @ModifyArg(method = "<init>", at = @At(value = "INVOKE",
                 target = "Lnet/minecraft/client/renderer/ItemModelShaper;register(Lnet/minecraft/world/item/Item;Lnet/minecraft/client/resources/model/ModelResourceLocation;)V"), index = 1)
-        private ModelResourceLocation changeModels(ModelResourceLocation modelId, @Local Item item){
+        private ModelResourceLocation changeModels(final ModelResourceLocation modelId, @Local final Item item){
             if((MiscUtil.isWitcherRPGLoaded() || TCOTS_Main.CONFIG.hasRPGTextures())
                     && item instanceof SwordItem && BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(TCOTS_Main.MOD_ID)){
                 return ModelResourceLocation.inventory(
@@ -44,7 +44,7 @@ public class WitcherRPGChangeModels {
 
         @ModifyArg(method = "<init>", at = @At(value = "INVOKE",
                 target = "Lnet/minecraft/client/resources/model/ModelBakery;loadItemModelAndDependencies(Lnet/minecraft/resources/ResourceLocation;)V"))
-        private ResourceLocation changeModels(ResourceLocation id) {
+        private ResourceLocation changeModels(final ResourceLocation id) {
             if ((MiscUtil.isWitcherRPGLoaded() || TCOTS_Main.CONFIG.hasRPGTextures())
                     && BuiltInRegistries.ITEM.get(id) instanceof SwordItem && id.getNamespace().equals(TCOTS_Main.MOD_ID)) {
                 return ResourceLocation.fromNamespaceAndPath(id.getNamespace(), id.getPath() + "_rpg");

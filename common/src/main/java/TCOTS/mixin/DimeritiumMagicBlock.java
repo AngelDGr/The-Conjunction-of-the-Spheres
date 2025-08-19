@@ -25,7 +25,7 @@ public abstract class DimeritiumMagicBlock {
     //Enderman
     @Mixin(EnderMan.class)
     public abstract static class BlockEndermanTeleportation extends Monster implements NeutralMob {
-        protected BlockEndermanTeleportation(EntityType<? extends Monster> entityType, Level world) {
+        protected BlockEndermanTeleportation(final EntityType<? extends Monster> entityType, final Level world) {
             super(entityType, world);
         }
 
@@ -34,12 +34,12 @@ public abstract class DimeritiumMagicBlock {
 
 
         @Inject(method = "teleport()Z", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingTeleport(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingTeleport(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(THIS, cir);
         }
 
         @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-        private void makeTakeDamageByArrows(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+        private void makeTakeDamageByArrows(final DamageSource source, final float amount, final CallbackInfoReturnable<Boolean> cir){
             if (this.isInvulnerableTo(source)) {
                 cir.setReturnValue(false);
             }
@@ -56,13 +56,13 @@ public abstract class DimeritiumMagicBlock {
         Entity entity;
 
         @Inject(method = "onHitEntity", at = @At("HEAD"))
-        private void getEntity(EntityHitResult entityHitResult, CallbackInfo ci){
+        private void getEntity(final EntityHitResult entityHitResult, final CallbackInfo ci){
             entity = entityHitResult.getEntity();
         }
 
         @ModifyVariable(method = "onHitEntity", at = @At("STORE"), ordinal = 0)
-        private boolean makeArrowDamageable(boolean value){
-            if(entity!=null && entity instanceof LivingEntity livingEntity){
+        private boolean makeArrowDamageable(final boolean value){
+            if(entity!=null && entity instanceof final LivingEntity livingEntity){
                 return value && !DimeritiumBomb.checkEffect(livingEntity);
             }
 
@@ -75,7 +75,7 @@ public abstract class DimeritiumMagicBlock {
         @Shadow @Final private EnderMan enderman;
 
         @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingStart(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(enderman, cir);
         }
     }
@@ -87,7 +87,7 @@ public abstract class DimeritiumMagicBlock {
         @Final @Shadow Shulker field_7348;
 
         @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingStart(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(field_7348, cir);
         }
     }
@@ -98,7 +98,7 @@ public abstract class DimeritiumMagicBlock {
         @Shadow @Final private Blaze blaze;
 
         @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingStart(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(blaze, cir);
         }
     }
@@ -109,7 +109,7 @@ public abstract class DimeritiumMagicBlock {
         @Shadow @Final private Ghast ghast;
 
         @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingStart(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(ghast, cir);
         }
     }
@@ -119,12 +119,12 @@ public abstract class DimeritiumMagicBlock {
     public abstract static class BlockGuardianBeamGoal{
         @Shadow @Final private Guardian guardian;
         @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingStart(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(guardian, cir);
         }
 
         @Inject(method = "canContinueToUse", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingContinue(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingContinue(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(guardian, cir);
         }
     }
@@ -136,12 +136,12 @@ public abstract class DimeritiumMagicBlock {
         @Final @Shadow SpellcasterIllager field_7386;
 
         @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingStart(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(field_7386, cir);
         }
 
         @Inject(method = "canContinueToUse", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingContinue(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingContinue(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(field_7386, cir);
         }
     }
@@ -151,24 +151,24 @@ public abstract class DimeritiumMagicBlock {
         @Final
         @Shadow Evoker field_7268;
         @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingStart(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingStart(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(field_7268, cir);
         }
 
         @Inject(method = "canContinueToUse", at = @At("HEAD"), cancellable = true)
-        private void magicBlockingContinue(CallbackInfoReturnable<Boolean> cir){
+        private void magicBlockingContinue(final CallbackInfoReturnable<Boolean> cir){
             DimeritiumBomb.checkEffectMixin(field_7268, cir);
         }
     }
 
     @Mixin(net.minecraft.world.entity.monster.Evoker.class)
     public abstract static class EvokerRunsFromPlayer extends SpellcasterIllager{
-        protected EvokerRunsFromPlayer(EntityType<? extends SpellcasterIllager> entityType, Level level) {
+        protected EvokerRunsFromPlayer(final EntityType<? extends SpellcasterIllager> entityType, final Level level) {
             super(entityType, level);
         }
 
         @Inject(method = "registerGoals", at = @At("HEAD"))
-        private void magicBlockingStart(CallbackInfo ci){
+        private void magicBlockingStart(final CallbackInfo ci){
             this.goalSelector.addGoal(1, new FleeWithDimeritium<>(this, Player.class, 10.0f, 1.0, 1.2));
         }
     }

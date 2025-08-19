@@ -38,15 +38,15 @@ public abstract class WorldRendererMixin {
     @Shadow protected abstract boolean shouldShowEntityOutlines();
 
     @Inject(method= "levelEvent", at = @At("HEAD"), cancellable = true)
-    public void controlSendWorldEvents(int eventId, BlockPos pos, int data, CallbackInfo ci){
-        RandomSource random = this.level.random;
+    public void controlSendWorldEvents(final int eventId, final BlockPos pos, final int data, final CallbackInfo ci){
+        final RandomSource random = this.level.random;
         //Particles for Monster Nest
         if(eventId==8642097) {
             this.level.playLocalSound(pos, SoundEvents.GRAVEL_BREAK, SoundSource.HOSTILE, 1.0f, 1.0f, false);
             for (int j = 0; j < 20; ++j) {
-                double ac = (double)pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 2.0;
-                double ad = (double)pos.getY() + 0.5 + (random.nextDouble() - 0.5) * 2.0;
-                double ae = (double)pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 2.0;
+                final double ac = (double)pos.getX() + 0.5 + (random.nextDouble() - 0.5) * 2.0;
+                final double ad = (double)pos.getY() + 0.5 + (random.nextDouble() - 0.5) * 2.0;
+                final double ae = (double)pos.getZ() + 0.5 + (random.nextDouble() - 0.5) * 2.0;
                 this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), ac, ad, ae, 0.0, 0.0, 0.0);
                 //Witch
                 //Mycelium
@@ -62,12 +62,12 @@ public abstract class WorldRendererMixin {
     }
 
     @ModifyExpressionValue(method= "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;shouldEntityAppearGlowing(Lnet/minecraft/world/entity/Entity;)Z"))
-    private boolean injectCatEffectOutline(boolean original, @Local Entity entity){
+    private boolean injectCatEffectOutline(final boolean original, @Local final Entity entity){
         return original ||(this.shouldShowEntityOutlines() && this.canHaveCatEffect() && checkEntity(entity));
     }
 
     @Unique
-    private boolean checkEntity(Entity entity){
+    private boolean checkEntity(final Entity entity){
         assert this.minecraft.player != null;
         return (entity instanceof LivingEntity && !(entity instanceof ArmorStand)) && entity != this.minecraft.player && this.minecraft.player.distanceTo(entity) <= 30;
     }
@@ -75,15 +75,15 @@ public abstract class WorldRendererMixin {
     @Unique
     private boolean canHaveCatEffect(){
         assert this.minecraft.player != null;
-        int lightBlock = this.minecraft.player.level().getBrightness(LightLayer.BLOCK, this.minecraft.player.blockPosition());
-        int lightSky   = this.minecraft.player.level().getBrightness(LightLayer.SKY,   this.minecraft.player.blockPosition());
+        final int lightBlock = this.minecraft.player.level().getBrightness(LightLayer.BLOCK, this.minecraft.player.blockPosition());
+        final int lightSky   = this.minecraft.player.level().getBrightness(LightLayer.SKY,   this.minecraft.player.blockPosition());
         return this.minecraft.player.hasEffect(TCOTS_Effects.CatEffect()) && !(this.minecraft.player.isSpectator()) && ((lightBlock <=4 && lightSky <= 10) || (this.isNightTicks() && lightBlock <=4));
     }
 
     @Unique
     private boolean isNightTicks(){
         assert this.minecraft.player != null;
-        long time = this.minecraft.player.level().getDayTime() % 24000;
+        final long time = this.minecraft.player.level().getDayTime() % 24000;
         return time >= 13000 && time < 23000;
     }
 }

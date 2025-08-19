@@ -13,7 +13,7 @@ public class DancingStar_ExplosionEmitterParticle extends NoRenderParticle {
 
     private final double code;
 
-    DancingStar_ExplosionEmitterParticle(ClientLevel clientWorld, double d, double e, double f, double vx, double vy, double vz) {
+    DancingStar_ExplosionEmitterParticle(final ClientLevel clientWorld, final double d, final double e, final double f, final double vx, final double vy, final double vz) {
         super(clientWorld, d, e, f, vx, vy, vz);
         this.code=vx;
         this.lifetime = 4;
@@ -38,11 +38,11 @@ public class DancingStar_ExplosionEmitterParticle extends NoRenderParticle {
 
         for (int i = 0; i < quantity; ++i) {
 
-            int randomI=this.random.nextIntBetweenInclusive(0,4);
+            final int randomI=this.random.nextIntBetweenInclusive(0,4);
 
-            double d = this.x + (this.random.nextDouble() - this.random.nextDouble()) * multiplier;
-            double e = this.y + (this.random.nextDouble()) * 4.0;
-            double f = this.z + (this.random.nextDouble() - this.random.nextDouble()) * multiplier;
+            final double d = this.x + (this.random.nextDouble() - this.random.nextDouble()) * multiplier;
+            final double e = this.y + (this.random.nextDouble()) * 4.0;
+            final double f = this.z + (this.random.nextDouble() - this.random.nextDouble()) * multiplier;
             if(randomI==4)
             {
                 this.level.addParticle(ParticleTypes.FLAME, d, e, f, 0.0, 0.0, 0.0);
@@ -61,7 +61,7 @@ public class DancingStar_ExplosionEmitterParticle extends NoRenderParticle {
 
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         @Override
-        public Particle createParticle(SimpleParticleType defaultParticleType, ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(final SimpleParticleType defaultParticleType, final ClientLevel clientWorld, final double d, final double e, final double f, final double g, final double h, final double i) {
             return new DancingStar_ExplosionEmitterParticle(clientWorld, d, e, f, g, h, i);
         }
     }

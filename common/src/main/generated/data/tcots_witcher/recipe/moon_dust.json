@@ -1,0 +1,21 @@
+{
+  "type": "tcots_witcher:alchemy_table",
+  "base": {
+    "count": 1,
+    "id": "minecraft:gunpowder"
+  },
+  "category": "bombs_oils",
+  "ingredient_counters": [
+    2
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:ghast_tear"
+    }
+  ],
+  "order": 0.58999974,
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:moon_dust"
+  }
+}

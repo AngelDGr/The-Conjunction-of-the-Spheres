@@ -13,25 +13,25 @@ import net.minecraft.util.CommonColors;
 import net.minecraft.util.Mth;
 
 public abstract class BoltEntityRenderer<T extends WitcherBolt> extends EntityRenderer<T> {
-    public BoltEntityRenderer(EntityRendererProvider.Context context) {
+    public BoltEntityRenderer(final EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public void render(T persistentProjectileEntity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
+    public void render(final T persistentProjectileEntity, final float f, final float g, final PoseStack matrixStack, final MultiBufferSource vertexConsumerProvider, final int i) {
         matrixStack.pushPose();
         matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(g, persistentProjectileEntity.yRotO, persistentProjectileEntity.getYRot()) - 90.0f));
         matrixStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(g, persistentProjectileEntity.xRotO, persistentProjectileEntity.getXRot())));
-        float s = (float) persistentProjectileEntity.shakeTime - g;
+        final float s = (float) persistentProjectileEntity.shakeTime - g;
         if (s > 0.0f) {
-            float t = -Mth.sin(s * 3.0f) * s;
+            final float t = -Mth.sin(s * 3.0f) * s;
             matrixStack.mulPose(Axis.ZP.rotationDegrees(t));
         }
         matrixStack.mulPose(Axis.XP.rotationDegrees(45.0f));
         matrixStack.scale(0.05625f, 0.05625f, 0.05625f);
         matrixStack.translate(-2.0f, 0.0f, 0.0f);
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entityCutout(this.getTextureLocation(persistentProjectileEntity)));
-        PoseStack.Pose entry = matrixStack.last();
+        final VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entityCutout(this.getTextureLocation(persistentProjectileEntity)));
+        final PoseStack.Pose entry = matrixStack.last();
 
         //Cross-Section
         for (int u = 0; u < 4; ++u) {
@@ -46,7 +46,7 @@ public abstract class BoltEntityRenderer<T extends WitcherBolt> extends EntityRe
     }
 
     public void vertex(
-            PoseStack.Pose matrix, VertexConsumer vertexConsumer, int x, int y, int z, float u, float v, int normalX, int normalZ, int normalY, int light
+            final PoseStack.Pose matrix, final VertexConsumer vertexConsumer, final int x, final int y, final int z, final float u, final float v, final int normalX, final int normalZ, final int normalY, final int light
     ) {
         vertexConsumer.addVertex(matrix, (float)x, (float)y, (float)z)
                 .setColor(CommonColors.WHITE)

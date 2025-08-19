@@ -26,19 +26,19 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 public abstract class GeoEntityRendererMixin<T extends Entity & GeoAnimatable> extends EntityRenderer<T> implements GeoRenderer<T>  {
     @Unique
     private BlockRenderDispatcher blockRenderManager;
-    protected GeoEntityRendererMixin(EntityRendererProvider.Context ctx) {
+    protected GeoEntityRendererMixin(final EntityRendererProvider.Context ctx) {
         super(ctx);
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void injectInConstructor(EntityRendererProvider.Context ctx, GeoModel<T> model, CallbackInfo ci){
+    private void injectInConstructor(final EntityRendererProvider.Context ctx, final GeoModel<T> model, final CallbackInfo ci){
         this.blockRenderManager = ctx.getBlockRenderDispatcher();
     }
 
     @Inject(method = "actuallyRender(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/entity/Entity;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZFIII)V",
             at = @At(value = "TAIL"))
-    private void renderIceOnEntity(PoseStack matrixStack, T animatable, BakedGeoModel model, @Nullable RenderType renderType, MultiBufferSource vertexConsumerProvider, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour, CallbackInfo ci) {
-        if (animatable instanceof LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$isFrozen()) {
+    private void renderIceOnEntity(final PoseStack matrixStack, final T animatable, final BakedGeoModel model, @Nullable final RenderType renderType, final MultiBufferSource vertexConsumerProvider, @Nullable final VertexConsumer buffer, final boolean isReRender, final float partialTick, final int packedLight, final int packedOverlay, final int colour, final CallbackInfo ci) {
+        if (animatable instanceof final LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$isFrozen()) {
             TCOTS_Client.renderNorthernWindIce(livingEntity, matrixStack, vertexConsumerProvider, blockRenderManager);
         }
     }

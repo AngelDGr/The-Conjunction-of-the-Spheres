@@ -12,13 +12,13 @@ public class DimeritiumFlash {
     public static class FlashFactory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet spriteProvider;
 
-        public FlashFactory(SpriteSet spriteProvider) {
+        public FlashFactory(final SpriteSet spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
 
         @Override
-        public Particle createParticle(@NotNull SimpleParticleType defaultParticleType, @NotNull ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
-            DimeritiumFlash.Flash flash = new DimeritiumFlash.Flash(clientWorld, d, e, f);
+        public Particle createParticle(@NotNull final SimpleParticleType defaultParticleType, @NotNull final ClientLevel clientWorld, final double d, final double e, final double f, final double g, final double h, final double i) {
+            final DimeritiumFlash.Flash flash = new DimeritiumFlash.Flash(clientWorld, d, e, f);
             flash.pickSprite(this.spriteProvider);
             return flash;
         }
@@ -26,7 +26,7 @@ public class DimeritiumFlash {
 
 
     public static class Flash extends TextureSheetParticle {
-        Flash(ClientLevel clientWorld, double d, double e, double f) {
+        Flash(final ClientLevel clientWorld, final double d, final double e, final double f) {
             super(clientWorld, d, e, f);
             this.lifetime = 4;
         }
@@ -37,13 +37,13 @@ public class DimeritiumFlash {
         }
 
         @Override
-        public void render(@NotNull VertexConsumer vertexConsumer, @NotNull Camera camera, float tickDelta) {
+        public void render(@NotNull final VertexConsumer vertexConsumer, @NotNull final Camera camera, final float tickDelta) {
             this.setAlpha(0.6f - ((float)this.age + tickDelta - 1.0f) * 0.25f * 0.5f);
             super.render(vertexConsumer, camera, tickDelta);
         }
 
         @Override
-        public float getQuadSize(float tickDelta) {
+        public float getQuadSize(final float tickDelta) {
             return 7.1f * Mth.sin(((float)this.age + tickDelta - 1.0f) * 0.25f * (float)Math.PI);
         }
     }

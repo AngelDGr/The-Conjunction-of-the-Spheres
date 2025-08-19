@@ -17,7 +17,7 @@ public class BlazeEntityMixin {
             method = "aiStep",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;addParticle(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V")
     )
-    private boolean particleOnlyWhenNotFrozen(Level instance, ParticleOptions parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ){
+    private boolean particleOnlyWhenNotFrozen(final Level instance, final ParticleOptions parameters, final double x, final double y, final double z, final double velocityX, final double velocityY, final double velocityZ){
         return !THIS.theConjunctionOfTheSpheres$isFrozen();
     }
 }

@@ -22,18 +22,18 @@ import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
 public abstract class GeoReplacedEntityRendererMixin<E extends Entity, T extends GeoAnimatable> extends EntityRenderer<E> implements GeoRenderer<T>{
     @Unique
     private BlockRenderDispatcher blockRenderManager;
-    protected GeoReplacedEntityRendererMixin(EntityRendererProvider.Context ctx) {
+    protected GeoReplacedEntityRendererMixin(final EntityRendererProvider.Context ctx) {
         super(ctx);
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void injectInConstructor(EntityRendererProvider.Context ctx, GeoModel<T> model, GeoAnimatable animatable, CallbackInfo ci){
+    private void injectInConstructor(final EntityRendererProvider.Context ctx, final GeoModel<T> model, final GeoAnimatable animatable, final CallbackInfo ci){
         this.blockRenderManager = ctx.getBlockRenderDispatcher();
     }
 
     @Inject(method = "render", at = @At(value = "TAIL"))
-    private void renderIceOnEntity(E entity, float entityYaw, float partialTick, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int packedLight, CallbackInfo ci) {
-        if (entity instanceof LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$isFrozen()) {
+    private void renderIceOnEntity(final E entity, final float entityYaw, final float partialTick, final PoseStack matrixStack, final MultiBufferSource vertexConsumerProvider, final int packedLight, final CallbackInfo ci) {
+        if (entity instanceof final LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$isFrozen()) {
             TCOTS_Client.renderNorthernWindIce(livingEntity, matrixStack, vertexConsumerProvider, blockRenderManager);
         }
     }

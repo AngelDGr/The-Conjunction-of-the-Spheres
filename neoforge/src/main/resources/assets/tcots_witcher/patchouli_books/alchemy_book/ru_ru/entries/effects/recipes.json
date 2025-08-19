@@ -81,6 +81,15 @@
       "type": "tcots_witcher:recipe_page",
       "title": "Элексиры",
       "recipes": [
+        "tcots_witcher:bindweed_potion",
+        "tcots_witcher:bindweed_potion_enhanced",
+        "tcots_witcher:bindweed_potion_superior"
+      ]
+    },
+    {
+      "type": "tcots_witcher:recipe_page",
+      "title": "Элексиры",
+      "recipes": [
         "tcots_witcher:rook_potion",
         "tcots_witcher:rook_potion_enhanced",
         "tcots_witcher:rook_potion_superior"

@@ -21,7 +21,6 @@ import TCOTS.utils.MiscUtil;
 import TCOTS.utils.SwordsAndArmorAttributes;
 import com.mojang.serialization.MapCodec;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.RegistrySupplier;
 import io.wispforest.owo.client.texture.AnimatedTextureDrawable;
 import io.wispforest.owo.client.texture.SpriteSheetMetadata;
@@ -99,10 +98,12 @@ public class TCOTS_Items {
     //xTODO: Maribor Forest: Add when added Alghouls
     //xTODO: White Honey: Add when added toxicity mechanic
 
+    //  Golden Oriole: Add when added Noonwraiths
+
+
     //TODO: W3.- 2nd Update
     //  Petri's Philter: Add when added specters
     //  Full Moon: Add when added Nightwraiths
-    //  Golden Oriole: Add when added Noonwraiths
     //TODO: W3.- 3rd Update
     //  Tawny Owl: Add when added Arachas
     //  Thunderbolt: Add when added Endregas
@@ -118,6 +119,7 @@ public class TCOTS_Items {
     //Witcher 1 Potions
     //xTODO: Wolf: Makes critical hits stronger
     //TODO:
+    //  Bindweed: Reduces damage taken from wither, poison and cadaverine (And any other hurting effect?)
     //  Willow: Makes you immune to knockback
     //  De Vries' Extract: Gives glowing to near invisible enemies
     //  Wolverine: Makes you stronger when you have less health?
@@ -126,7 +128,6 @@ public class TCOTS_Items {
     //Raven's Armor   (W2 Style)
     //Kaer Morhen Armor (W3 Style)
     //Manticore Armor (W1/W3 Style)
-
 
     //TODO: Weapons to add
     //  * Witcher gear swords from W3
@@ -353,6 +354,8 @@ public class TCOTS_Items {
     public static RegistrySupplier<Item> SCURVER_SPINE;
     public static RegistrySupplier<Item> DEVOURER_SPAWN_EGG;
     public static RegistrySupplier<Item> DEVOURER_TEETH;
+    public static RegistrySupplier<Item> BLOEDZUIGER_SPAWN_EGG;
+    public static RegistrySupplier<Item> BLOEDZUIGER_BLOOD;
     public static RegistrySupplier<Item> GRAVEIR_SPAWN_EGG;
     public static RegistrySupplier<Item> CADAVERINE;
     public static RegistrySupplier<Item> GRAVEIR_BONE;
@@ -435,6 +438,11 @@ public class TCOTS_Items {
         TCOTS_Items.DEVOURER_TEETH = registerItem("devourer_teeth",
                 ()->new Item(new Item.Properties()));
 
+        TCOTS_Items.BLOEDZUIGER_SPAWN_EGG = registerItem("bloedzuiger_spawn_egg",
+                ()->new SpawnEggItem(TCOTS_Entities.Bloedzuiger(), 0x21363a, 0x352b2c, new Item.Properties()));
+        TCOTS_Items.BLOEDZUIGER_BLOOD = registerItem("bloedzuiger_blood",
+                ()->new Item(new Item.Properties()));
+
         TCOTS_Items.GRAVEIR_SPAWN_EGG = registerItem("graveir_spawn_egg",
                 ()->new SpawnEggItem(TCOTS_Entities.Graveir(), 0xab706d, 0x882925, new Item.Properties()));
         TCOTS_Items.CADAVERINE = registerItem("cadaverine",
@@ -498,14 +506,13 @@ public class TCOTS_Items {
     public static RegistrySupplier<Item> NEKKER_WARRIOR_DECOCTION;
     public static RegistrySupplier<Item> TROLL_DECOCTION;
     public static RegistrySupplier<Item> EMPTY_WITCHER_POTION;
-    public static RegistrySupplier<Item> EMPTY_WITCHER_POTION_2;
-    public static RegistrySupplier<Item> EMPTY_WITCHER_POTION_3;
-    public static RegistrySupplier<Item> EMPTY_WITCHER_POTION_4;
-    public static RegistrySupplier<Item> EMPTY_WITCHER_POTION_5;
     //W1
     public static RegistrySupplier<Item> WOLF_POTION;
     public static RegistrySupplier<Item> WOLF_POTION_ENHANCED;
     public static RegistrySupplier<Item> WOLF_POTION_SUPERIOR;
+    public static RegistrySupplier<Item> BINDWEED_POTION;
+    public static RegistrySupplier<Item> BINDWEED_POTION_ENHANCED;
+    public static RegistrySupplier<Item> BINDWEED_POTION_SUPERIOR;
     //W2
     public static RegistrySupplier<Item> ROOK_POTION;
     public static RegistrySupplier<Item> ROOK_POTION_ENHANCED;
@@ -550,9 +557,6 @@ public class TCOTS_Items {
     public static RegistrySupplier<Item> EMPTY_OIL;
     //Bombs
     public static RegistrySupplier<Item> EMPTY_BOMB_POWDER;
-    public static RegistrySupplier<Item> EMPTY_BOMB_POWDER_2;
-    public static RegistrySupplier<Item> EMPTY_BOMB_POWDER_3;
-    public static RegistrySupplier<Item> EMPTY_BOMB_POWDER_4;
     public static RegistrySupplier<Item> GRAPESHOT;
     public static RegistrySupplier<Item> GRAPESHOT_ENHANCED;
     public static RegistrySupplier<Item> GRAPESHOT_SUPERIOR;
@@ -590,22 +594,6 @@ public class TCOTS_Items {
             {
                 TCOTS_Items.EMPTY_WITCHER_POTION = registerItem("empty_witcher_potion",
                         ()-> new EmptyWitcherPotionItem(new Item.Properties())
-                );
-
-                TCOTS_Items.EMPTY_WITCHER_POTION_2 = registerItem("empty_witcher_potion2",
-                        ()->new EmptyWitcherPotionItem(new Item.Properties().stacksTo(2))
-                );
-
-                TCOTS_Items.EMPTY_WITCHER_POTION_3 = registerItem("empty_witcher_potion3",
-                        ()->new EmptyWitcherPotionItem(new Item.Properties().stacksTo(3))
-                );
-
-                TCOTS_Items.EMPTY_WITCHER_POTION_4 = registerItem("empty_witcher_potion4",
-                        ()->new EmptyWitcherPotionItem(new Item.Properties().stacksTo(4))
-                );
-
-                TCOTS_Items.EMPTY_WITCHER_POTION_5 = registerItem("empty_witcher_potion5",
-                        ()-> new EmptyWitcherPotionItem(new Item.Properties().stacksTo(5))
                 );
 
                 //Swallow
@@ -814,10 +802,40 @@ public class TCOTS_Items {
                     );
 
                     TCOTS_Items.WOLF_POTION_SUPERIOR = registerItemPotion("wolf_potion_superior",
-                            new Item.Properties().stacksTo(3).rarity(Rarity.UNCOMMON),
+                            new Item.Properties().stacksTo(4).rarity(Rarity.UNCOMMON),
                             TCOTS_Effects.WOLF_EFFECT,
                             25,
                             60,
+                            2,
+                            false
+                    );
+                }
+
+                //Bindweed
+                {
+                    TCOTS_Items.BINDWEED_POTION = registerItemPotion("bindweed_potion",
+                            new Item.Properties().stacksTo(3),
+                            TCOTS_Effects.BINDWEED_EFFECT,
+                            25,
+                            30,
+                            0,
+                            false
+                    );
+
+                    TCOTS_Items.BINDWEED_POTION_ENHANCED = registerItemPotion("bindweed_potion_enhanced",
+                            new Item.Properties().stacksTo(4).rarity(Rarity.UNCOMMON),
+                            TCOTS_Effects.BINDWEED_EFFECT,
+                            25,
+                            60,
+                            1,
+                            false
+                    );
+
+                    TCOTS_Items.BINDWEED_POTION_SUPERIOR = registerItemPotion("bindweed_potion_superior",
+                            new Item.Properties().stacksTo(5).rarity(Rarity.UNCOMMON),
+                            TCOTS_Effects.BINDWEED_EFFECT,
+                            25,
+                            90,
                             2,
                             false
                     );
@@ -844,7 +862,7 @@ public class TCOTS_Items {
                     );
 
                     TCOTS_Items.ROOK_POTION_SUPERIOR = registerItemPotion("rook_potion_superior",
-                            new Item.Properties().stacksTo(3).rarity(Rarity.UNCOMMON),
+                            new Item.Properties().stacksTo(4).rarity(Rarity.UNCOMMON),
                             TCOTS_Effects.ROOK_EFFECT,
                             25,
                             90,
@@ -906,16 +924,6 @@ public class TCOTS_Items {
         {
             TCOTS_Items.EMPTY_BOMB_POWDER = registerItem("bomb_powder",
                     ()->new EmptyBombPowderItem(new Item.Properties()));
-
-            TCOTS_Items.EMPTY_BOMB_POWDER_2 = registerItem("bomb_powder_2",
-                    ()->new EmptyBombPowderItem(new Item.Properties().stacksTo(2)));
-
-            TCOTS_Items.EMPTY_BOMB_POWDER_3 = registerItem("bomb_powder_3",
-                    ()->new EmptyBombPowderItem(new Item.Properties().stacksTo(3)));
-
-            TCOTS_Items.EMPTY_BOMB_POWDER_4 = registerItem("bomb_powder_4",
-                    ()->new EmptyBombPowderItem(new Item.Properties().stacksTo(4)));
-
 
             TCOTS_Items.GRAPESHOT = registerItem("grapeshot",
                     ()->new WitcherBombs_Base(new Item.Properties().stacksTo(2), "grapeshot", 0));
@@ -1175,9 +1183,9 @@ public class TCOTS_Items {
                                     SwordsAndArmorAttributes.createWintersBladeAttributeModifiers()),
                             Component.translatable("tooltip.tcots_witcher.winters_blade").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC),
                             List.of(
-                                    Component.translatable("tooltip.tcots_witcher.winters_blade.extra3").withColor(0x007b77),
+                                    Component.translatable("tooltip.tcots_witcher.winters_blade.extra").withColor(0x007b77),
                                     Component.translatable("tooltip.tcots_witcher.winters_blade.extra2").withColor(0x007b77),
-                                    Component.translatable("tooltip.tcots_witcher.winters_blade.extra").withColor(0x007b77))
+                                    Component.translatable("tooltip.tcots_witcher.winters_blade.extra3").withColor(0x007b77))
                     )
             );
 
@@ -1395,29 +1403,29 @@ public class TCOTS_Items {
 //                .build());
     }
 
-    public static OwoItemGroup createOwOGroup(ResourceLocation id,
-                                              Consumer<OwoItemGroup> initializer,
-                                              Supplier<Icon> iconSupplier) {
+    public static OwoItemGroup createOwOGroup(final ResourceLocation id,
+                                              final Consumer<OwoItemGroup> initializer,
+                                              final Supplier<Icon> iconSupplier) {
 
         return createOwOGroup(id, initializer, iconSupplier, 4, 4, null, null, null, true, false, true);
     }
 
-    public static OwoItemGroup createOwOGroup(ResourceLocation id,
-                                       Consumer<OwoItemGroup> initializer,
-                                       Supplier<Icon> iconSupplier,
-                                       int tabStackHeight, int buttonStackHeight,
-                                       @Nullable ResourceLocation backgroundTexture,
-                                       @Nullable OwoItemGroup.ScrollerTextures scrollerTextures,
-                                       @Nullable OwoItemGroup.TabTextures tabTextures,
-                                       boolean useDynamicTitle,
-                                       boolean displaySingleTab,
-                                       boolean allowMultiSelect) {
+    public static OwoItemGroup createOwOGroup(final ResourceLocation id,
+                                              final Consumer<OwoItemGroup> initializer,
+                                              final Supplier<Icon> iconSupplier,
+                                              final int tabStackHeight, final int buttonStackHeight,
+                                              @Nullable final ResourceLocation backgroundTexture,
+                                              @Nullable final OwoItemGroup.ScrollerTextures scrollerTextures,
+                                              @Nullable final OwoItemGroup.TabTextures tabTextures,
+                                              final boolean useDynamicTitle,
+                                              final boolean displaySingleTab,
+                                              final boolean allowMultiSelect) {
 
         return new OwoItemGroup(id, initializer, iconSupplier, tabStackHeight, buttonStackHeight, backgroundTexture, scrollerTextures, tabTextures, useDynamicTitle, displaySingleTab, allowMultiSelect) {};
     }
 
     static Icon createAnimatedIcon(final ResourceLocation texture) {
-        var widget = new AnimatedTextureDrawable(
+        final var widget = new AnimatedTextureDrawable(
                 0, 0,
                 96, 96,
                 texture,
@@ -1427,11 +1435,11 @@ public class TCOTS_Items {
             context.getMatrixStack().pushPose();
 
             //Scales down to fit a 16x16 texture
-            float scaleValue= (float) 16 /96;
+            final float scaleValue= (float) 16 /96;
 
             //Moves the texture
-            double translationX=x* ((1/scaleValue));
-            double translationY=y* ((1/scaleValue));
+            final double translationX=x* ((1/scaleValue));
+            final double translationY=y* ((1/scaleValue));
 
             context.getMatrixStack().scale(scaleValue,scaleValue,1);
             context.getMatrixStack().translate(translationX,translationY,0);
@@ -1443,7 +1451,7 @@ public class TCOTS_Items {
         };
     }
 
-    public static void displayCombatTab(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output entries){
+    public static void displayCombatTab(final CreativeModeTab.ItemDisplayParameters itemDisplayParameters, final CreativeModeTab.Output entries){
         //Book
         entries.accept(TCOTS_Items.WITCHER_BESTIARY.get());
 
@@ -1458,6 +1466,7 @@ public class TCOTS_Items {
             entries.accept(TCOTS_Items.GRAVE_HAG_SPAWN_EGG.get());
             entries.accept(TCOTS_Items.SCURVER_SPAWN_EGG.get());
             entries.accept(TCOTS_Items.DEVOURER_SPAWN_EGG.get());
+            entries.accept(TCOTS_Items.BLOEDZUIGER_SPAWN_EGG.get());
             entries.accept(TCOTS_Items.GRAVEIR_SPAWN_EGG.get());
             entries.accept(TCOTS_Items.BULLVORE_SPAWN_EGG.get());
 
@@ -1527,7 +1536,7 @@ public class TCOTS_Items {
     }
 
 
-    public static void displayAlchemyTab(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output entries){
+    public static void displayAlchemyTab(final CreativeModeTab.ItemDisplayParameters itemDisplayParameters, final CreativeModeTab.Output entries){
         //Book
         entries.accept(TCOTS_Items.ALCHEMY_BOOK.get());
 
@@ -1591,6 +1600,7 @@ public class TCOTS_Items {
                 entries.accept(TCOTS_Items.WATER_HAG_MUD_BALL.get());
                 entries.accept(TCOTS_Items.SCURVER_SPINE.get());
                 entries.accept(TCOTS_Items.DEVOURER_TEETH.get());
+                entries.accept(TCOTS_Items.BLOEDZUIGER_BLOOD.get());
                 entries.accept(TCOTS_Items.CADAVERINE.get());
                 entries.accept(TCOTS_Items.GRAVEIR_BONE.get());
                 entries.accept(TCOTS_Items.BULLVORE_HORN_FRAGMENT.get());
@@ -1641,6 +1651,10 @@ public class TCOTS_Items {
                 entries.accept(TCOTS_Items.WOLF_POTION.get().getDefaultInstance());
                 entries.accept(TCOTS_Items.WOLF_POTION_ENHANCED.get().getDefaultInstance());
                 entries.accept(TCOTS_Items.WOLF_POTION_SUPERIOR.get().getDefaultInstance());
+
+                entries.accept(TCOTS_Items.BINDWEED_POTION.get().getDefaultInstance());
+                entries.accept(TCOTS_Items.BINDWEED_POTION_ENHANCED.get().getDefaultInstance());
+                entries.accept(TCOTS_Items.BINDWEED_POTION_SUPERIOR.get().getDefaultInstance());
 
                 // W2
                 entries.accept(TCOTS_Items.ROOK_POTION.get().getDefaultInstance());
@@ -1718,12 +1732,12 @@ public class TCOTS_Items {
         }
     }
 
-    public static void displayFormulaeTab(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output entries){
+    public static void displayFormulaeTab(final CreativeModeTab.ItemDisplayParameters itemDisplayParameters, final CreativeModeTab.Output entries){
         //Formulae
         addFormulaeEntries(entries);
     }
 
-    public static void displayAll(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output entries){
+    public static void displayAll(final CreativeModeTab.ItemDisplayParameters itemDisplayParameters, final CreativeModeTab.Output entries){
         displayCombatTab(itemDisplayParameters, entries);
 
         displayAlchemyTab(itemDisplayParameters, entries);
@@ -1732,7 +1746,7 @@ public class TCOTS_Items {
     }
 
     @SuppressWarnings("unused")
-    public static void displayAllItems(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output entries){
+    public static void displayAllItems(final CreativeModeTab.ItemDisplayParameters itemDisplayParameters, final CreativeModeTab.Output entries){
         //Combat Tab
         displayCombatTab(itemDisplayParameters, entries);
 
@@ -1743,12 +1757,12 @@ public class TCOTS_Items {
         displayFormulaeTab(itemDisplayParameters, entries);
     }
 
-    private static void addFormulaeEntries(CreativeModeTab.Output entries){
-        List<Item> listPotions = new ArrayList<>();
-        List<Item> listBombs = new ArrayList<>();
-        List<Item> listOils = new ArrayList<>();
+    private static void addFormulaeEntries(final CreativeModeTab.Output entries){
+        final List<Item> listPotions = new ArrayList<>();
+        final List<Item> listBombs = new ArrayList<>();
+        final List<Item> listOils = new ArrayList<>();
 
-        List<Item> listMisc = new ArrayList<>();
+        final List<Item> listMisc = new ArrayList<>();
 
         BuiltInRegistries.ITEM.forEach(item ->
                 {
@@ -1764,33 +1778,33 @@ public class TCOTS_Items {
         );
 
 
-        for(Item potion: listPotions){
-            if(potion instanceof WitcherPotions_Base witcherPotion && !(potion instanceof WitcherPotionsSplash_Base))
+        for(final Item potion: listPotions){
+            if(potion instanceof final WitcherPotions_Base witcherPotion && !(potion instanceof WitcherPotionsSplash_Base))
                 entries.accept(AlchemyFormulaUtil.setFormula(BuiltInRegistries.ITEM.getKey(potion), witcherPotion.isDecoction()));
 
             if(potion instanceof WitcherPotionsSplash_Base)
                 entries.accept(AlchemyFormulaUtil.setFormula(BuiltInRegistries.ITEM.getKey(potion)));
         }
 
-        for(Item bomb: listBombs){
+        for(final Item bomb: listBombs){
             entries.accept(AlchemyFormulaUtil.setFormula(BuiltInRegistries.ITEM.getKey(bomb)));
         }
 
-        for(Item oil: listOils){
+        for(final Item oil: listOils){
             entries.accept(AlchemyFormulaUtil.setFormula(BuiltInRegistries.ITEM.getKey(oil)));
         }
 
-        for(Item misc: listMisc){
+        for(final Item misc: listMisc){
             entries.accept(AlchemyFormulaUtil.setFormula(BuiltInRegistries.ITEM.getKey(misc)));
         }
 
     }
 
-    public static RegistrySupplier<Item> registerItem(String name, Supplier<Item> item) {
+    public static RegistrySupplier<Item> registerItem(final String name, final Supplier<Item> item) {
         return TCOTS_Registries.ITEMS.register(name, item);
     }
 
-    private static RegistrySupplier<WitcherAlcohol_Base> registerAlcohol(String name, Supplier<WitcherAlcohol_Base> item) {
+    private static RegistrySupplier<WitcherAlcohol_Base> registerAlcohol(final String name, final Supplier<WitcherAlcohol_Base> item) {
         return TCOTS_Registries.ITEMS.register(name, item);
     }
 
@@ -1799,7 +1813,7 @@ public class TCOTS_Items {
      @param name Name of the potion
      @param effect Decoction effect
      */
-    private static RegistrySupplier<Item> registerItemPotion(String name, ResourceLocation effect) {
+    private static RegistrySupplier<Item> registerItemPotion(final String name, final ResourceLocation effect) {
         return registerItemPotion(name, new Item.Properties().stacksTo(1), effect, 50, 600, 0, true);
     }
 
@@ -1812,29 +1826,29 @@ public class TCOTS_Items {
      @param durationInSecs Duration in seconds of the effect
      @param amplifier Amplifier of the effect
      */
-    private static RegistrySupplier<Item> registerItemPotion(String name, Item.Properties settings, ResourceLocation effect, int toxicity, int durationInSecs, int amplifier, boolean decoction) {
+    private static RegistrySupplier<Item> registerItemPotion(final String name, final Item.Properties settings, final ResourceLocation effect, final int toxicity, final int durationInSecs, final int amplifier, final boolean decoction) {
         try {
 
-            Supplier<WitcherPotions_Base> witcherPotion = () -> new WitcherPotions_Base(settings, effect, toxicity, durationInSecs, amplifier, decoction);
+            final Supplier<WitcherPotions_Base> witcherPotion = () -> new WitcherPotions_Base(settings, effect, toxicity, durationInSecs, amplifier, decoction);
 
             return TCOTS_Registries.ITEMS.register(name,  witcherPotion);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new IllegalArgumentException("Error registering potion");
         }
     }
 
-    private static RegistrySupplier<Item> registerSplashPotion(String name, Item.Properties settings, ResourceLocation effect, int toxicity, int durationInSecs){
+    private static RegistrySupplier<Item> registerSplashPotion(final String name, final Item.Properties settings, final ResourceLocation effect, final int toxicity, final int durationInSecs){
         try {
 //            ResourceLocation identifier = ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, name);
 
-            Supplier<WitcherPotions_Base> witcherPotion = ()-> new WitcherPotionsSplash_Base(settings, new MobEffectInstance(TCOTS_Effects.getHolder(effect), (int) (durationInSecs / 0.05), 0), toxicity);
+            final Supplier<WitcherPotions_Base> witcherPotion = ()-> new WitcherPotionsSplash_Base(settings, new MobEffectInstance(TCOTS_Effects.getHolder(effect), (int) (durationInSecs / 0.05), 0), toxicity);
             return TCOTS_Registries.ITEMS.register(name,  witcherPotion);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new IllegalArgumentException("Error registering Splash potion");
         }
     }
 
-    private static RegistrySupplier<Item> registerBlockItem(String name, Supplier<Block> block){
+    private static RegistrySupplier<Item> registerBlockItem(final String name, final Supplier<Block> block){
         return TCOTS_Registries.ITEMS.register(name, ()-> new BlockItem(block.get(), new Item.Properties()));
     }
 

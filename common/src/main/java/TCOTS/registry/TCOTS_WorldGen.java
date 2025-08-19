@@ -2,7 +2,6 @@ package TCOTS.registry;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.TCOTS_Registries;
-import TCOTS.TCOTS_Tags;
 import TCOTS.blocks.plants.*;
 import TCOTS.world.gen.BryoniaPatchFeature;
 import TCOTS.world.gen.BryoniaPatchFeatureConfig;
@@ -190,28 +189,27 @@ public class TCOTS_WorldGen {
     public static ResourceKey<ConfiguredFeature<?, ?>> BRYONIA_VINE_UNDERGROUND = registerKey("bryonia_patch_underground");
     public static ResourceKey<ConfiguredFeature<?, ?>> BRYONIA_VINE_SURFACE = registerKey("bryonia_patch_surface");
 
-    public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
+    public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(final String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, name));
     }
 
-    public static ResourceKey<PlacedFeature> registerPlacedFeatureKey(String name) {
+    public static ResourceKey<PlacedFeature> registerPlacedFeatureKey(final String name) {
         return ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, name));
     }
 
-    public static ResourceKey<StructureProcessorList> registerStructureProcessorKey(String name) {
+    public static ResourceKey<StructureProcessorList> registerStructureProcessorKey(final String name) {
         return ResourceKey.create(Registries.PROCESSOR_LIST, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, name));
     }
 
-    private static <C extends FeatureConfiguration, F extends Feature<C>> RegistrySupplier<F> registerFeature(String name, Supplier<F> feature) {
+    private static <C extends FeatureConfiguration, F extends Feature<C>> RegistrySupplier<F> registerFeature(final String name, final Supplier<F> feature) {
         return TCOTS_Registries.FEATURE.register(name,  feature);
     }
 
-    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void registerFeature(BootstrapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
+    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void registerFeature(final BootstrapContext<ConfiguredFeature<?, ?>> context, final ResourceKey<ConfiguredFeature<?, ?>> key, final F feature, final FC configuration) {
         context.register(key, new ConfiguredFeature<>(feature, configuration));
     }
 
-    //For DataGenerator (Made with the Fabric DataGenerator)
-    public static void boostrapConfiguredFeature(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+    public static void boostrapConfiguredFeature(final BootstrapContext<ConfiguredFeature<?, ?>> context) {
 
         registerFeature(context, TCOTS_WorldGen.HUGE_PUFFBALL_MUSHROOM_CF, HUGE_PUFFBALL_MUSHROOM_F.get(), new HugeMushroomFeatureConfiguration(
                 BlockStateProvider.simple(TCOTS_Blocks.PuffballMushroomBlock().defaultBlockState().setValue(HugeMushroomBlock.DOWN, false)),
@@ -279,10 +277,10 @@ public class TCOTS_WorldGen {
                 ));
     }
 
-    public static void boostrapPlacedFeature(BootstrapContext<PlacedFeature> context) {
-        HolderGetter<ConfiguredFeature<?, ?>> registryEntryLookup = context.lookup(Registries.CONFIGURED_FEATURE);
-        Holder.Reference<ConfiguredFeature<?, ?>> puffballEntry = registryEntryLookup.getOrThrow(PUFFBALL_MUSHROOM);
-        Holder.Reference<ConfiguredFeature<?, ?>> sewantMushroomsEntry = registryEntryLookup.getOrThrow(SEWANT_MUSHROOMS);
+    public static void boostrapPlacedFeature(final BootstrapContext<PlacedFeature> context) {
+        final HolderGetter<ConfiguredFeature<?, ?>> registryEntryLookup = context.lookup(Registries.CONFIGURED_FEATURE);
+        final Holder.Reference<ConfiguredFeature<?, ?>> puffballEntry = registryEntryLookup.getOrThrow(PUFFBALL_MUSHROOM);
+        final Holder.Reference<ConfiguredFeature<?, ?>> sewantMushroomsEntry = registryEntryLookup.getOrThrow(SEWANT_MUSHROOMS);
 
 
         PlacementUtils.register(context, CELANDINE_PLANT_PLACED, registryEntryLookup.getOrThrow(CELANDINE_PLANT),
@@ -344,7 +342,7 @@ public class TCOTS_WorldGen {
         return builder.build();
     }
 
-    public static void boostrapProcessorList(BootstrapContext<StructureProcessorList> processorListRegisterable) {
+    public static void boostrapProcessorList(final BootstrapContext<StructureProcessorList> processorListRegisterable) {
 
         register(processorListRegisterable, TCOTS_WorldGen.RANDOM_HERBALIST_HERBS_PLAINS,
                 ImmutableList.of(
@@ -719,11 +717,11 @@ public class TCOTS_WorldGen {
 
     }
 
-    private static ProcessorRule addPotReplaceable(Block block, float probability){
+    private static ProcessorRule addPotReplaceable(final Block block, final float probability){
         return addBlockReplaceable(Blocks.FLOWER_POT, block, probability);
     }
 
-    private static ProcessorRule addBlockStateReplaceable(BlockState stateOriginal, BlockState stateReplace, float probability){
+    private static ProcessorRule addBlockStateReplaceable(final BlockState stateOriginal, final BlockState stateReplace, final float probability){
         return new ProcessorRule(
                 new RandomBlockStateMatchTest(stateOriginal, probability),
                 AlwaysTrueTest.INSTANCE,
@@ -731,15 +729,15 @@ public class TCOTS_WorldGen {
         );
     }
 
-    private static ProcessorRule addFlowerReplaceable(Block block, float probability){
+    private static ProcessorRule addFlowerReplaceable(final Block block, final float probability){
         return addBlockReplaceable(Blocks.POPPY, block, probability);
     }
 
-    private static ProcessorRule addFlowerReplaceable(BlockState state, float probability){
+    private static ProcessorRule addFlowerReplaceable(final BlockState state, final float probability){
         return addBlockReplaceable(state, probability);
     }
 
-    private static ProcessorRule addBlockReplaceable(Block replace, Block block, float probability){
+    private static ProcessorRule addBlockReplaceable(final Block replace, final Block block, final float probability){
         return new ProcessorRule(
                 new RandomBlockMatchTest(replace, probability),
                 AlwaysTrueTest.INSTANCE,
@@ -747,7 +745,7 @@ public class TCOTS_WorldGen {
         );
     }
 
-    private static ProcessorRule addBlockReplaceable(BlockState state, float probability){
+    private static ProcessorRule addBlockReplaceable(final BlockState state, final float probability){
         return new ProcessorRule(
                 new RandomBlockMatchTest(Blocks.POPPY, probability),
                 AlwaysTrueTest.INSTANCE,
@@ -755,7 +753,7 @@ public class TCOTS_WorldGen {
         );
     }
 
-    private static void register(BootstrapContext<StructureProcessorList> processorListRegisterable, ResourceKey<StructureProcessorList> key, List<StructureProcessor> processors) {
+    private static void register(final BootstrapContext<StructureProcessorList> processorListRegisterable, final ResourceKey<StructureProcessorList> key, final List<StructureProcessor> processors) {
         processorListRegisterable.register(key, new StructureProcessorList(processors));
     }
 }

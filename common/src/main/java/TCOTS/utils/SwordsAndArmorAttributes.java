@@ -16,19 +16,19 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 public class SwordsAndArmorAttributes {
     // It subtracts from 4 to get final speed
-    static float slowSwordSpeed   =   MiscUtil.isWitcherRPGLoaded()? -1.8f : -2.6f; // W(RPG) = 2.2 / Vanilla = 1.4
-    static float normalSwordSpeed =   MiscUtil.isWitcherRPGLoaded()? -1.6f : -2.4f; // W(RPG) = 2.4 / Vanilla = 1.6
-    static float fastSwordSpeed   =   MiscUtil.isWitcherRPGLoaded()? -1.4f : -2.2f; // W(RPG) = 2.6 / Vanilla = 1.8
+    static float slowSwordSpeed   =   MiscUtil.isWitcherRPGLoaded()? -2.6f : -2.6f; // W(RPG) = 2.2 / Vanilla = 1.4
+    static float normalSwordSpeed =   MiscUtil.isWitcherRPGLoaded()? -2.4f : -2.4f; // W(RPG) = 2.4 / Vanilla = 1.6
+    static float fastSwordSpeed   =   MiscUtil.isWitcherRPGLoaded()? -2.2f : -2.2f; // W(RPG) = 2.6 / Vanilla = 1.8
 
 
     public static final ResourceLocation BASE_ATTACK_DAMAGE_MODIFIER_ID = ResourceLocation.withDefaultNamespace("base_attack_damage");
     public static final ResourceLocation BASE_ATTACK_SPEED_MODIFIER_ID = ResourceLocation.withDefaultNamespace("base_attack_speed");
-    public static ItemAttributeModifiers.Builder createMainSwordAttributeModifiers(Tier material, int baseAttackDamage, float attackSpeed) {
+    public static ItemAttributeModifiers.Builder createMainSwordAttributeModifiers(final Tier material, final float baseAttackDamage, final float attackSpeed) {
         return ItemAttributeModifiers.builder()
                 .add(
                         Attributes.ATTACK_DAMAGE,
                         new AttributeModifier(
-                                BASE_ATTACK_DAMAGE_MODIFIER_ID, (float)baseAttackDamage + material.getAttackDamageBonus(), AttributeModifier.Operation.ADD_VALUE
+                                BASE_ATTACK_DAMAGE_MODIFIER_ID, baseAttackDamage + material.getAttackDamageBonus(), AttributeModifier.Operation.ADD_VALUE
                         ),
                         EquipmentSlotGroup.MAINHAND
                 )
@@ -40,14 +40,14 @@ public class SwordsAndArmorAttributes {
     }
 
     public static ItemAttributeModifiers createWintersBladeAttributeModifiers() {
-        ItemAttributeModifiers.Builder builder = SwordsAndArmorAttributes.createMainSwordAttributeModifiers(TCOTS_ItemsMaterials.WintersBlade(), 4, normalSwordSpeed);
+        final ItemAttributeModifiers.Builder builder = SwordsAndArmorAttributes.createMainSwordAttributeModifiers(TCOTS_ItemsMaterials.WintersBlade(), 3, normalSwordSpeed);
 
         if(MiscUtil.isWitcherRPGLoaded()){
             builder
                     .add(
                             TCOTS_EntityAttributes.AARD_INTENSITY,
                             new AttributeModifier(ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "winters_blade-aard"),
-                                    4, AttributeModifier.Operation.ADD_VALUE),
+                                    3, AttributeModifier.Operation.ADD_VALUE),
                             EquipmentSlotGroup.MAINHAND
                     )
                     .add(
@@ -68,7 +68,7 @@ public class SwordsAndArmorAttributes {
     }
 
     public static ItemAttributeModifiers createArdaenyeAttributeModifiers() {
-        ItemAttributeModifiers.Builder builder = SwordsAndArmorAttributes.createMainSwordAttributeModifiers(TCOTS_ItemsMaterials.Ardaenye(), 3, slowSwordSpeed);
+        final ItemAttributeModifiers.Builder builder = SwordsAndArmorAttributes.createMainSwordAttributeModifiers(TCOTS_ItemsMaterials.Ardaenye(), 2.5f, normalSwordSpeed);
 
         if(MiscUtil.isWitcherRPGLoaded()){
             builder
@@ -84,7 +84,7 @@ public class SwordsAndArmorAttributes {
     }
 
     public static ItemAttributeModifiers createDyaeblAttributeModifiers() {
-        ItemAttributeModifiers.Builder builder = SwordsAndArmorAttributes.createMainSwordAttributeModifiers(TCOTS_ItemsMaterials.Dyaebl(),  2, normalSwordSpeed);
+        final ItemAttributeModifiers.Builder builder = SwordsAndArmorAttributes.createMainSwordAttributeModifiers(TCOTS_ItemsMaterials.Dyaebl(),  2, normalSwordSpeed);
 
         if(MiscUtil.isWitcherRPGLoaded()){
             builder
@@ -100,7 +100,7 @@ public class SwordsAndArmorAttributes {
     }
 
     public static ItemAttributeModifiers createMoonbladeAttributeModifiers() {
-        ItemAttributeModifiers.Builder builder = SwordsAndArmorAttributes.createMainSwordAttributeModifiers(TCOTS_ItemsMaterials.Moonblade(), 2, fastSwordSpeed);
+        final ItemAttributeModifiers.Builder builder = SwordsAndArmorAttributes.createMainSwordAttributeModifiers(TCOTS_ItemsMaterials.Moonblade(), 2, normalSwordSpeed);
 
         if(MiscUtil.isWitcherRPGLoaded()){
             builder
@@ -122,7 +122,7 @@ public class SwordsAndArmorAttributes {
     }
 
     public static ItemAttributeModifiers createGvalchirAttributeModifiers() {
-        ItemAttributeModifiers.Builder builder = SwordsAndArmorAttributes.createMainSwordAttributeModifiers(TCOTS_ItemsMaterials.Gvalchir(), 3, fastSwordSpeed);
+        final ItemAttributeModifiers.Builder builder = SwordsAndArmorAttributes.createMainSwordAttributeModifiers(TCOTS_ItemsMaterials.Gvalchir(), 3, fastSwordSpeed);
 
         if(MiscUtil.isWitcherRPGLoaded()){
             builder
@@ -145,7 +145,7 @@ public class SwordsAndArmorAttributes {
 
 
     @SuppressWarnings("unused")
-    public static ItemAttributeModifiers addExtraToxicity(double toxicity, EquipmentSlotGroup slot, String id){
+    public static ItemAttributeModifiers addExtraToxicity(final double toxicity, final EquipmentSlotGroup slot, final String id){
         return ItemAttributeModifiers.builder()
                 .add(
                         TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY,
@@ -159,12 +159,12 @@ public class SwordsAndArmorAttributes {
                 .build();
     }
 
-    public static ItemAttributeModifiers addArmorWithAdrenalineAttributes(Holder<ArmorMaterial> material, ArmorItem.Type type, double adrenaline){
-        int i = material.value().getDefense(type);
-        float f = material.value().toughness();
-        ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
-        EquipmentSlotGroup attributeModifierSlot = EquipmentSlotGroup.bySlot(type.getSlot());
-        ResourceLocation identifier = ResourceLocation.withDefaultNamespace("armor." + type.getName());
+    public static ItemAttributeModifiers addArmorWithAdrenalineAttributes(final Holder<ArmorMaterial> material, final ArmorItem.Type type, final double adrenaline){
+        final int i = material.value().getDefense(type);
+        final float f = material.value().toughness();
+        final ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+        final EquipmentSlotGroup attributeModifierSlot = EquipmentSlotGroup.bySlot(type.getSlot());
+        final ResourceLocation identifier = ResourceLocation.withDefaultNamespace("armor." + type.getName());
 
         builder.add(
                 Attributes.ARMOR, new AttributeModifier(identifier, i, AttributeModifier.Operation.ADD_VALUE), attributeModifierSlot
@@ -174,7 +174,7 @@ public class SwordsAndArmorAttributes {
                 new AttributeModifier(identifier, f, AttributeModifier.Operation.ADD_VALUE),
                 attributeModifierSlot
         );
-        float g = material.value().knockbackResistance();
+        final float g = material.value().knockbackResistance();
         if (g > 0.0F) {
             builder.add(
                     Attributes.KNOCKBACK_RESISTANCE,
@@ -198,12 +198,12 @@ public class SwordsAndArmorAttributes {
         return builder.build();
     }
 
-    public static ItemAttributeModifiers addManticoreArmorAttributes(RegistrySupplier<ArmorMaterial> material, ArmorItem.Type type, int toxicity, double adrenaline){
-        int i = material.value().getDefense(type);
-        float f = material.value().toughness();
-        ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
-        EquipmentSlotGroup attributeModifierSlot = EquipmentSlotGroup.bySlot(type.getSlot());
-        ResourceLocation identifier = ResourceLocation.withDefaultNamespace("armor." + type.getName());
+    public static ItemAttributeModifiers addManticoreArmorAttributes(final RegistrySupplier<ArmorMaterial> material, final ArmorItem.Type type, final int toxicity, final double adrenaline){
+        final int i = material.value().getDefense(type);
+        final float f = material.value().toughness();
+        final ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+        final EquipmentSlotGroup attributeModifierSlot = EquipmentSlotGroup.bySlot(type.getSlot());
+        final ResourceLocation identifier = ResourceLocation.withDefaultNamespace("armor." + type.getName());
 
         builder.add(
                 Attributes.ARMOR, new AttributeModifier(identifier, i, AttributeModifier.Operation.ADD_VALUE), attributeModifierSlot
@@ -213,7 +213,7 @@ public class SwordsAndArmorAttributes {
                 new AttributeModifier(identifier, f, AttributeModifier.Operation.ADD_VALUE),
                 attributeModifierSlot
         );
-        float g = material.value().knockbackResistance();
+        final float g = material.value().knockbackResistance();
         if (g > 0.0F) {
             builder.add(
                     Attributes.KNOCKBACK_RESISTANCE,

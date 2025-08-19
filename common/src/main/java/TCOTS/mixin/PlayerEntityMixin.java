@@ -50,6 +50,7 @@ import java.util.Objects;
 
 @Mixin(Player.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityMixinInterface {
+    @SuppressWarnings("all")
     @Unique
     Player THIS = (Player) (Object) this;
 
@@ -57,94 +58,94 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Shadow
     Inventory inventory;
 
-    protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, Level level) {
+    protected PlayerEntityMixin(final EntityType<? extends LivingEntity> entityType, final Level level) {
         super(entityType, level);
     }
 
     @Inject(method = "createAttributes", at = @At("RETURN"), cancellable = true)
-    private static void injectToxicity(CallbackInfoReturnable<AttributeSupplier.Builder> cir){
+    private static void injectToxicity(final CallbackInfoReturnable<AttributeSupplier.Builder> cir){
         cir.setReturnValue(cir.getReturnValue().add(TCOTS_EntityAttributes.GENERIC_WITCHER_MAX_TOXICITY));
     }
 
     //Oils
     @Unique
-    private float oilDamageAdded = 0;
+    private float tcots$oilDamageAdded = 0;
 
     @Inject(method = "attack", at = @At("HEAD"))
-    private void injectMonsterOil(Entity target, CallbackInfo ci){
+    private void injectMonsterOil(final Entity target, final CallbackInfo ci){
 
-        if(target instanceof LivingEntity livingTarget){
+        if(target instanceof final LivingEntity livingTarget){
             if(THIS.getMainHandItem().has(TCOTS_Items.MonsterOilComponent())){
-                MonsterOilComponent monsterOil =THIS.getMainHandItem().get(TCOTS_Items.MonsterOilComponent());
+                final MonsterOilComponent monsterOil =THIS.getMainHandItem().get(TCOTS_Items.MonsterOilComponent());
                 switch (Objects.requireNonNull(monsterOil).groupId()){
                     case 0:
-                        if(EntitiesUtil.isNecrophage(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isNecrophage(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 1:
-                        if(EntitiesUtil.isOgroid(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isOgroid(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 2:
-                        if(EntitiesUtil.isSpecter(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isSpecter(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 3:
-                        if(EntitiesUtil.isVampire(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isVampire(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 4:
-                        if(EntitiesUtil.isInsectoid(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isInsectoid(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 5:
-                        if(EntitiesUtil.isBeast(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isBeast(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 6:
-                        if(EntitiesUtil.isElementa(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isElementa(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 7:
-                        if(EntitiesUtil.isCursedOne(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isCursedOne(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 8:
-                        if(EntitiesUtil.isHybrid(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isHybrid(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 9:
-                        if(EntitiesUtil.isDraconid(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isDraconid(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 10:
-                        if(EntitiesUtil.isRelict(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isRelict(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     case 11:
-                        if(EntitiesUtil.isHumanoid(livingTarget)) LevelOilAssigner(monsterOil);
+                        if(EntitiesUtil.isHumanoid(livingTarget)) tcots$LevelOilAssigner(monsterOil);
                         break;
 
                     default:
                         break;
                 }
 
-                OilUsesManager(THIS, monsterOil);
+                tcots$OilUsesManager(THIS, monsterOil);
             }
         }
     }
 
     @Unique
-    private void LevelOilAssigner(MonsterOilComponent monsterOil){
+    private void tcots$LevelOilAssigner(final MonsterOilComponent monsterOil){
         switch (monsterOil.level()){
             case 1:
-                oilDamageAdded = 2f;
+                tcots$oilDamageAdded = 2f;
                 break;
             case 2:
-                oilDamageAdded = 4f;
+                tcots$oilDamageAdded = 4f;
                 break;
             case 3:
-                oilDamageAdded = 6f;
+                tcots$oilDamageAdded = 6f;
                 break;
             default:
                 break;
@@ -152,10 +153,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Unique
-    private void OilUsesManager(Player player, MonsterOilComponent monsterOil){
-        ItemStack weapon = player.getMainHandItem();
+    private void tcots$OilUsesManager(final Player player, final MonsterOilComponent monsterOil){
+        final ItemStack weapon = player.getMainHandItem();
 
-        MonsterOilComponent newMonsterOil= MonsterOilComponent.decreaseUse(monsterOil);
+        final MonsterOilComponent newMonsterOil= MonsterOilComponent.decreaseUse(monsterOil);
         weapon.set(TCOTS_Items.MonsterOilComponent(), newMonsterOil);
 
         if(newMonsterOil.uses()==0){
@@ -172,23 +173,23 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/player/Player;getAttackStrengthScale(F)F", ordinal = 0))
     )
-    private float injectMonsterOilAttack(float value, @Local(argsOnly = true) Entity target){
-        return value + oilDamageAdded;
+    private float injectMonsterOilAttack(final float value, @Local(argsOnly = true) final Entity target){
+        return value + tcots$oilDamageAdded;
     }
 
     @Inject(method = "attack", at = @At("TAIL"))
-    private void ResetMultiplier(Entity target, CallbackInfo ci){
-        oilDamageAdded = 0;
+    private void ResetMultiplier(final Entity target, final CallbackInfo ci){
+        tcots$oilDamageAdded = 0;
     }
 
     //SamumEffect
     @ModifyVariable(method = "attack", at = @At("STORE"), ordinal = 2)
-    private boolean injectCriticalWithSamum(boolean value, @Local(argsOnly = true) Entity target){
-        if(target instanceof LivingEntity entity){
+    private boolean injectCriticalWithSamum(final boolean value, @Local(argsOnly = true) final Entity target){
+        if(target instanceof final LivingEntity entity){
             if(SamumBomb.checkSamumEffect(entity)){
-                MobEffectInstance instance = entity.getEffect(TCOTS_Effects.SamumEffect());
+                final MobEffectInstance instance = entity.getEffect(TCOTS_Effects.SamumEffect());
                 assert instance != null;
-                int amplifier = instance.getAmplifier();
+                final int amplifier = instance.getAmplifier();
 
                 return value || amplifier > 1;
             }
@@ -199,13 +200,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     //Wolf Effect
     @ModifyExpressionValue(method = "attack", at = @At(value = "CONSTANT", args = "floatValue=1.5"))
-    private float injectExtraCriticalWolf(float value){
+    private float injectExtraCriticalWolf(final float value){
         if(this.hasEffect(TCOTS_Effects.WolfEffect())){
             //Wolf I:   -> 2.0f
             //Wolf II:  -> 2.5f
             //Wolf III: -> 3.0f
 
-            int amplifier = Objects.requireNonNull(this.getEffect(TCOTS_Effects.WolfEffect())).getAmplifier();
+            final int amplifier = Objects.requireNonNull(this.getEffect(TCOTS_Effects.WolfEffect())).getAmplifier();
             return value + (0.5f + (amplifier*0.5f));
         }
 
@@ -220,13 +221,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/player/Player;getAttackStrengthScale(F)F", ordinal = 0))
     )
-    private float addExtraSwordDamageRook(float value){
+    private float addExtraSwordDamageRook(final float value){
         if(this.getMainHandItem().getItem() instanceof SwordItem && this.hasEffect(TCOTS_Effects.RookEffect())){
             //Rook I:   -> +2
             //Rook II:  -> +3
             //Rook III: -> +4
 
-            int amplifier = Objects.requireNonNull(this.getEffect(TCOTS_Effects.RookEffect())).getAmplifier();
+            final int amplifier = Objects.requireNonNull(this.getEffect(TCOTS_Effects.RookEffect())).getAmplifier();
             return value + (2 + (amplifier));
         }
 
@@ -243,10 +244,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/player/Player;getAttackStrengthScale(F)F", ordinal = 0))
     )
-    private float injectRavenBonusToDamage(float value, @Local(argsOnly = true) Entity target){
+    private float injectRavenBonusToDamage(final float value, @Local(argsOnly = true) final Entity target){
         return value + (
                 EntitiesUtil.isWearingRavensArmor(THIS)
-                        && target instanceof LivingEntity livingTarget
+                        && target instanceof final LivingEntity livingTarget
                         && EntitiesUtil.isMonster(livingTarget)? 2.0f : 0.0f);
     }
 
@@ -254,11 +255,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @ModifyArg(method = "attack", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
             ordinal = 0))
-    private float injectMoonBladeDamage(float value, @Local(argsOnly = true) Entity target){
+    private float injectMoonBladeDamage(final float value, @Local(argsOnly = true) final Entity target){
         //+25% extra in the normal attack
         return value*(
                 THIS.getMainHandItem().getItem() == TCOTS_Items.MOONBLADE.get()
-                        && target instanceof LivingEntity livingTarget
+                        && target instanceof final LivingEntity livingTarget
                         && EntitiesUtil.isMonster(livingTarget)? (1+MiscUtil.moonblade_bonus)
                         : 1.0f);
     }
@@ -266,11 +267,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @ModifyArg(method = "attack", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/world/entity/LivingEntity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
             ordinal = 0))
-    private float injectMoonBladeDamageSweep(float value, @Local(argsOnly = true) Entity target){
+    private float injectMoonBladeDamageSweep(final float value, @Local(argsOnly = true) final Entity target){
         //+10% extra in the sweep attack
         return value*(
                 THIS.getMainHandItem().getItem() == TCOTS_Items.MOONBLADE.get()
-                        && target instanceof LivingEntity livingTarget
+                        && target instanceof final LivingEntity livingTarget
                         && EntitiesUtil.isMonster(livingTarget)? 1.10f : 1.0f);
     }
 
@@ -282,10 +283,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             to = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/player/Player;getAttackStrengthScale(F)F", ordinal = 0))
     )
-    private float injectWintersBladeDamage(float value, @Local(argsOnly = true) Entity target){
+    private float injectWintersBladeDamage(final float value, @Local(argsOnly = true) final Entity target){
         return value + (
                 THIS.getMainHandItem().getItem() == TCOTS_Items.WINTERS_BLADE.get()
-                        && target instanceof LivingEntity livingTarget
+                        && target instanceof final LivingEntity livingTarget
                         && livingTarget.getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)?
                         2.0f
                         : 0.0f);
@@ -296,7 +297,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private static final EntityDataAccessor<Integer> MUD_TICKS = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.INT);
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void injectMudTicks(SynchedEntityData.Builder builder, CallbackInfo ci){
+    private void injectMudTicks(final SynchedEntityData.Builder builder, final CallbackInfo ci){
         builder.define(MUD_TICKS, 0);
     }
 
@@ -310,7 +311,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Override
-    public void theConjunctionOfTheSpheres$setMudInFace(int ticks) {
+    public void theConjunctionOfTheSpheres$setMudInFace(final int ticks) {
         this.entityData.set(MUD_TICKS, ticks);
     }
 
@@ -320,7 +321,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
-    private void injectInTickMud(CallbackInfo ci){
+    private void injectInTickMud(final CallbackInfo ci){
 
         if(this.theConjunctionOfTheSpheres$getMudInFace() > 0 && this.isInWaterOrRain()){
             theConjunctionOfTheSpheres$setMudInFace(theConjunctionOfTheSpheres$getMudInFace() - 10);
@@ -331,19 +332,19 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void injectReadNBTMud(CompoundTag nbt, CallbackInfo ci){
+    private void injectReadNBTMud(final CompoundTag nbt, final CallbackInfo ci){
         theConjunctionOfTheSpheres$setMudInFace(nbt.getInt("MudTicks"));
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void injectWriteNBTMud(CompoundTag nbt, CallbackInfo ci){
+    private void injectWriteNBTMud(final CompoundTag nbt, final CallbackInfo ci){
         nbt.putInt("MudTicks", theConjunctionOfTheSpheres$getMudInFace());
     }
 
 
     //Refilling Alcohol
     @Unique
-    private int potionTimer;
+    private int tcots$potionTimer;
 
     @Unique
     List<WitcherAlcohol_Base> list_alcohol = Arrays.asList(
@@ -359,32 +360,32 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     );
 
     @Inject(method = "stopSleepInBed", at = @At("TAIL"))
-    private void injectPotionRefilling(boolean skipSleepTimer, boolean updateSleepingPlayers, CallbackInfo ci){
+    private void injectPotionRefilling(final boolean skipSleepTimer, final boolean updateSleepingPlayers, final CallbackInfo ci){
 
         boolean refilled=false;
 
         //Iterates the list with all the alcohols
-        for(WitcherAlcohol_Base alcoholBase: list_alcohol){
+        for(final WitcherAlcohol_Base alcoholBase: list_alcohol){
             //Get if the player has some alcohol
             if(((inventory.findSlotMatchingItem(alcoholBase.getDefaultInstance()) != -1))
                     && !refilled
-                    && potionTimer>90){
+                    && tcots$potionTimer >90){
                 int loopP = EntitiesUtil.isWearingManticoreArmor(THIS)? alcoholBase.getRefillQuantity()+2 : alcoholBase.getRefillQuantity();
 
-                int slot = inventory.findSlotMatchingItem(alcoholBase.getDefaultInstance());
+                final int slot = inventory.findSlotMatchingItem(alcoholBase.getDefaultInstance());
 
                 //Makes a loop across all the inventory
                 for(int i=0; i<inventory.getContainerSize(); i++){
                     //If found an Empty Potion with NBT
                     if(inventory.getItem(i).getItem() instanceof EmptyWitcherPotionItem && inventory.getItem(i).has(TCOTS_Items.RefillRecipe())){
-                        String refillItem= inventory.getItem(i).get(TCOTS_Items.RefillRecipe());
+                        final String refillItem= inventory.getItem(i).get(TCOTS_Items.RefillRecipe());
                         //Checks if the NBT contains the "Potion" string
 
                         if(refillItem!=null){
                             //Save the potion type
-                            Item PotionI = BuiltInRegistries.ITEM.get(ResourceLocation.parse(refillItem));
+                            final Item PotionI = BuiltInRegistries.ITEM.get(ResourceLocation.parse(refillItem));
                             //Saves the count of empty bottles
-                            int countI = inventory.getItem(i).getCount();
+                            final int countI = inventory.getItem(i).getCount();
 
                             //Erases the slot
                             inventory.getItem(i).shrink(inventory.getItem(i).getCount());
@@ -402,7 +403,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                 //Decrements the alcohol in inventory
                                 inventory.getItem(slot).shrink(1);
                                 //Triggers the advancement
-                                if(THIS instanceof ServerPlayer serverPlayer) TCOTS_Criteria.RefillConcoction().trigger(serverPlayer);
+                                if(THIS instanceof final ServerPlayer serverPlayer) TCOTS_Criteria.RefillConcoction().trigger(serverPlayer);
                                 //Play a sound
                                 playSound(TCOTS_Sounds.getSoundEvent("potion_refill"), 3.0f, 1.0f);
                                 //Breaks the loop
@@ -416,7 +417,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                         //Decrements the alcohol in inventory
                         inventory.getItem(slot).shrink(1);
                         //Triggers the advancement
-                        if(THIS instanceof ServerPlayer serverPlayer) TCOTS_Criteria.RefillConcoction().trigger(serverPlayer);
+                        if(THIS instanceof final ServerPlayer serverPlayer) TCOTS_Criteria.RefillConcoction().trigger(serverPlayer);
                         //Play a sound
                         playSound(TCOTS_Sounds.getSoundEvent("potion_refill"), 3.0f, 1.0f);
                     }
@@ -426,24 +427,24 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
-    private void injectInTickSleepingPotion(CallbackInfo ci){
+    private void injectInTickSleepingPotion(final CallbackInfo ci){
         if (this.isSleeping()) {
-            if(this.potionTimer < 100) {
-                ++this.potionTimer;
+            if(this.tcots$potionTimer < 100) {
+                ++this.tcots$potionTimer;
             }
         } else {
-            if(potionTimer != 0){
-                potionTimer=0;
+            if(tcots$potionTimer != 0){
+                tcots$potionTimer =0;
             }
         }
     }
 
     //Maribor Forest
     @Inject(method = "eat", at = @At("TAIL"))
-    private void injectMariborForestImprove(Level world, ItemStack stack, FoodProperties foodComponent, CallbackInfoReturnable<ItemStack> cir){
-        Player THIS = (Player)(Object)this;
+    private void injectMariborForestImprove(final Level world, final ItemStack stack, final FoodProperties foodComponent, final CallbackInfoReturnable<ItemStack> cir){
+        final Player THIS = (Player)(Object)this;
         if(this.hasEffect(TCOTS_Effects.MariborForestEffect())){
-            int amplifier = Objects.requireNonNull(this.getEffect(TCOTS_Effects.MariborForestEffect())).getAmplifier();
+            final int amplifier = Objects.requireNonNull(this.getEffect(TCOTS_Effects.MariborForestEffect())).getAmplifier();
             if(stack.has(DataComponents.FOOD)){
                 assert foodComponent != null;
 
@@ -468,31 +469,31 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     //Toxicity Logic
     @Unique
-    private static final EntityDataAccessor<Integer> TOXICITY = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> tcots$TOXICITY = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.INT);
     @Unique
-    private static final EntityDataAccessor<Integer> DECOCTION_TOXICITY = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> tcots$DECOCTION_TOXICITY = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.INT);
     @Unique
-    private static final EntityDataAccessor<Boolean> HUD_ACTIVE = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> tcots$HUD_ACTIVE = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.BOOLEAN);
     @Unique
-    private static final EntityDataAccessor<Float> HUD_TRANSPARENCY = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> tcots$HUD_TRANSPARENCY = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.FLOAT);
 
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void injectToxicityDataTracker(SynchedEntityData.Builder builder, CallbackInfo ci){
-        builder.define(TOXICITY, 0);
-        builder.define(DECOCTION_TOXICITY, 0);
-        builder.define(HUD_ACTIVE, false);
-        builder.define(HUD_TRANSPARENCY, 0.0f);
+    private void injectToxicityDataTracker(final SynchedEntityData.Builder builder, final CallbackInfo ci){
+        builder.define(tcots$TOXICITY, 0);
+        builder.define(tcots$DECOCTION_TOXICITY, 0);
+        builder.define(tcots$HUD_ACTIVE, false);
+        builder.define(tcots$HUD_TRANSPARENCY, 0.0f);
     }
 
     @Override
     public int theConjunctionOfTheSpheres$getNormalToxicity(){
-        return this.entityData.get(TOXICITY);
+        return this.entityData.get(tcots$TOXICITY);
     }
 
     @Override
-    public void theConjunctionOfTheSpheres$setToxicity(int toxicity){
-        this.entityData.set(TOXICITY,toxicity);
+    public void theConjunctionOfTheSpheres$setToxicity(final int toxicity){
+        this.entityData.set(tcots$TOXICITY,toxicity);
     }
 
     @Override
@@ -502,16 +503,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Override
     public int theConjunctionOfTheSpheres$getDecoctionToxicity() {
-        return this.entityData.get(DECOCTION_TOXICITY);
+        return this.entityData.get(tcots$DECOCTION_TOXICITY);
     }
 
     @Override
-    public void theConjunctionOfTheSpheres$setDecoctionToxicity(int DecoctionToxicity) {
-        this.entityData.set(DECOCTION_TOXICITY,DecoctionToxicity);
+    public void theConjunctionOfTheSpheres$setDecoctionToxicity(final int DecoctionToxicity) {
+        this.entityData.set(tcots$DECOCTION_TOXICITY,DecoctionToxicity);
     }
 
     @Override
-    public void theConjunctionOfTheSpheres$addToxicity(int toxicity,boolean decoction) {
+    public void theConjunctionOfTheSpheres$addToxicity(final int toxicity, final boolean decoction) {
         if(decoction){
             theConjunctionOfTheSpheres$setDecoctionToxicity(theConjunctionOfTheSpheres$getDecoctionToxicity()+toxicity);
         }
@@ -521,7 +522,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Override
-    public void theConjunctionOfTheSpheres$decreaseToxicity(int toxicity, boolean decoction) {
+    public void theConjunctionOfTheSpheres$decreaseToxicity(final int toxicity, final boolean decoction) {
         if(decoction){
             theConjunctionOfTheSpheres$setDecoctionToxicity(theConjunctionOfTheSpheres$getDecoctionToxicity()-toxicity);
         }
@@ -532,29 +533,29 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Override
     public int theConjunctionOfTheSpheres$getAllToxicity() {
-        return this.entityData.get(DECOCTION_TOXICITY)+this.entityData.get(TOXICITY);
+        return this.entityData.get(tcots$DECOCTION_TOXICITY)+this.entityData.get(tcots$TOXICITY);
     }
 
     @Override
     public boolean theConjunctionOfTheSpheres$toxicityOverThreshold() {
-        float overdoseThreshold=(this.theConjunctionOfTheSpheres$getMaxToxicity()*0.75f);
+        final float overdoseThreshold=(this.theConjunctionOfTheSpheres$getMaxToxicity()*0.75f);
         return this.theConjunctionOfTheSpheres$getAllToxicity() > overdoseThreshold;
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void injectReadNBTToxicity(CompoundTag nbt, CallbackInfo ci){
+    private void injectReadNBTToxicity(final CompoundTag nbt, final CallbackInfo ci){
         theConjunctionOfTheSpheres$setToxicity(nbt.getInt("Toxicity"));
         theConjunctionOfTheSpheres$setDecoctionToxicity(nbt.getInt("DecoctionToxicity"));
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void injectWriteNBTToxicity(CompoundTag nbt, CallbackInfo ci){
+    private void injectWriteNBTToxicity(final CompoundTag nbt, final CallbackInfo ci){
         nbt.putInt("Toxicity", theConjunctionOfTheSpheres$getNormalToxicity());
         nbt.putInt("DecoctionToxicity",theConjunctionOfTheSpheres$getDecoctionToxicity());
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
-    private void injectInTickDecreaseToxicityIfOverMaximum(CallbackInfo ci){
+    private void injectInTickDecreaseToxicityIfOverMaximum(final CallbackInfo ci){
         if(this.theConjunctionOfTheSpheres$getAllToxicity() > this.theConjunctionOfTheSpheres$getMaxToxicity()){
             THIS.theConjunctionOfTheSpheres$setToxicity(Mth.clamp(
                     THIS.theConjunctionOfTheSpheres$getNormalToxicity(),
@@ -564,7 +565,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
-    private void injectInTickDecreaseToxicity(CallbackInfo ci){
+    private void injectInTickDecreaseToxicity(final CallbackInfo ci){
         if (this.theConjunctionOfTheSpheres$getNormalToxicity()>0) {
             if(this.tickCount%40==0){
                 this.theConjunctionOfTheSpheres$decreaseToxicity(1,false);
@@ -572,7 +573,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         }
 
 
-        float dangerOverdoseThreshold=(this.theConjunctionOfTheSpheres$getMaxToxicity()*0.9f);
+        final float dangerOverdoseThreshold=(this.theConjunctionOfTheSpheres$getMaxToxicity()*0.9f);
         if(this.theConjunctionOfTheSpheres$toxicityOverThreshold()){
             //At 75%,  every 40 ticks
             //At 80%,  every 37.5 ticks
@@ -602,6 +603,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private static final EntityDataAccessor<Integer> EYES_SEPARATION = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.INT);
     @Unique
     private static final EntityDataAccessor<Integer> EYES_SHAPE = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.INT);
+    @Unique
+    private static final EntityDataAccessor<Boolean> EYES_MOVES = SynchedEntityData.defineId(PlayerEntityMixin.class, EntityDataSerializers.BOOLEAN);
 
 
     @Unique
@@ -611,41 +614,47 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Override
     public boolean theConjunctionOfTheSpheres$getWitcherEyesActivated(){return this.entityData.get(EYES_ACTIVATE);}
     @Override
-    public void theConjunctionOfTheSpheres$setWitcherEyesActivated(boolean activate){this.entityData.set(EYES_ACTIVATE, activate);}
+    public void theConjunctionOfTheSpheres$setWitcherEyesActivated(final boolean activate){this.entityData.set(EYES_ACTIVATE, activate);}
 
     @Override
     public boolean theConjunctionOfTheSpheres$getToxicityActivated() {return this.entityData.get(TOXICITY_ACTIVATE);}
 
     @Override
-    public void theConjunctionOfTheSpheres$setToxicityActivated(boolean activate) {this.entityData.set(TOXICITY_ACTIVATE, activate);}
+    public void theConjunctionOfTheSpheres$setToxicityActivated(final boolean activate) {this.entityData.set(TOXICITY_ACTIVATE, activate);}
 
     @Override
     public Vector3f theConjunctionOfTheSpheres$getEyesPivot(){return this.entityData.get(EYES_POSITION);}
     @Override
-    public void theConjunctionOfTheSpheres$setEyesPivot(Vector3f vector3f){this.entityData.set(EYES_POSITION,vector3f);}
+    public void theConjunctionOfTheSpheres$setEyesPivot(final Vector3f vector3f){this.entityData.set(EYES_POSITION,vector3f);}
 
     @Override
     public int theConjunctionOfTheSpheres$getEyeSeparation(){return this.entityData.get(EYES_SEPARATION);}
     @Override
-    public void theConjunctionOfTheSpheres$setEyeSeparation(int separation){this.entityData.set(EYES_SEPARATION, separation);}
+    public void theConjunctionOfTheSpheres$setEyeSeparation(final int separation){this.entityData.set(EYES_SEPARATION, separation);}
 
     @Override
     public int theConjunctionOfTheSpheres$getEyeShape(){return this.entityData.get(EYES_SHAPE);}
     @Override
-    public void theConjunctionOfTheSpheres$setEyeShape(int shape){this.entityData.set(EYES_SHAPE, shape);}
+    public void theConjunctionOfTheSpheres$setEyeShape(final int shape){this.entityData.set(EYES_SHAPE, shape);}
+
+    @Override
+    public boolean theConjunctionOfTheSpheres$getEyeMoves(){return this.entityData.get(EYES_MOVES);}
+    @Override
+    public void theConjunctionOfTheSpheres$setEyeMoves(final boolean moves){this.entityData.set(EYES_MOVES, moves);}
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void injectWitcherEyesData(SynchedEntityData.Builder builder, CallbackInfo ci){
+    private void injectWitcherEyesData(final SynchedEntityData.Builder builder, final CallbackInfo ci){
         builder.define(EYES_ACTIVATE,   false);
         builder.define(EYES_POSITION,   new Vector3f(0,0,0));
         builder.define(EYES_SEPARATION, 2);
         builder.define(EYES_SHAPE,      0);
+        builder.define(EYES_MOVES,   true);
         builder.define(TOXICITY_ACTIVATE, false);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void injectReadNBTWitcherEyes(CompoundTag nbt, CallbackInfo ci){
-        CompoundTag nbtEyes = getSubNbt("WitcherEyes", nbt);
+    private void injectReadNBTWitcherEyes(final CompoundTag nbt, final CallbackInfo ci){
+        final CompoundTag nbtEyes = getSubNbt("WitcherEyes", nbt);
         if(nbtEyes!=null) {
             this.theConjunctionOfTheSpheres$setWitcherEyesActivated(nbtEyes.getBoolean("Activated"));
 
@@ -654,9 +663,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             this.theConjunctionOfTheSpheres$setEyeSeparation(nbtEyes.getInt("EyesSeparation"));
 
             this.theConjunctionOfTheSpheres$setEyeShape(nbtEyes.getInt("EyesShape"));
+
+            this.theConjunctionOfTheSpheres$setEyeMoves(nbtEyes.getBoolean("Moves"));
         }
 
-        CompoundTag nbtToxicity = getSubNbt("ToxicityFace", nbt);
+        final CompoundTag nbtToxicity = getSubNbt("ToxicityFace", nbt);
 
         if(nbtToxicity!=null){
             this.theConjunctionOfTheSpheres$setToxicityActivated(nbtToxicity.getBoolean("Activated"));
@@ -664,8 +675,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void injectWriteNBTWitcherEyes(CompoundTag nbt, CallbackInfo ci){
-        CompoundTag nbtEyes = new CompoundTag();
+    private void injectWriteNBTWitcherEyes(final CompoundTag nbt, final CallbackInfo ci){
+        final CompoundTag nbtEyes = new CompoundTag();
 
         nbtEyes.putBoolean("Activated", this.theConjunctionOfTheSpheres$getWitcherEyesActivated());
 
@@ -675,9 +686,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         nbtEyes.putInt("EyesSeparation", this.theConjunctionOfTheSpheres$getEyeSeparation());
         nbtEyes.putInt("EyesShape", this.theConjunctionOfTheSpheres$getEyeShape());
 
+        nbtEyes.putBoolean("Moves", this.theConjunctionOfTheSpheres$getEyeMoves());
+
         nbt.put("WitcherEyes", nbtEyes);
 
-        CompoundTag nbtToxicity = new CompoundTag();
+        final CompoundTag nbtToxicity = new CompoundTag();
 
         nbtToxicity.putBoolean("Activated", this.theConjunctionOfTheSpheres$getToxicityActivated());
 

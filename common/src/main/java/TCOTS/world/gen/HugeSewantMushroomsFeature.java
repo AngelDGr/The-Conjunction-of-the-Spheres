@@ -13,28 +13,28 @@ import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFea
 
 public class HugeSewantMushroomsFeature extends AbstractHugeMushroomFeature {
     //xTODO: Fix shape
-    public HugeSewantMushroomsFeature(Codec<HugeMushroomFeatureConfiguration> codec) {
+    public HugeSewantMushroomsFeature(final Codec<HugeMushroomFeatureConfiguration> codec) {
         super(codec);
     }
 
     @Override
-    protected int getTreeRadiusForHeight(int i, int j, int capSize, int y) {
+    protected int getTreeRadiusForHeight(final int i, final int j, final int capSize, final int y) {
         return 0;
     }
 
     @Override
-    protected void makeCap(LevelAccessor world, RandomSource random, BlockPos start, int y, BlockPos.MutableBlockPos mutable, HugeMushroomFeatureConfiguration config) {
+    protected void makeCap(final LevelAccessor world, final RandomSource random, final BlockPos start, final int y, final BlockPos.MutableBlockPos mutable, final HugeMushroomFeatureConfiguration config) {
         for (int i = y - 3; i <= y; ++i) {
-            int j = i < y ? config.foliageRadius : config.foliageRadius - 1;
-            int k = config.foliageRadius - 2;
+            final int j = i < y ? config.foliageRadius : config.foliageRadius - 1;
+            final int k = config.foliageRadius - 2;
             for (int l = -j; l <= j; ++l) {
                 for (int m = -j; m <= j; ++m) {
-                    boolean bl6;
-                    boolean bl = l == -j;
-                    boolean bl2 = l == j;
-                    boolean bl3 = m == -j;
-                    boolean bl4 = m == j;
-                    boolean bl5 = bl || bl2;
+                    final boolean bl6;
+                    final boolean bl = l == -j;
+                    final boolean bl2 = l == j;
+                    final boolean bl3 = m == -j;
+                    final boolean bl4 = m == j;
+                    final boolean bl5 = bl || bl2;
                     bl6 = bl3 || bl4;
                     if (i < y && bl5 == bl6) continue;
                     mutable.setWithOffset(start, l, i, m);
@@ -52,7 +52,7 @@ public class HugeSewantMushroomsFeature extends AbstractHugeMushroomFeature {
 
 
     @Override
-    protected void placeTrunk(LevelAccessor world, RandomSource random, BlockPos pos, HugeMushroomFeatureConfiguration config, int height, BlockPos.MutableBlockPos mutablePos) {
+    protected void placeTrunk(final LevelAccessor world, final RandomSource random, final BlockPos pos, final HugeMushroomFeatureConfiguration config, final int height, final BlockPos.MutableBlockPos mutablePos) {
         int lastGeneratedBranchHeight=0;
         Direction lastBranchDirection=Direction.UP;
         config.stemProvider.getState(random, pos).setValue(HugeMushroomBlock.UP, true).setValue(HugeMushroomBlock.DOWN, true);
@@ -67,9 +67,9 @@ public class HugeSewantMushroomsFeature extends AbstractHugeMushroomFeature {
             if(i > 0 && i < height-6 && random.nextInt(2)==0){
 
                 //Select Length
-                int randomBranchLength = random.nextIntBetweenInclusive(3,4);
+                final int randomBranchLength = random.nextIntBetweenInclusive(3,4);
                 //Select Direction
-                Direction direction = switch (random.nextInt(4)) {
+                final Direction direction = switch (random.nextInt(4)) {
                     case 0 -> Direction.EAST;
                     case 1 -> Direction.WEST;
                     case 2 -> Direction.NORTH;
@@ -97,27 +97,27 @@ public class HugeSewantMushroomsFeature extends AbstractHugeMushroomFeature {
 
     private final List<Direction> directionList = List.of(Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH);
 
-    private void generateBranchCap(LevelAccessor world, RandomSource random, BlockPos start, BlockPos.MutableBlockPos mutablePos, HugeMushroomFeatureConfiguration config){
+    private void generateBranchCap(final LevelAccessor world, final RandomSource random, final BlockPos start, final BlockPos.MutableBlockPos mutablePos, final HugeMushroomFeatureConfiguration config){
 
         BlockPos extraBranch = start;
         if(random.nextInt()%2==0) {
             //Generates branch extra stem
-            BlockState blockStateStem = config.stemProvider.getState(random, start).setValue(HugeMushroomBlock.UP, true).setValue(HugeMushroomBlock.DOWN, true);
+            final BlockState blockStateStem = config.stemProvider.getState(random, start).setValue(HugeMushroomBlock.UP, true).setValue(HugeMushroomBlock.DOWN, true);
             extraBranch = mutablePos.set(start).move(Direction.UP, 1);
             if (world.getBlockState(extraBranch).isSolidRender(world, extraBranch)) return;
             this.setBlock(world, extraBranch, blockStateStem);
         }
 
 
-        BlockPos center = mutablePos.set(extraBranch).move(Direction.UP,1);
-        BlockPos.MutableBlockPos mutable=new BlockPos.MutableBlockPos();
+        final BlockPos center = mutablePos.set(extraBranch).move(Direction.UP,1);
+        final BlockPos.MutableBlockPos mutable=new BlockPos.MutableBlockPos();
         //Center block
-        BlockState blockState = config.capProvider.getState(random, start);
+        final BlockState blockState = config.capProvider.getState(random, start);
         if (world.getBlockState(mutablePos).isSolidRender(world, mutablePos)) return;
         this.setBlock(world, mutablePos, blockState);
 
         //Side blocks
-        for(Direction direction: directionList) {
+        for(final Direction direction: directionList) {
             mutable.set(center).move(direction,1);
             if (world.getBlockState(mutable).isSolidRender(world, mutable)) continue;
             this.setBlock(world,mutable,blockState);
@@ -142,7 +142,7 @@ public class HugeSewantMushroomsFeature extends AbstractHugeMushroomFeature {
     }
 
     @Override
-    protected int getTreeHeight(RandomSource random) {
+    protected int getTreeHeight(final RandomSource random) {
         int i = random.nextInt(3) + 8;
         if (random.nextInt(3) == 0) {
             i *= 2;

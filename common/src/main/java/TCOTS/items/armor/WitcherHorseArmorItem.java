@@ -30,7 +30,7 @@ public class WitcherHorseArmorItem extends AnimalArmorItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type) {
         if(!this.tooltip.isEmpty())
-            MiscUtil.setSpecialTooltip(Component.translatable("tooltip.tcots_witcher.generic_tooltip.special_abilities"), stack, tooltip, this.tooltip);
+            MiscUtil.setSpecialTooltip(Component.translatable("tooltip.tcots_witcher.generic_tooltip.special_abilities"), stack, tooltip, this.tooltip, type);
     }
 
     @Override

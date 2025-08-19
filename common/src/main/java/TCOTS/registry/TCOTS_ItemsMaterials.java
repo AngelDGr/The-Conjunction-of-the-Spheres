@@ -246,7 +246,7 @@ public class TCOTS_ItemsMaterials {
         return KNIGHT;
     }
 
-    private static RegistrySupplier<ArmorMaterial> registerArmorMaterial(String id, Supplier<ArmorMaterial> armorMaterial){
+    private static RegistrySupplier<ArmorMaterial> registerArmorMaterial(final String id, final Supplier<ArmorMaterial> armorMaterial){
         return TCOTS_Registries.ARMOR_MATERIALS.register(id, armorMaterial);
     }
 

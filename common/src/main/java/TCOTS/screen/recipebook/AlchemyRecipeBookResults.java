@@ -59,7 +59,7 @@ public class AlchemyRecipeBookResults {
         }
     }
 
-    public void initialize(Minecraft client, int parentI, int parentJ, AlchemyTableScreenHandler craftingScreenHandler) {
+    public void initialize(final Minecraft client, final int parentI, final int parentJ, final AlchemyTableScreenHandler craftingScreenHandler) {
         this.client = client;
 
         this.craftingScreenHandler = craftingScreenHandler;
@@ -71,7 +71,7 @@ public class AlchemyRecipeBookResults {
         TotalInventoryItems.addAll(PlayerInventoryItems);
         TotalInventoryItems.addAll(AlchemyTableInventoryItems);
         this.recipeFinder.clear();
-        for(ItemStack stack: this.TotalInventoryItems){
+        for(final ItemStack stack: this.TotalInventoryItems){
             recipeFinder.accountStack(stack, stack.getCount());
         }
 
@@ -86,7 +86,7 @@ public class AlchemyRecipeBookResults {
     }
 
 
-    public void setResults(boolean resetCurrentPage, AlchemyTableRecipeCategory category) {
+    public void setResults(final boolean resetCurrentPage, final AlchemyTableRecipeCategory category) {
 
         if(resetCurrentPage){
             this.currentPage=0;
@@ -108,18 +108,18 @@ public class AlchemyRecipeBookResults {
 
 
         this.recipeFinder.clear();
-        for(ItemStack stack: this.TotalInventoryItems){
+        for(final ItemStack stack: this.TotalInventoryItems){
             recipeFinder.accountStack(stack, stack.getCount());
         }
 
-        for(AlchemyRecipeResultButton button: this.resultButtons){
+        for(final AlchemyRecipeResultButton button: this.resultButtons){
             button.setCraftable(false);
 
             if(button.getRecipe() != null) {
 
                 if (recipeFinder.canCraft(button.getRecipe(), null)) {
                     for (int i = 0; i < button.getRecipe().getIngredients().size(); i++) {
-                        int ItemId = Item.getId(button.getRecipe().getIngredients().get(i).getItems()[0].getItem());
+                        final int ItemId = Item.getId(button.getRecipe().getIngredients().get(i).getItems()[0].getItem());
                         if (recipeFinder.contents.get(ItemId) >= button.getRecipe().getIngredientsCounts().get(i)) {
 
                             if(recipeFinder.contents.get(Item.getId(button.getRecipe().getBaseItem().getItem())) >= 1){
@@ -138,7 +138,7 @@ public class AlchemyRecipeBookResults {
                 button.textColorBase = recipeFinder.contents.get(Item.getId(button.getRecipe().getBaseItem().getItem())) >= button.getRecipe().getBaseItem().getCount()? 0xffffff: 0xb43d2c;
 
                 for (int i = 0; i < button.getRecipe().getIngredients().size(); i++) {
-                    int ItemId = Item.getId(button.getRecipe().getIngredients().get(i).getItems()[0].getItem());
+                    final int ItemId = Item.getId(button.getRecipe().getIngredients().get(i).getItems()[0].getItem());
                     button.setTextColor(i, recipeFinder.contents.get(ItemId) >= button.getRecipe().getIngredientsCounts().get(i));
                 }
 
@@ -147,7 +147,7 @@ public class AlchemyRecipeBookResults {
     }
 
 
-    private void resetPageCount(boolean resetCurrentPage){
+    private void resetPageCount(final boolean resetCurrentPage){
         this.pageCount = (int)Math.ceil((double)Active_listRecipes.size() / 6.0);
 
         if (this.pageCount <= this.currentPage || resetCurrentPage) {
@@ -157,7 +157,7 @@ public class AlchemyRecipeBookResults {
 
     private ClientRecipeBook recipeBook;
     //Receive the Recipes list
-    public void receiveRecipesList(List<RecipeHolder<AlchemyTableRecipe>> listRecipes, ClientRecipeBook recipeBook){
+    public void receiveRecipesList(final List<RecipeHolder<AlchemyTableRecipe>> listRecipes, final ClientRecipeBook recipeBook){
         if(this.listFittingRecipes.isEmpty()) {
 
             this.recipeBook=recipeBook;
@@ -195,14 +195,14 @@ public class AlchemyRecipeBookResults {
         }
     }
 
-    public void draw(GuiGraphics context, int x, int y, int mouseX, int mouseY, float delta) {
+    public void draw(final GuiGraphics context, final int x, final int y, final int mouseX, final int mouseY, final float delta) {
         if (this.pageCount > 1) {
-            String string = this.currentPage + 1 + "/" + this.pageCount;
-            int i = this.client.font.width(string);
+            final String string = this.currentPage + 1 + "/" + this.pageCount;
+            final int i = this.client.font.width(string);
             context.drawString(this.client.font, string, x - i / 2 + 73, y + 166, 0xffffff, true);
         }
 
-        for (AlchemyRecipeResultButton animatedResultButton : this.resultButtons) {
+        for (final AlchemyRecipeResultButton animatedResultButton : this.resultButtons) {
             animatedResultButton.render(context, mouseX, mouseY, delta);
         }
         this.prevPageButton.render(context, mouseX, mouseY, delta);
@@ -210,14 +210,14 @@ public class AlchemyRecipeBookResults {
         this.alternatesWidget.render(context, mouseX, mouseY, delta);
     }
 
-    protected void forEachButton(Consumer<AbstractWidget> consumer) {
+    protected void forEachButton(final Consumer<AbstractWidget> consumer) {
         consumer.accept(this.nextPageButton);
         consumer.accept(this.prevPageButton);
         this.resultButtons.forEach(consumer);
     }
 
 
-    public void refreshResultButtons(AlchemyTableRecipeCategory category) {
+    public void refreshResultButtons(final AlchemyTableRecipeCategory category) {
         this.resultButtons.forEach(
                 button -> button.receiveRecipe(null, this.recipeBook)
         );
@@ -303,7 +303,7 @@ public class AlchemyRecipeBookResults {
     }
 
     RecipeHolder<AlchemyTableRecipe> recipe;
-    public boolean mouseClicked(double mouseX, double mouseY, int button, AlchemyTableRecipeCategory category) {
+    public boolean mouseClicked(final double mouseX, final double mouseY, final int button, final AlchemyTableRecipeCategory category) {
 
         if (this.nextPageButton.mouseClicked(mouseX, mouseY, button)) {
             recipe = null;
@@ -319,7 +319,7 @@ public class AlchemyRecipeBookResults {
             return true;
         }
 
-        for(AlchemyRecipeResultButton resultButton: this.resultButtons){
+        for(final AlchemyRecipeResultButton resultButton: this.resultButtons){
             if(resultButton.mouseClicked(mouseX, mouseY, button) && resultButton.getCraftable()){
                 if(resultButton.getRecipeEntry() != null){
                     recipe = resultButton.getRecipeEntry();

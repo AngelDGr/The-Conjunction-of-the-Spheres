@@ -3,8 +3,8 @@ package TCOTS.entity.misc;
 import TCOTS.registry.TCOTS_Sounds;
 import TCOTS.registry.TCOTS_Entities;
 import TCOTS.registry.TCOTS_Items;
-import TCOTS.entity.necrophages.DrownerEntity;
-import TCOTS.entity.necrophages.WaterHagEntity;
+import TCOTS.entity.monsters.necrophages.DrownerEntity;
+import TCOTS.entity.monsters.necrophages.WaterHagEntity;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;
@@ -23,15 +23,15 @@ import org.jetbrains.annotations.NotNull;
 public class WaterHag_MudBallEntity extends ThrowableItemProjectile {
 
     private float damage=1;
-    public WaterHag_MudBallEntity(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
+    public WaterHag_MudBallEntity(final EntityType<? extends ThrowableItemProjectile> entityType, final Level world) {
         super(entityType, world);
     }
 
-    public WaterHag_MudBallEntity(Level world, double x, double y, double z) {
+    public WaterHag_MudBallEntity(final Level world, final double x, final double y, final double z) {
         super(TCOTS_Entities.WaterHagMudBall(), x, y, z, world);
     }
 
-    public WaterHag_MudBallEntity(Level world, LivingEntity owner, float damage) {
+    public WaterHag_MudBallEntity(final Level world, final LivingEntity owner, final float damage) {
         super(TCOTS_Entities.WaterHagMudBall(), owner, world);
         this.damage=damage;
     }
@@ -42,7 +42,7 @@ public class WaterHag_MudBallEntity extends ThrowableItemProjectile {
     }
 
     @Override
-    public void handleEntityEvent(byte status) {
+    public void handleEntityEvent(final byte status) {
         if (status == EntityEvent.DEATH) {
             for (int i = 0; i < 8; ++i) {
                 this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.MUD.defaultBlockState()), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
@@ -51,20 +51,20 @@ public class WaterHag_MudBallEntity extends ThrowableItemProjectile {
     }
 
     @Override
-    protected void onHitEntity(@NotNull EntityHitResult entityHitResult) {
+    protected void onHitEntity(@NotNull final EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
 
-        Entity entity = entityHitResult.getEntity();
+        final Entity entity = entityHitResult.getEntity();
         if(entity instanceof Player){
          ((Player) entity).theConjunctionOfTheSpheres$setMudInFace(140);
         }
         this.playSound(TCOTS_Sounds.getSoundEvent("water_hag_mud_ball_hit"), 1, 1);
-        float i = entity instanceof WaterHagEntity || entity instanceof DrownerEntity ? 0 : damage;
+        final float i = entity instanceof WaterHagEntity || entity instanceof DrownerEntity ? 0 : damage;
         entity.hurt(this.damageSources().thrown(this, this.getOwner()), i);
     }
 
     @Override
-    protected void onHit(@NotNull HitResult hitResult) {
+    protected void onHit(@NotNull final HitResult hitResult) {
         super.onHit(hitResult);
         if (!this.level().isClientSide) {
             this.playSound(TCOTS_Sounds.getSoundEvent("water_hag_mud_ball_hit"), 1, 1);

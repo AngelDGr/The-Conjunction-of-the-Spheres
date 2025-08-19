@@ -12,13 +12,13 @@ public class KillerWhaleEffect extends WitcherPotionEffect {
     //Works like Respiration II
 
 
-    public KillerWhaleEffect(MobEffectCategory category, int color) {
+    public KillerWhaleEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        boolean up = super.applyEffectTick(entity, amplifier);
+    public boolean applyEffectTick(final LivingEntity entity, final int amplifier) {
+        final boolean up = super.applyEffectTick(entity, amplifier);
 
         this.removeAndApplyAttributes(entity, amplifier, entity.isInWater());
 

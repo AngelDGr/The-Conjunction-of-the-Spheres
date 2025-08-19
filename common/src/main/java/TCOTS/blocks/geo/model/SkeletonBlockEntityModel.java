@@ -12,8 +12,8 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class SkeletonBlockEntityModel extends GeoModel<SkeletonBlockEntity> {
     @Override
-    public ResourceLocation getModelResource(SkeletonBlockEntity animatable) {
-        BlockState blockState = animatable.getBlockState();
+    public ResourceLocation getModelResource(final SkeletonBlockEntity animatable) {
+        final BlockState blockState = animatable.getBlockState();
         return switch (blockState.getValue(TCOTS_Blocks.SHAPE)){
             case 0  -> ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/block/skeleton/half_body.geo.json");
 
@@ -33,8 +33,8 @@ public class SkeletonBlockEntityModel extends GeoModel<SkeletonBlockEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureResource(SkeletonBlockEntity animatable) {
-        BlockState blockState = animatable.getBlockState();
+    public ResourceLocation getTextureResource(final SkeletonBlockEntity animatable) {
+        final BlockState blockState = animatable.getBlockState();
         if(blockState.getValue(TCOTS_Blocks.HAS_ARMOR)){
             return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/block/skeleton_block_armor.png");
         } else {
@@ -43,16 +43,16 @@ public class SkeletonBlockEntityModel extends GeoModel<SkeletonBlockEntity> {
     }
 
     @Override
-    public ResourceLocation getAnimationResource(SkeletonBlockEntity animatable) {
+    public ResourceLocation getAnimationResource(final SkeletonBlockEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 
     @Override
-    public void setCustomAnimations(SkeletonBlockEntity animatable, long instanceId, AnimationState<SkeletonBlockEntity> animationState) {
-        GeoBone block = getAnimationProcessor().getBone("block");
-        GeoBone head = getAnimationProcessor().getBone("head");
+    public void setCustomAnimations(final SkeletonBlockEntity animatable, final long instanceId, final AnimationState<SkeletonBlockEntity> animationState) {
+        final GeoBone block = getAnimationProcessor().getBone("block");
+        final GeoBone head = getAnimationProcessor().getBone("head");
 
-        BlockState blockState = animatable.getBlockState();
+        final BlockState blockState = animatable.getBlockState();
 
         block.setPosY(0.001f);
 

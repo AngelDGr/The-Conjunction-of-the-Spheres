@@ -16,7 +16,7 @@ public class LookAtEntityGoalMixin {
     @Final
     protected Mob mob;
     @Inject(method = "canContinueToUse", at = @At("HEAD"), cancellable = true)
-    private void injectNoSamumEffect(CallbackInfoReturnable<Boolean> cir){
+    private void injectNoSamumEffect(final CallbackInfoReturnable<Boolean> cir){
         if(SamumBomb.checkSamumEffect(mob)){
             cir.setReturnValue(false);
         }

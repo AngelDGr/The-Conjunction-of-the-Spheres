@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "tcots_witcher:bloedzuiger_blood"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "id": "tcots_witcher:cadaverine"
+  }
+}

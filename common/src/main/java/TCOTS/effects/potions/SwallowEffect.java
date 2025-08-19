@@ -12,12 +12,12 @@ public class SwallowEffect extends WitcherPotionEffect {
 //    Enhanced Swallow = Swallow II  = 2.0hp x s =  10s for complete healing
 //    Superior Swallow = Swallow III = 3.0hp x s = 6.6s for complete healing
 
-    public SwallowEffect(MobEffectCategory category, int color) {
+    public SwallowEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier){
+    public boolean applyEffectTick(final LivingEntity entity, final int amplifier){
         if (entity.getHealth() < entity.getMaxHealth()) {
 
             entity.heal(0.05F * (float) (amplifier + 1));

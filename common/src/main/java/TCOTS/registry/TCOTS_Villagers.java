@@ -44,7 +44,7 @@ public class TCOTS_Villagers {
         );
     }
 
-    public static ResourceKey<PoiType> registerKey(String name) {
+    public static ResourceKey<PoiType> registerKey(final String name) {
         return ResourceKey.create(Registries.POINT_OF_INTEREST_TYPE, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, name));
     }
 

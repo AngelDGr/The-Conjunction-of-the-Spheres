@@ -12,12 +12,12 @@ import net.minecraft.world.item.TooltipFlag;
 
 public class WitcherBestiaryItem extends LavenderBookItem {
 
-    public WitcherBestiaryItem(@NotNull ResourceLocation bookId, Properties settings) {
+    public WitcherBestiaryItem(@NotNull final ResourceLocation bookId, final Properties settings) {
         super(settings, bookId);
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type) {
+    public void appendHoverText(final ItemStack stack, final TooltipContext context, final List<Component> tooltip, final TooltipFlag type) {
         tooltip.add(Component.translatable("tooltip.tcots_witcher.witcher_bestiary").withStyle(ChatFormatting.GRAY));
         super.appendHoverText(stack, context, tooltip, type);
     }

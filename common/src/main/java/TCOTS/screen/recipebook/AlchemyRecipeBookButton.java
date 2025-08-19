@@ -19,11 +19,11 @@ public class AlchemyRecipeBookButton extends AbstractButton {
     protected final AlchemyRecipeBookButton.PressAction onPress;
     protected final AlchemyRecipeBookButton.NarrationSupplier narrationSupplier;
 
-    public static AlchemyRecipeBookButton.Builder builder(Component message, AlchemyRecipeBookButton.PressAction onPress) {
+    public static AlchemyRecipeBookButton.Builder builder(final Component message, final AlchemyRecipeBookButton.PressAction onPress) {
         return new AlchemyRecipeBookButton.Builder(message, onPress);
     }
 
-    protected AlchemyRecipeBookButton(int x, int y, int width, int height, Component message, AlchemyRecipeBookButton.PressAction onPress, AlchemyRecipeBookButton.NarrationSupplier narrationSupplier) {
+    protected AlchemyRecipeBookButton(final int x, final int y, final int width, final int height, final Component message, final AlchemyRecipeBookButton.PressAction onPress, final AlchemyRecipeBookButton.NarrationSupplier narrationSupplier) {
         super(x, y, width, height, message);
         this.onPress = onPress;
         this.narrationSupplier = narrationSupplier;
@@ -40,7 +40,7 @@ public class AlchemyRecipeBookButton extends AbstractButton {
     }
 
     @Override
-    public void updateWidgetNarration(@NotNull NarrationElementOutput builder) {
+    public void updateWidgetNarration(@NotNull final NarrationElementOutput builder) {
         this.defaultButtonNarrationText(builder);
     }
 
@@ -55,44 +55,44 @@ public class AlchemyRecipeBookButton extends AbstractButton {
         private int height = 20;
         private AlchemyRecipeBookButton.NarrationSupplier narrationSupplier = DEFAULT_NARRATION_SUPPLIER;
 
-        public Builder(Component message, AlchemyRecipeBookButton.PressAction onPress) {
+        public Builder(final Component message, final AlchemyRecipeBookButton.PressAction onPress) {
             this.message = message;
             this.onPress = onPress;
         }
 
-        public AlchemyRecipeBookButton.Builder position(int x, int y) {
+        public AlchemyRecipeBookButton.Builder position(final int x, final int y) {
             this.x = x;
             this.y = y;
             return this;
         }
 
-        public AlchemyRecipeBookButton.Builder width(int width) {
+        public AlchemyRecipeBookButton.Builder width(final int width) {
             this.width = width;
             return this;
         }
 
-        public AlchemyRecipeBookButton.Builder size(int width, int height) {
+        public AlchemyRecipeBookButton.Builder size(final int width, final int height) {
             this.width = width;
             this.height = height;
             return this;
         }
 
-        public AlchemyRecipeBookButton.Builder dimensions(int x, int y, int width, int height) {
+        public AlchemyRecipeBookButton.Builder dimensions(final int x, final int y, final int width, final int height) {
             return this.position(x, y).size(width, height);
         }
 
-        public AlchemyRecipeBookButton.Builder tooltip(@Nullable Tooltip tooltip) {
+        public AlchemyRecipeBookButton.Builder tooltip(@Nullable final Tooltip tooltip) {
             this.tooltip = tooltip;
             return this;
         }
 
-        public AlchemyRecipeBookButton.Builder narrationSupplier(AlchemyRecipeBookButton.NarrationSupplier narrationSupplier) {
+        public AlchemyRecipeBookButton.Builder narrationSupplier(final AlchemyRecipeBookButton.NarrationSupplier narrationSupplier) {
             this.narrationSupplier = narrationSupplier;
             return this;
         }
 
         public AlchemyRecipeBookButton build() {
-            AlchemyRecipeBookButton AlchemyRecipeBookButton = new AlchemyRecipeBookButton(this.x, this.y, this.width, this.height, this.message, this.onPress, this.narrationSupplier);
+            final AlchemyRecipeBookButton AlchemyRecipeBookButton = new AlchemyRecipeBookButton(this.x, this.y, this.width, this.height, this.message, this.onPress, this.narrationSupplier);
             AlchemyRecipeBookButton.setTooltip(this.tooltip);
             return AlchemyRecipeBookButton;
         }

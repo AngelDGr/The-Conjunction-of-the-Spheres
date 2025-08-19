@@ -52,3 +52,5 @@ replay_*.log
 
 /src/
 /run/
+
+/common/src/main/generated/.cache/

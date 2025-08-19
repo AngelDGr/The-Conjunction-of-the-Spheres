@@ -25,13 +25,13 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
     //Gecko stuff
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public AlchemyTableBlockEntity(BlockEntityType<?> entityType, BlockPos pos, BlockState state) {
+    public AlchemyTableBlockEntity(final BlockEntityType<?> entityType, final BlockPos pos, final BlockState state) {
         super(entityType, pos, state);
     }
 
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 0, state ->{
             state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
@@ -50,12 +50,12 @@ public class AlchemyTableBlockEntity extends BlockEntity implements GeoBlockEnti
     }
 
     @Override
-    public RecipeBookMenu<AlchemyTableRecipe.AlchemyTableInventory, AlchemyTableRecipe> createMenu(int syncId, @NotNull Inventory playerInventory, @NotNull Player player) {
+    public RecipeBookMenu<AlchemyTableRecipe.AlchemyTableInventory, AlchemyTableRecipe> createMenu(final int syncId, @NotNull final Inventory playerInventory, @NotNull final Player player) {
         return new AlchemyTableScreenHandler(syncId, playerInventory, ContainerLevelAccess.create(this.getLevel(), worldPosition), this);
     }
 
     @Override
-    public void saveExtraData(FriendlyByteBuf buf) {
+    public void saveExtraData(final FriendlyByteBuf buf) {
         buf.writeBlockPos(this.worldPosition);
     }
 }

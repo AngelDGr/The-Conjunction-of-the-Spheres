@@ -7,17 +7,17 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class GiantAnchorBlockItemModel extends GeoModel<GiantAnchorBlockItem> {
     @Override
-    public ResourceLocation getModelResource(GiantAnchorBlockItem animatable) {
+    public ResourceLocation getModelResource(final GiantAnchorBlockItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/block/giant_anchor.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(GiantAnchorBlockItem animatable) {
+    public ResourceLocation getTextureResource(final GiantAnchorBlockItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/block/giant_anchor.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(GiantAnchorBlockItem animatable) {
+    public ResourceLocation getAnimationResource(final GiantAnchorBlockItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 }

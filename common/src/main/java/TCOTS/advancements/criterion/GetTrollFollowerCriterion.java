@@ -20,8 +20,8 @@ public class GetTrollFollowerCriterion extends SimpleCriterionTrigger<GetTrollFo
         return GetTrollFollowerCriterion.Conditions.CODEC;
     }
 
-    public void trigger(ServerPlayer player, PathfinderMob entity) {
-        LootContext lootContext = EntityPredicate.createContext(player, entity);
+    public void trigger(final ServerPlayer player, final PathfinderMob entity) {
+        final LootContext lootContext = EntityPredicate.createContext(player, entity);
         this.trigger(player, conditions ->
                 conditions.entity.map(lootContextPredicate -> lootContextPredicate.matches(lootContext))
                 .orElse(false));
@@ -38,7 +38,7 @@ public class GetTrollFollowerCriterion extends SimpleCriterionTrigger<GetTrollFo
                                                 .forGetter(GetTrollFollowerCriterion.Conditions::entity))
                                 .apply(instance, GetTrollFollowerCriterion.Conditions::new));
 
-        public static Criterion<GetTrollFollowerCriterion.Conditions> create(EntityPredicate.Builder entity) {
+        public static Criterion<GetTrollFollowerCriterion.Conditions> create(final EntityPredicate.Builder entity) {
             return TCOTS_Criteria.GetTrollFollower().createCriterion(
                     new GetTrollFollowerCriterion.Conditions(
                             Optional.empty(),

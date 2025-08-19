@@ -8,7 +8,7 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer;
 @SuppressWarnings("unused")
 public class NestSkullBlockRenderer extends GeoBlockRenderer<NestSkullBlockEntity> {
 
-    public NestSkullBlockRenderer(BlockEntityRendererProvider.Context ctx) {
+    public NestSkullBlockRenderer(final BlockEntityRendererProvider.Context ctx) {
         super(new NestSkullBlockModel());
     }
 

@@ -5,7 +5,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectCategory;
 
 public class WolfEffect extends WitcherPotionEffect {
-    public WolfEffect(MobEffectCategory category, int color) {
+    public WolfEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
@@ -14,7 +14,7 @@ public class WolfEffect extends WitcherPotionEffect {
         return true;
     }
 
-    public int getSpecialAttributesValue(int amplifier){
+    public int getSpecialAttributesValue(final int amplifier){
         return (Mth.ceil((1f/0.03f) + (amplifier*(1f/0.03f))))-1;
     }
 

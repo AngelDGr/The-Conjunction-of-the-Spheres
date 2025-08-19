@@ -12,15 +12,15 @@ import net.minecraft.world.entity.LivingEntity;
 public class DevilsPuffballBomb {
     private static final byte DEVILS_PUFFBALL_EXPLODES = 33;
 
-    public static void explosionLogic(WitcherBombEntity bomb) {
+    public static void explosionLogic(final WitcherBombEntity bomb) {
         bomb.level().playSound(null, bomb.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), bomb.getSoundSource());
         bomb.level().broadcastEntityEvent(bomb, DEVILS_PUFFBALL_EXPLODES);
         applyLingeringPotion(bomb);
     }
 
-    private static void applyLingeringPotion(WitcherBombEntity bomb) {
-        AreaEffectCloud areaEffectCloudEntity = new AreaEffectCloud(bomb.level(), bomb.getX(), bomb.getY(), bomb.getZ());
-        Entity owner = bomb.getOwner();
+    private static void applyLingeringPotion(final WitcherBombEntity bomb) {
+        final AreaEffectCloud areaEffectCloudEntity = new AreaEffectCloud(bomb.level(), bomb.getX(), bomb.getY(), bomb.getZ());
+        final Entity owner = bomb.getOwner();
         if (owner instanceof LivingEntity) {
             areaEffectCloudEntity.setOwner((LivingEntity) owner);
         }
@@ -32,7 +32,7 @@ public class DevilsPuffballBomb {
         bomb.level().addFreshEntity(areaEffectCloudEntity);
     }
 
-    public static void handleStatus(WitcherBombEntity bomb, byte status) {
+    public static void handleStatus(final WitcherBombEntity bomb, final byte status) {
         if(status==DEVILS_PUFFBALL_EXPLODES){
             bomb.level().addParticle(TCOTS_Particles.DevilsPuffballExplosionEmitter(), bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
         }

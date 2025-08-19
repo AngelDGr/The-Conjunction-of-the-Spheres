@@ -1,7 +1,7 @@
 package TCOTS.entity.geo.renderer.ogroids;
 
 import TCOTS.entity.geo.model.ogroids.IceGiantModel;
-import TCOTS.entity.ogroids.IceGiantEntity;
+import TCOTS.entity.monsters.ogroids.IceGiantEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -21,7 +21,7 @@ public class IceGiantRenderer extends GeoEntityRenderer<IceGiantEntity> {
     private static final String RIGHT_HAND = "right_hand";
     protected ItemStack mainHandItem;
     protected ItemStack offhandItem;
-    public IceGiantRenderer(EntityRendererProvider.Context renderManager) {
+    public IceGiantRenderer(final EntityRendererProvider.Context renderManager) {
         super(renderManager, new IceGiantModel());
         this.shadowRadius = 1.2f;
 
@@ -29,7 +29,7 @@ public class IceGiantRenderer extends GeoEntityRenderer<IceGiantEntity> {
         addRenderLayer(new BlockAndItemGeoLayer<>(this) {
             @Nullable
             @Override
-            protected ItemStack getStackForBone(GeoBone bone, IceGiantEntity animatable) {
+            protected ItemStack getStackForBone(final GeoBone bone, final IceGiantEntity animatable) {
                 // Retrieve the items in the entity's hands for the relevant bone
                 return switch (bone.getName()) {
                     case LEFT_HAND -> animatable.isLeftHanded() ?
@@ -41,7 +41,7 @@ public class IceGiantRenderer extends GeoEntityRenderer<IceGiantEntity> {
             }
 
             @Override
-            protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, IceGiantEntity animatable) {
+            protected ItemDisplayContext getTransformTypeForStack(final GeoBone bone, final ItemStack stack, final IceGiantEntity animatable) {
                 // Apply the camera transform for the given hand
                 return switch (bone.getName()) {
                     case LEFT_HAND, RIGHT_HAND -> ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
@@ -51,8 +51,8 @@ public class IceGiantRenderer extends GeoEntityRenderer<IceGiantEntity> {
 
             // Do some quick render modifications depending on what the item is
             @Override
-            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, IceGiantEntity troll,
-                                              MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
+            protected void renderStackForBone(final PoseStack poseStack, final GeoBone bone, final ItemStack stack, final IceGiantEntity troll,
+                                              final MultiBufferSource bufferSource, final float partialTick, final int packedLight, final int packedOverlay) {
                 if (stack == IceGiantRenderer.this.mainHandItem) {
                     poseStack.mulPose(Axis.XP.rotationDegrees(-90f));
 
@@ -78,7 +78,7 @@ public class IceGiantRenderer extends GeoEntityRenderer<IceGiantEntity> {
     }
 
     @Override
-    public void preRender(PoseStack poseStack, IceGiantEntity animatable, BakedGeoModel model, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+    public void preRender(final PoseStack poseStack, final IceGiantEntity animatable, final BakedGeoModel model, @Nullable final MultiBufferSource bufferSource, @Nullable final VertexConsumer buffer, final boolean isReRender, final float partialTick, final int packedLight, final int packedOverlay, final int colour) {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
 
         this.mainHandItem = animatable.getMainHandItem();

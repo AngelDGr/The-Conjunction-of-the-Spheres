@@ -1,9 +1,9 @@
 package TCOTS.world.spawn;
 
 import TCOTS.registry.TCOTS_Entities;
-import TCOTS.entity.necrophages.BullvoreEntity;
-import TCOTS.entity.necrophages.NecrophageMonster;
-import TCOTS.entity.necrophages.RotfiendEntity;
+import TCOTS.entity.monsters.necrophages.BullvoreEntity;
+import TCOTS.entity.monsters.necrophages.NecrophageMonster;
+import TCOTS.entity.monsters.necrophages.RotfiendEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -24,18 +24,18 @@ public class BullvoreSpawner implements CustomSpawner {
     private int cooldown;
     private BullvoreEntity bullvoreEntity;
     @Override
-    public int tick(@NotNull ServerLevel world, boolean spawnMonsters, boolean spawnAnimals) {
+    public int tick(@NotNull final ServerLevel world, final boolean spawnMonsters, final boolean spawnAnimals) {
 //        System.out.println("I TRY!");
         //If it doesn't spawn monsters and the game rule it's false
         if (!spawnMonsters || !world.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING)) {
             return 0;
         }
         //If there's a player
-        int i = world.players().size();
+        final int i = world.players().size();
         if (i < 1) {
             return 0;
         }
-        RandomSource random = world.random;
+        final RandomSource random = world.random;
 
         --this.cooldown;
         if (this.cooldown > 0) {
@@ -44,14 +44,14 @@ public class BullvoreSpawner implements CustomSpawner {
 
         this.cooldown += 2 + random.nextInt(2);
 
-        Player playerEntity = world.players().get(random.nextInt(i));
+        final Player playerEntity = world.players().get(random.nextInt(i));
         //If the player isn't in spectator mode
         if (playerEntity.isSpectator()) {
             return 0;
         }
 
         //From 24-48 blocks away the player
-        int spawnX = (24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1);
+        final int spawnX = (24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1);
         //From 24-88 blocks away the player
         int spawnY =  (24 + random.nextInt(64)) * (random.nextBoolean() ? -1 : 1);
 
@@ -62,11 +62,11 @@ public class BullvoreSpawner implements CustomSpawner {
         }
 
         //From 24-48 blocks away the player
-        int spawnZ = (24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1);
-        BlockPos.MutableBlockPos mutable = playerEntity.blockPosition().mutable().move(spawnX, spawnY, spawnZ);
+        final int spawnZ = (24 + random.nextInt(24)) * (random.nextBoolean() ? -1 : 1);
+        final BlockPos.MutableBlockPos mutable = playerEntity.blockPosition().mutable().move(spawnX, spawnY, spawnZ);
 
         //If it isn't an overworld biome, or it's the Deep Dark
-        Holder<Biome> biome = world.getBiome(mutable);
+        final Holder<Biome> biome = world.getBiome(mutable);
         if (!biome.is(BiomeTags.IS_OVERWORLD) || biome == Biomes.DEEP_DARK || biome == Biomes.LUSH_CAVES) {
             return 0;
         }
@@ -83,7 +83,7 @@ public class BullvoreSpawner implements CustomSpawner {
 
         //Spawn Logic
         int numberOfSpawns = 0;
-        int o = 2 + random.nextInt(4);
+        final int o = 2 + random.nextInt(4);
         for (int p = 0; p < o; ++p) {
             //To no spawn above sea level after finding an empty space
             if (mutable.getY() >= (world.getSeaLevel()-10)) break;
@@ -103,8 +103,8 @@ public class BullvoreSpawner implements CustomSpawner {
         return numberOfSpawns;
     }
 
-    private void spawnRotfiend(@NotNull ServerLevel world, BlockPos pos, RandomSource random){
-        BlockState blockState = world.getBlockState(pos);
+    private void spawnRotfiend(@NotNull final ServerLevel world, final BlockPos pos, final RandomSource random){
+        final BlockState blockState = world.getBlockState(pos);
         if (!NaturalSpawner.isValidEmptySpawnBlock(world, pos, blockState, blockState.getFluidState(), TCOTS_Entities.Rotfiend())) {
             return;
         }
@@ -112,7 +112,7 @@ public class BullvoreSpawner implements CustomSpawner {
             return;
         }
 
-        RotfiendEntity rotfiendEntity = TCOTS_Entities.Rotfiend().create(world);
+        final RotfiendEntity rotfiendEntity = TCOTS_Entities.Rotfiend().create(world);
         if (rotfiendEntity != null) {
             //Spawn the rotfiend
             rotfiendEntity.setPos(pos.getX(), pos.getY(), pos.getZ());
@@ -124,7 +124,7 @@ public class BullvoreSpawner implements CustomSpawner {
         }
     }
 
-    private boolean spawnBullvore(@NotNull ServerLevel world, BlockPos pos, RandomSource random) {
+    private boolean spawnBullvore(@NotNull final ServerLevel world, final BlockPos pos, final RandomSource random) {
         //To avoid suffocation, it checks if none of the blocks in 4 tall block tower are solid
         if(
                         //Cross
@@ -177,7 +177,7 @@ public class BullvoreSpawner implements CustomSpawner {
         ){
             return false;
         }
-        BlockState blockState = world.getBlockState(pos);
+        final BlockState blockState = world.getBlockState(pos);
         if (!NaturalSpawner.isValidEmptySpawnBlock(world, pos, blockState, blockState.getFluidState(), TCOTS_Entities.Bullvore())) {
             return false;
         }

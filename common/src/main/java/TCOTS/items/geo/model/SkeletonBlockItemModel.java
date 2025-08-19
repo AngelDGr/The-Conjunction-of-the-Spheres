@@ -10,28 +10,28 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class SkeletonBlockItemModel extends GeoModel<SkeletonBlockItem> {
     @Override
-    public ResourceLocation getModelResource(SkeletonBlockItem animatable) {
+    public ResourceLocation getModelResource(final SkeletonBlockItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/block/skeleton_block.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(SkeletonBlockItem animatable) {
+    public ResourceLocation getTextureResource(final SkeletonBlockItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/block/skeleton_block.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(SkeletonBlockItem animatable) {
+    public ResourceLocation getAnimationResource(final SkeletonBlockItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 
     @Override
-    public RenderType getRenderType(SkeletonBlockItem animatable, ResourceLocation texture) {
+    public RenderType getRenderType(final SkeletonBlockItem animatable, final ResourceLocation texture) {
         return RenderType.entityTranslucent(texture);
     }
 
     @Override
-    public void setCustomAnimations(SkeletonBlockItem animatable, long instanceId, AnimationState<SkeletonBlockItem> animationState) {
-        GeoBone block = getAnimationProcessor().getBone("block");
+    public void setCustomAnimations(final SkeletonBlockItem animatable, final long instanceId, final AnimationState<SkeletonBlockItem> animationState) {
+        final GeoBone block = getAnimationProcessor().getBone("block");
         if(block.getRotY() != 0){
             block.setRotY(0);
         }

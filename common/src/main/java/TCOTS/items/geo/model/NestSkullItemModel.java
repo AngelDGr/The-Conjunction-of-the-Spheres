@@ -9,23 +9,23 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class NestSkullItemModel extends GeoModel<NestSkullItem> {
     @Override
-    public ResourceLocation getModelResource(NestSkullItem animatable) {
+    public ResourceLocation getModelResource(final NestSkullItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/block/nest_skull.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(NestSkullItem animatable) {
+    public ResourceLocation getTextureResource(final NestSkullItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/block/nest_skull.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(NestSkullItem animatable) {
+    public ResourceLocation getAnimationResource(final NestSkullItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/nest_skull.animation.json");
     }
 
     @Override
-    public void setCustomAnimations(NestSkullItem animatable, long instanceId, AnimationState<NestSkullItem> animationState) {
-        GeoBone head = getAnimationProcessor().getBone("head");
+    public void setCustomAnimations(final NestSkullItem animatable, final long instanceId, final AnimationState<NestSkullItem> animationState) {
+        final GeoBone head = getAnimationProcessor().getBone("head");
         if(head.getRotY() != 0){
             head.setRotY(0);
         }

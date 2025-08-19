@@ -6,7 +6,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import org.jetbrains.annotations.NotNull;
 
 public class NekkerWarriorDecoctionEffect extends DecoctionEffectBase{
-    public NekkerWarriorDecoctionEffect(MobEffectCategory category, int color) {
+    public NekkerWarriorDecoctionEffect(final MobEffectCategory category, final int color) {
         super(category, color, 50);
     }
 
@@ -21,13 +21,13 @@ public class NekkerWarriorDecoctionEffect extends DecoctionEffectBase{
     }
 
     @Override
-    public void addAttributeModifiers(@NotNull AttributeMap attributeContainer, int amplifier) {
+    public void addAttributeModifiers(@NotNull final AttributeMap attributeContainer, final int amplifier) {
 
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
-        boolean up = super.applyEffectTick(entity, amplifier);
+    public boolean applyEffectTick(@NotNull final LivingEntity entity, final int amplifier) {
+        final boolean up = super.applyEffectTick(entity, amplifier);
 
         this.removeAndApplyAttributes(entity, amplifier, entity.isPassenger() && entity.getVehicle() instanceof LivingEntity);
 
@@ -35,7 +35,7 @@ public class NekkerWarriorDecoctionEffect extends DecoctionEffectBase{
     }
 
     @Override
-    public int getSpecialAttributesValue(int amplifier) {
+    public int getSpecialAttributesValue(final int amplifier) {
         return 50;
     }
 }

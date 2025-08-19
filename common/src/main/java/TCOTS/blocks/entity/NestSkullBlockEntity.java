@@ -12,12 +12,12 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class NestSkullBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    public NestSkullBlockEntity(BlockEntityType<?> entityType, BlockPos pos, BlockState state) {
+    public NestSkullBlockEntity(final BlockEntityType<?> entityType, final BlockPos pos, final BlockState state) {
         super(entityType, pos, state);
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 0, state ->{
             state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;

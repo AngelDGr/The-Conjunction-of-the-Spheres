@@ -34,25 +34,25 @@ import net.minecraft.world.phys.HitResult;
 @Mixin(ThrownPotion.class)
 public class PotionEntityMixin extends ThrowableItemProjectile implements ItemSupplier {
 
-    public PotionEntityMixin(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
+    public PotionEntityMixin(final EntityType<? extends ThrowableItemProjectile> entityType, final Level world) {
         super(entityType, world);
     }
 
     @Inject(method = "onHit", at = @At("HEAD"), cancellable = true)
-    private void onCollisionWitcherPotion(HitResult hitResult, CallbackInfo ci){
+    private void onCollisionWitcherPotion(final HitResult hitResult, final CallbackInfo ci){
 
-        ThrownPotion thisObject = (ThrownPotion)(Object)this;
+        final ThrownPotion thisObject = (ThrownPotion)(Object)this;
 
         if (!thisObject.level().isClientSide) {
 
-            ItemStack itemStack = thisObject.getItem();
+            final ItemStack itemStack = thisObject.getItem();
             if(itemStack.getItem() instanceof WitcherPotionsSplash_Base){
-                List<MobEffectInstance> statusEffectList = ((WitcherPotionsSplash_Base) itemStack.getItem()).getPotionEffects();
-                int toxicity = ((WitcherPotionsSplash_Base) itemStack.getItem()).getToxicity();
+                final List<MobEffectInstance> statusEffectList = ((WitcherPotionsSplash_Base) itemStack.getItem()).getPotionEffects();
+                final int toxicity = ((WitcherPotionsSplash_Base) itemStack.getItem()).getToxicity();
 
                 this.applySplashWitcherPotion(statusEffectList, hitResult.getType() == net.minecraft.world.phys.HitResult.Type.ENTITY ? ((EntityHitResult)hitResult).getEntity() : null, toxicity);
 
-                int i = ((WitcherPotionsSplash_Base) itemStack.getItem()).getStatusEffect().getEffect().value().isInstantenous() ? 2007 : 2002;
+                final int i = ((WitcherPotionsSplash_Base) itemStack.getItem()).getStatusEffect().getEffect().value().isInstantenous() ? 2007 : 2002;
                 this.level().levelEvent(i, this.blockPosition(), ((WitcherPotionsSplash_Base) itemStack.getItem()).getStatusEffect().getEffect().value().getColor());
                 this.discard();
                 ci.cancel();
@@ -61,17 +61,17 @@ public class PotionEntityMixin extends ThrowableItemProjectile implements ItemSu
     }
 
     @Unique
-    private void applySplashWitcherPotion(List<MobEffectInstance> statusEffects, Entity entity, int toxicity) {
-        AABB box = this.getBoundingBox().inflate(4.0, 2.0, 4.0);
-        List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class, box);
+    private void applySplashWitcherPotion(final List<MobEffectInstance> statusEffects, final Entity entity, final int toxicity) {
+        final AABB box = this.getBoundingBox().inflate(4.0, 2.0, 4.0);
+        final List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class, box);
         if (!list.isEmpty()) {
-            Entity entity2 = this.getEffectSource();
+            final Entity entity2 = this.getEffectSource();
 
-            for (LivingEntity livingEntity : list) {
+            for (final LivingEntity livingEntity : list) {
                 if (livingEntity.isAffectedByPotions()) {
-                    double d = this.distanceToSqr(livingEntity);
+                    final double d = this.distanceToSqr(livingEntity);
                     if (d < 16.0) {
-                        double e;
+                        final double e;
                         if (livingEntity == entity) {
                             e = 1.0;
                         } else {
@@ -79,20 +79,20 @@ public class PotionEntityMixin extends ThrowableItemProjectile implements ItemSu
                         }
 
                         //Returns if you have already enough toxicity
-                        if (livingEntity instanceof Player player && player.theConjunctionOfTheSpheres$getMaxToxicity() < player.theConjunctionOfTheSpheres$getAllToxicity()+toxicity) {
+                        if (livingEntity instanceof final Player player && player.theConjunctionOfTheSpheres$getMaxToxicity() < player.theConjunctionOfTheSpheres$getAllToxicity()+toxicity) {
                             player.displayClientMessage(Component.translatable("tcots_witcher.gui.toxicity_danger").withStyle(ChatFormatting.DARK_GREEN), true);
                             player.hurt(TCOTS_DamageTypes.toxicityDamage(level()),1+(toxicity*0.1f));
 
                             return;
                         }
 
-                        for (MobEffectInstance statusEffectInstance : statusEffects) {
-                            Holder<MobEffect> registryEntry = statusEffectInstance.getEffect();
+                        for (final MobEffectInstance statusEffectInstance : statusEffects) {
+                            final Holder<MobEffect> registryEntry = statusEffectInstance.getEffect();
                             if (registryEntry.value().isInstantenous()) {
                                 registryEntry.value().applyInstantenousEffect(this, this.getOwner(), livingEntity, statusEffectInstance.getAmplifier(), e);
                             } else {
-                                int i = statusEffectInstance.mapDuration(duration -> (int) (e * (double) duration + 0.5));
-                                MobEffectInstance statusEffectInstance2 = new MobEffectInstance(
+                                final int i = statusEffectInstance.mapDuration(duration -> (int) (e * (double) duration + 0.5));
+                                final MobEffectInstance statusEffectInstance2 = new MobEffectInstance(
                                         registryEntry, i, statusEffectInstance.getAmplifier(), statusEffectInstance.isAmbient(), statusEffectInstance.isVisible()
                                 );
                                 if (!statusEffectInstance2.endsWithin(20)) {
@@ -102,7 +102,7 @@ public class PotionEntityMixin extends ThrowableItemProjectile implements ItemSu
                         }
 
                         //To add toxicity to players
-                        if (livingEntity instanceof Player player)
+                        if (livingEntity instanceof final Player player)
                             player.theConjunctionOfTheSpheres$addToxicity(toxicity, false);
                     }
                 }

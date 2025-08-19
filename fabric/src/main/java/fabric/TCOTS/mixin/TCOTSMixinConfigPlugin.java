@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class TCOTSMixinConfigPlugin implements IMixinConfigPlugin {
     @Override
-    public void onLoad(String mixinPackage) {
+    public void onLoad(final String mixinPackage) {
 
     }
 
@@ -20,7 +20,7 @@ public class TCOTSMixinConfigPlugin implements IMixinConfigPlugin {
     }
 
     @Override
-    public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+    public boolean shouldApplyMixin(final String targetClassName, final String mixinClassName) {
         if(mixinClassName.contains("TCOTS.mixin.trinket"))
             return FabricLoader.getInstance().isModLoaded("trinkets");
 
@@ -28,7 +28,7 @@ public class TCOTSMixinConfigPlugin implements IMixinConfigPlugin {
     }
 
     @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+    public void acceptTargets(final Set<String> myTargets, final Set<String> otherTargets) {
 
     }
 
@@ -38,12 +38,12 @@ public class TCOTSMixinConfigPlugin implements IMixinConfigPlugin {
     }
 
     @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    public void preApply(final String targetClassName, final ClassNode targetClass, final String mixinClassName, final IMixinInfo mixinInfo) {
 
     }
 
     @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    public void postApply(final String targetClassName, final ClassNode targetClass, final String mixinClassName, final IMixinInfo mixinInfo) {
 
     }
 }

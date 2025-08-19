@@ -54,7 +54,7 @@ public abstract class InGameHudMixin {
     ResourceLocation MUD_BALL_OVERLAY=MUD_BALL_OVERLAY_1;
     @Unique
     private void changeOverlay(){
-        int random = this.random.nextIntBetweenInclusive(0,3);
+        final int random = this.random.nextIntBetweenInclusive(0,3);
         if(changeOverlay) {
             switch (random) {
                 case 0:
@@ -79,7 +79,7 @@ public abstract class InGameHudMixin {
         }
     }
     @Inject(method = "renderCameraOverlays", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getTicksFrozen()I"))
-    private void renderMudBall(GuiGraphics context, DeltaTracker tickCounter, CallbackInfo ci){
+    private void renderMudBall(final GuiGraphics context, final DeltaTracker tickCounter, final CallbackInfo ci){
         changeOverlay();
 
         assert this.minecraft.player != null;
@@ -97,8 +97,8 @@ public abstract class InGameHudMixin {
             method = "renderHearts",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;renderHeart(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Gui$HeartType;IIZZZ)V", ordinal = 3)
     )
-    private void injectEffectsHearts(Gui instance, GuiGraphics context, Gui.HeartType heartType, int x, int y, boolean hardcore, boolean blinking, boolean half, Operation<Void> original) {
-        Player player = this.getCameraPlayer();
+    private void injectEffectsHearts(final Gui instance, final GuiGraphics context, final Gui.HeartType heartType, final int x, final int y, final boolean hardcore, final boolean blinking, final boolean half, final Operation<Void> original) {
+        final Player player = this.getCameraPlayer();
 
         if (player!=null&& player.theConjunctionOfTheSpheres$toxicityOverThreshold() && !player.hasEffect(MobEffects.WITHER)) {
             RenderSystem.enableBlend();

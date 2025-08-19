@@ -29,20 +29,20 @@ public interface ExcavatorMob {
     RawAnimation DIGGING_OUT = RawAnimation.begin().thenPlayAndHold("special.diggingOut");
     RawAnimation DIGGING_IN = RawAnimation.begin().thenPlayAndHold("special.diggingIn");
 
-    default AABB groundBox(Mob mob){
+    default AABB groundBox(final Mob mob){
         return new AABB(mob.getX() - 0.39, mob.getY() + 0.1, mob.getZ() - 0.39,
                 mob.getX() + 0.39, mob.getY(), mob.getZ() + 0.39);
     }
 
-    default DrownerPuddleEntity DetectOwnPuddle(Mob mob) {
-        List<DrownerPuddleEntity> list = mob.level().getEntitiesOfClass(DrownerPuddleEntity.class,
+    default DrownerPuddleEntity DetectOwnPuddle(final Mob mob) {
+        final List<DrownerPuddleEntity> list = mob.level().getEntitiesOfClass(DrownerPuddleEntity.class,
                 new AABB(mob.getX() + 2, mob.getY() + 2, mob.getZ() + 2,
                         mob.getX() - 2, mob.getY() - 2, mob.getZ() - 2),
                 (T) -> true);
 
         //Detect
         if (!list.isEmpty()) {
-            for (DrownerPuddleEntity puddleEntity : list) {
+            for (final DrownerPuddleEntity puddleEntity : list) {
                 if (puddleEntity.getOwnerUUID() != null && puddleEntity.getOwnerUUID().equals(mob.getUUID())) {
                     return puddleEntity;
                 }
@@ -52,7 +52,7 @@ public interface ExcavatorMob {
         return null;
     }
 
-    default  <T extends GeoAnimatable> PlayState animationEmergingPredicate(AnimationState<T> state) {
+    default  <T extends GeoAnimatable> PlayState animationEmergingPredicate(final AnimationState<T> state) {
         if (this.getIsEmerging()){
             state.setAnimation(getEmergingAnimation());
             return PlayState.CONTINUE;
@@ -71,7 +71,7 @@ public interface ExcavatorMob {
         return DIGGING_IN;
     }
 
-    default  <T extends GeoAnimatable> PlayState animationDiggingPredicate(AnimationState<T> state) {
+    default  <T extends GeoAnimatable> PlayState animationDiggingPredicate(final AnimationState<T> state) {
         if(this.getInGround() && !this.getIsEmerging()){
             state.setAnimation(getDiggingAnimation());
             return PlayState.CONTINUE;
@@ -85,7 +85,7 @@ public interface ExcavatorMob {
         return null;
     }
 
-    default void setPuddle(DrownerPuddleEntity puddle) {
+    default void setPuddle(final DrownerPuddleEntity puddle) {
 
     }
 
@@ -101,7 +101,7 @@ public interface ExcavatorMob {
     default boolean getSpawnedPuddleDataTracker() {
         return false;
     }
-    default void setSpawnedPuddleDataTracker(boolean puddleSpawned) {
+    default void setSpawnedPuddleDataTracker(final boolean puddleSpawned) {
 
     }
 
@@ -109,7 +109,7 @@ public interface ExcavatorMob {
 
      void setAnimationParticlesTicks(int animationParticlesTicks);
 
-    default void tickExcavator(LivingEntity entity) {
+    default void tickExcavator(final LivingEntity entity) {
         //Particles when return to ground
         if(this.getAnimationParticlesTicks() > 0 && this.getInGround()
                 && !(this.getIsEmerging())
@@ -131,7 +131,7 @@ public interface ExcavatorMob {
         }
     }
 
-    default void tickPuddle(Mob mob){
+    default void tickPuddle(final Mob mob){
         if(getPuddle()==null){
             setPuddle(DetectOwnPuddle(mob));
         }
@@ -144,13 +144,13 @@ public interface ExcavatorMob {
 
     void setIsEmerging(boolean wasEmerging);
 
-    default void spawnGroundParticles(@NotNull LivingEntity entity){
-        BlockState blockState = entity.getBlockStateOn();
+    default void spawnGroundParticles(@NotNull final LivingEntity entity){
+        final BlockState blockState = entity.getBlockStateOn();
         if (blockState.getRenderShape() != RenderShape.INVISIBLE) {
             for (int i = 0; i < 11; ++i) {
-                double d = entity.getX() + (double) Mth.randomBetween(entity.getRandom(), -0.7F, 0.7F);
-                double e = entity.getY();
-                double f = entity.getZ() + (double) Mth.randomBetween(entity.getRandom(), -0.7F, 0.7F);
+                final double d = entity.getX() + (double) Mth.randomBetween(entity.getRandom(), -0.7F, 0.7F);
+                final double e = entity.getY();
+                final double f = entity.getZ() + (double) Mth.randomBetween(entity.getRandom(), -0.7F, 0.7F);
 
                 entity.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), d, e, f, 0.0, 0.0, 0.0);
             }
@@ -165,7 +165,7 @@ public interface ExcavatorMob {
 
     void setInvisibleData(boolean isInvisible);
 
-    default void mobTickExcavator(@Nullable List<TagKey<Block>> blockTags, @Nullable List<Block> blocks, Mob mob){
+    default void mobTickExcavator(@Nullable final List<TagKey<Block>> blockTags, @Nullable final List<Block> blocks, final Mob mob){
         if (this.getReturnToGround_Ticks() > 0
                 && !this.getIsEmerging()
                 && !mob.isAggressive()
@@ -179,20 +179,20 @@ public interface ExcavatorMob {
         }
     }
 
-    private boolean checkBlocks(@Nullable List<TagKey<Block>> blockTags, @Nullable List<Block> blocks, Mob mob){
-        BlockPos entityPos = new BlockPos((int)mob.getX(), (int)mob.getY(), (int)mob.getZ());
-        BlockPos entityDown = entityPos.below();
-        Level world = mob.level();
+    private boolean checkBlocks(@Nullable final List<TagKey<Block>> blockTags, @Nullable final List<Block> blocks, final Mob mob){
+        final BlockPos entityPos = new BlockPos((int)mob.getX(), (int)mob.getY(), (int)mob.getZ());
+        final BlockPos entityDown = entityPos.below();
+        final Level world = mob.level();
 
         if(blockTags != null){
-            for (TagKey<Block> tags : blockTags) {
+            for (final TagKey<Block> tags : blockTags) {
                 if(world.getBlockState(entityDown).is(tags)){
                     return true;
                 }
             }
         }
         if(blocks != null) {
-            for (Block block : blocks) {
+            for (final Block block : blocks) {
                 if(world.getBlockState(entityDown).is(block)){
                     return true;
                 }

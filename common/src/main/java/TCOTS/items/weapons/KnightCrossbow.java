@@ -16,22 +16,22 @@ import org.jetbrains.annotations.NotNull;
 public class KnightCrossbow extends WitcherBaseCrossbow{
     //xTODO: Improve this crossbow, extra damage
 
-    public KnightCrossbow(Properties settings) {
+    public KnightCrossbow(final Properties settings) {
         super(settings);
     }
 
     @Override
-    protected float getShootingPower(ChargedProjectiles stack) {
+    protected float getShootingPower(final ChargedProjectiles stack) {
         return stack.contains(Items.FIREWORK_ROCKET) ? 4.8f : 6.2f;
     }
 
     @Override
-    public int getCrossbowPullTime(ItemStack stack, LivingEntity user) {
-        float f = EnchantmentHelper.modifyCrossbowChargingTime(stack, user, 2.5F);
+    public int getCrossbowPullTime(final ItemStack stack, final LivingEntity user) {
+        final float f = EnchantmentHelper.modifyCrossbowChargingTime(stack, user, 2.5F);
         return Mth.floor(f * 20.0F);
     }
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag type) {
+    public void appendHoverText(@NotNull final ItemStack stack, @NotNull final TooltipContext context, @NotNull final List<Component> tooltip, @NotNull final TooltipFlag type) {
         super.appendHoverText(stack, context, tooltip, type);
         tooltip.add(Component.translatable("tooltip.tcots_witcher.knight_crossbow").withStyle(ChatFormatting.GRAY));
 

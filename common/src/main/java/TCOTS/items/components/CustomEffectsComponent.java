@@ -18,7 +18,7 @@ public record CustomEffectsComponent(List<MobEffectInstance> customEffects) {
                     .apply(instance, CustomEffectsComponent::new)
     );
 
-    public static ItemStack of(ItemStack stack, List<MobEffectInstance> customEffects){
+    public static ItemStack of(final ItemStack stack, final List<MobEffectInstance> customEffects){
         stack.set(TCOTS_Items.CustomEffects(), new CustomEffectsComponent(customEffects));
 
         return stack;

@@ -11,29 +11,29 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class AlchemyTableModel extends GeoModel<AlchemyTableBlockEntity> {
     @Override
-    public ResourceLocation getModelResource(AlchemyTableBlockEntity animatable) {
+    public ResourceLocation getModelResource(final AlchemyTableBlockEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/block/alchemy_table.geo.json");
     }
 
 
     @Override
-    public ResourceLocation getTextureResource(AlchemyTableBlockEntity animatable) {
+    public ResourceLocation getTextureResource(final AlchemyTableBlockEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/block/alchemy_table.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(AlchemyTableBlockEntity animatable) {
+    public ResourceLocation getAnimationResource(final AlchemyTableBlockEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 
     @Override
-    public RenderType getRenderType(AlchemyTableBlockEntity animatable, ResourceLocation texture) {
+    public RenderType getRenderType(final AlchemyTableBlockEntity animatable, final ResourceLocation texture) {
         return RenderType.entityTranslucent(getTextureResource(animatable));
     }
 
     @Override
-    public void setCustomAnimations(AlchemyTableBlockEntity animatable, long instanceId, AnimationState<AlchemyTableBlockEntity> animationState) {
-        GeoBone book = getAnimationProcessor().getBone("Book");
+    public void setCustomAnimations(final AlchemyTableBlockEntity animatable, final long instanceId, final AnimationState<AlchemyTableBlockEntity> animationState) {
+        final GeoBone book = getAnimationProcessor().getBone("Book");
         if(
                 animatable.getLevel() != null
                 &&

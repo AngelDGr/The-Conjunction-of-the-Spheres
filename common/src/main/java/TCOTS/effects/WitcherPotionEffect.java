@@ -13,12 +13,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import org.jetbrains.annotations.NotNull;
 
 public class WitcherPotionEffect extends MobEffect {
-    public WitcherPotionEffect(MobEffectCategory category, int color) {
+    public WitcherPotionEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier){
+    public boolean shouldApplyEffectTickThisTick(final int duration, final int amplifier){
         return true;
     }
 
@@ -30,7 +30,7 @@ public class WitcherPotionEffect extends MobEffect {
         return false;
     }
 
-    public int getSpecialAttributesValue(int amplifier){
+    public int getSpecialAttributesValue(final int amplifier){
         return 0;
     }
 
@@ -38,36 +38,36 @@ public class WitcherPotionEffect extends MobEffect {
         return false;
     }
 
-    public boolean hasExtraLine(int amplifier){
+    public boolean hasExtraLine(final int amplifier){
         return false;
     }
 
     protected final Map<Holder<Attribute>, EffectAttributeModifierCreator> attributeModifiersExtra = new Object2ObjectOpenHashMap<>();
 
     @Override
-    public @NotNull MobEffect addAttributeModifier(@NotNull Holder<Attribute> attribute, @NotNull ResourceLocation id, double amount, AttributeModifier.@NotNull Operation operation) {
+    public @NotNull MobEffect addAttributeModifier(@NotNull final Holder<Attribute> attribute, @NotNull final ResourceLocation id, final double amount, final AttributeModifier.@NotNull Operation operation) {
         this.attributeModifiersExtra.put(attribute, new EffectAttributeModifierCreator(id, amount, operation));
         return super.addAttributeModifier(attribute, id, amount, operation);
     }
 
     protected record EffectAttributeModifierCreator(ResourceLocation id, double baseValue, AttributeModifier.Operation operation) {
-        public AttributeModifier createAttributeModifier(int amplifier) {
+        public AttributeModifier createAttributeModifier(final int amplifier) {
             return new AttributeModifier(this.id, this.baseValue * (double)(amplifier + 1), this.operation);
         }
     }
 
-    protected void removeAndApplyAttributes(LivingEntity entity, int amplifier, boolean conditional){
+    protected void removeAndApplyAttributes(final LivingEntity entity, final int amplifier, final boolean conditional){
         if(conditional){
-            for (Map.Entry<Holder<Attribute>, EffectAttributeModifierCreator> entry : this.attributeModifiersExtra.entrySet()) {
-                AttributeInstance entityAttributeInstance = entity.getAttributes().getInstance(entry.getKey());
+            for (final Map.Entry<Holder<Attribute>, EffectAttributeModifierCreator> entry : this.attributeModifiersExtra.entrySet()) {
+                final AttributeInstance entityAttributeInstance = entity.getAttributes().getInstance(entry.getKey());
                 if (entityAttributeInstance != null) {
                     entityAttributeInstance.removeModifier(entry.getValue().id());
                     entityAttributeInstance.addPermanentModifier(entry.getValue().createAttributeModifier(amplifier));
                 }
             }
         } else {
-            for (Map.Entry<Holder<Attribute>, EffectAttributeModifierCreator> entry : this.attributeModifiersExtra.entrySet()) {
-                AttributeInstance entityAttributeInstance = entity.getAttributes().getInstance(entry.getKey());
+            for (final Map.Entry<Holder<Attribute>, EffectAttributeModifierCreator> entry : this.attributeModifiersExtra.entrySet()) {
+                final AttributeInstance entityAttributeInstance = entity.getAttributes().getInstance(entry.getKey());
                 if (entityAttributeInstance != null) {
                     entityAttributeInstance.removeModifier(entry.getValue().id());
                 }

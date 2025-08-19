@@ -50,28 +50,28 @@ public class SewantMushroomsPlant extends MushroomBlock {
     });
 
 
-    public SewantMushroomsPlant(ResourceKey<ConfiguredFeature<?, ?>> featureKey, Properties settings) {
+    public SewantMushroomsPlant(final ResourceKey<ConfiguredFeature<?, ?>> featureKey, final Properties settings) {
         super(featureKey, settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(MUSHROOM_AMOUNT, 1));
     }
 
     @Override
-    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public @NotNull ItemStack getCloneItemStack(@NotNull final LevelReader world, @NotNull final BlockPos pos, @NotNull final BlockState state) {
         return new ItemStack(TCOTS_Items.SEWANT_MUSHROOMS);
     }
 
     @Override
-    public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
+    public @NotNull BlockState rotate(final BlockState state, final Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
+    public @NotNull BlockState mirror(final BlockState state, final Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    public boolean canBeReplaced(@NotNull BlockState state, BlockPlaceContext context) {
+    public boolean canBeReplaced(@NotNull final BlockState state, final BlockPlaceContext context) {
         if (!context.isSecondaryUseActive() && context.getItemInHand().is(this.asItem()) && state.getValue(MUSHROOM_AMOUNT) < 4) {
             return true;
         }
@@ -79,13 +79,13 @@ public class SewantMushroomsPlant extends MushroomBlock {
     }
 
     @Override
-    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public @NotNull VoxelShape getShape(final BlockState state, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final CollisionContext context) {
         return FACING_AND_AMOUNT_TO_SHAPE.apply(state.getValue(FACING), state.getValue(MUSHROOM_AMOUNT));
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        BlockState blockState = ctx.getLevel().getBlockState(ctx.getClickedPos());
+    public BlockState getStateForPlacement(final BlockPlaceContext ctx) {
+        final BlockState blockState = ctx.getLevel().getBlockState(ctx.getClickedPos());
         if (blockState.is(this)) {
             return blockState.setValue(MUSHROOM_AMOUNT, Math.min(4, blockState.getValue(MUSHROOM_AMOUNT) + 1));
         }
@@ -93,12 +93,12 @@ public class SewantMushroomsPlant extends MushroomBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(final StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, MUSHROOM_AMOUNT);
     }
 
     @Override
-    public boolean isBonemealSuccess(@NotNull Level world, @NotNull RandomSource random, @NotNull BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(@NotNull final Level world, @NotNull final RandomSource random, @NotNull final BlockPos pos, final BlockState state) {
         if(state.getValue(MUSHROOM_AMOUNT)<4){
             return true;
         }
@@ -106,8 +106,8 @@ public class SewantMushroomsPlant extends MushroomBlock {
     }
 
     @Override
-    public void performBonemeal(@NotNull ServerLevel world, @NotNull RandomSource random, @NotNull BlockPos pos, BlockState state) {
-        int i = state.getValue(MUSHROOM_AMOUNT);
+    public void performBonemeal(@NotNull final ServerLevel world, @NotNull final RandomSource random, @NotNull final BlockPos pos, final BlockState state) {
+        final int i = state.getValue(MUSHROOM_AMOUNT);
         if (i < 4) {
             world.setBlock(pos, state.setValue(MUSHROOM_AMOUNT, i + 1), Block.UPDATE_CLIENTS);
         } else {
@@ -116,21 +116,21 @@ public class SewantMushroomsPlant extends MushroomBlock {
     }
 
     @Override
-    public void randomTick(BlockState state, @NotNull ServerLevel world, @NotNull BlockPos pos, @NotNull RandomSource random) {
-        int amount = state.getValue(MUSHROOM_AMOUNT);
+    public void randomTick(final BlockState state, @NotNull final ServerLevel world, @NotNull BlockPos pos, @NotNull final RandomSource random) {
+        final int amount = state.getValue(MUSHROOM_AMOUNT);
 
         if (amount < 4 && random.nextInt(10) == 0 &&
                 (world.getRawBrightness(pos, 0) < 13
                 || world.getBlockState(pos.below()).is(BlockTags.MUSHROOM_GROW_BLOCK)))
         {
-            BlockState blockState = state.setValue(MUSHROOM_AMOUNT, amount + 1);
+            final BlockState blockState = state.setValue(MUSHROOM_AMOUNT, amount + 1);
             world.setBlock(pos, blockState, Block.UPDATE_CLIENTS);
             world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockState));
         }
 
         if (random.nextInt(25) == 0) {
             int i = 5;
-            for (BlockPos blockPos : BlockPos.betweenClosed(pos.offset(-4, -1, -4), pos.offset(4, 1, 4))) {
+            for (final BlockPos blockPos : BlockPos.betweenClosed(pos.offset(-4, -1, -4), pos.offset(4, 1, 4))) {
                 if (!world.getBlockState(blockPos).is(this) || --i > 0) continue;
                 return;
             }

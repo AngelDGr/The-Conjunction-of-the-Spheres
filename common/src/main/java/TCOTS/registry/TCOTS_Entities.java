@@ -1,19 +1,23 @@
 package TCOTS.registry;
 
+import TCOTS.TCOTS_Main;
 import TCOTS.TCOTS_Registries;
 import TCOTS.entity.misc.DrownerPuddleEntity;
 import TCOTS.entity.misc.FoglingEntity;
 import TCOTS.entity.misc.ScurverSpineEntity;
 import TCOTS.entity.misc.WaterHag_MudBallEntity;
-import TCOTS.entity.necrophages.*;
-import TCOTS.entity.ogroids.*;
+import TCOTS.entity.monsters.necrophages.*;
+import TCOTS.entity.monsters.ogroids.*;
 import TCOTS.entity.misc.*;
 import TCOTS.entity.misc.bolts.*;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 public class TCOTS_Entities {
     //    1.0.0- Necrophages & Ogroids
@@ -32,8 +36,8 @@ public class TCOTS_Entities {
     //xTODO: Bullvore
     //W1
     //xTODO: Devourer
+    //TODO: Bloedzuiger
     //xTODO: Graveir
-
 
     //  Ogroids
     //W3
@@ -117,6 +121,11 @@ public class TCOTS_Entities {
             "devourer",
             () -> EntityType.Builder.of(DevourerEntity::new, MobCategory.MONSTER)
                     .sized(0.85f, 1.8f).build("devourer"));
+
+    public static final RegistrySupplier<EntityType<BloedzuigerEntity>> BLOEDZUIGER = TCOTS_Registries.ENTITY_TYPES.register(
+            "bloedzuiger",
+            () -> EntityType.Builder.of(BloedzuigerEntity::new, MobCategory.MONSTER)
+                    .sized(1.0f, 2.0f).build("bloedzuiger"));
 
     public static final RegistrySupplier<EntityType<GraveirEntity>> GRAVEIR = TCOTS_Registries.ENTITY_TYPES.register(
             "graveir",
@@ -257,6 +266,7 @@ public class TCOTS_Entities {
     public static EntityType<ScurverEntity> Scurver() { return SCURVER.get(); }
     public static EntityType<ScurverSpineEntity> ScurverSpine() { return SCURVER_SPINE.get(); }
     public static EntityType<DevourerEntity> Devourer() { return DEVOURER.get(); }
+    public static EntityType<BloedzuigerEntity> Bloedzuiger() { return BLOEDZUIGER.get(); }
     public static EntityType<GraveirEntity> Graveir() { return GRAVEIR.get(); }
     public static EntityType<BullvoreEntity> Bullvore() { return BULLVORE.get(); }
 
@@ -279,5 +289,9 @@ public class TCOTS_Entities {
     public static EntityType<PrecisionBoltProjectile> PrecisionBolt() { return PRECISION_BOLT.get(); }
     public static EntityType<ExplodingBoltProjectile> ExplodingBolt() { return EXPLODING_BOLT.get(); }
     public static EntityType<BroadheadBoltProjectile> BroadheadBolt() { return BROADHEAD_BOLT.get(); }
+
+    public static ResourceKey<LootTable> FOREST_TROLL_BARTERING = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"gameplay/forest_troll_bartering"));
+    public static ResourceKey<LootTable> ROCK_TROLL_BARTERING = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"gameplay/rock_troll_bartering"));
+    public static ResourceKey<LootTable> ICE_TROLL_BARTERING = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"gameplay/ice_troll_bartering"));
 
 }

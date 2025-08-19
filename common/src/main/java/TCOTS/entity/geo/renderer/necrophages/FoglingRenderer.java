@@ -15,26 +15,26 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.util.Color;
 
 public class FoglingRenderer extends GeoEntityRenderer<FoglingEntity> {
-    public FoglingRenderer(EntityRendererProvider.Context renderManager) {
+    public FoglingRenderer(final EntityRendererProvider.Context renderManager) {
         super(renderManager, new FoglingModel());
         this.shadowRadius = 0.6f;
     }
 
     @Override
-    public ResourceLocation getTextureLocation(FoglingEntity animatable) {
+    public ResourceLocation getTextureLocation(final FoglingEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/entity/necrophages/foglet/fogling.png");
     }
 
     @Override
-    public float getMotionAnimThreshold(FoglingEntity animatable) {
+    public float getMotionAnimThreshold(final FoglingEntity animatable) {
         return 0.005f;
     }
 
     @Override
-    public void actuallyRender(PoseStack poseStack, FoglingEntity animatable, BakedGeoModel model, @Nullable RenderType renderType, MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
-        Color holdColor = new Color(colour);
+    public void actuallyRender(final PoseStack poseStack, final FoglingEntity animatable, final BakedGeoModel model, @Nullable final RenderType renderType, final MultiBufferSource bufferSource, @Nullable final VertexConsumer buffer, final boolean isReRender, final float partialTick, final int packedLight, final int packedOverlay, final int colour) {
+        final Color holdColor = new Color(colour);
 
-        int newColor =  Color.ofRGBA(
+        final int newColor =  Color.ofRGBA(
                         holdColor.getRedFloat(),
                         holdColor.getGreenFloat(),
                         holdColor.getBlueFloat(),

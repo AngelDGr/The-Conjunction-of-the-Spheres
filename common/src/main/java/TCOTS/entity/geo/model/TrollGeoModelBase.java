@@ -1,7 +1,7 @@
 package TCOTS.entity.geo.model;
 
-import TCOTS.entity.ogroids.AbstractTrollEntity;
-import TCOTS.entity.ogroids.RockTrollEntity;
+import TCOTS.entity.monsters.ogroids.AbstractTrollEntity;
+import TCOTS.entity.monsters.ogroids.RockTrollEntity;
 import TCOTS.utils.GeoControllersUtil;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib.constant.DataTickets;
@@ -11,28 +11,28 @@ import software.bernie.geckolib.model.data.EntityModelData;
 
 public abstract class TrollGeoModelBase<T extends AbstractTrollEntity> extends BipedGeoModelBase<T> {
 
-    protected boolean hasArmZMovement(T troll){
+    protected boolean hasArmZMovement(final T troll){
         return false;
     }
 
     @Override
-    protected boolean hasNormalHead(T troll) {
+    protected boolean hasNormalHead(final T troll) {
         return false;
     }
 
     @Override
-    public void setCustomAnimations(T troll, long instanceId, AnimationState<T> animationState) {
-        GeoBone head = getAnimationProcessor().getBone("head");
-        GeoBone left_leg =  getAnimationProcessor().getBone("left_leg_swing");
-        GeoBone right_leg = getAnimationProcessor().getBone("right_leg_swing");
-        GeoBone left_arm =  getAnimationProcessor().getBone("left_arm_swing");
-        GeoBone right_arm = getAnimationProcessor().getBone("right_arm_swing");
-        GeoBone left_hand = getAnimationProcessor().getBone("left_hand");
-        GeoBone right_hand = getAnimationProcessor().getBone("right_hand");
-        GeoBone low_jaw = getAnimationProcessor().getBone("lowJaw");
+    public void setCustomAnimations(final T troll, final long instanceId, final AnimationState<T> animationState) {
+        final GeoBone head = getAnimationProcessor().getBone("head");
+        final GeoBone left_leg =  getAnimationProcessor().getBone("left_leg_swing");
+        final GeoBone right_leg = getAnimationProcessor().getBone("right_leg_swing");
+        final GeoBone left_arm =  getAnimationProcessor().getBone("left_arm_swing");
+        final GeoBone right_arm = getAnimationProcessor().getBone("right_arm_swing");
+        final GeoBone left_hand = getAnimationProcessor().getBone("left_hand");
+        final GeoBone right_hand = getAnimationProcessor().getBone("right_hand");
+        final GeoBone low_jaw = getAnimationProcessor().getBone("lowJaw");
 
         if (head != null && low_jaw!= null) {
-            EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+            final EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
             //Admiring
             if(troll.hasBarteringItem()){
                 head.setRotX(((-22f) * Mth.DEG_TO_RAD));
@@ -41,7 +41,7 @@ public abstract class TrollGeoModelBase<T extends AbstractTrollEntity> extends B
                 low_jaw.setRotX(0);
             }
             //Blocking
-            else if(troll instanceof RockTrollEntity rockTroll && rockTroll.isTrollBlocking()){
+            else if(troll instanceof final RockTrollEntity rockTroll && rockTroll.isTrollBlocking()){
                 head.setRotX(((-15f) * Mth.DEG_TO_RAD));
                 head.setRotY(((-22.5f) * Mth.DEG_TO_RAD));
                 head.setRotZ(0);
@@ -148,9 +148,9 @@ public abstract class TrollGeoModelBase<T extends AbstractTrollEntity> extends B
         }
     }
 
-    protected float getAnimationProgress(AbstractTrollEntity troll, float partialTick) {
-        float g = Mth.lerp(partialTick, troll.prevEatingProgress, troll.eatingProgress);
-        float h = Mth.lerp(partialTick, troll.prevMaxEatingDeviation, troll.maxEatingDeviation);
+    protected float getAnimationProgress(final AbstractTrollEntity troll, final float partialTick) {
+        final float g = Mth.lerp(partialTick, troll.prevEatingProgress, troll.eatingProgress);
+        final float h = Mth.lerp(partialTick, troll.prevMaxEatingDeviation, troll.maxEatingDeviation);
         return (Mth.sin(g) + 1.0f) * h;
     }
 }

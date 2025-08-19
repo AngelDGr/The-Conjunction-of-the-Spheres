@@ -7,17 +7,17 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class RavensArmorModel extends GeoModel<RavensArmorItem> {
     @Override
-    public ResourceLocation getModelResource(RavensArmorItem animatable) {
+    public ResourceLocation getModelResource(final RavensArmorItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/armor/ravens_armor.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(RavensArmorItem animatable) {
+    public ResourceLocation getTextureResource(final RavensArmorItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/models/armor/ravens_armor.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(RavensArmorItem animatable) {
+    public ResourceLocation getAnimationResource(final RavensArmorItem animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 }

@@ -6,7 +6,7 @@ public interface LivingEntityMixinInterface {
         return 0;
     }
 
-    default void theConjunctionOfTheSpheres$setKillCount(int i) {
+    default void theConjunctionOfTheSpheres$setKillCount(final int i) {
 
     }
 
@@ -18,7 +18,7 @@ public interface LivingEntityMixinInterface {
         return 0;
     }
 
-    default void theConjunctionOfTheSpheres$setKillCountdown(int i) {
+    default void theConjunctionOfTheSpheres$setKillCountdown(final int i) {
 
     }
 
@@ -38,6 +38,6 @@ public interface LivingEntityMixinInterface {
         return null;
     }
 
-    default void theConjunctionOfTheSpheres$setAnchor(Object anchor){}
+    default void theConjunctionOfTheSpheres$setAnchor(final Object anchor){}
 
 }

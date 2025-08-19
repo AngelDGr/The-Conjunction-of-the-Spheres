@@ -34,13 +34,13 @@ public class GiantAnchorItem extends TieredItem implements GeoItem {
     //The anchor can be launched
     private final AnimatableInstanceCache cache   = GeckoLibUtil.createInstanceCache(this);
     public boolean hidden = false;
-    public GiantAnchorItem(Tier tier, Properties settings) {
+    public GiantAnchorItem(final Tier tier, final Properties settings) {
         super(tier,settings);
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     @Override
-    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+    public void createGeoRenderer(final Consumer<GeoRenderProvider> consumer) {
         consumer.accept(new GeoRenderProvider() {
 
             private final GiantAnchorItemRenderer renderer = new GiantAnchorItemRenderer();
@@ -55,8 +55,8 @@ public class GiantAnchorItem extends TieredItem implements GeoItem {
     /**
     Move the anchor to the owner and plays the return sound
      */
-    public static void retrieveAnchor(@NotNull LivingEntity thrower){
-        AnchorProjectileEntity anchorProjectile= (AnchorProjectileEntity) thrower.theConjunctionOfTheSpheres$getAnchor();
+    public static void retrieveAnchor(@NotNull final LivingEntity thrower){
+        final AnchorProjectileEntity anchorProjectile= (AnchorProjectileEntity) thrower.theConjunctionOfTheSpheres$getAnchor();
         if(anchorProjectile!=null) {
             anchorProjectile.pickupType= AbstractArrow.Pickup.ALLOWED;
             anchorProjectile.dealtDamage=true;
@@ -66,20 +66,20 @@ public class GiantAnchorItem extends TieredItem implements GeoItem {
     }
 
     @Override
-    public void releaseUsing(@NotNull ItemStack anchorStack, @NotNull Level world, @NotNull LivingEntity user, int remainingUseTicks) {
+    public void releaseUsing(@NotNull final ItemStack anchorStack, @NotNull final Level world, @NotNull final LivingEntity user, final int remainingUseTicks) {
 
         if(!world.isClientSide){
             if(user.theConjunctionOfTheSpheres$getAnchor()!=null){
                 GiantAnchorItem.retrieveAnchor(user);
             } else {
 
-                float pullProgress = BowItem.getPowerForTime(this.getUseDuration(anchorStack, user) - remainingUseTicks);
+                final float pullProgress = BowItem.getPowerForTime(this.getUseDuration(anchorStack, user) - remainingUseTicks);
 
-                AnchorProjectileEntity anchorProjectile = new AnchorProjectileEntity(user, world);
+                final AnchorProjectileEntity anchorProjectile = new AnchorProjectileEntity(user, world);
                 anchorProjectile.setEnchanted(anchorStack.hasFoil());
                 anchorProjectile.shootFromRotation(user, user.getXRot(), user.getYRot(), 0.0f, pullProgress * 0.4f, 1.0f);
 
-                if (user instanceof Player player) {
+                if (user instanceof final Player player) {
                     anchorStack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                     player.awardStat(Stats.ITEM_USED.get(this));
                 }
@@ -92,20 +92,20 @@ public class GiantAnchorItem extends TieredItem implements GeoItem {
 
     }
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, @NotNull Player user, @NotNull InteractionHand hand) {
-        ItemStack anchorStack= user.getItemInHand(hand);
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull final Level world, @NotNull final Player user, @NotNull final InteractionHand hand) {
+        final ItemStack anchorStack= user.getItemInHand(hand);
 
         user.startUsingItem(hand);
         return InteractionResultHolder.consume(anchorStack);
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity user) {
+    public int getUseDuration(@NotNull final ItemStack stack, @NotNull final LivingEntity user) {
         return 72000;
     }
 
     @Override
-    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
+    public @NotNull UseAnim getUseAnimation(@NotNull final ItemStack stack) {
         if(wasLaunched(stack)){
             return UseAnim.NONE;
         }
@@ -115,42 +115,42 @@ public class GiantAnchorItem extends TieredItem implements GeoItem {
 
 
     @Override
-    public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity user) {
+    public boolean hurtEnemy(@NotNull final ItemStack stack, @NotNull final LivingEntity target, @NotNull final LivingEntity user) {
         GiantAnchorItem.retrieveAnchor(user);
         return true;
     }
 
     @Override
-    public void postHurtEnemy(ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
+    public void postHurtEnemy(final ItemStack stack, @NotNull final LivingEntity target, @NotNull final LivingEntity attacker) {
         stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
     }
 
     @Override
-    public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level world, @NotNull BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity miner) {
+    public boolean mineBlock(@NotNull final ItemStack stack, @NotNull final Level world, @NotNull final BlockState state, @NotNull final BlockPos pos, @NotNull final LivingEntity miner) {
         GiantAnchorItem.retrieveAnchor(miner);
         return super.mineBlock(stack, world, state, pos, miner);
     }
 
 
     @Override
-    public void inventoryTick(@NotNull ItemStack anchorStack, @NotNull Level world, @NotNull Entity entity, int slot, boolean selected) {
-        if(entity instanceof LivingEntity livingEntity){
+    public void inventoryTick(@NotNull final ItemStack anchorStack, @NotNull final Level world, @NotNull final Entity entity, final int slot, final boolean selected) {
+        if(entity instanceof final LivingEntity livingEntity){
             this.hidden = livingEntity.theConjunctionOfTheSpheres$getAnchor()!=null;
         }
 
-        if(entity instanceof LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$getAnchor()!=null){
+        if(entity instanceof final LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$getAnchor()!=null){
             anchorStack.set(TCOTS_Items.AnchorRetrieve(), true);
-        } else if (entity instanceof LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$getAnchor()==null) {
+        } else if (entity instanceof final LivingEntity livingEntity && livingEntity.theConjunctionOfTheSpheres$getAnchor()==null) {
             anchorStack.remove(TCOTS_Items.AnchorRetrieve());
         }
     }
 
-    public static boolean wasLaunched(ItemStack stack) {
+    public static boolean wasLaunched(final ItemStack stack) {
         return stack.has(TCOTS_Items.AnchorRetrieve());
     }
 
     @Override
-    public void registerControllers(ContextAwareAnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final ContextAwareAnimatableManager.ControllerRegistrar controllers) {
         controllers.add(GeoControllersUtil.genericIdleController(this).triggerableAnim("idle", GeoControllersUtil.IDLE));
     }
 

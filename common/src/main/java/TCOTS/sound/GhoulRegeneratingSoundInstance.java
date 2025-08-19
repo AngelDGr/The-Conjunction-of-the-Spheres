@@ -1,6 +1,6 @@
 package TCOTS.sound;
 
-import TCOTS.entity.necrophages.GhoulEntity;
+import TCOTS.entity.monsters.necrophages.GhoulEntity;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundSource;
@@ -9,7 +9,7 @@ public class GhoulRegeneratingSoundInstance extends AbstractTickableSoundInstanc
     private final GhoulEntity ghoul;
     private int timer;
 
-    public GhoulRegeneratingSoundInstance(GhoulEntity ghoul) {
+    public GhoulRegeneratingSoundInstance(final GhoulEntity ghoul) {
         super(ghoul.getRegeneratingSound(), SoundSource.HOSTILE, SoundInstance.createUnseededRandom());
         this.ghoul = ghoul;
         this.attenuation = Attenuation.LINEAR;

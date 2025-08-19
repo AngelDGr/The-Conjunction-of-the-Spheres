@@ -13,11 +13,11 @@ public class BaseBoltProjectile extends WitcherBolt {
 
     private static final ItemStack DEFAULT_STACK = new ItemStack(TCOTS_Items.KNIGHT_CROSSBOW.get());
 
-    public BaseBoltProjectile(EntityType<? extends BaseBoltProjectile> entityType, Level world) {
+    public BaseBoltProjectile(final EntityType<? extends BaseBoltProjectile> entityType, final Level world) {
         super(entityType, world);
     }
 
-    public BaseBoltProjectile(Level world, LivingEntity owner, ItemStack stack, @Nullable ItemStack weapon) {
+    public BaseBoltProjectile(final Level world, final LivingEntity owner, final ItemStack stack, @Nullable final ItemStack weapon) {
         super(TCOTS_Entities.BaseBolt(), owner, world, stack, weapon);
         setBaseDamage(3);
     }

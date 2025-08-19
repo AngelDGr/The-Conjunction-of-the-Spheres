@@ -18,7 +18,7 @@ public class TCOTS_CustomCriterion extends SimpleCriterionTrigger<TCOTS_CustomCr
         return Conditions.CODEC;
     }
 
-    public void trigger(ServerPlayer player) {
+    public void trigger(final ServerPlayer player) {
         this.trigger(player, conditions -> true);
     }
 

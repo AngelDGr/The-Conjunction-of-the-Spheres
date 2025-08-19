@@ -12,12 +12,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class PuffballMushroomPlant extends MushroomBlock {
 
-    public PuffballMushroomPlant(ResourceKey<ConfiguredFeature<?, ?>> featureKey, Properties settings) {
+    public PuffballMushroomPlant(final ResourceKey<ConfiguredFeature<?, ?>> featureKey, final Properties settings) {
         super(featureKey, settings);
     }
 
     @Override
-    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader world, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public @NotNull ItemStack getCloneItemStack(@NotNull final LevelReader world, @NotNull final BlockPos pos, @NotNull final BlockState state) {
         return new ItemStack(TCOTS_Items.PUFFBALL);
     }
 }

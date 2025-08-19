@@ -34,18 +34,18 @@ public class DrownerPuddleEntity extends Entity implements GeoEntity, TraceableE
 
     protected static final EntityDataAccessor<Boolean> DESPAWN_PUDDLE = SynchedEntityData.defineId(DrownerPuddleEntity.class, EntityDataSerializers.BOOLEAN);
 
-    public DrownerPuddleEntity(EntityType<? extends DrownerPuddleEntity> entity, Level world) {
+    public DrownerPuddleEntity(final EntityType<? extends DrownerPuddleEntity> entity, final Level world) {
         super(entity, world);
     }
 
-    public DrownerPuddleEntity(EntityType<? extends DrownerPuddleEntity> entity, Level world, double x, double y, double z, LivingEntity owner) {
+    public DrownerPuddleEntity(final EntityType<? extends DrownerPuddleEntity> entity, final Level world, final double x, final double y, final double z, final LivingEntity owner) {
         this(entity, world);
         this.setOwner(owner);
         this.setPos(x, y, z);
     }
 
 
-    public void setOwner(@Nullable LivingEntity owner) {
+    public void setOwner(@Nullable final LivingEntity owner) {
         this.owner = owner;
         this.ownerUuid = owner == null ? null : owner.getUUID();
     }
@@ -64,18 +64,18 @@ public class DrownerPuddleEntity extends Entity implements GeoEntity, TraceableE
     public boolean getDespawnPuddle() {
         return this.entityData.get(DESPAWN_PUDDLE);
     }
-    public void setDespawnPuddle(boolean isSpawned) {
+    public void setDespawnPuddle(final boolean isSpawned) {
         this.entityData.set(DESPAWN_PUDDLE, isSpawned);
     }
 
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(final SynchedEntityData.Builder builder) {
         builder.define(DESPAWN_PUDDLE, Boolean.FALSE);
     }
 
     @Override
-    protected void addAdditionalSaveData(@NotNull CompoundTag nbt) {
+    protected void addAdditionalSaveData(@NotNull final CompoundTag nbt) {
         if (this.ownerUuid != null) {
             nbt.putUUID("Owner", this.ownerUuid);
         }
@@ -83,7 +83,7 @@ public class DrownerPuddleEntity extends Entity implements GeoEntity, TraceableE
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag nbt) {
+    protected void readAdditionalSaveData(final CompoundTag nbt) {
         if (nbt.hasUUID("Owner")) {
             this.ownerUuid = nbt.getUUID("Owner");
         }
@@ -92,7 +92,7 @@ public class DrownerPuddleEntity extends Entity implements GeoEntity, TraceableE
 
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
 
         controllers.add(DefaultAnimations.getSpawnController(this, AnimationState::getAnimatable,  36));
 

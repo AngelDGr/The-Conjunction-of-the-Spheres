@@ -15,29 +15,29 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
     @Override
-    public ResourceLocation getModelResource(NestSkullBlockEntity animatable) {
+    public ResourceLocation getModelResource(final NestSkullBlockEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "geo/block/nest_skull.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(NestSkullBlockEntity animatable) {
+    public ResourceLocation getTextureResource(final NestSkullBlockEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/block/nest_skull.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(NestSkullBlockEntity animatable) {
+    public ResourceLocation getAnimationResource(final NestSkullBlockEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "animations/misc/dummy.animation.json");
     }
 
 
     @Override
-    public void setCustomAnimations(NestSkullBlockEntity animatable, long instanceId, AnimationState<NestSkullBlockEntity> animationState) {
-        GeoBone head = getAnimationProcessor().getBone("head");
+    public void setCustomAnimations(final NestSkullBlockEntity animatable, final long instanceId, final AnimationState<NestSkullBlockEntity> animationState) {
+        final GeoBone head = getAnimationProcessor().getBone("head");
 
-        BlockState blockState = animatable.getBlockState();
-        boolean isInWall = blockState.getBlock() instanceof NestWallSkullBlock;
+        final BlockState blockState = animatable.getBlockState();
+        final boolean isInWall = blockState.getBlock() instanceof NestWallSkullBlock;
 
-        Direction direction;
+        final Direction direction;
         if(isInWall){
             direction=blockState.getValue(TCOTS_Blocks.FACING);
         }
@@ -45,7 +45,7 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
             direction= null;
         }
 
-        int k;
+        final int k;
 
         if (isInWall) {
             k = RotationSegment.convertToSegment(direction.getOpposite());
@@ -53,7 +53,7 @@ public class NestSkullBlockModel extends GeoModel<NestSkullBlockEntity> {
             k = blockState.getValue(SkullBlock.ROTATION);
         }
 
-        float h = RotationSegment.convertToDegrees(k);
+        final float h = RotationSegment.convertToDegrees(k);
 
         if(isInWall){
             head.setRotY(0);

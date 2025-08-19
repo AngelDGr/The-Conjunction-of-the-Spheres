@@ -23,8 +23,8 @@ public class DancingStarBomb {
     private static final byte DANCING_STAR_EXPLODES_L1 = 18;
     private static final byte DANCING_STAR_EXPLODES_L2 = 19;
     private static final byte DANCING_STAR_EXPLODES_L3 = 20;
-    public static void explosionLogic(WitcherBombEntity bomb){
-    Explosion explosion =
+    public static void explosionLogic(final WitcherBombEntity bomb){
+    final Explosion explosion =
             bomb.level().explode(
                 bomb,
                 null,
@@ -60,10 +60,10 @@ public class DancingStarBomb {
         //Level 0 -> 2x2x2
         //Level 1 -> 3x2x3
         //Level 2 -> 4x2x4
-        List<LivingEntity> entities =
+        final List<LivingEntity> entities =
                 bomb.level().getEntitiesOfClass(LivingEntity.class, bomb.getBoundingBox().inflate(2+(bomb.getLevel()),2,3+(bomb.getLevel())), livingEntity -> true);
 
-        for (LivingEntity livingEntity : entities){
+        for (final LivingEntity livingEntity : entities){
             //To not apply effect across walls
             if(BombsUtil.getExposure(livingEntity.position(), bomb) == 0) continue;
             //Level 0 -> 10s
@@ -75,11 +75,11 @@ public class DancingStarBomb {
         createFire(bomb, explosion);
     }
 
-    private static void createFire(WitcherBombEntity bomb, Explosion explosion){
-        ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList<>();
+    private static void createFire(final WitcherBombEntity bomb, final Explosion explosion){
+        final ObjectArrayList<BlockPos> affectedBlocks = new ObjectArrayList<>();
         int l;
         int k;
-        HashSet<BlockPos> set = Sets.newHashSet();
+        final HashSet<BlockPos> set = Sets.newHashSet();
         for (int j = 0; j < 16; ++j) {
             for (k = 0; k < 16; ++k) {
                 block2: for (l = 0; l < 16; ++l) {
@@ -87,7 +87,7 @@ public class DancingStarBomb {
                     double d = (float)j / 15.0f * 2.0f - 1.0f;
                     double e = (float)k / 15.0f * 2.0f - 1.0f;
                     double f = (float)l / 15.0f * 2.0f - 1.0f;
-                    double g = Math.sqrt(d * d + e * e + f * f);
+                    final double g = Math.sqrt(d * d + e * e + f * f);
                     d /= g;
                     e /= g;
                     f /= g;
@@ -95,11 +95,11 @@ public class DancingStarBomb {
                     double n = bomb.getY();
                     double o = bomb.getZ();
                     for (float h = (1+(bomb.getLevel())) * (0.7f + bomb.level().random.nextFloat() * 0.6f); h > 0.0f; h -= 0.22500001f) {
-                        BlockPos blockPos = BlockPos.containing(m, n, o);
-                        BlockState blockState = bomb.level().getBlockState(blockPos);
-                        FluidState fluidState = bomb.level().getFluidState(blockPos);
+                        final BlockPos blockPos = BlockPos.containing(m, n, o);
+                        final BlockState blockState = bomb.level().getBlockState(blockPos);
+                        final FluidState fluidState = bomb.level().getFluidState(blockPos);
                         if (!bomb.level().isInWorldBounds(blockPos)) continue block2;
-                        Optional<Float> optional = BombsUtil.getBlastResistance(blockState, fluidState);
+                        final Optional<Float> optional = BombsUtil.getBlastResistance(blockState, fluidState);
                         if (optional.isPresent() && !bomb.destroyableBlocks(blockState)) {
                             h -= (optional.get() + 0.3f) * 0.3f;
                         }
@@ -116,8 +116,8 @@ public class DancingStarBomb {
         }
         affectedBlocks.addAll(set);
 
-        for (BlockPos blockPos2 : affectedBlocks) {
-            BlockState state = bomb.level().getBlockState(blockPos2);
+        for (final BlockPos blockPos2 : affectedBlocks) {
+            final BlockState state = bomb.level().getBlockState(blockPos2);
 
             //Destroy nest blocks
             if(bomb.destroyableBlocks(state)) {
@@ -137,7 +137,7 @@ public class DancingStarBomb {
 
     }
 
-    public static void handleStatus(WitcherBombEntity bomb, byte status){
+    public static void handleStatus(final WitcherBombEntity bomb, final byte status){
         if(status == DANCING_STAR_EXPLODES_L1 || status == DANCING_STAR_EXPLODES_L2 || status == DANCING_STAR_EXPLODES_L3){
             switch (status){
                 case DANCING_STAR_EXPLODES_L2:

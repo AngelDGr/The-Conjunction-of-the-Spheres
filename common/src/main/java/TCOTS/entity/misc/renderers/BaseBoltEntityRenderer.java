@@ -8,12 +8,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class BaseBoltEntityRenderer extends BoltEntityRenderer<BaseBoltProjectile> {
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"textures/entity/base_bolt.png");
-    public BaseBoltEntityRenderer(EntityRendererProvider.Context context) {
+    public BaseBoltEntityRenderer(final EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull BaseBoltProjectile arrowEntity) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull final BaseBoltProjectile arrowEntity) {
         return TEXTURE;
     }
 }

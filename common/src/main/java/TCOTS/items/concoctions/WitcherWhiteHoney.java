@@ -23,20 +23,20 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class WitcherWhiteHoney extends WitcherPotions_Base {
-    public WitcherWhiteHoney(Properties settings) {
+    public WitcherWhiteHoney(final Properties settings) {
         super(settings, new MobEffectInstance(MobEffects.POISON), 0, false);
     }
 
     @Override
-    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level world, @NotNull LivingEntity user) {
-        Player playerEntity = user instanceof Player ? (Player)user : null;
+    public @NotNull ItemStack finishUsingItem(@NotNull final ItemStack stack, @NotNull final Level world, @NotNull final LivingEntity user) {
+        final Player playerEntity = user instanceof Player ? (Player)user : null;
         if (playerEntity instanceof ServerPlayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer)playerEntity, stack);
         }
 
         if (!world.isClientSide) {
             user.removeAllEffects();
-            if(user instanceof Player player){
+            if(user instanceof final Player player){
                 player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getNormalToxicity(),false);
                 player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getDecoctionToxicity(),true);
             }
@@ -49,7 +49,7 @@ public class WitcherWhiteHoney extends WitcherPotions_Base {
             }
         }
 
-        ItemStack stack_Empty = WitcherPotions_Base.getStackEmptyBottle(this);
+        final ItemStack stack_Empty = WitcherPotions_Base.getStackEmptyBottle(this);
 
         if (playerEntity == null || !playerEntity.getAbilities().instabuild) {
             if (playerEntity != null) {
@@ -67,17 +67,17 @@ public class WitcherWhiteHoney extends WitcherPotions_Base {
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, @NotNull Player user, @NotNull InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull final Level world, @NotNull final Player user, @NotNull final InteractionHand hand) {
         return ItemUtils.startUsingInstantly(world, user, hand);
     }
 
     @Override
-    public @NotNull UseAnim getUseAnimation(ItemStack stack) {
+    public @NotNull UseAnim getUseAnimation(final ItemStack stack) {
         return UseAnim.DRINK;
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag type) {
+    public void appendHoverText(@NotNull final ItemStack stack, final TooltipContext context, @NotNull final List<Component> tooltip, @NotNull final TooltipFlag type) {
         tooltip.add(Component.translatable("tooltip.effect.tcots_witcher.white_honey.first").withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("tooltip.effect.tcots_witcher.white_honey.second").withStyle(ChatFormatting.GRAY));
     }

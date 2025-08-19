@@ -16,7 +16,7 @@ public class HerbalTableRecipeJsonBuilder {
     private final int basePotion;
     private final int tickEffectTime;
     private final int badAmplifier;
-    public HerbalTableRecipeJsonBuilder(ItemStack herb, List<String> effectsID, int basePotion, int tickEffectTime, int badAmplifier) {
+    public HerbalTableRecipeJsonBuilder(final ItemStack herb, final List<String> effectsID, final int basePotion, final int tickEffectTime, final int badAmplifier) {
         this.herb=herb;
         this.effectsID = effectsID;
         this.basePotion=basePotion;
@@ -24,23 +24,23 @@ public class HerbalTableRecipeJsonBuilder {
         this.badAmplifier=badAmplifier;
     }
 
-    public static HerbalTableRecipeJsonBuilder create(ItemStack herb, List<MobEffect> PositiveEffectID) {
+    public static HerbalTableRecipeJsonBuilder create(final ItemStack herb, final List<MobEffect> PositiveEffectID) {
         return create(herb, PositiveEffectID, 40);
     }
 
-    public static HerbalTableRecipeJsonBuilder create(ItemStack herb, List<MobEffect> PositiveEffectID, int tickEffectTime) {
+    public static HerbalTableRecipeJsonBuilder create(final ItemStack herb, final List<MobEffect> PositiveEffectID, final int tickEffectTime) {
         return create(herb, PositiveEffectID, tickEffectTime, 0);
     }
 
-    public static HerbalTableRecipeJsonBuilder create(ItemStack herb, List<MobEffect> PositiveEffectID, int tickEffectTime, int badAmplifier) {
+    public static HerbalTableRecipeJsonBuilder create(final ItemStack herb, final List<MobEffect> PositiveEffectID, final int tickEffectTime, final int badAmplifier) {
 
         return create(herb, PositiveEffectID, tickEffectTime, badAmplifier, 0);
     }
 
-    public static HerbalTableRecipeJsonBuilder create(ItemStack herb, List<MobEffect> PositiveEffectID, int tickEffectTime, int badAmplifier, int basePotion) {
-        List<String> listPositiveEffects=new ArrayList<>();
+    public static HerbalTableRecipeJsonBuilder create(final ItemStack herb, final List<MobEffect> PositiveEffectID, final int tickEffectTime, final int badAmplifier, final int basePotion) {
+        final List<String> listPositiveEffects=new ArrayList<>();
 
-        for(MobEffect effect : PositiveEffectID){
+        for(final MobEffect effect : PositiveEffectID){
             listPositiveEffects.add(Objects.requireNonNull(BuiltInRegistries.MOB_EFFECT.getKey(effect)).toString());
         }
 
@@ -48,16 +48,16 @@ public class HerbalTableRecipeJsonBuilder {
     }
 
     @SuppressWarnings("unused")
-    public void offerTo(RecipeOutput exporter, ResourceLocation recipeId) {
-        HerbalTableRecipe herbalTableRecipe = new HerbalTableRecipe(this.herb, this.effectsID, this.basePotion, this.tickEffectTime, this.badAmplifier);
+    public void offerTo(final RecipeOutput exporter, final ResourceLocation recipeId) {
+        final HerbalTableRecipe herbalTableRecipe = new HerbalTableRecipe(this.herb, this.effectsID, this.basePotion, this.tickEffectTime, this.badAmplifier);
 
         exporter.accept(recipeId, herbalTableRecipe, null);
     }
 
-    public void offerTo(RecipeOutput exporter) {
-        HerbalTableRecipe herbalTableRecipe = new HerbalTableRecipe(this.herb, this.effectsID, this.basePotion, this.tickEffectTime, this.badAmplifier);
+    public void offerTo(final RecipeOutput exporter) {
+        final HerbalTableRecipe herbalTableRecipe = new HerbalTableRecipe(this.herb, this.effectsID, this.basePotion, this.tickEffectTime, this.badAmplifier);
 
-        String recipeID = BuiltInRegistries.ITEM.getKey(herb.getItem()) +"_herbal";
+        final String recipeID = BuiltInRegistries.ITEM.getKey(herb.getItem()) +"_herbal";
 
         exporter.accept(ResourceLocation.parse(recipeID), herbalTableRecipe, null);
     }

@@ -2,11 +2,17 @@ package TCOTS.utils;
 
 import TCOTS.registry.TCOTS_Effects;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.LightLayer;
 import org.apache.commons.compress.utils.Lists;
 import org.lwjgl.glfw.GLFW;
 import com.mojang.blaze3d.platform.InputConstants;
+
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -25,50 +31,104 @@ public class MiscUtil {
     public static float gvalchir_penetration = MiscUtil.isWitcherRPGLoaded()? 0.75f: 0.75f;
     public static float moonblade_bonus      = MiscUtil.isWitcherRPGLoaded()? 0.15f: 0.25f;
 
-
     /**
-    Puts a dynamic tooltip to an armor item that it can be open with shift
+    Puts a dynamic tooltip to an armor item that it can be open with left alt
      @param stack The stack that it's going to have the tooltip
      @param mainTooltip The main tooltip to change
      @param bonusTooltip The tooltip that it's going to be added
      */
-    public static void setFullSetBonusTooltip(ItemStack stack, List<Component> mainTooltip, List<MutableComponent> bonusTooltip){
-        List<MutableComponent> bonusTooltipGreen = Lists.newArrayList();
+    public static void setFullSetBonusTooltip(final ItemStack stack, final List<Component> mainTooltip, final List<MutableComponent> bonusTooltip, final TooltipFlag tooltipFlag){
+        final List<MutableComponent> bonusTooltipGreen = Lists.newArrayList();
 
         bonusTooltip.forEach(text -> {
-            text.withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC);
+            text.withStyle(ChatFormatting.DARK_GREEN);
             bonusTooltipGreen.add(text);
         });
 
-
-
-        MiscUtil.setSpecialTooltip(Component.translatable("tooltip.tcots_witcher.generic_tooltip.full_set_bonus"), stack, mainTooltip, bonusTooltipGreen);
+        MiscUtil.setSpecialTooltip(Component.translatable("tooltip.tcots_witcher.generic_tooltip.full_set_bonus"), stack, mainTooltip, bonusTooltipGreen, tooltipFlag);
     }
 
     /**
-     Puts a dynamic tooltip to an item that it can be open with shift
+     Puts a dynamic tooltip to an item that it can be open with left alt
      @param stack The stack that it's going to have the tooltip
      @param mainTooltip The main tooltip to change
      @param bonusTooltip The tooltip that it's going to be added
      */
-    public static void setSpecialTooltip(MutableComponent mainText,ItemStack stack, List<Component> mainTooltip, List<MutableComponent> bonusTooltip){
-        if(Minecraft.getInstance()!=null && (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) || InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_RIGHT_SHIFT))){
+    public static void setSpecialTooltip(
+            final MutableComponent mainText,
+            final ItemStack stack,
+            final List<Component> mainTooltip,
+            final List<MutableComponent> bonusTooltip,
+            final TooltipFlag tooltipType
+    ) {
+        boolean mustContainExtraSpace = stack.getItem() instanceof SwordItem;
 
-            mainTooltip.add(mainText.withStyle(ChatFormatting.DARK_GREEN));
 
-            bonusTooltip.forEach(
-                    text -> mainTooltip.add(CommonComponents.space().append(text))
-            );
-
-        } else {
-            mainTooltip.add(mainText.withStyle(ChatFormatting.GRAY));
-            mainTooltip.add(CommonComponents.space().append(Component.translatable("tooltip.tcots_witcher.generic_tooltip.see_more").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)));
+        // To not add the space if it contains "Allows Spell Casting"
+        for (final Component component : mainTooltip) {
+            if (component.getContents() instanceof final TranslatableContents translation) {
+                if (translation.getKey().equals("spell.tooltip.host.proxy.spell")) {
+                    mustContainExtraSpace = false;
+                    break;
+                }
+            }
         }
 
-        if(stack.isEnchanted()) mainTooltip.add(CommonComponents.EMPTY);
+        //Build special tooltip lines separately
+        final List<Component> specialLines = new ArrayList<>();
+
+        if (mustContainExtraSpace) {
+            specialLines.add(CommonComponents.EMPTY);
+            specialLines.add(mainText.withStyle(ChatFormatting.GRAY));
+        } else if (!(stack.getItem() instanceof SwordItem)) {
+            specialLines.add(mainText.withStyle(ChatFormatting.GRAY));
+        }
+
+        if (Minecraft.getInstance() != null && (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_ALT))) {
+            specialLines.addAll(bonusTooltip);
+        } else {
+            specialLines.add(Component.translatable(
+                    "tooltip.tcots_witcher.generic_tooltip.see_more", "Left Alt"
+            ).withStyle(ChatFormatting.DARK_GRAY));
+        }
+
+        // Optional: Add empty line if enchanted and not a sword
+        if (stack.isEnchanted() && !(stack.getItem() instanceof SwordItem)) {
+            specialLines.add(CommonComponents.EMPTY);
+        }
+
+        // Find advanced tooltip start
+        int found = 0;
+        if (tooltipType.isAdvanced()) {
+            final var searchedStyle = Component.literal("x")
+                    .withStyle(ChatFormatting.DARK_GRAY)
+                    .getStyle(); // From: ItemStack.java, advanced tooltip section
+
+            int reverseIndex = mainTooltip.size();
+            for (final var line : mainTooltip.reversed()) {
+                --reverseIndex;
+                final var style = line.getStyle();
+                if (style != null) {
+                    boolean newFind = searchedStyle.getColor().equals(style.getColor());
+                    if (found != 0 && !newFind) {
+                        break;
+                    } else if (newFind) {
+                        found = reverseIndex;
+                    }
+                }
+            }
+        }
+
+        // Insert Lines
+        if (found <= 0) {
+            mainTooltip.addAll(specialLines);
+        } else {
+            mainTooltip.addAll(found, specialLines);
+        }
     }
 
-    public static int getTimeInTicks(int seconds){
+
+    public static int getTimeInTicks(final int seconds){
         return seconds*20;
     }
 
@@ -77,10 +137,10 @@ public class MiscUtil {
      @param enchantment The Enchantment to check
      @param stack The stack to check
      */
-    public static int getEnchantmentLevel(ResourceKey<Enchantment> enchantment, ItemStack stack) {
+    public static int getEnchantmentLevel(final ResourceKey<Enchantment> enchantment, final ItemStack stack) {
         int level = 0;
-        ItemEnchantments itemEnchantmentsComponent = stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
-        for (Holder<Enchantment> entry : itemEnchantmentsComponent.keySet()) {
+        final ItemEnchantments itemEnchantmentsComponent = stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
+        for (final Holder<Enchantment> entry : itemEnchantmentsComponent.keySet()) {
             if (entry.is(enchantment)) {
                 level = itemEnchantmentsComponent.getLevel(entry);
             }
@@ -89,22 +149,40 @@ public class MiscUtil {
         return level;
     }
 
+    public static boolean canHaveCatEffect(final LivingEntity player){
 
-
-
-    public static boolean canHaveCatEffect(LivingEntity player){
-
-        int lightBlock = player.level().getBrightness(LightLayer.BLOCK, player.blockPosition());
-        int lightSky   = player.level().getBrightness(LightLayer.SKY,   player.blockPosition());
+        final int lightBlock = player.level().getBrightness(LightLayer.BLOCK, player.blockPosition());
+        final int lightSky   = player.level().getBrightness(LightLayer.SKY,   player.blockPosition());
 
         return player.hasEffect(TCOTS_Effects.CatEffect()) && !(player.isSpectator()) && ((lightBlock <=4 && lightSky <= 10) || (isNightTicks(player) && lightBlock <=4));
     }
 
-    private static boolean isNightTicks(LivingEntity player){
-        long time = player.level().getDayTime() % 24000;
+    private static boolean isNightTicks(final LivingEntity player){
+        final long time = player.level().getDayTime() % 24000;
         return time >= 13000 && time < 23000;
     }
 
+//    /**
+//     Detects if the player model is one Expressive model like the ones from <a href="https://modrinth.com/resourcepack/better-expressions">Better Expressions</a> or <a href="https://modrinth.com/resourcepack/tras-fresh-player">Fresh Moves</a>
+//     */
+//    public static boolean hasExpressiveModel(HumanoidModel<?> model){
+//        return model.head.getAllParts().anyMatch(part->part.toString().contains("EMF_brows"))
+//                && model.head.getAllParts().anyMatch(part->part.toString().contains("EMF_eyes"))
+//                && model.head.getAllParts().anyMatch(part->part.toString().contains("EMF_extras"));
+//    }
+
+    /**
+     Detects if the player model is one Expressive model like the ones from <a href="https://modrinth.com/resourcepack/better-expressions">Better Expressions</a> or <a href="https://modrinth.com/resourcepack/tras-fresh-player">Fresh Moves</a>
+     */
+    public static boolean hasExpressiveModel(final HumanoidModel<?> model){
+        if(model.head.hasChild("EMF_head")){
+            return model.head.getChild("EMF_head").hasChild("EMF_brows")
+                    && model.head.getChild("EMF_head").hasChild("EMF_eyes")
+                    && model.head.getChild("EMF_head").hasChild("EMF_extras");
+        }
+
+        return false;
+    }
 
 
     /** In Fabric detects if <a href="https://www.curseforge.com/minecraft/mc-mods/witcher-rpg-class">Witcher (More RPG Classes)</a> is present, in NeoForge only returns false (because the mod is Fabric only)*/

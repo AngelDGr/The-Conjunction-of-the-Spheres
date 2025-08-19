@@ -15,7 +15,7 @@ public class CrossbowMixins {
     public static class HeldItemRendererMixin {
 
         @ModifyExpressionValue(method = "renderArmWithItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 1))
-        private boolean injectCrossbowFirstPerson(boolean original, @Local(argsOnly = true) ItemStack stack) {
+        private boolean injectCrossbowFirstPerson(final boolean original, @Local(argsOnly = true) final ItemStack stack) {
             return original || (stack.getItem() instanceof WitcherBaseCrossbow);
         }
     }

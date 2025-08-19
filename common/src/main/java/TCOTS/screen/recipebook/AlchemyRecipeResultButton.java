@@ -43,7 +43,7 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
 
     int j = 193;
 
-    public void receiveRecipe(RecipeHolder<AlchemyTableRecipe> recipe, RecipeBook recipeBook){
+    public void receiveRecipe(final RecipeHolder<AlchemyTableRecipe> recipe, final RecipeBook recipeBook){
 
         this.playerHasRecipe = recipeBook.contains(recipe);
 
@@ -55,11 +55,11 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
         }
     }
 
-    public void receiveTextRenderer(Font renderer){
+    public void receiveTextRenderer(final Font renderer){
         this.textRenderer=renderer;
     }
 
-    public void setCraftable(boolean craftable){
+    public void setCraftable(final boolean craftable){
         this.craftable=craftable;
     }
 
@@ -81,7 +81,7 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
     int textColor4=0xb43d2c;
     int textColor5=0xb43d2c;
     int textColorBase=0xb43d2c;
-    public void setTextColor(int index, boolean colorWhite){
+    public void setTextColor(final int index, final boolean colorWhite){
         switch (index){
             case 0:
                 textColor1 = colorWhite ? 0xffffff: 0xb43d2c;
@@ -105,11 +105,11 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
 
     boolean baseNotPresent=false;
 
-    public void setBaseNotPresent(boolean baseNotPresent) {
+    public void setBaseNotPresent(final boolean baseNotPresent) {
         this.baseNotPresent = baseNotPresent;
     }
 
-    private void drawNotBase(GuiGraphics context){
+    private void drawNotBase(final GuiGraphics context){
         context.pose().pushPose();
         context.pose().translate(0,0,101);
         context.blit(
@@ -122,7 +122,7 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(@NotNull GuiGraphics context, int mouseX, int mouseY, float delta) {
+    protected void renderWidget(@NotNull final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
         if(recipeEntry == null || recipe == null){
             return;
         }
@@ -134,10 +134,10 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
                 j = 193+23+23;
             }
 
-            ChatFormatting textColor;
+            final ChatFormatting textColor;
 
             if(this.recipe.getResultItem(null).getItem() instanceof WitcherPotions_Base && !(this.recipe.getResultItem(null).getItem() instanceof WitcherAlcohol_Base) && !(this.recipe.getResultItem(null).getItem() instanceof WitcherWhiteHoney)){
-                List<Component> list= new ArrayList<>();
+                final List<Component> list= new ArrayList<>();
 
                 if(((WitcherPotions_Base) this.recipe.getResultItem(null).getItem()).getStatusEffect().getAmplifier() > 0){
                     textColor = ChatFormatting.YELLOW;
@@ -145,7 +145,7 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
                     textColor = ChatFormatting.WHITE;
                 }
 
-                int tooltipY;
+                final int tooltipY;
                 //Name
                 if((((WitcherPotions_Base) this.recipe.getResultItem(null).getItem()).isDecoction())){
                     tooltipY=12;
@@ -156,11 +156,11 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
                 }
 
                 //Toxicity
-                int tox = ((WitcherPotions_Base) this.recipe.getResultItem(null).getItem()).getToxicity();
+                final int tox = ((WitcherPotions_Base) this.recipe.getResultItem(null).getItem()).getToxicity();
                 list.add(Component.translatable("tcots_witcher.tooltip.toxicity", tox).withStyle(ChatFormatting.DARK_GREEN));
 
                 //Stack
-                int maxCount = this.recipe.getResultItem(null).getMaxStackSize();
+                final int maxCount = this.recipe.getResultItem(null).getMaxStackSize();
                 if(!(((WitcherPotions_Base) this.recipe.getResultItem(null).getItem()).isDecoction())){
                     list.add(Component.translatable("tcots_witcher.tooltip.max_stack", maxCount).withStyle(ChatFormatting.DARK_BLUE));
                 }
@@ -176,24 +176,24 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
                     textColor = ChatFormatting.WHITE;
                 }
 
-                List<Component> list= new ArrayList<>();
+                final List<Component> list= new ArrayList<>();
                 //Name
                 list.add(Component.translatable("tcots_witcher.tooltip.gui.formula", recipe.getResultItem(null).getHoverName().getString()).withStyle(textColor));
 
                 //Damage
-                int damage = ((WitcherMonsterOil_Base) this.recipe.getResultItem(null).getItem()).getLevel() * 2;
+                final int damage = ((WitcherMonsterOil_Base) this.recipe.getResultItem(null).getItem()).getLevel() * 2;
                 list.add(Component.translatable("tcots_witcher.tooltip.gui.oil_damage", damage).withStyle(ChatFormatting.RED));
 
                 //Uses
-                int uses = ((WitcherMonsterOil_Base) this.recipe.getResultItem(null).getItem()).getUses();
+                final int uses = ((WitcherMonsterOil_Base) this.recipe.getResultItem(null).getItem()).getUses();
                 list.add(Component.translatable("tcots_witcher.tooltip.gui.oil_uses", uses).withStyle(ChatFormatting.DARK_BLUE));
                 context.renderComponentTooltip(textRenderer, list, this.getX()-20, this.getY()-22);
             } else if (this.recipe.getResultItem(null).getItem() instanceof WitcherWhiteHoney) {
 
-                List<Component> list= new ArrayList<>();
+                final List<Component> list= new ArrayList<>();
                 list.add(Component.translatable("tcots_witcher.tooltip.gui.formula", recipe.getResultItem(null).getHoverName().getString()));
                 //Stack
-                int maxCount = this.recipe.getResultItem(null).getMaxStackSize();
+                final int maxCount = this.recipe.getResultItem(null).getMaxStackSize();
 
                 list.add(Component.translatable("tcots_witcher.tooltip.max_stack", maxCount).withStyle(ChatFormatting.DARK_BLUE));
 
@@ -206,12 +206,12 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
                     textColor = ChatFormatting.WHITE;
                 }
 
-                List<Component> list= new ArrayList<>();
+                final List<Component> list= new ArrayList<>();
                 //Name
                 list.add(Component.translatable("tcots_witcher.tooltip.gui.formula", recipe.getResultItem(null).getHoverName().getString()).withStyle(textColor));
 
                 //Stack
-                int maxCount = this.recipe.getResultItem(null).getMaxStackSize();
+                final int maxCount = this.recipe.getResultItem(null).getMaxStackSize();
 
                 list.add(Component.translatable("tcots_witcher.tooltip.max_stack", maxCount).withStyle(ChatFormatting.DARK_BLUE));
 
@@ -253,14 +253,14 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
                     this.getX() + 3,
                     this.getY() + 3);
 
-            int resultCount = recipe.getResultItem(null).getCount();
+            final int resultCount = recipe.getResultItem(null).getCount();
 
             drawItemAmount(context, resultCount, 0xffffff, 14);
 
             //Draw ingredients
             for (int l = 0; l < recipe.getIngredients().size(); l++) {
-                ItemStack stack = recipe.getIngredients().get(l).getItems()[0];
-                int amount = recipe.getIngredientsCounts().get(l);
+                final ItemStack stack = recipe.getIngredients().get(l).getItems()[0];
+                final int amount = recipe.getIngredientsCounts().get(l);
                 switch (l) {
                     case 0:
                         //Draw ingredient Item
@@ -290,13 +290,13 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
             }
 
             //Draw base
-            int baseAmount = recipe.getBaseItem().getCount();
+            final int baseAmount = recipe.getBaseItem().getCount();
             context.renderFakeItem(recipe.getBaseItem(), this.getX() + 117, this.getY() + 3);
             drawItemAmount(context, baseAmount, textColorBase, 128);
         }
     }
 
-    private void drawItemAmount(GuiGraphics context, int amount, int textColor, int xOffset, int yOffset){
+    private void drawItemAmount(final GuiGraphics context, final int amount, final int textColor, final int xOffset, final int yOffset){
         if (amount > 1) {
             context.pose().pushPose();
             context.pose().translate(0, 0, 200);
@@ -305,22 +305,22 @@ public class AlchemyRecipeResultButton extends AbstractWidget {
         }
     }
 
-    private void drawItemAmount(GuiGraphics context, int amount, int textColor, int xOffset){
+    private void drawItemAmount(final GuiGraphics context, final int amount, final int textColor, final int xOffset){
         drawItemAmount(context, amount, textColor, xOffset, 12);
     }
 
     @Override
-    protected void updateWidgetNarration(@NotNull NarrationElementOutput builder) {
+    protected void updateWidgetNarration(@NotNull final NarrationElementOutput builder) {
 
     }
 
     @Override
-    public void playDownSound(SoundManager soundManager) {
+    public void playDownSound(final SoundManager soundManager) {
         soundManager.play(SimpleSoundInstance.forUI(SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, 1.0f));
     }
 
     @Override
-    protected boolean isValidClickButton(int button) {
+    protected boolean isValidClickButton(final int button) {
         return craftable && playerHasRecipe;
     }
 

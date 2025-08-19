@@ -18,14 +18,14 @@ import net.minecraft.world.level.block.Block;
 public class AlchemyTableItem extends BlockItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public AlchemyTableItem(Block block, Properties settings) {
+    public AlchemyTableItem(final Block block, final Properties settings) {
         super(block, settings);
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
 
     @Override
-    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+    public void createGeoRenderer(final Consumer<GeoRenderProvider> consumer) {
         consumer.accept(new GeoRenderProvider() {
 
             private AlchemyTableItemRenderer renderer = new AlchemyTableItemRenderer();
@@ -43,7 +43,7 @@ public class AlchemyTableItem extends BlockItem implements GeoItem {
 
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(GeoControllersUtil.genericIdleController(this));
     }
 

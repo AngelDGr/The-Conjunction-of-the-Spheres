@@ -37,7 +37,7 @@ public abstract class GameRendererMixin {
     @Inject(method =
             "tick",
             at = @At("TAIL"))
-    private void injectCatShader(CallbackInfo ci){
+    private void injectCatShader(final CallbackInfo ci){
         this.PutCatShader();
     }
 
@@ -66,15 +66,15 @@ public abstract class GameRendererMixin {
     @Unique
     private boolean isNightTicks(){
         assert this.minecraft.player != null;
-        long time = this.minecraft.player.level().getDayTime() % 24000;
+        final long time = this.minecraft.player.level().getDayTime() % 24000;
         return time >= 13000 && time < 23000;
     }
 
     @Unique
     private boolean canHaveCatEffect(){
         assert this.minecraft.player != null;
-        int lightBlock = this.minecraft.player.level().getBrightness(LightLayer.BLOCK, this.minecraft.player.blockPosition());
-        int lightSky   = this.minecraft.player.level().getBrightness(LightLayer.SKY,   this.minecraft.player.blockPosition());
+        final int lightBlock = this.minecraft.player.level().getBrightness(LightLayer.BLOCK, this.minecraft.player.blockPosition());
+        final int lightSky   = this.minecraft.player.level().getBrightness(LightLayer.SKY,   this.minecraft.player.blockPosition());
         return this.minecraft.player.hasEffect(TCOTS_Effects.CatEffect()) && !(this.minecraft.player.isSpectator()) && ((lightBlock <=4 && lightSky <= 10) || (this.isNightTicks() && lightBlock <=4));
     }
 

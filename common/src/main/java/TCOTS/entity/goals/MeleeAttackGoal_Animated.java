@@ -24,11 +24,11 @@ public class MeleeAttackGoal_Animated extends Goal {
     private long lastUpdateTime;
     private final int attackAnimationsNumber;
 
-    public MeleeAttackGoal_Animated(PathfinderMob mob, double speed, boolean pauseWhenMobIdle) {
+    public MeleeAttackGoal_Animated(final PathfinderMob mob, final double speed, final boolean pauseWhenMobIdle) {
         this(mob, speed, pauseWhenMobIdle, 3);
     }
 
-    public MeleeAttackGoal_Animated(PathfinderMob mob, double speed, boolean pauseWhenMobIdle, int attackAnimationsNumber) {
+    public MeleeAttackGoal_Animated(final PathfinderMob mob, final double speed, final boolean pauseWhenMobIdle, final int attackAnimationsNumber) {
         if (!(mob instanceof GeoEntity)) {
             throw new IllegalArgumentException("MeleeAttackGoal_Animated requires Mob implements GeoEntity");
         }
@@ -41,12 +41,12 @@ public class MeleeAttackGoal_Animated extends Goal {
 
     @Override
     public boolean canUse() {
-        long l = this.mob.level().getGameTime();
+        final long l = this.mob.level().getGameTime();
         if (l - this.lastUpdateTime < 20L) {
             return false;
         }
         this.lastUpdateTime = l;
-        LivingEntity livingEntity = this.mob.getTarget();
+        final LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity == null) {
             return false;
         }
@@ -62,7 +62,7 @@ public class MeleeAttackGoal_Animated extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        LivingEntity livingEntity = this.mob.getTarget();
+        final LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity == null) {
             return false;
         }
@@ -88,7 +88,7 @@ public class MeleeAttackGoal_Animated extends Goal {
 
     @Override
     public void stop() {
-        LivingEntity livingEntity = this.mob.getTarget();
+        final LivingEntity livingEntity = this.mob.getTarget();
         if (!EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(livingEntity)) {
             this.mob.setTarget(null);
         }
@@ -103,7 +103,7 @@ public class MeleeAttackGoal_Animated extends Goal {
 
     @Override
     public void tick() {
-        LivingEntity livingEntity = this.mob.getTarget();
+        final LivingEntity livingEntity = this.mob.getTarget();
         if (livingEntity == null) {
             return;
         }
@@ -114,7 +114,7 @@ public class MeleeAttackGoal_Animated extends Goal {
             this.targetY = livingEntity.getY();
             this.targetZ = livingEntity.getZ();
             this.updateCountdownTicks = 4 + this.mob.getRandom().nextInt(7);
-            double d = this.mob.distanceToSqr(livingEntity);
+            final double d = this.mob.distanceToSqr(livingEntity);
             if (d > 1024.0) {
                 this.updateCountdownTicks += 10;
             } else if (d > 256.0) {
@@ -129,15 +129,15 @@ public class MeleeAttackGoal_Animated extends Goal {
         this.attack(livingEntity);
     }
 
-    protected void attack(LivingEntity target) {
+    protected void attack(final LivingEntity target) {
         if (this.canAttack(target)) {
             this.resetCooldown();
             this.mob.swing(InteractionHand.MAIN_HAND);
             this.mob.getRandom().nextIntBetweenInclusive(0,1);
 
             //Triggers the Animation
-            if(this.mob instanceof GeoEntity geo) {
-                int randomAttack;
+            if(this.mob instanceof final GeoEntity geo) {
+                final int randomAttack;
                 switch (this.attackAnimationsNumber){
                     //Two attack animations
                     case 2:
@@ -180,7 +180,7 @@ public class MeleeAttackGoal_Animated extends Goal {
         return this.cooldown <= 0;
     }
 
-    protected boolean canAttack(LivingEntity target) {
+    protected boolean canAttack(final LivingEntity target) {
         return this.isCooledDown() && this.mob.isWithinMeleeAttackRange(target) && this.mob.getSensing().hasLineOfSight(target);
     }
 

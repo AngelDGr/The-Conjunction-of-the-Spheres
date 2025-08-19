@@ -6,13 +6,13 @@ import net.minecraft.world.entity.Mob;
 import org.jetbrains.annotations.NotNull;
 
 public class SamumEffect extends BombEffectBase {
-    public SamumEffect(MobEffectCategory category, int color) {
+    public SamumEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
-        if(entity instanceof Mob mob){
+    public boolean applyEffectTick(@NotNull final LivingEntity entity, final int amplifier) {
+        if(entity instanceof final Mob mob){
             mob.setTarget(null);
             mob.getLookControl().setLookAt(entity.getX(), entity.getY()-5, entity.getZ());
         }

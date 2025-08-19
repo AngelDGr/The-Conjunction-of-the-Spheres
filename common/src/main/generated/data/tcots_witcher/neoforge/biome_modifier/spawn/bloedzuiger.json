@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#tcots_witcher:has_monster/bloedzuiger",
+  "spawners": {
+    "type": "tcots_witcher:bloedzuiger",
+    "maxCount": 6,
+    "minCount": 3,
+    "weight": 100
+  }
+}

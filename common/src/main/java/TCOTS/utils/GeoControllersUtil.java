@@ -21,9 +21,9 @@ public class GeoControllersUtil {
     public static final RawAnimation RUNNING = RawAnimation.begin().thenLoop("move.running");
     public static final RawAnimation WALKING = RawAnimation.begin().thenLoop("move.walking");
 
-    public static <T extends GeoAnimatable> PlayState idleWalkRunController(AnimationState<T> state){
+    public static <T extends GeoAnimatable> PlayState idleWalkRunController(final AnimationState<T> state){
         //If it's aggressive and it is moving
-        Mob entity = (Mob) state.getAnimatable();
+        final Mob entity = (Mob) state.getAnimatable();
         if (entity.isAggressive() && state.isMoving()) {
             return state.setAndContinue(RUNNING);
         }
@@ -45,7 +45,7 @@ public class GeoControllersUtil {
         }
     }
 
-    public static <T extends GeoAnimatable> AnimationController<?> attackController(T animatable, int attacks){
+    public static <T extends GeoAnimatable> AnimationController<?> attackController(final T animatable, final int attacks){
         if(attacks==2){
             return new AnimationController<>(animatable, "AttackController", 1, state -> PlayState.STOP)
                     .triggerableAnim("attack1", GeoControllersUtil.ATTACK1)
@@ -58,14 +58,14 @@ public class GeoControllersUtil {
         }
     }
 
-    public static float getLimbSwing(AnimationState<?> animationState, float min, float max, float speed, float increase, boolean negative){
+    public static float getLimbSwing(final AnimationState<?> animationState, final float min, final float max, final float speed, final float increase, final boolean negative){
         return (float) Mth.clamp((negative? -1: 1)*((Math.sin(animationState.getLimbSwing()*speed)*(animationState.getLimbSwingAmount()*increase))), min, max);
     }
 
     /**
     Generic idle controller
      */
-    public static <T extends GeoAnimatable> AnimationController<?> genericIdleController(T animatable){
+    public static <T extends GeoAnimatable> AnimationController<?> genericIdleController(final T animatable){
         return
         new AnimationController<>(animatable, "IdleController", 0, state ->{
             state.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
@@ -74,17 +74,17 @@ public class GeoControllersUtil {
     }
 
     @SuppressWarnings("unused")
-    public static boolean isThirdPerson(@NotNull AnimationState<?> state){
+    public static boolean isThirdPerson(@NotNull final AnimationState<?> state){
         return state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE).getId()==1 || state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE).getId()==2;
     }
 
     @SuppressWarnings("unused")
-    public static boolean isFirstPerson(@NotNull AnimationState<?> state){
+    public static boolean isFirstPerson(@NotNull final AnimationState<?> state){
         return state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE).firstPerson();
     }
 
     @SuppressWarnings("unused")
-    public static boolean inInventory(@NotNull AnimationState<?> state){
+    public static boolean inInventory(@NotNull final AnimationState<?> state){
         return state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE).getId()==6;
     }
 

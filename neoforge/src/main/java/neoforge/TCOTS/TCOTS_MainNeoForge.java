@@ -3,8 +3,8 @@ package neoforge.TCOTS;
 import TCOTS.TCOTS_Main;
 
 import TCOTS.entity.misc.FoglingEntity;
-import TCOTS.entity.necrophages.*;
-import TCOTS.entity.ogroids.*;
+import TCOTS.entity.monsters.necrophages.*;
+import TCOTS.entity.monsters.ogroids.*;
 import TCOTS.items.AlchemyRecipeRandomlyLootFunction;
 import TCOTS.items.components.RecipeTeacherComponent;
 import TCOTS.registry.TCOTS_Entities;
@@ -15,6 +15,8 @@ import TCOTS.utils.AlchemyFormulaUtil;
 import TCOTS.world.spawn.BullvoreSpawner;
 
 import dev.architectury.event.events.common.LootEvent;
+import neoforge.TCOTS.datagen.TCOTS_DataGenerator;
+import neoforge.TCOTS.datagen.providers.TCOTS_DataMapGenerator;
 import neoforge.TCOTS.world.village.TCOTS_VillageAdditions;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -63,10 +65,10 @@ import java.util.function.Supplier;
 @Mod(value = TCOTS_Main.MOD_ID)
 public class TCOTS_MainNeoForge {
     /**
-     * registerCompostableItems() done with Data_Maps -> {@link neoforge.TCOTS.TCOTS_DataGenerator.DataMapGenerator}
-     * registerBiomeModificationSpawn() done with Biome_Modifiers -> {@link neoforge.TCOTS.TCOTS_DataGenerator}
+     * registerCompostableItems() done with Data_Maps -> {@link TCOTS_DataMapGenerator}
+     * registerBiomeModificationSpawn() done with Biome_Modifiers -> {@link TCOTS_DataGenerator}
      *  */
-    public TCOTS_MainNeoForge(IEventBus eventBus) {
+    public TCOTS_MainNeoForge(final IEventBus eventBus) {
         //Init common package
         TCOTS_Main.initCommon();
 
@@ -90,7 +92,7 @@ public class TCOTS_MainNeoForge {
     }
 
     @SubscribeEvent
-    public static void registerCommonEvent(FMLCommonSetupEvent event){
+    public static void registerCommonEvent(final FMLCommonSetupEvent event){
 
         //Dispense Behaviors
         {
@@ -107,7 +109,7 @@ public class TCOTS_MainNeoForge {
     }
 
     @SubscribeEvent
-    public static void setEntitiesAttributes(EntityAttributeCreationEvent event) {
+    public static void setEntitiesAttributes(final EntityAttributeCreationEvent event) {
         //Necrophages
         {
             //Drowner
@@ -137,6 +139,9 @@ public class TCOTS_MainNeoForge {
 
             //Devourer
             event.put(TCOTS_Entities.DEVOURER.get(), DevourerEntity.setAttributes().build());
+
+            //Bloedzuiger
+            event.put(TCOTS_Entities.BLOEDZUIGER.get(), BloedzuigerEntity.setAttributes().build());
 
             //Graveir
             event.put(TCOTS_Entities.GRAVEIR.get(), GraveirEntity.setAttributes().build());
@@ -172,7 +177,7 @@ public class TCOTS_MainNeoForge {
     }
 
     @SubscribeEvent
-    public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event){
+    public static void registerSpawnPlacements(final RegisterSpawnPlacementsEvent event){
         //Necrophages
         {
             //Drowners
@@ -206,6 +211,10 @@ public class TCOTS_MainNeoForge {
             //Devourer
             event.register(TCOTS_Entities.DEVOURER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     DevourerEntity::canSpawnInDarkW, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+
+            //Bloedzuiger
+            event.register(TCOTS_Entities.BLOEDZUIGER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    BloedzuigerEntity::canSpawnBloedzuiger, RegisterSpawnPlacementsEvent.Operation.REPLACE);
 
             //Graveir
             event.register(TCOTS_Entities.GRAVEIR.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
@@ -252,7 +261,7 @@ public class TCOTS_MainNeoForge {
         LootEvent.MODIFY_LOOT_TABLE.register((id, tableBuilder, isBuiltin) -> {
 
             if(Blocks.WHEAT.getLootTable().equals(id) && isBuiltin){
-                LootPool.Builder ergotSeeds = LootPool.lootPool()
+                final LootPool.Builder ergotSeeds = LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(TCOTS_Items.ERGOT_SEEDS.get()))
                         .when(LootItemRandomChanceCondition.randomChance(0.05f))
@@ -265,7 +274,7 @@ public class TCOTS_MainNeoForge {
             }
 
             if(EntityType.RAVAGER.getDefaultLootTable().equals(id) && isBuiltin){
-                LootPool.Builder monsterFat = LootPool.lootPool()
+                final LootPool.Builder monsterFat = LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(TCOTS_Items.MONSTER_FAT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(3f,8f))))
                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
@@ -277,7 +286,7 @@ public class TCOTS_MainNeoForge {
             }
 
             if((EntityType.HOGLIN.getDefaultLootTable().equals(id) || EntityType.ZOGLIN.getDefaultLootTable().equals(id)) && isBuiltin){
-                LootPool.Builder monsterFat = LootPool.lootPool()
+                final LootPool.Builder monsterFat = LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(TCOTS_Items.MONSTER_FAT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(2f,4f))))
                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
@@ -289,7 +298,7 @@ public class TCOTS_MainNeoForge {
             }
 
             if(EntityType.POLAR_BEAR.getDefaultLootTable().equals(id) && isBuiltin){
-                LootPool.Builder monsterFat = LootPool.lootPool()
+                final LootPool.Builder monsterFat = LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(TCOTS_Items.MONSTER_FAT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(2f,3f))))
                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
@@ -301,7 +310,7 @@ public class TCOTS_MainNeoForge {
             }
 
             if(EntityType.PIGLIN_BRUTE.getDefaultLootTable().equals(id) && isBuiltin){
-                LootPool.Builder monsterFat = LootPool.lootPool()
+                final LootPool.Builder monsterFat = LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(TCOTS_Items.MONSTER_FAT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f,2f))))
                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
@@ -316,12 +325,12 @@ public class TCOTS_MainNeoForge {
             {
                 if (BuiltInLootTables.ABANDONED_MINESHAFT.equals(id) && isBuiltin) {
 
-                    LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                    final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(0, 2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                             .when(LootItemRandomChanceCondition.randomChance(0.4f));
 
-                    LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                    final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
                             .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(14).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,4))))
@@ -333,12 +342,12 @@ public class TCOTS_MainNeoForge {
 
                 if (BuiltInLootTables.ANCIENT_CITY.equals(id) && isBuiltin) {
 
-                    LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                    final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(0, 1))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(new AlchemyRecipeRandomlyLootFunction.Builder().add(1))
                             .when(LootItemRandomChanceCondition.randomChance(0.9f));
 
-                    LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                    final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,3))))
                             .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -352,13 +361,13 @@ public class TCOTS_MainNeoForge {
                 {
                     if (BuiltInLootTables.BASTION_BRIDGE.equals(id) && isBuiltin) {
 
-                        LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                        final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 1))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get()))
                                 .apply(AlchemyRecipeRandomlyLootFunction.builder())
                                 .when(LootItemRandomChanceCondition.randomChance(0.4f));
 
-                        LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                        final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(1, 2))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15)
                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 3))))
@@ -372,13 +381,13 @@ public class TCOTS_MainNeoForge {
 
                     if (BuiltInLootTables.BASTION_OTHER.equals(id) && isBuiltin) {
 
-                        LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                        final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 1))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get()))
                                 .apply(AlchemyRecipeRandomlyLootFunction.builder())
                                 .when(LootItemRandomChanceCondition.randomChance(0.3f));
 
-                        LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                        final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(1, 2))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15)
                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 3))))
@@ -394,12 +403,12 @@ public class TCOTS_MainNeoForge {
 
                 if(BuiltInLootTables.DESERT_PYRAMID.equals(id) && isBuiltin){
 
-                    LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                    final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(0,2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                             .when(LootItemRandomChanceCondition.randomChance(0.4f));
 
-                    LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                    final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,3))))
                             .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -411,12 +420,12 @@ public class TCOTS_MainNeoForge {
 
                 if(BuiltInLootTables.IGLOO_CHEST.equals(id) && isBuiltin){
 
-                    LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                    final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                             .when(LootItemRandomChanceCondition.randomChance(1f));
 
-                    LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                    final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,3))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(1,5))))
                             .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(1,3))))
@@ -429,12 +438,12 @@ public class TCOTS_MainNeoForge {
 
                 if(BuiltInLootTables.JUNGLE_TEMPLE.equals(id) && isBuiltin){
 
-                    LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                    final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(0,2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                             .when(LootItemRandomChanceCondition.randomChance(0.8f));
 
-                    LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                    final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,4))))
                             .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -446,12 +455,12 @@ public class TCOTS_MainNeoForge {
 
                 if(BuiltInLootTables.NETHER_BRIDGE.equals(id) && isBuiltin){
 
-                    LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                    final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(0,1))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                             .when(LootItemRandomChanceCondition.randomChance(0.6f));
 
-                    LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                    final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,4))))
                             .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -463,13 +472,13 @@ public class TCOTS_MainNeoForge {
 
                 if(BuiltInLootTables.PILLAGER_OUTPOST.equals(id) && isBuiltin){
 
-                    LootPool.Builder extra_loot_oils = LootPool.lootPool()
+                    final LootPool.Builder extra_loot_oils = LootPool.lootPool()
                             .setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(TCOTS_Items.HANGED_OIL.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                             .add(LootItem.lootTableItem(TCOTS_Items.ENHANCED_HANGED_OIL.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                             .when(LootItemRandomChanceCondition.randomChance(0.05f));
 
-                    LootPool.Builder crossbow_bolts = LootPool.lootPool()
+                    final LootPool.Builder crossbow_bolts = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,4))
                             .add(LootItem.lootTableItem(TCOTS_Items.BASE_BOLT.get()).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(1,12))))
                             .add(LootItem.lootTableItem(TCOTS_Items.BLUNT_BOLT.get()).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1,6))))
@@ -478,12 +487,12 @@ public class TCOTS_MainNeoForge {
                             .add(LootItem.lootTableItem(TCOTS_Items.EXPLODING_BOLT.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1,2))))
                             .when(LootItemRandomChanceCondition.randomChance(0.4f));
 
-                    LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                    final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(0,2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                             .when(LootItemRandomChanceCondition.randomChance(0.5f));
 
-                    LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                    final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1, 2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(8).apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 1))))
                             .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2))))
@@ -502,7 +511,7 @@ public class TCOTS_MainNeoForge {
                 //Shipwreck
                 {
                     if (BuiltInLootTables.SHIPWRECK_SUPPLY.equals(id) && isBuiltin) {
-                        LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                        final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(1, 4))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(8).apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 1))))
                                 .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2))))
@@ -516,7 +525,7 @@ public class TCOTS_MainNeoForge {
                     }
 
                     if (BuiltInLootTables.SHIPWRECK_MAP.equals(id) && isBuiltin) {
-                        LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                        final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                                 .when(LootItemRandomChanceCondition.randomChance(0.6f));
@@ -527,12 +536,12 @@ public class TCOTS_MainNeoForge {
 
                 if(BuiltInLootTables.SIMPLE_DUNGEON.equals(id) && isBuiltin){
 
-                    LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                    final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,3))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                             .when(LootItemRandomChanceCondition.randomChance(0.7f));
 
-                    LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                    final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
                             .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -547,12 +556,12 @@ public class TCOTS_MainNeoForge {
                 {
                     if (BuiltInLootTables.STRONGHOLD_CORRIDOR.equals(id) && isBuiltin) {
 
-                        LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                        final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 3))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                                 .when(LootItemRandomChanceCondition.randomChance(0.6f));
 
-                        LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                        final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(1,2))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(15).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,4))))
                                 .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(0,2))))
@@ -564,7 +573,7 @@ public class TCOTS_MainNeoForge {
 
                     if (BuiltInLootTables.STRONGHOLD_CROSSING.equals(id) && isBuiltin) {
 
-                        LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                        final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                                 .when(LootItemRandomChanceCondition.randomChance(0.4f));
@@ -574,7 +583,7 @@ public class TCOTS_MainNeoForge {
 
                     if (BuiltInLootTables.STRONGHOLD_LIBRARY.equals(id) && isBuiltin) {
 
-                        LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                        final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 4))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                                 .when(LootItemRandomChanceCondition.randomChance(1f));
@@ -587,7 +596,7 @@ public class TCOTS_MainNeoForge {
                 {
                     if (BuiltInLootTables.UNDERWATER_RUIN_BIG.equals(id) && isBuiltin) {
 
-                        LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                        final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 2))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                                 .when(LootItemRandomChanceCondition.randomChance(0.3f));
@@ -597,7 +606,7 @@ public class TCOTS_MainNeoForge {
 
                     if (BuiltInLootTables.UNDERWATER_RUIN_SMALL.equals(id) && isBuiltin) {
 
-                        LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                        final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0, 1))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                                 .when(LootItemRandomChanceCondition.randomChance(0.2f));
@@ -607,20 +616,20 @@ public class TCOTS_MainNeoForge {
                 }
 
                 if(BuiltInLootTables.WOODLAND_MANSION.equals(id) && isBuiltin){
-                    LootPool.Builder extra_loot_oils = LootPool.lootPool()
+                    final LootPool.Builder extra_loot_oils = LootPool.lootPool()
                             .setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(TCOTS_Items.HANGED_OIL.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                             .add(LootItem.lootTableItem(TCOTS_Items.ENHANCED_HANGED_OIL.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                             .add(LootItem.lootTableItem(TCOTS_Items.SUPERIOR_HANGED_OIL.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                             .when(LootItemRandomChanceCondition.randomChance(0.05f));
 
-                    LootPool.Builder witcher_books = LootPool.lootPool()
+                    final LootPool.Builder witcher_books = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(1,3))
                             .add(LootItem.lootTableItem(TCOTS_Items.WITCHER_BESTIARY.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_BOOK.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                             .when(LootItemRandomChanceCondition.randomChance(0.05f));
 
-                    LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                    final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                             .setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(12).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1))))
                             .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(14).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2))))
@@ -630,7 +639,7 @@ public class TCOTS_MainNeoForge {
                             .add(LootItem.lootTableItem(TCOTS_Items.MANDRAKE_CORDIAL.get()).setWeight(18).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1))))
                             .when(LootItemRandomChanceCondition.randomChance(0.1f));
 
-                    LootPool.Builder alchemy_formulae = LootPool.lootPool()
+                    final LootPool.Builder alchemy_formulae = LootPool.lootPool()
                             .setRolls(UniformGenerator.between(0, 2))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALCHEMY_FORMULA.get())).apply(AlchemyRecipeRandomlyLootFunction.builder())
                             .when(LootItemRandomChanceCondition.randomChance(0.6f));
@@ -644,7 +653,7 @@ public class TCOTS_MainNeoForge {
                 //Village
                 {
                     if(BuiltInLootTables.FARMER_GIFT.equals(id) && isBuiltin){
-                        LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                        final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(15).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                                 .add(LootItem.lootTableItem(TCOTS_Items.VILLAGE_HERBAL.get()).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2))))
@@ -659,7 +668,7 @@ public class TCOTS_MainNeoForge {
                             || BuiltInLootTables.VILLAGE_TAIGA_HOUSE.equals(id)
                             || BuiltInLootTables.VILLAGE_SNOWY_HOUSE.equals(id))
                             && isBuiltin){
-                        LootPool.Builder witcher_alcohol = LootPool.lootPool()
+                        final LootPool.Builder witcher_alcohol = LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(TCOTS_Items.ALCOHEST.get()).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1))))
                                 .add(LootItem.lootTableItem(TCOTS_Items.DWARVEN_SPIRIT.get()).setWeight(11).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2))))
@@ -669,7 +678,7 @@ public class TCOTS_MainNeoForge {
                                 .add(LootItem.lootTableItem(TCOTS_Items.MANDRAKE_CORDIAL.get()).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1))))
                                 .when(LootItemRandomChanceCondition.randomChance(0.15f));
 
-                        LootPool.Builder witcher_bestiary = LootPool.lootPool()
+                        final LootPool.Builder witcher_bestiary = LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(TCOTS_Items.WITCHER_BESTIARY.get()).setWeight(1).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                                 .when(LootItemRandomChanceCondition.randomChance(0.05f));
@@ -700,7 +709,7 @@ public class TCOTS_MainNeoForge {
             {
                 if (BuiltInLootTables.SNIFFER_DIGGING.equals(id) && isBuiltin) {
 
-                    LootPool.Builder allspice = LootPool.lootPool()
+                    final LootPool.Builder allspice = LootPool.lootPool()
                             .setRolls(ConstantValue.exactly(1))
                             .add(LootItem.lootTableItem(TCOTS_Items.ALLSPICE.get()))
                             .when(LootItemRandomChanceCondition.randomChance(0.4f));
@@ -719,13 +728,13 @@ public class TCOTS_MainNeoForge {
             //Experience      --> 1/2/5/10/15/20/30
             //PriceMultiplier --> 0.05/0.2
 
-            NeoForge.EVENT_BUS.addListener((VillagerTradesEvent event) -> {
+            NeoForge.EVENT_BUS.addListener((final VillagerTradesEvent event) -> {
 
                 //Herbalist
                 if(event.getType().equals(TCOTS_Villagers.HERBALIST.get())){
                     //Level 1
                     {
-                        int level = 1;
+                        final int level = 1;
                         //Sell
                         {
                             event.getTrades().get(level)
@@ -765,7 +774,7 @@ public class TCOTS_MainNeoForge {
 
                     //Level 2
                     {
-                        int level = 2;
+                        final int level = 2;
                         //Sell
                         {
                             event.getTrades().get(level)
@@ -810,7 +819,7 @@ public class TCOTS_MainNeoForge {
 
                     //Level 3
                     {
-                        int level = 3;
+                        final int level = 3;
                         //Sell
                         {
                             event.getTrades().get(level)
@@ -865,7 +874,7 @@ public class TCOTS_MainNeoForge {
 
                     //Level 4
                     {
-                        int level = 4;
+                        final int level = 4;
                         //Sells
                         {
                             event.getTrades().get(level)
@@ -918,7 +927,7 @@ public class TCOTS_MainNeoForge {
 
                     //Level 5
                     {
-                        int level = 5;
+                        final int level = 5;
                         //Sell
                         {
                             {
@@ -931,6 +940,7 @@ public class TCOTS_MainNeoForge {
                                     event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.BLACK_BLOOD_POTION, 32, TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED));
                                     event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.MARIBOR_FOREST_POTION, 32, TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED));
                                     event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.WOLF_POTION, 32, TCOTS_Items.WOLF_POTION_ENHANCED));
+                                    event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.BINDWEED_POTION, 32, TCOTS_Items.BINDWEED_POTION_ENHANCED));
                                     event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.ROOK_POTION, 32, TCOTS_Items.ROOK_POTION_ENHANCED));
 
                                     event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.WHITE_HONEY_POTION, 16, TCOTS_Items.WHITE_HONEY_POTION_ENHANCED));
@@ -943,6 +953,7 @@ public class TCOTS_MainNeoForge {
                                     event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.BLACK_BLOOD_POTION_ENHANCED, 48, TCOTS_Items.BLACK_BLOOD_POTION_SUPERIOR));
                                     event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.MARIBOR_FOREST_POTION_ENHANCED, 48, TCOTS_Items.MARIBOR_FOREST_POTION_SUPERIOR));
                                     event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.WOLF_POTION_ENHANCED, 48, TCOTS_Items.WOLF_POTION_SUPERIOR));
+                                    event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.BINDWEED_POTION_ENHANCED, 48, TCOTS_Items.BINDWEED_POTION_SUPERIOR));
                                     event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.ROOK_POTION_ENHANCED, 48, TCOTS_Items.ROOK_POTION_SUPERIOR));
 
                                     event.getTrades().get(level).add((entity, random) -> upgradeRecipeTrade(TCOTS_Items.WHITE_HONEY_POTION_ENHANCED, 32, TCOTS_Items.WHITE_HONEY_POTION_SUPERIOR));
@@ -1124,7 +1135,7 @@ public class TCOTS_MainNeoForge {
             });
         }
 
-        private static MerchantOffer upgradeRecipeTrade(Supplier<Item> recipeToUpgrade, int Cost, Supplier<Item> upgradedRecipe){
+        private static MerchantOffer upgradeRecipeTrade(final Supplier<Item> recipeToUpgrade, final int Cost, final Supplier<Item> upgradedRecipe){
             return new MerchantOffer(
                     //Wants
                     new ItemCost(TCOTS_Items.ALCHEMY_FORMULA.get())
@@ -1138,7 +1149,7 @@ public class TCOTS_MainNeoForge {
                     0.2f);
         }
 
-        private static MerchantOffer miscRecipeTrade(Supplier<? extends Item> item){
+        private static MerchantOffer miscRecipeTrade(final Supplier<? extends Item> item){
             return new MerchantOffer(
                     //Wants
                     new ItemCost(Items.EMERALD, 16),
@@ -1157,7 +1168,7 @@ public class TCOTS_MainNeoForge {
         });
     }
 
-    public static void specificLoaderStuff(IEventBus eventBus){
+    public static void specificLoaderStuff(final IEventBus eventBus){
         TCOTS_Registries.SOUND_EVENTS.register(eventBus);
 
         TCOTS_Items.initDataComponents(); TCOTS_Registries.DATA_COMPONENTS.register(eventBus);

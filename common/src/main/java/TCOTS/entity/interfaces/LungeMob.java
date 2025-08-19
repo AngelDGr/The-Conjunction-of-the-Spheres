@@ -31,7 +31,7 @@ public interface LungeMob {
 
     default RawAnimation getLungeAnimation() {return LUNGE;}
 
-    default void lungeAnimationController(GeoEntity mob, AnimatableManager.ControllerRegistrar controllerRegistrar) {
+    default void lungeAnimationController(final GeoEntity mob, final AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(
                 new AnimationController<>(mob, "LungeController", 1, state -> PlayState.STOP)
                         .triggerableAnim("lunge", getLungeAnimation())

@@ -1,7 +1,7 @@
 package TCOTS.mixin;
 
 import TCOTS.TCOTS_Main;
-import TCOTS.entity.necrophages.GhoulEntity;
+import TCOTS.entity.monsters.necrophages.GhoulEntity;
 import TCOTS.sound.GhoulRegeneratingSoundInstance;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -28,13 +28,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonPacketListenerImpl implements TickablePacketListener, ClientGamePacketListener {
     @Shadow private ClientLevel level;
 
-    public ClientPlayNetworkHandlerMixin(Minecraft client, Connection connection, CommonListenerCookie connectionState) {
+    public ClientPlayNetworkHandlerMixin(final Minecraft client, final Connection connection, final CommonListenerCookie connectionState) {
         super(client, connection, connectionState);
     }
 
     @Inject(method = "handleEntityEvent", at = @At("TAIL"), cancellable = true)
-    private void injectGhoulSound(@NotNull ClientboundEntityEventPacket packet, CallbackInfo ci) {
-        Entity entity = packet.getEntity(this.level);
+    private void injectGhoulSound(@NotNull final ClientboundEntityEventPacket packet, final CallbackInfo ci) {
+        final Entity entity = packet.getEntity(this.level);
         if (entity != null) {
             if (packet.getEventId() == GhoulEntity.GHOUL_REGENERATING) {
                 this.minecraft.getSoundManager().play(new GhoulRegeneratingSoundInstance((GhoulEntity) entity));
@@ -44,13 +44,14 @@ public abstract class ClientPlayNetworkHandlerMixin extends ClientCommonPacketLi
     }
 
     @Inject(method = "handleRespawn", at = @At("TAIL"))
-    private void injectChangesInEyesRespawn(ClientboundRespawnPacket packet, CallbackInfo ci){
+    private void injectChangesInEyesRespawn(final ClientboundRespawnPacket packet, final CallbackInfo ci){
         TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(new TCOTS_Main.WitcherEyesFullPacket(
                 TCOTS_Main.CONFIG.witcher_eyes.activateEyes(),
                 TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                 TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                 TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()
+                TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()
                 )
         );
 

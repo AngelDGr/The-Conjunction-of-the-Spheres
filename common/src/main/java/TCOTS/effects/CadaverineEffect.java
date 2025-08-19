@@ -10,15 +10,17 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Zombie;
 
 public class CadaverineEffect extends MobEffect {
-    public CadaverineEffect(MobEffectCategory category, int color) {
+    public CadaverineEffect(final MobEffectCategory category, final int color) {
         super(category, color);
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        float damageAmount = entity instanceof IronGolem ? 3f: entity instanceof Zombie? 2f: 1f;
+    public boolean applyEffectTick(final LivingEntity entity, final int amplifier) {
+        final float damageAmount = entity instanceof IronGolem ? 3f:
+                entity instanceof Zombie || EntitiesUtil.isNecrophage(entity)? 2f:
+                        1f;
 
-        boolean damage = entity.hurt(TCOTS_DamageTypes.cadaverineDamage(entity.level()), damageAmount);
+        final boolean damage = entity.hurt(TCOTS_DamageTypes.cadaverineDamage(entity.level()), damageAmount);
         if (damage)
             EntitiesUtil.damageEquipment(entity, TCOTS_DamageTypes.cadaverineDamage(entity.level()), 1,
                     EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD,
@@ -30,8 +32,8 @@ public class CadaverineEffect extends MobEffect {
 
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
-        int i = 15 >> amplifier;
+    public boolean shouldApplyEffectTickThisTick(final int duration, final int amplifier) {
+        final int i = 15 >> amplifier;
         if (i > 0) {
             return duration % i == 0;
         }

@@ -10,18 +10,18 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.util.Color;
 
 public class DrownerPuddleRenderer extends GeoEntityRenderer<DrownerPuddleEntity> {
-    public DrownerPuddleRenderer(EntityRendererProvider.Context renderManager) {
+    public DrownerPuddleRenderer(final EntityRendererProvider.Context renderManager) {
         super(renderManager, new DrownerPuddleModel());
     }
 
     @Override
-    public ResourceLocation getTextureLocation(DrownerPuddleEntity animatable) {
+    public ResourceLocation getTextureLocation(final DrownerPuddleEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "textures/entity/necrophages/drowner/drowner_puddle.png");
     }
 
     @Override
-    public Color getRenderColor(DrownerPuddleEntity animatable, float partialTick, int packedLight) {
-        int waterColor = BiomeColors.getAverageWaterColor(animatable.level(), animatable.blockPosition());
+    public Color getRenderColor(final DrownerPuddleEntity animatable, final float partialTick, final int packedLight) {
+        final int waterColor = BiomeColors.getAverageWaterColor(animatable.level(), animatable.blockPosition());
 
         return Color.ofOpaque(waterColor);
     }

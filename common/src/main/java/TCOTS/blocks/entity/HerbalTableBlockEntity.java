@@ -13,12 +13,12 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class HerbalTableBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public HerbalTableBlockEntity(BlockEntityType<?> entityType, BlockPos pos, BlockState state) {
+    public HerbalTableBlockEntity(final BlockEntityType<?> entityType, final BlockPos pos, final BlockState state) {
         super(entityType, pos, state);
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(GeoControllersUtil.genericIdleController(this));
     }
 

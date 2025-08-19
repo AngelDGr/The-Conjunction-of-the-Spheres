@@ -34,7 +34,7 @@ public class GiantAnchorBlock extends BaseEntityBlock {
     protected static final VoxelShape TOP_EAST = Block.box(0.0, 8.0, 0.0, 8.0, 16.0, 16.0);
     protected static final VoxelShape TOP_WEST = Block.box(8.0, 8.0, 0.0, 16.0, 16.0, 16.0);
 
-    private static VoxelShape composeShape(Direction direction){
+    private static VoxelShape composeShape(final Direction direction){
         return switch (direction){
             case DOWN, NORTH, UP -> putTopPart(TOP_NORTH);
 
@@ -44,42 +44,42 @@ public class GiantAnchorBlock extends BaseEntityBlock {
         };
     }
 
-    private static VoxelShape putTopPart(VoxelShape topPart){
+    private static VoxelShape putTopPart(final VoxelShape topPart){
         return Shapes.or(BOTTOM_SHAPE, topPart);
     }
 
-    public GiantAnchorBlock(Properties settings) {
+    public GiantAnchorBlock(final Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state){
+    public @NotNull RenderShape getRenderShape(@NotNull final BlockState state){
         return RenderShape.MODEL;
     }
 
     @Override
-    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public @NotNull VoxelShape getShape(final BlockState state, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final CollisionContext context) {
         return composeShape(state.getValue(FACING));
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    public BlockState getStateForPlacement(final BlockPlaceContext ctx) {
         return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
+    public @NotNull BlockState rotate(final BlockState state, final Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
+    public @NotNull BlockState mirror(final BlockState state, final Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(final StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
@@ -89,18 +89,18 @@ public class GiantAnchorBlock extends BaseEntityBlock {
     }
 
     @Override
-    public boolean useShapeForLightOcclusion(@NotNull BlockState state) {
+    public boolean useShapeForLightOcclusion(@NotNull final BlockState state) {
         return true;
     }
 
     @Override
-    protected boolean isPathfindable(@NotNull BlockState state, @NotNull PathComputationType type) {
+    protected boolean isPathfindable(@NotNull final BlockState state, @NotNull final PathComputationType type) {
         return false;
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull final BlockPos pos, @NotNull final BlockState state) {
         return new GiantAnchorBlockEntity(TCOTS_Blocks.GiantAnchorEntity(), pos, state);
     }
 }

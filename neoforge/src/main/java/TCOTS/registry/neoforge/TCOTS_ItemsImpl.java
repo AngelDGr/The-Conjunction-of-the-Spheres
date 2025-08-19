@@ -42,7 +42,7 @@ public class TCOTS_ItemsImpl extends TCOTS_Items {
         CUSTOM_EFFECTS_COMPONENT = registerDataComponent("custom_effects", builder -> builder.persistent(CustomEffectsComponent.CODEC));
     }
 
-    private static <T> Supplier<DataComponentType<T>> registerDataComponent(String id, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
+    private static <T> Supplier<DataComponentType<T>> registerDataComponent(final String id, final UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
         return TCOTS_Registries.DATA_COMPONENTS.registerComponentType(id, builderOperator);
     }
 

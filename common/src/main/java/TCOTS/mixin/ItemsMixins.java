@@ -2,7 +2,7 @@ package TCOTS.mixin;
 
 import TCOTS.registry.TCOTS_Blocks;
 import TCOTS.blocks.entity.MonsterNestBlockEntity;
-import TCOTS.entity.ogroids.RockTrollEntity;
+import TCOTS.entity.monsters.ogroids.RockTrollEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -35,9 +35,9 @@ public class ItemsMixins {
     @Mixin(MilkBucketItem.class)
     public static class MilkBucketItemMixin {
         @Inject(method = "finishUsingItem", at = @At("RETURN"))
-        private void injectInTickDecreaseToxicity(ItemStack stack, Level world, LivingEntity user, CallbackInfoReturnable<ItemStack> cir) {
+        private void injectInTickDecreaseToxicity(final ItemStack stack, final Level world, final LivingEntity user, final CallbackInfoReturnable<ItemStack> cir) {
             if(!world.isClientSide){
-                if(user instanceof Player player){
+                if(user instanceof final Player player){
                     player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getNormalToxicity(),false);
                     player.theConjunctionOfTheSpheres$decreaseToxicity(player.theConjunctionOfTheSpheres$getDecoctionToxicity(),true);
                 }
@@ -51,15 +51,15 @@ public class ItemsMixins {
         @Shadow public abstract EntityType<?> getType(ItemStack stack);
 
         @Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
-        public void InjectInMonsterNest(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir){
-            BlockEntity blockEntity;
-            Level world = context.getLevel();
-            BlockPos blockPos = context.getClickedPos();
-            BlockState blockState = world.getBlockState(blockPos);
-            ItemStack itemStack = context.getItemInHand();
+        public void InjectInMonsterNest(final UseOnContext context, final CallbackInfoReturnable<InteractionResult> cir){
+            final BlockEntity blockEntity;
+            final Level world = context.getLevel();
+            final BlockPos blockPos = context.getClickedPos();
+            final BlockState blockState = world.getBlockState(blockPos);
+            final ItemStack itemStack = context.getItemInHand();
             if (blockState.is(TCOTS_Blocks.MonsterNest()) && (blockEntity = world.getBlockEntity(blockPos)) instanceof MonsterNestBlockEntity) {
-                MonsterNestBlockEntity mobSpawnerBlockEntity = (MonsterNestBlockEntity)blockEntity;
-                EntityType<?> entityType = this.getType(itemStack);
+                final MonsterNestBlockEntity mobSpawnerBlockEntity = (MonsterNestBlockEntity)blockEntity;
+                final EntityType<?> entityType = this.getType(itemStack);
                 mobSpawnerBlockEntity.setEntityId(entityType, world.getRandom());
                 blockEntity.setChanged();
                 world.sendBlockUpdated(blockPos, blockState, blockState, Block.UPDATE_ALL);
@@ -78,12 +78,12 @@ public class ItemsMixins {
     public static abstract class ItemMixin {
 
         @Inject(method = "useOn", at = @At("TAIL"), cancellable = true)
-        private void injectTrollCommanding(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir){
+        private void injectTrollCommanding(final UseOnContext context, final CallbackInfoReturnable<InteractionResult> cir){
 
             if(context.getItemInHand().is(Items.STICK)){
-                Player player = context.getPlayer();
+                final Player player = context.getPlayer();
                 if(player!=null) {
-                    List<RockTrollEntity> listFollowerTrolls =
+                    final List<RockTrollEntity> listFollowerTrolls =
                             player.level().getEntitiesOfClass(RockTrollEntity.class, player.getBoundingBox().inflate(20, 10, 20),
                             troll -> troll.isFollowing() && troll.getOwner() == player);
 
@@ -91,7 +91,7 @@ public class ItemsMixins {
 
                         listFollowerTrolls.sort(Comparator.comparing(troll -> troll.getName().getString()));
 
-                        RockTrollEntity trollCommanded = listFollowerTrolls.get(0);
+                        final RockTrollEntity trollCommanded = listFollowerTrolls.get(0);
                         trollCommanded.setFollowerState(2);
                         trollCommanded.setGuardingPos(context.getClickedPos());
                         player.displayClientMessage(Component.translatable("tcots_witcher.gui.troll_waits", trollCommanded.getName()), true);

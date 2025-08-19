@@ -20,55 +20,55 @@ import net.minecraft.world.entity.player.Player;
 public class MoonDustBomb {
     private static final byte MOON_DUST_EXPLODES = 41;
 
-    public static void explosionLogic(WitcherBombEntity bomb){
+    public static void explosionLogic(final WitcherBombEntity bomb){
 
         bomb.playSound(SoundEvents.GENERIC_EXPLODE.value(), 1,1);
 
         bomb.level().broadcastEntityEvent(bomb, MOON_DUST_EXPLODES);
 
-        List<LivingEntity> list = bomb.level().getEntitiesOfClass(LivingEntity.class, bomb.getBoundingBox().inflate(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
+        final List<LivingEntity> list = bomb.level().getEntitiesOfClass(LivingEntity.class, bomb.getBoundingBox().inflate(3+(bomb.getLevel()*2),2,3+(bomb.getLevel()*2)),
                 entity ->
                         !(entity instanceof ArmorStand)
                                 && entity.isAlive()
                                 && entity != bomb.getOwner());
 
 
-        Entity entityCause = bomb.getEffectSource();
-        for(LivingEntity entity: list){
+        final Entity entityCause = bomb.getEffectSource();
+        for(final LivingEntity entity: list){
             //To not apply effect across walls
             if(BombsUtil.getExposure(entity.position(), bomb) == 0) continue;
 
             //Applies moon dust effect to entity
             entity.addEffect(new MobEffectInstance(TCOTS_Effects.MoonDustEffect(), bomb.getLevel() < 2 ? 200 : 400, bomb.getLevel()), entityCause);
             //Gives you the advancement
-            if(entity.getType() == EntityType.CREEPER && bomb.getLevel()>1 && bomb.getEffectSource() instanceof Player player){
-                if(player instanceof ServerPlayer serverPlayer){
+            if(entity.getType() == EntityType.CREEPER && bomb.getLevel()>1 && bomb.getEffectSource() instanceof final Player player){
+                if(player instanceof final ServerPlayer serverPlayer){
                     TCOTS_Criteria.StopCreeper().trigger(serverPlayer);
                 }
             }
         }
     }
 
-    public static void handleStatus(WitcherBombEntity bomb, byte status) {
+    public static void handleStatus(final WitcherBombEntity bomb, final byte status) {
         if(status== MOON_DUST_EXPLODES){
             bomb.level().addParticle(TCOTS_Particles.MoonDustExplosionEmitter(), bomb.getX(), bomb.getY(), bomb.getZ(), 0.0, 0.0, 0.0);
         }
     }
 
-    public static boolean checkEffectAndSplinters(LivingEntity entity){
+    public static boolean checkEffectAndSplinters(final LivingEntity entity){
         return MoonDustBomb.checkOnlyEffect(entity) || entity.theConjunctionOfTheSpheres$hasSilverSplinters();
     }
 
-    public static boolean checkOnlyEffect(LivingEntity entity){
+    public static boolean checkOnlyEffect(final LivingEntity entity){
         return entity.hasEffect(TCOTS_Effects.MoonDustEffect());
     }
 
-    public static boolean checkSilverSplinters(LivingEntity entity){
+    public static boolean checkSilverSplinters(final LivingEntity entity){
         return entity.theConjunctionOfTheSpheres$hasSilverSplinters();
     }
 
 
-    public static void checkEffectAndSplintersMixin(LivingEntity entity, CallbackInfoReturnable<Boolean> cir){
+    public static void checkEffectAndSplintersMixin(final LivingEntity entity, final CallbackInfoReturnable<Boolean> cir){
         if(MoonDustBomb.checkEffectAndSplinters(entity))
             cir.setReturnValue(false);
     }

@@ -12,16 +12,16 @@ import java.util.List;
 
 public class WitcherBestiaryItem extends ItemModBook {
 
-    public @NotNull Component getName(ItemStack arg) {
+    public @NotNull Component getName(final ItemStack arg) {
         return Component.translatable(this.getDescriptionId(arg));
     }
 
-    public WitcherBestiaryItem(Item.Properties arg) {
+    public WitcherBestiaryItem(final Item.Properties arg) {
         this.components = arg.buildAndValidateComponents();
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(final ItemStack stack, final Item.TooltipContext context, final List<Component> tooltip, final TooltipFlag flagIn) {
         tooltip.add(Component.translatable("tooltip.tcots_witcher.witcher_bestiary").withStyle(ChatFormatting.GRAY));
     }
 

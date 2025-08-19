@@ -32,7 +32,7 @@ public class AlchemyTableRecipe implements Recipe<AlchemyTableRecipe.AlchemyTabl
                                         ItemStack ingredient5,
                                         ItemStack base)  implements RecipeInput {
         @Override
-        public @NotNull ItemStack getItem(int slot) {
+        public @NotNull ItemStack getItem(final int slot) {
             return switch (slot){
                 case 0 -> this.ingredient1;
                 case 1 -> this.ingredient2;
@@ -60,7 +60,7 @@ public class AlchemyTableRecipe implements Recipe<AlchemyTableRecipe.AlchemyTabl
 
     public final AlchemyTableRecipeCategory category;
 
-    public AlchemyTableRecipe(float order, AlchemyTableRecipeCategory category, List<Ingredient> ingredients, List<Integer> IngredientCount, ItemStack base, ItemStack output) {
+    public AlchemyTableRecipe(final float order, final AlchemyTableRecipeCategory category, final List<Ingredient> ingredients, final List<Integer> IngredientCount, final ItemStack base, final ItemStack output) {
         this.output = output;
         this.recipeItems = ingredients;
         this.order =order;
@@ -73,12 +73,12 @@ public class AlchemyTableRecipe implements Recipe<AlchemyTableRecipe.AlchemyTabl
      * Return all the ingredients of the recipe with the assigned count.
      */
     public List<ItemStack> returnItemStackWithQuantity(){
-        List<ItemStack> list = new ArrayList<>();
+        final List<ItemStack> list = new ArrayList<>();
         for(int i=0;i<getIngredients().size();i++){
-            Item itemForStack = getIngredients().get(i).getItems()[0].getItem();
-            int count = getIngredientsCounts().get(i);
+            final Item itemForStack = getIngredients().get(i).getItems()[0].getItem();
+            final int count = getIngredientsCounts().get(i);
 
-            ItemStack stack = new ItemStack(itemForStack, count);
+            final ItemStack stack = new ItemStack(itemForStack, count);
             list.add(stack);
         }
 
@@ -86,7 +86,7 @@ public class AlchemyTableRecipe implements Recipe<AlchemyTableRecipe.AlchemyTabl
     }
 
     @Override
-    public int compareTo(@NotNull AlchemyTableRecipe o) {
+    public int compareTo(@NotNull final AlchemyTableRecipe o) {
         return Float.compare(this.getOrder(), o.getOrder());
     }
 
@@ -106,23 +106,23 @@ public class AlchemyTableRecipe implements Recipe<AlchemyTableRecipe.AlchemyTabl
 
     //If a given inventory satisfies a recipe's input.
     @Override
-    public boolean matches(@NotNull AlchemyTableInventory recipeInputInventory, Level world) {
+    public boolean matches(@NotNull final AlchemyTableInventory recipeInputInventory, final Level world) {
         if(world.isClientSide()) {
             return false;
         }
-        Ingredient Ing1;
-        Ingredient Ing2;
-        Ingredient Ing3;
-        Ingredient Ing4;
-        Ingredient Ing5;
+        final Ingredient Ing1;
+        final Ingredient Ing2;
+        final Ingredient Ing3;
+        final Ingredient Ing4;
+        final Ingredient Ing5;
 
-        Item Item1;
-        Item Item2;
-        Item Item3;
-        Item Item4;
-        Item Item5;
+        final Item Item1;
+        final Item Item2;
+        final Item Item3;
+        final Item Item4;
+        final Item Item5;
 
-        Item BaseItem = getBaseItem().getItem();
+        final Item BaseItem = getBaseItem().getItem();
 
         switch (getIngredients().size()){
             case 1:
@@ -220,24 +220,24 @@ public class AlchemyTableRecipe implements Recipe<AlchemyTableRecipe.AlchemyTabl
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull AlchemyTableInventory input, HolderLookup.@NotNull Provider lookup) {
+    public @NotNull ItemStack assemble(@NotNull final AlchemyTableInventory input, final HolderLookup.@NotNull Provider lookup) {
         return this.getResultItem(lookup).copy();
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
+    public boolean canCraftInDimensions(final int width, final int height) {
         return true;
     }
 
 
     @Override
-    public @NotNull ItemStack getResultItem(@Nullable HolderLookup.Provider registriesLookup) {
+    public @NotNull ItemStack getResultItem(@Nullable final HolderLookup.Provider registriesLookup) {
         return output;
     }
 
     @Override
     public @NotNull NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.createWithCapacity(this.recipeItems.size());
+        final NonNullList<Ingredient> list = NonNullList.createWithCapacity(this.recipeItems.size());
         list.addAll(recipeItems);
         return list;
     }
@@ -326,10 +326,10 @@ public class AlchemyTableRecipe implements Recipe<AlchemyTableRecipe.AlchemyTabl
 
 
         // Turns Recipe into PacketByteBuf
-        public static void write(RegistryFriendlyByteBuf buf, AlchemyTableRecipe recipe) {
+        public static void write(final RegistryFriendlyByteBuf buf, final AlchemyTableRecipe recipe) {
             buf.writeFloat(recipe.getOrder());
 
-            int limit=recipe.getIngredients().size();
+            final int limit=recipe.getIngredients().size();
 
             buf.writeInt(limit);
 
@@ -347,26 +347,26 @@ public class AlchemyTableRecipe implements Recipe<AlchemyTableRecipe.AlchemyTabl
         }
 
         // Turns PacketByteBuf into Recipe(InGame)
-        public static AlchemyTableRecipe read(RegistryFriendlyByteBuf buf) {
+        public static AlchemyTableRecipe read(final RegistryFriendlyByteBuf buf) {
             // Make sure the read in the same order you have written!
 
-            float count = buf.readFloat();
+            final float count = buf.readFloat();
 
-            int limit = buf.readInt();
+            final int limit = buf.readInt();
 
-            List<Ingredient> ingredientList = Lists.newArrayList();
+            final List<Ingredient> ingredientList = Lists.newArrayList();
             for(int i =0;i<limit;i++){
                 ingredientList.add(Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
             }
 
-            List<Integer> ingredientCountList = Lists.newArrayList();
+            final List<Integer> ingredientCountList = Lists.newArrayList();
             for(int i =0;i<limit;i++){
                 ingredientCountList.add(buf.readInt());
             }
 
-            ItemStack base = ItemStack.STREAM_CODEC.decode(buf);
-            ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
-            AlchemyTableRecipeCategory alchemyTableRecipeCategory = buf.readEnum(AlchemyTableRecipeCategory.class);
+            final ItemStack base = ItemStack.STREAM_CODEC.decode(buf);
+            final ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
+            final AlchemyTableRecipeCategory alchemyTableRecipeCategory = buf.readEnum(AlchemyTableRecipeCategory.class);
 
             return new AlchemyTableRecipe(count, alchemyTableRecipeCategory, ingredientList, ingredientCountList, base, output);
         }

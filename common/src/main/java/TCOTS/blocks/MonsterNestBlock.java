@@ -49,29 +49,29 @@ public class MonsterNestBlock extends BaseEntityBlock {
         return CODEC;
     }
 
-    public MonsterNestBlock(Properties settings) {
+    public MonsterNestBlock(final Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull final BlockPos pos, @NotNull final BlockState state) {
         return new MonsterNestBlockEntity(TCOTS_Blocks.MonsterNestBlockEntity(), pos, state);
     }
 
     @Override
-    public void playerDestroy(@NotNull Level world, @NotNull Player player, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable BlockEntity blockEntity, @NotNull ItemStack tool) {
+    public void playerDestroy(@NotNull final Level world, @NotNull final Player player, @NotNull final BlockPos pos, @NotNull final BlockState state, @Nullable final BlockEntity blockEntity, @NotNull final ItemStack tool) {
         super.playerDestroy(world, player, pos, state, blockEntity, tool);
-        if(player instanceof ServerPlayer serverPlayer){
+        if(player instanceof final ServerPlayer serverPlayer){
             TCOTS_Criteria.DestroyMultipleMonsterNest().trigger(serverPlayer, serverPlayer.getStats().getValue(Stats.BLOCK_MINED.get(this)));
         }
     }
 
     @Override
-    public void onExplosionHit(@NotNull BlockState state, @NotNull Level world, @NotNull BlockPos pos, Explosion explosion, @NotNull BiConsumer<ItemStack, BlockPos> stackMerger) {
-        if(explosion.getDirectSourceEntity()!=null && explosion.getDirectSourceEntity() instanceof WitcherBombEntity bomb && bomb.getOwner() instanceof Player player){
-            if(player instanceof ServerPlayer serverPlayer){
+    public void onExplosionHit(@NotNull final BlockState state, @NotNull final Level world, @NotNull final BlockPos pos, final Explosion explosion, @NotNull final BiConsumer<ItemStack, BlockPos> stackMerger) {
+        if(explosion.getDirectSourceEntity()!=null && explosion.getDirectSourceEntity() instanceof final WitcherBombEntity bomb && bomb.getOwner() instanceof final Player player){
+            if(player instanceof final ServerPlayer serverPlayer){
                 TCOTS_Criteria.DestroyMonsterNest().trigger(serverPlayer);
 
                 serverPlayer.awardStat(Stats.BLOCK_MINED.get(this));
@@ -85,26 +85,26 @@ public class MonsterNestBlock extends BaseEntityBlock {
 
     @Override
     @Nullable
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(final Level world, @NotNull final BlockState state, @NotNull final BlockEntityType<T> type) {
         return MonsterNestBlock.createTickerHelper(type, TCOTS_Blocks.MonsterNestBlockEntity(), world.isClientSide ? MonsterNestBlockEntity::clientTick : MonsterNestBlockEntity::serverTick);
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(@NotNull BlockState state){
+    public @NotNull RenderShape getRenderShape(@NotNull final BlockState state){
         return RenderShape.MODEL;
     }
 
     protected static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 15.0, 16.0);
     @Override
-    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    public @NotNull VoxelShape getShape(@NotNull final BlockState state, @NotNull final BlockGetter world, @NotNull final BlockPos pos, @NotNull final CollisionContext context) {
         return SHAPE;
     }
 
 
 
     @Override
-    public float getDestroyProgress(@NotNull BlockState state, Player player, @NotNull BlockGetter world, @NotNull BlockPos pos) {
-        ItemStack shovel = player.getMainHandItem();
+    public float getDestroyProgress(@NotNull final BlockState state, final Player player, @NotNull final BlockGetter world, @NotNull final BlockPos pos) {
+        final ItemStack shovel = player.getMainHandItem();
         if(shovel.getItem() instanceof ShovelItem && MiscUtil.getEnchantmentLevel(Enchantments.EFFICIENCY, shovel) >= 3){
             return super.getDestroyProgress(state, player, world, pos);
         } else {
@@ -113,38 +113,38 @@ public class MonsterNestBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, Item.@NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag options) {
+    public void appendHoverText(@NotNull final ItemStack stack, final Item.@NotNull TooltipContext context, @NotNull final List<Component> tooltip, @NotNull final TooltipFlag options) {
         super.appendHoverText(stack, context, tooltip, options);
         Spawner.appendHoverText(stack, tooltip, "SpawnData");
     }
 
     @Override
-    public void spawnAfterBreak(@NotNull BlockState state, @NotNull ServerLevel world, @NotNull BlockPos pos, @NotNull ItemStack tool, boolean dropExperience) {
+    public void spawnAfterBreak(@NotNull final BlockState state, @NotNull final ServerLevel world, @NotNull final BlockPos pos, @NotNull final ItemStack tool, final boolean dropExperience) {
         super.spawnAfterBreak(state, world, pos, tool, dropExperience);
         if (dropExperience) {
-            int i = 15 + world.random.nextInt(15) + world.random.nextInt(15);
+            final int i = 15 + world.random.nextInt(15) + world.random.nextInt(15);
             this.popExperience(world, pos, i);
         }
     }
 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    public BlockState getStateForPlacement(final BlockPlaceContext ctx) {
         return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
+    public @NotNull BlockState rotate(final BlockState state, final Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
-    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
+    public @NotNull BlockState mirror(final BlockState state, final Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(final StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 }

@@ -1,0 +1,35 @@
+{
+  "name": "Bloedzuiger",
+  "icon": "tcots_witcher:textures/gui/sprites/witcher_bestiary/category/monsters/necrophages/bloedzuiger.png",
+  "category": "tcots_witcher:necrophages",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Travellers crossing swamps can be sure to encounter both $(l:tcots_witcher:monsters/necrophages/drowner)drowners$(/l) and bloedzuigers.$(br2)The bloedzuiger feed on blood, but their gullets are particularly large and their stomachs are filled with acid, so they suck and digest both their victims' blood and intestines, causing terror among peasants."
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "His thick body contains great amount of cadaverine, causing a toxic explosion when killed.",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bloedzuiger/bloedzuiger_main.png"
+    },
+    {
+      "type": "tcots_witcher:image_below",
+      "text": "$(l)$(#00a800)Habitat$()$(li)Swamps$(li)Mangrove Swamps",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bloedzuiger/bloedzuiger_special.png"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(#fc5454)Behavior$()$(br)A creeping horror with a corrosive bite. When it attacks, it can coat its prey with a vile acid called cadaverine, an acid that decays rapidly both flesh and armor.$(br2)Like the $(l:tcots_witcher:monsters/necrophages/rotfiend)rotfiend$(/l), the bloedzuiger is a walking bomb: when wounded enough, its body violently explodes, releasing a cloud of deadly cadaverine that harms all nearby monsters."
+    },
+    {
+      "type": "tcots_witcher:monster_loot",
+      "text": "A cunning hunter knows how to turn this explosive weakness into a weapon, luring groups of necrophages into the blast to wipe them out in one fell swoop. But if the warrior wants to prevent this explosion they need to $(#0A880E)kill it when the creature is in flames$().",
+      "items": ["tcots_witcher:cadaverine", "tcots_witcher:bloedzuiger_blood"]
+    },
+    {
+      "type": "tcots_witcher:image_center",
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bloedzuiger/bloedzuiger_full.png"
+    }
+  ],
+  "sortnum": 9
+}

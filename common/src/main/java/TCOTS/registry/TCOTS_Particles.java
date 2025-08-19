@@ -24,6 +24,8 @@ public class TCOTS_Particles {
     private static final SimpleParticleType LANDING_BLOOD_PARTICLE = new SimpleParticleType(false){};
     private static final SimpleParticleType FALLING_BLACK_BLOOD_PARTICLE = new SimpleParticleType(false){};
     private static final SimpleParticleType LANDING_BLACK_BLOOD_PARTICLE = new SimpleParticleType(false){};
+    private static final SimpleParticleType BLOEDZUIGER_BLOOD_EMITTER = new SimpleParticleType(false){};
+    private static final SimpleParticleType CADAVERINE_CLOUD = new SimpleParticleType(false){};
 
     public static void initParticles() {
         TCOTS_Registries.PARTICLES.register("rotfiend_blood_explosion",
@@ -79,6 +81,12 @@ public class TCOTS_Particles {
                 ()-> FALLING_BLACK_BLOOD_PARTICLE);
         TCOTS_Registries.PARTICLES.register("landing_black_blood",
                 ()-> LANDING_BLACK_BLOOD_PARTICLE);
+
+        TCOTS_Registries.PARTICLES.register("bloedzuiger_blood_emitter",
+                ()-> BLOEDZUIGER_BLOOD_EMITTER);
+
+        TCOTS_Registries.PARTICLES.register("cadaverine_cloud",
+                ()-> CADAVERINE_CLOUD);
     }
 
     public static SimpleParticleType RotfiendBloodExplosion() {
@@ -157,4 +165,11 @@ public class TCOTS_Particles {
         return LANDING_BLACK_BLOOD_PARTICLE;
     }
 
+    public static SimpleParticleType BloedzuigerBloodEmitter() {
+        return BLOEDZUIGER_BLOOD_EMITTER;
+    }
+
+    public static SimpleParticleType CadaverineCloud() {
+        return CADAVERINE_CLOUD;
+    }
 }

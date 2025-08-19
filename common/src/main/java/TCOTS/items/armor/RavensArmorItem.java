@@ -25,7 +25,7 @@ import net.minecraft.world.item.TooltipFlag;
 
 public class RavensArmorItem extends ArmorItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    public RavensArmorItem(Holder<ArmorMaterial> material, Type type, Properties settings) {
+    public RavensArmorItem(final Holder<ArmorMaterial> material, final Type type, final Properties settings) {
         super(material, type, settings);
     }
 
@@ -48,15 +48,15 @@ public class RavensArmorItem extends ArmorItem implements GeoItem {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag type) {
+    public void appendHoverText(@NotNull final ItemStack stack, @NotNull final TooltipContext context, @NotNull final List<Component> tooltip, @NotNull final TooltipFlag type) {
         MiscUtil.setFullSetBonusTooltip(stack, tooltip,
                 List.of(Component.translatable("tooltip.tcots_witcher.ravens_armor.full_set1"),
                         Component.translatable("tooltip.tcots_witcher.ravens_armor.full_set2"),
-                        Component.translatable("tooltip.tcots_witcher.ravens_armor.full_set3")));
+                        Component.translatable("tooltip.tcots_witcher.ravens_armor.full_set3")), type);
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(GeoControllersUtil.genericIdleController(this));
     }
 

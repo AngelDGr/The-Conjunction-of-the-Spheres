@@ -2,7 +2,7 @@ package TCOTS.mixin;
 
 import TCOTS.TCOTS_Main;
 import TCOTS.entity.misc.AnchorProjectileEntity;
-import TCOTS.entity.ogroids.AbstractTrollEntity;
+import TCOTS.entity.monsters.ogroids.AbstractTrollEntity;
 import TCOTS.interfaces.LivingEntityMixinInterface;
 import TCOTS.items.components.MonsterOilComponent;
 import TCOTS.items.concoctions.bombs.MoonDustBomb;
@@ -27,6 +27,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -57,15 +58,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements Attackable, LivingEntityMixinInterface {
 
-    public LivingEntityMixin(EntityType<?> type, Level world) {
+    public LivingEntityMixin(final EntityType<?> type, final Level world) {
         super(type, world);
     }
+    @SuppressWarnings("all")
     @Unique
     LivingEntity THIS = (LivingEntity)(Object)this;
 
@@ -99,7 +102,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void injectKillCountDataTracker(SynchedEntityData.Builder builder, CallbackInfo ci){
+    private void injectKillCountDataTracker(final SynchedEntityData.Builder builder, final CallbackInfo ci){
         builder.define(KILL_COUNT, 0);
         builder.define(KILL_COUNTDOWN, 0);
     }
@@ -110,7 +113,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @Override
-    public void theConjunctionOfTheSpheres$setKillCount(int killCount) {
+    public void theConjunctionOfTheSpheres$setKillCount(final int killCount) {
         this.entityData.set(KILL_COUNT, killCount);
     }
 
@@ -120,26 +123,26 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @Override
-    public void theConjunctionOfTheSpheres$setKillCountdown(int killCountdown) {
+    public void theConjunctionOfTheSpheres$setKillCountdown(final int killCountdown) {
         this.entityData.set(KILL_COUNTDOWN, killCountdown);
     }
 
     @Override
     public void theConjunctionOfTheSpheres$incrementKillCount() {
-        int count = this.theConjunctionOfTheSpheres$getKillCount();
+        final int count = this.theConjunctionOfTheSpheres$getKillCount();
         this.theConjunctionOfTheSpheres$setKillCount(count + 1);
     }
 
 
     @Inject(method = "setLastHurtMob", at = @At("HEAD"))
-    private void injectCountdownAttack(CallbackInfo ci){
+    private void injectCountdownAttack(final CallbackInfo ci){
         THIS.theConjunctionOfTheSpheres$setKillCountdown(300);
     }
 
     @Inject(method = "tickEffects", at = @At("HEAD"))
-    private void injectCountdown(CallbackInfo ci){
+    private void injectCountdown(final CallbackInfo ci){
         if(THIS.hasEffect(TCOTS_Effects.GraveHagDecoctionEffect())) {
-            int count = THIS.theConjunctionOfTheSpheres$getKillCountdown();
+            final int count = THIS.theConjunctionOfTheSpheres$getKillCountdown();
             if (THIS.theConjunctionOfTheSpheres$getKillCountdown() > 0) {
 
                 THIS.theConjunctionOfTheSpheres$setKillCountdown(count - 1);
@@ -154,12 +157,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @Inject(method = "die", at = @At("HEAD"))
-    private void injectKillCounter(DamageSource damageSource, CallbackInfo ci){
-        LivingEntity livingEntity = THIS.getKillCredit();
+    private void injectKillCounter(final DamageSource damageSource, final CallbackInfo ci){
+        final LivingEntity livingEntity = THIS.getKillCredit();
         if (livingEntity != null) {
             if(livingEntity.hasEffect(TCOTS_Effects.GraveHagDecoctionEffect())){
 
-                int killCount =  livingEntity.theConjunctionOfTheSpheres$getKillCount();
+                final int killCount =  livingEntity.theConjunctionOfTheSpheres$getKillCount();
 
                 if(killCount < 20){
                     livingEntity.theConjunctionOfTheSpheres$incrementKillCount();
@@ -171,20 +174,20 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void injectKillCountWriteNBT(CompoundTag nbt, CallbackInfo ci){
+    private void injectKillCountWriteNBT(final CompoundTag nbt, final CallbackInfo ci){
         nbt.putInt("KillCount", THIS.theConjunctionOfTheSpheres$getKillCount());
         nbt.putInt("KillCountdown", THIS.theConjunctionOfTheSpheres$getKillCountdown());
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void injectKillCountReadNBT(CompoundTag nbt, CallbackInfo ci){
+    private void injectKillCountReadNBT(final CompoundTag nbt, final CallbackInfo ci){
         THIS.theConjunctionOfTheSpheres$setKillCount(nbt.getInt("KillCount"));
         THIS.theConjunctionOfTheSpheres$setKillCountdown(nbt.getInt("KillCountdown"));
     }
 
     //Foglet Decoction
     @ModifyVariable(method = "hurt", at = @At("HEAD"), ordinal = 0, argsOnly = true)
-    private float injectFoggyResistance(float amount){
+    private float injectFoggyResistance(final float amount){
         if(this.hasEffect(TCOTS_Effects.FogletDecoctionEffect())
                 && this.level() instanceof ServerLevel
                 && (this.level().isRaining() || this.level().isThundering()))
@@ -198,17 +201,17 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     //Black Blood
     @Inject(method = "hurt", at = @At("TAIL"))
-    private void injectBlackBloodDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+    private void injectBlackBloodDamage(final DamageSource source, final float amount, final CallbackInfoReturnable<Boolean> cir){
         if(this.hasEffect(TCOTS_Effects.BlackBloodEffect())){
             //To reflect damage
-            int amplifier = Objects.requireNonNull(this.getEffect(TCOTS_Effects.BlackBloodEffect())).getAmplifier();
-            float damageMultiplier = switch (amplifier) {
+            final int amplifier = Objects.requireNonNull(this.getEffect(TCOTS_Effects.BlackBloodEffect())).getAmplifier();
+            final float damageMultiplier = switch (amplifier) {
                 case 0 ->  0.15f;
                 case 1 ->  0.20f;
                 default -> 0.30f;
             };
 
-            if(source.getEntity() != null && source.getEntity() instanceof LivingEntity attackerBlack &&
+            if(source.getEntity() != null && source.getEntity() instanceof final LivingEntity attackerBlack &&
                     !((source.getDirectEntity() instanceof Projectile) || (source.getDirectEntity() instanceof AbstractArrow))){
                 //Damage
                 if(amount > 0 && (EntitiesUtil.isNecrophage(attackerBlack) || EntitiesUtil.isVampire(attackerBlack))){
@@ -216,8 +219,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
                 }
 
                 //For Knockback above level 0
-                double d = this.getX() - attackerBlack.getX();
-                double e = this.getZ() - attackerBlack.getZ();
+                final double d = this.getX() - attackerBlack.getX();
+                final double e = this.getZ() - attackerBlack.getZ();
                 if(amplifier > 0){
                     attackerBlack.knockback(amplifier*0.5f, d, e);
                 }
@@ -230,11 +233,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @Inject(method = "tickEffects", at = @At("HEAD"))
-    private void injectBlackBloodBleedingEffect(CallbackInfo ci){
+    private void injectBlackBloodBleedingEffect(final CallbackInfo ci){
         if(this.hasEffect(TCOTS_Effects.BlackBloodEffect())) {
-            int amplifier = Objects.requireNonNull(this.getEffect(TCOTS_Effects.BlackBloodEffect())).getAmplifier();
+            final int amplifier = Objects.requireNonNull(this.getEffect(TCOTS_Effects.BlackBloodEffect())).getAmplifier();
             if(amplifier> 1){
-                List<LivingEntity> list= this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(5,2,5),
+                final List<LivingEntity> list= this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(5,2,5),
                 livingEntity -> EntitiesUtil.isNecrophage(livingEntity) || EntitiesUtil.isVampire(livingEntity));
                 //To apply bleeding effect to near mobs
                 if(!list.isEmpty()) {
@@ -250,14 +253,14 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     //SamumEffect
     @Inject(method = "hurt", at = @At("TAIL"))
-    private void injectRemoveSamumOnHit(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+    private void injectRemoveSamumOnHit(final DamageSource source, final float amount, final CallbackInfoReturnable<Boolean> cir){
         if(SamumBomb.checkSamumEffect(THIS)){
             this.removeEffect(TCOTS_Effects.SamumEffect());
         }
     }
 
     @Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)
-    private void injectImmunityToStun(MobEffectInstance effect, CallbackInfoReturnable<Boolean> cir){
+    private void injectImmunityToStun(final MobEffectInstance effect, final CallbackInfoReturnable<Boolean> cir){
         if(((THIS instanceof Warden) || (THIS instanceof Guardian)) && (effect.getEffect()== TCOTS_Effects.SamumEffect()))
             cir.setReturnValue(false);
     }
@@ -272,17 +275,17 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @Unique
-    public void setIsFrozen(boolean frozen) {
+    public void tcots$setIsFrozen(final boolean frozen) {
         this.entityData.set(IS_FROZEN, frozen);
     }
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void injectNorthernWindDataTracker(SynchedEntityData.Builder builder, CallbackInfo ci){
+    private void injectNorthernWindDataTracker(final SynchedEntityData.Builder builder, final CallbackInfo ci){
         builder.define(IS_FROZEN, false);
     }
 
     @Inject(method = "hurt", at = @At("TAIL"))
-    private void injectRemoveNorthernWindOnHit(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+    private void injectRemoveNorthernWindOnHit(final DamageSource source, final float amount, final CallbackInfoReturnable<Boolean> cir){
         if(NorthernWindBomb.checkEffect(THIS)){
             this.playSound(SoundEvents.GLASS_BREAK,1,1);
             this.removeEffect(TCOTS_Effects.NorthernWindEffect());
@@ -290,10 +293,10 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @ModifyVariable(method = "hurt", at = @At("HEAD"), ordinal = 0, argsOnly = true)
-    private float injectExtraDamageNorthernWind(float amount){
+    private float injectExtraDamageNorthernWind(final float amount){
         if(NorthernWindBomb.checkEffect(THIS)){
-            int amplifier= Objects.requireNonNull(this.getEffect(TCOTS_Effects.NorthernWindEffect())).getAmplifier();
-            int randomN=this.random.nextIntBetweenInclusive(0,10);
+            final int amplifier= Objects.requireNonNull(this.getEffect(TCOTS_Effects.NorthernWindEffect())).getAmplifier();
+            final int randomN=this.random.nextIntBetweenInclusive(0,10);
             //Instant kill chance or extra damage
             if(this.getMaxHealth() <= 100 && amplifier>1 && randomN==0){
                 return this.getHealth();
@@ -306,7 +309,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @ModifyVariable(method = "knockback", at = @At("HEAD"), ordinal = 0, argsOnly = true)
-    private double injectExtraKnockbackNorthernWind(double strength){
+    private double injectExtraKnockbackNorthernWind(final double strength){
         if(NorthernWindBomb.checkEffect(THIS)){
             return strength * 1.8;
         }
@@ -314,21 +317,21 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
-    private void injectNorthernWindNoPushable(CallbackInfoReturnable<Boolean> cir){
+    private void injectNorthernWindNoPushable(final CallbackInfoReturnable<Boolean> cir){
         if(NorthernWindBomb.checkEffect(THIS)){
             cir.setReturnValue(false);
         }
     }
 
     @Inject(method = "tickEffects", at = @At("HEAD"))
-    private void injectIsFrozen(CallbackInfo ci){
+    private void injectIsFrozen(final CallbackInfo ci){
         if(!THIS.level().isClientSide) {
-            setIsFrozen(NorthernWindBomb.checkEffect(THIS));
+            tcots$setIsFrozen(NorthernWindBomb.checkEffect(THIS));
         }
     }
 
     @Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)
-    private void injectImmunityToFreeze(MobEffectInstance effect, CallbackInfoReturnable<Boolean> cir){
+    private void injectImmunityToFreeze(final MobEffectInstance effect, final CallbackInfoReturnable<Boolean> cir){
         if(THIS.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES) && (effect.getEffect()== TCOTS_Effects.NorthernWindEffect()))
             cir.setReturnValue(false);
     }
@@ -343,32 +346,32 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @Unique
-    public void setSilverSplinters(boolean frozen) {
+    public void tcots$setSilverSplinters(final boolean frozen) {
         this.entityData.set(SILVER_SPLINTERS, frozen);
     }
 
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void injectMoonDustDataTracker(SynchedEntityData.Builder builder, CallbackInfo ci){
+    private void injectMoonDustDataTracker(final SynchedEntityData.Builder builder, final CallbackInfo ci){
         builder.define(SILVER_SPLINTERS, false);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void injectSilverSplintersWriteNBT(CompoundTag nbt, CallbackInfo ci){
+    private void injectSilverSplintersWriteNBT(final CompoundTag nbt, final CallbackInfo ci){
         nbt.putBoolean("SilverSplinters", THIS.theConjunctionOfTheSpheres$hasSilverSplinters());
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void injectSilverSplintersReadNBT(CompoundTag nbt, CallbackInfo ci){
-        this.setSilverSplinters(nbt.getBoolean("SilverSplinters"));
+    private void injectSilverSplintersReadNBT(final CompoundTag nbt, final CallbackInfo ci){
+        this.tcots$setSilverSplinters(nbt.getBoolean("SilverSplinters"));
     }
 
     @Inject(method = "tickEffects", at = @At("HEAD"))
-    private void injectHasSilverSplinters(CallbackInfo ci){
+    private void injectHasSilverSplinters(final CallbackInfo ci){
         if(!THIS.level().isClientSide) {
             if (MoonDustBomb.checkOnlyEffect(THIS)){
-                int amplifier = Objects.requireNonNull(THIS.getEffect(TCOTS_Effects.MoonDustEffect())).getAmplifier();
+                final int amplifier = Objects.requireNonNull(THIS.getEffect(TCOTS_Effects.MoonDustEffect())).getAmplifier();
                 if(amplifier>1){
-                    setSilverSplinters(true);
+                    tcots$setSilverSplinters(true);
                 }
             }
         }
@@ -376,7 +379,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     //Immunity to bleeding
     @Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)
-    private void injectImmunityToBleeding(MobEffectInstance effect, CallbackInfoReturnable<Boolean> cir){
+    private void injectImmunityToBleeding(final MobEffectInstance effect, final CallbackInfoReturnable<Boolean> cir){
         if((
                 (THIS instanceof AbstractSkeleton)
                 || EntitiesUtil.isElementa(THIS)
@@ -389,11 +392,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     //G'valchir damage
     @Unique
-    private boolean attackerHasGvalchir =false;
+    private boolean tcots$attackerHasGvalchir =false;
     @Inject(method ="getDamageAfterArmorAbsorb", at = @At("HEAD"))
-    private void getAttackerGvalchirBoolean(DamageSource source, float amount, CallbackInfoReturnable<Float> cir){
-        if(source.getEntity() instanceof LivingEntity livingEntity){
-            this.attackerHasGvalchir =
+    private void getAttackerGvalchirBoolean(final DamageSource source, final float amount, final CallbackInfoReturnable<Float> cir){
+        if(source.getEntity() instanceof final LivingEntity livingEntity){
+            this.tcots$attackerHasGvalchir =
                     //Has the G'valchir in hand
                     livingEntity.getMainHandItem().getItem() == TCOTS_Items.GVALCHIR.get() &&
                     //To avoid ignore armor with attacks with projectiles
@@ -401,15 +404,15 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
                     //To avoid ignore armor when there's thorns damage
                     && !(source.typeHolder() == DamageTypes.MAGIC);
         } else {
-            attackerHasGvalchir = false;
+            tcots$attackerHasGvalchir = false;
         }
     }
 
     @ModifyArgs(method = "getDamageAfterArmorAbsorb", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/damagesource/CombatRules;getDamageAfterAbsorb(Lnet/minecraft/world/entity/LivingEntity;FLnet/minecraft/world/damagesource/DamageSource;FF)F"))
-    private void injectArmorPenetration(Args args){
-        if(attackerHasGvalchir){
-            float armor = args.get(3);
-            float armorToughness = args.get(4);
+    private void injectArmorPenetration(final Args args){
+        if(tcots$attackerHasGvalchir){
+            final float armor = args.get(3);
+            final float armorToughness = args.get(4);
 
             args.set(3, armor*(1-MiscUtil.gvalchir_penetration));
             args.set(4, armorToughness*0.50f);
@@ -418,7 +421,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     //Nekker Warrior Decoction
     @Unique
-    private boolean passengerHasDecoction =false;
+    private boolean tcots$passengerHasDecoction =false;
     @Unique
     private static final AttributeModifier PASSENGER_SPEED_BOOST = new AttributeModifier(
             ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"passenger_speed_boost"),
@@ -426,23 +429,23 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
     @Inject(method = "tick", at = @At("HEAD"))
-    private void injectExtraNekkerWarriorSpeed(CallbackInfo ci){
+    private void injectExtraNekkerWarriorSpeed(final CallbackInfo ci){
         if(THIS.isVehicle()){
-            Entity passenger = THIS.getControllingPassenger();
+            final Entity passenger = THIS.getControllingPassenger();
 
-            if(passenger instanceof LivingEntity livingPassenger){
+            if(passenger instanceof final LivingEntity livingPassenger){
                 if(livingPassenger.hasEffect(TCOTS_Effects.NekkerWarriorDecoctionEffect())){
-                    passengerHasDecoction = true;
-                    AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
+                    tcots$passengerHasDecoction = true;
+                    final AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
                     if(entityAttributeInstance!=null) {
                         entityAttributeInstance.removeModifier(PASSENGER_SPEED_BOOST.id());
                         entityAttributeInstance.addTransientModifier(PASSENGER_SPEED_BOOST);
                     }
-                } else if(passengerHasDecoction){
-                    AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
+                } else if(tcots$passengerHasDecoction){
+                    final AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
                     if(entityAttributeInstance!=null) {
                         entityAttributeInstance.removeModifier(PASSENGER_SPEED_BOOST.id());
-                        passengerHasDecoction = false;
+                        tcots$passengerHasDecoction = false;
                     }
                 }
             }
@@ -452,9 +455,9 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     //Troll Reputation
     @Inject(method = "die", at = @At("TAIL"))
-    private void injectTrollTriggerDefending(DamageSource damageSource, CallbackInfo ci){
+    private void injectTrollTriggerDefending(final DamageSource damageSource, final CallbackInfo ci){
 
-        if(this.level() instanceof ServerLevel && getLastHurtMob() instanceof AbstractTrollEntity troll && getLastHurtByMob() instanceof Player player){
+        if(this.level() instanceof ServerLevel && getLastHurtMob() instanceof final AbstractTrollEntity troll && getLastHurtByMob() instanceof final Player player){
             if(!this.level().isClientSide && !troll.isRabid()) {
                 ((ServerLevel) this.level()).onReputationEvent(troll.getDefendingInteraction(false), player, troll);
                 troll.handleNearTrollsInteraction(troll.getDefendingInteraction(true), player);
@@ -465,9 +468,9 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @Inject(method = "canAttack(Lnet/minecraft/world/entity/LivingEntity;)Z", at = @At("HEAD"), cancellable = true)
-    private void GolemNotAttackFriendlyIceTroll(LivingEntity target, CallbackInfoReturnable<Boolean> cir){
+    private void GolemNotAttackFriendlyIceTroll(final LivingEntity target, final CallbackInfoReturnable<Boolean> cir){
         if(THIS.getType() == EntityType.IRON_GOLEM){
-            if(target instanceof AbstractTrollEntity troll && !troll.isRabid()){
+            if(target instanceof final AbstractTrollEntity troll && !troll.isRabid()){
                 cir.setReturnValue(false);
             }
         }
@@ -476,14 +479,14 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     //Trigger Advancement
     @Inject(method = "die", at = @At("TAIL"))
-    private void injectTriggerAdvancement(DamageSource damageSource, CallbackInfo ci){
-        if(EntitiesUtil.isHumanoid(THIS) && getLastHurtByMob() instanceof Player player){
+    private void injectTriggerAdvancement(final DamageSource damageSource, final CallbackInfo ci){
+        if(EntitiesUtil.isHumanoid(THIS) && getLastHurtByMob() instanceof final Player player){
             if(player.getMainHandItem().has(TCOTS_Items.MonsterOilComponent()) && player.getMainHandItem().get(TCOTS_Items.MonsterOilComponent())!=null){
-                MonsterOilComponent monsterOil = player.getMainHandItem().get(TCOTS_Items.MonsterOilComponent());
+                final MonsterOilComponent monsterOil = player.getMainHandItem().get(TCOTS_Items.MonsterOilComponent());
 
                 if(monsterOil!=null && monsterOil.groupId()==11)
                 {
-                    if(player instanceof ServerPlayer serverPlayer){
+                    if(player instanceof final ServerPlayer serverPlayer){
                         TCOTS_Criteria.KillWithHanged().trigger(serverPlayer);
                     }
                 }
@@ -500,19 +503,21 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     @Shadow public abstract boolean removeEffect(Holder<MobEffect> effect);
 
-    
+
+    @Shadow public abstract Collection<MobEffectInstance> getActiveEffects();
+
     @Inject(method ="getDamageAfterMagicAbsorb", at = @At("RETURN"), cancellable = true)
-    private void injectArmorExtraMonsterResistance(DamageSource source, float amount, CallbackInfoReturnable<Float> cir){
+    private void injectArmorExtraMonsterResistance(final DamageSource source, final float amount, final CallbackInfoReturnable<Float> cir){
         if(source.is(DamageTypeTags.BYPASSES_ENCHANTMENTS)){
             cir.setReturnValue(amount);
         }
 
         if(EntitiesUtil.isWearingRavensArmor(THIS) && source.getEntity()!=null
-                && source.getEntity() instanceof LivingEntity attacker && EntitiesUtil.isMonster(attacker)){
+                && source.getEntity() instanceof final LivingEntity attacker && EntitiesUtil.isMonster(attacker)){
             cir.setReturnValue(amount*0.50f);
         } else
         if(EntitiesUtil.isWearingWarriorsLeatherArmor(THIS) && source.getEntity()!=null
-                && source.getEntity() instanceof LivingEntity attacker && EntitiesUtil.isMonster(attacker)){
+                && source.getEntity() instanceof final LivingEntity attacker && EntitiesUtil.isMonster(attacker)){
             cir.setReturnValue(amount*0.75f);
         }
     }
@@ -525,16 +530,16 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             0.1f,
             AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     @Inject(method = "aiStep", at = @At("TAIL"))
-    private void injectRavensArmorSetBonus(CallbackInfo ci){
+    private void injectRavensArmorSetBonus(final CallbackInfo ci){
 
         //Adds Speed boost
         if(EntitiesUtil.isWearingRavensArmor(THIS)){
-            AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
+            final AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
                 if(entityAttributeInstance!=null) {
                     entityAttributeInstance.removeModifier(RAVEN_SPEED_BONUS.id());
                     entityAttributeInstance.addTransientModifier(RAVEN_SPEED_BONUS);}
         } else {
-            AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
+            final AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
             if(entityAttributeInstance!=null) entityAttributeInstance.removeModifier(RAVEN_SPEED_BONUS.id());
         }
 
@@ -542,7 +547,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
 
     //Winter's Blade
     @Inject(method =  "tick", at= @At("HEAD"))
-    private void injectWintersBladeExtinguish(CallbackInfo ci){
+    private void injectWintersBladeExtinguish(final CallbackInfo ci){
         if(THIS.isOnFire()){
             if(THIS.getMainHandItem().is(TCOTS_Items.WINTERS_BLADE.get()) || THIS.getOffhandItem().is(TCOTS_Items.WINTERS_BLADE.get())) THIS.clearFire();
         }
@@ -556,19 +561,19 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
             AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
     @Inject(method = "aiStep", at = @At("TAIL"))
-    private void injectSnowSpeed(CallbackInfo ci){
-        if(THIS instanceof Horse horse){
+    private void injectSnowSpeed(final CallbackInfo ci){
+        if(THIS instanceof final Horse horse){
             if(horse.getBodyArmorItem().is(TCOTS_Items.TUNDRA_HORSE_ARMOR.get()) &&
-                    (this.isSteepingOrInside(horse, Blocks.POWDER_SNOW)
-                            || this.isSteepingOrInside(horse, Blocks.SNOW_BLOCK) || this.isSteepingOrInside(horse, Blocks.SNOW) ||
-                            this.isSteepingOrInside(horse, Blocks.ICE) || this.isSteepingOrInside(horse, Blocks.BLUE_ICE) || this.isSteepingOrInside(horse, Blocks.PACKED_ICE) || this.isSteepingOrInside(horse, Blocks.FROSTED_ICE)
+                    (this.tcots$isSteepingOrInside(horse, Blocks.POWDER_SNOW)
+                            || this.tcots$isSteepingOrInside(horse, Blocks.SNOW_BLOCK) || this.tcots$isSteepingOrInside(horse, Blocks.SNOW) ||
+                            this.tcots$isSteepingOrInside(horse, Blocks.ICE) || this.tcots$isSteepingOrInside(horse, Blocks.BLUE_ICE) || this.tcots$isSteepingOrInside(horse, Blocks.PACKED_ICE) || this.tcots$isSteepingOrInside(horse, Blocks.FROSTED_ICE)
                     )){
-                AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
+                final AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
                 if(entityAttributeInstance!=null) {
                     entityAttributeInstance.removeModifier(TUNDRA_ARMOR_BONUS.id());
                     entityAttributeInstance.addTransientModifier(TUNDRA_ARMOR_BONUS);}
             } else {
-                AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
+                final AttributeInstance entityAttributeInstance = THIS.getAttribute(Attributes.MOVEMENT_SPEED);
                 if(entityAttributeInstance!=null) entityAttributeInstance.removeModifier(TUNDRA_ARMOR_BONUS.id());
             }
         }
@@ -576,13 +581,13 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     }
 
     @Unique
-    private boolean isSteepingOrInside(LivingEntity entity, Block block){
+    private boolean tcots$isSteepingOrInside(final LivingEntity entity, final Block block){
         return entity.getBlockStateOn().is(block) || entity.level().getBlockState(entity.blockPosition()).is(block);
     }
 
     @Inject(method ="getDamageAfterMagicAbsorb", at = @At("RETURN"), cancellable = true)
-    private void injectKnightHorseArmorResistance(DamageSource source, float amount, CallbackInfoReturnable<Float> cir){
-        if(THIS instanceof Horse horse && horse.getBodyArmorItem().is(TCOTS_Items.KNIGHT_ERRANTS_HORSE_ARMOR.get())){
+    private void injectKnightHorseArmorResistance(final DamageSource source, final float amount, final CallbackInfoReturnable<Float> cir){
+        if(THIS instanceof final Horse horse && horse.getBodyArmorItem().is(TCOTS_Items.KNIGHT_ERRANTS_HORSE_ARMOR.get())){
             if(source.is(DamageTypeTags.BYPASSES_ENCHANTMENTS)){
                 cir.setReturnValue(amount);
             }
@@ -600,19 +605,19 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     //Giant Anchor
     @Unique
     @Nullable
-    public AnchorProjectileEntity anchorProjectile;
+    public AnchorProjectileEntity tcots$anchorProjectile;
     @Override
     public AnchorProjectileEntity theConjunctionOfTheSpheres$getAnchor(){
-        return anchorProjectile;
+        return tcots$anchorProjectile;
     }
 
     @Override
-    public void theConjunctionOfTheSpheres$setAnchor(Object anchor) {
-        this.anchorProjectile= (AnchorProjectileEntity) anchor;
+    public void theConjunctionOfTheSpheres$setAnchor(final Object anchor) {
+        this.tcots$anchorProjectile = (AnchorProjectileEntity) anchor;
     }
 
     @Inject(method = "die", at = @At("HEAD"))
-    private void injectDiscardAnchor(CallbackInfo ci){
+    private void injectDiscardAnchor(final CallbackInfo ci){
         if(!this.level().isClientSide && this.theConjunctionOfTheSpheres$getAnchor()!=null){
             this.theConjunctionOfTheSpheres$getAnchor().setOwner(null);
         }
@@ -625,41 +630,75 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Li
     @Unique
     private static final byte BLACK_BLOOD_PARTICLES = 73;
     @Inject(method = "handleEntityEvent", at = @At("TAIL"))
-    private void injectParticles(byte status, CallbackInfo ci){
+    private void injectParticles(final byte status, final CallbackInfo ci){
         if(status == BLOOD_PARTICLES){
-            spawnBloodParticles(THIS, TCOTS_Particles.FallingBloodParticle());
+            tcots$spawnBloodParticles(THIS, TCOTS_Particles.FallingBloodParticle());
         }
 
         if(status == BLACK_BLOOD_PARTICLES){
-            spawnBloodParticles(THIS, TCOTS_Particles.FallingBlackBloodParticle());
+            tcots$spawnBloodParticles(THIS, TCOTS_Particles.FallingBlackBloodParticle());
         }
     }
 
     @Inject(method = "hurt", at = @At("TAIL"))
-    private void injectInDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir){
+    private void injectInDamage(final DamageSource source, final float amount, final CallbackInfoReturnable<Boolean> cir){
         if(source.is(TCOTS_DamageTypes.BLEEDING) && !this.hasEffect(TCOTS_Effects.BlackBloodEffect())){
             this.level().broadcastEntityEvent(THIS,
                     THIS.hasEffect(TCOTS_Effects.BleedingBlackBloodEffect())? BLACK_BLOOD_PARTICLES :BLOOD_PARTICLES);
         }
     }
 
-    //xTODO: Test this to better adapt to size
     @Unique
-    protected void spawnBloodParticles(LivingEntity entity, SimpleParticleType particle){
-
+    protected void tcots$spawnBloodParticles(final LivingEntity entity, final SimpleParticleType particle){
         for(int i=0; i<10; i++){
-            double d = entity.getX() + (double) Mth.randomBetween(entity.getRandom(),
+            final double d = entity.getX() + (double) Mth.randomBetween(entity.getRandom(),
                     (float)-entity.getBoundingBox().getXsize()/2,
                     (float) entity.getBoundingBox().getXsize()/2);
-            double e =  (entity.getEyeY())+ (double) Mth.randomBetween(entity.getRandom(),
+            final double e =  (entity.getEyeY())+ (double) Mth.randomBetween(entity.getRandom(),
                     -0.5f,
                     0.25f);
-            double f = entity.getZ() + (double) Mth.randomBetween(entity.getRandom(),
+            final double f = entity.getZ() + (double) Mth.randomBetween(entity.getRandom(),
                     (float)-entity.getBoundingBox().getZsize()/2,
                     (float) entity.getBoundingBox().getZsize()/2);
             entity.level().addParticle(particle, d,e,f,0,0,0);
         }
+    }
 
+    @Unique
+    private int tcots$bindweedCooldown = 0;
+    // Bindweed I   -> Skips damage each 3 hurt
+    // Bindweed II  -> Skips damage each 2 hurt
+    // Bindweed III -> Skips damage each 1 hurt
+    @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
+    private void tcots$bindweedPreventDamage(final DamageSource source, final float amount, final CallbackInfoReturnable<Boolean> cir){
+        if(this.hasEffect(TCOTS_Effects.BindweedEffect())){
+            final MobEffectInstance bindweed= this.getEffect(TCOTS_Effects.BindweedEffect());
 
+            boolean sufferedEffectDamage=false;
+
+            for (final MobEffectInstance effectInstance: this.getActiveEffects()){
+                final int duration = effectInstance.isInfiniteDuration() ? THIS.tickCount : effectInstance.getDuration();
+
+                if(effectInstance.getEffect().value().getCategory() == MobEffectCategory.HARMFUL
+                        && effectInstance.getEffect().value().shouldApplyEffectTickThisTick(duration, effectInstance.getAmplifier())){
+                    sufferedEffectDamage=true;
+                }
+            }
+
+            if(sufferedEffectDamage){
+                assert bindweed != null;
+
+                if(tcots$bindweedCooldown <= 0){
+                    cir.setReturnValue(false);
+                    tcots$bindweedCooldown =
+                            // Wait 3/2/1 hurt before next possible skip
+                            bindweed.getAmplifier()==0? 3:
+                                    bindweed.getAmplifier()==1? 2:
+                                            1;
+                } else {
+                    tcots$bindweedCooldown--;
+                }
+            }
+        }
     }
 }

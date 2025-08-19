@@ -42,16 +42,17 @@ import java.util.function.Supplier;
 @Mod(value = TCOTS_Main.MOD_ID, dist = Dist.CLIENT)
 public class TCOTS_ClientNeoForge {
 
-    public TCOTS_ClientNeoForge(IEventBus modEventBus){
+    public TCOTS_ClientNeoForge(final IEventBus modEventBus){
         //Send data when join
-        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingIn evt) -> {
+        NeoForge.EVENT_BUS.addListener((final ClientPlayerNetworkEvent.LoggingIn evt) -> {
             {
                 TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(new TCOTS_Main.WitcherEyesFullPacket(
                                 TCOTS_Main.CONFIG.witcher_eyes.activateEyes(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()
+                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()
                         )
                 );
             }
@@ -59,13 +60,13 @@ public class TCOTS_ClientNeoForge {
     }
 
     @SubscribeEvent
-    public static void registerHUDLayers(RegisterGuiLayersEvent event){
+    public static void registerHUDLayers(final RegisterGuiLayersEvent event){
         event.registerAboveAll(ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID, "toxicity_overlay"),
                 (drawContext, tickCounter) -> ToxicityHudOverlay.onHudRender(drawContext, tickCounter.getGameTimeDeltaPartialTick(true)));
     }
 
     @SubscribeEvent
-    public static void registerClientEvent(FMLClientSetupEvent event){
+    public static void registerClientEvent(final FMLClientSetupEvent event){
         TCOTS_Client.initItemPropertiesRegistry();
 
         //Send client-packets to server
@@ -79,7 +80,8 @@ public class TCOTS_ClientNeoForge {
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()));
             });
 
             TCOTS_Main.CONFIG.witcher_eyes.subscribeToEyeSeparation(eye_separation ->
@@ -91,7 +93,8 @@ public class TCOTS_ClientNeoForge {
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                 eye_separation.ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()));
             });
 
             TCOTS_Main.CONFIG.witcher_eyes.subscribeToEyeShape(eye_shape ->
@@ -103,7 +106,8 @@ public class TCOTS_ClientNeoForge {
                                 eye_shape.ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()));
             });
 
             TCOTS_Main.CONFIG.witcher_eyes.subscribeToXEyePos(xEyePos ->
@@ -115,7 +119,8 @@ public class TCOTS_ClientNeoForge {
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                 xEyePos,
-                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos()));
+                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()));
             });
 
             TCOTS_Main.CONFIG.witcher_eyes.subscribeToYEyePos(yEyePos ->
@@ -127,7 +132,21 @@ public class TCOTS_ClientNeoForge {
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
                                 TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
-                                yEyePos));
+                                yEyePos,
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeMoves()));
+            });
+
+            TCOTS_Main.CONFIG.witcher_eyes.subscribeToEyeMoves(eyeMoves ->
+            {
+                if(Minecraft.getInstance().getConnection()==null)return;
+                TCOTS_Main.PACKETS_CHANNEL.clientHandle().send(
+                        new TCOTS_Main.WitcherEyesFullPacket(
+                                TCOTS_Main.CONFIG.witcher_eyes.activateEyes(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeShape().ordinal(),
+                                TCOTS_Main.CONFIG.witcher_eyes.eyeSeparation().ordinal(),
+                                TCOTS_Main.CONFIG.witcher_eyes.XEyePos(),
+                                TCOTS_Main.CONFIG.witcher_eyes.YEyePos(),
+                                eyeMoves));
             });
 
             TCOTS_Main.CONFIG.witcher_eyes.subscribeToActivateToxicity(activateToxicity ->
@@ -142,7 +161,7 @@ public class TCOTS_ClientNeoForge {
     }
 
     @SubscribeEvent
-    public static void registerColorBlocks(RegisterColorHandlersEvent.Block event){
+    public static void registerColorBlocks(final RegisterColorHandlersEvent.Block event){
         //Grass Colors
         event.register((state, world, pos, tintIndex) -> {
                     if (world == null || pos == null) {
@@ -162,12 +181,12 @@ public class TCOTS_ClientNeoForge {
     }
 
     @SubscribeEvent
-    public static void registerColorItems(RegisterColorHandlersEvent.Item event){
+    public static void registerColorItems(final RegisterColorHandlersEvent.Item event){
         event.register((stack, tintIndex) -> tintIndex > 0 ? -1: DyedItemColor.getOrDefault(stack, -6265536), TCOTS_Items.KNIGHT_CROSSBOW.get());
     }
 
     @SubscribeEvent
-    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+    public static void registerEntityRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         //Monsters
         event.registerEntityRenderer(TCOTS_Entities.Drowner(), DrownerRenderer::new);
         event.registerEntityRenderer(TCOTS_Entities.DrownerPuddle(), DrownerPuddleRenderer::new);
@@ -190,6 +209,8 @@ public class TCOTS_ClientNeoForge {
         event.registerEntityRenderer(TCOTS_Entities.ScurverSpine(), ScurverSpineRenderer::new);
 
         event.registerEntityRenderer(TCOTS_Entities.Devourer(), DevourerRenderer::new);
+
+        event.registerEntityRenderer(TCOTS_Entities.Bloedzuiger(), BloedzuigerRenderer::new);
 
         event.registerEntityRenderer(TCOTS_Entities.Graveir(), GraveirRenderer::new);
 
@@ -253,7 +274,7 @@ public class TCOTS_ClientNeoForge {
     }
 
     @SubscribeEvent
-    public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+    public static void registerParticleProviders(final RegisterParticleProvidersEvent event) {
         // There are multiple ways to register providers, all differing in the functional type they provide in the
         // second parameter. For example, #registerSpriteSet represents a Function<SpriteSet, ParticleProvider<?>>:
         event.registerSpriteSet(TCOTS_Particles.RotfiendBloodExplosion(), Rotfiend_BloodExplosionParticle.Factory::new);
@@ -272,6 +293,10 @@ public class TCOTS_ClientNeoForge {
         event.registerSpriteSet(TCOTS_Particles.YellowCloud(), CloudParticleColor.YellowCloudFactory::new);
         event.registerSpriteSet(TCOTS_Particles.DimeritiumFlash(), DimeritiumFlash.FlashFactory::new);
         event.registerSpecial(TCOTS_Particles.MoonDustExplosionEmitter(), new MoonDust_ExplosionEmitterParticle.Factory());
+
+        event.registerSpecial(TCOTS_Particles.BloedzuigerBloodEmitter(), new Bloedzuiger_BloodEmitterParticle.Factory());
+
+        event.registerSpriteSet(TCOTS_Particles.CadaverineCloud(), CloudParticleColor.CadaverineCloudFactory::new);
 
         event.registerSpriteSet(TCOTS_Particles.FallingBloodParticle(),
                 (spriteProvider) ->
@@ -308,13 +333,13 @@ public class TCOTS_ClientNeoForge {
     }
 
     @SubscribeEvent
-    public static void registerMenuScreen(RegisterMenuScreensEvent event){
+    public static void registerMenuScreen(final RegisterMenuScreensEvent event){
         event.register(TCOTS_ScreenHandlersAndRecipes.AlchemyTableScreenHandler(), AlchemyTableScreen::new);
         event.register(TCOTS_ScreenHandlersAndRecipes.HerbalTableScreenHandler(), HerbalTableScreen::new);
     }
 
     @SubscribeEvent
-    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+    public static void registerLayerDefinitions(final EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(TCOTS_Client.WITCHER_EYES_LAYER, WitcherEyesModel_createModelData());
         event.registerLayerDefinition(TCOTS_Client.TOXICITY_FACE_LAYER, ToxicityFaceModel_createModelData());
     }

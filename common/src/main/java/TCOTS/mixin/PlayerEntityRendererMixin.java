@@ -14,14 +14,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerRenderer.class)
 public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-    public PlayerEntityRendererMixin(EntityRendererProvider.Context ctx, PlayerModel<AbstractClientPlayer> model, float shadowRadius) {
+    public PlayerEntityRendererMixin(final EntityRendererProvider.Context ctx, final PlayerModel<AbstractClientPlayer> model, final float shadowRadius) {
         super(ctx, model, shadowRadius);
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void injectInConstructor(EntityRendererProvider.Context ctx, boolean slim, CallbackInfo ci) {
+    private void injectInConstructor(final EntityRendererProvider.Context ctx, final boolean slim, final CallbackInfo ci) {
         this.addLayer(new WitcherEyesFeatureRenderer(this, ctx));
 
         this.addLayer(new ToxicityFaceFeatureRenderer(this, ctx));
     }
+
 }

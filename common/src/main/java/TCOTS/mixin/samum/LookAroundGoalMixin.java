@@ -16,14 +16,14 @@ public class LookAroundGoalMixin {
     @Shadow @Final private Mob mob;
 
     @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
-    private void injectNoSamumEffect(CallbackInfoReturnable<Boolean> cir){
+    private void injectNoSamumEffect(final CallbackInfoReturnable<Boolean> cir){
         if(SamumBomb.checkSamumEffect(mob)){
             cir.setReturnValue(false);
         }
     }
 
     @Inject(method = "canContinueToUse", at = @At("HEAD"), cancellable = true)
-    private void injectNoSamumEffectContinue(CallbackInfoReturnable<Boolean> cir){
+    private void injectNoSamumEffectContinue(final CallbackInfoReturnable<Boolean> cir){
         if(SamumBomb.checkSamumEffect(mob)){
             cir.setReturnValue(false);
         }

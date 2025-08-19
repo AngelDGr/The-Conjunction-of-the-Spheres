@@ -15,7 +15,7 @@ import net.minecraft.world.item.TooltipFlag;
 public class EmptyWitcherPotionItem extends Item {
 
 
-    public EmptyWitcherPotionItem(Properties settings) {
+    public EmptyWitcherPotionItem(final Properties settings) {
         super(settings);
     }
 
@@ -39,7 +39,7 @@ public class EmptyWitcherPotionItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type) {
+    public void appendHoverText(final ItemStack stack, final TooltipContext context, final List<Component> tooltip, final TooltipFlag type) {
         tooltip.add(Component.translatable("tooltip.tcots_witcher.empty_witcher_bottle_1").withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("tooltip.tcots_witcher.empty_witcher_bottle_2").withStyle(ChatFormatting.GRAY));
     }

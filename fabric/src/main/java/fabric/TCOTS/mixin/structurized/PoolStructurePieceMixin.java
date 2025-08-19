@@ -22,15 +22,15 @@ public class PoolStructurePieceMixin {
 	@Shadow @Final protected StructurePoolElement element;
 
 	@Inject(method = "addAdditionalSaveData", at = @At(value = "TAIL"))
-	private void fixPoolElement(StructurePieceSerializationContext context, CompoundTag nbt, CallbackInfo ci) {
+	private void fixPoolElement(final StructurePieceSerializationContext context, final CompoundTag nbt, final CallbackInfo ci) {
 		if (!nbt.contains("pool_element")) {
-			CompoundTag nbtElement = new CompoundTag();
-			String poolId = element.toString();
-			String poolId2 = poolId.substring(0,poolId.length()-2);
-			String split = "\\[";
-			String[] poolIdArray = poolId2.split(split);
-			String poolLocation = poolIdArray[poolIdArray.length - 1];
-			Triple<String, String, String> info = FabricStructurePoolRegistry.getPoolStructureElementInfo(poolLocation);
+			final CompoundTag nbtElement = new CompoundTag();
+			final String poolId = element.toString();
+			final String poolId2 = poolId.substring(0,poolId.length()-2);
+			final String split = "\\[";
+			final String[] poolIdArray = poolId2.split(split);
+			final String poolLocation = poolIdArray[poolIdArray.length - 1];
+			final Triple<String, String, String> info = FabricStructurePoolRegistry.getPoolStructureElementInfo(poolLocation);
 			if (info != null) {
 				nbtElement.putString("element_type", info.getLeft());
 				nbtElement.putString("location", poolLocation);

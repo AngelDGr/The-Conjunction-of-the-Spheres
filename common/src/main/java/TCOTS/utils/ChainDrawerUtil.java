@@ -28,46 +28,46 @@ public class ChainDrawerUtil {
     private static final ResourceLocation TEXTURE = ResourceLocation.parse("textures/block/chain.png");
 
 
-    public static void renderChain(Entity fromEntity, float tickDelta, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, Entity toEntity) {
+    public static void renderChain(final Entity fromEntity, final float tickDelta, final PoseStack matrixStack, final MultiBufferSource vertexConsumerProvider, final Entity toEntity) {
         matrixStack.pushPose();
 
-        double lerpBodyAngle = (Mth.lerp(tickDelta, fromEntity.yRotO, fromEntity.getVisualRotationYInDegrees()) * Mth.DEG_TO_RAD) + Mth.HALF_PI;
-        Vec3 leashOffsetO = new Vec3(0, 0, 0);
-        double xAngleOffset = Math.cos(lerpBodyAngle) * leashOffsetO.z + Math.sin(lerpBodyAngle) * leashOffsetO.x;
-        double zAngleOffset = Math.sin(lerpBodyAngle) * leashOffsetO.z - Math.cos(lerpBodyAngle) * leashOffsetO.x;
+        final double lerpBodyAngle = (Mth.lerp(tickDelta, fromEntity.yRotO, fromEntity.getVisualRotationYInDegrees()) * Mth.DEG_TO_RAD) + Mth.HALF_PI;
+        final Vec3 leashOffsetO = new Vec3(0, 0, 0);
+        final double xAngleOffset = Math.cos(lerpBodyAngle) * leashOffsetO.z + Math.sin(lerpBodyAngle) * leashOffsetO.x;
+        final double zAngleOffset = Math.sin(lerpBodyAngle) * leashOffsetO.z - Math.cos(lerpBodyAngle) * leashOffsetO.x;
 
-        Vec3 dstPos = toEntity.getRopeHoldPosition(tickDelta);
+        final Vec3 dstPos = toEntity.getRopeHoldPosition(tickDelta);
         //The leash pos offset
-        Vec3 leashOffset = getLeashOffset(fromEntity);
+        final Vec3 leashOffset = getLeashOffset(fromEntity);
         matrixStack.translate(xAngleOffset, leashOffset.y, zAngleOffset);
 
-        double lerpOriginX = Mth.lerp(tickDelta, fromEntity.xo, fromEntity.getX()) + xAngleOffset;
-        double lerpOriginY = Mth.lerp(tickDelta, fromEntity.yo, fromEntity.getY()) + leashOffset.y;
-        double lerpOriginZ = Mth.lerp(tickDelta, fromEntity.zo, fromEntity.getZ()) + zAngleOffset;
-        float xDif = (float)(dstPos.x - lerpOriginX);
-        float yDif = (float)(dstPos.y - lerpOriginY);
-        float zDif = (float)(dstPos.z - lerpOriginZ);
+        final double lerpOriginX = Mth.lerp(tickDelta, fromEntity.xo, fromEntity.getX()) + xAngleOffset;
+        final double lerpOriginY = Mth.lerp(tickDelta, fromEntity.yo, fromEntity.getY()) + leashOffset.y;
+        final double lerpOriginZ = Mth.lerp(tickDelta, fromEntity.zo, fromEntity.getZ()) + zAngleOffset;
+        final float xDif = (float)(dstPos.x - lerpOriginX);
+        final float yDif = (float)(dstPos.y - lerpOriginY);
+        final float zDif = (float)(dstPos.z - lerpOriginZ);
 
-        VertexConsumer buffer = vertexConsumerProvider.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
+        final VertexConsumer buffer = vertexConsumerProvider.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
 
         // Now we gather light information for the chain. Since the chain is lighter if there is more light.
-        BlockPos blockPosOfStart = BlockPos.containing(fromEntity.getEyePosition(tickDelta));
-        BlockPos blockPosOfEnd = BlockPos.containing(toEntity.getEyePosition(tickDelta));
-        int blockLightLevelOfStart = fromEntity.level().getBrightness(LightLayer.BLOCK, blockPosOfStart);
-        int blockLightLevelOfEnd = toEntity.level().getBrightness(LightLayer.BLOCK, blockPosOfEnd);
-        int skylightLevelOfStart = fromEntity.level().getBrightness(LightLayer.SKY, blockPosOfStart);
-        int skylightLevelOfEnd = fromEntity.level().getBrightness(LightLayer.SKY, blockPosOfEnd);
+        final BlockPos blockPosOfStart = BlockPos.containing(fromEntity.getEyePosition(tickDelta));
+        final BlockPos blockPosOfEnd = BlockPos.containing(toEntity.getEyePosition(tickDelta));
+        final int blockLightLevelOfStart = fromEntity.level().getBrightness(LightLayer.BLOCK, blockPosOfStart);
+        final int blockLightLevelOfEnd = toEntity.level().getBrightness(LightLayer.BLOCK, blockPosOfEnd);
+        final int skylightLevelOfStart = fromEntity.level().getBrightness(LightLayer.SKY, blockPosOfStart);
+        final int skylightLevelOfEnd = fromEntity.level().getBrightness(LightLayer.SKY, blockPosOfEnd);
 
-        Vector3f chainVec =
+        final Vector3f chainVec =
                 new Vector3f(
                         xDif,
                         yDif,
                         zDif);
 
-        float angleY = -(float) Math.atan2(chainVec.z(), chainVec.x());
+        final float angleY = -(float) Math.atan2(chainVec.z(), chainVec.x());
         matrixStack.mulPose(new Quaternionf().rotateXYZ(0, angleY, 0));
 
-        ChainModel model = ChainRenderer.buildModel(chainVec);
+        final ChainModel model = ChainRenderer.buildModel(chainVec);
         model.render(buffer, matrixStack, blockLightLevelOfStart, blockLightLevelOfEnd, skylightLevelOfStart, skylightLevelOfEnd);
 
         matrixStack.popPose();
@@ -75,7 +75,7 @@ public class ChainDrawerUtil {
 
 
     @SuppressWarnings("unused")
-    protected static Vec3 getLeashOffset(Entity entity) {
+    protected static Vec3 getLeashOffset(final Entity entity) {
         return new Vec3(0.0, 0.0, 0.0);
     }
 
@@ -85,7 +85,7 @@ public class ChainDrawerUtil {
  */
  public record ChainModel(float[] vertices, float[] uvs) {
 
-    public static Builder builder(int initialCapacity) {
+    public static Builder builder(final int initialCapacity) {
         return new Builder(initialCapacity);
     }
 
@@ -99,15 +99,15 @@ public class ChainDrawerUtil {
      * @param sLight0  Sky-light at the start.
      * @param sLight1  Sky-light at the end.
      */
-    public void render(VertexConsumer vertexConsumer, PoseStack matrices, int bLight0, int bLight1, int sLight0, int sLight1) {
-        Matrix4f modelMatrix = matrices.last().pose();
-        int count = vertices.length / 3;
+    public void render(final VertexConsumer vertexConsumer, final PoseStack matrices, final int bLight0, final int bLight1, final int sLight0, final int sLight1) {
+        final Matrix4f modelMatrix = matrices.last().pose();
+        final int count = vertices.length / 3;
         for (int i = 0; i < count; i++) {
             // divide by 2 because chain has 2 face sets
-            float f = (i % (count / 2f)) / (count / 2f);
-            int blockLight = (int) Mth.lerp(f, (float) bLight0, (float) bLight1);
-            int skyLight = (int) Mth.lerp(f, (float) sLight0, (float) sLight1);
-            int light = LightTexture.pack(blockLight, skyLight);
+            final float f = (i % (count / 2f)) / (count / 2f);
+            final int blockLight = (int) Mth.lerp(f, (float) bLight0, (float) bLight1);
+            final int skyLight = (int) Mth.lerp(f, (float) sLight0, (float) sLight1);
+            final int light = LightTexture.pack(blockLight, skyLight);
 
             vertexConsumer
                     .addVertex(modelMatrix, vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2])
@@ -125,19 +125,19 @@ public class ChainDrawerUtil {
         private final List<Float> uvs;
         private int size;
 
-        public Builder(int initialCapacity) {
+        public Builder(final int initialCapacity) {
             vertices = new ArrayList<>(initialCapacity * 3);
             uvs = new ArrayList<>(initialCapacity * 2);
         }
 
-        public Builder vertex(Vector3f v) {
+        public Builder vertex(final Vector3f v) {
             vertices.add(v.x());
             vertices.add(v.y());
             vertices.add(v.z());
             return this;
         }
 
-        public Builder uv(float u, float v) {
+        public Builder uv(final float u, final float v) {
             uvs.add(u);
             uvs.add(v);
             return this;
@@ -154,11 +154,11 @@ public class ChainDrawerUtil {
             return new ChainModel(toFloatArray(vertices), toFloatArray(uvs));
         }
 
-        private float[] toFloatArray(List<Float> floats) {
-            float[] array = new float[floats.size()];
+        private float[] toFloatArray(final List<Float> floats) {
+            final float[] array = new float[floats.size()];
             int i = 0;
 
-            for (float f : floats) {
+            for (final float f : floats) {
                 array[i++] = f;
             }
 
@@ -187,10 +187,10 @@ public static class ChainRenderer {
      * @param chainVec The vector from the chain start to the end
      * @return The generated model
      */
-    public static ChainModel buildModel(Vector3f chainVec) {
-        float desiredSegmentLength = 1f / quality;
-        int initialCapacity = (int) (2f * chainVec.lengthSquared() / desiredSegmentLength);
-        ChainModel.Builder builder = ChainModel.builder(initialCapacity);
+    public static ChainModel buildModel(final Vector3f chainVec) {
+        final float desiredSegmentLength = 1f / quality;
+        final int initialCapacity = (int) (2f * chainVec.lengthSquared() / desiredSegmentLength);
+        final ChainModel.Builder builder = ChainModel.builder(initialCapacity);
 
         if (Float.isNaN(chainVec.x()) && Float.isNaN(chainVec.z())) {
             buildFaceVertical(builder, chainVec, 45, UVRect.DEFAULT_SIDE_A);
@@ -206,27 +206,27 @@ public static class ChainRenderer {
     /**
      * {@link #buildFace} does not work when {@code chainVec} is pointing straight up or down.
      */
-    public static void buildFaceVertical(ChainModel.Builder builder, Vector3f chainVec, float angle, UVRect uv) {
+    public static void buildFaceVertical(final ChainModel.Builder builder, final Vector3f chainVec, final float angle, final UVRect uv) {
         chainVec.x = 0;
         chainVec.z = 0;
 
         float actualSegmentLength = 1f / quality;
-        float chainWidth = (uv.x1() - uv.x0()) / 16 * CHAIN_SCALE;
+        final float chainWidth = (uv.x1() - uv.x0()) / 16 * CHAIN_SCALE;
 
-        Vector3f normal = new Vector3f((float) Math.cos(Math.toRadians(angle)), 0, (float) Math.sin(Math.toRadians(angle)));
+        final Vector3f normal = new Vector3f((float) Math.cos(Math.toRadians(angle)), 0, (float) Math.sin(Math.toRadians(angle)));
         normal.normalize(chainWidth);
 
-        Vector3f vert00 = new Vector3f(
+        final Vector3f vert00 = new Vector3f(
                 -normal.x() / 2,
                 0,
-                -normal.z() / 2),
-                vert01 = new Vector3f(vert00);
+                -normal.z() / 2);
+        final Vector3f vert01 = new Vector3f(vert00);
 
-        Vector3f vert10 = new Vector3f(
+        final Vector3f vert10 = new Vector3f(
                 -normal.x() / 2,
                 0,
-                -normal.z() / 2),
-                vert11 = new Vector3f(vert10);
+                -normal.z() / 2);
+        final Vector3f vert11 = new Vector3f(vert10);
 
         float uvv0 = 0, uvv1 = 0;
         boolean lastIter = false;
@@ -267,22 +267,29 @@ public static class ChainRenderer {
      * @param angle   The angle of the face
      * @param uv      The uv bounds of the face
      */
-    public static void buildFace(ChainModel.Builder builder, Vector3f chainVec, float angle, UVRect uv) {
-        float actualSegmentLength, desiredSegmentLength = 1f / quality;
-        float distance = chainVec.length(), distanceXZ = (float) Math.sqrt(Math.fma(chainVec.x(), chainVec.x(), chainVec.z() * chainVec.z()));
+    public static void buildFace(final ChainModel.Builder builder, final Vector3f chainVec, final float angle, final UVRect uv) {
+        float actualSegmentLength;
+        final float desiredSegmentLength = 1f / quality;
+        final float distance = chainVec.length();
+        final float distanceXZ = (float) Math.sqrt(Math.fma(chainVec.x(), chainVec.x(), chainVec.z() * chainVec.z()));
         // Original code used total distance between start and end instead of horizontal distance
         // That changed the look of chains when there was a big height difference, but it looks better.
-        float wrongDistanceFactor = distance / distanceXZ;
+        final float wrongDistanceFactor = distance / distanceXZ;
 
         // 00, 01, 11, 11 refers to the X and Y position of the vertex.
         // 00 is the lower X and Y vertex. 10 Has the same y value as 00 but a higher x value.
-        Vector3f vert00 = new Vector3f(), vert01 = new Vector3f(), vert11 = new Vector3f(), vert10 = new Vector3f();
-        Vector3f normal = new Vector3f(), rotAxis = new Vector3f();
+        final Vector3f vert00 = new Vector3f();
+        Vector3f vert01 = new Vector3f();
+        Vector3f vert11 = new Vector3f();
+        final Vector3f vert10 = new Vector3f();
+        final Vector3f normal = new Vector3f();
+        final Vector3f rotAxis = new Vector3f();
 
-        float chainWidth = (uv.x1() - uv.x0()) / 16 * CHAIN_SCALE;
+        final float chainWidth = (uv.x1() - uv.x0()) / 16 * CHAIN_SCALE;
         //
         float uvv0, uvv1 = 0, gradient, x, y;
-        Vector3f point0 = new Vector3f(), point1 = new Vector3f();
+        final Vector3f point0 = new Vector3f();
+        final Vector3f point1 = new Vector3f();
         Quaternionf rotator = new Quaternionf();
 
         // All of this setup can probably go, but I can't figure out
@@ -377,7 +384,7 @@ public static class ChainRenderer {
      * @param k the gradient
      * @return Δx
      */
-    private static float estimateDeltaX(float s, float k) {
+    private static float estimateDeltaX(final float s, final float k) {
         return (float) (s / Math.sqrt(1 + k * k));
     }
 
@@ -392,9 +399,9 @@ public static class ChainRenderer {
      * @param h height at x=d
      * @return gradient at x
      */
-    public static double drip2prime(double x, double d, double h) {
-        double a = 7;
-        double p1 = a * asinh((h / (2D * a)) * (1D / Math.sinh(d / (2D * a))));
+    public static double drip2prime(final double x, final double d, final double h) {
+        final double a = 7;
+        final double p1 = a * asinh((h / (2D * a)) * (1D / Math.sinh(d / (2D * a))));
         return Math.sinh((2 * x + 2 * p1 - d) / (2 * a));
     }
 
@@ -412,17 +419,17 @@ public static class ChainRenderer {
      * @param h height at x=d
      * @return y
      */
-    public static double drip2(double x, double d, double h) {
+    public static double drip2(final double x, final double d, final double h) {
         double a = 20;
         a = a + (d * 0.3);
-        double p1 = a * asinh((h / (2D * a)) * (1D / Math.sinh(d / (2D * a))));
-        double p2 = -a * Math.cosh((2D * p1 - d) / (2D * a));
+        final double p1 = a * asinh((h / (2D * a)) * (1D / Math.sinh(d / (2D * a))));
+        final double p2 = -a * Math.cosh((2D * p1 - d) / (2D * a));
         return p2 + a * Math.cosh((((2D * x) + (2D * p1)) - d) / (2D * a));
     }
 
 
 
-    private static double asinh(double x) {
+    private static double asinh(final double x) {
         return Math.log(x + Math.sqrt(x * x + 1.0));
     }
 }

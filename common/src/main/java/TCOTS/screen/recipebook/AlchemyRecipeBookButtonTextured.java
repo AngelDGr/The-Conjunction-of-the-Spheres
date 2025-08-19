@@ -9,18 +9,18 @@ import net.minecraft.resources.ResourceLocation;
 public class AlchemyRecipeBookButtonTextured extends AlchemyRecipeBookButton{
     protected final WidgetSprites textures;
 
-    public AlchemyRecipeBookButtonTextured(int x, int y, int width, int height, WidgetSprites textures, AlchemyRecipeBookButton.PressAction pressAction) {
+    public AlchemyRecipeBookButtonTextured(final int x, final int y, final int width, final int height, final WidgetSprites textures, final AlchemyRecipeBookButton.PressAction pressAction) {
         this(x, y, width, height, textures, pressAction, CommonComponents.EMPTY);
     }
 
-    public AlchemyRecipeBookButtonTextured(int x, int y, int width, int height, WidgetSprites textures, AlchemyRecipeBookButton.PressAction pressAction, Component text) {
+    public AlchemyRecipeBookButtonTextured(final int x, final int y, final int width, final int height, final WidgetSprites textures, final AlchemyRecipeBookButton.PressAction pressAction, final Component text) {
         super(x, y, width, height, text, pressAction, DEFAULT_NARRATION_SUPPLIER);
         this.textures = textures;
     }
 
     @Override
-    public void renderWidget(GuiGraphics context, int mouseX, int mouseY, float delta) {
-        ResourceLocation identifier = this.textures.get(this.isActive(), this.isHoveredOrFocused());
+    public void renderWidget(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
+        final ResourceLocation identifier = this.textures.get(this.isActive(), this.isHoveredOrFocused());
         context.blitSprite(identifier, this.getX(), this.getY(), this.width, this.height);
     }
 }

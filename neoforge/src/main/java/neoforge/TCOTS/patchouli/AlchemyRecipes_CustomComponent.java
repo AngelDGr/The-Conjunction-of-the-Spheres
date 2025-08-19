@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.UnaryOperator;
 
+@SuppressWarnings("all")
 public class AlchemyRecipes_CustomComponent implements ICustomComponent {
     private transient int x, y;
 

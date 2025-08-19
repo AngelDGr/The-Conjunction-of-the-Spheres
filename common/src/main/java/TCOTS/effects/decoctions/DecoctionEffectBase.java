@@ -11,18 +11,18 @@ public class DecoctionEffectBase extends WitcherPotionEffect {
 
     private LivingEntity entity;
     private final int decoctionToxicity;
-    public DecoctionEffectBase(MobEffectCategory category, int color, int decoctionToxicity) {
+    public DecoctionEffectBase(final MobEffectCategory category, final int color, final int decoctionToxicity) {
         super(category, color);
         this.decoctionToxicity=decoctionToxicity;
     }
 
     @Override
-    public void onEffectStarted(@NotNull LivingEntity entity, int amplifier) {
+    public void onEffectStarted(@NotNull final LivingEntity entity, final int amplifier) {
         this.entity=entity;
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(@NotNull final LivingEntity entity, final int amplifier) {
         if (this.entity == null) {
             this.entity = entity;
         }
@@ -31,9 +31,9 @@ public class DecoctionEffectBase extends WitcherPotionEffect {
     }
 
     @Override
-    public void removeAttributeModifiers(@NotNull AttributeMap attributeContainer) {
+    public void removeAttributeModifiers(@NotNull final AttributeMap attributeContainer) {
         if(!entity.level().isClientSide){
-            if(entity!=null && entity instanceof Player player){
+            if(entity!=null && entity instanceof final Player player){
                 player.theConjunctionOfTheSpheres$decreaseToxicity(this.decoctionToxicity,true);
             }
         }

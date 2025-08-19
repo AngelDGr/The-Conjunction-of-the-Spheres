@@ -7,12 +7,12 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ExplodingBoltEntityRenderer extends BoltEntityRenderer<ExplodingBoltProjectile>{
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(TCOTS_Main.MOD_ID,"textures/entity/exploding_bolt.png");
-    public ExplodingBoltEntityRenderer(EntityRendererProvider.Context context) {
+    public ExplodingBoltEntityRenderer(final EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ExplodingBoltProjectile arrowEntity) {
+    public ResourceLocation getTextureLocation(final ExplodingBoltProjectile arrowEntity) {
         return TEXTURE;
     }
 }

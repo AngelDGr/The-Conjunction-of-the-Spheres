@@ -12,7 +12,7 @@ public class DragonsDream_ExplosionEmitterParticle extends NoRenderParticle {
     private int age;
     private final int lifetime;
 
-    DragonsDream_ExplosionEmitterParticle(ClientLevel clientWorld, double d, double e, double f) {
+    DragonsDream_ExplosionEmitterParticle(final ClientLevel clientWorld, final double d, final double e, final double f) {
         super(clientWorld, d, e, f, 0.0, 0.0, 0.0);
         this.lifetime = 4;
     }
@@ -20,9 +20,9 @@ public class DragonsDream_ExplosionEmitterParticle extends NoRenderParticle {
     @Override
     public void tick() {
         for (int i = 0; i < 8; ++i) {
-            double d = this.x + (this.random.nextDouble() - this.random.nextDouble()) * 3.0;
-            double e = this.y + (this.random.nextDouble()) * 4.0;
-            double f = this.z + (this.random.nextDouble() - this.random.nextDouble()) * 3.0;
+            final double d = this.x + (this.random.nextDouble() - this.random.nextDouble()) * 3.0;
+            final double e = this.y + (this.random.nextDouble()) * 4.0;
+            final double f = this.z + (this.random.nextDouble() - this.random.nextDouble()) * 3.0;
             this.level.addParticle(TCOTS_Particles.YellowCloud(), d, e, f, 0, 0.0, 0.0);
         }
         ++this.age;
@@ -34,7 +34,7 @@ public class DragonsDream_ExplosionEmitterParticle extends NoRenderParticle {
 
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         @Override
-        public Particle createParticle(@NotNull SimpleParticleType defaultParticleType, @NotNull ClientLevel clientWorld, double d, double e, double f, double g, double h, double i) {
+        public Particle createParticle(@NotNull final SimpleParticleType defaultParticleType, @NotNull final ClientLevel clientWorld, final double d, final double e, final double f, final double g, final double h, final double i) {
             return new DragonsDream_ExplosionEmitterParticle(clientWorld, d, e, f);
         }
     }

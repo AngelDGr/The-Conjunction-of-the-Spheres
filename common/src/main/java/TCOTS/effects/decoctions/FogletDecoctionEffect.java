@@ -7,21 +7,21 @@ import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
 public class FogletDecoctionEffect extends DecoctionEffectBase {
-    public FogletDecoctionEffect(MobEffectCategory category, int color) {
+    public FogletDecoctionEffect(final MobEffectCategory category, final int color) {
         super(category, color,50);
     }
 
-    protected void spawnFogParticlesItself(LivingEntity entity){
+    protected void spawnFogParticlesItself(final LivingEntity entity){
         if(entity.tickCount%22 == 0){
-            double d = entity.getX() + (double) Mth.randomBetween(entity.getRandom(), -0.8F, 0.8F);
-            double e = (entity.getEyeY()-0.5f)+ (double) Mth.randomBetween(entity.getRandom(), -1F, 1F);
-            double f = entity.getZ() + (double) Mth.randomBetween(entity.getRandom(), -0.8F, 0.8F);
+            final double d = entity.getX() + (double) Mth.randomBetween(entity.getRandom(), -0.8F, 0.8F);
+            final double e = (entity.getEyeY()-0.5f)+ (double) Mth.randomBetween(entity.getRandom(), -1F, 1F);
+            final double f = entity.getZ() + (double) Mth.randomBetween(entity.getRandom(), -0.8F, 0.8F);
             entity.level().addParticle(TCOTS_Particles.FogletFog(), d,e,f,0,0,0);
         }
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(@NotNull final LivingEntity entity, final int amplifier) {
         if(entity.level().isThundering() || entity.level().isRaining()){
             spawnFogParticlesItself(entity);
         }

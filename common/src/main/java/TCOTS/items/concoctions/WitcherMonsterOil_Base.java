@@ -38,7 +38,7 @@ public class WitcherMonsterOil_Base extends Item {
     private final int level;
     private final Component againstDescription;
 
-    public WitcherMonsterOil_Base(Properties settings, MonsterOilType group, int uses, int level) {
+    public WitcherMonsterOil_Base(final Properties settings, final MonsterOilType group, final int uses, final int level) {
         super(settings);
 
         group_id =group.getNumericID();
@@ -59,10 +59,10 @@ public class WitcherMonsterOil_Base extends Item {
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, Player user, @NotNull InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull final Level world, final Player user, @NotNull final InteractionHand hand) {
         if(user.getMainHandItem().getItem() instanceof SwordItem || user.getMainHandItem().getItem() instanceof AxeItem){
             if (notHasSameOil(user.getMainHandItem())){
-                ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL.get());
+                final ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL.get());
                 stack_Empty.set(TCOTS_Items.RefillRecipe(), BuiltInRegistries.ITEM.getKey(this).toString());
 
 
@@ -89,19 +89,19 @@ public class WitcherMonsterOil_Base extends Item {
 
     }
 
-    private boolean notHasSameOil(ItemStack stack){
+    private boolean notHasSameOil(final ItemStack stack){
         if(!stack.has(TCOTS_Items.MonsterOilComponent())){
             return true;
         }
 
 
-        MonsterOilComponent monsterOil = stack.get(TCOTS_Items.MonsterOilComponent());
+        final MonsterOilComponent monsterOil = stack.get(TCOTS_Items.MonsterOilComponent());
         //Check if it has full uses AND it is of the same Monster Oil and level, otherwise it can be replaced
         return monsterOil == null || monsterOil.uses() != getUses() || monsterOil.groupId() != this.group_id || monsterOil.level() != getLevel();
     }
 
     @Override
-    public boolean overrideOtherStackedOnMe(@NotNull ItemStack stack, @NotNull ItemStack otherStack, @NotNull Slot slot, @NotNull ClickAction clickType, @NotNull Player player, @NotNull SlotAccess cursorStackReference) {
+    public boolean overrideOtherStackedOnMe(@NotNull final ItemStack stack, @NotNull final ItemStack otherStack, @NotNull final Slot slot, @NotNull final ClickAction clickType, @NotNull final Player player, @NotNull final SlotAccess cursorStackReference) {
         if (clickType != ClickAction.SECONDARY || slot.allowModification(player)) {
             return false;
         }
@@ -109,7 +109,7 @@ public class WitcherMonsterOil_Base extends Item {
 
         if(otherStack.getItem() instanceof SwordItem || otherStack.getItem() instanceof AxeItem){
             if (notHasSameOil(otherStack)){
-                ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL.get());
+                final ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL.get());
                 stack_Empty.set(TCOTS_Items.RefillRecipe(), BuiltInRegistries.ITEM.getKey(this).toString());
 
                 player.playSound(TCOTS_Sounds.getSoundEvent("oil_applied"), 1,1);
@@ -131,16 +131,16 @@ public class WitcherMonsterOil_Base extends Item {
     }
 
     @Override
-    public boolean overrideStackedOnOther(@NotNull ItemStack stack, @NotNull Slot slot, @NotNull ClickAction clickType, @NotNull Player player) {
+    public boolean overrideStackedOnOther(@NotNull final ItemStack stack, @NotNull final Slot slot, @NotNull final ClickAction clickType, @NotNull final Player player) {
         if (clickType != ClickAction.SECONDARY) {
             return false;
         }
 
-        ItemStack itemStackInSlot = slot.getItem();
+        final ItemStack itemStackInSlot = slot.getItem();
         if(itemStackInSlot.getItem() instanceof SwordItem || itemStackInSlot.getItem() instanceof AxeItem){
             if (notHasSameOil(itemStackInSlot)){
 
-                ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL.get());
+                final ItemStack stack_Empty = new ItemStack(TCOTS_Items.EMPTY_OIL.get());
                 stack_Empty.set(TCOTS_Items.RefillRecipe(), BuiltInRegistries.ITEM.getKey(this).toString());
 
 
@@ -163,7 +163,7 @@ public class WitcherMonsterOil_Base extends Item {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltip, @NotNull TooltipFlag type) {
+    public void appendHoverText(@NotNull final ItemStack stack, @NotNull final TooltipContext context, final List<Component> tooltip, @NotNull final TooltipFlag type) {
         //Against Necrophages:
         tooltip.add(this.againstDescription);
         //  +2 Attack Damage
@@ -191,7 +191,7 @@ public class WitcherMonsterOil_Base extends Item {
 
         private final int numericID;
 
-        MonsterOilType(String id, int numericID){
+        MonsterOilType(final String id, final int numericID){
             this.id=id;
             this.numericID=numericID;
         }

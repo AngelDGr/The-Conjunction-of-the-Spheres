@@ -21,20 +21,20 @@ public abstract class QuadrupedGhoulModelBase <T extends GeoAnimatable> extends 
     }
 
     @Override
-    public void setCustomAnimations(T animatable, long instanceId, AnimationState<T> animationState) {
-        if(animatable instanceof Mob mob) {
-            GeoBone head = getAnimationProcessor().getBone("head");
+    public void setCustomAnimations(final T animatable, final long instanceId, final AnimationState<T> animationState) {
+        if(animatable instanceof final Mob mob) {
+            final GeoBone head = getAnimationProcessor().getBone("head");
 
-            GeoBone left_leg = getAnimationProcessor().getBone("left_leg_swing");
+            final GeoBone left_leg = getAnimationProcessor().getBone("left_leg_swing");
 
-            GeoBone right_leg = getAnimationProcessor().getBone("right_leg_swing");
+            final GeoBone right_leg = getAnimationProcessor().getBone("right_leg_swing");
 
-            GeoBone left_arm = getAnimationProcessor().getBone("left_arm_swing");
+            final GeoBone left_arm = getAnimationProcessor().getBone("left_arm_swing");
 
-            GeoBone right_arm = getAnimationProcessor().getBone("right_arm_swing");
+            final GeoBone right_arm = getAnimationProcessor().getBone("right_arm_swing");
 
             if (head != null) {
-                EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+                final EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
                 head.setRotX((entityData.headPitch() + 90f) * Mth.DEG_TO_RAD);
                 head.setRotZ((entityData.netHeadYaw() * Mth.DEG_TO_RAD));
             }

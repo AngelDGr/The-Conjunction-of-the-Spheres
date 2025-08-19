@@ -13,7 +13,7 @@ public class MobMixin {
     Mob THIS = (Mob) (Object) this;
 
     @Inject(method = "playAmbientSound", at = @At("HEAD"), cancellable = true)
-    private void stopSound(CallbackInfo ci){
+    private void stopSound(final CallbackInfo ci){
         if(THIS.theConjunctionOfTheSpheres$isFrozen()){
             ci.cancel();
         }

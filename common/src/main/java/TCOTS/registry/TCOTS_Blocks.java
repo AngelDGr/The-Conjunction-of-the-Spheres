@@ -107,7 +107,7 @@ public class TCOTS_Blocks {
     public static  final Supplier<Block> GIANT_ANCHOR =TCOTS_Registries.BLOCKS.register("giant_anchor",
             ()->new GiantAnchorBlock(BlockBehaviour.Properties.of().strength(8.0f, 600.0f).sound(SoundType.ANVIL).mapColor(MapColor.COLOR_BROWN).ignitedByLava().noOcclusion()));
 
-    public static Block flowerPot(Block arg) {
+    public static Block flowerPot(final Block arg) {
         return new FlowerPotBlock(arg, BlockBehaviour.Properties.of().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY));
     }
 
