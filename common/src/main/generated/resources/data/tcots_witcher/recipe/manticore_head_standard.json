@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "tcots_witcher:cured_monster_leather"
+    }
+  },
+  "pattern": [
+    "LIL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:manticore_head"
+  }
+}

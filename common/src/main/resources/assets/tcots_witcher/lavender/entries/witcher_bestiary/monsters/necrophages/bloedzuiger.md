@@ -20,7 +20,7 @@ so they suck and digest both their victims' blood and intestines, causing terror
 
 His thick body contains great amount of cadaverine, causing a toxic explosion when killed.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bloedzuiger/bloedzuiger_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bloedzuiger/main.png,fit)
 
 ;;;;;
 
@@ -28,7 +28,7 @@ His thick body contains great amount of cadaverine, causing a toxic explosion wh
 - Swamps
 - Mangrove Swamps
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bloedzuiger/bloedzuiger_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bloedzuiger/secondary.png,fit)
 
 ;;;;;
 
@@ -102,4 +102,4 @@ But if the warrior wants to prevent this explosion they need to {#0A880E}killing
 
 
 
-![Bloedzuiger](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bloedzuiger/bloedzuiger_full.png,fit)
+![Bloedzuiger](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bloedzuiger/full.png,fit)

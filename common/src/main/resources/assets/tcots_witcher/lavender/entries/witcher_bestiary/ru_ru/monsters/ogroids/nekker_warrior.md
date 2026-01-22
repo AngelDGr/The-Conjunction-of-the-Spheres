@@ -21,7 +21,7 @@
 
 Встречи с Наккерами Воинами никогда не бывают одиночными, так как они всегда окружены другими Наккерами.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/main.png,fit)
 
 ;;;;;
 
@@ -29,7 +29,7 @@
 - Леса
 - Равнины
 - [Гнёзда чудовищ](^tcots_witcher:misc/monster_nests), могут быть найдены на равнинах и в лесах.
-  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_command.png,fit)
+  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/secondary.png,fit)
 
 ;;;;;
 
@@ -137,4 +137,4 @@
 
 
 
-![Наккер Воин](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_full.png,fit)
+![Наккер Воин](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/full.png,fit)

@@ -23,7 +23,7 @@ beguilement and disorientation.
 The foglets are additionally said to possess an ability to create complicated illusions made from
 pure fog.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/foglet/main.png,fit)
 
 ;;;;;
 
@@ -32,7 +32,7 @@ pure fog.
 - Forests (at night, especially Dark Forests)
 - Mountains (at night)
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_fog.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/foglet/secondary.png,fit)
 
 ;;;;;
 
@@ -141,4 +141,4 @@ visible and vulnerable again, take this moment to {#0A880E}kill it rapidly befor
 
 
 
-![Foglet](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_full.png,fit)
+![Foglet](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/foglet/full.png,fit)

@@ -20,7 +20,7 @@
 
 Будь осторожен, путешественник, эти существа представляют огромную угрозу для любого неопытного воина.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/rotfiend/main.png,fit)
 
 ;;;;;
 
@@ -29,7 +29,7 @@
 - Равнины (ночью)
 - Тёмные пещеры
 
-  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_exploding.png,fit)
+  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/rotfiend/secondary.png,fit)
 
 ;;;;;
 
@@ -106,4 +106,4 @@
 
 
 
-![Гнилец](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_full.png,fit)
+![Гнилец](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/rotfiend/full.png,fit)

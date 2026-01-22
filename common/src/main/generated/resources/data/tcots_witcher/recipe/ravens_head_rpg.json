@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "witcher_rpg:meteorite_silver_ingot"
+    },
+    "L": {
+      "item": "tcots_witcher:cured_monster_leather"
+    }
+  },
+  "pattern": [
+    "DLD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:ravens_head"
+  }
+}

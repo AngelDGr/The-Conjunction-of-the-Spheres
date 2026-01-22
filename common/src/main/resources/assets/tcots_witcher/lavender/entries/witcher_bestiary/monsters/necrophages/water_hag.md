@@ -22,7 +22,7 @@ surfacing beside their victims to attack them with their sickle-shaped claws.
 
 They are also able to form this mud into balls, which they toss to temporarily blind opponents.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/water_hag/main.png,fit)
 
 ;;;;;
 
@@ -30,7 +30,7 @@ They are also able to form this mud into balls, which they toss to temporarily b
 - Swamps and Mangrove Swamps near the water
 - Rivers and lakes
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_launching.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/water_hag/secondary.png,fit)
 
 ;;;;;
 
@@ -140,4 +140,4 @@ The mud in your eyes it's going to wash off after a little time, and it's going 
 
 
 
-![Water Hag](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_full.png,fit)
+![Water Hag](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/water_hag/full.png,fit)

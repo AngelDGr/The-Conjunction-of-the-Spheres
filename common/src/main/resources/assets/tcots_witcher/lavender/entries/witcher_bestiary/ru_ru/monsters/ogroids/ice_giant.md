@@ -17,7 +17,7 @@
 ;;;;;
 
 заканчивались одинаково - быстрой и мучительной смертью.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/main.png,fit)
 
 ;;;;;
 
@@ -31,7 +31,7 @@
 - *Неизвестно*
 
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/secondary.png,fit)
 
 ;;;;;
 
@@ -105,6 +105,6 @@
         </flow-layout>
 ```
 
-![Ледяной Гигант](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_full.png,fit)
+![Ледяной Гигант](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/full.png,fit)
 
 

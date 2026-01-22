@@ -7,7 +7,7 @@
       "type": "tcots_witcher:image_below_title",
       "title": "Befriending a Troll",
       "text": "Тролли известны своим удивительным интелектом, и многие путешественники вступали с ними в связь на протяжении многих лет.$(br)Информация, полученная от этих связей, кратко изложена здесь.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_friend.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/troll_befriend.png"
     },
     {
       "type": "patchouli:text",

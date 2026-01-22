@@ -21,4 +21,4 @@ some rumours say that can also be destroyed with an efficiency enchantment stron
 But breaking one has a reward, as monsters usually hide magic goods inside them.
 
 
-![Monster Nest](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/monster_nest.png,fit)
+![Monster Nest](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/monster_nest.png,fit)

@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "Некоторые утверждают, что его кожа голубая, потому что он был рождён из снега и льда, что явно невозномжно – хоть он и способен выдержать самые холодные ветра севера.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Среда обитания$()$(li)*Неизвестно*",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_special.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -28,7 +28,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/full.png"
     }
   ],
   "sortnum": 6

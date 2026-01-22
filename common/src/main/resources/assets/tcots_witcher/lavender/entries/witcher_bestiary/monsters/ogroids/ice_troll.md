@@ -20,7 +20,7 @@ these permafrost-dwelling monsters treat nearly every man they encounter as a po
 
 Luckily ice trolls live atop high mountain ridges so inaccessible they rarely encounter any sentient being.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_troll/main.png,fit)
 
 ;;;;;
 
@@ -28,7 +28,7 @@ Luckily ice trolls live atop high mountain ridges so inaccessible they rarely en
 - Snowy mountains
 - Snowy biomes
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_troll/secondary.png,fit)
 
 ;;;;;
 
@@ -151,4 +151,4 @@ Lastly, never think of attacking them during a blizzard. At such times they draw
 
 
 
-![Ice Troll](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_full.png,fit)
+![Ice Troll](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_troll/full.png,fit)

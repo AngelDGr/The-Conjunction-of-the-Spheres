@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "Some claim its skin is blue because it was born of snow and ice, which is clearly impossible – though it's capable of withstanding the fiercest frosts.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Habitat$()$(li)*Unknown*",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_special.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -28,7 +28,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/full.png"
     }
   ],
   "sortnum": 6

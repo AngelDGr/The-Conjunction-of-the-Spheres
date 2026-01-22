@@ -11,7 +11,7 @@
 
 Trolls are known for their surprising intelligence, and many travelers have bonded with them over the years.
 The info gathered from these bonds is summarized here.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_friend.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/troll_befriend.png,fit)
 
 
 ;;;;;

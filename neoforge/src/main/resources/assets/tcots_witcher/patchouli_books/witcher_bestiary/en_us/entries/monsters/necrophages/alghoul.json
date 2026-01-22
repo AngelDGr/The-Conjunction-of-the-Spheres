@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "When encountering such a pack the alghoul should be eliminated as a first priority, leaving the other beasts for once their leader is gone.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/alghoul/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Habitat$()$(li)Forests (at night)$(li)Plains (at night)$(li)$(l:tcots_witcher:misc/monster_nests)Ghoul nests$(), found in plains or forests",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_spikes.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/alghoul/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/alghoul/full.png"
         }
     ],
     "sortnum": 2

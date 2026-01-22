@@ -25,7 +25,7 @@ They live in nests of several individuals.
 So if you found one, rest assure that you are
 going to find more.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/main.png,fit)
 
 ;;;;;
 
@@ -33,7 +33,7 @@ going to find more.
 - Forests
 - Plains
 - [Nekker nests](^tcots_witcher:misc/monster_nests), found in plains or forests
-  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_lunging.png,fit)
+  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/secondary.png,fit)
 
 ;;;;;
 
@@ -109,4 +109,4 @@ Avoid being overwhelmed with the quantity of these tiny creatures, and you can m
 
 
 
-![Nekker](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_full.png,fit)
+![Nekker](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/full.png,fit)

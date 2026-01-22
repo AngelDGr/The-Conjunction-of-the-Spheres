@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "They live in nests of several individuals.$(br)So if you found one, rest assure that you are going to find more.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Habitat$()$(li)Forests$(li)Plains$(li)$(l:tcots_witcher:misc/monster_nests)Nekker nests$(), found in plains or forests",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_lunging.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -28,7 +28,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/full.png"
     }
   ],
   "sortnum": 0

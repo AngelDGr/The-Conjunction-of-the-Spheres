@@ -20,7 +20,7 @@ Though they have eerily familiar faces, one searches them in vain for any sign o
 
 They are driven by one thing and one thing only: an insatiable craving for human flesh.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/ghoul/main.png,fit)
 
 ;;;;;
 
@@ -28,7 +28,7 @@ They are driven by one thing and one thing only: an insatiable craving for human
 - Forests (at night)
 - Plains (at night)
 - [Ghoul nests](^tcots_witcher:misc/monster_nests), found in plains or forests
-  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_regen.png,fit)
+  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/ghoul/secondary.png,fit)
 
 ;;;;;
 
@@ -105,4 +105,4 @@ or just hit it rapidly.{}
 
 
 
-![Ghoul](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_full.png,fit)
+![Ghoul](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/ghoul/full.png,fit)

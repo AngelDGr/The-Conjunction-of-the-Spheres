@@ -22,7 +22,7 @@ trolls are capable of reason.
 
 Just like other monsters though, some are outright hostile and can't be reasoned with.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/main.png,fit)
 
 ;;;;;
 
@@ -30,7 +30,7 @@ Just like other monsters though, some are outright hostile and can't be reasoned
 - Mountains
 - Caves
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/secondary.png,fit)
 
 
 ;;;;;
@@ -138,4 +138,4 @@ However, a particular breed known as __rabid trolls__ is purely hostile, easily 
 
 
 
-![Rock Troll](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_full.png,fit)
+![Rock Troll](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/full.png,fit)

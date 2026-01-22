@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "LNL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:warriors_leather_head"
+  }
+}

@@ -1,7 +1,7 @@
 {
   "accessWidener": "tcots_witcher-common.accesswidener",
   "injected_interfaces": {
-    "net/minecraft/class_1309": 		 	  ["TCOTS/interfaces/LivingEntityMixinInterface"],
-    "net/minecraft/class_1657": 		 	  ["TCOTS/interfaces/PlayerEntityMixinInterface"]
+    "net/minecraft/class_1309": 		 	  ["mors/tcots/interfaces/LivingEntityMixinInterface"],
+    "net/minecraft/class_1657": 		 	  ["mors/tcots/interfaces/PlayerEntityMixinInterface"]
   }
 }

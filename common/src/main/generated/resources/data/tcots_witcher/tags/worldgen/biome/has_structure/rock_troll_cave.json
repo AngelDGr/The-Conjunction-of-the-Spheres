@@ -1,0 +1,14 @@
+{
+  "values": [
+    "minecraft:stony_peaks",
+    "minecraft:meadow",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_forest",
+    "minecraft:windswept_gravelly_hills",
+    "minecraft:taiga",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:old_growth_spruce_taiga",
+    "minecraft:dripstone_caves",
+    "minecraft:lush_caves"
+  ]
+}

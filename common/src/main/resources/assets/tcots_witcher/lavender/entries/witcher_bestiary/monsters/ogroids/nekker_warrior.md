@@ -21,7 +21,7 @@ Nekker Warriors lead their packs with a ferocity that makes them formidable adve
 
 Encounters with Nekker Warriors are never solitary affairs, as these are always surrounded by other Nekkers.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/main.png,fit)
 
 ;;;;;
 
@@ -29,7 +29,7 @@ Encounters with Nekker Warriors are never solitary affairs, as these are always 
 - Forests
 - Plains
 - [Nekker nests](^tcots_witcher:misc/monster_nests), found in plains or forests
-  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_command.png,fit)
+  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/secondary.png,fit)
 
 ;;;;;
 
@@ -137,4 +137,4 @@ Try to focus on it when fighting a Nekker swarm; {#0A880E}without a leader, the 
 
 
 
-![Nekker Warrior](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_full.png,fit)
+![Nekker Warrior](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/full.png,fit)

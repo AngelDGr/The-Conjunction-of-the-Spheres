@@ -1,5 +1,5 @@
 plugins {
-    id 'com.github.johnrengelman.shadow'
+    id 'com.gradleup.shadow'
 }
 
 architectury {
@@ -59,12 +59,18 @@ repositories {
         name = "Curios"
         url = "https://maven.theillusivec4.top/"
     }
+
+    // For Accessories
+    maven { url 'https://maven.wispforest.io/releases' }
+    maven { url 'https://maven.su5ed.dev/releases' }
+    maven { url 'https://maven.fabricmc.net' }
+
 }
 
 dependencies {
     neoForge "net.neoforged:neoforge:$rootProject.neoforge_version"
 
-    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
+    common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 
     compileOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.2-beta.4"))
@@ -89,12 +95,8 @@ dependencies {
     modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}:api"
     modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
 
-
-
-
-    //Curios Dependency
-    runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
-    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
+    //Accessories
+    modImplementation("io.wispforest:accessories-neoforge:${project.accessories_version}")
 }
 
 processResources {
@@ -103,10 +105,6 @@ processResources {
     filesMatching('META-INF/neoforge.mods.toml') {
         expand version: project.version
     }
-}
-
-loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
 }
 
 shadowJar {
@@ -120,6 +118,10 @@ shadowJar {
 remapJar {
     inputFile.set shadowJar.archiveFile
     atAccessWideners.add("tcots_witcher-common.accesswidener")
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
 }
 
 jar {
@@ -139,11 +141,9 @@ components.java {
 }
 
 //DataGen
-def generatedResources = file("src/generated")
-
 sourceSets {
     main {
-        resources.srcDir generatedResources
+        resources.srcDir file("src/generated/resources")
     }
 }
 
@@ -152,7 +152,7 @@ loom {
         data {
             data()
             programArgs "--all", "--mod", "tcots_witcher"
-            programArgs("--output", project(":common").file("src/main/generated").absolutePath)
+            programArgs("--output", project(":common").file("src/main/generated/resources").absolutePath)
             programArgs("--existing", project(":common").file("src/main/resources").absolutePath)
         }
     }

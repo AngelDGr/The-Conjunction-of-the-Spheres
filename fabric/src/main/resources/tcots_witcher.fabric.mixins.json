@@ -1,8 +1,8 @@
 {
   "required": true,
-  "package": "fabric.TCOTS.mixin",
+  "package": "mors.fabric.tcots.mixin",
   "compatibilityLevel": "JAVA_17",
-  "plugin": "fabric.TCOTS.mixin.TCOTSMixinConfigPlugin",
+  "plugin": "mors.fabric.tcots.mixin.TCOTSMixinConfigPlugin",
   "mixins": [
     "structurized.PoolStructurePieceMixin",
     "structurized.RegistryLoaderMixin",

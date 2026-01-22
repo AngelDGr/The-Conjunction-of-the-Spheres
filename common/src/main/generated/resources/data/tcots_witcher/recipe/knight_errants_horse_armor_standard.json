@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:iron_horse_armor"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "  I",
+    "IAN",
+    "IIN"
+  ],
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:knight_errants_horse_armor"
+  }
+}

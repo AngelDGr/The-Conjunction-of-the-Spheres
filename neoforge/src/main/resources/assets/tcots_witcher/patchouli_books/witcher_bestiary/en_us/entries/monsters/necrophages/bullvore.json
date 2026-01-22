@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "This monster does not like the company of its own kind, but it is at times accompanied by smaller, weaker beasts, especially rotfiends.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bullvore/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Habitat$()$(li)Underground$(li)Dark Caves$(br)*It's always surrounded by lesser necrophages",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_special.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bullvore/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bullvore/full.png"
         }
     ],
     "sortnum": 11

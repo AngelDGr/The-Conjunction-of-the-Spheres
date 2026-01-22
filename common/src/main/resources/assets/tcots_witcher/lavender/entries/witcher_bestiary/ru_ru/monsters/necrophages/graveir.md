@@ -23,7 +23,7 @@
 
 У мерзких Грайверов в зубах содержится трупный яд. Так что, если вы встретитесь с ними в бою, остерегайтесь их клыков.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/graveir/main.png,fit)
 
 ;;;;;
 
@@ -31,7 +31,7 @@
 - Под землёй
 - В тёмных пещерах
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_toxic.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/graveir/secondary.png,fit)
 
 ;;;;;
 
@@ -107,5 +107,5 @@
 
 
 
-![Грайвер](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_full.png,fit)
+![Грайвер](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/graveir/full.png,fit)
 

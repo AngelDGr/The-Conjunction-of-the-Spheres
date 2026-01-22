@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "The vile graveirs have cadaverine in their teeth, so anyone who engages one in battle beware.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/graveir/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Habitat$()$(li)Underground$(li)Dark Caves",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_toxic.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/graveir/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/graveir/full.png"
         }
     ],
     "sortnum": 9

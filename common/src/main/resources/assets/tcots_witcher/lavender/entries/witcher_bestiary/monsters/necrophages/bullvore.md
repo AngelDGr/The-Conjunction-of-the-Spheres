@@ -19,7 +19,7 @@ The visible mark of Chaos are the horns and vestigial hands the creature barely 
 
 This monster does not like the company of its own kind, but 
 it is at times accompanied by smaller, weaker beasts, especially rotfiends.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bullvore/main.png,fit)
 
 ;;;;;
 
@@ -28,7 +28,7 @@ it is at times accompanied by smaller, weaker beasts, especially rotfiends.
 - Dark Caves
 
 *It's always surrounded by lesser necrophages
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bullvore/secondary.png,fit)
 
 ;;;;;
 
@@ -103,4 +103,4 @@ Additionally, {#0A880E}once it starts its charge, it won’t change direction un
 
 
 
-![Bullvore](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_full.png,fit)
+![Bullvore](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bullvore/full.png,fit)

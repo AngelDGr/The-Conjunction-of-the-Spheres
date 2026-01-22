@@ -20,7 +20,7 @@ Cyclopses go where they want; any warrior should move to the side if a cyclops i
 ;;;;;
 
 They rarely flinch from anything a warrior can do to them, so they keep trying to fight no matter how many cuts from a blade they take.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/cyclops/main.png,fit)
 
 ;;;;;
 
@@ -29,7 +29,7 @@ They rarely flinch from anything a warrior can do to them, so they keep trying t
 - Old Growth Taigas
 - Snowy Plains
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/cyclops/secondary.png,fit)
 
 ;;;;;
 
@@ -101,4 +101,4 @@ When battling a Cyclops, maintain a medium distance. If it starts to jump, eithe
 
 
 
-![Cyclops](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_full.png,fit)
+![Cyclops](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/cyclops/full.png,fit)

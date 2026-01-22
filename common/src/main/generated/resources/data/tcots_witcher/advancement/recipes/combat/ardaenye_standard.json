@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_devourer_teeth": {
+      "conditions": {
+        "items": [
+          {
+            "items": "tcots_witcher:devourer_teeth"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "tcots_witcher:ardaenye_standard"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_devourer_teeth"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "tcots_witcher:ardaenye_standard"
+    ]
+  }
+}

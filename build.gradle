@@ -1,10 +1,10 @@
 plugins {
-    id 'dev.architectury.loom' version '1.7-SNAPSHOT' apply false
+    id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
-    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
+    id 'com.gradleup.shadow' version '8.3.6' apply false
 
     // see https://projects.neoforged.net/neoforged/moddevgradle for new versions
-    id 'net.neoforged.moddev' version '2.0.80' apply false
+    id 'net.neoforged.moddev' version '2.0.137' apply false
 }
 
 architectury {
@@ -19,8 +19,6 @@ allprojects {
 subprojects {
     apply plugin: 'dev.architectury.loom'
     apply plugin: 'architectury-plugin'
-
-    sourceSets.main.resources { srcDir 'src/main/generated' }
 
     base {
         // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
@@ -56,9 +54,5 @@ subprojects {
 
     tasks.withType(JavaCompile).configureEach {
         it.options.release = 21
-    }
-
-    java {
-        withSourcesJar()
     }
 }

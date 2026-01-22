@@ -20,7 +20,7 @@ on the rotten marrow which they slurp from human bones using their long, prehens
 
 With claws built for digging up buried bodies that serve just as well as weapons to rend flesh.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/main.png,fit)
 
 ;;;;;
 
@@ -29,7 +29,7 @@ With claws built for digging up buried bodies that serve just as well as weapons
 - Plains (at night)
 - Dark caves
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_running.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/secondary.png,fit)
 
 ;;;;;
 
@@ -88,4 +88,4 @@ and damaging a lot any shield that you could use.
 
 
 
-![Grave Hag](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_full.png,fit)
+![Grave Hag](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/full.png,fit)

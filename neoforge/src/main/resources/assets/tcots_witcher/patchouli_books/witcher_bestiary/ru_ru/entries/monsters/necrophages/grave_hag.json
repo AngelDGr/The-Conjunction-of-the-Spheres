@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "Когти, предназначенные для раскапывания могил, служат неплохим оружием для разрывания плоти.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)Тёмные пещеры",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_running.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/full.png"
         }
     ],
     "sortnum": 6

@@ -20,7 +20,7 @@ Devourers hunt after dark in groups that peasants refer to as sabbaths.
 
 They like to deceive their victims and torture them, but there is no truth to the tales of their midnight flights on broomsticks 
 and their gingerbread houses.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/main.png,fit)
 
 ;;;;;
 
@@ -29,7 +29,7 @@ and their gingerbread houses.
 - Plains (at night)
 - Swamps (at night)
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_jump.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/secondary.png,fit)
 
 ;;;;;
 
@@ -102,4 +102,4 @@ Take in account that this attack mechanism has a major flaw; {#0A880E}it needs t
 
 
 
-![Devourer](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_full.png,fit)
+![Devourer](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/full.png,fit)

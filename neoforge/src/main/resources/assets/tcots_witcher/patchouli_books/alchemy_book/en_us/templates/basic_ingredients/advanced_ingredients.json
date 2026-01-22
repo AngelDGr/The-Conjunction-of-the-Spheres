@@ -19,21 +19,21 @@
     },
     {
       "type": "patchouli:custom",
-      "class": "neoforge.TCOTS.patchouli.ItemsInLine_CustomComponent",
+      "class": "mors.neoforge.tcots.patchouli.ItemsInLine_CustomComponent",
       "index": 0,
       "x": 0,
       "y": 20
     },
     {
       "type": "patchouli:custom",
-      "class": "neoforge.TCOTS.patchouli.ItemsInLine_CustomComponent",
+      "class": "mors.neoforge.tcots.patchouli.ItemsInLine_CustomComponent",
       "index": 1,
       "x": 0,
       "y": 40
     },
     {
       "type": "patchouli:custom",
-      "class": "neoforge.TCOTS.patchouli.ItemsInLine_CustomComponent",
+      "class": "mors.neoforge.tcots.patchouli.ItemsInLine_CustomComponent",
       "index": 2,
       "x": 0,
       "y": 60

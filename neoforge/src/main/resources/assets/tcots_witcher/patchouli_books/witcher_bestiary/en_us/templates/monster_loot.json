@@ -8,7 +8,7 @@
     },
     {
       "type": "patchouli:custom",
-      "class": "neoforge.TCOTS.patchouli.MonsterLoot_CustomComponent",
+      "class": "mors.neoforge.tcots.patchouli.MonsterLoot_CustomComponent",
       "title": "Loot",
       "color_title": "5454fc",
       "x": 0,

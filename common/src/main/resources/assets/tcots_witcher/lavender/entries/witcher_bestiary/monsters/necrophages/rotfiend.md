@@ -20,7 +20,7 @@ They usually feed in large groups and thus present a danger to lone travelers â€
 
 Be careful fellow traveler, these creatures can represent a serious threat to any inexperienced warrior.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/rotfiend/main.png,fit)
 
 ;;;;;
 
@@ -29,7 +29,7 @@ Be careful fellow traveler, these creatures can represent a serious threat to an
 - Plains (at night)
 - Dark caves
 
-  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_exploding.png,fit)
+  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/rotfiend/secondary.png,fit)
 
 ;;;;;
 
@@ -106,4 +106,4 @@ The only way to prevent this explosion is {#0A880E}killing it when the creature 
 
 
 
-![Rotfiend](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_full.png,fit)
+![Rotfiend](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/rotfiend/full.png,fit)

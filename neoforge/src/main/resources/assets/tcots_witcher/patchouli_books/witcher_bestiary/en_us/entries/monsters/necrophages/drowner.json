@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "It is often thought drowners arise from the bodies of those who drown in shallow water.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Habitat$()$(li)Swamps and Mangrove Swamps near the water$(li)Rivers and lakes$(li)Beaches near the water",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_swimming.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/full.png"
         }
     ],
     "sortnum": 0

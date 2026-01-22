@@ -26,4 +26,4 @@
 
 За разрушение любого из таких гнёзд полагается награда, так как монстры обычно прячут в них магические предметы.
 
-![Гнездо чудовищ](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/monster_nest.png,fit)
+![Гнездо чудовищ](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/monster_nest.png,fit)

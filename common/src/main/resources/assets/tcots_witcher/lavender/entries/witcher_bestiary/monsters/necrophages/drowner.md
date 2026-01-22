@@ -22,7 +22,7 @@ with slime and sludge oozing out of every pore and the acrid stench of rot wafti
 
 It is often thought drowners arise from the bodies of those who drown in shallow water.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/main.png,fit)
 
 ;;;;;
 
@@ -30,7 +30,7 @@ It is often thought drowners arise from the bodies of those who drown in shallow
 - Swamps and Mangrove Swamps near the water
 - Rivers and lakes
 - Beaches near the water
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_swimming.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/secondary.png,fit)
 
 ;;;;;
 
@@ -135,4 +135,4 @@ crossbow shot.{}
 
 
 
-![Drowner](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_full.png,fit)
+![Drowner](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/full.png,fit)

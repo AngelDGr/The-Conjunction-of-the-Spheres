@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "minecraft:chain"
+    },
+    "D": {
+      "item": "witcher_rpg:dark_iron_ingot"
+    },
+    "M": {
+      "item": "witcher_rpg:meteorite_silver_ingot"
+    },
+    "P": {
+      "item": "witcher_rpg:pure_silver"
+    },
+    "S": {
+      "item": "witcher_rpg:silver_ingot"
+    }
+  },
+  "pattern": [
+    "SCS",
+    "DPD",
+    "MSM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:manticore_school_medallion"
+  }
+}

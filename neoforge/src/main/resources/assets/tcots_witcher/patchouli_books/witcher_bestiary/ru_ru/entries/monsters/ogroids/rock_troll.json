@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "Однако, как и другие монстры, некоторые из них откровенно враждебны, и с ними бывает невозможно договориться.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Среда обитания$()$(li)Горы$(li)Пещеры",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_special.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -29,7 +29,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/full.png"
     }
   ],
   "sortnum": 3

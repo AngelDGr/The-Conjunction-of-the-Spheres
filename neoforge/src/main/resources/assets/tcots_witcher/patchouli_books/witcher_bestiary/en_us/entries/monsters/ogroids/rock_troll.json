@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "Just like other monsters though, some are outright hostile and can't be reasoned with.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Habitat$()$(li)Mountains$(li)Caves",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_special.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -29,7 +29,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/full.png"
     }
   ],
   "sortnum": 3

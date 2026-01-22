@@ -23,7 +23,7 @@
 Говорят, что туманники также обладают способностью создавать сложные иллюзии из
 чистого тумана.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/foglet/main.png,fit)
 
 ;;;;;
 
@@ -32,7 +32,7 @@
 - Леса (ночью, особенно тёмный лес)
 - Горы (ночью)
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_fog.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/foglet/secondary.png,fit)
 
 ;;;;;
 
@@ -141,4 +141,4 @@
 
 
 
-![Туманник](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/foglet/foglet_full.png,fit)
+![Туманник](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/foglet/full.png,fit)

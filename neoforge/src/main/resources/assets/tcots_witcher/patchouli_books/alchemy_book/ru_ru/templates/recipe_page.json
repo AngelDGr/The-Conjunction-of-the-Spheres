@@ -2,7 +2,7 @@
   "components": [
     {
       "type": "patchouli:custom",
-      "class": "neoforge.TCOTS.patchouli.AlchemyRecipes_CustomComponent"
+      "class": "mors.neoforge.tcots.patchouli.AlchemyRecipes_CustomComponent"
     }
   ]
 }

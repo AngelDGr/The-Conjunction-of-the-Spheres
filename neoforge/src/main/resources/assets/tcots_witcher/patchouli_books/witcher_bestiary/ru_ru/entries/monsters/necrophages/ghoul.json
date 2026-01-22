@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "Ими движет одно и только одно: неутолимая жажда человеческой плоти.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/ghoul/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)$(l:tcots_witcher:misc/monster_nests)Гнёзда гулей$(), найденые на равнинах и в лесах.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_regen.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/ghoul/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ghoul/ghoul_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/ghoul/full.png"
         }
     ],
     "sortnum": 1

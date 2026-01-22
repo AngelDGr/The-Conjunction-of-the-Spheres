@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "They rarely flinch from anything a warrior can do to them, so they keep trying to fight no matter how many cuts from a blade they take.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/cyclops/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Habitat$()$(li)Mountains$(li)Old Growth Taigas$(li)Snowy Plains",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_special.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/cyclops/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -28,7 +28,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/cyclops/full.png"
     }
   ],
   "sortnum": 2

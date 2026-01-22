@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "tag": "tcots_witcher:monster_blood"
+    },
+    "G": {
+      "item": "tcots_witcher:graveir_bone"
+    },
+    "H": {
+      "item": "tcots_witcher:nekker_heart"
+    },
+    "S": {
+      "item": "minecraft:golden_sword"
+    }
+  },
+  "pattern": [
+    "HBG",
+    "BSB",
+    "GBH"
+  ],
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:moonblade"
+  }
+}

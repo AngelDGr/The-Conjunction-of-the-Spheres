@@ -23,7 +23,7 @@
 
 Шипы вылетают с огромной скоростью, превращаясь в последнее смертоносное оружие в их арсенале.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/scurver/main.png,fit)
 
 ;;;;;
 
@@ -32,7 +32,7 @@
 - Равнины (ночью)
 - Джунгли (ночью)
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_exploding.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/scurver/secondary.png,fit)
 
 ;;;;;
 
@@ -119,4 +119,4 @@
 
 
 
-![Болотник](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_full.png,fit)
+![Болотник](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/scurver/full.png,fit)

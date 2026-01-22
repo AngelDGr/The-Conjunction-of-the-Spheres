@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "Считается, что обычно утопцами становятся те везунчики, которые утонули на мелководье.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Среда обитания$()$(li)Болота и мангровые болота у воды$(li)Реки и озёра$(li)Пляжи рядом с водой",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_swimming.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/full.png"
         }
     ],
     "sortnum": 0

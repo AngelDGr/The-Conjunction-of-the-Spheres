@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "К счастью, ледяные тролли живут на вершинах высоких горных хребтов, настолько недоступных, что ни одно разумное существо туда не пойдёт по своей воле.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_troll/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Среда обитания$()$(li)Заснеженные горы$(li)Снежные биомы",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_special.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_troll/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -29,7 +29,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_troll/ice_troll_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_troll/full.png"
     }
   ],
   "sortnum": 4

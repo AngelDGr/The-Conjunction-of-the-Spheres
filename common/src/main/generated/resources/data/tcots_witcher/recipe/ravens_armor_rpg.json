@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "witcher_rpg:meteorite_silver_ingot"
+    },
+    "G": {
+      "item": "tcots_witcher:graveir_bone"
+    },
+    "I": {
+      "item": "witcher_rpg:silver_ingot"
+    },
+    "L": {
+      "item": "tcots_witcher:cured_monster_leather"
+    }
+  },
+  "pattern": [
+    "D D",
+    "LDL",
+    "GIG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:ravens_armor"
+  }
+}

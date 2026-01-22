@@ -19,7 +19,7 @@
 ;;;;;
 
 Они любят дурачить и мучить своих жертв, но в сказках об их полуночных полётах на мётлах и пряничных домиках нет ни капли правды.  
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/main.png,fit)
 
 ;;;;;
 
@@ -28,7 +28,7 @@
 - Равнины (ночью)
 - Болота (ночью)
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_jump.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/secondary.png,fit)
 
 ;;;;;
 
@@ -101,4 +101,4 @@
 
 
 
-![Яга](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_full.png,fit)
+![Яга](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/full.png,fit)

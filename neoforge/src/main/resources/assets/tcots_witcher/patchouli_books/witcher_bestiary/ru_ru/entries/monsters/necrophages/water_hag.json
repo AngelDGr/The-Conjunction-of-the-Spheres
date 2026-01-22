@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "Так же они умеют формировать из этой грязи шары, которые бросают, чтобы ослепить противника.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/water_hag/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Среда обитания$()$(li)Болота и мангровые болота рядом с водой$(li)Реки и озёра",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_launching.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/water_hag/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -29,7 +29,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/water_hag/water_hag_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/water_hag/full.png"
         }
     ],
     "sortnum": 5

@@ -20,7 +20,7 @@
 
 Когти, предназначенные для раскапывания могил, служат неплохим оружием для разрывания плоти.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/main.png,fit)
 
 ;;;;;
 
@@ -29,7 +29,7 @@
 - Равнины (ночью)
 - Тёмные пещеры
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_running.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/secondary.png,fit)
 
 ;;;;;
 
@@ -89,4 +89,4 @@
 
 
 
-![Кладбищенская баба](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_full.png,fit)
+![Кладбищенская баба](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/full.png,fit)

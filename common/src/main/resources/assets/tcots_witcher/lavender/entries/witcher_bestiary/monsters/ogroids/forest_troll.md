@@ -20,7 +20,7 @@ they try to counter their lack of defense wearing primitive clothing.
 
 Even though forest troll are slightly larger than rock or ice trolls, they are
 the calmest of the troll's subspecies.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/forest_troll/main.png,fit)
 
 ;;;;;
 
@@ -28,7 +28,7 @@ the calmest of the troll's subspecies.
 - Forest
 - Dark Forests
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/forest_troll/secondary.png,fit)
 
 ;;;;;
 
@@ -166,4 +166,4 @@ engage in combat.
 
 
 
-![Forest Troll](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_full.png,fit)
+![Forest Troll](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/forest_troll/full.png,fit)

@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "Несмотря на то, что лесные тролли немного крупнее каменных или ледяных, они являются самыми спокойными из всех подвидов троллей.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/forest_troll/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Среда обитания$()$(li)Лес$(li)Тёмный лес",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_special.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/forest_troll/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -29,7 +29,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/forest_troll/full.png"
     }
   ],
   "sortnum": 5

@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "With claws built for digging up buried bodies that serve just as well as weapons to rend flesh.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Habitat$()$(li)Forests (at night)$(li)Plains (at night)$(li)Dark caves",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_running.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/grave_hag/grave_hag_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/grave_hag/full.png"
         }
     ],
     "sortnum": 6

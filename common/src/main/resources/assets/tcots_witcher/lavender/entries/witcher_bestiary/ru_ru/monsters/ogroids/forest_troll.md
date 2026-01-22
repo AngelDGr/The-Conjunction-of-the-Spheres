@@ -18,7 +18,7 @@
 ;;;;;
 
 У них нет надёжной элементальной брони, как у других троллей, поэтому вместо этого они пытаются компенсировать отсутствие защиты надевая примитивную одежду.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/forest_troll/main.png,fit)
 
 ;;;;;
 
@@ -51,7 +51,7 @@
 Лучшая стратегия против этих чудовищ - это [подружиться](^tcots_witcher:misc/befriending_troll) с ними, если это возможно, вместо того, чтобы 
 вступать в бой.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/forest_troll/secondary.png,fit)
 
 ;;;;;
 
@@ -173,4 +173,4 @@
 
 
 
-![Лесной Тролль](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/forest_troll/forest_troll_full.png,fit)
+![Лесной Тролль](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/forest_troll/full.png,fit)

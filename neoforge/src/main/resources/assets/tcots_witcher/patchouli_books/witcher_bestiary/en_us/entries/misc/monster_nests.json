@@ -10,7 +10,7 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "But breaking one has a reward, as monsters usually hide magic goods inside them.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/monster_nest.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/monster_nest.png"
     }
   ],
   "sortnum": 1

@@ -22,7 +22,7 @@
 
 
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_friend.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/troll_befriend.png,fit)
 
 
 ;;;;;

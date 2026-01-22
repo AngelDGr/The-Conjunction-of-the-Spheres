@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "Встречи с Наккерами Воинами никогда не бывают одиночными, так как они всегда окружены другими Наккерами.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса$(li)Равнины$(li)$(l:tcots_witcher:misc/monster_nests)Гнёзда чудовищ$(), могут быть найдены на равнинах и в лесах.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_command.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -29,7 +29,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/full.png"
     }
   ],
   "sortnum": 1

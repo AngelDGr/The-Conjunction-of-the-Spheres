@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "При встрече с одним, нужно быть готовым дать отпор сразу многим врагам. Они живут в гнёздах по несколько особей. Так что, если вы нашли только одного - найдутся ещё.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса$(li)Равнины$(li)$(l:tcots_witcher:misc/monster_nests)Гнёзда чудовищ$(), встречаются на равнинах или в лесах",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_lunging.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -28,7 +28,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/full.png"
     }
   ],
   "sortnum": 0

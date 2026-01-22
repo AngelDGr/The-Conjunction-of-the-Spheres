@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "Будь осторожен, путешественник, эти существа представляют огромную угрозу для любого неопытного воина.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/rotfiend/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)Тёмные пещеры",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_exploding.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/rotfiend/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rotfiend/rotfiend_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/rotfiend/full.png"
         }
     ],
     "sortnum": 3

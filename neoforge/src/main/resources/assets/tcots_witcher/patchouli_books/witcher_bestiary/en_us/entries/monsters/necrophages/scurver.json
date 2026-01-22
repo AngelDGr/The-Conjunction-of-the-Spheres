@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "The spines go out at great speed, turning them into one last deadly weapon in their arsenal.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/scurver/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Habitat$()$(li)Forests (at night)$(li)Plains (at night)$(li)Jungles (at night)",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_exploding.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/scurver/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/scurver/full.png"
         }
     ],
     "sortnum": 7

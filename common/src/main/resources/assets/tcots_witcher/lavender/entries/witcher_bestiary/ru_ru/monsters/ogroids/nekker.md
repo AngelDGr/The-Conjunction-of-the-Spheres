@@ -23,7 +23,7 @@
 При встрече с одним, нужно быть готовым дать отпор сразу многим врагам.
 Они живут в гнёздах по несколько особей.
 Так что, если вы нашли только одного - найдутся ещё.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/main.png,fit)
 
 ;;;;;
 
@@ -31,7 +31,7 @@
 - Леса
 - Равнины
 - [Гнёзда чудовищ](^tcots_witcher:misc/monster_nests), встречаются на равнинах или в лесах
-  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_lunging.png,fit)
+  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/secondary.png,fit)
 
 ;;;;;
 
@@ -104,4 +104,4 @@
 
 
 
-![Наккер](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/nekker_full.png,fit)
+![Наккер](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/full.png,fit)

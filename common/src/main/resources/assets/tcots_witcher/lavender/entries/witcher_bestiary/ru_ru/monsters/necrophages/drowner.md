@@ -20,7 +20,7 @@
 
 Считается, что обычно утопцами становятся те везунчики, которые утонули на мелководье.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/main.png,fit)
 
 ;;;;;
 
@@ -28,7 +28,7 @@
 - Болота и мангровые болота у воды
 - Реки и озёра
 - Пляжи рядом с водой
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_swimming.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/secondary.png,fit)
 
 ;;;;;
 
@@ -130,4 +130,4 @@ __Когда они плавают, а вы находитесь под водо
 
 
 
-![Утопец](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/drowner/drowner_full.png,fit)
+![Утопец](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/drowner/full.png,fit)

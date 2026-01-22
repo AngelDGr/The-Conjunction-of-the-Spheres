@@ -19,7 +19,7 @@
 
 Это чудовище не любит компанию себе подобных, но 
 иногда ему составляют компанию более мелкие и слабые твари, в особенности гнильцы.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bullvore/main.png,fit)
 
 ;;;;;
 
@@ -28,7 +28,7 @@
 - Тёмные пещеры
 
 *Он всегда окружён меньшими по размеру трупоедами*
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bullvore/secondary.png,fit)
 
 ;;;;;
 
@@ -104,4 +104,4 @@
 
 
 
-![Утковол](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bullvore/bullvore_full.png,fit)
+![Утковол](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bullvore/full.png,fit)

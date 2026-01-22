@@ -23,7 +23,7 @@ to explode.
 
 The spines go out at great speed, turning them into one last deadly weapon in their arsenal.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/scurver/main.png,fit)
 
 ;;;;;
 
@@ -32,7 +32,7 @@ The spines go out at great speed, turning them into one last deadly weapon in th
 - Plains (at night)
 - Jungles (at night)
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_exploding.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/scurver/secondary.png,fit)
 
 ;;;;;
 
@@ -119,4 +119,4 @@ If you manage {#0A880E}kill the creature when it's in flames, you could retrieve
 
 
 
-![Scurver](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/scurver/scurver_full.png,fit)
+![Scurver](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/scurver/full.png,fit)

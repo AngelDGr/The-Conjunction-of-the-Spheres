@@ -8,7 +8,7 @@
     },
     {
       "type": "patchouli:custom",
-      "class": "neoforge.TCOTS.patchouli.MonsterLoot_CustomComponent",
+      "class": "mors.neoforge.tcots.patchouli.MonsterLoot_CustomComponent",
       "title": "Mutagen",
       "color_title": "0000a8",
       "single": true,

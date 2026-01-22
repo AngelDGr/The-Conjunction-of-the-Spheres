@@ -1,3 +1,39 @@
+# 1.1.0 - 1.21
+### Additions
+- Added Raven's, Manticore and Warrior's Leather headbands, for consistency with Witcher (More RPG Classes)
+- Added Manticore School Medallion! The recipe is only available with Witcher (More RPG Classes) loaded
+- Added Monster Resistance, Monster Damage, Bomb Cooldown Reduction, Extra Alcohol Refill and Potion Drink Time attributes
+
+### Changes
+- Complete rework for the models and textures of all enemies! I will continue with this more detailed art-style from now on
+- Redone the armors models and textures!
+- Changed translations keys for consistency with vanilla ones 
+- Changed some effect ids
+- Changed sound ids for consistency with vanilla ones
+- Increased ghoul speed
+- Ghoul will sprint when attacking
+- Ghouls now can also burrow themselves on the ground like other necrophages
+- Completely redone tooltip system
+- While being invisible, Foglets and Foglings don't longer have footsteps sounds
+- Increased foglet health from 25hp to 30hp
+- Nekker height changed from 0.975 to 1.25
+- Nekker warrior height changed from 1.30 to 1.45
+- Renamed armors to "suit" and trousers to "pants", for consistency with Witcher (More RPG Classes)
+- Modified armor attributes, for consistency with Witcher (More RPG Classes)
+- Increased the rarity for manticore and raven's armors from uncommon to rare, for consistency with Witcher (More RPG Classes)
+- Changed Manticore and Raven's armors recipes with Witcher (More RPG Classes) loaded, now uses dark iron ingot, meteorite silver and silver instead of vanilla ingots
+- Modified full set tooltips to be like Witcher (More RPG Classes)
+- Modified armor set bonuses, now they apply depending on how many pieces you have from the set
+- Added new full set bonuses for manticore and raven's armor
+- Added particles to the Winter’s Blade block so players can more easily tell that it’s important
+- Changed crafting of the Alchemy Table of using only cobblestone to use items from the tag stone_crafting_materials 
+- Bullvores now can charge against their prey regardless of distance
+- Changed all the textures of the bestiary to match the new textures, changed the categories icons too, if you discover from where the symbols are from, I will give you a cookie
+
+### Fixes
+- Foglings attack correctly to their Foglet target
+- Raven's chestplate now has the correct defense value
+
 # 1.0.7 - 1.21
 ### Additions
 - Added the *Bloedzuiger*, a necrophage from W1 that dies with a cadaverine explosion, spawn on swamps

@@ -19,7 +19,7 @@ same way – in a quick and painful death.
 
 Some claim its skin is blue because it was born of snow and ice, which is clearly impossible –
 though it's capable of withstanding the fiercest frosts.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/main.png,fit)
 
 ;;;;;
 
@@ -27,7 +27,7 @@ though it's capable of withstanding the fiercest frosts.
 - *Unknown*
 
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/secondary.png,fit)
 
 ;;;;;
 
@@ -103,4 +103,4 @@ that might still lie hidden within the monster’s lair.
 
 
 
-![Ice Giant](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ice_giant/ice_giant_full.png,fit)
+![Ice Giant](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/ice_giant/full.png,fit)

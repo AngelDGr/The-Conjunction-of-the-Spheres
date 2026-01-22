@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "При встрече с такой стаей в первую очередь стоит убить альгуля, оставив остальных чудовищ без вожака. Так уничтожить их будет гораздо проще.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/alghoul/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)$(l:tcots_witcher:misc/monster_nests)Гнездо альгуля$(), найденое на равнине или в лесу.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_spikes.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/alghoul/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/alghoul/full.png"
         }
     ],
     "sortnum": 2

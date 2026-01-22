@@ -20,7 +20,7 @@
 ;;;;;
 
 Они не страшатся того, что с ними может сделать клинок воина, и продолжают сражаться, не смотря на колличество кровоточащих ран.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/cyclops/main.png,fit)
 
 ;;;;;
 
@@ -29,7 +29,7 @@
 - Древние массивы тайги
 - Снежные равнины
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/cyclops/secondary.png,fit)
 
 ;;;;;
 
@@ -102,4 +102,4 @@
 
 
 
-![Циклопы](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/cyclops/cyclops_full.png,fit)
+![Циклопы](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/cyclops/full.png,fit)

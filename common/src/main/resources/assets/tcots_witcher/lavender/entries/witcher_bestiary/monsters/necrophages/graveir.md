@@ -24,7 +24,7 @@ the more it is to their liking.
 
 The vile graveirs have cadaverine in their teeth, so anyone who engages one in battle beware.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/graveir/main.png,fit)
 
 ;;;;;
 
@@ -32,7 +32,7 @@ The vile graveirs have cadaverine in their teeth, so anyone who engages one in b
 - Underground
 - Dark Caves
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_toxic.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/graveir/secondary.png,fit)
 
 ;;;;;
 
@@ -108,5 +108,5 @@ for skilled fighters to gain the upper hand and ultimately overcome this formida
 
 
 
-![Graveir](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/graveir/graveir_full.png,fit)
+![Graveir](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/graveir/full.png,fit)
 

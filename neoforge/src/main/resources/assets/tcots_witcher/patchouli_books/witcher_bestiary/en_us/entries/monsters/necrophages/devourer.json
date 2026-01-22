@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "They like to deceive their victims and torture them, but there is no truth to the tales of their midnight flights on broomsticks and their gingerbread houses.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Habitat$()$(li)Forests (at night)$(li)Plains (at night)$(li)Swamps (at night)",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_jump.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/full.png"
         }
     ],
     "sortnum": 8

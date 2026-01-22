@@ -10,12 +10,12 @@
         {
             "type": "tcots_witcher:image_below",
             "text": "Они любят дурачить и мучить своих жертв, но в сказках об их полуночных полётах на мётлах и пряничных домиках нет ни капли правды.",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_main.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/main.png"
         },
         {
             "type": "tcots_witcher:image_below",
             "text": "$(l)$(#00a800)Среда обитания$()$(li)Леса (ночью)$(li)Равнины (ночью)$(li)Болота (ночью)",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_jump.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/secondary.png"
         },
         {
             "type": "patchouli:text",
@@ -28,7 +28,7 @@
         },
         {
             "type": "tcots_witcher:image_center",
-            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/devourer/devourer_full.png"
+            "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/devourer/full.png"
         }
     ],
     "sortnum": 8

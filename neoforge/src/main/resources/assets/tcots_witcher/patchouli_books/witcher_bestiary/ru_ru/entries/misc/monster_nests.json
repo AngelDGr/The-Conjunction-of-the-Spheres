@@ -14,7 +14,7 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "За разрушение любого из таких гнёзд полагается награда, так как монстры обычно прячут в них магические предметы.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker/monster_nest.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker/monster_nest.png"
     }
   ],
   "sortnum": 1

@@ -1,0 +1,1011 @@
+{
+  "block.generic.ingredient_pops": {
+    "sounds": [
+      "item/sweet_berries/pick_from_bush1",
+      "item/sweet_berries/pick_from_bush2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.block.generic.ingredient_pops"
+  },
+  "entity.generic.big_impact": {
+    "sounds": [
+      "tcots_witcher:entity/generic/big_impact1",
+      "tcots_witcher:entity/generic/big_impact2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.generic.big_impact"
+  },
+  "entity.generic.ground_punch": {
+    "sounds": [
+      "tcots_witcher:entity/generic/ground_punch1",
+      "tcots_witcher:entity/generic/ground_punch2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.generic.ground_punch"
+  },
+  "entity.generic.medium_impact": {
+    "sounds": [
+      "tcots_witcher:entity/generic/medium_impact1",
+      "tcots_witcher:entity/generic/medium_impact2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.generic.medium_impact"
+  },
+  "entity.generic.monster_digging": {
+    "sounds": [
+      "tcots_witcher:entity/generic/monster_digging1",
+      "tcots_witcher:entity/generic/monster_digging2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.generic.monster_digging"
+  },
+  "entity.generic.monster_emerging": {
+    "sounds": [
+      "tcots_witcher:entity/generic/monster_emerging1",
+      "tcots_witcher:entity/generic/monster_emerging2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.generic.monster_emerging"
+  },
+  "entity.generic.wet_monster_digging": {
+    "sounds": [
+      "tcots_witcher:entity/generic/wet_monster_digging1",
+      "tcots_witcher:entity/generic/wet_monster_digging2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.generic.wet_monster_digging"
+  },
+  "entity.generic.wet_monster_emerging": {
+    "sounds": [
+      "tcots_witcher:entity/generic/wet_monster_emerging1",
+      "tcots_witcher:entity/generic/wet_monster_emerging2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.generic.wet_monster_emerging"
+  },
+  "entity.necrophage.alghoul.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_attack1",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_attack2",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.alghoul.attack"
+  },
+  "entity.necrophage.alghoul.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_death1",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_death2",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.alghoul.death"
+  },
+  "entity.necrophage.alghoul.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_hurt1",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_hurt2",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_hurt3",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_hurt4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.alghoul.hurt"
+  },
+  "entity.necrophage.alghoul.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_idle1",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_idle2",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_idle3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.alghoul.idle"
+  },
+  "entity.necrophage.alghoul.lunge": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_lunge1",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_lunge2",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_lunge3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.alghoul.lunge"
+  },
+  "entity.necrophage.alghoul.regen": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_regen1"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.alghoul.regen"
+  },
+  "entity.necrophage.alghoul.scream": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_scream1",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_scream2",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_scream3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.alghoul.scream"
+  },
+  "entity.necrophage.alghoul.spikes": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_spikes1",
+      "tcots_witcher:entity/necrophage/alghoul/alghoul_spikes2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.alghoul.spikes"
+  },
+  "entity.necrophage.bloedzuiger.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_attack1",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_attack2",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.bloedzuiger.attack"
+  },
+  "entity.necrophage.bloedzuiger.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_death1",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_death2",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.bloedzuiger.death"
+  },
+  "entity.necrophage.bloedzuiger.exploding": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_exploding1",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_exploding2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.bloedzuiger.exploding"
+  },
+  "entity.necrophage.bloedzuiger.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_hurt1",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_hurt2",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_hurt3",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_hurt4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.bloedzuiger.hurt"
+  },
+  "entity.necrophage.bloedzuiger.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_idle1",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_idle2",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_idle3",
+      "tcots_witcher:entity/necrophage/bloedzuiger/bloedzuiger_idle4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.bloedzuiger.idle"
+  },
+  "entity.necrophage.bullvore.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_attack1",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_attack2",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_attack3",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_attack4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.bullvore.attack"
+  },
+  "entity.necrophage.bullvore.charge": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_charge1",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_charge2",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_charge3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.bullvore.charge"
+  },
+  "entity.necrophage.bullvore.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_death1",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_death2",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.bullvore.death"
+  },
+  "entity.necrophage.bullvore.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_hurt1",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_hurt2",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_hurt3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.bullvore.hurt"
+  },
+  "entity.necrophage.bullvore.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_idle1",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_idle2",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_idle3",
+      "tcots_witcher:entity/necrophage/bullvore/bullvore_idle4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.bullvore.idle"
+  },
+  "entity.necrophage.devourer.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/devourer/devourer_attack1",
+      "tcots_witcher:entity/necrophage/devourer/devourer_attack2",
+      "tcots_witcher:entity/necrophage/devourer/devourer_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.devourer.attack"
+  },
+  "entity.necrophage.devourer.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/devourer/devourer_death1",
+      "tcots_witcher:entity/necrophage/devourer/devourer_death2",
+      "tcots_witcher:entity/necrophage/devourer/devourer_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.devourer.death"
+  },
+  "entity.necrophage.devourer.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/devourer/devourer_hurt1",
+      "tcots_witcher:entity/necrophage/devourer/devourer_hurt2",
+      "tcots_witcher:entity/necrophage/devourer/devourer_hurt3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.devourer.hurt"
+  },
+  "entity.necrophage.devourer.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/devourer/devourer_idle1",
+      "tcots_witcher:entity/necrophage/devourer/devourer_idle2",
+      "tcots_witcher:entity/necrophage/devourer/devourer_idle3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.devourer.idle"
+  },
+  "entity.necrophage.devourer.jump": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/devourer/devourer_jump1",
+      "tcots_witcher:entity/necrophage/devourer/devourer_jump2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.devourer.jump"
+  },
+  "entity.necrophage.drowner.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/drowner/drowner_attack1",
+      "tcots_witcher:entity/necrophage/drowner/drowner_attack2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.drowner.attack"
+  },
+  "entity.necrophage.drowner.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/drowner/drowner_death1",
+      "tcots_witcher:entity/necrophage/drowner/drowner_death2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.drowner.death"
+  },
+  "entity.necrophage.drowner.footstep": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/drowner/drowner_footstep1",
+      "tcots_witcher:entity/necrophage/drowner/drowner_footstep2",
+      "tcots_witcher:entity/necrophage/drowner/drowner_footstep3",
+      "tcots_witcher:entity/necrophage/drowner/drowner_footstep4",
+      "tcots_witcher:entity/necrophage/drowner/drowner_footstep5"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.drowner.footstep"
+  },
+  "entity.necrophage.drowner.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/drowner/drowner_hurt1",
+      "tcots_witcher:entity/necrophage/drowner/drowner_hurt2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.drowner.hurt"
+  },
+  "entity.necrophage.drowner.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/drowner/drowner_idle1",
+      "tcots_witcher:entity/necrophage/drowner/drowner_idle2",
+      "tcots_witcher:entity/necrophage/drowner/drowner_idle3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.drowner.idle"
+  },
+  "entity.necrophage.drowner.lunge": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/drowner/drowner_lunge1",
+      "tcots_witcher:entity/necrophage/drowner/drowner_lunge2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.drowner.lunge"
+  },
+  "entity.necrophage.foglet.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/foglet/foglet_attack1",
+      "tcots_witcher:entity/necrophage/foglet/foglet_attack2",
+      "tcots_witcher:entity/necrophage/foglet/foglet_attack3",
+      "tcots_witcher:entity/necrophage/foglet/foglet_attack4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.foglet.attack"
+  },
+  "entity.necrophage.foglet.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/foglet/foglet_death1",
+      "tcots_witcher:entity/necrophage/foglet/foglet_death2",
+      "tcots_witcher:entity/necrophage/foglet/foglet_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.foglet.death"
+  },
+  "entity.necrophage.foglet.fog": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/foglet/foglet_fog1",
+      "tcots_witcher:entity/necrophage/foglet/foglet_fog2",
+      "tcots_witcher:entity/necrophage/foglet/foglet_fog3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.foglet.fog"
+  },
+  "entity.necrophage.foglet.fogling_disappear": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/foglet/foglet_fogling_disappear1",
+      "tcots_witcher:entity/necrophage/foglet/foglet_fogling_disappear2",
+      "tcots_witcher:entity/necrophage/foglet/foglet_fogling_disappear3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.foglet.fogling_disappear"
+  },
+  "entity.necrophage.foglet.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/foglet/foglet_hurt1",
+      "tcots_witcher:entity/necrophage/foglet/foglet_hurt2",
+      "tcots_witcher:entity/necrophage/foglet/foglet_hurt3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.foglet.hurt"
+  },
+  "entity.necrophage.foglet.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/foglet/foglet_idle1",
+      "tcots_witcher:entity/necrophage/foglet/foglet_idle2",
+      "tcots_witcher:entity/necrophage/foglet/foglet_idle3",
+      "tcots_witcher:entity/necrophage/foglet/foglet_idle4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.foglet.idle"
+  },
+  "entity.necrophage.ghoul.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_attack1",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_attack2",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.ghoul.attack"
+  },
+  "entity.necrophage.ghoul.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_death1",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_death2",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.ghoul.death"
+  },
+  "entity.necrophage.ghoul.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_hurt1",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_hurt2",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_hurt3",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_hurt4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.ghoul.hurt"
+  },
+  "entity.necrophage.ghoul.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_idle1",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_idle2",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_idle3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.ghoul.idle"
+  },
+  "entity.necrophage.ghoul.lunge": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_lunge1",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_lunge2",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_lunge3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.ghoul.lunge"
+  },
+  "entity.necrophage.ghoul.regen": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_regen1"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.ghoul.regen"
+  },
+  "entity.necrophage.ghoul.scream": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_scream1",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_scream2",
+      "tcots_witcher:entity/necrophage/ghoul/ghoul_scream3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.ghoul.scream"
+  },
+  "entity.necrophage.grave_hag.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_attack1",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_attack2",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.grave_hag.attack"
+  },
+  "entity.necrophage.grave_hag.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_death1",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_death2",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.grave_hag.death"
+  },
+  "entity.necrophage.grave_hag.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_hurt1",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_hurt2",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_hurt3",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_hurt4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.grave_hag.hurt"
+  },
+  "entity.necrophage.grave_hag.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_idle1",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_idle2",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_idle3",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_idle4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.grave_hag.idle"
+  },
+  "entity.necrophage.grave_hag.run": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_run1",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_run2",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_run3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.grave_hag.run"
+  },
+  "entity.necrophage.grave_hag.tongue_attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_tongue_attack1",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_tongue_attack2",
+      "tcots_witcher:entity/necrophage/grave_hag/grave_hag_tongue_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.grave_hag.tongue_attack"
+  },
+  "entity.necrophage.graveir.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/graveir/graveir_attack1",
+      "tcots_witcher:entity/necrophage/graveir/graveir_attack2",
+      "tcots_witcher:entity/necrophage/graveir/graveir_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.graveir.attack"
+  },
+  "entity.necrophage.graveir.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/graveir/graveir_death1",
+      "tcots_witcher:entity/necrophage/graveir/graveir_death2",
+      "tcots_witcher:entity/necrophage/graveir/graveir_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.graveir.death"
+  },
+  "entity.necrophage.graveir.ground_punch": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/graveir/graveir_ground_punch1",
+      "tcots_witcher:entity/necrophage/graveir/graveir_ground_punch2",
+      "tcots_witcher:entity/necrophage/graveir/graveir_ground_punch3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.graveir.ground_punch"
+  },
+  "entity.necrophage.graveir.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/graveir/graveir_hurt1",
+      "tcots_witcher:entity/necrophage/graveir/graveir_hurt2",
+      "tcots_witcher:entity/necrophage/graveir/graveir_hurt3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.graveir.hurt"
+  },
+  "entity.necrophage.graveir.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/graveir/graveir_idle1",
+      "tcots_witcher:entity/necrophage/graveir/graveir_idle2",
+      "tcots_witcher:entity/necrophage/graveir/graveir_idle3",
+      "tcots_witcher:entity/necrophage/graveir/graveir_idle4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.graveir.idle"
+  },
+  "entity.necrophage.rotfiend.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_attack1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_attack2",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.rotfiend.attack"
+  },
+  "entity.necrophage.rotfiend.blood_explosion": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_blood_explosion1"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.rotfiend.blood_explosion"
+  },
+  "entity.necrophage.rotfiend.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_death1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_death2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.rotfiend.death"
+  },
+  "entity.necrophage.rotfiend.exploding": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_exploding1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_exploding2",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_exploding3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.rotfiend.exploding"
+  },
+  "entity.necrophage.rotfiend.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_hurt1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_hurt2",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_hurt3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.rotfiend.hurt"
+  },
+  "entity.necrophage.rotfiend.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_idle1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_idle2",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_idle3",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_idle4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.rotfiend.idle"
+  },
+  "entity.necrophage.rotfiend.lunge": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_lunge1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_lunge2",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_lunge3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.rotfiend.lunge"
+  },
+  "entity.necrophage.scurver.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_attack1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_attack2",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.scurver.attack"
+  },
+  "entity.necrophage.scurver.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_death1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_death2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.scurver.death"
+  },
+  "entity.necrophage.scurver.exploding": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_exploding1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_exploding2",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_exploding3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.scurver.exploding"
+  },
+  "entity.necrophage.scurver.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_hurt1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_hurt2",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_hurt3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.scurver.hurt"
+  },
+  "entity.necrophage.scurver.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_idle1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_idle2",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_idle3",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_idle4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.scurver.idle"
+  },
+  "entity.necrophage.scurver.lunge": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_lunge1",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_lunge2",
+      "tcots_witcher:entity/necrophage/rotfiend/rotfiend_lunge3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.scurver.lunge"
+  },
+  "entity.necrophage.water_hag.attack": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_attack1",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_attack2",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.water_hag.attack"
+  },
+  "entity.necrophage.water_hag.death": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_death1",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_death2",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.water_hag.death"
+  },
+  "entity.necrophage.water_hag.digging": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_digging1",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_digging2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.water_hag.digging"
+  },
+  "entity.necrophage.water_hag.emerging": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_emerging1",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_emerging2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.water_hag.emerging"
+  },
+  "entity.necrophage.water_hag.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_hurt1",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_hurt2",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_hurt3",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_hurt4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.water_hag.hurt"
+  },
+  "entity.necrophage.water_hag.idle": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_idle1",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_idle2",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_idle3",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_idle4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.water_hag.idle"
+  },
+  "entity.necrophage.water_hag.mud_ball_hit": {
+    "sounds": [
+      "block/mud/step1",
+      "block/mud/step2",
+      "block/mud/step3",
+      "block/mud/step4",
+      "block/mud/step5",
+      "block/mud/step6"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.water_hag.mud_ball_hit"
+  },
+  "entity.necrophage.water_hag.mud_ball_launch": {
+    "sounds": [
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_mud_ball_launch1",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_mud_ball_launch2",
+      "tcots_witcher:entity/necrophage/water_hag/water_hag_mud_ball_launch3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.necrophage.water_hag.mud_ball_launch"
+  },
+  "entity.ogroid.cyclops.attack": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_attack1",
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_attack2",
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.cyclops.attack"
+  },
+  "entity.ogroid.cyclops.death": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_death1",
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_death2",
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.cyclops.death"
+  },
+  "entity.ogroid.cyclops.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_hurt1",
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_hurt2",
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_hurt3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.cyclops.hurt"
+  },
+  "entity.ogroid.cyclops.idle": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_idle1",
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_idle2",
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_idle3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.cyclops.idle"
+  },
+  "entity.ogroid.cyclops.punch": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_punch1",
+      "tcots_witcher:entity/ogroid/cyclops/cyclops_punch2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.cyclops.punch"
+  },
+  "entity.ogroid.ice_giant.attack": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_attack1",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_attack2",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.ice_giant.attack"
+  },
+  "entity.ogroid.ice_giant.charge": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_charge1",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_charge2",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_charge3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.ice_giant.charge"
+  },
+  "entity.ogroid.ice_giant.death": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_death1",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_death2",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.ice_giant.death"
+  },
+  "entity.ogroid.ice_giant.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_hurt1",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_hurt2",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_hurt3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.ice_giant.hurt"
+  },
+  "entity.ogroid.ice_giant.idle": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_idle1",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_idle2",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_idle3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.ice_giant.idle"
+  },
+  "entity.ogroid.ice_giant.punch": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_punch1",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_punch2",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_punch3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.ice_giant.punch"
+  },
+  "entity.ogroid.ice_giant.snore": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_snore1",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_snore2",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_snore3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.ice_giant.snore"
+  },
+  "entity.ogroid.ice_giant.wake_up": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_wake_up1",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_wake_up2",
+      "tcots_witcher:entity/ogroid/ice_giant/ice_giant_wake_up3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.ice_giant.wake_up"
+  },
+  "entity.ogroid.nekker.attack": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/nekker/nekker_attack1",
+      "tcots_witcher:entity/ogroid/nekker/nekker_attack2",
+      "tcots_witcher:entity/ogroid/nekker/nekker_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.nekker.attack"
+  },
+  "entity.ogroid.nekker.death": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/nekker/nekker_death1",
+      "tcots_witcher:entity/ogroid/nekker/nekker_death2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.nekker.death"
+  },
+  "entity.ogroid.nekker.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/nekker/nekker_hurt1",
+      "tcots_witcher:entity/ogroid/nekker/nekker_hurt2",
+      "tcots_witcher:entity/ogroid/nekker/nekker_hurt3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.nekker.hurt"
+  },
+  "entity.ogroid.nekker.idle": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/nekker/nekker_idle1",
+      "tcots_witcher:entity/ogroid/nekker/nekker_idle2",
+      "tcots_witcher:entity/ogroid/nekker/nekker_idle3",
+      "tcots_witcher:entity/ogroid/nekker/nekker_idle4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.nekker.idle"
+  },
+  "entity.ogroid.nekker.lunge": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/nekker/nekker_lunge1",
+      "tcots_witcher:entity/ogroid/nekker/nekker_lunge2",
+      "tcots_witcher:entity/ogroid/nekker/nekker_lunge3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.nekker.lunge"
+  },
+  "entity.ogroid.nekker_warrior.attack": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_attack1",
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_attack2",
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.nekker_warrior.attack"
+  },
+  "entity.ogroid.nekker_warrior.death": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_death1",
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_death2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.nekker_warrior.death"
+  },
+  "entity.ogroid.nekker_warrior.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_hurt1",
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_hurt2",
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_hurt3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.nekker_warrior.hurt"
+  },
+  "entity.ogroid.nekker_warrior.idle": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_idle1",
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_idle2",
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_idle3",
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_idle4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.nekker_warrior.idle"
+  },
+  "entity.ogroid.nekker_warrior.lunge": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_lunge1",
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_lunge2",
+      "tcots_witcher:entity/ogroid/nekker_warrior/nekker_warrior_lunge3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.nekker_warrior.lunge"
+  },
+  "entity.ogroid.troll.attack": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_attack1",
+      "tcots_witcher:entity/ogroid/troll/troll_attack2",
+      "tcots_witcher:entity/ogroid/troll/troll_attack3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.attack"
+  },
+  "entity.ogroid.troll.barter": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_barter1",
+      "tcots_witcher:entity/ogroid/troll/troll_barter2",
+      "tcots_witcher:entity/ogroid/troll/troll_barter3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.barter"
+  },
+  "entity.ogroid.troll.block_impact": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_block_impact1",
+      "tcots_witcher:entity/ogroid/troll/troll_block_impact2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.block_impact"
+  },
+  "entity.ogroid.troll.block_impact_break": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_block_impact1",
+      "tcots_witcher:entity/ogroid/troll/troll_block_impact2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.block_impact_break"
+  },
+  "entity.ogroid.troll.death": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_death1",
+      "tcots_witcher:entity/ogroid/troll/troll_death2",
+      "tcots_witcher:entity/ogroid/troll/troll_death3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.death"
+  },
+  "entity.ogroid.troll.dismiss": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_dismiss1",
+      "tcots_witcher:entity/ogroid/troll/troll_dismiss2",
+      "tcots_witcher:entity/ogroid/troll/troll_dismiss3",
+      "tcots_witcher:entity/ogroid/troll/troll_dismiss4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.dismiss"
+  },
+  "entity.ogroid.troll.follow": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_follow1",
+      "tcots_witcher:entity/ogroid/troll/troll_follow2",
+      "tcots_witcher:entity/ogroid/troll/troll_follow3",
+      "tcots_witcher:entity/ogroid/troll/troll_follow4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.follow"
+  },
+  "entity.ogroid.troll.furious": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_furious1",
+      "tcots_witcher:entity/ogroid/troll/troll_furious2",
+      "tcots_witcher:entity/ogroid/troll/troll_furious3",
+      "tcots_witcher:entity/ogroid/troll/troll_furious4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.furious"
+  },
+  "entity.ogroid.troll.grunt": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_grunt1",
+      "tcots_witcher:entity/ogroid/troll/troll_grunt2",
+      "tcots_witcher:entity/ogroid/troll/troll_grunt3",
+      "tcots_witcher:entity/ogroid/troll/troll_grunt4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.grunt"
+  },
+  "entity.ogroid.troll.hurt": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_hurt1",
+      "tcots_witcher:entity/ogroid/troll/troll_hurt2",
+      "tcots_witcher:entity/ogroid/troll/troll_hurt3",
+      "tcots_witcher:entity/ogroid/troll/troll_hurt4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.hurt"
+  },
+  "entity.ogroid.troll.idle": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_idle1",
+      "tcots_witcher:entity/ogroid/troll/troll_idle2",
+      "tcots_witcher:entity/ogroid/troll/troll_idle3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.idle"
+  },
+  "entity.ogroid.troll.rock_projectile_impact": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_rock_projectile_impact1",
+      "tcots_witcher:entity/ogroid/troll/troll_rock_projectile_impact2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.rock_projectile_impact"
+  },
+  "entity.ogroid.troll.rock_projectile_throws": {
+    "sounds": [
+      "random/bow"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.rock_projectile_throws"
+  },
+  "entity.ogroid.troll.waiting": {
+    "sounds": [
+      "tcots_witcher:entity/ogroid/troll/troll_waiting1",
+      "tcots_witcher:entity/ogroid/troll/troll_waiting2",
+      "tcots_witcher:entity/ogroid/troll/troll_waiting3",
+      "tcots_witcher:entity/ogroid/troll/troll_waiting4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.ogroid.troll.waiting"
+  },
+  "entity.villager.work_herbalist": {
+    "sounds": [
+      "block/brewing_stand/brew1",
+      "block/brewing_stand/brew2"
+    ],
+    "subtitle": "subtitles.tcots_witcher.entity.villager.work_herbalist"
+  },
+  "gui.alchemy.black_blood_hit": {
+    "sounds": [
+      "tcots_witcher:gui/alchemy/black_blood_hit1",
+      "tcots_witcher:gui/alchemy/black_blood_hit2",
+      "tcots_witcher:gui/alchemy/black_blood_hit3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.gui.alchemy.black_blood_hit"
+  },
+  "gui.alchemy.oil_applied": {
+    "sounds": [
+      "item/honeycomb/wax_on1",
+      "item/honeycomb/wax_on2",
+      "item/honeycomb/wax_on3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.gui.alchemy.oil_applied"
+  },
+  "gui.alchemy.oil_ran_out": {
+    "sounds": [
+      "item/axe/scrape1",
+      "item/axe/scrape2",
+      "item/axe/scrape3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.gui.alchemy.oil_ran_out"
+  },
+  "gui.alchemy.potion_refill": {
+    "sounds": [
+      "tcots_witcher:gui/alchemy/potion_refill1"
+    ],
+    "subtitle": "subtitles.tcots_witcher.gui.alchemy.potion_refill"
+  },
+  "item.anchor.anchor_chain": {
+    "sounds": [
+      "tcots_witcher:item/anchor/anchor_chain1",
+      "tcots_witcher:item/anchor/anchor_chain2",
+      "tcots_witcher:item/anchor/anchor_chain3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.item.anchor.anchor_chain"
+  },
+  "item.anchor.anchor_impact": {
+    "sounds": [
+      "tcots_witcher:item/anchor/anchor_impact1",
+      "tcots_witcher:item/anchor/anchor_impact2",
+      "tcots_witcher:item/anchor/anchor_impact3",
+      "tcots_witcher:item/anchor/anchor_impact4"
+    ],
+    "subtitle": "subtitles.tcots_witcher.item.anchor.anchor_impact"
+  },
+  "item.anchor.anchor_throw": {
+    "sounds": [
+      "tcots_witcher:item/anchor/anchor_throw1",
+      "tcots_witcher:item/anchor/anchor_throw2",
+      "tcots_witcher:item/anchor/anchor_throw3"
+    ],
+    "subtitle": "subtitles.tcots_witcher.item.anchor.anchor_throw"
+  }
+}

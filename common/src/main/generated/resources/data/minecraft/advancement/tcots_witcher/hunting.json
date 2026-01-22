@@ -1,0 +1,307 @@
+{
+  "parent": "minecraft:tcots_witcher/root",
+  "criteria": {
+    "tcots_witcher:alghoul": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:alghoul"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:bloedzuiger": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:bloedzuiger"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:bullvore": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:bullvore"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:cyclops": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:cyclops"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:devourer": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:devourer"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:drowner": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:drowner"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:foglet": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:foglet"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:forest_troll": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:forest_troll"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:ghoul": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:ghoul"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:grave_hag": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:grave_hag"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:graveir": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:graveir"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:ice_giant": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:ice_giant"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:ice_troll": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:ice_troll"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:nekker": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:nekker"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:nekker_warrior": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:nekker_warrior"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:rock_troll": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:rock_troll"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:rotfiend": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:rotfiend"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:scurver": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:scurver"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "tcots_witcher:water_hag": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "tcots_witcher:water_hag"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.witcher.start_killing.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "tcots_witcher:graveir_bone"
+    },
+    "title": {
+      "translate": "advancements.witcher.start_killing.title"
+    }
+  },
+  "requirements": [
+    [
+      "tcots_witcher:nekker_warrior",
+      "tcots_witcher:ice_giant",
+      "tcots_witcher:ice_troll",
+      "tcots_witcher:bloedzuiger",
+      "tcots_witcher:alghoul",
+      "tcots_witcher:graveir",
+      "tcots_witcher:rock_troll",
+      "tcots_witcher:ghoul",
+      "tcots_witcher:cyclops",
+      "tcots_witcher:rotfiend",
+      "tcots_witcher:grave_hag",
+      "tcots_witcher:forest_troll",
+      "tcots_witcher:scurver",
+      "tcots_witcher:foglet",
+      "tcots_witcher:devourer",
+      "tcots_witcher:bullvore",
+      "tcots_witcher:water_hag",
+      "tcots_witcher:drowner",
+      "tcots_witcher:nekker"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

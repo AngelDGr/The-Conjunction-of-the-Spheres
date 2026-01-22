@@ -1,0 +1,222 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"pose.half_body_down": {
+			"loop": true,
+			"bones": {
+				"head": {
+					"rotation": {
+						"vector": [-10, -25, 0]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [0, 0, -60]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [0, 0, 22.5]
+					}
+				},
+				"skeleton": {
+					"rotation": {
+						"vector": [-90, 0, -180]
+					},
+					"position": {
+						"vector": [0, -11.75, -6]
+					}
+				},
+				"downBody": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"pose.legs": {
+			"loop": true,
+			"bones": {
+				"left_leg": {
+					"rotation": {
+						"vector": [0, 0, -17.5]
+					},
+					"position": {
+						"vector": [0, -3, 0]
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": [0, 0, 25]
+					},
+					"position": {
+						"vector": [1, 1, 0]
+					}
+				},
+				"skeleton": {
+					"rotation": {
+						"vector": [-90, 0, 0]
+					},
+					"position": {
+						"vector": [0, -10, 8]
+					}
+				},
+				"downBody": {
+					"position": {
+						"vector": [0, 1, 0]
+					}
+				},
+				"upperBodyHead": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"pose.sitting": {
+			"loop": true,
+			"bones": {
+				"head": {
+					"rotation": {
+						"vector": [40, -5, 5]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [-30, 0, -2]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [-30, 0, 2]
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"vector": [-80, -15, 0]
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": [-80, 12, 0]
+					}
+				},
+				"skeleton": {
+					"position": {
+						"vector": [0, -9, 3]
+					}
+				},
+				"downBody": {
+					"rotation": {
+						"vector": [-7.5, 0, 0]
+					}
+				},
+				"upperBodyHead": {
+					"rotation": {
+						"vector": [12.5, 0, 0]
+					}
+				}
+			}
+		},
+		"pose.half_body_up": {
+			"loop": true,
+			"bones": {
+				"head": {
+					"rotation": {
+						"vector": [0, -25, 0]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [0, 0, -35]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [0, 0, 37.5]
+					}
+				},
+				"skeleton": {
+					"rotation": {
+						"vector": [-90, 0, 0]
+					},
+					"position": {
+						"vector": [0, -7.75, -6]
+					}
+				},
+				"downBody": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"pose.crossed_arms": {
+			"loop": true,
+			"bones": {
+				"head": {
+					"rotation": {
+						"vector": [0, 15, 0]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [-30, 0, 27.5]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [-25, -15, -30]
+					}
+				},
+				"skeleton": {
+					"rotation": {
+						"vector": [-90, 0, 0]
+					},
+					"position": {
+						"vector": [0, -7.75, -6]
+					}
+				},
+				"downBody": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"pose.reaching": {
+			"loop": true,
+			"bones": {
+				"head": {
+					"rotation": {
+						"vector": [-60, 10, -10]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [-10, 0, -140]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [-7.5, 0, 30]
+					}
+				},
+				"skeleton": {
+					"rotation": {
+						"vector": [90, 0, 0]
+					},
+					"position": {
+						"vector": [0, -11.75, 5]
+					}
+				},
+				"downBody": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

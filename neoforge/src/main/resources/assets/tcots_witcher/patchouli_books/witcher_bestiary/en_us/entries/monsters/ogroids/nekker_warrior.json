@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "Encounters with Nekker Warriors are never solitary affairs, as these are always surrounded by other Nekkers.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Habitat$()$(li)Forests$(li)Plains$(li)$(l:tcots_witcher:misc/monster_nests)Nekker nests$(), found in plains or forests",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_command.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -29,7 +29,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/nekker_warrior/nekker_warrior_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/nekker_warrior/full.png"
     }
   ],
   "sortnum": 1

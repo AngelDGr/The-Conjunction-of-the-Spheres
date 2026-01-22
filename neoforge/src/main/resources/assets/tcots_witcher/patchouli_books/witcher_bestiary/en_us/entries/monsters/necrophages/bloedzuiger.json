@@ -10,12 +10,12 @@
     {
       "type": "tcots_witcher:image_below",
       "text": "His thick body contains great amount of cadaverine, causing a toxic explosion when killed.",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bloedzuiger/bloedzuiger_main.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bloedzuiger/main.png"
     },
     {
       "type": "tcots_witcher:image_below",
       "text": "$(l)$(#00a800)Habitat$()$(li)Swamps$(li)Mangrove Swamps",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bloedzuiger/bloedzuiger_special.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bloedzuiger/secondary.png"
     },
     {
       "type": "patchouli:text",
@@ -28,7 +28,7 @@
     },
     {
       "type": "tcots_witcher:image_center",
-      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/bloedzuiger/bloedzuiger_full.png"
+      "image": "tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/bloedzuiger/full.png"
     }
   ],
   "sortnum": 9

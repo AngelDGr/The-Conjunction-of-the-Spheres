@@ -20,7 +20,7 @@
 
 Однако, как и другие монстры, некоторые из них откровенно враждебны, и с ними бывает невозможно договориться.
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/main.png,fit)
 
 ;;;;;
 
@@ -28,7 +28,7 @@
 - Горы
 - Пещеры
 
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_special.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/secondary.png,fit)
 
 ;;;;;
 
@@ -135,4 +135,4 @@
 
 
 
-![Скальный Тролль](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/rock_troll/rock_troll_full.png,fit)
+![Скальный Тролль](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/ogroid/rock_troll/full.png,fit)

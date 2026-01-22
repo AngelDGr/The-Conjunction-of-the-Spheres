@@ -18,7 +18,7 @@ Ghouls seem to possess wits enough to at least know a brighter mind when they se
 ;;;;;
 
 When encountering such a pack the alghoul should be eliminated as a first priority, leaving the other beasts for once their leader is gone.
-![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_main.png,fit)
+![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/alghoul/main.png,fit)
 
 ;;;;;
 
@@ -26,7 +26,7 @@ When encountering such a pack the alghoul should be eliminated as a first priori
 - Forests (at night)
 - Plains (at night)
 - [Ghoul nests](^tcots_witcher:misc/monster_nests), found in plains or forests
-  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_spikes.png,fit)
+  ![](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/alghoul/secondary.png,fit)
 
 ;;;;;
 
@@ -118,4 +118,4 @@ so {#0A880E}it's better focus on killing it before the other ghouls.{}
 
 
 
-![Alghoul](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/alghoul/alghoul_full.png,fit)
+![Alghoul](tcots_witcher:textures/gui/sprites/witcher_bestiary/entries/necrophage/alghoul/full.png,fit)

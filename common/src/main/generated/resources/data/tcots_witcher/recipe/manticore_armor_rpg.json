@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "E": {
+      "item": "tcots_witcher:nekker_eye"
+    },
+    "I": {
+      "item": "witcher_rpg:dark_iron_ingot"
+    },
+    "L": {
+      "item": "tcots_witcher:cured_monster_leather"
+    }
+  },
+  "pattern": [
+    "L L",
+    "IEI",
+    "ELE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "tcots_witcher:manticore_armor"
+  }
+}
