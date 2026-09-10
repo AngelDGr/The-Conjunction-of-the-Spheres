@@ -72,13 +72,18 @@ public interface GuardNestMob {
     }
 
     default void tickGuardNest(final PathfinderMob entity){
-        if(this.getNestPos()==BlockPos.ZERO && this.canHaveNest()) {
-            final Optional<BlockPos> optional = this.findNest(entity);
-            optional.ifPresent(this::setNestPos);
-            this.setCanHaveNest(false);
+        // equals, not ==: readNbtGuardNest creates a new BlockPos, so a loaded mob without a nest holds a non-identical (0,0,0).
+        if(this.getNestPos().equals(BlockPos.ZERO)) {
+            if(this.canHaveNest()) {
+                final Optional<BlockPos> optional = this.findNest(entity);
+                optional.ifPresent(this::setNestPos);
+                this.setCanHaveNest(false);
+            }
+            return;
         }
 
-        if(!entity.level().getBlockState(this.getNestPos()). is(TCOTS_Blocks.MonsterNest()) && this.getNestPos()!=BlockPos.ZERO){
+        // Level.getBlockState loads or generates an unloaded chunk synchronously on the server thread; skip the check until the nest's chunk is loaded.
+        if(entity.level().isLoaded(this.getNestPos()) && !entity.level().getBlockState(this.getNestPos()).is(TCOTS_Blocks.MonsterNest())){
             this.setNestPos(BlockPos.ZERO);
         }
     }
