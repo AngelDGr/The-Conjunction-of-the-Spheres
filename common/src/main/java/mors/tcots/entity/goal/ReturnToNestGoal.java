@@ -35,7 +35,7 @@ public class ReturnToNestGoal extends Goal {
     @Override
     public boolean canUse() {
         return mob.getTarget()==null
-                && guardMob.getNestPos()!= BlockPos.ZERO
+                && !guardMob.getNestPos().equals(BlockPos.ZERO)
                 && mob.getOnPos().distToLowCornerSqr(
                         guardMob.getNestPos().getX(),
                         guardMob.getNestPos().getY(),
